@@ -159,7 +159,7 @@ export const LANE = { w: 0.98, d: 0.36 }; // the duck-race desk card
 // ctx.seatScreens: seat id -> the console screen mesh (Mines, Dragon Tower); ctx.slotLevers: seat id -> lever pivot;
 // ctx.lanePlates: seat id -> the duck-race desk card; ctx.deco: seat id -> meshes to hide while you sit there.
 export function buildRig(ctx, seats, felts) {
-  const root = new THREE.Group(); ctx.group.add(root);
+  const root = new THREE.Group(); root.visible = false; ctx.group.add(root); // shown only while you sit at a table
   const parts = [];      // what the crosshair can hit this frame
   const hit = [];        // [mesh, id] for every part mesh, filled per station
   let cur = null;        // { seat, game, frame }
