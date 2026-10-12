@@ -56,7 +56,7 @@ function readOpts() {
   return { players: +$('optPlayers').value, killers: +$('optKillers').value, difficulty: $('optDiff').value, forceRole: $('optRole').value };
 }
 function enterGame() {
-  S.screen = 'game'; S.view = null; S.me.posVer = -1; S.lastMode = null; S.overShown = false; S.paused = false; S.disp = {}; S.acc = 0;
+  S.screen = 'game'; S.view = null; S.tips = 0; S.me.posVer = -1; S.lastMode = null; S.overShown = false; S.paused = false; S.disp = {}; S.acc = 0;
   only(); show('hud', true); closePanel(); resetMeeting(); audio.setMood('lounge');
 }
 
@@ -95,7 +95,9 @@ function hostData(conn, msg) {
   if (msg.t === 'hello') {
     if (S.screen !== 'lobby') { S.room.send(conn, { t: 'busy', why: 'That game already started. Ask the host to go back to the lobby.' }); setTimeout(() => conn.close(), 300); return; }
     if (S.guests.size >= 7) { S.room.send(conn, { t: 'busy', why: 'That room is full.' }); setTimeout(() => conn.close(), 300); return; }
-    const name = String(msg.name || 'Guest').replace(/[^\w .'-]/g, '').trim().slice(0, 12) || 'Guest';
+    let name = String(msg.name || 'Guest').replace(/[^\w .'-]/g, '').trim().slice(0, 10) || 'Guest';
+    const taken = new Set([myName().toLowerCase(), ...[...S.guests.values()].map(g => g.name.toLowerCase())]);
+    if (taken.has(name.toLowerCase())) { let i = 2; while (taken.has((name + i).toLowerCase())) i++; name = name + i; }
     S.guests.set(conn, { name, id: null }); broadcastLobby();
     return;
   }
@@ -283,6 +285,15 @@ function simStep(dt) {
     }
   }
 }
+const TIPS = [
+  [3, 'Tip: sit at a table to win money for the crew. Your drink goes on the rail behind you.', 'g'],
+  [3, 'Tip: get next to a drink nobody is watching and Poison it. Snack bowls work too.', 'k'],
+  [14, 'Tip: you only see inside your cone. Look back at your drink now and then.', 'g'],
+  [14, "Tip: check who's looking first. Anyone who sees you act will say so.", 'k'],
+  [28, 'Tip: Sniff a drink before you sip. Poison smells like bitter almonds.', 'g'],
+  [28, "Tip: cut the Lights and nobody sees past arm's length for 10 seconds.", 'k'],
+  [45, 'Tip: found a body? Report it. Your notes show who hung around whose drink.'],
+];
 function frameGame(dt) {
   moveMe(dt);
   if (S.sim) simStep(dt);
@@ -303,6 +314,9 @@ function frameGame(dt) {
     st.games++; if (priv.won) st.wins++; if (priv.isKiller) { st.killerGames++; if (priv.won) st.killerWins++; }
     store.set('lc.stats', st);
     setTimeout(() => { if (S.screen === 'game') { only('over'); renderOver(v, S.role === 'host', S.role === 'solo'); } }, 900);
+  }
+  if (S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0]) {
+    const tip = TIPS[S.tips++]; if (store.get('lc.stats', { games: 0 }).games < 3 && (!tip[2] || priv.isKiller === (tip[2] === 'k'))) toast(tip[1]);
   }
   updateHud(v);
   draw({ pub: smooth(pub, dt), priv, me: S.me });

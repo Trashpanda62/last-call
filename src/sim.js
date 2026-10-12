@@ -599,7 +599,8 @@ function makeApi(G) {
   }
   function dropHuman(id) {
     const c = byId(id); if (!c || !c.isHuman) return;
-    c.isHuman = false; c.netKey = null; c.state = 'idle'; c.path = [];
+    c.isHuman = false; c.netKey = null; c.path = []; c.sniff = null;
+    if (c.seat) { c.state = 'seated'; c.sitT = rand(5, 15); c.gameT = 2; } else c.state = 'idle';
     tellAll(`${c.name} left. A bot took their seat.`);
   }
 
