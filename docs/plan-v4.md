@@ -86,14 +86,21 @@ The candidates as asked:
 | | Reserve for retakes (about 15%) | | 1,000 |
 | | **Total** | | **6,550** |
 
-Phase 0 approved and done 2026-10-12 (03:10-03:50 CT): 181 credits, balance 7,266 after. Picks page:
+Phase 0 approved and done 2026-10-12 (03:10-03:50 CT): 181 credits, balance 7,266 after.
+
+**Picked (Steve, 2026-10-12): scene A (plush felt diorama), bean A (plush, red felt, button eyes, stitched smile).** Phases 1-10 build
+to that look. Picks page:
 https://trashpanda62.github.io/last-call/picks/v4/ (provenance in picks/v4/provenance.json, receipts in runs/).
 
 Order: 0 (Steve picks a look) → 1, 3, 9 (characters) → 4, 5, 6 (tables and rooms) → 7, 8, 10. Every image is checked
 up close for extra or missing limbs and fingers before Steve sees it. Every job id and file goes in provenance.json.
 Generated meshes are remeshed to a polygon budget and instanced so phones keep their frame rate.
 
-## 5. ElevenLabs (no budget; rates measured 2026-09-27: speech about 1 credit a character, effects 12 a second, music about 15 a second)
+## 5. ElevenLabs
+
+**Steve, 2026-10-12: "No voice lines."** No voiced dialogue, names, reactions or staff callouts; the voice casting is
+shelved. Effects, ambience and music stay in the plan.
+ (no budget; rates measured 2026-09-27: speech about 1 credit a character, effects 12 a second, music about 15 a second)
 
 | What | Amount | Est. credits |
 | --- | --- | --- |
