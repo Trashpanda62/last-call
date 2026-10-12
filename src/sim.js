@@ -1,7 +1,7 @@
 // The authoritative game. No DOM: the host (or solo client) runs it; every human sees it through view(id).
 import { CFG, DIFF, CAST, DRINKS } from './config.js';
 import { rand, pick, clamp, dist, angDiff, money, shuffle } from './util.js';
-import { ROOMS, TAP, BELL, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, makeSeats, los, collide, roomOf, route } from './map.js';
+import { ROOMS, TAP, BELL, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, makeSeats, los, collide, roomOf, route } from './map.js';
 
 export function createGame(opts) {
   const n = clamp(opts.players || 6, 4, 8);
@@ -162,7 +162,9 @@ function makeApi(G) {
   }
 
   // ---------- Bots ----------
-  function setGoal(c, p) { c.path = route(c, p); c.stuckT = 0; }
+  function setGoal(c, p) { c.path = route(c, p); c.stuckT = 0; c.stalls = 0; }
+  const clear = p => !OBSTACLES.some(o => p.x > o.x - 30 && p.x < o.x + o.w + 30 && p.y > o.y - 30 && p.y < o.y + o.h + 30);
+  function openSpot(room) { for (let i = 0; i < 20; i++) { const p = { x: rand(room.x + 60, room.x + room.w - 60), y: rand(room.y + 160, room.y + room.h - 60) }; if (clear(p)) return p; } return { x: room.x + room.w / 2, y: room.y + room.h / 2 }; }
   function followPath(c, dt, speed) {
     if (!c.path.length) return true;
     const p = c.path[0], dx = p.x - c.x, dy = p.y - c.y, d = Math.hypot(dx, dy);
@@ -172,7 +174,11 @@ function makeApi(G) {
     collide(c);
     c.stuckT += dt;
     if (c.stuckT > 1) {
-      if (dist(c, c.lastPos) < 12) { c.x += rand(-14, 14); c.y += rand(-14, 14); collide(c); c.path = route(c, c.path[0]).concat(c.path.slice(1)); }
+      if (dist(c, c.lastPos) < 12) {
+        c.x += rand(-14, 14); c.y += rand(-14, 14); collide(c);
+        if (++c.stalls > 4) { c.path = []; if (c.target && c.target.claim === c.id) c.target.claim = null; c.state = 'idle'; return false; }
+        c.path = route(c, c.path[0]).concat(c.path.slice(1));
+      }
       c.lastPos = { x: c.x, y: c.y }; c.stuckT = 0;
     }
     return false;
@@ -191,18 +197,18 @@ function makeApi(G) {
   }
   function botChoose(c) {
     const hasDrink = c.drink || G.drinks.some(d => d.owner === c.id && d.sips > 0);
-    if (c.thirst < 50 && !hasDrink) { c.state = 'getDrink'; setGoal(c, { x: TAP.x + rand(-80, 80), y: TAP.y + 10 }); return; }
+    if ((c.thirst < 50 && !hasDrink) || (c.thirst < 20 && !c.drink)) { c.state = 'getDrink'; setGoal(c, { x: TAP.x + rand(-80, 80), y: TAP.y + 10 }); return; }
     const r = Math.random();
     if (r < 0.1) { c.state = 'rest'; setGoal(c, pick(REST_SPOTS)); return; }
     if (r < 0.18 && !c.lucky) { const b = pick(G.bowls); c.state = 'snack'; c.target = b; setGoal(c, { x: b.x, y: b.y + (b.y < 200 ? 0 : 0) }); return; }
-    if (r < 0.24) { c.state = 'wander'; const room = ROOMS[pick(['floor', 'vip', 'race', 'bar'])]; setGoal(c, { x: rand(room.x + 60, room.x + room.w - 60), y: rand(room.y + 160, room.y + room.h - 60) }); return; }
+    if (r < 0.24) { c.state = 'wander'; setGoal(c, openSpot(ROOMS[pick(['floor', 'vip', 'race', 'bar'])])); return; }
     const mine = G.drinks.find(d => d.owner === c.id && !d.holder && d.sips > 0);
     let seat = mine && G.seats.find(s => !s.occ && !s.claim && dist(s.drink, mine) < 5);
     if (!seat) {
       const free = G.seats.filter(s => !s.occ && !s.claim && !G.drinks.some(d => !d.holder && d.owner !== c.id && dist(d, s.drink) < 5));
       seat = free.length ? pick(free) : null;
     }
-    if (!seat) { c.state = 'wander'; setGoal(c, { x: rand(650, 1200), y: rand(480, 700) }); return; }
+    if (!seat) { c.state = 'wander'; setGoal(c, openSpot(ROOMS.floor)); return; }
     seat.claim = c.id; c.target = seat; c.state = 'toSeat';
     setGoal(c, seat.approach); c.path.push({ x: seat.x, y: seat.y });
   }
@@ -307,7 +313,7 @@ function makeApi(G) {
     const prey = gamblersAlive();
     let plan = null;
     if (k.cd.shiv <= 0) {
-      const loners = prey.filter(v => G.chars.filter(o => o.alive && o !== v && !o.isKiller && dist(o, v) < 330 && los(o, v)).length === 0);
+      const loners = prey.filter(v => !G.chars.some(o => o.alive && o !== v && !o.isKiller && canSee(o, v)));
       if (loners.length && Math.random() < 0.65) plan = { kind: 'shiv', victim: pick(loners).id };
     }
     if (!plan && k.cd.poison <= 0) {
@@ -505,6 +511,7 @@ function makeApi(G) {
     let killersWin = null, text = '';
     if (!k) { killersWin = false; text = `${kn} ${was}, and security dragged ${G.killerIds.length > 1 ? 'them' : 'them'} out.`; }
     else if (k >= g) { killersWin = true; text = `${kn} ${was}. Last call came for everyone.`; }
+    else if (G.closed) { killersWin = true; text = `Closing time. The crew never broke the bank, and ${kn} walked out free.`; }
     else if (G.bank >= G.target) { killersWin = false; text = `The crew broke the bank with ${money(G.bank)}. ${kn} ${was}, and it didn't matter.`; }
     if (killersWin === null) return;
     if (G.mode === 'meeting' && G.meeting.phase !== 'result') return;
@@ -610,6 +617,8 @@ function makeApi(G) {
     if (G.mode === 'meeting') { meetingTick(dt); return; }
     G.t += dt;
     if (G.lightsT > 0) G.lightsT -= dt;
+    if (!G.warned && G.t > CFG.closingTime - CFG.closingWarn) { G.warned = true; tellAll(`Last call! The casino closes in ${CFG.closingWarn / 60} minutes. Break the bank or catch the killer.`, true, 'meeting'); }
+    if (G.t >= CFG.closingTime) { G.closed = true; checkOver(); if (G.over) return; }
     for (const c of G.chars) {
       if (!c.alive) continue;
       for (const k in c.cd) c.cd[k] = Math.max(0, c.cd[k] - dt);
@@ -635,7 +644,7 @@ function makeApi(G) {
   function pubView() {
     const m = G.meeting;
     return {
-      t: G.t, mode: G.mode, bank: G.bank, target: G.target, lightsT: G.lightsT, nk: G.killerIds.length,
+      t: G.t, mode: G.mode, bank: G.bank, target: G.target, closeT: Math.max(0, Math.ceil(CFG.closingTime - G.t)), lightsT: G.lightsT, nk: G.killerIds.length,
       chars: G.chars.map(c => ({ id: c.id, name: c.name, color: c.color, hat: c.hat, x: Math.round(c.x), y: Math.round(c.y), look: +c.look.toFixed(2),
         alive: c.alive, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: c.poisonT > 0 && c.poisonT < CFG.poisonDelay - 2, human: c.isHuman, lucky: c.lucky > 0 })),
       drinks: G.drinks.map(d => ({ id: d.id, owner: d.owner, holder: d.holder, x: Math.round(d.x), y: Math.round(d.y), sips: d.sips, color: d.color, kind: d.kind })),

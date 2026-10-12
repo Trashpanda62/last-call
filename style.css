@@ -160,3 +160,17 @@ body.touch #toasts { top: 70px; }
   #toasts { top: 76px; }
 }
 body.touch .kb, body:not(.touch) .tb { display: none; }
+@media (max-height: 520px) {
+  #meeting .card { padding: 10px 14px; }
+  #meeting h2 { font-size: 18px; }
+  .mcols { margin-top: 4px; gap: 10px; flex-wrap: nowrap; }
+  .mleft { flex: 1 1 50%; min-width: 0; }
+  #mSide { flex: 1 1 50%; min-width: 0; }
+  #mChat { min-height: 0; height: calc(100vh - 150px); max-height: none; font-size: 13px; }
+  #mNotes { max-height: 64px; font-size: 12px; margin-bottom: 6px; }
+  #mVotes { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .vrow button { padding: 4px 6px; font-size: 13px; }
+  .vrow button.acc { font-size: 11px; padding: 4px 5px; }
+  #mTimer { margin-top: 6px; font-size: 13px; }
+}
+#closeT.late { color: var(--red); font-weight: bold; }

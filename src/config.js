@@ -6,7 +6,7 @@ export const CFG = {
   thirstDrain: 1.1, sipGain: 30, drinkSips: 4, parched: 0.6,
   poisonDelay: 7, luckyTime: 30, luckyBonus: 0.5,
   poisonCd: 45, shivCd: 60, lightsCd: 60, lightsDur: 10, startCd: 30, sharedCd: 30,
-  reach: 40,
+  reach: 40, closingTime: 720, closingWarn: 120,
   bot: { bjBet: 300, bjEvery: 4, rlEvery: 5, raceEvery: 8, slotEvery: 3, bjWin: 0.56, bjPush: 0.1, rlWin: 0.54, slotWin: 0.32, luckyEdge: 0.08 },
   playerBet: 250, slotBet: 100,
   talkGap: 0.9, voteTime: 30, resultTime: 4, voteThreshold: 24,

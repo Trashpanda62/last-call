@@ -23,6 +23,7 @@ let lastRole = '';
 export function updateHud(v) {
   const { pub, priv } = v;
   $('bankText').textContent = money(pub.bank) + ' / ' + money(pub.target);
+  const ct = pub.closeT; $('closeT').textContent = `· closes ${Math.floor(ct / 60)}:${String(ct % 60).padStart(2, '0')}`; $('closeT').classList.toggle('late', ct <= 120);
   $('bankFill').style.transform = `scaleX(${clamp(pub.bank / pub.target, 0, 1)})`;
   $('thirstFill').style.transform = `scaleX(${priv.thirst / 100})`;
   $('thirstFill').style.background = priv.thirst < 25 ? '#e8443a' : '#6ac0e8';
