@@ -589,7 +589,7 @@ function makeApi(G) {
     }
     c.moving = !!inp.moving;
     if (typeof inp.look === 'number' && isFinite(inp.look)) c.look = c.face = inp.look;
-    if (c.seat) { c.face = c.seat.face; c.look = c.seat.face + (inp.lookBack ? Math.PI : 0); }
+    if (c.seat) { c.face = c.seat.face; if (typeof inp.look !== 'number') c.look = c.seat.face + (inp.lookBack ? Math.PI : 0); } // seated humans turn their head freely
   }
   function humanTick(c, dt) {
     if (c.sniff) {
@@ -645,7 +645,7 @@ function makeApi(G) {
     const m = G.meeting;
     return {
       t: G.t, mode: G.mode, bank: G.bank, target: G.target, closeT: Math.max(0, Math.ceil(CFG.closingTime - G.t)), lightsT: G.lightsT, nk: G.killerIds.length,
-      chars: G.chars.map(c => ({ id: c.id, name: c.name, color: c.color, hat: c.hat, x: Math.round(c.x), y: Math.round(c.y), look: +c.look.toFixed(2),
+      chars: G.chars.map(c => ({ id: c.id, name: c.name, color: c.color, hat: c.hat, x: Math.round(c.x), y: Math.round(c.y), look: +c.look.toFixed(2), face: +c.face.toFixed(2),
         alive: c.alive, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: c.poisonT > 0 && c.poisonT < CFG.poisonDelay - 2, human: c.isHuman, lucky: c.lucky > 0 })),
       drinks: G.drinks.map(d => ({ id: d.id, owner: d.owner, holder: d.holder, x: Math.round(d.x), y: Math.round(d.y), sips: d.sips, color: d.color, kind: d.kind })),
       bodies: G.bodies.map(b => ({ id: b.id, x: Math.round(b.x), y: Math.round(b.y), cause: b.cause })),

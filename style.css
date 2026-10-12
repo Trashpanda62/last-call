@@ -86,7 +86,8 @@ kbd { font: 12px monospace; background: #2a1b22; border: 1px solid var(--line); 
 .card h1 { margin: 0; font-size: 46px; color: var(--gold); letter-spacing: 0.04em; text-shadow: 0 0 18px rgba(255, 79, 122, 0.35); }
 .card h2 { margin: 0 0 4px; color: var(--gold); }
 .tag { color: var(--muted); margin: 4px 0 8px; }
-#menu { background: radial-gradient(ellipse at 50% 30%, rgba(74, 22, 34, 0.75), rgba(8, 5, 7, 0.92)); }
+#menu, #setup { background: radial-gradient(ellipse at 50% 40%, rgba(40, 10, 18, 0.25), rgba(8, 5, 7, 0.78)); }
+#meeting, #over { background: rgba(8, 5, 7, 0.55); }
 .joinRow { display: flex; gap: 8px; }
 .joinRow input { width: 100px; text-transform: uppercase; letter-spacing: 0.2em; text-align: center; }
 .joinRow button { flex: 1; }
@@ -174,3 +175,11 @@ body.touch .kb, body:not(.touch) .tb { display: none; }
   #mTimer { margin-top: 6px; font-size: 13px; }
 }
 #closeT.late { color: var(--red); font-weight: bold; }
+
+/* First-person */
+#cross { position: fixed; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: rgba(255, 246, 225, 0.85); box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.45); pointer-events: none; }
+#hud > #hint { position: fixed; left: 50%; top: calc(50% + 26px); transform: translateX(-50%); }
+#lockHint { left: 50%; top: calc(50% + 60px); transform: translateX(-50%); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 5px 12px; color: var(--gold); pointer-events: none; }
+#panel { transition: opacity 0.2s; }
+#panel.away { opacity: 0.12; pointer-events: none; }
+body.touch #hud > #hint { display: none; }

@@ -25,6 +25,14 @@ export const OBSTACLES = [
   { x: 30, y: 700, w: 40, h: 260, kind: 'sinks' },
   ...SLOT_YS.map(y => ({ x: 545, y: y - 26, w: 40, h: 52, kind: 'slot' })),
   { x: 1470, y: 690, w: 120, h: 50, kind: 'coffee' },
+  ...[1360, 1460, 1560, 1660].map(x => ({ x: x - 35, y: 276, w: 70, h: 22, kind: 'desk' })), // race betting desks
+  { x: 1340, y: 1125, w: 140, h: 35, kind: 'couch' }, { x: 1600, y: 1125, w: 140, h: 35, kind: 'couch' },
+];
+export const CHANDELIERS = [[900, 180], [900, 470], [900, 760], [900, 1040], [1530, 300], [1530, 900], [270, 330], [270, 900]];
+export const PLANTS = [[1300, 640], [1760, 640], [1300, 1160], [1760, 1160], [560, 40], [1240, 40], [560, 1160], [1240, 1160], [500, 160]];
+export const DOOR_GAPS = [ // wall openings: {x, y, w, h} in sim px, matching the gaps in WALLS
+  { x: 520, y: 250, w: 20, h: 120 }, { x: 520, y: 850, w: 20, h: 120 }, { x: 1260, y: 250, w: 20, h: 120 }, { x: 1260, y: 850, w: 20, h: 120 },
+  { x: 220, y: 600, w: 100, h: 20 }, { x: 1480, y: 590, w: 100, h: 20 },
 ];
 export const SOLIDS = WALLS.concat(OBSTACLES);
 export const DOORS = [

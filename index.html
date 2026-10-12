@@ -14,6 +14,9 @@
 
 <!-- In-game HUD -->
 <div id="hud" class="hidden">
+  <div id="cross"></div>
+  <div id="hint"></div>
+  <div id="lockHint" class="hidden">Click to look around</div>
   <div id="bank">
     <div class="label">Bankroll <span id="closeT"></span></div>
     <div id="bankText">$3,000 / $9,000</div>
@@ -26,7 +29,6 @@
   <div id="bottom">
     <div id="thirst"><span>Thirst</span><div class="bar"><div id="thirstFill"></div></div><span id="lucky"></span></div>
     <div id="drinkInfo"></div>
-    <div id="hint"></div>
     <div id="killerBar" class="hidden">
       <button data-act="poison">1 · Poison</button>
       <button data-act="shiv">2 · Shiv</button>
@@ -101,12 +103,13 @@
       <div class="hcard"><b>The setup</b><p>Six gamblers walk into a casino. One is a killer (two in big games). Nobody knows who.</p></div>
       <div class="hcard"><b>Gamblers</b><p>Win the crew bankroll at blackjack, roulette, the races and the slots. Hit the target and the house is broken. Or vote the killer out.</p></div>
       <div class="hcard"><b>The killer</b><p>Poison an unattended drink, lace the snack bowl, stab someone alone, or kill the lights. Do it when nobody is looking.</p></div>
-      <div class="hcard"><b>Watch your drink</b><p>You only see inside your cone. Sit at a table and your drink sits behind you. Look back now and then. Sniff before you sip.</p></div>
+      <div class="hcard"><b>Watch your drink</b><p>You only see what you are looking at. Sit at a table and your drink goes on the rail behind you. Look back now and then. Sniff before you sip.</p></div>
       <div class="hcard"><b>Thirst and snacks</b><p>Get thirsty and you slow down, so you have to drink. Pretzels make your wins pay more for a while, if they're clean.</p></div>
       <div class="hcard"><b>Meetings</b><p>Find a body or ring the pit bell. Everyone says what they saw (the killer lies), then votes. Your notes remember who lurked by whose drink.</p></div>
     </div>
-    <p class="muted"><b>Keys:</b> WASD move, mouse look, E use, F sip, R sniff, X pour, Space look back, 1/2/3 killer moves, Esc menu.
-      <b>Phone:</b> left thumb walks, tap the floor to look, buttons on the right.</p>
+    <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, E or click to use, F sip, R sniff, X pour, hold Space to look behind you, 1/2/3 killer moves, Esc menu.
+      At a table the mouse is free for the game: drag to look around, walk to stand up.
+      <b>Phone:</b> left thumb walks, right thumb drags to look, buttons on the right.</p>
     <button class="big" id="howClose">Got it</button>
   </div>
 </div>
@@ -157,6 +160,7 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js" defer></script>
+<script type="importmap">{ "imports": { "three": "./vendor/three/build/three.module.js", "three/addons/": "./vendor/three/addons/" } }</script>
 <script type="module" src="src/main.js"></script>
 </body>
 </html>
