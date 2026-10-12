@@ -154,13 +154,16 @@ export class Items {
     this.floatPool.forEach(s => { s.visible = false; });
     let fi = 0;
     for (const f of pub.floats) {
-      const key = f.text + f.color;
+      const key = f.text + f.color + (f.big ? '!' : '');
       let s = this.floatPool[fi];
       if (!s || s.userData.key !== key) {
-        if (!this.floatCache.has(key)) this.floatCache.set(key, T.textSprite(f.text, { color: f.color, size: 56, bg: null, h: 0.3 }).material);
+        if (!this.floatCache.has(key)) {
+          if (this.floatCache.size > 80) { const [k0, m0] = this.floatCache.entries().next().value; if (!this.floatPool.some(sp => sp.material === m0)) { m0.map.dispose(); m0.dispose(); this.floatCache.delete(k0); } }
+          this.floatCache.set(key, T.textSprite(f.text, { color: f.color, size: 56, bg: null, h: 0.3 }).material);
+        }
         if (!s) { s = new THREE.Sprite(); this.group.add(s); this.floatPool[fi] = s; }
         s.material = this.floatCache.get(key); s.userData.key = key;
-        const img = s.material.map.image; s.scale.set(0.3 * img.width / img.height, 0.3, 1);
+        const img = s.material.map.image, hh = f.big ? 0.5 : 0.3; s.scale.set(hh * img.width / img.height, hh, 1);
       }
       const life = 1.6 - f.t;
       s.position.set(f.x * M, 1.9 + life * 0.45, (f.y + 18 * life) * M);

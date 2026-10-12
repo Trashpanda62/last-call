@@ -62,18 +62,50 @@ kbd { font: 12px monospace; background: #2a1b22; border: 1px solid var(--line); 
 @keyframes fade { 0% { opacity: 0; transform: translateY(-6px); } 8%, 80% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 
 /* Table game panel */
-#panel { position: fixed; right: 14px; top: 50%; transform: translateY(-50%); width: 300px; background: var(--panel);
-  border: 1px solid var(--line); border-radius: 10px; padding: 14px; z-index: 2; }
-#panel h3 { margin: 0 0 6px; color: var(--gold); }
-#panel .cards { font: 22px monospace; letter-spacing: 2px; min-height: 30px; }
-#panel .row { margin-top: 8px; }
-#panel .res { min-height: 22px; margin-top: 8px; color: var(--gold); }
-#panel .small { margin-top: 8px; }
-.reels { display: flex; gap: 6px; font-size: 34px; justify-content: center; background: #120b0f; border-radius: 8px; padding: 8px; }
-.reels span { width: 52px; text-align: center; background: #f3ead8; color: #1a1014; border-radius: 6px; }
-.track { position: relative; height: 18px; background: #2a1b22; border-radius: 4px; margin: 4px 0; }
-.track i { position: absolute; top: 0; left: 0; height: 18px; width: 18px; border-radius: 50%; }
-
+#panel { position: fixed; right: 14px; top: 50%; transform: translateY(-50%); width: 360px; max-height: calc(100vh - 28px); overflow-y: auto;
+  background: linear-gradient(180deg, #2a1420 0%, #140a10 60%, #0c0609 100%); border: 2px solid #b8913a; border-radius: 16px; padding: 12px;
+  z-index: 2; box-shadow: 0 0 0 1px #000, 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 230, 160, 0.35), inset 0 0 30px rgba(232, 196, 106, 0.08); }
+#panel .ph { text-align: center; margin-bottom: 8px; }
+#panel h3 { margin: 0; color: var(--gold); font: 900 22px "Arial Black", Impact, system-ui, sans-serif; letter-spacing: 0.04em;
+  text-shadow: 0 0 12px rgba(255, 200, 80, 0.5), 0 2px 0 #5a3a10; }
+#panel .rules { font: 700 9.5px system-ui, sans-serif; letter-spacing: 0.08em; color: #ff9ad0; margin-top: 2px; }
+#panel canvas { width: 100%; height: auto; aspect-ratio: 16 / 10; border-radius: 10px; border: 2px solid #3a2a14;
+  box-shadow: inset 0 0 0 1px #000, 0 0 18px rgba(80, 160, 255, 0.15); background: #05040c; touch-action: manipulation; }
+#panel .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+#panel button { padding: 7px 10px; font: 700 13px system-ui, sans-serif; border-radius: 8px;
+  background: linear-gradient(180deg, #3a2430, #24141c); border: 1px solid #6a4a2a; }
+#panel button.on { background: linear-gradient(180deg, #f5d684, #c89a3a); color: #1a1014; border-color: #ffe7a0; }
+#panel button.big { flex: 1; padding: 11px 12px; font: 900 15px "Arial Black", Impact, system-ui, sans-serif; letter-spacing: 0.03em;
+  background: linear-gradient(180deg, #ffe08a, #e8a830 55%, #b87818); color: #2a1404; border: 1px solid #ffeab0;
+  box-shadow: 0 3px 0 #6a4008, 0 0 14px rgba(255, 190, 60, 0.35); text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
+#panel button.big.alt { background: linear-gradient(180deg, #8affc0, #2ac070 55%, #1a8048); color: #04200e; border-color: #c0ffd8; box-shadow: 0 3px 0 #0a4020; }
+#panel button.big.cash { background: linear-gradient(180deg, #8affc0, #2ac070 55%, #1a8048); color: #04200e; animation: pulse 0.6s infinite alternate; }
+@keyframes pulse { to { box-shadow: 0 3px 0 #0a4020, 0 0 26px rgba(80, 255, 150, 0.8); } }
+#panel button.red { border-color: #e8443a; } #panel button.black { border-color: #888; }
+#panel button small { opacity: 0.7; font-weight: 600; }
+#panel .grid3, #panel .grid2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 8px; }
+#panel .grid2 { grid-template-columns: repeat(2, 1fr); }
+#panel .grid2 button { text-align: left; }
+#panel .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+#panel .numsel { min-width: 28px; text-align: center; font: 900 18px "Arial Black", system-ui, sans-serif; color: var(--gold); }
+#panel .eggs button { flex: 1; font-size: 20px; padding: 6px; }
+#panel .res { min-height: 22px; margin-top: 8px; text-align: center; font: 800 15px system-ui, sans-serif; color: var(--gold); }
+#panel .res.win, #panel .row.win { color: #5aff9a; } #panel .res.lose, #panel .row.lose { color: #ff6a6a; }
+#panel .small { margin-top: 6px; font-size: 11.5px; line-height: 1.35; }
+#panel .tip { margin-top: 8px; }
+.betbar { margin-top: 8px; padding: 8px; border-radius: 12px; background: rgba(0, 0, 0, 0.35); border: 1px solid #4a3418; }
+.betbar.locked { opacity: 0.55; }
+.betrow { display: flex; align-items: center; gap: 8px; }
+.betrow .lbl { font: 900 12px "Arial Black", system-ui, sans-serif; color: #ff9ad0; letter-spacing: 0.1em; }
+#panel .betamt { flex: 1; text-align: left; font: 900 20px "Arial Black", system-ui, sans-serif; color: #ffe08a; background: #0a0608; border-color: #8a6a2a; padding: 4px 10px; }
+.betbar .chips { display: flex; gap: 4px; margin-top: 6px; }
+.betbar .chips button { flex: 1; padding: 6px 2px; font-size: 12px; }
+#panel .chip { border-radius: 999px; border-width: 2px; border-style: dashed; }
+#panel .c10 { background: #e8e4dc; color: #222; border-color: #888; } #panel .c100 { background: #c0302a; border-color: #ffb0a0; }
+#panel .c1000 { background: #1a1a1a; border-color: #ddd; } #panel .c10000 { background: #6a2ac0; border-color: #d0b0ff; }
+#panel .c100000 { background: #e8a830; color: #2a1404; border-color: #fff0b0; } #panel .c1000000 { background: #2ac070; color: #04200e; border-color: #c0ffd8; }
+.keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 6px; }
+.keypad .ok { grid-column: span 3; background: linear-gradient(180deg, #ffe08a, #e8a830); color: #2a1404; }
 /* Splash */
 #splash { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 5; background: rgba(60, 0, 0, 0.35); }
 #splashText { font-size: clamp(32px, 8vw, 72px); font-weight: bold; color: #fff; text-shadow: 0 0 24px var(--red), 0 4px 0 #600; letter-spacing: 0.06em; animation: slam 1.4s ease-out forwards; text-align: center; padding: 0 16px; }
@@ -83,6 +115,7 @@ kbd { font: 12px monospace; background: #2a1b22; border: 1px solid var(--line); 
 .overlay { position: fixed; inset: 0; background: rgba(8, 5, 7, 0.84); display: flex; padding: 16px; overflow-y: auto; z-index: 4; touch-action: pan-y; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 22px 26px; max-width: 520px; width: 100%; margin: auto; }
 .card.wide { max-width: 880px; }
+#meeting .card.wide { max-width: 1040px; }
 .card h1 { margin: 0; font-size: 46px; color: var(--gold); letter-spacing: 0.04em; text-shadow: 0 0 18px rgba(255, 79, 122, 0.35); }
 .card h2 { margin: 0 0 4px; color: var(--gold); }
 .tag { color: var(--muted); margin: 4px 0 8px; }
@@ -110,6 +143,11 @@ kbd { font: 12px monospace; background: #2a1b22; border: 1px solid var(--line); 
 #chatForm { display: flex; gap: 6px; }
 #chatForm input { flex: 1; }
 #mSide { flex: 0 1 300px; }
+#mSide.many { flex: 0 1 470px; }
+#mVotes.many { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+#mVotes.many .vrow button { padding: 4px 7px; font-size: 13px; }
+#mVotes.many .vrow button.acc { font-size: 11px; padding: 4px 5px; }
+#mVotes.many > button:last-child { grid-column: span 2; }
 #mNotes { font-size: 13px; color: var(--muted); margin-bottom: 10px; max-height: 22vh; overflow-y: auto; }
 #mNotes b { color: var(--ink); }
 #mNotes .hard { color: #ffb3ad; }
@@ -141,17 +179,21 @@ body.touch #bottom button { pointer-events: auto; }
 body.touch #drinkInfo, body.touch #hint { font-size: 12px; }
 body.touch #hint { display: none; }
 body.touch #role { display: none; }
-body.touch #panel { right: 100px; width: min(300px, calc(100vw - 112px)); top: 8px; transform: none; max-height: calc(100vh - 16px); overflow-y: auto; }
+body.touch #panel { right: 100px; width: min(340px, calc(100vw - 112px)); top: 8px; transform: none; max-height: calc(100vh - 16px); overflow-y: auto; }
 body.touch #toasts { top: 70px; }
 @media (max-height: 520px) {
+  #panel { padding: 8px; }
+  #panel canvas { aspect-ratio: 16 / 7; }
+  #panel .rules, #panel .tip { display: none; }
+  #panel h3 { font-size: 16px; }
+  #panel .row { margin-top: 5px; } #panel .betbar { margin-top: 5px; padding: 6px; }
+  #panel button.big { padding: 8px 10px; font-size: 13px; }
   .card { padding: 14px 16px; }
   .card h1 { font-size: 32px; }
   #mChat { min-height: 110px; max-height: 38vh; }
   #bank { padding: 5px 10px; width: 190px; }
   #bankText { font-size: 15px; }
   #panel h3 { font-size: 15px; }
-  #panel .cards { font-size: 17px; }
-  .reels { font-size: 24px; }
 }
 @media (orientation: portrait) and (max-width: 640px) {
   #bank { width: 170px; }
@@ -181,5 +223,12 @@ body.touch .kb, body:not(.touch) .tb { display: none; }
 #hud > #hint { position: fixed; left: 50%; top: calc(50% + 26px); transform: translateX(-50%); }
 #lockHint { left: 50%; top: calc(50% + 60px); transform: translateX(-50%); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 5px 12px; color: var(--gold); pointer-events: none; }
 #panel { transition: opacity 0.2s; }
+/* Phones in landscape: two columns (screen and bets left, game buttons right) so nothing needs scrolling. */
+@media (max-height: 520px) and (min-width: 640px) {
+  #panel, body.touch #panel { display: grid; grid-template-columns: 1fr 1fr; grid-template-areas: "h h" "c p" "b p" "b r"; grid-template-rows: auto auto 1fr auto;
+    column-gap: 8px; width: min(620px, calc(100vw - 130px)); align-items: start; }
+  #panel .ph { grid-area: h; margin-bottom: 4px; } #panel canvas { grid-area: c; } #pctl { grid-area: p; } #panel .res { grid-area: r; } #panel .betbar { grid-area: b; }
+  #panel #pctl .row:first-child, #panel #pctl .grid2, #panel #pctl .grid3 { margin-top: 0; }
+}
 #panel.away { opacity: 0.12; pointer-events: none; }
 body.touch #hud > #hint { display: none; }

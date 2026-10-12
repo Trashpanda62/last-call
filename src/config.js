@@ -1,15 +1,22 @@
 // Every tunable number lives here.
 export const CFG = {
-  startBank: 3000, targets: { 4: 5100, 5: 7000, 6: 9900, 7: 11500, 8: 15000 }, duoCdScale: 2, duoBankScale: 0.6,
+  // The crew bank. Every bet also earns the crew a comp (a share of the bet, win or lose).
+  startBank: 500000, comp: 0.2,
+  // The target is the start bank times this, by player count (more players play more tables at once).
+  targets: { 4: 1.6, 5: 2.7, 6: 4.4, 7: 3.4, 8: 4.5, 9: 8, 10: 14, 11: 18, 12: 12, 13: 23, 14: 22, 15: 27, 16: 42 },
+  killerBank: { 1: 1, 2: 0.7, 3: 0.55, 4: 0.45 }, // more killers, a smaller target
+  cdScale: { 1: 1, 2: 1.6, 3: 2.1, 4: 2.6 },      // cooldowns stretch while several killers are alive
+  maxKillers: n => n >= 14 ? 4 : n >= 12 ? 3 : n >= 7 ? 2 : 1,
   playerSpeed: 150, ghostSpeed: 230, botSpeed: 118, radius: 15,
-  viewRange: 290, darkRange: 120, coneHalf: Math.PI / 3, nearSense: 28,
+  viewRange: 380, darkRange: 120, coneHalf: Math.PI / 3, nearSense: 28,
   thirstDrain: 1.1, sipGain: 30, drinkSips: 4, parched: 0.6,
   poisonDelay: 7, luckyTime: 30, luckyBonus: 0.5,
   poisonCd: 45, shivCd: 60, lightsCd: 60, lightsDur: 10, startCd: 30, sharedCd: 30,
   reach: 40, closingTime: 720, closingWarn: 120,
-  bot: { bjBet: 300, bjEvery: 4, rlEvery: 5, raceEvery: 8, slotEvery: 3, bjWin: 0.56, bjPush: 0.1, rlWin: 0.54, slotWin: 0.32, luckyEdge: 0.08 },
-  playerBet: 250, slotBet: 100,
-  talkGap: 0.9, voteTime: 30, resultTime: 4, voteThreshold: 24,
+  // Bots bet this share of the bank, every so many seconds per game, on the same game math as players.
+  bot: { frac: 0.06, every: { bj: 5, roulette: 7, slots: 2.5, plinko: 2.5, mines: 5, tower: 5, coin: 4, wheel: 5, dice: 6 } },
+  talkGap: 0.9, voteTime: 30, resultTime: 4, voteThreshold: 24, voteThresholdPer: 4,
+  social: 2.5, // how strongly bots pick seats and rooms where other people are
   netHz: 15,
 };
 
@@ -29,6 +36,14 @@ export const CAST = [
   { name: 'Pip', color: '#f4e04d', hat: 'visor' },
   { name: 'Coco', color: '#a066ff', hat: 'crown' },
   { name: 'Ozzie', color: '#ff8c2e', hat: 'beanie' },
+  { name: 'Teal', color: '#1fb5b0', hat: 'cap' },
+  { name: 'Snow', color: '#eef0f4', hat: 'party' },
+  { name: 'Moss', color: '#7a9a2a', hat: 'pirate' },
+  { name: 'Ruby', color: '#a3123a', hat: 'flower' },
+  { name: 'Sky', color: '#7cc8ff', hat: 'propeller' },
+  { name: 'Peach', color: '#ffb48a', hat: 'chef' },
+  { name: 'Ink', color: '#2a2a3a', hat: 'headphones' },
+  { name: 'Lime', color: '#a8e63a', hat: 'sombrero' },
 ];
 
 export const DRINKS = [

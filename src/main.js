@@ -1,11 +1,12 @@
 // Screens, modes (solo, host, guest), input and the main loop.
 import { CFG } from './config.js';
 import { clamp, angDiff } from './util.js';
-import { collide } from './map.js';
+import { collide, W, H } from './map.js';
 import { createGame } from './sim.js';
 import { init as init3d, draw, playHand, info as gfxInfo } from './3d/render3d.js';
 import * as audio from './audio.js';
-import { $, show, toast, splash, updateHud, openPanel, closePanel, panelGame, renderMeeting, resetMeeting, renderOver } from './ui.js';
+import { $, show, toast, splash, updateHud, renderMeeting, resetMeeting, renderOver } from './ui.js';
+import { openPanel, closePanel, panelGame, panelView, panelTick, setHandHook } from './panels.js';
 import { hostRoom, joinRoom } from './net.js';
 
 const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* optional */ } } };
@@ -17,6 +18,7 @@ const keys = {}; const mouse = { x: 0, y: 0 };
 const stick = { id: null, active: false, x: 0, y: 0, ox: 0, oy: 0 };
 let touchMode = false, touchBack = false;
 init3d(document.getElementById('view'), { lowPower: matchMedia('(pointer: coarse)').matches });
+setHandHook(playHand);
 
 // ---------- Names, settings, stats ----------
 const NAMES = ['Ace', 'Lucky', 'Dice', 'Vegas', 'Chip', 'Jinx', 'Rook', 'Mabel', 'Sal', 'Trixie'];
@@ -46,6 +48,14 @@ function toMenu(err) {
   Object.assign(S, { screen: 'menu', role: null, sim: null, view: null, room: null, paused: false, guests: new Map() });
   closePanel(); show('hud', false); only('menu'); $('menuErr').textContent = err || ''; refreshStats(); audio.setMood('lounge');
 }
+// Players 4-16; the killer choices follow the player count.
+function syncKillers() {
+  const n = +$('optPlayers').value, max = CFG.maxKillers(n);
+  $('optKillers').innerHTML = [1, 2, 3, 4].filter(k => k <= max).map(k => `<option value="${k}" ${k === max ? 'selected' : ''}>${k}${k === max ? ' (balanced)' : ' (easier)'}</option>`).join('');
+}
+$('optPlayers').innerHTML = Array.from({ length: 13 }, (_, i) => i + 4).map(n => `<option ${n === 10 ? 'selected' : ''}>${n}</option>`).join('');
+$('optKillers').innerHTML = '<option value="2" selected>2</option>';
+$('optPlayers').onchange = syncKillers; syncKillers();
 function openSetup(mode) {
   S.screen = mode === 'solo' ? 'setup' : 'lobby';
   only('setup');
@@ -96,7 +106,7 @@ function hostData(conn, msg) {
   const g = S.guests.get(conn);
   if (msg.t === 'hello') {
     if (S.screen !== 'lobby') { S.room.send(conn, { t: 'busy', why: 'That game already started. Ask the host to go back to the lobby.' }); setTimeout(() => conn.close(), 300); return; }
-    if (S.guests.size >= 7) { S.room.send(conn, { t: 'busy', why: 'That room is full.' }); setTimeout(() => conn.close(), 300); return; }
+    if (S.guests.size >= 15) { S.room.send(conn, { t: 'busy', why: 'That room is full.' }); setTimeout(() => conn.close(), 300); return; }
     let name = String(msg.name || 'Guest').replace(/[^\w .'-]/g, '').trim().slice(0, 10) || 'Guest';
     const taken = new Set([myName().toLowerCase(), ...[...S.guests.values()].map(g => g.name.toLowerCase())]);
     if (taken.has(name.toLowerCase())) { let i = 2; while (taken.has((name + i).toLowerCase())) i++; name = name + i; }
@@ -147,7 +157,6 @@ function guestData(msg) {
 // ---------- Actions and input ----------
 function act(k, arg) {
   audio.unlock();
-  if (k === 'bank') playHand(arg > 0 ? 'coin' : 'click');
   if (S.sim) S.sim.action(S.myId, k, arg);
   else if (S.role === 'guest' && S.room) S.room.send({ t: 'act', k, arg });
 }
@@ -198,7 +207,7 @@ function moveMe(dt) {
     me.x += mx * sp * dt; me.y += my * sp * dt; me.moving = true;
     if (p.alive && (S.stepD = (S.stepD || 0) + sp * dt) > 62) { S.stepD = 0; audio.sfx('step'); }
     if (p.alive) collide(me);
-    me.x = clamp(me.x, 0, 1800); me.y = clamp(me.y, 0, 1200);
+    me.x = clamp(me.x, 0, W); me.y = clamp(me.y, 0, H);
   }
 }
 
@@ -366,7 +375,7 @@ function frameGame(dt) {
   else if (S.role === 'guest' && S.room) { S.sendT += dt; if (S.sendT >= 0.05) { S.sendT = 0; S.room.send({ t: 'in', ...inputPayload() }); } }
   const v = S.view; if (!v) { drawDemo(dt); return; }
   const { pub, priv } = v;
-  if (priv.seat && pub.mode === 'play' && !pub.over && panelGame() !== priv.seat.game) openPanel(priv.seat.game, act);
+  if (priv.seat && pub.mode === 'play' && !pub.over && panelGame() !== priv.seat.game) openPanel(priv.seat, act, v);
   if ((!priv.seat || pub.mode !== 'play' || pub.over) && panelGame()) closePanel();
   if (pub.mode !== S.lastMode) {
     if (pub.mode === 'meeting') { releaseLock(); splash(pub.meeting.title.toUpperCase()); only('meeting'); audio.setMood('meeting'); S.paused = false; show('pause', false); }
@@ -384,17 +393,17 @@ function frameGame(dt) {
   if (S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0]) {
     const tip = TIPS[S.tips++]; if (store.get('lc.stats', { games: 0 }).games < 3 && (!tip[2] || priv.isKiller === (tip[2] === 'k'))) toast(tip[1]);
   }
-  updateHud(v);
+  updateHud(v); panelTick(v);
   const fp = pub.mode === 'play' && !pub.over;
   const away = !!priv.seat && Math.abs(angDiff(effLook(), priv.seat.face)) > 1.0;
   $('panel').classList.toggle('away', away);
   show('cross', fp && !priv.seat && !touchMode);
   show('lockHint', fp && !touchMode && lockOK() && !locked() && wantLock());
-  draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit' });
+  draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit', my: panelView() });
 }
 // Behind the menus: an all-bot game plays out under a slow camera.
 function drawDemo(dt) {
-  if (!S.demo || S.demo.G.over) S.demo = createGame({ humans: [], players: 7, killers: 1, difficulty: 'normal' });
+  if (!S.demo || S.demo.G.over) S.demo = createGame({ humans: [], players: 12, killers: 2, difficulty: 'normal' });
   S.demoAcc = (S.demoAcc || 0) + dt;
   while (S.demoAcc >= 1 / 30) { S.demo.tick(1 / 30); S.demoAcc -= 1 / 30; }
   draw({ pub: S.demo.pubView(), priv: null, mode: 'orbit' });

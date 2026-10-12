@@ -1,6 +1,6 @@
 # Last Call
 
-A first-person 3D casino social-deduction game for the browser (PC first, phones work too). Four to eight gamblers, one or two of them killers.
+A first-person 3D casino social-deduction game for the browser (PC first, phones work too). Four to sixteen gamblers, one to four of them killers, twelve casino games and one crew bank.
 The killers poison drinks, lace the snack bowls, stab loners and cut the lights, but only when nobody is looking.
 Gamblers win by breaking the bank or by voting the killers out. Killers win when they match the gamblers left.
 
@@ -13,10 +13,19 @@ WebAudio sound. three.js r185 is vendored in `vendor/three`.
 
 ## Modes
 
-- **Solo:** you plus bots. Pick players (4-8), killers (1, or 2 at 7+), bot smarts and your role.
+- **Solo:** you plus bots. Pick players (4-16), killers (up to 2 at 7+, 3 at 12+, 4 at 14+; the most is the balanced
+  game), bot smarts and your role.
 - **Online:** host a room and share the 4-letter code or the invite link (`?join=CODE`). Empty seats are bots.
   The host's browser runs the game and the guests connect over WebRTC through PeerJS's free broker.
   A guest who leaves is replaced by a bot. Games in progress can't be joined; the host returns everyone to the lobby.
+
+## The games
+
+Blackjack (double, split, ties pay half, blackjack pays 2 to 1), roulette with lucky numbers up to 500x, penny and
+high-limit slots, Plinko (up to 1000x), Mines, Dragon Tower, the coin flip, the prize wheel, street dice, and two
+rounds the whole casino shares: Crash (one rocket, cash out before it blows) and the duck race. Pick your bet with chips,
+the keypad, 1/2, x2 or MAX; the max bet is a quarter of the crew bank. Every bet also pays the crew a 20% comp, win or
+lose. Every game pays back a little more than it takes (about 104%), and the bots play the same odds as you.
 
 ## Controls
 
@@ -31,11 +40,14 @@ Phone: left thumb walks, right thumb drags to look, buttons on the right.
 - The sim is a 2D plane (1 px = 1/60 m); `src/3d/` draws it in 3D: `world.js` the casino, `chars.js` the bean
   gamblers, `items.js` drinks, bowls, bodies and effects, `hands.js` first-person hands, `textures.js` painted
   textures, `render3d.js` camera, lights, bloom and lights-out.
-- `src/ui.js` HUD, table games, meetings, `src/audio.js` sounds and music.
+- `src/games.js` every game's maths (shared by players and bots), `src/paint.js` the 2D game screens (shared by the
+  consoles and the 3D machines), `src/panels.js` the game consoles, `src/3d/machines.js` the machines and tables.
+- `src/ui.js` HUD, meetings, results, `src/audio.js` sounds and music.
 - `src/net.js` rooms, `src/main.js` screens, modes, input and the loop.
 - `node tools/batch.mjs [games] [players] [killers] [difficulty]` plays headless games (one idle human seat) and
-  prints win rates. `CFG='{"poisonCd":50}' node tools/batch.mjs` tries a tuning change.
+  prints win rates. `CFG='{"poisonCd":50}' node tools/batch.mjs` tries a tuning change. `node tools/ev.mjs` measures
+  each game's return to player. Run both through the heavy-job scheduler on Steve's PC.
 - `window.__lastCall` (start, step, place, look, act, vote, render, shot, state, view, noLock) drives a solo game from
-  automation. Call `noLock()` first: automation must never take pointer lock.
+  headless automation. Call `noLock()` first: automation must never take pointer lock. Test headless only.
 
 Run locally with any static server, for example `python -m http.server 8931 --bind 127.0.0.1`.

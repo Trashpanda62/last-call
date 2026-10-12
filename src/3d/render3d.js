@@ -1,54 +1,94 @@
-// The 3D view: first-person camera for the player, slow orbits for the menu, meetings and the results.
+// The 3D view: first-person camera for the player, a camera tour for the menu, an orbit for meetings.
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { buildWorld, GLOWS, M, WALL_H, yawOf } from './world.js';
+import { buildWorld, GLOWS, M, yawOf } from './world.js';
 import { Bean } from './chars.js';
 import { Items } from './items.js';
 import { Hands } from './hands.js';
 import { setAniso } from './textures.js';
 import { BELL } from '../map.js';
+import { ringRadius } from '../sim.js';
 
 export const EYE = { stand: 1.12, seat: 1.42, ghost: 1.6 };
-const FOV = 72;
+const FOV = 72, POOL = 8;
 let R = null;
 
+// The menu's camera tour: slow dolly shots through the casino (sim px and metres).
+const TOUR = [
+  { a: [1000, 800, 2.5], b: [1640, 800, 2.5], look: [1320, 260, 1.1] },
+  { a: [2230, 560, 1.8], b: [2770, 560, 1.8], look: [2500, 20, 1.9] },
+  { a: [2160, 1140, 2.0], b: [2780, 1140, 2.0], look: [2560, 960, 0.5] },
+  { a: [1120, 1290, 1.9], b: [1520, 1290, 1.9], look: [1700, 1880, 1.9] },
+  { a: [320, 1260, 2.1], b: [820, 1290, 2.1], look: [560, 1760, 1.2] },
+  { a: [2200, 1300, 1.8], b: [2780, 1320, 1.8], look: [2480, 1540, 0.6] },
+  { a: [700, 640, 1.7], b: [1900, 640, 1.7], look: [1320, 940, 0.9] },
+];
+const SHOT = 9;
+
 export function init(canvas, { lowPower = false } = {}) {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !lowPower, powerPreference: 'high-performance' });
-  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.95;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.shadowMap.enabled = !lowPower; renderer.shadowMap.type = THREE.PCFShadowMap;
   setAniso(Math.min(8, renderer.capabilities.getMaxAnisotropy()));
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0b0709);
-  scene.fog = new THREE.Fog(0x1a0a0e, 14, 34);
+  scene.fog = new THREE.Fog(0x1a0a0e, 18, 46);
   const pmrem = new THREE.PMREMGenerator(renderer);
   const env = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environment = env; scene.environmentIntensity = 0.35;
-  const camera = new THREE.PerspectiveCamera(FOV, 1, 0.05, 80);
+  scene.environment = env; scene.environmentIntensity = 0.32;
+  const camera = new THREE.PerspectiveCamera(FOV, 1, 0.05, 90);
   camera.rotation.order = 'YXZ';
-  const hemi = new THREE.HemisphereLight(0xffe2b8, 0x3a1018, 0.55); scene.add(hemi);
-  const fill = new THREE.AmbientLight(0x402028, 0.35); scene.add(fill);
-  const torch = new THREE.PointLight(0xffd8a0, 0, 3.2, 1.6); scene.add(torch); // the player's own glow when the lights go out
+  const hemi = new THREE.HemisphereLight(0xffe2b8, 0x3a1018, 0.42); scene.add(hemi);
+  const fill = new THREE.AmbientLight(0x402028, 0.28); scene.add(fill);
+  // a soft overhead key light that follows the camera and gives everything near you a contact shadow
+  const key = new THREE.DirectionalLight(0xffe6c8, 0.75);
+  key.castShadow = !lowPower; key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -11, right: 11, top: 11, bottom: -11, near: 0.5, far: 24 });
+  key.shadow.bias = -0.0004; key.shadow.normalBias = 0.025; key.shadow.radius = 3;
+  scene.add(key, key.target);
+  const torch = new THREE.PointLight(0xffd8a0, 0, 3.2, 1.6); scene.add(torch); // your own glow when the lights go out
+  const pool = [];
+  for (let i = 0; i < POOL; i++) { const l = new THREE.PointLight(0xffd29a, 0, 10, 1.6); scene.add(l); pool.push(l); }
   const world = buildWorld(scene);
   const items = new Items(scene);
-  const hands = new Hands(); hands.scene.environment = env; hands.scene.environmentIntensity = 0.25;
-  const dealers = [
-    new Bean({ color: '#22201e', hat: 'visor', dealer: true }), new Bean({ color: '#22201e', hat: 'visor', dealer: true }),
-  ];
-  const dealerSpots = [{ x: 900, y: 252, a: Math.PI / 2 }, { x: 900, y: 935, a: -Math.PI / 2 }];
+  const hands = new Hands(); hands.scene.environment = env; hands.scene.environmentIntensity = 0.3;
+  const dealerSpots = world.machines.dealerSpots;
+  const dealers = dealerSpots.map(() => new Bean({ color: '#22201e', hat: 'visor', dealer: true }));
   dealers.forEach(d => scene.add(d.root));
 
-  const composer = new EffectComposer(renderer);
+  const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: lowPower ? 0 : 4 });
+  const composer = new EffectComposer(renderer, rt);
   composer.addPass(new RenderPass(scene, camera));
+  let gtao = null;
+  if (!lowPower) {
+    gtao = new GTAOPass(scene, camera, 256, 256);
+    gtao.output = GTAOPass.OUTPUT.Default; gtao.blendIntensity = 0.85;
+    gtao.updateGtaoMaterial({ radius: 0.45, distanceExponent: 1.2, thickness: 1, scale: 1, samples: 12, distanceFallOff: 1 });
+    gtao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 5, rings: 2, samples: 12 });
+    // AO comes only from solid meshes: skip glows, glass, sprites and anything marked noAO
+    gtao._overrideVisibility = function () {
+      const cache = this._visibilityCache;
+      this.scene.traverse(o => {
+        if (!o.visible) return;
+        const m = o.material, tr = m && !Array.isArray(m) && (m.transparent || m.blending === THREE.AdditiveBlending);
+        if (o.isPoints || o.isLine || o.isSprite || tr || o.userData.noAO) { o.visible = false; cache.push(o); }
+      });
+    };
+    const setSize = gtao.setSize.bind(gtao); gtao.setSize = (w, h) => setSize(Math.max(1, w >> 1), Math.max(1, h >> 1)); // AO at half resolution
+    composer.addPass(gtao);
+  }
   const handPass = new RenderPass(hands.scene, hands.camera); handPass.clear = false; handPass.clearDepth = true; composer.addPass(handPass);
-  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.4, 0.5, 0.97); composer.addPass(bloom);
+  const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.45, 0.55, 0.92); composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
-  R = { renderer, scene, camera, composer, bloom, hemi, fill, torch, world, items, hands, beans: new Map(), dealers, dealerSpots, lowPower,
-    dark: 0, orbitA: 0, last: performance.now(), size: '', fp: { bob: 0 }, me: -1 };
+  R = { renderer, scene, camera, composer, bloom, gtao, hemi, fill, key, torch, pool, world, items, hands, beans: new Map(), dealers, dealerSpots, lowPower,
+    dark: 0, orbitA: 0, tourT: 0, last: performance.now(), size: '', fp: { bob: 0 }, me: -1 };
   return R;
 }
 
@@ -77,26 +117,44 @@ function beanFor(c) {
   return b;
 }
 
-// frame: { pub, priv, me: {x,y,look,pitch,moving}, mode: 'fp'|'orbit', t }
+// The nearest light spots get the pooled point lights; the edge of the set fades so nothing pops.
+const tmpD = [];
+function placeLights(cam, lit) {
+  const spots = R.world.lightSpots;
+  tmpD.length = 0;
+  for (let i = 0; i < spots.length; i++) tmpD.push([spots[i].p.distanceToSquared(cam), i]);
+  tmpD.sort((a, b) => a[0] - b[0]);
+  const edge = tmpD.length > POOL ? Math.sqrt(tmpD[POOL][0]) : 1e9;
+  for (let k = 0; k < POOL; k++) {
+    const L = R.pool[k], e = tmpD[k];
+    if (!e) { L.intensity = 0; continue; }
+    const s = spots[e[1]], d = Math.sqrt(e[0]);
+    L.position.copy(s.p); L.color.setHex(s.color); L.distance = s.range;
+    L.intensity = s.power * Math.min(1, Math.max(0, (edge - d) / 4)) * lit;
+  }
+}
+
+// frame: { pub, priv, me: {x,y,look,pitch,moving}, mode: 'fp'|'orbit', my: panel view }
 export function draw(frame) {
   if (!R) return;
   resize();
   const now = performance.now(); const dt = Math.min(0.1, (now - R.last) / 1000); R.last = now;
   const { pub, priv, me } = frame;
   const t = pub ? pub.t : now / 1000;
-  R.world.update(now / 1000, dt);
   const orbit = frame.mode !== 'fp' || !pub;
   const meeting = pub && pub.mode === 'meeting';
-  // lights out: fade everything but the player's glow
+  // lights out: fade everything but your own glow
   const want = pub && pub.lightsT > 0 && !pub.over && pub.mode === 'play' ? 1 : 0;
   R.dark += (want - R.dark) * Math.min(1, dt * (want ? 6 : 2));
   const lit = 1 - R.dark * 0.94;
-  R.hemi.intensity = 0.55 * lit; R.fill.intensity = 0.35 * lit; R.scene.environmentIntensity = 0.35 * lit;
-  for (const L of R.world.lights) L.l.intensity = L.v * lit;
-  for (const g of GLOWS) { if (g.k === 'color') g.m.color.setScalar(g.v * (1 - R.dark * 0.85)); else g.m[g.k] = g.v * (1 - R.dark * 0.85); }
+  R.hemi.intensity = 0.42 * lit; R.fill.intensity = 0.28 * lit; R.key.intensity = 0.75 * lit; R.scene.environmentIntensity = 0.32 * lit;
+  for (const g of GLOWS) {
+    const k = g.v * (1 - R.dark * 0.85);
+    if (g.k === 'color') { if (g.base) g.m.color.copy(g.base).multiplyScalar(k); else g.m.color.setScalar(k); } else g.m[g.k] = k;
+  }
   R.torch.intensity = R.dark * 2.2;
   R.scene.fog.color.setRGB(0.1 * lit, 0.04 * lit, 0.055 * lit);
-  R.scene.fog.near = 14 - R.dark * 13; R.scene.fog.far = 34 - R.dark * 30.5;
+  R.scene.fog.near = 18 - R.dark * 17; R.scene.fog.far = 46 - R.dark * 42.5;
   R.scene.background.setRGB(0.043 * lit, 0.027 * lit, 0.035 * lit);
 
   // dealers idle at their tables
@@ -106,16 +164,16 @@ export function draw(frame) {
   const seen = new Set();
   const meIdx = priv ? priv.me : -1;
   if (pub) {
-    const alive = pub.chars.filter(c => c.alive);
+    const alive = pub.chars.filter(c => c.alive), rr = ringRadius(alive.length) * 0.85;
     for (const c of pub.chars) {
       const b = beanFor(c); seen.add(c.id);
       const isMe = c.id === meIdx;
       b.root.visible = c.alive && !(isMe && !orbit);
       if (!b.root.visible) continue;
       let x = c.x, y = c.y, face = c.face, look = c.look, moving = c.moving, seated = c.seat !== null;
-      if (meeting) { // gather around the pit bell
+      if (meeting) { // everyone gathers around the pit bell
         const i = alive.indexOf(c), a = i / alive.length * Math.PI * 2;
-        x = BELL.x + Math.cos(a) * 110; y = BELL.y + Math.sin(a) * 110; face = look = a + Math.PI; moving = false; seated = false;
+        x = BELL.x + Math.cos(a) * rr; y = BELL.y + Math.sin(a) * rr; face = look = a + Math.PI; moving = false; seated = false;
       }
       if (isMe && orbit && me) { x = me.x; y = me.y; look = me.look; }
       b.update({ x: x * M, z: y * M, face: yawOf(face), look: yawOf(look), moving, seated, pale: c.pale, lucky: c.lucky, t, dt });
@@ -128,11 +186,16 @@ export function draw(frame) {
   // camera
   const cam = R.camera;
   let handsHidden = true;
-  if (orbit) {
-    R.orbitA += dt * (meeting ? 0.12 : 0.06);
-    const cx = BELL.x * M, cz = BELL.y * M, rx = meeting ? 4.0 : 4.6, rz = meeting ? 4.0 : 7.0;
-    cam.position.set(cx + Math.cos(R.orbitA) * rx, meeting ? 2.3 : 2.7, cz + Math.sin(R.orbitA) * rz);
-    cam.lookAt(cx, meeting ? 1.0 : 1.3, cz);
+  if (orbit && meeting) {
+    R.orbitA += dt * 0.12;
+    const cx = BELL.x * M, cz = BELL.y * M, rad = 4.2 + (pub.chars.length > 10 ? 1 : 0);
+    cam.position.set(cx + Math.cos(R.orbitA) * rad, 2.4, cz + Math.sin(R.orbitA) * rad);
+    cam.lookAt(cx, 1.0, cz);
+  } else if (orbit) {
+    R.tourT += dt;
+    const shot = TOUR[Math.floor(R.tourT / SHOT) % TOUR.length], u = (R.tourT % SHOT) / SHOT, e = u * u * (3 - 2 * u);
+    cam.position.set((shot.a[0] + (shot.b[0] - shot.a[0]) * e) * M, shot.a[2] + (shot.b[2] - shot.a[2]) * e, (shot.a[1] + (shot.b[1] - shot.a[1]) * e) * M);
+    cam.lookAt(shot.look[0] * M, shot.look[2], shot.look[1] * M);
   } else {
     const ghost = !priv.alive, seated = !!priv.seat;
     R.fp.bob += dt * (me.moving ? 10 : 0);
@@ -146,7 +209,14 @@ export function draw(frame) {
     R.hands.update({ dt, t, drink: d ? { kind: d.kind, color: d.color, sips: d.sips } : null, seated, game: priv.seat && priv.seat.game, moving: me.moving, ghost, light: lit + R.dark * 0.25, hidden: false });
   }
   if (handsHidden) R.hands.update({ hidden: true, dt });
+  cam.updateMatrixWorld();
   R.torch.position.copy(cam.position);
+  placeLights(cam.position, lit);
+  // the shadow light hangs over a point a few metres ahead of you, snapped to its texels so shadows don't swim
+  const ahead = new THREE.Vector3(0, 0, -5).applyQuaternion(cam.quaternion); ahead.y = 0;
+  const step = 22 / 2048, tx = Math.round((cam.position.x + ahead.x) / step) * step, tz = Math.round((cam.position.z + ahead.z) / step) * step;
+  R.key.target.position.set(tx, 0, tz); R.key.position.set(tx + 2.5, 12, tz + 3.5); R.key.target.updateMatrixWorld();
+  R.world.update(now / 1000, dt, { pub, priv, my: frame.my || null, cam: cam.position });
   if (pub) R.items.update(pub, priv || { me: -1, spiked: [], alive: true }, R.beans, t, dt, { firstPerson: !orbit, camera: cam });
   R.composer.render(dt);
 }
