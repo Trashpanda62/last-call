@@ -1,12 +1,12 @@
 // Screens, modes (solo, host, guest), input and the main loop.
 import { CFG } from './config.js';
-import { clamp, angDiff } from './util.js';
+import { clamp } from './util.js';
 import { collide, W, H } from './map.js';
 import { createGame } from './sim.js';
-import { init as init3d, draw, playHand, info as gfxInfo } from './3d/render3d.js';
+import { init as init3d, draw, playHand, info as gfxInfo, pick, pickNear, partsOnScreen, screenPointOf, setHover, camPos } from './3d/render3d.js';
 import * as audio from './audio.js';
 import { $, show, toast, splash, updateHud, renderMeeting, resetMeeting, renderOver } from './ui.js';
-import { openPanel, closePanel, panelGame, panelView, panelTick, setHandHook } from './panels.js';
+import { openTable, closeTable, tableGame, tableView, tableTick, tableHud, setHandHook, press as pressPart, partInfo } from './tables.js';
 import { hostRoom, joinRoom } from './net.js';
 
 const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* optional */ } } };
@@ -18,7 +18,8 @@ const keys = {}; const mouse = { x: 0, y: 0 };
 const stick = { id: null, active: false, x: 0, y: 0, ox: 0, oy: 0 };
 let touchMode = false, touchBack = false;
 init3d(document.getElementById('view'), { lowPower: matchMedia('(pointer: coarse)').matches });
-setHandHook(playHand);
+let pressAt = null; // where on screen the current press happened (the hand reaches there)
+setHandHook(kind => playHand(kind, pressAt));
 
 // ---------- Names, settings, stats ----------
 const NAMES = ['Ace', 'Lucky', 'Dice', 'Vegas', 'Chip', 'Jinx', 'Rook', 'Mabel', 'Sal', 'Trixie'];
@@ -46,7 +47,7 @@ function toMenu(err) {
   if (S.room) { try { S.room.close(); } catch (e) { /* ignore */ } }
   releaseLock();
   Object.assign(S, { screen: 'menu', role: null, sim: null, view: null, room: null, paused: false, guests: new Map() });
-  closePanel(); show('hud', false); only('menu'); $('menuErr').textContent = err || ''; refreshStats(); audio.setMood('lounge');
+  closeTable(); show('hud', false); only('menu'); $('menuErr').textContent = err || ''; refreshStats(); audio.setMood('lounge');
 }
 // Players 4-16; the killer choices follow the player count.
 function syncKillers() {
@@ -69,7 +70,7 @@ function readOpts() {
 }
 function enterGame() {
   S.screen = 'game'; S.view = null; S.tips = 0; S.backT = 0; S.me.pitch = 0; S.wasSeated = false; S.me.posVer = -1; S.lastMode = null; S.overShown = false; S.paused = false; S.disp = {}; S.acc = 0;
-  only(); show('hud', true); closePanel(); resetMeeting(); audio.setMood('lounge');
+  only(); show('hud', true); closeTable(); resetMeeting(); audio.setMood('lounge');
 }
 
 // ---------- Solo ----------
@@ -130,7 +131,7 @@ function hostStart() {
 function hostBackToLobby() {
   S.sim = null; S.view = null;
   for (const g of S.guests.values()) g.id = null;
-  closePanel(); show('hud', false); openSetup('host'); broadcastLobby();
+  closeTable(); show('hud', false); openSetup('host'); broadcastLobby();
 }
 
 // ---------- Joining ----------
@@ -148,7 +149,7 @@ function startJoin(code) {
 }
 function guestData(msg) {
   if (!msg || typeof msg !== 'object') return;
-  if (msg.t === 'lobby') { if (S.screen !== 'lobby') { closePanel(); show('hud', false); openSetup('guest'); } renderLobby(msg.names, msg.code); }
+  if (msg.t === 'lobby') { if (S.screen !== 'lobby') { closeTable(); show('hud', false); openSetup('guest'); } renderLobby(msg.names, msg.code); }
   else if (msg.t === 'busy') toMenu(msg.why);
   else if (msg.t === 'start') { S.myId = msg.id; enterGame(); }
   else if (msg.t === 'snap' && S.screen === 'game') { S.view = { pub: msg.pub, priv: msg.priv }; inbox(msg.priv.inbox); }
@@ -183,7 +184,7 @@ function moveMe(dt) {
   const p = v.priv, me = S.me;
   if (p.posVer !== me.posVer) {
     me.x = p.x; me.y = p.y; me.posVer = p.posVer; S.standReq = false;
-    if (p.seat) { me.look = p.seat.face; me.pitch = -0.32; releaseLock(); } else if (S.wasSeated) me.pitch = 0;
+    if (p.seat) { me.look = p.seat.face; me.pitch = (SEAT_PITCH[p.seat.game] ?? -0.4) - (touchMode ? 0.1 : 0); } else if (S.wasSeated) me.pitch = 0;
     else { const c = v.pub.chars[p.me]; if (c) me.look = c.look; me.pitch = 0; }
     S.wasSeated = !!p.seat;
   }
@@ -211,13 +212,30 @@ function moveMe(dt) {
   }
 }
 
-// Pointer lock: mouse look while walking. Never under automation (it would grab the real cursor).
+// Seated, the camera starts tilted down toward the felt (more on phones, so the layout fills the view).
+const SEAT_PITCH = { bj: -0.55, roulette: -0.66, dice: -0.6, slots: -0.14, plinko: -0.3, mines: -0.32, tower: -0.32, crash: -0.42, race: -0.56, coin: -0.5, wheel: -0.44, vip: -0.2 };
+const seatedPlay = () => S.screen === 'game' && !S.paused && S.view && S.view.priv.seat && S.view.pub.mode === 'play' && !S.view.pub.over;
+// Press the part of your table under a screen point (NDC). alt: take chips back. near: phones snap to the
+// nearest part within that many px. Returns true if something was there.
+let aim = null, tapShow = null;
+function pressAtNdc(nx, ny, alt, near) {
+  if (!seatedPlay() || !tableGame()) return false;
+  const h = pick(nx, ny) || (near ? pickNear(nx, ny, near) : null);
+  if (!h) return false;
+  audio.unlock(); pressAt = { x: nx, y: ny };
+  pressPart(h.part, h.uv, alt); pressAt = null;
+  if (touchMode) tapShow = { h, t: performance.now() };
+  return true;
+}
+const ndcOf = (x, y) => [x / innerWidth * 2 - 1, -(y / innerHeight) * 2 + 1];
+
+// Pointer lock: mouse look while walking and while seated. Never under automation (it would grab the real cursor).
 const view = $('view'), stickEl = $('stick'), knob = $('knob');
 const lockOK = () => !navigator.webdriver && !S.noLock && !touchMode;
 const locked = () => document.pointerLockElement === view;
 function wantLock() {
   const v = S.view;
-  return S.screen === 'game' && !S.paused && !!v && v.pub.mode === 'play' && !v.pub.over && !v.priv.seat;
+  return S.screen === 'game' && !S.paused && !!v && v.pub.mode === 'play' && !v.pub.over;
 }
 function requestLock(force) {
   if (!lockOK() || locked() || !(force ? S.screen === 'game' && !S.paused : wantLock())) return;
@@ -233,11 +251,17 @@ let drag = null;
 view.addEventListener('mousedown', e => {
   audio.unlock();
   if (touchMode) return;
-  if (locked()) { if (e.button === 0 && S.view && S.view.priv.ctx) act('use'); return; }
+  if (locked()) {
+    if (seatedPlay()) { if (e.button === 0 || e.button === 2) pressAtNdc(0, 0, e.button === 2); return; } // seated: click presses what the crosshair is on
+    if (e.button === 0 && S.view && S.view.priv.ctx) act('use'); return;
+  }
   if (wantLock() && lockOK()) { requestLock(); return; }
-  drag = { x: e.clientX, y: e.clientY }; // seated (or no pointer lock): drag to look around
+  drag = { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, b: e.button }; // no pointer lock: drag to look, click to press
 });
-addEventListener('mouseup', () => { drag = null; });
+addEventListener('mouseup', e => {
+  if (drag && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 6 && seatedPlay()) pressAtNdc(...ndcOf(e.clientX, e.clientY), drag.b === 2);
+  drag = null;
+});
 view.addEventListener('contextmenu', e => e.preventDefault());
 addEventListener('mousemove', e => {
   if (locked()) { lookBy(e.movementX, e.movementY); return; }
@@ -253,6 +277,7 @@ addEventListener('keydown', e => {
   if (!keys[k]) {
     const seated = S.screen === 'game' && S.view && S.view.priv.seat && S.view.pub.mode === 'play';
     if (k === 'escape' && S.screen === 'game') { if (performance.now() - (S.unlockAt || 0) > 400) togglePause(); }
+    else if (k === 'e' && seated && !S.paused && aim) pressAtNdc(0, 0, false); // seated: E presses what you aim at
     else if (S.screen === 'game' && KEYMAP[k] && !S.paused) { act(KEYMAP[k]); if (k === 'e' && seated) requestLock(true); }
     if (MOVE_KEYS.has(k) && S.screen === 'game' && !S.paused) {
       if (seated && !S.standReq) { S.standReq = true; act('use'); requestLock(true); } else requestLock();
@@ -268,9 +293,11 @@ addEventListener('pointerdown', () => audio.unlock(), { passive: true });
 function setTouch() { if (!touchMode) { touchMode = true; document.body.classList.add('touch'); } }
 addEventListener('touchstart', setTouch, { passive: true });
 const looks = new Map();
+const taps = new Map(); // touch id -> where and when it started (a short, still touch is a tap)
 view.addEventListener('touchstart', e => {
   e.preventDefault(); setTouch(); audio.unlock();
   for (const t of e.changedTouches) {
+    taps.set(t.identifier, { x: t.clientX, y: t.clientY, t: performance.now(), moved: 0 });
     if (t.clientX < innerWidth * 0.45 && stick.id === null) {
       Object.assign(stick, { id: t.identifier, ox: t.clientX, oy: t.clientY, active: true, x: 0, y: 0 });
       stickEl.style.left = t.clientX + 'px'; stickEl.style.top = t.clientY + 'px'; stickEl.classList.add('on'); knob.style.transform = '';
@@ -280,6 +307,7 @@ view.addEventListener('touchstart', e => {
 view.addEventListener('touchmove', e => {
   e.preventDefault();
   for (const t of e.changedTouches) {
+    const tp = taps.get(t.identifier); if (tp) tp.moved = Math.max(tp.moved, Math.hypot(t.clientX - tp.x, t.clientY - tp.y));
     const l = looks.get(t.identifier);
     if (l) { lookBy((t.clientX - l.x) * 1.6, (t.clientY - l.y) * 1.6); l.x = t.clientX; l.y = t.clientY; continue; }
     if (t.identifier !== stick.id) continue;
@@ -288,7 +316,10 @@ view.addEventListener('touchmove', e => {
     stick.x = dx / max; stick.y = dy / max; knob.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
   }
 }, { passive: false });
-const endTouch = e => { for (const t of e.changedTouches) { looks.delete(t.identifier); if (t.identifier === stick.id) { Object.assign(stick, { id: null, active: false, x: 0, y: 0 }); stickEl.classList.remove('on'); } } };
+const endTouch = e => { for (const t of e.changedTouches) {
+  const tp = taps.get(t.identifier); taps.delete(t.identifier);
+  if (e.type === 'touchend' && tp && tp.moved < 14 && performance.now() - tp.t < 450) pressAtNdc(...ndcOf(tp.x, tp.y), false, 30); // seated: tap the table
+  looks.delete(t.identifier); if (t.identifier === stick.id) { Object.assign(stick, { id: null, active: false, x: 0, y: 0 }); stickEl.classList.remove('on'); } } };
 view.addEventListener('touchend', endTouch); view.addEventListener('touchcancel', endTouch);
 document.querySelectorAll('#touchBtns [data-act]').forEach(b => {
   const a = b.dataset.act;
@@ -375,8 +406,8 @@ function frameGame(dt) {
   else if (S.role === 'guest' && S.room) { S.sendT += dt; if (S.sendT >= 0.05) { S.sendT = 0; S.room.send({ t: 'in', ...inputPayload() }); } }
   const v = S.view; if (!v) { drawDemo(dt); return; }
   const { pub, priv } = v;
-  if (priv.seat && pub.mode === 'play' && !pub.over && panelGame() !== priv.seat.game) openPanel(priv.seat, act, v);
-  if ((!priv.seat || pub.mode !== 'play' || pub.over) && panelGame()) closePanel();
+  if (priv.seat && pub.mode === 'play' && !pub.over && tableGame() !== priv.seat.game) openTable(priv.seat, act, v);
+  if ((!priv.seat || pub.mode !== 'play' || pub.over) && tableGame()) closeTable();
   if (pub.mode !== S.lastMode) {
     if (pub.mode === 'meeting') { releaseLock(); splash(pub.meeting.title.toUpperCase()); only('meeting'); audio.setMood('meeting'); S.paused = false; show('pause', false); }
     else if (S.lastMode === 'meeting') { only(); resetMeeting(); audio.setMood('lounge'); }
@@ -393,14 +424,34 @@ function frameGame(dt) {
   if (S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0]) {
     const tip = TIPS[S.tips++]; if (store.get('lc.stats', { games: 0 }).games < 3 && (!tip[2] || priv.isKiller === (tip[2] === 'k'))) toast(tip[1]);
   }
-  updateHud(v); panelTick(v);
+  updateHud(v); tableTick(v);
   const fp = pub.mode === 'play' && !pub.over;
-  const away = !!priv.seat && Math.abs(angDiff(effLook(), priv.seat.face)) > 1.0;
-  $('panel').classList.toggle('away', away);
-  show('cross', fp && !priv.seat && !touchMode);
+  show('cross', fp && !touchMode);
   show('lockHint', fp && !touchMode && lockOK() && !locked() && wantLock());
-  draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit', my: panelView() });
+  draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit', my: tableView() });
+  seatedHud();
 }
+// Seated: name what the crosshair is on (phones: what you just tapped), and the bet readout.
+function seatedHud() {
+  const seated = seatedPlay() && tableGame();
+  aim = seated && !touchMode && S.backT < 0.3 ? pick(0, 0) : null;
+  const tap = touchMode && tapShow && performance.now() - tapShow.t < 900 ? tapShow.h : null;
+  const h = aim || tap; setHover(seated ? h : null);
+  const info = seated && h ? partInfo(h.part, h.uv) : null;
+  $('aim').textContent = info ? info.label : ''; $('aim').className = info && !info.on ? 'off' : '';
+  if (info) $('hint').textContent = '';
+  const hd = seated ? tableHud() : null;
+  show('tableHud', !!hd);
+  if (hd) {
+    const key = JSON.stringify(hd);
+    if (key !== S.hudKey) {
+      S.hudKey = key;
+      $('tableHud').innerHTML = (hd.chip ? `<span>CHIP <b>${hd.chip}</b></span>` : '') + `<span>ON THE TABLE <b>${hd.total}</b></span><span class="muted">MAX ${hd.max}</span>`
+        + (hd.flash ? `<span class="flash">${esc(hd.flash)}</span>` : hd.res.text ? `<span class="${hd.res.cls}">${esc(hd.res.text)}</span>` : '');
+    }
+  }
+}
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 // Behind the menus: an all-bot game plays out under a slow camera.
 function drawDemo(dt) {
   if (!S.demo || S.demo.G.over) S.demo = createGame({ humans: [], players: 12, killers: 2, difficulty: 'normal' });
@@ -437,5 +488,16 @@ window.__lastCall = {
   vote(id) { act('vote', id); }, gfx: gfxInfo, noLock() { S.noLock = true; },
   look(a, pitch) { S.me.look = a; S.me.pitch = pitch || 0; },
   demo(seconds) { drawDemo(seconds || 0); },
+  // Tables: press a part by name (as if aimed at and clicked), aim the crosshair at it, list what is on screen.
+  press(part, alt) {
+    const c = partsOnScreen().find(q => q.part === part); if (!c) return 'no part ' + part;
+    pressAt = { x: c.x / innerWidth * 2 - 1, y: -(c.y / innerHeight) * 2 + 1 }; const ok = pressPart(part, null, alt); pressAt = null; return ok;
+  },
+  pressScreen(x, y) { const p = screenPointOf(x, y); if (!p) return 'no screen'; return pressAtNdc(...ndcOf(p.x, p.y), false) ? 'ok' : 'missed'; },
+  aimAt(part) {
+    const c = part === 'scr' ? screenPointOf(0.5, 0.5) : partsOnScreen().find(q => q.part === part), cam = camPos(); if (!c || !cam) return false;
+    const d = c.p.map((v, i) => v - cam[i]); S.me.look = Math.atan2(d[2], d[0]); S.me.pitch = Math.atan2(d[1], Math.hypot(d[0], d[2])); return true;
+  },
+  parts: () => partsOnScreen(), screenPoint: (x, y) => screenPointOf(x, y), table: () => tableView(), hud: () => tableHud(), aim: () => aim && aim.part,
   place(x, y) { S.me.x = x; S.me.y = y; if (S.sim) { S.me.posVer = S.sim.G.chars[S.myId].posVer; S.sim.setInput(S.myId, inputPayload()); S.view = S.sim.view(S.myId); } },
 };

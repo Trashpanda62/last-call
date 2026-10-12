@@ -1,5 +1,5 @@
-// 2D painters shared by the table panels and the machine screens in the 3D casino, so the screen in front of you
-// shows the same thing as your panel. Pure canvas drawing; no DOM lookups, no three.js.
+// 2D painters for the machine screens in the 3D casino (and the touch buttons on them). Pure canvas drawing; no DOM
+// lookups, no three.js.
 import * as Gm from './games.js';
 
 export const ARC = '900 {s}px "Arial Black", Impact, system-ui, sans-serif';
@@ -135,7 +135,7 @@ export function paintSlots(g, w, h, t, st) {
   }
   g.fillStyle = 'rgba(255,40,60,0.7)'; g.fillRect(w * 0.03, y0 + rh / 2 - h * 0.006, w * 0.94, h * 0.012);
   if (st && st.win && !(st.spin && t - st.spin.t0 < 1.7)) glowText(g, st.win, w / 2, h * 0.9, h * 0.08, '#ffd040');
-  else text(g, st ? 'PULL TO SPIN' : 'INSERT CHIPS', w / 2, h * 0.9, h * 0.06, 'rgba(255,255,255,0.6)');
+  else text(g, st && st.bet ? 'BET ' + short(st.bet) + ' · PULL THE LEVER' : st && st.reels ? 'PULL TO SPIN' : 'INSERT CHIPS', w / 2, h * 0.9, h * 0.06, 'rgba(255,255,255,0.6)');
 }
 
 // ---------- Mines ----------
@@ -348,4 +348,21 @@ export function paintBankBoard(g, w, h, t, pub) {
   g.fillStyle = 'rgba(255,255,255,0.12)'; g.fillRect(w * 0.08, h * 0.64, w * 0.84, h * 0.09);
   g.fillStyle = '#3fff8a'; g.fillRect(w * 0.08, h * 0.64, w * 0.84 * p, h * 0.09);
   text(g, 'TARGET ' + short(pub.target), w / 2, h * 0.86, h * 0.1, '#fff');
+}
+
+// ---------- Touch buttons on a machine screen ----------
+// items: [{ x, y, w, h (0..1 of the screen), label, sel, on }] from tables.js ui(); the same boxes are hit-tested there.
+export function paintUI(g, w, h, items, accent = '#ffd040') {
+  for (const b of items) {
+    const x = b.x * w, y = b.y * h, bw = b.w * w, bh = b.h * h, r = Math.min(bw, bh) * 0.18;
+    g.fillStyle = 'rgba(0,0,0,0.55)'; g.beginPath(); g.roundRect(x - 2, y - 2, bw + 4, bh + 4, r); g.fill();
+    const lg = g.createLinearGradient(0, y, 0, y + bh);
+    if (b.sel) { lg.addColorStop(0, '#fff3b0'); lg.addColorStop(1, accent); } else { lg.addColorStop(0, '#4a4060'); lg.addColorStop(1, '#221c30'); }
+    g.fillStyle = lg; g.beginPath(); g.roundRect(x, y, bw, bh, r); g.fill();
+    g.strokeStyle = b.sel ? '#fff' : accent; g.lineWidth = Math.max(2, h * 0.008); g.stroke();
+    g.globalAlpha = b.on === false ? 0.35 : 1;
+    const fs = Math.min(bh * 0.42, bw * 1.5 / Math.max(2, b.label.length));
+    text(g, b.label, x + bw / 2, y + bh / 2 + fs * 0.05, fs, b.sel ? '#1a1014' : '#fff');
+    g.globalAlpha = 1;
+  }
 }

@@ -43,7 +43,15 @@ export class Hands {
     this.anim = null; this.t = 0; this.bob = 0;
   }
   setSuit(color) { this.sleeveMat.color.set(color); }
-  play(kind) { this.anim = { kind, t: 0, dur: { sip: 1.0, poison: 1.1, stab: 0.5, crunch: 0.8, coin: 0.45, click: 0.3, press: 0.35, pull: 0.6, throw: 0.6 }[kind] || 0.5 }; }
+  // at: a screen point (NDC) to reach for: the nearer hand pokes (or grabs, for a pull) toward it.
+  play(kind, at) {
+    this.anim = { kind, t: 0, dur: { sip: 1.0, poison: 1.1, stab: 0.5, crunch: 0.8, coin: 0.45, click: 0.3, press: 0.38, pull: 0.65, throw: 0.6 }[kind] || 0.5 };
+    if (at && kind !== 'throw' && kind !== 'sip') {
+      const d = new THREE.Vector3(at.x, at.y, 0.5).unproject(this.camera).normalize(), k = 0.52 / Math.max(0.3, -d.z);
+      this.anim.to = d.multiplyScalar(k).add(new THREE.Vector3(0, -0.035, 0.11)); // the wrist sits behind the fingertip
+      this.anim.hand = at.x < -0.12 ? this.left : this.right;
+    }
+  }
   setAspect(a, fov) { this.camera.aspect = a; this.camera.fov = fov; this.camera.updateProjectionMatrix(); }
   // s: { drink: {kind, color, sips} | null held, seated, game, moving, ghost, dt, t, light }
   update(s) {
@@ -70,14 +78,19 @@ export class Hands {
       h.userData.glove.userData.curl(0.3 + Math.sin(this.t * 1.3 + sd) * 0.04);
     }
     if (this.glass) this.right.userData.glove.userData.curl(0.75);
-    if (s.seated) { // hands rest forward on the table or the machine
-      this.left.position.y += 0.02; this.right.position.y += 0.02; this.left.position.x -= 0.02; this.right.position.x += 0.02; this.left.position.z -= 0.04; this.right.position.z -= 0.04;
+    if (s.seated) { // hands rest low at the sides, out of the way of the table, and reach in to press things
+      this.left.position.y -= 0.09; this.right.position.y -= 0.09; this.left.position.x -= 0.08; this.right.position.x += 0.08; this.left.position.z += 0.02; this.right.position.z += 0.02;
     }
     if (!this.glass && !s.seated) { this.right.position.y -= 0.05; }
     this.vial.visible = false; this.knife.visible = false;
     if (this.anim) {
       const a = this.anim; a.t += dt; const p = Math.min(1, a.t / a.dur), k = Math.sin(p * Math.PI);
-      if (a.kind === 'sip') { this.right.position.x -= 0.22 * k; this.right.position.y += 0.18 * k; this.right.position.z += 0.12 * k; this.right.rotation.x = 1.0 * k; }
+      if (a.to) { // reach: out to the point and back, finger out; a pull drags down at the end
+        const h = a.hand, e = p < 0.45 ? Math.sin(p / 0.45 * Math.PI / 2) : Math.cos((p - 0.45) / 0.55 * Math.PI / 2);
+        h.position.lerp(a.to, e);
+        if (a.kind === 'pull') { h.position.y -= Math.max(0, Math.sin((p - 0.35) / 0.65 * Math.PI)) * 0.12 * (p > 0.35 ? 1 : 0); h.userData.glove.userData.curl(0.95); }
+        else h.userData.glove.userData.curl(0.25 + 0.5 * e);
+      } else if (a.kind === 'sip') { this.right.position.x -= 0.22 * k; this.right.position.y += 0.18 * k; this.right.position.z += 0.12 * k; this.right.rotation.x = 1.0 * k; }
       else if (a.kind === 'poison') { this.vial.visible = true; this.left.position.x += 0.16 * k; this.left.position.y += 0.08 * k; this.left.position.z -= 0.15 * k; this.left.rotation.z = -1.6 * Math.max(0, Math.sin(Math.min(1, p * 1.6) * Math.PI)); }
       else if (a.kind === 'stab') { this.knife.visible = true; this.right.position.z -= 0.3 * k; this.right.position.x -= 0.1 * k; this.right.userData.glove.userData.curl(1); }
       else if (a.kind === 'crunch') { this.left.position.x += 0.2 * k; this.left.position.y += 0.2 * k; this.left.position.z += 0.1 * k; }

@@ -1,11 +1,12 @@
 // Every game's station in 3D: tables, cabinets, consoles, the duck pond and the big screens.
-// Screens repaint from the shared painters (paint.js). The station you are sitting at shows your own game:
-// state.my comes from the panel (ui.js panelView()).
+// Screens repaint from the shared painters (paint.js). The station you are sitting at shows your own game and gets
+// the hands-on parts (rig.js): state.my comes from the table controller (tables.js tableView()).
 import * as THREE from 'three';
 import * as T from './textures.js';
 import * as P from '../paint.js';
 import * as Gm from '../games.js';
 import { MAT, GLOWS, glowMat, basicGlow, v3, box, rbox, cyl, sph, lathe, torus, yawOf, uvScale } from './world.js';
+import { buildRig, rouletteLayoutTex, diceLayoutTex, LANE } from './rig.js';
 import { BJ_TABLES, RL_TABLE, CRASH_SCREEN, PLINKO_YS, MINES_XS, TOWER_XS, POND, RACE_XS, SLOT_WEST_YS, SLOT_SOUTH_XS, JACKPOT, DICE_TABLE, WHEEL_X, COIN, OBSTACLES } from '../map.js';
 
 const M = 1 / 60;
@@ -15,6 +16,7 @@ export function buildMachines(ctx, seats) {
   const screens = [];  // live canvases: { live, center, every, acc, arg(state) -> painter state, seat? }
   const updaters = []; // f(t, dt, state)
   const add = o => { group.add(o); return o; };
+  const RC = { group, seatScreens: {}, slotLevers: {}, lanePlates: {}, deco: {} }, felts = {}; // for the rig
   // A live screen: a glowing plane showing a painter. Returns the mesh.
   function screen({ w, h, cw, ch, paint, pos, yaw = 0, tilt = 0, every = 0.2, strength = 1.15, seat = null, arg = () => null, far = 22 }) {
     const live = T.liveCanvas(cw, ch, paint);
@@ -78,7 +80,8 @@ export function buildMachines(ctx, seats) {
     const free = cardPool.filter(m => !used.has(m)); let k = 0;
     if (my && my.view) {
       const s = seats[my.seat], tb = BJ_TABLES[s.table], f = v3(Math.cos(s.face), 0, Math.sin(s.face)), r = v3(-f.z, 0, f.x);
-      const base = v3(s.x * M, 0.88, s.y * M).addScaledVector(f, 0.6);
+      const a = Math.atan2((s.y - tb.y) / 152, (s.x - tb.x) / 168);
+      const base = v3(tb.x * M + Math.cos(a) * 1.68, 0.88, tb.y * M + Math.sin(a) * 1.305).addScaledVector(f, 0.24); // just past the betting circle
       my.view.hands.forEach((hd, j) => hd.cards.forEach((c, i) => {
         const m = free[k++]; if (!m) return; m.visible = true; m.material = cardMat(c);
         const off = (my.view.hands.length > 1 ? (j ? 0.17 : -0.17) : 0) + (i - (hd.cards.length - 1) / 2) * 0.075;
@@ -98,8 +101,8 @@ export function buildMachines(ctx, seats) {
     B.add(rbox(w + 0.3, 0.14, d + 0.3, 0.07), MAT.leather, v3(cx, 0.81, cz));
     B.add(rbox(w - 0.3, 0.74, d - 0.5, 0.05), MAT.darkWood, v3(cx, 0.37, cz));
     const fw = (o.w - 110) * M;
-    const felt = new THREE.Mesh(new THREE.PlaneGeometry(fw, d - 0.05), new THREE.MeshStandardMaterial({ map: T.rouletteFelt(), roughness: 0.95 }));
-    felt.rotation.set(-Math.PI / 2, 0, 0); felt.position.set(o.x * M + fw / 2 + 0.05, 0.885, cz); felt.receiveShadow = true; add(felt);
+    const felt = new THREE.Mesh(new THREE.PlaneGeometry(fw, d - 0.05), new THREE.MeshStandardMaterial({ map: rouletteLayoutTex(), roughness: 0.95 }));
+    felt.rotation.set(-Math.PI / 2, 0, 0); felt.position.set(o.x * M + fw / 2 + 0.05, 0.885, cz); felt.receiveShadow = true; add(felt); felts.roulette = felt;
     const wx = (o.x + o.w - 55) * M, wz = cz;
     B.add(cyl(0.78, 0.66, 0.16, 48), MAT.darkWood, v3(wx, 0.93, wz)); B.add(torus(0.72, 0.04, 8, 56), MAT.gold, v3(wx, 1.01, wz), 0, null, Math.PI / 2);
     const wheel = new THREE.Group(); wheel.position.set(wx, 1.0, wz); add(wheel);
@@ -108,7 +111,6 @@ export function buildMachines(ctx, seats) {
     const hub = new THREE.Mesh(lathe([[0, 0.13], [0.03, 0.13], [0.02, 0.06], [0.08, 0.02], [0.12, 0]], 16), MAT.gold); wheel.add(hub);
     for (let i = 0; i < 4; i++) { const arm = new THREE.Mesh(cyl(0.012, 0.012, 0.22, 6), MAT.gold); arm.rotation.z = Math.PI / 2; arm.rotation.y = i * Math.PI / 2; arm.position.y = 0.06; arm.position.x = Math.cos(i * Math.PI / 2) * 0.11; arm.position.z = -Math.sin(i * Math.PI / 2) * 0.11; wheel.add(arm); }
     const ball = add(new THREE.Mesh(sph(0.025, 12), MAT.porcelain));
-    chipRack(B, cx - 1.4, cz);
     beam(cx, cz, 0xffe0b0, 2.2); lightSpots.push({ p: v3(cx, 2.6, cz), color: 0xffe2c0, power: 5, range: 6 });
     let rot = 0;
     updaters.push((t, dt, st) => {
@@ -149,8 +151,13 @@ export function buildMachines(ctx, seats) {
     const lbl = new THREE.Mesh(new THREE.PlaneGeometry(0.56, 0.16), basicGlow(T.neonTexture(high ? '$ HIGH $' : sd.machine % 2 ? '777' : 'LUCKY', high ? '#ffd040' : '#ff7ac8', 512, 150, 'bold italic 100px Georgia'), 1.6, { blending: THREE.AdditiveBlending, transparent: true, depthWrite: false }));
     lbl.position.copy(at(0.21, 0, 2.27)); lbl.rotation.y = yaw; add(lbl);
     for (let k = 0; k < 3; k++) { const b = new THREE.Mesh(cyl(0.035, 0.035, 0.02, 14), glowMat([0xff3a3a, 0xffd040, 0x3fff8a][k], 2)); b.position.copy(at(0.3, (k - 1) * 0.18, 1.21)); b.rotation.set(0.35, yaw, 0, 'YXZ'); add(b); }
-    B.add(cyl(0.02, 0.02, 0.5, 8), MAT.chrome, at(0, 0.44, 1.35), yaw); B.add(sph(0.055, 12), MAT.candy(0xe0203a), at(0, 0.44, 1.62), yaw);
-    screen({ w: 0.62, h: 0.48, cw: 384, ch: 300, paint: (g, w, h, t, a) => P.paintSlots(g, w, h, t, a), pos: at(0.205, 0, 1.62), yaw, tilt: 0, every: 0.25, seat: s.id, arg: st => st.my && st.my.seat === s.id ? { tier: s.tier, ...st.my.view } : { tier: s.tier } });
+    // the lever pivots at its foot; pulling it swings the ball toward you
+    const lever = new THREE.Group(); lever.position.copy(at(0, 0.44, 1.1)); lever.rotation.set(0, yaw, 0, 'YXZ'); add(lever);
+    const stick = new THREE.Mesh(cyl(0.02, 0.02, 0.5, 8), MAT.chrome); stick.position.y = 0.25; lever.add(stick);
+    const knob = new THREE.Mesh(sph(0.055, 12), MAT.candy(0xe0203a)); knob.position.y = 0.52; knob.castShadow = true; lever.add(knob);
+    B.add(cyl(0.045, 0.05, 0.08, 14), MAT.chrome, at(0, 0.42, 1.1), yaw, null, 0, Math.PI / 2);
+    RC.slotLevers[s.id] = lever;
+    screen({ w: 0.62, h: 0.48, cw: 384, ch: 300, paint: (g, w, h, t, a) => P.paintSlots(g, w, h, t, a), pos: at(0.205, 0, 1.62), yaw, tilt: 0, every: 0.25, seat: s.id, arg: st => st.my && st.my.seat === s.id ? { tier: s.tier, ...st.my.view, bet: st.my.extra && st.my.extra.bet } : { tier: s.tier } });
     for (let k = 0; k < 9; k++) bulbs.push({ p: at(0.2, Math.cos(Math.PI * k / 8) * 0.43, 2.13 + Math.sin(Math.PI * k / 8) * 0.43), phase: k + sd.machine });
   }
   lightSpots.push({ p: v3(110 * M, 2.6, 1520 * M), color: 0xff70c0, power: 4, range: 7 }, { p: v3(620 * M, 2.6, 1790 * M), color: 0xffc040, power: 4, range: 7 });
@@ -175,6 +182,7 @@ export function buildMachines(ctx, seats) {
       const x = (o.x + o.w / 2) * M, dz = (o.y + o.h / 2) * M;
       B.add(rbox(0.7, 0.95, 0.42, 0.05), MAT.candy(0x2a1a5a), v3(x, 0.475, dz)); B.add(rbox(0.72, 0.06, 0.48, 0.02), MAT.chrome, v3(x, 0.98, dz));
       const btn = new THREE.Mesh(cyl(0.09, 0.09, 0.04, 20), glowMat(0x3fff8a, 2.2)); btn.position.set(x, 1.02, dz + 0.08); add(btn);
+      const cs = seats.find(q => q.game === 'crash' && Math.abs(q.x * M - x) < 0.3); if (cs) RC.deco[cs.id] = [btn];
       const lbl = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.12), basicGlow(T.plaque('CASH OUT', { w: 512, h: 120, bg: '#0a2a14', ink: '#3fff8a', font: '900 64px Arial Black, sans-serif' }), 1.2));
       lbl.position.set(x, 0.75, dz + 0.215); add(lbl);
     }
@@ -205,7 +213,7 @@ export function buildMachines(ctx, seats) {
     const glass = new THREE.Mesh(new THREE.PlaneGeometry(1.38, 1.75), new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.02, transparent: true, opacity: 0.08, clearcoat: 1 })); glass.position.copy(at(-0.06, 0, 1.75)); glass.rotation.y = yaw; add(glass);
     for (const side of [-1, 1]) B.add(box(0.03, 1.8, 0.03), glowMat(0x3fe0ff, 2.4), at(-0.08, side * 0.72, 1.75), yaw);
     B.add(rbox(0.6, 0.18, 0.3, 0.04), MAT.candy(0x1a2a8a), at(0.38, 0, 0.92), yaw, null, 0.4);
-    const go = new THREE.Mesh(cyl(0.07, 0.07, 0.03, 20), glowMat(0xff3fa4, 2.4)); go.position.copy(at(0.45, 0, 1.0)); add(go);
+    const go = new THREE.Mesh(cyl(0.07, 0.07, 0.03, 20), glowMat(0xff3fa4, 2.4)); go.position.copy(at(0.45, 0, 1.0)); add(go); RC.deco[s.id] = [go];
     const balls = []; for (let k = 0; k < 6; k++) { const b = add(new THREE.Mesh(ballGeo, ballMat)); b.visible = false; balls.push(b); }
     let idle = [];
     updaters.push((t, dt, st) => {
@@ -230,7 +238,8 @@ export function buildMachines(ctx, seats) {
     B.add(rbox(0.8, 0.95, 0.55, 0.06), MAT.candy(c.col), v3(x, 0.475, z), yaw);
     B.add(rbox(0.86, 0.6, 0.12, 0.05), MAT.candy(c.col), v3(x, 1.3, z + 0.08), yaw, null, -0.45);
     B.add(box(0.84, 0.03, 0.03), glowMat(c.glow, 2.4), v3(x, 0.97, z - 0.29), yaw);
-    screen({ w: 0.74, h: 0.46, cw: 512, ch: 320, paint: c.game === 'mines' ? P.paintMines : P.paintTower, pos: v3(x, 1.3, z + 0.0), yaw, tilt: 0.45, every: 0.3, seat: s.id, arg: st => st.my && st.my.seat === s.id ? st.my.view : null });
+    const pt = c.game === 'mines' ? P.paintMines : P.paintTower;
+    RC.seatScreens[s.id] = screen({ w: 0.74, h: 0.46, cw: 512, ch: 320, paint: (g, w, h, t, a) => { pt(g, w, h, t, a && a.v); if (a && a.ui) P.paintUI(g, w, h, a.ui, c.game === 'mines' ? '#3fff8a' : '#ffa040'); }, pos: v3(x, 1.3, z + 0.0), yaw, tilt: 0.45, every: 0.3, seat: s.id, arg: st => st.my && st.my.seat === s.id ? { v: st.my.view, ui: st.my.ui } : null });
   }
   lightSpots.push({ p: v3(2210 * M, 2.5, 560 * M), color: 0x60ffa0, power: 3, range: 6 }, { p: v3(2770 * M, 2.5, 560 * M), color: 0xffa060, power: 3, range: 6 });
 
@@ -288,10 +297,29 @@ export function buildMachines(ctx, seats) {
     const bw = 2.8, bh = 1.75, bz = cz;
     B.add(rbox(0.1, bh + 0.2, bw + 0.2, 0.04), MAT.blackGloss, v3(2980 * M - 0.05, 2.15, bz));
     screen({ w: bw, h: bh, cw: 640, ch: 400, paint: (g, w, h, t, a) => P.paintTote(g, w, h, t, a && a.R, a && a.me), pos: v3(2980 * M - 0.11, 2.15, bz), yaw: -Math.PI / 2, every: 1 / 10, far: 30, arg: st => st.pub && { R: st.pub.race, me: st.priv ? st.priv.me : -1 } });
+    // each betting desk carries a race card: six duck lanes with this race's odds (you drop chips on a lane)
+    const card = T.liveCanvas(768, 280, (g, w, h, t, R) => {
+      g.fillStyle = '#062a3a'; g.fillRect(0, 0, w, h);
+      Gm.DUCKS.forEach((d, i) => {
+        const x = i * w / 6;
+        g.fillStyle = i % 2 ? '#0a3a50' : '#0c4660'; g.fillRect(x, 0, w / 6, h);
+        g.fillStyle = d.color; g.fillRect(x + 6, 6, w / 6 - 12, 26);
+        g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.fillStyle = '#04121a'; g.font = '900 20px "Arial Black", Impact, sans-serif'; g.fillText(String(i + 1), x + w / 12, 20);
+        g.fillStyle = '#fff'; g.font = '900 19px "Arial Black", Impact, sans-serif'; g.fillText(d.name.toUpperCase(), x + w / 12, 52);
+        g.fillStyle = '#ffd040'; g.font = '900 34px "Arial Black", Impact, sans-serif'; g.fillText(R ? P.xfmt(R.pays[i]) : '', x + w / 12, h - 36);
+        g.strokeStyle = 'rgba(255,255,255,0.35)'; g.setLineDash([10, 8]); g.lineWidth = 3; g.beginPath(); g.arc(x + w / 12, h * 0.52, 34, 0, 7); g.stroke(); g.setLineDash([]);
+        if (i) { g.fillStyle = 'rgba(255,255,255,0.5)'; g.fillRect(x - 1, 0, 2, h); }
+      });
+    });
+    let cardRound = -1;
+    screens.push({ live: { update: (t, R) => { if (R && R.round !== cardRound) { cardRound = R.round; card.update(t, R); } } }, center: v3(2500 * M, 0.9, 849 * M), every: 0.5, acc: 0, arg: st => st.pub && st.pub.race, far: 14 });
+    const cardMat = new THREE.MeshStandardMaterial({ map: card.tex, roughness: 0.5, emissive: 0xffffff, emissiveMap: card.tex, emissiveIntensity: 0.35 });
     for (const x of RACE_XS) {
       const dx = x * M, dz = (838 + 11) * M;
       B.add(rbox(1.1, 0.1, 0.45, 0.03), MAT.polished, v3(dx, 0.84, dz)); B.add(rbox(1.0, 0.8, 0.1, 0.03), MAT.candy(0x1a6a8a), v3(dx, 0.4, dz + 0.12));
-      const m = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.2), glowMat(0x3fe0ff, 0.9)); m.position.set(dx, 0.98, dz + 0.04); m.rotation.x = -0.6; add(m);
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(LANE.w, LANE.d), cardMat); m.position.set(dx, 0.893, dz); m.rotation.set(-Math.PI / 2, Math.PI, 0, 'YXZ'); add(m);
+      const rs = seats.find(q => q.game === 'race' && q.x === x); if (rs) RC.lanePlates[rs.id] = m;
     }
     lightSpots.push({ p: v3((x0 + x1) / 2 - 3, 2.6, cz), color: 0x9fe8ff, power: 5, range: 8 }, { p: v3((x0 + x1) / 2 + 3, 2.6, cz), color: 0x9fe8ff, power: 5, range: 8 });
   }
@@ -299,23 +327,22 @@ export function buildMachines(ctx, seats) {
   // ---------- Street dice ----------
   {
     const o = DICE_TABLE, cx = (o.x + o.w / 2) * M, cz = (o.y + o.h / 2) * M, w = o.w * M, d = o.h * M;
-    B.add(rbox(w, 0.8, d, 0.3), MAT.darkWood, v3(cx, 0.4, cz));
-    for (const [x, z, ww, dd] of [[cx, cz - d / 2 + 0.09, w - 0.1, 0.18], [cx, cz + d / 2 - 0.09, w - 0.1, 0.18], [cx - w / 2 + 0.09, cz, 0.18, d - 0.1], [cx + w / 2 - 0.09, cz, 0.18, d - 0.1]]) B.add(rbox(ww, 0.2, dd, 0.08), MAT.leather, v3(x, 0.95, z));
-    const felt = new THREE.Mesh(new THREE.PlaneGeometry(w - 0.36, d - 0.36), new THREE.MeshStandardMaterial({ map: T.diceFelt(), roughness: 0.95 }));
-    felt.rotation.x = -Math.PI / 2; felt.position.set(cx, 0.81, cz); felt.receiveShadow = true; add(felt);
-    chipRack(B, cx, cz - d / 2 + 0.35);
+    B.add(rbox(w, 0.88, d, 0.3), MAT.darkWood, v3(cx, 0.44, cz));
+    for (const [x, z, ww, dd] of [[cx, cz - d / 2 + 0.09, w - 0.1, 0.18], [cx, cz + d / 2 - 0.09, w - 0.1, 0.18], [cx - w / 2 + 0.09, cz, 0.18, d - 0.1], [cx + w / 2 - 0.09, cz, 0.18, d - 0.1]]) B.add(rbox(ww, 0.12, dd, 0.05), MAT.leather, v3(x, 0.92, z));
+    const felt = new THREE.Mesh(new THREE.PlaneGeometry(w - 0.36, d - 0.36), new THREE.MeshStandardMaterial({ map: diceLayoutTex(), roughness: 0.95 }));
+    felt.rotation.x = -Math.PI / 2; felt.position.set(cx, 0.89, cz); felt.receiveShadow = true; add(felt); felts.dice = felt;
     const pip = v => { const [c, g] = T.canvas(64, 64); g.fillStyle = '#f8f4ec'; g.fillRect(0, 0, 64, 64); g.fillStyle = '#c0302a'; const P2 = { 1: [[0, 0]], 2: [[-1, -1], [1, 1]], 3: [[-1, -1], [0, 0], [1, 1]], 4: [[-1, -1], [1, -1], [-1, 1], [1, 1]], 5: [[-1, -1], [1, -1], [0, 0], [-1, 1], [1, 1]], 6: [[-1, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [1, 1]] }[v]; for (const [a, b] of P2) { g.beginPath(); g.arc(32 + a * 17, 32 + b * 17, 6, 0, 7); g.fill(); } return new THREE.MeshStandardMaterial({ map: T.tex(c, false), roughness: 0.3 }); };
     const faceMats = [3, 4, 1, 6, 2, 5].map(pip); // +x -x +y -y +z -z
     const dice = [0, 1].map(() => { const m = new THREE.Mesh(rbox(0.07, 0.07, 0.07, 0.012), faceMats); m.rotation.order = 'YXZ'; m.castShadow = true; add(m); return m; });
     const upRot = { 1: [0, 0], 6: [Math.PI, 0], 2: [-Math.PI / 2, 0], 5: [Math.PI / 2, 0], 3: [0, Math.PI / 2], 4: [0, -Math.PI / 2] };
-    dice.forEach((m, i) => { m.position.set(cx + 0.9 + i * 0.12, 0.85, cz + 0.1); });
+    dice.forEach((m, i) => { m.position.set(cx + 0.9 + i * 0.12, 0.93, cz + 0.1); });
     updaters.push((t, dt, st) => {
       const my = st.my && st.my.game === 'dice' && st.my.view && st.my.view.roll ? st.my : null;
       if (!my) return;
       const r = my.view.roll, s = seats[my.seat], u = Math.min(1, (t - r.t0) / 0.9), e = 1 - Math.pow(1 - u, 2);
-      const from = v3(s.x * M, 1.1, s.y * M), to = v3(cx + (s.x * M < cx ? 1 : -1) * 0.2, 0.845, cz + (s.y * M < cz ? 0.5 : -0.5));
+      const from = v3(s.x * M, 1.15, s.y * M), to = v3(cx + (s.x * M < cx ? 1 : -1) * 0.2, 0.925, cz + (s.y * M < cz ? 0.5 : -0.5));
       dice.forEach((m, i) => {
-        const p = from.clone().lerp(to, e); p.x += (i - 0.5) * 0.14; p.y = 0.845 + Math.abs(Math.sin(u * Math.PI * 3)) * (1 - u) * 0.35 + (1 - e) * 0.2;
+        const p = from.clone().lerp(to, e); p.x += (i - 0.5) * 0.14; p.y = 0.925 + Math.abs(Math.sin(u * Math.PI * 3)) * (1 - u) * 0.35 + (1 - e) * 0.2;
         m.position.copy(p);
         const [rx, rz] = upRot[r.dice[i]];
         m.rotation.set(rx + (1 - e) * 14 * (i ? 1 : -1), (i ? 0.4 : -0.3) + (1 - e) * 9, rz + (1 - e) * 11);
@@ -340,6 +367,7 @@ export function buildMachines(ctx, seats) {
       const x = (o.x + o.w / 2) * M, dz = (o.y + o.h / 2) * M;
       B.add(rbox(0.6, 0.95, 0.45, 0.05), MAT.candy(0x3a1a5a), v3(x, 0.475, dz));
       const btn = new THREE.Mesh(cyl(0.1, 0.1, 0.04, 20), glowMat(0xffd040, 2.4)); btn.position.set(x, 0.98, dz); add(btn);
+      const ws = seats.find(q => q.game === 'wheel' && Math.abs(q.x * M - x) < 0.3); if (ws) RC.deco[ws.id] = [btn];
     }
     updaters.push((t, dt, st) => {
       const my = st.my && st.my.game === 'wheel' && st.my.view ? st.my.view : null;
@@ -355,6 +383,10 @@ export function buildMachines(ctx, seats) {
     B.add(cyl(0.7, 0.8, 0.15, 8), MAT.gold, v3(x, 0.075, z)); B.add(cyl(0.55, 0.62, 0.85, 8), MAT.marble, v3(x, 0.55, z)); B.add(cyl(0.7, 0.6, 0.1, 8), MAT.gold, v3(x, 1.02, z));
     const coin = new THREE.Mesh(cyl(0.42, 0.42, 0.05, 48), [MAT.gold, new THREE.MeshStandardMaterial({ map: T.coinFace(true), metalness: 0.7, roughness: 0.3 }), new THREE.MeshStandardMaterial({ map: T.coinFace(false), metalness: 0.7, roughness: 0.3 })]);
     coin.castShadow = true; add(coin);
+    for (const s of seats.filter(q => q.game === 'coin')) { // a betting stand in front of each coin seat
+      const f = v3(Math.cos(s.face), 0, Math.sin(s.face)), p = v3(s.x * M, 0, s.y * M).addScaledVector(f, 0.74), yw = yawOf(s.face);
+      B.add(rbox(0.92, 0.9, 0.56, 0.05), MAT.candy(0x3a1a5a), p.clone().setY(0.45), yw); B.add(rbox(0.96, 0.03, 0.6, 0.012), MAT.gold, p.clone().setY(0.91), yw);
+    }
     updaters.push((t, dt, st) => {
       const my = st.my && st.my.game === 'coin' && st.my.view && st.my.view.flip ? st.my.view.flip : null;
       if (my) {
@@ -378,8 +410,9 @@ export function buildMachines(ctx, seats) {
     { x: DICE_TABLE.x + DICE_TABLE.w + 34, y: DICE_TABLE.y + DICE_TABLE.h / 2, a: Math.PI },
   ];
 
+  const rig = buildRig(RC, seats, felts);
   return {
-    dealerSpots,
+    dealerSpots, rig,
     update(t, dt, state) {
       state.t = t;
       const cam = state.cam;
@@ -391,6 +424,7 @@ export function buildMachines(ctx, seats) {
         s.acc = 0; s.live.update(t, s.arg(state));
       }
       for (const u of updaters) u(t, dt, state);
+      rig.update(t, dt, state.my);
     },
   };
 }

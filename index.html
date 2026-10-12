@@ -15,7 +15,9 @@
 <!-- In-game HUD -->
 <div id="hud" class="hidden">
   <div id="cross"></div>
+  <div id="aim"></div>
   <div id="hint"></div>
+  <div id="tableHud" class="hidden"></div>
   <div id="lockHint" class="hidden">Click to look around</div>
   <div id="bank">
     <div class="label">Bankroll <span id="closeT"></span></div>
@@ -46,7 +48,6 @@
   </div>
 </div>
 
-<div id="panel" class="hidden"></div>
 <div id="splash" class="hidden"><div id="splashText"></div></div>
 
 <!-- Main menu -->
@@ -108,8 +109,9 @@
       <div class="hcard"><b>Meetings</b><p>Find a body or ring the pit bell. Everyone says what they saw (the killer lies), then votes. Your notes remember who lurked by whose drink.</p></div>
     </div>
     <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, E or click to use, F sip, R sniff, X pour, hold Space to look behind you, 1/2/3 killer moves, Esc menu.
-      At a table the mouse is free for the game: drag to look around, walk to stand up.
-      <b>Phone:</b> left thumb walks, right thumb drags to look, buttons on the right.</p>
+      At a table you play with your hands: aim at a chip, a square on the felt or a button and click (or E) to press it,
+      right-click a stack to take it back; walk to stand up.
+      <b>Phone:</b> left thumb walks, right thumb drags to look, buttons on the right; at a table, tap the chips, squares and buttons.</p>
     <button class="big" id="howClose">Got it</button>
   </div>
 </div>
