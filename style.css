@@ -83,3 +83,27 @@ kbd { font: 12px monospace; background: #2a1b22; border: 1px solid var(--line); 
   #role { max-width: 200px; font-size: 13px; }
   #panel { right: 8px; left: 8px; width: auto; top: auto; bottom: 120px; transform: none; }
 }
+
+/* Touch controls */
+html, body, canvas { touch-action: none; -webkit-user-select: none; user-select: none; }
+.phone { color: var(--muted); font-size: 13px; }
+#stick, #touchBtns { display: none; }
+body.touch #touchBtns { display: flex; position: fixed; right: 12px; bottom: 12px; flex-direction: column; gap: 8px; }
+body.touch #touchBtns button { width: 76px; height: 46px; padding: 0; font-size: 14px; background: rgba(42, 27, 34, 0.85); }
+body.touch #stick { display: block; position: fixed; width: 110px; height: 110px; margin: -55px 0 0 -55px; border-radius: 50%;
+  border: 2px solid var(--line); background: rgba(232, 196, 106, 0.08); opacity: 0; pointer-events: none; }
+body.touch #stick.on { opacity: 1; }
+#knob { position: absolute; left: 35px; top: 35px; width: 40px; height: 40px; border-radius: 50%; background: rgba(232, 196, 106, 0.6); }
+body.touch #bottom { left: 12px; transform: none; align-items: flex-start; bottom: 12px; max-width: calc(100vw - 110px); pointer-events: none; }
+body.touch #bottom button { pointer-events: auto; }
+body.touch #drinkInfo { font-size: 12px; }
+body.touch #panel { left: auto; right: 100px; width: min(300px, calc(100vw - 112px)); top: 8px; bottom: auto; transform: none; max-height: calc(100vh - 16px); overflow-y: auto; }
+body.touch #role { display: none; }
+.overlay { overflow-y: auto; align-items: flex-start; }
+.card { margin: auto; }
+@media (max-height: 500px) {
+  .card { padding: 14px 16px; }
+  .card h1 { font-size: 30px; }
+  #mChat { min-height: 120px; max-height: 40vh; }
+  #bank { padding: 6px 10px; width: 190px; }
+}

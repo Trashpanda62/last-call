@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Last Call</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -27,6 +27,14 @@
     </div>
   </div>
   <div id="toasts"></div>
+  <div id="stick"><div id="knob"></div></div>
+  <div id="touchBtns">
+    <button data-key="e">Use</button>
+    <button data-key="f">Sip</button>
+    <button data-key="r">Sniff</button>
+    <button data-key="x">Pour</button>
+    <button data-key="back">Look back</button>
+  </div>
 </div>
 
 <div id="panel" class="hidden"></div>
@@ -45,6 +53,7 @@
       <span><kbd>F</kbd> sip</span><span><kbd>R</kbd> sniff a drink</span><span><kbd>X</kbd> pour out</span>
       <span><kbd>Space</kbd> look behind you (seated)</span>
     </div>
+    <p class="phone">On a phone: drag your left thumb to walk, tap the floor to look that way, and use the buttons on the right. Turn your phone sideways.</p>
     <div class="row">
       <button class="big" data-role="random">Deal me in</button>
       <button data-role="gambler">Play gambler</button>

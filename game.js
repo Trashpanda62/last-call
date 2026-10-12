@@ -155,6 +155,8 @@
   const view = $('view'), ctx = view.getContext('2d');
   const dark = document.createElement('canvas'), dctx = dark.getContext('2d');
   const keys = {}; const mouse = { x: 0, y: 0 };
+  const stick = { id: null, active: false, x: 0, y: 0, ox: 0, oy: 0 };
+  let touchMode = false, tapLook = false, lookBack = false;
   let cam = { x: 0, y: 0, z: 1 };
 
   function newGame(roleChoice) {
@@ -698,15 +700,16 @@
     const p = S.player;
     let mx = (keys.d || keys.arrowright ? 1 : 0) - (keys.a || keys.arrowleft ? 1 : 0);
     let my = (keys.s || keys.arrowdown ? 1 : 0) - (keys.w || keys.arrowup ? 1 : 0);
+    if (stick.active && Math.hypot(stick.x, stick.y) > 0.25) { mx += stick.x; my += stick.y; }
     if (p.seat) {
-      p.look = p.face + (keys[' '] ? Math.PI : 0);
-      if (mx || my) { standUp(p); closePanel(); }
+      p.look = p.face + (keys[' '] || lookBack ? Math.PI : 0);
+      if (Math.hypot(mx, my) > 0.6) { standUp(p); closePanel(); }
       return;
     }
-    const wm = screenToWorld(mouse.x, mouse.y);
-    p.look = p.face = Math.atan2(wm.y - p.y, wm.x - p.x);
+    if (!touchMode || tapLook) { const wm = screenToWorld(mouse.x, mouse.y); p.look = p.face = Math.atan2(wm.y - p.y, wm.x - p.x); }
+    if (touchMode && (mx || my)) { tapLook = false; p.look = p.face = Math.atan2(my, mx); }
     if (mx || my) {
-      const l = Math.hypot(mx, my); mx /= l; my /= l;
+      const l = Math.hypot(mx, my); if (l > 1) { mx /= l; my /= l; }
       const sp = !p.alive ? CFG.ghostSpeed : p.thirst <= 0 ? CFG.playerSpeed * CFG.parched : CFG.playerSpeed;
       p.x += mx * sp * dt; p.y += my * sp * dt;
       if (p.alive) collide(p); else { p.x = clamp(p.x, 0, W); p.y = clamp(p.y, 0, H); }
@@ -831,7 +834,7 @@
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     view.width = Math.max(1, Math.round(innerWidth * dpr)); view.height = Math.max(1, Math.round(innerHeight * dpr));
     dark.width = view.width; dark.height = view.height;
-    cam.z = Math.min(view.width / 1150, view.height / 760);
+    cam.z = dpr * Math.min(innerWidth / 1150, innerHeight / (innerHeight < 560 ? 520 : 760));
   }
   function screenToWorld(sx, sy) {
     const dpr = view.width / innerWidth;
@@ -1010,6 +1013,35 @@
   addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
   addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
   addEventListener('resize', resize);
+  // Touch: left thumb drags a joystick, a tap elsewhere on the floor turns you to face it, buttons do the rest.
+  const stickEl = $('stick'), knob = $('knob');
+  view.addEventListener('touchstart', e => {
+    e.preventDefault(); setTouch();
+    for (const t of e.changedTouches) {
+      if (t.clientX < innerWidth * 0.45 && stick.id === null) {
+        stick.id = t.identifier; stick.ox = t.clientX; stick.oy = t.clientY; stick.active = true; stick.x = stick.y = 0;
+        stickEl.style.left = t.clientX + 'px'; stickEl.style.top = t.clientY + 'px'; stickEl.classList.add('on'); knob.style.transform = '';
+      } else { mouse.x = t.clientX; mouse.y = t.clientY; tapLook = true; }
+    }
+  }, { passive: false });
+  view.addEventListener('touchmove', e => {
+    e.preventDefault();
+    for (const t of e.changedTouches) {
+      if (t.identifier !== stick.id) { mouse.x = t.clientX; mouse.y = t.clientY; tapLook = true; continue; }
+      let dx = t.clientX - stick.ox, dy = t.clientY - stick.oy; const l = Math.hypot(dx, dy), max = 50;
+      if (l > max) { dx *= max / l; dy *= max / l; }
+      stick.x = dx / max; stick.y = dy / max; knob.style.transform = `translate(${dx}px, ${dy}px)`;
+    }
+  }, { passive: false });
+  const endTouch = e => { for (const t of e.changedTouches) if (t.identifier === stick.id) { stick.id = null; stick.active = false; stick.x = stick.y = 0; stickEl.classList.remove('on'); } };
+  view.addEventListener('touchend', endTouch); view.addEventListener('touchcancel', endTouch);
+  function setTouch() { if (!touchMode) { touchMode = true; document.body.classList.add('touch'); } }
+  addEventListener('touchstart', setTouch, { passive: true });
+  document.querySelectorAll('#touchBtns [data-key]').forEach(b => {
+    b.addEventListener('touchstart', e => { e.preventDefault(); if (b.dataset.key === 'back') lookBack = true; else onKey(b.dataset.key); }, { passive: false });
+    b.addEventListener('touchend', e => { e.preventDefault(); if (b.dataset.key === 'back') lookBack = false; });
+    b.addEventListener('click', () => { if (b.dataset.key !== 'back') onKey(b.dataset.key); });
+  });
   document.querySelectorAll('[data-role]').forEach(b => { b.onclick = () => newGame(b.dataset.role); });
   $('again').onclick = () => { $('over').classList.add('hidden'); $('title').classList.remove('hidden'); $('hud').classList.add('hidden'); S = null; SEATS.forEach(s => { s.occ = null; s.claim = null; }); };
   document.querySelectorAll('#killerBar button').forEach(b => { b.onclick = () => onKey(b.dataset.k); });
