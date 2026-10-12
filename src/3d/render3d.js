@@ -103,8 +103,8 @@ function resize() {
   R.bloom.resolution.set(w / 2, h / 2);
   // keep roughly the same horizontal view on tall screens
   const aspect = w / h, fov = aspect < 1 ? Math.min(100, 2 * Math.atan(Math.tan(FOV * Math.PI / 360) * 1.6 / aspect) * 180 / Math.PI * 0.62) : FOV;
-  R.camera.aspect = aspect; R.camera.fov = fov; R.camera.updateProjectionMatrix();
-  R.hands.setAspect(aspect, fov);
+  R.camera.aspect = aspect; R.baseFov = fov; R.camera.fov = fov * (R.zoom || 1); R.camera.updateProjectionMatrix();
+  R.hands.setAspect(aspect, R.camera.fov);
 }
 
 function beanFor(c) {
@@ -140,6 +140,9 @@ export function draw(frame) {
   resize();
   const now = performance.now(); const dt = Math.min(0.1, (now - R.last) / 1000); R.last = now;
   const { pub, priv, me } = frame;
+  // seated on a phone in landscape the view narrows a little so the table's parts are big enough to tap
+  const zoom = frame.zoom || 1;
+  if (Math.abs((R.zoom || 1) - zoom) > 0.002) { R.zoom = (R.zoom || 1) + (zoom - (R.zoom || 1)) * Math.min(1, dt * 5); if (Math.abs(R.zoom - zoom) < 0.004) R.zoom = zoom; R.camera.fov = R.baseFov * R.zoom; R.camera.updateProjectionMatrix(); R.hands.setAspect(R.camera.aspect, R.camera.fov); }
   const t = pub ? pub.t : now / 1000;
   const orbit = frame.mode !== 'fp' || !pub;
   const meeting = pub && pub.mode === 'meeting';

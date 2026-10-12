@@ -6,7 +6,7 @@ import * as T from './textures.js';
 import * as P from '../paint.js';
 import * as Gm from '../games.js';
 import { MAT, GLOWS, glowMat, basicGlow, v3, box, rbox, cyl, sph, lathe, torus, yawOf, uvScale } from './world.js';
-import { buildRig, rouletteLayoutTex, diceLayoutTex, LANE } from './rig.js';
+import { buildRig, rouletteLayoutTex, diceLayoutTex, LANE, STANDS } from './rig.js';
 import { BJ_TABLES, RL_TABLE, CRASH_SCREEN, PLINKO_YS, MINES_XS, TOWER_XS, POND, RACE_XS, SLOT_WEST_YS, SLOT_SOUTH_XS, JACKPOT, DICE_TABLE, WHEEL_X, COIN, OBSTACLES } from '../map.js';
 
 const M = 1 / 60;
@@ -410,6 +410,13 @@ export function buildMachines(ctx, seats) {
     { x: DICE_TABLE.x + DICE_TABLE.w + 34, y: DICE_TABLE.y + DICE_TABLE.h / 2, a: Math.PI },
   ];
 
+  // betting stands where a seat is too far from its machine to reach the chips
+  for (const s of seats) {
+    const st = STANDS[s.game]; if (!st) continue;
+    const f = v3(Math.cos(s.face), 0, Math.sin(s.face)), p = v3(s.x * M, 0, s.y * M).addScaledVector(f, st[0]), yw = yawOf(s.face);
+    B.add(rbox(st[1] * 0.9, st[3] - 0.03, st[2] * 0.8, 0.05), MAT.candy(0x1a2a8a), p.clone().setY((st[3] - 0.03) / 2), yw);
+    B.add(rbox(st[1], 0.03, st[2], 0.012), MAT.chrome, p.clone().setY(st[3] - 0.015), yw);
+  }
   const rig = buildRig(RC, seats, felts);
   return {
     dealerSpots, rig,

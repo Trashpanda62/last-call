@@ -6,7 +6,7 @@ import { createGame } from './sim.js';
 import { init as init3d, draw, playHand, info as gfxInfo, pick, pickNear, partsOnScreen, screenPointOf, setHover, camPos } from './3d/render3d.js';
 import * as audio from './audio.js';
 import { $, show, toast, splash, updateHud, renderMeeting, resetMeeting, renderOver } from './ui.js';
-import { openTable, closeTable, tableGame, tableView, tableTick, tableHud, setHandHook, press as pressPart, partInfo } from './tables.js';
+import { openTable, closeTable, tableGame, tableSeat, tableView, tableTick, tableHud, setHandHook, press as pressPart, partInfo } from './tables.js';
 import { hostRoom, joinRoom } from './net.js';
 
 const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* optional */ } } };
@@ -184,7 +184,7 @@ function moveMe(dt) {
   const p = v.priv, me = S.me;
   if (p.posVer !== me.posVer) {
     me.x = p.x; me.y = p.y; me.posVer = p.posVer; S.standReq = false;
-    if (p.seat) { me.look = p.seat.face; me.pitch = (SEAT_PITCH[p.seat.game] ?? -0.4) - (touchMode ? 0.1 : 0); } else if (S.wasSeated) me.pitch = 0;
+    if (p.seat) { me.look = p.seat.face; me.pitch = (SEAT_PITCH[p.seat.game] ?? -0.4) + (touchMode ? (innerHeight > innerWidth ? 0.14 : 0.05) : 0); } else if (S.wasSeated) me.pitch = 0;
     else { const c = v.pub.chars[p.me]; if (c) me.look = c.look; me.pitch = 0; }
     S.wasSeated = !!p.seat;
   }
@@ -212,7 +212,7 @@ function moveMe(dt) {
   }
 }
 
-// Seated, the camera starts tilted down toward the felt (more on phones, so the layout fills the view).
+// Seated, the camera starts tilted down toward the felt and the chips (phones zoom in a little instead, see draw).
 const SEAT_PITCH = { bj: -0.55, roulette: -0.66, dice: -0.6, slots: -0.14, plinko: -0.3, mines: -0.32, tower: -0.32, crash: -0.42, race: -0.56, coin: -0.5, wheel: -0.44, vip: -0.2 };
 const seatedPlay = () => S.screen === 'game' && !S.paused && S.view && S.view.priv.seat && S.view.pub.mode === 'play' && !S.view.pub.over;
 // Press the part of your table under a screen point (NDC). alt: take chips back. near: phones snap to the
@@ -406,7 +406,7 @@ function frameGame(dt) {
   else if (S.role === 'guest' && S.room) { S.sendT += dt; if (S.sendT >= 0.05) { S.sendT = 0; S.room.send({ t: 'in', ...inputPayload() }); } }
   const v = S.view; if (!v) { drawDemo(dt); return; }
   const { pub, priv } = v;
-  if (priv.seat && pub.mode === 'play' && !pub.over && tableGame() !== priv.seat.game) openTable(priv.seat, act, v);
+  if (priv.seat && pub.mode === 'play' && !pub.over && tableSeat() !== priv.seat.id) { closeTable(); openTable(priv.seat, act, v); }
   if ((!priv.seat || pub.mode !== 'play' || pub.over) && tableGame()) closeTable();
   if (pub.mode !== S.lastMode) {
     if (pub.mode === 'meeting') { releaseLock(); splash(pub.meeting.title.toUpperCase()); only('meeting'); audio.setMood('meeting'); S.paused = false; show('pause', false); }
@@ -428,12 +428,13 @@ function frameGame(dt) {
   const fp = pub.mode === 'play' && !pub.over;
   show('cross', fp && !touchMode);
   show('lockHint', fp && !touchMode && lockOK() && !locked() && wantLock());
-  draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit', my: tableView() });
+  draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit', my: tableView(), zoom: touchMode && seatedPlay() && innerWidth > innerHeight ? 0.74 : 1 });
   seatedHud();
 }
 // Seated: name what the crosshair is on (phones: what you just tapped), and the bet readout.
 function seatedHud() {
   const seated = seatedPlay() && tableGame();
+  document.body.classList.toggle('seated', !!seated);
   aim = seated && !touchMode && S.backT < 0.3 ? pick(0, 0) : null;
   const tap = touchMode && tapShow && performance.now() - tapShow.t < 900 ? tapShow.h : null;
   const h = aim || tap; setHover(seated ? h : null);

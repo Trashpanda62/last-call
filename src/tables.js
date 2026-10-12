@@ -28,6 +28,7 @@ let crashAuto = 2;        // auto cash-out, remembered
 let hand = () => {};      // first-person hand animation hook: hand(kind)
 export function setHandHook(fn) { hand = fn; }
 export const tableGame = () => tb && tb.game;
+export const tableSeat = () => tb ? tb.seat : -1;
 
 // ---------- Open, close, tick ----------
 export function openTable(seat, act, v) {

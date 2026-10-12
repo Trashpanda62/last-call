@@ -133,10 +133,10 @@ function liveLabel(w, h, paint) { const lc = T.liveCanvas(w, h, paint); lc.key =
 // Where each game's parts sit, in the seat's frame: [ahead, right, height, tilt]. The kit is the chip tray, keypad,
 // rail and game buttons on one slab.
 const AT = {
-  bj: { kit: [0.72, 0, 0.885, 0.05] },
+  bj: { kit: [0.66, 0, 0.885, 0.06] },
   roulette: { kit: [0.47, 0, 0.885, 0.1] },
   dice: { kit: [0.5, 0, 0.99, 0.1] },
-  plinko: { kit: [0.97, 0, 0.84, 0.1], pad: [1.3, -0.5, 0.805], scr: [1.24, 0, 1.04, 0.4] },
+  plinko: { kit: [0.6, 0, 0.86, 0.12], pad: [0.9, 0, 0.862], scr: [1.24, 0, 1.04, 0.4] }, // on a betting stand (machines.js)
   mines: { kit: [0.6, 0, 0.9, 0.1], pad: [0.9, 0, 0.952] },
   tower: { kit: [0.6, 0, 0.9, 0.1], pad: [0.9, 0, 0.952] },
   crash: { kit: [0.5, 0, 0.95, 0.12], pad: [0.8, -0.17, 1.012], plunger: [0.8, 0.17, 1.012], autos: [1.0, 0, 1.012] },
@@ -153,6 +153,7 @@ const GAME_BTNS = {
   crash: [['bet', 'BET', 0x2ac070]], race: [['bet', 'BET', 0x2ac070]], coin: [['flip', 'FLIP', 0xe8b440], ['take', 'TAKE', 0x2ac070]], wheel: [['spin', 'SPIN', 0xe8b440]],
 };
 export const SCALE = { desk: 0.86, touch: 1.15 }; // the kit's size: smaller with a mouse, bigger for thumbs
+export const STANDS = { plinko: [0.68, 0.96, 0.62, 0.86] }; // betting stands in front of these seats: [ahead, width, depth, height]
 export const LANE = { w: 0.98, d: 0.36 }; // the duck-race desk card
 
 // ctx.seatScreens: seat id -> the console screen mesh (Mines, Dragon Tower); ctx.slotLevers: seat id -> lever pivot;
@@ -166,7 +167,7 @@ export function buildRig(ctx, seats, felts) {
   // ----- a button: a lit rounded body and a painted cap -----
   function button(id, text, w, d, color, { h = 0.028, ink = '#1a1014', size = 0.55, sub = '' } = {}) {
     const g = new THREE.Group(), base = new THREE.Color(color);
-    const glow = base.r * 0.3 + base.g * 0.55 + base.b * 0.15 > 0.6 ? 0.06 : 0.38; // pale keys would bloom white
+    const glow = base.r * 0.3 + base.g * 0.55 + base.b * 0.15 > 0.6 ? 0.0 : 0.3; // pale keys would bloom white
     const bodyMat = new THREE.MeshStandardMaterial({ color: base, roughness: 0.32, metalness: 0.05, emissive: base.clone(), emissiveIntensity: glow });
     const body = new THREE.Mesh(rbox(w, h, d, Math.min(0.012, w / 4)), bodyMat); body.position.y = h / 2; g.add(body);
     const capMat = new THREE.MeshBasicMaterial({ map: label(text, w, d, { ink, size, sub }), transparent: true, depthWrite: false });
@@ -179,20 +180,21 @@ export function buildRig(ctx, seats, felts) {
   function light(b, on, hover, sel) {
     const u = b.userData;
     u.bodyMat.color.copy(u.base).multiplyScalar(on ? 1 : 0.28);
-    u.bodyMat.emissiveIntensity = on ? (sel ? 1.1 : u.glow) + (hover ? 0.3 + u.glow : 0) : hover ? 0.1 : 0.02;
+    u.bodyMat.emissiveIntensity = on ? (sel ? 0.9 : u.glow) + (hover ? 0.22 : 0) : hover ? 0.08 : 0.02;
     u.capMat.opacity = on ? 1 : 0.4;
   }
 
   // ----- the kit: slab, keypad and display, chips, rail buttons; game buttons per game -----
   const kit = new THREE.Group(); root.add(kit);
-  kit.add(at(new THREE.Mesh(rbox(0.88, 0.024, 0.36, 0.012), MAT.blackGloss), -0.014, -0.012, -0.024));
+  const SLAB = new THREE.MeshStandardMaterial({ color: 0x141016, roughness: 0.82, metalness: 0 });
+  kit.add(at(new THREE.Mesh(rbox(0.88, 0.024, 0.36, 0.012), SLAB), -0.014, -0.012, -0.024)); // matte: a gloss slab mirrors the ceiling lights into a bloom under your hands
   kit.add(at(new THREE.Mesh(rbox(0.9, 0.012, 0.38, 0.006), MAT.gold), -0.014, -0.022, -0.024));
   // 7 8 9 C / 4 5 6 OK / 1 2 3 OK / 0 000 OK: [column, row, columns wide, rows tall]
   const KP = 0.066, KX = -0.395, KZ = -0.075, keys = [];
   const KPOS = { 7: [0, 0], 8: [1, 0], 9: [2, 0], C: [3, 0], 4: [0, 1], 5: [1, 1], 6: [2, 1], OK: [3, 1, 1, 3], 1: [0, 2], 2: [1, 2], 3: [2, 2], 0: [0, 3], '000': [1, 3, 2, 1] };
   KEYS.forEach(k => {
     const [c, r, cw = 1, rh = 1] = KPOS[k], w = KP * cw - 0.008, d = KP * rh - 0.008, x = KX + (c + (cw - 1) / 2) * KP, z = KZ + (r + (rh - 1) / 2) * KP;
-    const b = button('key:' + k, k, w, d, k === 'OK' ? 0x2ac070 : k === 'C' ? 0xd83a3a : 0xe8e0cc, { size: k.length > 1 ? 0.42 : 0.6, h: 0.022 });
+    const b = button('key:' + k, k, w, d, k === 'OK' ? 0x2ac070 : k === 'C' ? 0xd83a3a : 0xd6ccb4, { size: k.length > 1 ? 0.42 : 0.6, h: 0.022 });
     b.position.set(x, 0, z); kit.add(b); keys.push(b);
   });
   const disp = liveLabel(256, 56, (g, w, h, t, s) => {
@@ -276,7 +278,7 @@ export function buildRig(ctx, seats, felts) {
   plScrMesh.userData.scr = true; root.add(plScrMesh);
 
   // ----- chip stacks: one instanced mesh for every chip on the table -----
-  const MAXC = 900, sGeo = cyl(0.026, 0.026, 0.0085, 24);
+  const MAXC = 900, sGeo = cyl(0.03, 0.03, 0.0095, 24);
   const stackMesh = new THREE.InstancedMesh(sGeo, [stackMat(stripes(true)), stackMat(stripes(false)), stackMat(stripes(false))], MAXC);
   stackMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage); stackMesh.count = 0; stackMesh.castShadow = true; stackMesh.frustumCulled = false;
   const chipCols = CHIP_COL.map(c => new THREE.Color(c));
@@ -331,15 +333,16 @@ export function buildRig(ctx, seats, felts) {
 
   // Set up the parts for the seat I just sat at.
   function setup(my) {
-    const seat = seats[my.seat], F = frameOf(seat), A = AT[my.game] || {}, sc = document.body.classList.contains('touch') ? SCALE.touch : SCALE.desk;
-    cur = { seat: my.seat, game: my.game, F, A, lanes: null, scr: null, lever: null };
+    const seat = seats[my.seat], F = frameOf(seat), A = AT[my.game] || {}, touch = document.body.classList.contains('touch'), sc = touch ? SCALE.touch : SCALE.desk;
+    const portrait = innerHeight > innerWidth;
+    cur = { seat: my.seat, game: my.game, F, A, lanes: null, scr: null, lever: null, portrait };
     root.visible = true;
     for (const o of [kit, plunger, autos, handle, slotBar, plScrMesh, ...Object.values(pads)]) o.visible = false;
     for (const g in gameRows) gameRows[g].visible = false;
     hit.length = 0;
     const addHits = (obj) => obj.traverse(m => { if (m.isMesh && (m.userData.part || m.userData.uvPart || m.userData.scr)) hit.push(m); });
-    if (A.kit) {
-      place(kit, F, A.kit, sc);
+    if (A.kit) { // on a tall phone the chips and buttons sit straight ahead and the keypad off to the left
+      place(kit, F, portrait && touch ? [A.kit[0], A.kit[1] - 0.15 * sc, A.kit[2], A.kit[3]] : A.kit, sc);
       for (const b of keys) addHits(b); for (const c of chipBtns) addHits(c); for (const b of rails) addHits(b);
       const row = gameRow(my.game); row.visible = true; addHits(row);
     }
@@ -399,7 +402,7 @@ export function buildRig(ctx, seats, felts) {
     screenPoint(x, y) { const s = cur && cur.scr; if (!s) return null; const g = s.geometry.parameters; return s.localToWorld(v3((x - 0.5) * g.width, (0.5 - y) * g.height, 0.001)); },
     update(t, dt, my) {
       if (!my || my.game === 'vip') { teardown(); return; }
-      if (!cur || cur.seat !== my.seat) { teardown(); setup(my); }
+      if (!cur || cur.seat !== my.seat || cur.portrait !== innerHeight > innerWidth) { teardown(); setup(my); }
       const on = my.on || {}, pr = my.pressed && t - my.pressed.t < 0.16 ? my.pressed.id : '';
       const dip = (b, id) => { b.children[0].position.y = b.userData.body.geometry.parameters.height / 2 - (pr === id ? 0.012 : 0); b.children[1].position.y = b.userData.body.geometry.parameters.height + 0.0012 - (pr === id ? 0.012 : 0); };
       // buttons light up when they do something
@@ -462,7 +465,7 @@ export function buildRig(ctx, seats, felts) {
         const fresh = s.add ? t - s.add : 9;
         for (let j = 0; j < list.length && n < MAXC; j++, n++) {
           const top = j === list.length - 1 && fresh < 0.2 ? (1 - fresh / 0.2) * 0.07 : 0;
-          pp.copy(base); pp.y += 0.0045 + j * 0.0087 + dy + top;
+          pp.copy(base); pp.y += 0.005 + j * 0.0097 + dy + top;
           sc.set(k, k, k); q.setFromAxisAngle(Y, j * 0.7 + s.spot.length);
           mtx.compose(pp, q, sc); stackMesh.setMatrixAt(n, mtx); stackMesh.setColorAt(n, chipCols[list[j]]);
         }

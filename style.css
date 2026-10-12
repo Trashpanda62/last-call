@@ -181,6 +181,7 @@ body.touch #hud > #hint { display: none; }
 #tableHud .win { color: #5aff9a; } #tableHud .lose { color: #ff6a6a; } #tableHud .flash { color: #ffd040; }
 body.touch #tableHud { left: 50%; top: max(8px, env(safe-area-inset-top)); bottom: auto; font-size: 12px; padding: 4px 10px; gap: 8px; max-width: calc(100vw - 420px); }
 body.touch #aim { top: calc(max(8px, env(safe-area-inset-top)) + 36px); }
+body.touch.seated #drinkInfo { display: none; }
 @media (orientation: portrait) and (max-width: 640px) {
   body.touch #tableHud { top: auto; bottom: calc(max(10px, env(safe-area-inset-bottom)) + 96px); left: 10px; transform: none; max-width: calc(100vw - 110px); flex-wrap: wrap; white-space: normal; }
   body.touch #aim { bottom: calc(max(10px, env(safe-area-inset-bottom)) + 66px); left: 10px; transform: none; max-width: calc(100vw - 110px); white-space: normal; }
