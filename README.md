@@ -17,7 +17,7 @@ WebAudio sound. three.js r185 is vendored in `vendor/three`.
 
 ## Modes
 
-- **Solo:** you plus bots. Pick players (4-16), killers (up to 2 at 7+, 3 at 11+, 4 at 14+; the most is the balanced
+- **Solo:** you plus bots. Pick players (4-16), killers (up to 2 at 7+, 3 at 11+, 4 at 13+; the most is the balanced
   game), bot smarts and your role.
 - **Online:** host a room and share the 4-letter code or the invite link (`?join=CODE`). Empty seats are bots.
   The host's browser runs the game and the guests connect over WebRTC through PeerJS's free broker.

@@ -3,10 +3,10 @@ export const CFG = {
   // The crew bank. Every bet also earns the crew a comp (a share of the bet, win or lose).
   startBank: 500000, comp: 0.2,
   // The target is the start bank times this, by player count (more players play more tables at once).
-  targets: { 4: 1.7, 5: 2.8, 6: 4.8, 7: 3.3, 8: 5, 9: 8.8, 10: 23.7, 11: 10.5, 12: 15.6, 13: 29.9, 14: 17, 15: 28, 16: 54.6 },
+  targets: { 4: 1.7, 5: 2.8, 6: 4.8, 7: 3.3, 8: 5, 9: 8.8, 10: 23.7, 11: 10.5, 12: 15.6, 13: 11, 14: 17, 15: 28, 16: 54.6 },
   killerBank: { 1: 1, 2: 0.7, 3: 0.55, 4: 0.45 }, // more killers, a smaller target
   cdScale: { 1: 1, 2: 1.45, 3: 1.85, 4: 2.25 },      // cooldowns stretch while several killers are alive
-  maxKillers: n => n >= 14 ? 4 : n >= 11 ? 3 : n >= 7 ? 2 : 1,
+  maxKillers: n => n >= 13 ? 4 : n >= 11 ? 3 : n >= 7 ? 2 : 1,
   playerSpeed: 150, ghostSpeed: 230, botSpeed: 118, radius: 15,
   viewRange: 380, darkRange: 120, coneHalf: Math.PI / 3, nearSense: 28,
   thirstDrain: 1.1, sipGain: 30, drinkSips: 4, parched: 0.6,
