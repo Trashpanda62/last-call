@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Last Call v4 looks</title>
+<style>
+  :root { --bg: #140d11; --ink: #f3ead8; --muted: #b9ab90; --gold: #e8c46a; --card: #22161c; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.45 Georgia, serif; padding: 16px; }
+  main { max-width: 1100px; margin: 0 auto; }
+  h1 { color: var(--gold); margin: 0 0 4px; font-size: 32px; }
+  h2 { color: var(--gold); margin: 28px 0 6px; font-size: 20px; }
+  p { margin: 6px 0; color: var(--muted); }
+  .grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .grid.three { grid-template-columns: repeat(3, 1fr); } .grid.three .wide { grid-column: span 2; } }
+  .opt { background: var(--card); border: 2px solid transparent; border-radius: 12px; padding: 8px; cursor: pointer; }
+  .opt.on { border-color: var(--gold); }
+  .opt img { width: 100%; display: block; border-radius: 8px; }
+  .opt b { display: block; margin: 6px 2px 0; color: var(--ink); }
+  .opt span { display: block; margin: 0 2px 2px; color: var(--muted); font-size: 14px; }
+  .bar { position: sticky; bottom: 0; background: var(--bg); padding: 12px 0; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  button { font: bold 16px system-ui, sans-serif; background: var(--gold); color: #1a1014; border: 0; border-radius: 10px; padding: 12px 18px; }
+  #picked { color: var(--muted); font-size: 14px; }
+  textarea { width: 100%; min-height: 70px; background: var(--card); color: var(--ink); border: 1px solid #4a3418; border-radius: 8px; padding: 8px; font: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Last Call v4: pick a look</h1>
+  <p>Generated with Sorceress (181 credits so far). Tap one scene and one bean. They can mix: a scene sets the world's look, a bean sets the characters.</p>
+
+  <h2>1. The casino look</h2>
+  <div class="grid" data-q="scene">
+    <div class="opt" data-v="A"><img src="scene-a.jpg" alt="Scene A"><b>A · Plush diorama</b><span>Felt and velvet beans, stitched seams, warm Art Deco, stop-motion film lighting.</span></div>
+    <div class="opt" data-v="B"><img src="scene-b.jpg" alt="Scene B"><b>B · Glossy neon Vegas</b><span>Shiny vinyl toys, magenta and cyan neon, mirrored gold.</span></div>
+    <div class="opt" data-v="C"><img src="scene-c.jpg" alt="Scene C"><b>C · Chunky cartoon</b><span>Googly eyes, oversized props, bright cosy indie-game look.</span></div>
+  </div>
+
+  <h2>2. The bean (this becomes the rigged 3D character)</h2>
+  <div class="grid three" data-q="bean">
+    <div class="opt" data-v="A"><img src="bean-a.jpg" alt="Bean A"><b>A · Plush</b><span>Red felt, button eyes, stitched smile.</span></div>
+    <div class="opt" data-v="B"><img src="bean-b.jpg" alt="Bean B"><b>B · Vinyl toy</b><span>Glossy plastic, big shiny eyes. Would be redrawn in an A-pose before the 3D model.</span></div>
+    <div class="opt" data-v="C"><img src="bean-c.jpg" alt="Bean C"><b>C · Cartoon</b><span>Matte, googly eyes, big grin.</span></div>
+  </div>
+
+  <h2>3. The 3D test: a slot machine</h2>
+  <p>The image became the 3D game model next to it (12,000 polygons, rendered from four sides). The chrome came out matte white; a material fix in the game brings the shine back.</p>
+  <div class="grid three">
+    <div class="opt" style="cursor:default"><img src="slot-image.jpg" alt="Slot machine image"><b>Image</b></div>
+    <div class="opt wide" style="cursor:default"><img src="slot-3d.jpg" alt="Slot machine 3D renders"><b>3D model</b></div>
+  </div>
+
+  <h2>Notes (optional)</h2>
+  <textarea id="notes" placeholder="Anything to change, mix or avoid"></textarea>
+
+  <div class="bar"><button id="copy">Copy my picks</button><span id="picked">Nothing picked yet.</span></div>
+</main>
+<script>
+  const picks = {};
+  document.querySelectorAll('[data-q]').forEach(g => g.querySelectorAll('.opt').forEach(o => o.addEventListener('click', () => {
+    g.querySelectorAll('.opt').forEach(x => x.classList.remove('on')); o.classList.add('on'); picks[g.dataset.q] = o.dataset.v; show();
+  })));
+  const text = () => `Last Call v4 looks: scene ${picks.scene || '-'}, bean ${picks.bean || '-'}` + (document.getElementById('notes').value.trim() ? `. Notes: ${document.getElementById('notes').value.trim()}` : '');
+  function show() { document.getElementById('picked').textContent = text(); }
+  document.getElementById('notes').addEventListener('input', show);
+  document.getElementById('copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(text()); document.getElementById('copy').textContent = 'Copied'; }
+    catch (e) { prompt('Copy this:', text()); }
+  });
+</script>
+</body>
+</html>
