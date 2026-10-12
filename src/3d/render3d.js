@@ -10,6 +10,7 @@ import { buildWorld, GLOWS, M, yawOf } from './world.js';
 import { Bean } from './chars.js';
 import { Items } from './items.js';
 import { Hands } from './hands.js';
+import { Hazards } from './hazards.js';
 import { setAniso } from './textures.js';
 import { BELL } from '../map.js';
 import { ringRadius } from '../sim.js';
@@ -57,6 +58,7 @@ export function init(canvas, { lowPower = false } = {}) {
   for (let i = 0; i < POOL; i++) { const l = new THREE.PointLight(0xffd29a, 0, 10, 1.6); scene.add(l); pool.push(l); }
   const world = buildWorld(scene);
   const items = new Items(scene);
+  const hazards = new Hazards(scene);
   const hands = new Hands(); hands.scene.environment = env; hands.scene.environmentIntensity = 0.3;
   const dealerSpots = world.machines.dealerSpots;
   const dealers = dealerSpots.map(() => new Bean({ color: '#22201e', hat: 'visor', dealer: true }));
@@ -87,7 +89,7 @@ export function init(canvas, { lowPower = false } = {}) {
   const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.45, 0.55, 0.92); composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
-  R = { renderer, scene, camera, composer, bloom, gtao, hemi, fill, key, torch, pool, world, items, hands, beans: new Map(), dealers, dealerSpots, lowPower,
+  R = { renderer, scene, camera, composer, bloom, gtao, hemi, fill, key, torch, pool, world, items, hazards, hands, beans: new Map(), dealers, dealerSpots, lowPower,
     dark: 0, orbitA: 0, tourT: 0, last: performance.now(), size: '', fp: { bob: 0 }, me: -1 };
   return R;
 }
@@ -207,6 +209,7 @@ export function draw(frame) {
     R.hands.setSuit(myChar.color);
     const d = priv.drink && priv.drink.held ? pub.drinks.find(x => x.holder === meIdx) : null;
     R.hands.update({ dt, t, drink: d ? { kind: d.kind, color: d.color, sips: d.sips } : null, seated, game: priv.seat && priv.seat.game, moving: me.moving, ghost, light: lit + R.dark * 0.25, hidden: false });
+    if (R.hazards.cctv(cam, pub, priv)) handsHidden = true; // the security desk shows the live camera
   }
   if (handsHidden) R.hands.update({ hidden: true, dt });
   cam.updateMatrixWorld();
@@ -218,6 +221,7 @@ export function draw(frame) {
   R.key.target.position.set(tx, 0, tz); R.key.position.set(tx + 2.5, 12, tz + 3.5); R.key.target.updateMatrixWorld();
   R.world.update(now / 1000, dt, { pub, priv, my: frame.my || null, cam: cam.position });
   if (pub) R.items.update(pub, priv || { me: -1, spiked: [], alive: true }, R.beans, t, dt, { firstPerson: !orbit, camera: cam });
+  if (pub) R.hazards.update(pub, priv, R.beans, t, dt);
   R.composer.render(dt);
 }
 

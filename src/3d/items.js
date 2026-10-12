@@ -50,6 +50,8 @@ const bubbleMat = new THREE.MeshBasicMaterial({ color: 0x7dff5a, transparent: tr
 const puddleMats = {
   poison: new THREE.MeshStandardMaterial({ color: 0x5aff40, emissive: 0x2a8020, transparent: true, opacity: 0.6, roughness: 0.1 }),
   shiv: new THREE.MeshStandardMaterial({ color: 0x9a0a10, transparent: true, opacity: 0.85, roughness: 0.15 }),
+  drown: new THREE.MeshStandardMaterial({ color: 0x3fb8e0, transparent: true, opacity: 0.6, roughness: 0.05 }),
+  trap: new THREE.MeshStandardMaterial({ color: 0x2a2224, transparent: true, opacity: 0.75, roughness: 0.6 }), // scorch
 };
 
 export class Items {

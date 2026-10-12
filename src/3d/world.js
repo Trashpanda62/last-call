@@ -250,7 +250,7 @@ export function buildWorld(scene, opts = {}) {
 
   let acc = {};
   return {
-    group, lightSpots, seats, machines,
+    group, lightSpots, seats, machines, chandeliers: ctx.chandeliers,
     update(t, dt, state) {
       anim.forEach((a, i) => {
         if (typeof a === 'function') return a(t, dt, state);
@@ -483,7 +483,7 @@ function decor(ctx) {
   rg.fillStyle = '#d9a94a'; rg.beginPath(); rg.arc(128, 128, 22, 0, 7); rg.fill();
   const barRug = new THREE.Mesh(new THREE.PlaneGeometry(5.5, 5.5), std({ map: T.tex(rc, false), roughness: 0.95 })); barRug.rotation.x = -Math.PI / 2; barRug.receiveShadow = true; add(barRug, v3(300 * M, 0.006, 470 * M));
   // paintings: [x, y (sim px, a wall's inner face), yaw (the way the picture faces), kind]
-  const ART = [[20, 285, Math.PI / 2, 0], [20, 525, Math.PI / 2, 3], [640, 660, Math.PI / 2, 1], [2000, 660, -Math.PI / 2, 1], [640, 180, Math.PI / 2, 0], [2000, 180, -Math.PI / 2, 2],
+  const ART = [[20, 285, Math.PI / 2, 0], [20, 525, Math.PI / 2, 3], [640, 440, Math.PI / 2, 1], [2000, 660, -Math.PI / 2, 1], [640, 180, Math.PI / 2, 0], [2000, 180, -Math.PI / 2, 2],
     [2240, 1200, 0, 0], [2760, 1200, 0, 2], [2200, 1880, Math.PI, 3], [2800, 1880, Math.PI, 0], [620, 520, -Math.PI / 2, 2]];
   ART.forEach(([px, py, yaw, kind], i) => {
     const nx = Math.sin(yaw), nz = Math.cos(yaw), x = px * M, z = py * M;
@@ -542,10 +542,6 @@ function seatsAndRails(ctx, seats) {
         B.add(cyl(0.022, 0.016, 0.46, 8), MAT.gold, v3(x + dx * c + dz * sn, 0.23, z - dx * sn + dz * c));
       }
     }
-    // the drink stand behind the seat
-    const dx = s.drink.x * M, dz = s.drink.y * M;
-    B.add(cyl(0.12, 0.14, 0.03, 16), MAT.brass, v3(dx, 0.015, dz)); B.add(cyl(0.022, 0.022, 0.98, 10), MAT.brass, v3(dx, 0.5, dz));
-    B.add(cyl(0.12, 0.1, 0.035, 20), MAT.polished, v3(dx, 1.0, dz)); B.add(torus(0.12, 0.008, 6, 24), MAT.gold, v3(dx, 1.017, dz), 0, null, Math.PI / 2);
   }
 }
 
@@ -565,38 +561,57 @@ function plants(ctx) {
 }
 
 // ---------- Chandeliers ----------
+// Each one is its own small model so a killer can bring it down (pub.chandeliers, same order as CHANDELIERS).
 function chandeliers(ctx) {
-  const { B, group, lightSpots } = ctx;
+  const { group, lightSpots, anim } = ctx;
   const crystal = new THREE.OctahedronGeometry(0.035, 0);
   const crystalMat = new THREE.MeshStandardMaterial({ color: 0xfff6e0, emissive: 0xffe0a0, emissiveIntensity: 0.9, roughness: 0.05, metalness: 0.3 });
   GLOWS.push({ m: crystalMat, k: 'emissiveIntensity', v: 0.9 });
-  const bulbMat = glowMat(0xffd8a0, 3.2);
-  const crystals = [], bulbPts = [];
+  const bulbMat = glowMat(0xffd8a0, 3.2), bulbGeo = sph(0.045, 10);
+  const list = ctx.chandeliers = [];
   for (const [cxp, czp] of CHANDELIERS) {
     const room = strictRoom(cxp, czp);
-    if (room === 'alley' || room === 'race' || room === 'arcade') { lightSpots.push({ p: v3(cxp * M, WALL_H - 0.5, czp * M), color: room === 'arcade' ? 0xd0a0ff : 0xbfefff, power: 6, range: 10 }); continue; }
-    const x = cxp * M, z = czp * M, big = room === 'floor';
-    const R = big ? 0.8 : 0.5;
-    B.add(cyl(0.012, 0.012, 0.5, 6), MAT.gold, v3(x, WALL_H - 0.25, z)); B.add(cyl(0.18, 0.12, 0.08, 16), MAT.gold, v3(x, WALL_H - 0.04, z));
-    for (const [rr, y, t] of [[R, 0.6, 0.03], [R * 0.62, 0.82, 0.025], [R * 0.3, 1.0, 0.02]]) B.add(torus(rr, t, 8, 40), MAT.gold, v3(x, WALL_H - y, z), 0, null, Math.PI / 2);
-    B.add(lathe([[0, -0.3], [0.06, -0.2], [0.1, 0], [0.04, 0.1], [0, 0.12]], 16), MAT.gold, v3(x, WALL_H - 0.85, z));
-    for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2; B.add(cyl(0.01, 0.01, R * 1.02, 6), MAT.gold, v3(x + Math.cos(a) * R * 0.5, WALL_H - 0.6, z + Math.sin(a) * R * 0.5), -a, null, 0, Math.PI / 2); }
+    if (room === 'alley' || room === 'race' || room === 'arcade') { lightSpots.push({ p: v3(cxp * M, WALL_H - 0.5, czp * M), color: room === 'arcade' ? 0xd0a0ff : 0xbfefff, power: 6, range: 10 }); list.push(null); continue; }
+    const big = room === 'floor', R = big ? 0.8 : 0.5;
+    const g = new THREE.Group(); g.position.set(cxp * M, 0, czp * M); group.add(g);
+    const B = new Batch(true), crystals = [], bulbPts = [];
+    B.add(cyl(0.012, 0.012, 0.5, 6), MAT.gold, v3(0, WALL_H - 0.25, 0)); B.add(cyl(0.18, 0.12, 0.08, 16), MAT.gold, v3(0, WALL_H - 0.04, 0));
+    for (const [rr, y, t] of [[R, 0.6, 0.03], [R * 0.62, 0.82, 0.025], [R * 0.3, 1.0, 0.02]]) B.add(torus(rr, t, 8, 40), MAT.gold, v3(0, WALL_H - y, 0), 0, null, Math.PI / 2);
+    B.add(lathe([[0, -0.3], [0.06, -0.2], [0.1, 0], [0.04, 0.1], [0, 0.12]], 16), MAT.gold, v3(0, WALL_H - 0.85, 0));
+    for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2; B.add(cyl(0.01, 0.01, R * 1.02, 6), MAT.gold, v3(Math.cos(a) * R * 0.5, WALL_H - 0.6, Math.sin(a) * R * 0.5), -a, null, 0, Math.PI / 2); }
     const nb = big ? 14 : 8;
     for (let i = 0; i < nb; i++) {
       const a = i / nb * Math.PI * 2;
-      bulbPts.push(v3(x + Math.cos(a) * R, WALL_H - 0.53, z + Math.sin(a) * R));
-      if (big) bulbPts.push(v3(x + Math.cos(a + 0.2) * R * 0.62, WALL_H - 0.76, z + Math.sin(a + 0.2) * R * 0.62));
-      for (let j = 0; j < 4; j++) crystals.push(v3(x + Math.cos(a + 0.2) * R * (0.95 - j * 0.02), WALL_H - 0.7 - j * 0.085, z + Math.sin(a + 0.2) * R * (0.95 - j * 0.02)));
-      crystals.push(v3(x + Math.cos(a) * R * 0.6, WALL_H - 0.98 - (i % 2) * 0.08, z + Math.sin(a) * R * 0.6));
+      bulbPts.push(v3(Math.cos(a) * R, WALL_H - 0.53, Math.sin(a) * R));
+      if (big) bulbPts.push(v3(Math.cos(a + 0.2) * R * 0.62, WALL_H - 0.76, Math.sin(a + 0.2) * R * 0.62));
+      for (let j = 0; j < 4; j++) crystals.push(v3(Math.cos(a + 0.2) * R * (0.95 - j * 0.02), WALL_H - 0.7 - j * 0.085, Math.sin(a + 0.2) * R * (0.95 - j * 0.02)));
+      crystals.push(v3(Math.cos(a) * R * 0.6, WALL_H - 0.98 - (i % 2) * 0.08, Math.sin(a) * R * 0.6));
     }
-    lightSpots.push({ p: v3(x, WALL_H - 0.95, z), color: 0xffd29a, power: big ? 9 : 6, range: big ? 12 : 8 });
+    B.build(g);
+    const cm = new THREE.InstancedMesh(crystal, crystalMat, crystals.length);
+    crystals.forEach((p, i) => cm.setMatrixAt(i, new THREE.Matrix4().makeTranslation(p.x, p.y, p.z)));
+    const bm = new THREE.InstancedMesh(bulbGeo, bulbMat, bulbPts.length);
+    bulbPts.forEach((p, i) => bm.setMatrixAt(i, new THREE.Matrix4().makeTranslation(p.x, p.y, p.z)));
+    g.add(cm, bm);
+    const spot = { p: v3(cxp * M, WALL_H - 0.95, czp * M), color: 0xffd29a, power: big ? 9 : 6, range: big ? 12 : 8 };
+    lightSpots.push(spot);
+    list.push({ g, bm, spot, power: spot.power, drop: WALL_H - 1.18, seed: cxp + czp });
   }
-  const cm = new THREE.InstancedMesh(crystal, crystalMat, crystals.length);
-  crystals.forEach((p, i) => cm.setMatrixAt(i, new THREE.Matrix4().makeTranslation(p.x, p.y, p.z)));
-  group.add(cm);
-  const bm = new THREE.InstancedMesh(sph(0.045, 10), bulbMat, bulbPts.length);
-  bulbPts.forEach((p, i) => bm.setMatrixAt(i, new THREE.Matrix4().makeTranslation(p.x, p.y, p.z)));
-  group.add(bm);
+  // falling: it shudders on its chain, then drops; down: it lies broken on the floor, dark
+  anim.push((t, dt, state) => {
+    const chs = state && state.pub && state.pub.chandeliers; if (!chs) return;
+    for (const ch of chs) {
+      const e = list[ch.id]; if (!e) continue;
+      const g = e.g;
+      if (ch.state === 'up') { g.position.y = 0; g.rotation.set(0, 0, 0); e.bm.visible = true; e.spot.power = e.power; continue; }
+      if (ch.state === 'falling') {
+        const shake = Math.min(1, (1.6 - ch.t) / 0.8) * 0.06;
+        g.rotation.set(Math.sin(t * 31 + e.seed) * shake, 0, Math.cos(t * 27 + e.seed) * shake);
+        g.position.y = ch.t < 0.35 ? -e.drop * (1 - (ch.t / 0.35) ** 2) : 0;
+        e.spot.power = e.power * (0.5 + 0.5 * Math.abs(Math.sin(t * 40)));
+      } else { g.position.y = -e.drop; g.rotation.set(0.12, e.seed % 3, 0.22); e.bm.visible = false; e.spot.power = 0; }
+    }
+  });
 }
 
 // ---------- The back alley ----------

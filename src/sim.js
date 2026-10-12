@@ -1,12 +1,19 @@
 // The authoritative game. No DOM: the host (or solo client) runs it; every human sees it through view(id).
 import { CFG, DIFF, CAST, DRINKS } from './config.js';
 import { rand, pick, clamp, dist, angDiff, money, shuffle } from './util.js';
-import { ROOMS, TAP, BELL, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, W, H, makeSeats, los, collide, roomOf, route } from './map.js';
+import { ROOMS, TAP, BELL, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, W, H, makeSeats, los, collide, roomOf, route } from './map.js';
 import * as Gm from './games.js';
 
 // "Red", "Red and Mint", "Red, Mint and Pip"
 export const nameList = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
 export const ringRadius = n => n > 10 ? 175 : n > 7 ? 150 : 130;
+const rectDist = (p, r) => Math.hypot(Math.max(r.x - p.x, 0, p.x - r.x - r.w), Math.max(r.y - p.y, 0, p.y - r.y - r.h));
+const KILLS = ['order', 'rig', 'blade', 'accident'];
+// What a killer actually tampers with at each kind of seat.
+const RIG_LABEL = {
+  bj: 'the blackjack chips', roulette: 'the roulette chips', slots: "the slot machine's lever", plinko: "the Plinko cabinet's button", mines: 'the Mines console',
+  tower: 'the Dragon Tower console', coin: 'the coin podium', wheel: "the prize wheel's handle", dice: 'the dice', crash: 'the Crash desk', race: 'the duck race betting desk',
+};
 
 export function createGame(opts) {
   const n = clamp(opts.players || 6, 4, 16);
@@ -22,8 +29,11 @@ export function createGame(opts) {
   const G = {
     t: 0, mode: 'play', bank: CFG.startBank, target: Gm.niceDown(CFG.startBank * CFG.targets[n] * CFG.killerBank[nk]), diff: DIFF[opts.difficulty] || DIFF.normal,
     chars: [], drinks: [], bodies: [], floats: [], fx: [], lightsT: 0, nextId: 1, obsT: 0, pending: null, meeting: null, over: null,
-    seats: makeSeats(), bowls: BOWL_SPOTS.map((p, i) => ({ id: i, x: p.x, y: p.y, spiked: false, by: null })), deaths: 0,
-    killerIds, stats: { poisonings: 0, stabs: 0, meetings: 0 },
+    seats: makeSeats(), bowls: BOWL_SPOTS.map((p, i) => ({ id: i, x: p.x, y: p.y })), deaths: 0, traps: [],
+    chandeliers: CHANDELIERS.map(([x, y], i) => ({ id: i, x, y, state: 'up', t: 0, by: null })).filter(ch => !['alley', 'race', 'arcade'].includes(roomOf(ch))), guard: null, guardSaw: null, haunts: [],
+    // (the alley, pond and arcade have plain lamps, nothing to drop)
+    antidotes: CFG.antidotes, security: { cams: false, feed: 'floor', feedT: 0 },
+    killerIds, stats: { poisonings: 0, stabs: 0, meetings: 0, traps: 0, accidents: 0 },
   };
   for (let i = 0; i < n; i++) {
     const look = CAST[i];
@@ -35,10 +45,11 @@ export function createGame(opts) {
       isKiller: killerIds.includes(i), alive: true, x: BELL.x + Math.cos(ang) * rr, y: BELL.y + Math.sin(ang) * rr,
       face: ang + Math.PI, look: ang + Math.PI, thirst: rand(60, 90), drink: null, seat: null, state: 'idle', path: [], wait: 0,
       poisonT: 0, poisonBy: null, poisonDrink: null, poisonKind: null, stuckT: 0, lastPos: { x: 0, y: 0 },
-      cd: { poison: CFG.startCd, shiv: CFG.startCd + 10, lights: CFG.startCd + 20 },
+      cd: { order: CFG.startCd, rig: CFG.startCd, blade: CFG.startCd + 10, accident: CFG.startCd + 15, disguise: 0, lights: CFG.startCd + 20 },
       glanceT: rand(3, 8), glancing: 0, glanceOff: 0, gameT: rand(1, 4), sipT: rand(3, 8), sitT: 0, lucky: 0,
       sus: {}, witnessed: [], lastSeen: {}, touches: {}, huntT: rand(4, 8), hunt: null, bellUsed: false,
-      notes: [], inbox: [], posVer: 0, moving: false, lookBack: false, sniff: null, voted: null, accused: false, target: null,
+      notes: [], inbox: [], posVer: 0, moving: false, lookBack: false, inspect: null, voted: null, accused: false, target: null,
+      heard: [], hauntUsed: false, disguise: null, trapT: 0, killedBy: null,
     });
   }
   for (const c of G.chars) for (const o of G.chars) c.sus[o.id] = 0;
@@ -70,6 +81,8 @@ function makeApi(G) {
   const viewRange = () => G.lightsT > 0 ? CFG.darkRange : CFG.viewRange;
   function canSee(v, p) {
     if (!v.alive) return false;
+    // the security desk's camera feed shows one room at a time, wherever it is
+    if (v.seat && v.seat.game === 'cams' && G.security.cams && roomOf(p) === G.security.feed) return true;
     const d = dist(v, p);
     if (d > viewRange()) return false;
     if (d > CFG.nearSense && Math.abs(angDiff(Math.atan2(p.y - v.y, p.x - v.x), v.look)) > CFG.coneHalf) return false;
@@ -78,27 +91,23 @@ function makeApi(G) {
   // Fellow killers never count as witnesses. A careless bot killer misjudges some gazes.
   function witnessesOf(actor, ignore, careless) {
     return G.chars.filter(c => c !== actor && c !== ignore && c.alive && !(actor.isKiller && c.isKiller) && canSee(c, actor) &&
-      !(careless && Math.random() < (c.isHuman ? D().careless * 2.5 : D().careless)));
+      !(careless && Math.random() < (c.isHuman ? D().careless * 2.5 : D().careless))).concat(G.guard && canSee(G.guard, actor) ? [G.guard] : []);
   }
 
-  // ---------- Drinks and snacks ----------
-  function pourFor(c) {
+  // ---------- Drinks, snacks and the antidote ----------
+  // Drinks are always in someone's hand. Anyone at the bar can send a drink "on the house" to anyone; a killer's can be
+  // poisoned, so a free drink is a gift or a death sentence and nobody can tell which by looking.
+  function pourFor(c, from = null, poisonBy = null) {
     const k = pick(DRINKS);
-    const d = { id: G.nextId++, owner: c.id, holder: c.id, x: c.x, y: c.y, sips: CFG.drinkSips, poisoned: false, poisonBy: null, kind: k.kind, color: k.color, placedAt: 0 };
+    if (c.drink) removeDrink(c.drink);
+    const d = { id: G.nextId++, owner: c.id, holder: c.id, x: c.x, y: c.y, sips: CFG.drinkSips, poisoned: poisonBy !== null, poisonBy, from, kind: k.kind, color: k.color };
     G.drinks.push(d); c.drink = d; sfxTo(c, 'pour');
     return d;
   }
-  function placeDrink(c, spot) {
-    const d = c.drink; if (!d) return;
-    d.holder = null; d.x = spot.x; d.y = spot.y; d.placedAt = G.t; c.drink = null;
-    for (const o of G.chars) o.touches[d.id] = new Set();
-  }
-  function pickUpDrink(c, d) { d.holder = c.id; c.drink = d; }
-  function ownRailDrink(c) { return c.seat ? G.drinks.find(d => d.owner === c.id && !d.holder && d.sips > 0 && dist(d, c.seat.drink) < 5) || null : null; }
   function removeDrink(d) { G.drinks = G.drinks.filter(x => x !== d); for (const c of G.chars) if (c.drink === d) c.drink = null; }
   function poisonChar(c, by, what, kind) {
     if (c.poisonT) return;
-    c.poisonT = CFG.poisonDelay; c.poisonBy = by; c.poisonDrink = what; c.poisonKind = kind;
+    c.poisonT = CFG.poisonDelay; c.poisonBy = by; c.poisonDrink = what; c.poisonKind = kind; c.sickTold = false;
   }
   function sip(c, d) {
     d.sips--; c.thirst = Math.min(100, c.thirst + CFG.sipGain); sfxTo(c, 'sip');
@@ -108,46 +117,119 @@ function makeApi(G) {
   function eatSnack(c, b) {
     c.lucky = CFG.luckyTime; sfxTo(c, 'crunch');
     tell(c, `Lucky pretzels! Your table wins pay ${Math.round(CFG.luckyBonus * 100)}% more for ${CFG.luckyTime}s.`);
-    if (b.spiked) { poisonChar(c, b.by, 'bowl' + b.id, 'pretzels'); b.spiked = false; b.by = null; }
+    const trap = trapAt('bowl', b.id);
+    if (trap && !c.isKiller) { poisonChar(c, trap.by, 'bowl' + b.id, 'pretzels'); removeTrap(trap); }
     G.fx.push({ kind: 'crumbs', x: b.x, y: b.y, t: 0.8 });
   }
-
-  // ---------- Killer actions ----------
-  function phraseFor(k, what, victim, item) {
-    return what === 'shiv' ? `stab ${victim.name}` : what === 'spike' ? 'sprinkle something into the snack bowl' : `tip something into ${victim.name}'s ${item}`;
+  function takeAntidote(c) {
+    if (!c.poisonT || G.antidotes <= 0) return false;
+    G.antidotes--; c.poisonT = 0; c.poisonBy = null; sfxTo(c, 'sip');
+    tell(c, `The antidote burns all the way down, but you'll live. ${G.antidotes} left behind the bar.`);
+    if (c.poisonDrink !== null) note(c, `Your ${c.poisonKind} was poisoned. The antidote saved you.`, { hard: true });
+    return true;
   }
-  function noteWitnesses(k, what, victim, item) {
-    const phrase = phraseFor(k, what, victim, item);
-    for (const w of witnessesOf(k, victim)) {
-      if (w.isHuman) { note(w, `You saw <b>${k.name}</b> ${phrase}.`, { who: k.id, hard: true }); tell(w, `You saw ${k.name} ${phrase}!`, true, 'gasp'); }
-      else { w.witnessed.push({ who: k.id, what, victim: victim ? victim.id : null, phrase, t: G.t }); w.sus[k.id] += 120; }
+  function sendDrink(c, to, poisoned) {
+    const d = pourFor(to, c.id, poisoned ? c.id : null);
+    tell(to, `A ${d.kind} arrived from a secret admirer.`, false, 'pour');
+    if (!poisoned) tell(c, `You sent ${to.name} a ${d.kind}.`);
+    for (const w of witnessesOf(c, to)) remember(w, c, 'send', to, `send ${to.name} a ${d.kind}`, CFG.sendSus, false);
+    return d;
+  }
+
+  // ---------- What a witness takes away ----------
+  // A disguised killer is remembered as whoever they look like.
+  const appearAs = c => c.disguise && c.disguise.t > 0 ? byId(c.disguise.as) : c;
+  function remember(w, actor, what, victim, phrase, sus, hard = true) {
+    const seen = appearAs(actor);
+    if (w.isGuard) { if (hard && !G.guardSaw) G.guardSaw = { who: seen.id, phrase, real: actor.id }; return; }
+    if (w.isHuman) {
+      note(w, `You saw <b>${seen.name}</b> ${phrase}.${!seen.alive ? ` But ${seen.name} is dead...` : ''}`, { who: seen.id, hard });
+      if (hard) tell(w, `You saw ${seen.name} ${phrase}!`, true, 'gasp');
+    } else {
+      w.witnessed.push({ who: seen.id, real: actor.id, what, victim: victim ? victim.id : null, phrase, t: G.t, hard, fake: !seen.alive || seen.id !== actor.id });
+      if (seen.alive) w.sus[seen.id] += sus;
     }
   }
-  function doPoison(k, d) {
-    if (k.cd.poison > 0 || !d || d.holder || d.poisoned || d.owner === k.id || byId(d.owner).isKiller) return false;
-    d.poisoned = true; d.poisonBy = k.id; k.cd.poison = CFG.poisonCd * cdScale(); k.cd.shiv = Math.max(k.cd.shiv, CFG.sharedCd);
-    const owner = byId(d.owner);
-    noteWitnesses(k, 'poison', owner, d.kind);
-    tell(k, `You spiked ${owner.name}'s ${d.kind}.`, false, 'poison');
-    G.stats.poisonings++;
+  function witnessAll(k, what, victim, phrase, sus) { for (const w of witnessesOf(k, victim)) remember(w, k, what, victim, phrase, sus); }
+
+  // ---------- Traps ----------
+  const trapAt = (kind, id) => G.traps.find(t => t.kind === kind && t.id === id) || null;
+  function removeTrap(t) { G.traps = G.traps.filter(x => x !== t); }
+  // What a killer can rig from here: an empty seat (its machine or chips) or a snack bowl.
+  function rigTarget(c) {
+    const s = nearest(G.seats.filter(s => !s.occ && s.game !== 'vip' && s.game !== 'cams' && !trapAt('seat', s.id)), c, CFG.reach + 20);
+    if (s) return { kind: 'seat', id: s.id, x: s.x, y: s.y, label: RIG_LABEL[s.game] || GAME_NAMES[s.game] };
+    const b = nearest(G.bowls.filter(b => !trapAt('bowl', b.id)), c, CFG.reach + 10);
+    return b ? { kind: 'bowl', id: b.id, x: b.x, y: b.y, label: 'the snack bowl' } : null;
+  }
+
+  // ---------- Killer moves ----------
+  function cdHold(k, key, base) { k.cd[key] = base * cdScale(); for (const o of KILLS) if (o !== key) k.cd[o] = Math.max(k.cd[o], CFG.sharedCd); }
+  // 1. A poisoned drink on the house, ordered at the bar for anyone in the casino.
+  function doOrder(k, v) {
+    if (k.cd.order > 0 || !v || !v.alive || v.isKiller || dist(k, TAP) > 90) return false;
+    const d = sendDrink(k, v, true); cdHold(k, 'order', CFG.orderCd); G.stats.poisonings++;
+    tell(k, `A poisoned ${d.kind} is on its way to ${v.name}.`, false, 'poison');
     return true;
   }
-  function doSpike(k, b) {
-    if (k.cd.poison > 0 || !b || b.spiked) return false;
-    b.spiked = true; b.by = k.id; k.cd.poison = CFG.poisonCd * cdScale(); k.cd.shiv = Math.max(k.cd.shiv, CFG.sharedCd);
-    noteWitnesses(k, 'spike', null, 'snacks');
-    tell(k, 'You laced the pretzels. Whoever eats next is done.', false, 'poison');
-    G.stats.poisonings++;
+  // 2. Rig an empty seat's machine or chips, or a snack bowl. The next gambler to use it dies.
+  function doRig(k, t) {
+    if (k.cd.rig > 0 || !t || trapAt(t.kind, t.id)) return false;
+    G.traps.push({ kind: t.kind, id: t.id, by: k.id, t: G.t, label: t.label });
+    witnessAll(k, 'rig', null, `fiddle with ${t.label}`, 70);
+    cdHold(k, 'rig', CFG.rigCd); G.stats.traps++;
+    tell(k, `You rigged ${t.label}. The next gambler to use it is done.`, false, 'poison');
     return true;
   }
-  function doShiv(k, v) {
-    if (k.cd.shiv > 0 || !v || !v.alive || v === k || v.isKiller || dist(k, v) > CFG.reach + 5) return false;
-    noteWitnesses(k, 'shiv', v, null);
-    k.cd.shiv = CFG.shivCd * cdScale(); k.cd.poison = Math.max(k.cd.poison, CFG.sharedCd);
-    sfxTo(k, 'stab'); G.stats.stabs++;
-    kill(v, 'shiv', k);
+  // 3. A close kill. Only from behind: if they can see you coming, it fails.
+  const behind = (k, v) => Math.abs(angDiff(Math.atan2(k.y - v.y, k.x - v.x), v.look)) > CFG.behind;
+  function doBlade(k, v) {
+    if (k.cd.blade > 0 || !v || !v.alive || v === k || v.isKiller || dist(k, v) > CFG.reach + 5) return false;
+    if (!behind(k, v)) { tell(k, `${v.name} can see you coming. Get behind them.`); return false; }
+    witnessAll(k, 'blade', v, `strangle ${v.name}`, 120);
+    cdHold(k, 'blade', CFG.bladeCd); sfxTo(k, 'stab'); G.stats.stabs++;
+    kill(v, 'blade', k);
+    scream(v);
     return true;
   }
+  // 4. Accidents: shove someone by the duck pond in, or loosen a chandelier over a table.
+  function pondVictim(k) { return nearest(G.chars.filter(v => v.alive && !v.isKiller && v !== k && rectDist(v, POND) < CFG.pondReach), k, CFG.reach + 8); }
+  function chandelierNear(k) { return nearest(G.chandeliers.filter(ch => ch.state === 'up' && dist(ch, k) > 40), k, CFG.chandelierReach); }
+  function doAccident(k) {
+    if (k.cd.accident > 0) return false;
+    const v = pondVictim(k);
+    if (v) {
+      witnessAll(k, 'push', v, `shove ${v.name} into the duck pond`, 120);
+      cdHold(k, 'accident', CFG.accidentCd); G.stats.accidents++;
+      G.fx.push({ kind: 'splash', x: v.x, y: v.y, t: 1.2 });
+      kill(v, 'drown', k); scream(v);
+      return true;
+    }
+    const ch = chandelierNear(k);
+    if (!ch) return false;
+    ch.state = 'falling'; ch.t = CFG.chandelierFall; ch.by = k.id;
+    witnessAll(k, 'chandelier', null, `mess with the chandelier's chain in ${ROOMS[roomOf(ch)].name}`, 90);
+    for (const h of humans()) if (h.alive && roomOf(h) === roomOf(ch)) tell(h, 'The chandelier creaks...', true, 'gasp');
+    cdHold(k, 'accident', CFG.accidentCd); G.stats.accidents++;
+    return true;
+  }
+  function dropChandelier(ch) {
+    ch.state = 'down';
+    G.fx.push({ kind: 'smash', x: ch.x, y: ch.y, t: 1.5 });
+    const hit = G.chars.filter(v => v.alive && !v.isKiller && dist(v, ch) < CFG.chandelierRadius).sort((a, b) => dist(a, ch) - dist(b, ch)).slice(0, CFG.chandelierMax);
+    for (const v of hit) kill(v, 'chandelier', byId(ch.by));
+    for (const h of humans()) if (h.alive && roomOf(h) === roomOf(ch)) tell(h, hit.length ? `The chandelier came down on ${nameList(hit.map(v => v.name))}!` : 'The chandelier crashed down. Nobody under it, luckily.', true, 'die');
+  }
+  // 5. Disguise: wear your last victim's look for a while.
+  function doDisguise(k) {
+    if (k.cd.disguise > 0) return false;
+    const v = k.lastVictim !== undefined ? byId(k.lastVictim) : null;
+    if (!v) { tell(k, 'You need a victim first. Their look is your disguise.'); return false; }
+    k.disguise = { as: v.id, t: CFG.disguiseDur }; k.cd.disguise = CFG.disguiseCd;
+    tell(k, `You look like ${v.name} for ${CFG.disguiseDur} seconds.`, false, 'lights');
+    return true;
+  }
+  // 6. Lights out.
   function doLights(k) {
     if (k.cd.lights > 0) return false;
     for (const o of killersAlive()) o.cd.lights = CFG.lightsCd;
@@ -155,15 +237,35 @@ function makeApi(G) {
     tellAll('The lights cut out!', true, 'lights');
     return true;
   }
+  // Everyone within earshot hears a scream, through walls.
+  function scream(v) {
+    const room = ROOMS[roomOf(v)].name;
+    for (const c of G.chars) {
+      if (!c.alive || c === v || dist(c, v) > CFG.hearRange || canSee(c, v)) continue;
+      if (c.isHuman) { tell(c, `A scream from ${room}!`, true, 'gasp'); note(c, `You heard a scream from ${room}.`, { hard: false }); }
+      else c.heard.push({ t: G.t, room: roomOf(v), victim: v.id });
+    }
+  }
+  const DEATH = {
+    poison: v => [`Your ${v.poisonKind} was poisoned. You're a ghost now. Drift around and watch.`, `${v.name} collapsed!`],
+    trap: v => [`${v.trapItem ? v.trapItem[0].toUpperCase() + v.trapItem.slice(1) : 'It'} was rigged. You're a ghost now.`, `${v.name} was electrocuted by ${v.trapItem || 'a machine'}!`],
+    blade: () => ["Someone got you from behind. You're a ghost now.", null],
+    chandelier: () => ["A chandelier fell on you. You're a ghost now.", null],
+    drown: (v, by) => [`${by ? appearAs(by).name : 'Someone'} shoved you into the duck pond. You're a ghost now.`, `${v.name} went into the pond!`],
+  };
   function kill(v, cause, by) {
-    v.alive = false; v.poisonT = 0; v.sniff = null;
+    const knew = by && v.alive && canSee(v, by);
+    v.alive = false; v.poisonT = 0; v.trapT = 0; v.inspect = null;
+    v.killedBy = knew ? appearAs(by).id : null;
+    if (by) by.lastVictim = v.id;
     if (v.seat) { v.seat.occ = null; v.seat = null; v.posVer++; }
     if (v.drink) { v.drink.holder = null; v.drink.x = v.x + 18; v.drink.y = v.y + 6; v.drink = null; }
-    G.bodies.push({ x: v.x, y: v.y, id: v.id, cause, by: by ? by.id : null, drinkId: v.poisonDrink, kind: v.poisonKind, reported: false, t: G.t, seenBy: new Set() });
-    G.deaths++;
-    G.fx.push({ kind: cause === 'poison' ? 'bubbles' : 'splat', x: v.x, y: v.y, t: 1.5 });
-    if (v.isHuman) tell(v, cause === 'poison' ? `Your ${v.poisonKind} was poisoned. You're a ghost now. Drift around and watch.` : "Someone stabbed you. You're a ghost now.", true, 'die');
-    for (const h of humans()) if (h !== v && h.alive && canSee(h, v)) tell(h, cause === 'poison' ? `${v.name} collapsed!` : `${v.name} was stabbed!`, true, 'die');
+    G.bodies.push({ x: v.x, y: v.y, id: v.id, cause, by: by ? by.id : null, drinkId: v.poisonDrink, kind: v.poisonKind, item: v.trapItem || null, reported: false, t: G.t, seenBy: new Set() });
+    G.deaths++; G.stats[cause] = (G.stats[cause] || 0) + 1;
+    G.fx.push({ kind: cause === 'poison' ? 'bubbles' : cause === 'trap' ? 'sparks' : 'splat', x: v.x, y: v.y, t: 1.5 });
+    const [mine, seen] = (DEATH[cause] || DEATH.blade)(v, by);
+    if (v.isHuman) tell(v, mine, true, 'die');
+    if (seen) for (const h of humans()) if (h !== v && h.alive && canSee(h, v)) tell(h, seen, true, 'die');
     checkOver();
   }
 
@@ -191,31 +293,26 @@ function makeApi(G) {
   }
   function standUp(c) {
     if (!c.seat) return;
-    const rd = ownRailDrink(c);
-    if (rd && !c.drink) pickUpDrink(c, rd);
     c.x = c.seat.approach.x; c.y = c.seat.approach.y;
     c.leftSeatT = G.t; c.seat.occ = null; c.seat = null; c.posVer++;
   }
   function sit(c, seat) {
     if (c.target && c.target.claim === c.id) c.target.claim = null;
     seat.occ = c; seat.claim = null; c.seat = seat; c.x = seat.x; c.y = seat.y; c.face = c.look = seat.face; c.posVer++;
-    if (c.drink) placeDrink(c, seat.drink);
+    const trap = trapAt('seat', seat.id);
+    if (trap && !c.isKiller) { removeTrap(trap); c.trapT = CFG.rigDelay; c.trapBy = trap.by; c.trapItem = trap.label; }
   }
   function botChoose(c) {
-    const hasDrink = c.drink || G.drinks.some(d => d.owner === c.id && d.sips > 0);
-    if ((c.thirst < 50 && !hasDrink) || (c.thirst < 20 && !c.drink)) { c.state = 'getDrink'; setGoal(c, { x: TAP.x + rand(-80, 80), y: TAP.y + 10 }); return; }
+    if (sick(c) && G.antidotes > 0 && dist(c, TAP) / CFG.botSpeed < c.poisonT - 1) { c.state = 'antidote'; setGoal(c, { x: TAP.x + rand(-40, 40), y: TAP.y + 10 }); return; }
+    if (c.thirst < 45 && !c.drink) { c.state = 'getDrink'; setGoal(c, { x: TAP.x + rand(-80, 80), y: TAP.y + 10 }); return; }
     const r = Math.random();
     if (r < 0.1) { c.state = 'rest'; setGoal(c, pick(REST_SPOTS)); return; }
-    if (r < 0.18 && !c.lucky) { const b = pick(G.bowls); c.state = 'snack'; c.target = b; setGoal(c, { x: b.x, y: b.y + (b.y < 200 ? 0 : 0) }); return; }
+    if (r < 0.18 && !c.lucky) { const b = pick(G.bowls); c.state = 'snack'; c.target = b; setGoal(c, { x: b.x, y: b.y }); return; }
     if (r < 0.24) { c.state = 'wander'; setGoal(c, openSpot(ROOMS[busyRoom(c)])); return; }
-    const mine = G.drinks.find(d => d.owner === c.id && !d.holder && d.sips > 0);
-    let seat = mine && G.seats.find(s => !s.occ && !s.claim && dist(s.drink, mine) < 5);
-    if (!seat) {
-      // People drift toward the action: a seat counts more for every other gambler in its room.
-      const free = G.seats.filter(s => !s.occ && !s.claim && !G.drinks.some(d => !d.holder && d.owner !== c.id && dist(d, s.drink) < 5));
-      const crowd = roomCrowd(c);
-      seat = free.length ? free[pickIdx(free.map(s => 1 + CFG.social * (crowd[roomOf(s)] || 0)))] : null;
-    }
+    // People drift toward the action: a seat counts more for every other gambler in its room.
+    const free = G.seats.filter(s => !s.occ && !s.claim && (s.game !== 'cams' || G.security.cams || G.deaths > 0));
+    const crowd = roomCrowd(c);
+    const seat = free.length ? free[pickIdx(free.map(s => (s.game === 'cams' ? 0.6 : 1) + CFG.social * (crowd[roomOf(s)] || 0)))] : null;
     if (!seat) { c.state = 'wander'; setGoal(c, openSpot(ROOMS[busyRoom(c)])); return; }
     seat.claim = c.id; c.target = seat; c.state = 'toSeat';
     setGoal(c, seat.approach); c.path.push({ x: seat.x, y: seat.y });
@@ -313,12 +410,22 @@ function makeApi(G) {
   }
   function pickIdx(w) { let s = 0; for (const x of w) s += x; let u = Math.random() * s; for (let i = 0; i < w.length; i++) { u -= w[i]; if (u < 0) return i; } return w.length - 1; }
   function botSip(c, d) {
-    if (d.poisoned && !c.isKiller && Math.random() < D().sniff) {
+    // A free drink from nobody-knows-who gets a sniff more often than your own order.
+    if (d.poisoned && !c.isKiller && Math.random() < D().sniff * (d.from !== null ? 2 : 1)) {
       removeDrink(d);
-      callMeeting(c, null, `${c.name} sniffed their ${d.kind} and smelled bitter almonds. Someone spiked it.`, { drinkId: d.id, owner: c.id, kind: d.kind });
+      callMeeting(c, null, `${c.name} sniffed a free ${d.kind} and smelled bitter almonds. Somebody sent it to kill.`, { drinkId: d.id, owner: c.id, kind: d.kind });
       return;
     }
     sip(c, d);
+  }
+  // A bot at the security desk spends crew money on cameras or a guard once people start dying.
+  function botSecurity(c, dt) {
+    c.secT = (c.secT ?? rand(3, 8)) - dt;
+    if (c.secT > 0) return;
+    c.secT = rand(15, 30);
+    if (c.isKiller) return;
+    if (!G.security.cams && G.deaths >= 1 && G.bank > price('cams') * 4 && Math.random() < 0.5) buy(c, 'cams');
+    else if (!G.guard && G.deaths >= 2 && G.bank > price('guard') * 4 && Math.random() < 0.4) buy(c, 'guard');
   }
   function botTick(c, dt) {
     c.moving = false;
@@ -326,17 +433,24 @@ function makeApi(G) {
     if (c.glancing > 0) c.glancing -= dt;
     else if (c.glanceT <= 0) { c.glancing = rand(0.8, 1.8); c.glanceOff = rand(-1, 1) * Math.PI; c.glanceT = rand(...D().glance); }
     if (c.isKiller && killerBrain(c, dt)) { c.look = c.face; return; }
+    if (sick(c) && c.state !== 'antidote' && c.state !== 'seated' && G.antidotes > 0 && !c.isKiller) { c.path = []; c.state = 'idle'; }
     switch (c.state) {
       case 'idle': botChoose(c); break;
       case 'getDrink':
-        if (followPath(c, dt, CFG.botSpeed)) { c.face = -Math.PI / 2; c.wait += dt; if (c.wait > 1.2) { c.wait = 0; pourFor(c); c.state = 'idle'; } }
+        if (followPath(c, dt, CFG.botSpeed)) { c.face = -Math.PI / 2; c.wait += dt; if (c.wait > 1.2) { c.wait = 0; pourFor(c); c.state = 'idle'; maybeTreat(c); } }
+        break;
+      case 'antidote':
+        if (followPath(c, dt, CFG.botSpeed * 1.2)) {
+          const kind = c.poisonKind, what = c.poisonDrink; c.state = 'idle';
+          if (takeAntidote(c)) callMeeting(c, null, `${c.name} was poisoned by their ${kind} and only just made it to the antidote.`, { owner: c.id, drinkId: what, kind });
+        }
         break;
       case 'snack':
         if (followPath(c, dt, CFG.botSpeed)) {
-          const b = c.target; c.state = 'idle'; c.target = null;
-          if (b.spiked && !c.isKiller && Math.random() < D().sniff) {
-            b.spiked = false; callMeeting(c, null, `${c.name} smelled bitter almonds on the pretzels. Someone laced the snack bowl.`, null);
-          } else if (!(b.spiked && c.isKiller)) eatSnack(c, b);
+          const b = c.target, trap = trapAt('bowl', b.id); c.state = 'idle'; c.target = null;
+          if (trap && !c.isKiller && Math.random() < D().sniff) {
+            removeTrap(trap); callMeeting(c, null, `${c.name} smelled bitter almonds on the pretzels. Someone laced the snack bowl.`, { trap: 'the snack bowl' });
+          } else if (!(trap && c.isKiller)) eatSnack(c, b);
         }
         break;
       case 'rest': case 'wander':
@@ -345,42 +459,77 @@ function makeApi(G) {
       case 'toSeat': {
         const s = c.target;
         if (s.occ && s.occ !== c) { s.claim = null; c.state = 'idle'; break; }
-        if (followPath(c, dt, CFG.botSpeed)) { sit(c, s); c.sitT = rand(22, 45); c.gameT = rand(1, 3); c.state = 'seated'; }
+        if (followPath(c, dt, CFG.botSpeed)) {
+          // careful gamblers check the machine first, more so once people have died
+          if (!c.isKiller && s.game !== 'cams' && Math.random() < D().sniff * (G.deaths ? 1.6 : 0.5)) { c.state = 'inspect'; c.inspectT = CFG.inspectTime; break; }
+          sit(c, s); c.sitT = rand(22, 45); c.gameT = rand(1, 3); c.state = 'seated'; c.secT = rand(3, 8);
+        }
+        break;
+      }
+      case 'inspect': {
+        const s = c.target; c.inspectT -= dt;
+        if (s.occ && s.occ !== c) { c.state = 'idle'; break; }
+        if (c.inspectT <= 0) {
+          const trap = trapAt('seat', s.id);
+          if (trap) { removeTrap(trap); s.claim = null; c.state = 'idle'; callMeeting(c, null, `${c.name} checked ${trap.label} and found it rigged to kill.`, { trap: trap.label }); break; }
+          sit(c, s); c.sitT = rand(22, 45); c.gameT = rand(1, 3); c.state = 'seated'; c.secT = rand(3, 8);
+        }
         break;
       }
       case 'seated': {
-        c.face = c.seat.face; c.sitT -= dt; c.gameT -= dt; c.sipT -= dt;
+        c.face = c.seat.face; c.sitT -= dt; c.gameT -= dt;
         if (c.gameT <= 0) botPlay(c);
-        const d = ownRailDrink(c);
-        if (d && c.thirst < 75 && c.sipT <= 0) { c.sipT = rand(6, 12); botSip(c, d); }
-        if (c.sitT <= 0 || (!d && c.thirst < 40)) { standUp(c); c.state = 'idle'; }
+        if (c.seat.game === 'cams') botSecurity(c, dt);
+        if (c.sitT <= 0 || (!c.drink && c.thirst < 35) || (sick(c) && G.antidotes > 0 && !c.isKiller)) { standUp(c); c.state = 'idle'; }
         break;
       }
     }
-    if (c.drink && c.state !== 'seated' && c.thirst < 60) { c.sipT -= dt; if (c.sipT <= 0) { c.sipT = rand(5, 9); botSip(c, c.drink); } }
+    if (c.drink && c.thirst < 70) { c.sipT -= dt; if (c.sipT <= 0) { c.sipT = rand(5, 10); if (c.drink) botSip(c, c.drink); } }
     c.look = c.face + (c.glancing > 0 ? c.glanceOff : 0);
+  }
+  // Now and then a bot at the bar buys someone a round. It gives cover to the killers' poisoned orders.
+  function maybeTreat(c) {
+    if (Math.random() > CFG.treat) return;
+    const friends = G.chars.filter(o => o.alive && o !== c && !o.drink);
+    if (friends.length) sendDrink(c, pick(friends), false);
   }
   // True while the bot killer is busy hunting (skips the gambler routine).
   function killerBrain(k, dt) {
     if (k.hunt) {
-      const h = k.hunt; h.t -= dt;
-      let target = null;
-      if (h.kind === 'poison') {
-        target = G.drinks.find(d => d.id === h.drinkId);
-        if (!target || target.holder || target.poisoned || !byId(target.owner).alive) return endHunt(k);
-      } else if (h.kind === 'spike') {
-        target = G.bowls[h.bowl]; if (target.spiked) return endHunt(k);
+      const h = k.hunt; h.t -= dt; h.repath -= dt;
+      let goal = null, ready = false, tgt = null;
+      if (h.kind === 'blade' || h.kind === 'push') {
+        const v = tgt = byId(h.victim);
+        if (!v.alive || (h.kind === 'push' && rectDist(v, POND) >= CFG.pondReach)) return endHunt(k);
+        goal = h.kind === 'blade' ? { x: v.x - Math.cos(v.look) * 26, y: v.y - Math.sin(v.look) * 26 } : v;
+        ready = dist(k, v) < CFG.reach && (h.kind === 'push' || behind(k, v));
+      } else if (h.kind === 'chandelier') {
+        const ch = tgt = G.chandeliers.find(c => c.id === h.ch);
+        if (ch.state !== 'up' || !underChandelier(ch).length) return endHunt(k);
+        goal = h.spot; ready = dist(k, h.spot) < 30;
+      } else if (h.kind === 'rig') {
+        const t = tgt = h.target;
+        if (trapAt(t.kind, t.id) || (t.kind === 'seat' && (G.seats[t.id].occ || (G.seats[t.id].claim !== null && G.seats[t.id].claim !== k.id)))) return endHunt(k);
+        goal = t; ready = dist(k, t) < CFG.reach + 10;
       } else {
-        target = byId(h.victim);
-        if (!target.alive) return endHunt(k);
-        h.repath -= dt; if (h.repath <= 0) { h.repath = 0.8; setGoal(k, target); }
+        if (!byId(h.victim).alive) return endHunt(k);
+        goal = h.spot; tgt = TAP; ready = dist(k, TAP) < 80;
       }
-      if (dist(k, target) >= CFG.reach - 4) followPath(k, dt, CFG.botSpeed * (h.kind === 'shiv' ? 1.15 : 1));
-      else {
-        k.face = Math.atan2(target.y - k.y, target.x - k.x);
-        if (witnessesOf(k, h.kind === 'shiv' ? target : null, true).length === 0) {
-          if (h.kind === 'poison') doPoison(k, target); else if (h.kind === 'spike') doSpike(k, target); else doShiv(k, target);
-          return endHunt(k);
+      if (!ready) {
+        if (h.repath <= 0 || !k.path.length) { h.repath = 0.8; setGoal(k, goal); }
+        followPath(k, dt, CFG.botSpeed * (h.kind === 'blade' ? 1.15 : 1));
+      } else {
+        k.face = Math.atan2(tgt.y - k.y, tgt.x - k.x);
+        const victim = h.kind === 'blade' || h.kind === 'push' ? byId(h.victim) : null;
+        // ordering a drink is not suspicious in itself; a careless killer misses one pair of eyes for the whole attempt
+        if (witnessesOf(k, victim).length <= (h.kind === 'order' ? 1 : 0) + (h.blind ? 1 : 0)) {
+          let done = false;
+          if (h.kind === 'blade') done = doBlade(k, victim);
+          else if (h.kind === 'push' || h.kind === 'chandelier') done = doAccident(k);
+          else if (h.kind === 'rig') done = doRig(k, h.target);
+          else done = doOrder(k, byId(h.victim));
+          if (done && victim && k.cd.disguise <= 0 && Math.random() < 0.5) doDisguise(k);
+          if (done || h.kind !== 'blade') return endHunt(k);
         }
         h.linger += dt;
       }
@@ -390,29 +539,40 @@ function makeApi(G) {
     k.huntT -= dt;
     if (k.huntT > 0) return false;
     k.huntT = rand(4, 8);
-    const prey = gamblersAlive();
-    let plan = null;
-    if (k.cd.shiv <= 0) {
-      const loners = prey.filter(v => !G.chars.some(o => o.alive && o !== v && !o.isKiller && canSee(o, v)));
-      if (loners.length && Math.random() < 0.65) plan = { kind: 'shiv', victim: pick(loners).id };
+    const prey = gamblersAlive(), plans = [];
+    if (k.cd.blade <= 0) {
+      // seated gamblers have their backs to the room; loners have nobody watching
+      const open = prey.filter(v => v.seat || !G.chars.some(o => o.alive && o !== v && !o.isKiller && canSee(o, v)));
+      if (open.length) plans.push([3, { kind: 'blade', victim: pick(open).id }]);
     }
-    if (!plan && k.cd.poison <= 0) {
-      if (Math.random() < 0.25) plan = { kind: 'spike', bowl: pick(G.bowls.filter(b => !b.spiked) || [G.bowls[0]])?.id ?? 0 };
-      else {
-        const ds = G.drinks.filter(d => !d.holder && !d.poisoned && !byId(d.owner).isKiller && byId(d.owner).alive);
-        if (ds.length && Math.random() < 0.8) { ds.sort((a, b) => dist(a, k) - dist(b, k)); plan = { kind: 'poison', drinkId: ds[Math.floor(Math.random() * Math.min(2, ds.length))].id }; }
-      }
+    if (k.cd.accident <= 0) {
+      const pv = prey.filter(v => rectDist(v, POND) < CFG.pondReach);
+      if (pv.length) plans.push([2, { kind: 'push', victim: pick(pv).id }]);
+      const chs = G.chandeliers.filter(ch => ch.state === 'up' && underChandelier(ch).length);
+      if (chs.length) { const ch = pick(chs); plans.push([1 + underChandelier(ch).length, { kind: 'chandelier', ch: ch.id, spot: chandelierSpot(ch) }]); }
     }
-    if (!plan) return false;
+    if (k.cd.rig <= 0) {
+      const crowd = roomCrowd(k);
+      const seats = G.seats.filter(s => !s.occ && s.claim === null && s.game !== 'vip' && s.game !== 'cams' && !trapAt('seat', s.id));
+      if (seats.length) { const s = seats[pickIdx(seats.map(s => 0.2 + (crowd[roomOf(s)] || 0)))]; plans.push([2, { kind: 'rig', target: { kind: 'seat', id: s.id, x: s.x, y: s.y, label: RIG_LABEL[s.game] || GAME_NAMES[s.game] } }]); }
+      const b = pick(G.bowls); if (!trapAt('bowl', b.id)) plans.push([0.5, { kind: 'rig', target: { kind: 'bowl', id: b.id, x: b.x, y: b.y, label: 'the snack bowl' } }]);
+    }
+    if (k.cd.order <= 0 && prey.length) plans.push([2, { kind: 'order', victim: pick(prey).id, spot: { x: TAP.x + rand(-60, 60), y: TAP.y + 30 } }]);
+    if (!plans.length || Math.random() < 0.25) return false;
+    const plan = plans[pickIdx(plans.map(p => p[0]))][1];
     if (k.seat) standUp(k);
     if (k.target && k.target.claim === k.id) k.target.claim = null;
-    k.state = 'hunting';
-    k.hunt = Object.assign(plan, { t: 18, linger: 0, repath: 0 });
-    setGoal(k, plan.kind === 'poison' ? G.drinks.find(d => d.id === plan.drinkId) : plan.kind === 'spike' ? G.bowls[plan.bowl] : byId(plan.victim));
-    if (k.cd.lights <= 0 && Math.random() < 0.3) doLights(k);
+    k.state = 'hunting'; k.path = [];
+    k.hunt = Object.assign(plan, { t: plan.kind === 'order' ? 35 : 20, linger: 0, repath: 0, blind: Math.random() < D().careless });
+    if ((plan.kind === 'blade' || plan.kind === 'push') && k.cd.lights <= 0 && Math.random() < 0.3) doLights(k);
     return true;
   }
   function endHunt(k) { k.hunt = null; k.state = 'idle'; return false; }
+  const underChandelier = ch => G.chars.filter(v => v.alive && !v.isKiller && dist(v, ch) < CFG.chandelierRadius * 0.85);
+  function chandelierSpot(ch) {
+    for (let i = 0; i < 16; i++) { const a = Math.random() * Math.PI * 2, p = { x: ch.x + Math.cos(a) * 115, y: ch.y + Math.sin(a) * 115 }; if (clear(p) && roomOf(p) === roomOf(ch)) return p; }
+    return { x: ch.x + 115, y: ch.y };
+  }
 
   // ---------- What everyone remembers ----------
   function observe() {
@@ -420,18 +580,13 @@ function makeApi(G) {
       if (!v.alive) continue;
       for (const c of G.chars) {
         if (c === v || !c.alive || !canSee(v, c)) continue;
-        v.lastSeen[c.id] = { t: G.t, room: roomOf(c), with: G.chars.filter(o => o !== c && o !== v && o.alive && dist(o, c) < 90).map(o => o.id) };
-        for (const d of G.drinks) {
-          if (d.holder || d.owner === c.id || dist(c, d) > 45) continue;
-          (v.touches[d.id] || (v.touches[d.id] = new Set())).add(c.id);
-          const key = c.id + ':' + d.id;
-          if (v.isHuman && !v.notes.some(n => n.key === key)) note(v, `${c.name} hung around ${byId(d.owner).name}'s ${d.kind}.`, { key, who: c.id });
-        }
+        const a = appearAs(c);
+        v.lastSeen[a.id] = { t: G.t, room: roomOf(c), with: G.chars.filter(o => o !== c && o !== v && o.alive && dist(o, c) < 90).map(o => appearAs(o).id) };
         for (const b of G.bowls) {
           if (dist(c, b) > 40) continue;
-          const key = c.id + ':bowl' + b.id + ':' + Math.floor(G.t / 30);
-          (v.touches['bowl' + b.id] || (v.touches['bowl' + b.id] = new Set())).add(c.id);
-          if (v.isHuman && !v.notes.some(n => n.key === key)) note(v, `${c.name} was at the snack bowl in ${ROOMS[roomOf(b)].name}.`, { key, who: c.id });
+          const key = a.id + ':bowl' + b.id + ':' + Math.floor(G.t / 30);
+          (v.touches['bowl' + b.id] || (v.touches['bowl' + b.id] = new Set())).add(a.id);
+          if (v.isHuman && !v.notes.some(n => n.key === key)) note(v, `${a.name} was at the snack bowl in ${ROOMS[roomOf(b)].name}.`, { key, who: a.id });
         }
       }
       for (const b of G.bodies) {
@@ -441,6 +596,30 @@ function makeApi(G) {
         if (!G.pending) G.pending = { t: 0.5, caller: v, body: b };
       }
     }
+    // the guard reports a body or a kill straight away
+    if (G.guard && !G.pending) {
+      const b = G.bodies.find(b => !b.reported && canSee(G.guard, b));
+      if (G.guardSaw || b) G.pending = { t: 0.3, guard: true, body: b || null };
+    }
+  }
+  // Ghosts can haunt one living person a round: a cold chill that makes the bots near them uneasy.
+  function haunt(g, target) {
+    if (g.alive || g.hauntUsed || !target || !target.alive) return false;
+    g.hauntUsed = true;
+    G.haunts.push({ by: g.id, on: target.id, t: CFG.hauntTime });
+    for (const o of G.chars) {
+      if (!o.alive || o === target || dist(o, target) > CFG.viewRange || !los(o, target)) continue;
+      if (o.isHuman) tell(o, `A chill runs through the room. The candles around ${appearAs(target).name} flicker.`, false, 'lights');
+      else if (!o.isKiller) o.sus[target.id] += CFG.hauntSus;
+    }
+    if (target.isHuman) tell(target, 'Something cold brushes your neck.', true, 'gasp');
+    return true;
+  }
+  function botGhost(g) {
+    if (g.hauntUsed || g.isKiller || Math.random() > 0.01) return;
+    let t = g.killedBy !== null && g.killedBy !== undefined ? byId(g.killedBy) : null;
+    if (!t || !t.alive) { const top = Object.entries(g.sus).filter(([id]) => byId(id).alive && +id !== g.id).sort((x, y) => y[1] - x[1])[0]; t = top && top[1] > 30 ? byId(top[0]) : null; }
+    if (t) haunt(g, t);
   }
 
   // ---------- Meetings ----------
@@ -449,53 +628,73 @@ function makeApi(G) {
     G.mode = 'meeting'; G.pending = null; G.stats.meetings++;
     const victims = G.bodies.filter(b => !b.reported);
     victims.forEach(b => { b.reported = true; });
-    for (const c of G.chars) { c.voted = null; c.accused = false; c.sniff = null; }
+    for (const c of G.chars) { c.voted = null; c.accused = false; c.inspect = null; if (c.disguise) c.disguise.t = 0; }
+    // the guard's word counts for a lot with everyone who isn't in on it
+    const gs = G.guardSaw;
+    if (gs) for (const c of G.chars) if (c.alive && !c.isKiller && c.id !== gs.who) c.sus[gs.who] += 200;
+    G.guardSaw = null;
     G.meeting = {
-      title: body ? 'Body reported' : spiked ? 'Spiked drink!' : 'Emergency meeting', reason,
+      title: body ? 'Body reported' : spiked ? 'Murder plot!' : gs ? 'Security report' : 'Emergency meeting', reason,
       queue: buildStatements(victims, spiked, caller), lines: [], extra: [], phase: 'talk', talkT: 0.6, voteT: CFG.voteTime, resultT: CFG.resultTime,
       result: '', tally: null, victims: victims.map(v => v.id),
     };
     for (const h of humans()) sfxTo(h, 'meeting');
   }
+  function guardMeeting(body) {
+    const gs = G.guardSaw;
+    const what = gs ? `The security guard saw ${byId(gs.who).name} ${gs.phrase}.` : '';
+    const found = body ? `The security guard found ${byId(body.id).name}'s body.` : '';
+    callMeeting(null, body, [found, what].filter(Boolean).join(' '), null);
+  }
+  const CAUSE_WORDS = { poison: 'poisoned', trap: 'killed by a rigged machine', blade: 'strangled', chandelier: 'crushed by a chandelier', drown: 'drowned in the duck pond' };
   function buildStatements(victims, spiked, caller) {
     const out = [];
     const order = shuffle(G.chars.filter(c => c.alive && !c.isHuman));
     if (caller && !caller.isHuman && order.includes(caller)) { order.splice(order.indexOf(caller), 1); order.unshift(caller); }
-    const poisonCases = victims.filter(v => v.cause === 'poison').map(v => ({ drinkId: v.drinkId, owner: v.id, kind: v.kind }));
-    if (spiked) poisonCases.push(spiked);
+    const poisoned = victims.filter(v => v.cause === 'poison').map(v => v.id);
+    if (spiked && spiked.owner !== undefined) poisoned.push(spiked.owner);
+    const rigged = victims.some(v => v.cause === 'trap') || (spiked && spiked.trap);
     for (const b of order) {
       const acc = {}; let text = '';
+      const say = (id, n, s) => { acc[id] = (acc[id] || 0) + n; text += s + ' '; };
       if (b.isKiller) {
         const others = G.chars.filter(c => c.alive && c !== b && !c.isKiller);
         const accusedMe = out.find(l => l.acc[b.id] > 0);
         if (accusedMe && Math.random() < 0.7) { const liar = byId(accusedMe.who); acc[liar.id] = 40; text = `That's a lie. ${liar.name} is trying to pin this on me. I was at ${pick(Object.values(ROOMS)).name}.`; }
         else if (Math.random() < 0.6 && others.length) {
-          const x = pick(others); const pc = poisonCases[0];
-          if (pc) { acc[x.id] = 35; text = `I saw ${x.name} hanging around ${pc.owner !== undefined && byId(pc.owner) ? byId(pc.owner).name + "'s " + pc.kind : 'that drink'}.`; }
-          else { acc[x.id] = 25; text = `${x.name} was alone with them right before. Just saying.`; }
+          const x = pick(others);
+          if (poisoned.length) say(x.id, 35, `I saw ${x.name} at the bar sending drinks around.`);
+          else if (rigged) say(x.id, 35, `${x.name} was messing with machines all night.`);
+          else say(x.id, 25, `${x.name} was alone with them right before. Just saying.`);
         } else text = pick(["I was at the tables the whole time. Didn't see a thing.", 'I was getting a drink. This is terrifying.', 'Can we skip? We have no proof.']);
       } else {
-        const seen = b.witnessed.filter(w => !w.used);
-        for (const w of seen) { w.used = true; acc[w.who] = (acc[w.who] || 0) + 120; text += `I SAW ${byId(w.who).name} ${w.phrase}! `; }
-        if (!seen.length) {
-          for (const pc of poisonCases) {
-            const key = typeof pc.drinkId === 'string' ? pc.drinkId : pc.drinkId;
-            const t = b.touches[key];
-            const sus = t ? [...t].filter(id => id !== b.id && id !== pc.owner) : [];
-            if (sus.length) {
-              const x = byId(pick(sus)); acc[x.id] = (acc[x.id] || 0) + 35;
-              text += String(key).startsWith('bowl') ? `${x.name} was at that snack bowl. ` : `I saw ${x.name} hanging around ${byId(pc.owner).name}'s ${pc.kind}. `;
-            }
-          }
-          for (const v of victims.filter(v => v.cause === 'shiv')) {
-            const ls = b.lastSeen[v.id];
-            if (ls && ls.with.length && G.t - ls.t < 60) { const x = byId(pick(ls.with)); if (x !== b) { acc[x.id] = (acc[x.id] || 0) + 25; text += `Last I saw ${byId(v.id).name}, ${x.name} was right next to them in ${ROOMS[ls.room].name}. `; } }
-          }
+        for (const w of b.witnessed.filter(w => !w.used && w.hard)) {
+          w.used = true;
+          if (w.fake) text += `I saw ${byId(w.who).name} ${w.phrase}... but ${byId(w.who).name} was already dead. Someone is wearing their face. `;
+          else say(w.who, w.what === 'rig' || w.what === 'chandelier' ? 80 : 120, `I SAW ${byId(w.who).name} ${w.phrase}!`);
+        }
+        for (const w of b.witnessed.filter(w => !w.used && !w.hard && w.what === 'send' && poisoned.includes(w.victim))) {
+          w.used = true;
+          if (!w.fake && byId(w.who).alive) say(w.who, 60, `${byId(w.who).name} sent ${byId(w.victim).name} a drink right before. That drink was poisoned.`);
+        }
+        for (const v of victims.filter(v => v.cause === 'poison' && String(v.drinkId).startsWith('bowl'))) {
+          const sus = [...(b.touches[v.drinkId] || [])].filter(id => id !== b.id && id !== v.id && byId(id).alive);
+          if (sus.length) { const x = byId(pick(sus)); say(x.id, 35, `${x.name} was at that snack bowl.`); }
+        }
+        for (const h of b.heard.filter(h => !h.used)) {
+          h.used = true;
+          text += `I heard a scream from ${ROOMS[h.room].name}. `;
+          const near = Object.entries(b.lastSeen).filter(([id, s]) => +id !== h.victim && s.room === h.room && h.t - s.t < 25 && s.t <= h.t + 1 && byId(id).alive);
+          if (near.length) { const x = byId(pick(near)[0]); say(x.id, 30, `${x.name} was in there just before.`); }
+        }
+        if (!text) for (const v of victims.filter(v => v.cause !== 'poison')) {
+          const ls = b.lastSeen[v.id];
+          if (ls && ls.with.length && G.t - ls.t < 60) { const x = byId(pick(ls.with)); if (x !== b && x.alive) say(x.id, 25, `Last I saw ${byId(v.id).name}, ${x.name} was right next to them in ${ROOMS[ls.room].name}.`); }
         }
         if (!text) {
           const top = Object.entries(b.sus).filter(([id]) => +id !== b.id && byId(id).alive).sort((x, y) => y[1] - x[1])[0];
           if (top && top[1] > 20) { acc[top[0]] = 15; text = `I still don't trust ${byId(top[0]).name}.`; }
-          else text = pick([`I was at ${b.seat ? GAME_NAMES[b.seat.game] : 'the tables'}. Didn't see anything.`, 'I was busy losing money, sorry.', 'No idea. Somebody start talking.', "I didn't see it. Watch your drinks, people."]);
+          else text = pick([`I was at ${b.seat ? GAME_NAMES[b.seat.game] : 'the tables'}. Didn't see anything.`, 'I was busy losing money, sorry.', 'No idea. Somebody start talking.', "I didn't see it. Check your seats before you sit, people."]);
         }
       }
       out.push({ who: b.id, text: text.trim(), acc });
@@ -573,9 +772,10 @@ function makeApi(G) {
       if (c.seat) { c.seat.occ = null; c.seat = null; }
       const a = i / alive.length * Math.PI * 2, rr = ringRadius(alive.length);
       c.x = BELL.x + Math.cos(a) * rr; c.y = BELL.y + Math.sin(a) * rr; c.face = c.look = a + Math.PI; c.posVer++;
-      c.state = 'idle'; c.path = []; c.hunt = null; c.cd.shiv = Math.max(c.cd.shiv, 15);
+      c.state = 'idle'; c.path = []; c.hunt = null; c.cd.blade = Math.max(c.cd.blade, 15);
     });
-    for (const c of G.chars) if (!c.alive && c.isHuman) { c.x = BELL.x; c.y = BELL.y - 70; c.posVer++; }
+    for (const c of G.chars) { c.hauntUsed = false; if (!c.alive && c.isHuman) { c.x = BELL.x; c.y = BELL.y - 70; c.posVer++; } }
+    G.haunts = [];
     G.seats.forEach(s => { s.claim = null; });
     G.mode = 'play'; G.meeting = null;
     tellAll(msg);
@@ -599,6 +799,31 @@ function makeApi(G) {
     for (const h of humans()) sfxTo(h, (killersWin === h.isKiller) ? 'win' : 'lose');
   }
 
+  // ---------- Security: bought with crew-bank money at the security desk ----------
+  const price = item => Gm.niceDown(G.target * CFG[item + 'Price']);
+  function buy(c, item) {
+    const p = price(item);
+    if ((item === 'cams' && G.security.cams) || (item === 'guard' && G.guard)) return tell(c, item === 'cams' ? 'The cameras are already on.' : 'The guard is already on patrol.');
+    if (G.bank < p * 2) return tell(c, `The crew bank can't spare ${money(p)} right now.`);
+    G.bank -= p;
+    G.floats.push({ x: c.x, y: c.y - 30, text: '-' + money(p), color: '#e8443a', t: 1.6 });
+    const who = appearAs(c).name;
+    if (item === 'cams') { G.security.cams = true; tellAll(`${who} switched on the security cameras (${money(p)} from the crew bank). Whoever sits at the security desk can watch one room at a time.`, false, 'coin'); }
+    else {
+      const sp = { x: c.x + 60, y: c.y };
+      G.guard = { id: -1, isGuard: true, alive: true, name: 'the guard', x: sp.x, y: sp.y, face: 0, look: 0, path: [], t: CFG.guardTime, stuckT: 0, stalls: 0, lastPos: { x: 0, y: 0 }, wait: 0, moving: false };
+      tellAll(`${who} hired a security guard for ${CFG.guardTime / 60} minutes (${money(p)} from the crew bank). The guard reports anything they see.`, false, 'coin');
+    }
+    return true;
+  }
+  const FEEDS = ['floor', 'bar', 'arcade', 'race', 'slots', 'alley', 'vip'];
+  function guardTick(dt) {
+    const g = G.guard; g.t -= dt; g.moving = false;
+    if (g.t <= 0) { G.guard = null; tellAll("The security guard's shift is over."); return; }
+    if (followPath(g, dt, CFG.guardSpeed)) { g.wait += dt; if (g.wait > 3) { g.wait = 0; setGoal(g, openSpot(ROOMS[pick(FEEDS)])); } }
+    g.look = g.face + Math.sin(G.t * 1.3) * 0.9; // the guard sweeps the room
+  }
+
   // ---------- Human actions ----------
   function nearest(list, p, max) { let best = null, bd = max; for (const o of list) { const d = dist(o, p); if (d < bd) { bd = d; best = o; } } return best; }
   function contextFor(c) {
@@ -606,16 +831,41 @@ function makeApi(G) {
     const body = G.bodies.find(b => !b.reported && dist(b, c) < 90 && canSee(c, b));
     if (body) return { label: 'Report body', act: () => callMeeting(c, body, `${c.name} found ${byId(body.id).name}'s body.`) };
     if (c.seat) return { label: 'Stand up', act: () => standUp(c) };
-    if (!c.drink && dist(c, TAP) < 75) return { label: 'Order a drink', act: () => { pourFor(c); tell(c, `One ${c.drink.kind}, on the house.`); } };
+    if (dist(c, TAP) < 90) {
+      if (c.poisonT > 0 && G.antidotes > 0) return { label: `Take the antidote (${G.antidotes} left)`, act: () => takeAntidote(c) };
+      if (!c.drink) return { label: 'Order a drink', act: () => { pourFor(c); tell(c, `One ${c.drink.kind}, on the house.`); } };
+    }
     if (dist(c, BELL) < 60 && !c.bellUsed) return { label: 'Ring the pit bell', act: () => { c.bellUsed = true; callMeeting(c, null, `${c.name} rang the pit bell.`); } };
     const seat = G.seats.find(s => !s.occ && dist(s, c) < 45);
     if (seat) return { label: `Sit at ${GAME_NAMES[seat.game]}`, act: () => sit(c, seat) };
-    const mine = G.drinks.find(d => d.owner === c.id && !d.holder && dist(d, c) < CFG.reach);
-    if (mine && !c.drink) return { label: `Pick up your ${mine.kind}`, act: () => pickUpDrink(c, mine) };
     const bowl = G.bowls.find(b => dist(b, c) < CFG.reach + 5);
     if (bowl && !c.lucky) return { label: 'Eat a pretzel', act: () => eatSnack(c, bowl) };
     return null;
   }
+  // Inspect: what's within reach to check (your drink, a machine you're at or next to, a snack bowl).
+  function inspectTarget(c) {
+    if (c.drink) return { kind: 'drink', d: c.drink };
+    const s = c.seat || nearest(G.seats.filter(s => !s.occ && s.game !== 'cams' && s.game !== 'vip'), c, CFG.reach + 20);
+    if (s) return { kind: 'seat', s };
+    const b = nearest(G.bowls, c, CFG.reach + 10);
+    return b ? { kind: 'bowl', b } : null;
+  }
+  function finishInspect(c, x) {
+    if (x.kind === 'drink') {
+      if (!G.drinks.includes(x.d)) return;
+      if (x.d.poisoned) { tell(c, `Bitter almonds. Your ${x.d.kind} is POISONED.${x.d.from !== null ? ' It came from the bar, "on the house".' : ''}`, true, 'poison'); if (!c.isKiller) note(c, `Your ${x.d.kind} was poisoned${x.d.from !== null ? ', sent from the bar' : ''}.`, { hard: true }); }
+      else tell(c, `Smells like a perfectly normal ${x.d.kind}.`);
+    } else if (x.kind === 'seat') {
+      const trap = trapAt('seat', x.s.id);
+      if (trap) { removeTrap(trap); tell(c, `A wire where no wire should be: ${trap.label} was rigged to kill. You pulled it out.`, true, 'poison'); if (!c.isKiller) note(c, `${trap.label[0].toUpperCase() + trap.label.slice(1)} was rigged. You disarmed it.`, { hard: true }); }
+      else tell(c, `${(RIG_LABEL[x.s.game] || GAME_NAMES[x.s.game]).replace(/^the /, 'The ')} looks fine.`);
+    } else {
+      const trap = trapAt('bowl', x.b.id);
+      if (trap) { removeTrap(trap); tell(c, 'Bitter almonds. These pretzels are POISONED. You tipped them out.', true, 'poison'); if (!c.isKiller) note(c, 'The snack bowl was poisoned.', { hard: true }); }
+      else tell(c, 'Just salty pretzels.');
+    }
+  }
+  const living = id => { const o = byId(id); return o && o.alive ? o : null; };
   function action(id, k, arg) {
     const c = byId(id); if (!c || !c.isHuman) return;
     if (G.mode === 'meeting') {
@@ -632,18 +882,29 @@ function makeApi(G) {
       return;
     }
     if (G.mode !== 'play') return;
+    if (k === 'haunt' && !c.alive) {
+      if (c.hauntUsed) return tell(c, 'You can haunt again after the next meeting.');
+      if (!haunt(c, living(arg))) tell(c, 'Pick someone alive to haunt.');
+      return;
+    }
     if (k === 'use') { const x = contextFor(c); if (x) x.act(); return; }
     if (!c.alive) return;
     if (k === 'sip') {
-      const d = c.drink || G.drinks.find(d => d.owner === c.id && !d.holder && dist(d, c) < CFG.reach + 15);
-      if (d) sip(c, d); else tell(c, 'You have nothing to drink. The bar is west of the casino floor.');
-    } else if (k === 'sniff') {
-      const d = c.drink || nearest(G.drinks.filter(d => !d.holder), c, CFG.reach + 15);
-      const b = !d && nearest(G.bowls, c, CFG.reach + 10);
-      if (d || b) { c.sniff = { d: d || null, b: b || null, t: 1.5 }; tell(c, 'Sniffing... hold still.'); } else tell(c, 'Nothing within reach to sniff.');
+      if (c.drink) sip(c, c.drink); else tell(c, 'You have nothing to drink. The bar is in the north-west corner.');
+    } else if (k === 'sniff' || k === 'inspect') {
+      const x = inspectTarget(c);
+      if (x) { c.inspect = Object.assign(x, { t: CFG.inspectTime }); tell(c, x.kind === 'drink' ? 'Sniffing... hold still.' : 'Checking it over... hold still.'); } else tell(c, 'Nothing within reach to check.');
     } else if (k === 'pour') {
-      const d = c.drink || G.drinks.find(d => d.owner === c.id && !d.holder && dist(d, c) < CFG.reach + 15);
-      if (d) { removeDrink(d); tell(c, `You poured out your ${d.kind}.`, false, 'pour'); }
+      if (c.drink) { const d = c.drink; removeDrink(d); tell(c, `You poured out your ${d.kind}.`, false, 'pour'); }
+    } else if (k === 'antidote') {
+      if (dist(c, TAP) > 90) tell(c, 'The antidote is behind the bar.'); else if (!takeAntidote(c)) tell(c, c.poisonT > 0 ? 'The antidote is gone.' : "You don't need it. Yet.");
+    } else if (k === 'send') {
+      const to = living(arg);
+      if (dist(c, TAP) > 90) tell(c, 'Drinks are sent from the bar.'); else if (!to || to === c) tell(c, 'Pick someone to send a drink to.'); else sendDrink(c, to, false);
+    } else if (k === 'feed' && c.seat && c.seat.game === 'cams' && G.security.cams && FEEDS.includes(arg)) {
+      G.security.feed = arg; G.security.feedT = 12;
+    } else if (k === 'buy' && (arg === 'cams' || arg === 'guard')) {
+      if (!c.seat || c.seat.game !== 'cams') tell(c, 'Security is bought at the security desk.'); else buy(c, arg);
     } else if (k === 'bank' && (c.seat || G.t - (c.leftSeatT ?? -99) < 8) && c.alive && arg && isFinite(arg.d) && isFinite(arg.b)) {
       // a finished round at a table: d is what came back minus the stake, b the stake (doubles and splits count)
       const b = clamp(arg.b, 0, Gm.maxBet(G.bank) * 6);
@@ -655,24 +916,27 @@ function makeApi(G) {
       const b = G.crash.bets.get(c.id); if (b && !b.out) crashCash(c.id, b, G.crash.mult);
     } else if (k === 'race' && c.seat && c.seat.game === 'race' && G.race.phase === 'bet' && !G.race.bets.has(c.id) && arg && isFinite(arg.bet) && arg.duck >= 0 && arg.duck < Gm.DUCKS.length) {
       G.race.bets.set(c.id, { duck: arg.duck | 0, bet: Gm.clampBet(arg.bet, G.bank) }); sfxTo(c, 'chip');
-    } else if (c.isKiller && k === 'poison') {
-      if (c.cd.poison > 0) return tell(c, `Poison ready in ${Math.ceil(c.cd.poison)}s.`);
-      const d = nearest(G.drinks.filter(d => !d.holder && d.owner !== c.id && !d.poisoned && !byId(d.owner).isKiller), c, CFG.reach);
-      const b = !d && nearest(G.bowls.filter(b => !b.spiked), c, CFG.reach + 5);
-      if (d) doPoison(c, d); else if (b) doSpike(c, b); else tell(c, "Get next to someone's unattended drink or a snack bowl.");
-    } else if (c.isKiller && k === 'shiv') {
-      if (c.cd.shiv > 0) return tell(c, `Shiv ready in ${Math.ceil(c.cd.shiv)}s.`);
-      const v = nearest(G.chars.filter(o => o.alive && o !== c && !o.isKiller), c, CFG.reach + 5);
-      if (v) doShiv(c, v); else tell(c, 'Get right next to someone.');
-    } else if (c.isKiller && k === 'lights') {
-      if (!doLights(c)) tell(c, `Lights out ready in ${Math.ceil(c.cd.lights)}s.`);
+    } else if (c.isKiller && KILLS.concat(['disguise', 'lights']).includes(k)) {
+      if (c.cd[k] > 0) return tell(c, `Ready in ${Math.ceil(c.cd[k])}s.`);
+      if (k === 'order') {
+        const v = living(arg);
+        if (dist(c, TAP) > 90) tell(c, 'Poisoned drinks are ordered at the bar.');
+        else if (!v || v.isKiller) tell(c, 'Pick a gambler to send it to.');
+        else doOrder(c, v);
+      } else if (k === 'rig') { const t = rigTarget(c); if (!t) tell(c, 'Get next to an empty seat, a machine or a snack bowl.'); else doRig(c, t); }
+      else if (k === 'blade') {
+        const v = nearest(G.chars.filter(o => o.alive && o !== c && !o.isKiller), c, CFG.reach + 5);
+        if (v) doBlade(c, v); else tell(c, 'Get right behind someone.');
+      } else if (k === 'accident') { if (!doAccident(c)) tell(c, 'Get next to someone by the duck pond, or under a chandelier\'s chain (stand near one with someone under it).'); }
+      else if (k === 'disguise') doDisguise(c);
+      else if (!doLights(c)) tell(c, `Lights out ready in ${Math.ceil(c.cd.lights)}s.`);
     }
   }
   function setInput(id, inp) {
     const c = byId(id); if (!c || !c.isHuman || !inp) return;
     if (inp.posVer !== c.posVer) return; // client hasn't caught up with a teleport yet
     if (!c.seat && typeof inp.x === 'number' && typeof inp.y === 'number' && isFinite(inp.x) && isFinite(inp.y)) {
-      if (c.sniff && dist(c, inp) > 3) { c.sniff = null; tell(c, 'Sniff interrupted.'); }
+      if (c.inspect && c.inspect.kind !== 'drink' && dist(c, inp) > 3) { c.inspect = null; tell(c, 'Interrupted.'); }
       c.x = clamp(inp.x, 0, W); c.y = clamp(inp.y, 0, H);
       if (c.alive) collide(c);
     }
@@ -681,26 +945,17 @@ function makeApi(G) {
     if (c.seat) { c.face = c.seat.face; if (typeof inp.look !== 'number') c.look = c.seat.face + (inp.lookBack ? Math.PI : 0); } // seated humans turn their head freely
   }
   function humanTick(c, dt) {
-    if (c.sniff) {
-      c.sniff.t -= dt;
-      if (c.sniff.t <= 0) {
-        const { d, b } = c.sniff; c.sniff = null;
-        if (b) { if (b.spiked) { tell(c, 'Bitter almonds. These pretzels are POISONED.', true, 'poison'); if (!c.isKiller) note(c, 'The snack bowl was poisoned.', { hard: true }); } else tell(c, 'Just salty pretzels.'); return; }
-        if (!G.drinks.includes(d)) return;
-        const owner = byId(d.owner); const whose = owner === c ? 'Your' : owner.name + "'s";
-        if (d.poisoned) { tell(c, `Bitter almonds. ${whose} ${d.kind} is POISONED.`, true, 'poison'); if (!c.isKiller) note(c, `${whose} ${d.kind} was poisoned.`, { hard: true }); }
-        else tell(c, `Smells like a perfectly normal ${d.kind}.`);
-      }
-    }
+    if (c.inspect) { c.inspect.t -= dt; if (c.inspect.t <= 0) { const x = c.inspect; c.inspect = null; finishInspect(c, x); } }
   }
   function dropHuman(id) {
     const c = byId(id); if (!c || !c.isHuman) return;
-    c.isHuman = false; c.netKey = null; c.path = []; c.sniff = null;
+    c.isHuman = false; c.netKey = null; c.path = []; c.inspect = null;
     if (c.seat) { c.state = 'seated'; c.sitT = rand(5, 15); c.gameT = 2; } else c.state = 'idle';
     tellAll(`${c.name} left. A bot took their seat.`);
   }
 
   // ---------- Tick ----------
+  const sick = c => c.poisonT > 0 && CFG.poisonDelay - c.poisonT > CFG.sickAfter;
   function tick(dt) {
     if (G.over) { G.t += dt; return; }
     if (G.mode === 'meeting') { meetingTick(dt); return; }
@@ -708,22 +963,38 @@ function makeApi(G) {
     if (G.lightsT > 0) G.lightsT -= dt;
     if (!G.warned && G.t > CFG.closingTime - CFG.closingWarn) { G.warned = true; tellAll(`Last call! The casino closes in ${CFG.closingWarn / 60} minutes. Break the bank or catch the killer.`, true, 'meeting'); }
     if (G.t >= CFG.closingTime) { G.closed = true; checkOver(); if (G.over) return; }
+    const S = G.security;
+    if (S.cams && (S.feedT -= dt) <= 0) { S.feedT = 4; S.feed = FEEDS[(FEEDS.indexOf(S.feed) + 1) % FEEDS.length]; }
     for (const c of G.chars) {
-      if (!c.alive) continue;
+      if (!c.alive) { if (!c.isHuman) botGhost(c); continue; }
       for (const k in c.cd) c.cd[k] = Math.max(0, c.cd[k] - dt);
       c.thirst = Math.max(0, c.thirst - CFG.thirstDrain * dt);
       if (c.lucky > 0) c.lucky = Math.max(0, c.lucky - dt);
-      if (c.poisonT > 0) { c.poisonT -= dt; if (c.poisonT <= 0) { kill(c, 'poison', byId(c.poisonBy)); continue; } }
+      if (c.disguise && c.disguise.t > 0 && (c.disguise.t -= dt) <= 0) tell(c, 'Your disguise slipped. You look like yourself again.');
+      if (c.trapT > 0 && (c.trapT -= dt) <= 0) { kill(c, 'trap', byId(c.trapBy)); continue; }
+      if (c.poisonT > 0) {
+        c.poisonT -= dt;
+        if (c.poisonT <= 0) { kill(c, 'poison', byId(c.poisonBy)); continue; }
+        if (!c.sickTold && sick(c)) { c.sickTold = true; tell(c, G.antidotes > 0 ? `You feel sick. Poison! Get the antidote at the bar in ${Math.floor(c.poisonT)} seconds.` : 'You feel sick. Poison, and the antidote is gone.', true, 'poison'); }
+      }
       if (c.isHuman) humanTick(c, dt); else botTick(c, dt);
       if (c.drink) { c.drink.x = c.x + Math.cos(c.face + 0.9) * 16; c.drink.y = c.y + Math.sin(c.face + 0.9) * 16; }
       if (G.mode !== 'play') break;
     }
     if (G.mode !== 'play') return;
+    for (const ch of G.chandeliers) if (ch.state === 'falling' && (ch.t -= dt) <= 0) { dropChandelier(ch); if (G.over) return; }
+    if (G.guard) guardTick(dt);
+    for (const h of G.haunts) h.t -= dt;
+    G.haunts = G.haunts.filter(h => h.t > 0);
     crashTick(dt); raceTick(dt);
     G.obsT -= dt; if (G.obsT <= 0) { G.obsT = 0.25; observe(); }
     if (G.pending) {
       G.pending.t -= dt;
-      if (G.pending.t <= 0) { const { caller, body } = G.pending; G.pending = null; if (caller.alive && G.mode === 'play') callMeeting(caller, body, `${caller.name} found ${byId(body.id).name}'s body.`); }
+      if (G.pending.t <= 0) {
+        const { caller, body, guard } = G.pending; G.pending = null;
+        if (guard) guardMeeting(body);
+        else if (caller.alive && G.mode === 'play') callMeeting(caller, body, `${caller.name} found ${byId(body.id).name}'s body.`);
+      }
     }
     for (const f of G.floats) { f.t -= dt; f.y -= 18 * dt; }
     G.floats = G.floats.filter(f => f.t > 0);
@@ -736,11 +1007,15 @@ function makeApi(G) {
     const m = G.meeting;
     return {
       t: G.t, mode: G.mode, bank: G.bank, target: G.target, closeT: Math.max(0, Math.ceil(CFG.closingTime - G.t)), lightsT: G.lightsT, nk: G.killerIds.length,
-      chars: G.chars.map(c => ({ id: c.id, name: c.name, color: c.color, hat: c.hat, x: Math.round(c.x), y: Math.round(c.y), look: +c.look.toFixed(2), face: +c.face.toFixed(2),
-        alive: c.alive, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: c.poisonT > 0 && c.poisonT < CFG.poisonDelay - 2, human: c.isHuman, lucky: c.lucky > 0 })),
+      chars: G.chars.map(c => { const a = appearAs(c); return { id: c.id, name: a.name, color: a.color, hat: a.hat, x: Math.round(c.x), y: Math.round(c.y), look: +c.look.toFixed(2), face: +c.face.toFixed(2),
+        alive: c.alive, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: sick(c), human: c.isHuman, lucky: c.lucky > 0, inspecting: !!c.inspect }; }),
       drinks: G.drinks.map(d => ({ id: d.id, owner: d.owner, holder: d.holder, x: Math.round(d.x), y: Math.round(d.y), sips: d.sips, color: d.color, kind: d.kind })),
       bodies: G.bodies.map(b => ({ id: b.id, x: Math.round(b.x), y: Math.round(b.y), cause: b.cause })),
       bowls: G.bowls.map(b => ({ id: b.id, x: b.x, y: b.y })),
+      chandeliers: G.chandeliers.map(ch => ({ id: ch.id, x: ch.x, y: ch.y, state: ch.state, t: +ch.t.toFixed(2) })),
+      guard: G.guard && { x: Math.round(G.guard.x), y: Math.round(G.guard.y), look: +G.guard.look.toFixed(2), moving: G.guard.moving, t: Math.ceil(G.guard.t) },
+      haunts: G.haunts.map(h => ({ on: h.on, t: +h.t.toFixed(2) })),
+      security: { cams: G.security.cams, feed: G.security.cams ? G.security.feed : null, camsPrice: price('cams'), guardPrice: price('guard') }, antidotes: G.antidotes,
       floats: G.floats.map(f => ({ x: Math.round(f.x), y: Math.round(f.y), text: f.text, color: f.color, t: +f.t.toFixed(2), big: !!f.big })),
       fx: G.fx.map(f => ({ kind: f.kind, x: Math.round(f.x), y: Math.round(f.y), t: +f.t.toFixed(2) })),
       seatsOcc: G.seats.map(s => s.occ ? s.occ.id : null), maxBet: Gm.maxBet(G.bank),
@@ -756,15 +1031,19 @@ function makeApi(G) {
   function view(id, pub) {
     const c = byId(id);
     const ctx = contextFor(c);
-    const myDrink = c.drink || G.drinks.find(d => d.owner === c.id);
+    const myDrink = c.drink;
+    const cd = {}; for (const k in c.cd) cd[k] = Math.ceil(c.cd[k]);
     const priv = {
-      me: c.id, isKiller: c.isKiller, killers: c.isKiller ? G.killerIds.slice() : [c.id].filter(() => false), alive: c.alive,
-      thirst: Math.round(c.thirst), cd: { poison: Math.ceil(c.cd.poison), shiv: Math.ceil(c.cd.shiv), lights: Math.ceil(c.cd.lights) },
+      me: c.id, isKiller: c.isKiller, killers: c.isKiller ? G.killerIds.slice() : [], alive: c.alive,
+      thirst: Math.round(c.thirst), cd,
       notes: c.notes.slice(-12).map(n => ({ text: n.text, hard: !!n.hard })), inbox: c.inbox.splice(0),
       ctx: ctx ? ctx.label : null, posVer: c.posVer, x: c.x, y: c.y, seat: c.seat ? { id: c.seat.id, x: c.seat.x, y: c.seat.y, face: c.seat.face, game: c.seat.game, tier: c.seat.tier || null } : null,
-      drink: myDrink ? { kind: myDrink.kind, sips: myDrink.sips, held: myDrink.holder === c.id } : null,
-      sniffT: c.sniff ? c.sniff.t : 0, bellUsed: c.bellUsed, voted: c.voted, accused: c.accused, lucky: Math.ceil(c.lucky),
-      spiked: c.isKiller ? G.drinks.filter(d => d.poisoned).map(d => d.id).concat(G.bowls.filter(b => b.spiked).map(b => 'bowl' + b.id)) : [],
+      drink: myDrink ? { kind: myDrink.kind, sips: myDrink.sips, held: true } : null,
+      sniffT: c.inspect ? c.inspect.t : 0, inspectT: c.inspect ? c.inspect.t : 0, bellUsed: c.bellUsed, voted: c.voted, accused: c.accused, lucky: Math.ceil(c.lucky),
+      sick: sick(c), poisonT: sick(c) ? Math.ceil(c.poisonT) : 0, hauntUsed: !!c.hauntUsed, atBar: dist(c, TAP) < 90,
+      disguise: c.disguise && c.disguise.t > 0 ? { as: c.disguise.as, t: Math.ceil(c.disguise.t) } : null,
+      spiked: c.isKiller ? G.drinks.filter(d => d.poisoned).map(d => d.id).concat(G.traps.filter(t => t.kind === 'bowl').map(t => 'bowl' + t.id)) : [],
+      rigged: c.isKiller ? G.traps.filter(t => t.kind === 'seat').map(t => t.id) : [],
     };
     if (G.over) priv.won = G.over.killersWin === c.isKiller;
     return { pub: pub || pubView(), priv };

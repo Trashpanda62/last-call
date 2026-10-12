@@ -62,6 +62,7 @@ export const DICE_TABLE = { x: 1120, y: 1440, w: 320, h: 150 };
 export const WHEEL_X = 1700;                                                 // the prize wheel on the alley's south wall
 export const COIN = { x: 1855, y: 1335 };
 export const COFFEE = { x: 2400, y: 1505, w: 160, h: 70 };
+export const SECURITY = { x: 650, y: 560, w: 50, h: 130 };                  // the security desk: camera monitors on the floor's west wall
 
 export const OBSTACLES = [
   { x: 60, y: 60, w: 400, h: 50, kind: 'counter' },
@@ -83,6 +84,7 @@ export const OBSTACLES = [
   { x: WHEEL_X - 100, y: 1855, w: 200, h: 25, kind: 'wheel' },
   { x: COIN.x - 45, y: COIN.y - 45, w: 90, h: 90, kind: 'coin' },
   { ...COFFEE, kind: 'coffee' },
+  { ...SECURITY, kind: 'security' },
   { x: 2090, y: 1830, w: 220, h: 40, kind: 'couch' }, { x: 2690, y: 1830, w: 220, h: 40, kind: 'couch' },
   // dressing that you walk around: bar booths and a jukebox, a slot-hall ottoman, a VIP pool table, champagne and piano
   { x: 30, y: 230, w: 80, h: 110, kind: 'booth' }, { x: 30, y: 470, w: 80, h: 110, kind: 'booth' }, { x: 540, y: 655, w: 50, h: 40, kind: 'jukebox' },
@@ -101,7 +103,7 @@ export const REST_SPOTS = [{ x: 110, y: 820 }, { x: 110, y: 980 }, { x: 320, y: 
 export const BOWL_SPOTS = [{ x: 530, y: 160 }, { x: 2900, y: 1300 }, { x: 2120, y: 140 }, { x: 1560, y: 1260 }];
 export const GAME_NAMES = {
   bj: 'blackjack', roulette: 'roulette', race: 'the duck race', vip: 'the VIP lounge', slots: 'the slots', crash: 'Crash',
-  plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice',
+  plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice', cams: 'the security desk',
 };
 
 export function makeSeats() {
@@ -126,6 +128,7 @@ export function makeSeats() {
   [-60, 60].forEach((dx, i) => add('wheel', WHEEL_X + dx, 1762, Math.PI / 2, { machine: i }));
   for (const x of [1220, 1340]) { add('dice', x, DICE_TABLE.y - 40, Math.PI / 2); add('dice', x, DICE_TABLE.y + DICE_TABLE.h + 40, -Math.PI / 2); }
   for (const [x, y] of [[1780, 1430], [1930, 1430]]) add('coin', x, y, Math.atan2(COIN.y - y, COIN.x - x));
+  add('cams', SECURITY.x + SECURITY.w + 38, SECURITY.y + SECURITY.h / 2, Math.PI);
   add('vip', COFFEE.x - 70, COFFEE.y + 35, 0); add('vip', COFFEE.x + COFFEE.w + 70, COFFEE.y + 35, Math.PI);
   add('vip', COFFEE.x + 80, COFFEE.y - 65, Math.PI / 2); add('vip', COFFEE.x + 80, COFFEE.y + COFFEE.h + 65, -Math.PI / 2);
   return seats;

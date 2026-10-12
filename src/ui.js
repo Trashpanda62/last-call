@@ -28,7 +28,7 @@ export function updateHud(v) {
   $('lucky').textContent = priv.lucky > 0 ? `Lucky ${priv.lucky}s` : '';
   const d = priv.drink;
   $('drinkInfo').textContent = !priv.alive ? "You're a ghost. Drift around and watch."
-    : d ? `Your ${d.kind}: ${d.sips} sips${d.held ? ' (in hand)' : ' (set down)'}` : priv.thirst <= 0 ? 'Parched! Get a drink at the bar.' : 'No drink. The bar is west of the casino floor.';
+    : d ? `Your ${d.kind}: ${d.sips} sips` : priv.thirst <= 0 ? 'Parched! Get a drink at the bar.' : 'No drink. The bar is in the north-west corner.';
   $('hint').textContent = priv.ctx ? 'E · ' + priv.ctx : '';
   $('useBtn').textContent = priv.ctx ? shortCtx(priv.ctx) : 'Use';
   $('useBtn').classList.toggle('ready', !!priv.ctx);
@@ -39,20 +39,18 @@ export function updateHud(v) {
     if (priv.isKiller) {
       r.className = 'killer';
       const mates = pub.chars.filter(c => priv.killers.includes(c.id) && c.id !== priv.me).map(c => c.name);
-      r.innerHTML = `<b>You are ${mates.length ? 'a KILLER' : 'the KILLER'}.</b> ${mates.length ? `Your partner: ${esc(mates.join(', '))}. ` : ''}Poison, stab, cut the lights. Don't get seen.`;
-    } else { r.className = ''; r.innerHTML = `<b>You are a GAMBLER.</b> Win the crew ${money(pub.target)} or vote out the killer. Watch your drink.`; }
-  }
-  show('killerBar', priv.isKiller && priv.alive);
-  if (priv.isKiller) {
-    const set = (k, cd, label) => { const b = document.querySelector(`#killerBar [data-act=${k}]`); b.textContent = label + (cd > 0 ? ` (${cd}s)` : ''); b.disabled = cd > 0; };
-    set('poison', priv.cd.poison, '1 · Poison'); set('shiv', priv.cd.shiv, '2 · Shiv'); set('lights', priv.cd.lights, '3 · Lights');
+      r.innerHTML = `<b>You are ${mates.length ? 'a KILLER' : 'the KILLER'}.</b> ${mates.length ? `Your partner: ${esc(mates.join(', '))}. ` : ''}Poison orders, rigged machines, a knife from behind, accidents. Don't get seen.`;
+    } else { r.className = ''; r.innerHTML = `<b>You are a GAMBLER.</b> Win the crew ${money(pub.target)} or vote out the killer. Check before you sit, sniff before you sip.`; }
   }
 }
 function shortCtx(s) {
   if (s.startsWith('Report')) return 'Report'; if (s.startsWith('Sit')) return 'Sit'; if (s.startsWith('Stand')) return 'Stand';
-  if (s.startsWith('Order')) return 'Order'; if (s.startsWith('Ring')) return 'Bell'; if (s.startsWith('Pick')) return 'Pick up'; if (s.startsWith('Eat')) return 'Snack';
+  if (s.startsWith('Order')) return 'Order'; if (s.startsWith('Take')) return 'Antidote'; if (s.startsWith('Ring')) return 'Bell'; if (s.startsWith('Pick')) return 'Pick up'; if (s.startsWith('Eat')) return 'Snack';
   return 'Use';
 }
+
+const CAUSES = [['poison', 'poisoned'], ['trap', 'rigged'], ['blade', 'knifed'], ['chandelier', 'crushed'], ['drown', 'drowned']];
+function deaths(st) { const p = CAUSES.filter(([k]) => st[k]).map(([k, w]) => `${st[k]} ${w}`); return p.length ? p.join(', ') : 'nobody died'; }
 
 // ---------- Meeting ----------
 let mKey = '', mLines = 0, mVoteKey = '';
@@ -112,7 +110,7 @@ export function renderOver(v, isHost, solo) {
   $('oTitle').style.color = priv.won ? 'var(--gold)' : 'var(--red)';
   $('oText').textContent = o.text;
   const mins = Math.floor(o.t / 60), secs = Math.floor(o.t % 60);
-  $('oStats').textContent = `${mins}:${String(secs).padStart(2, '0')} long · ${o.stats.poisonings} poisoning${o.stats.poisonings === 1 ? '' : 's'} · ${o.stats.stabs} stab${o.stats.stabs === 1 ? '' : 's'} · ${o.stats.meetings} meeting${o.stats.meetings === 1 ? '' : 's'} · bankroll ${money(pub.bank)}`;
+  $('oStats').textContent = `${mins}:${String(secs).padStart(2, '0')} long · ${deaths(o.stats)} · ${o.stats.meetings} meeting${o.stats.meetings === 1 ? '' : 's'} · bankroll ${money(pub.bank)}`;
   show('againBtn', solo || isHost); show('overWait', !solo && !isHost);
   $('againBtn').textContent = solo ? 'Play again' : 'Back to lobby';
 }

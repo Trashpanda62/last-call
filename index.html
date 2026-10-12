@@ -29,18 +29,14 @@
   <div id="bottom">
     <div id="thirst"><span>Thirst</span><div class="bar"><div id="thirstFill"></div></div><span id="lucky"></span></div>
     <div id="drinkInfo"></div>
-    <div id="killerBar" class="hidden">
-      <button data-act="poison">1 · Poison</button>
-      <button data-act="shiv">2 · Shiv</button>
-      <button data-act="lights">3 · Lights</button>
-    </div>
+    <div id="killerBar" class="hidden"></div>
   </div>
   <div id="toasts"></div>
   <div id="stick"><div id="knob"></div></div>
   <div id="touchBtns">
     <button data-act="use" id="useBtn">Use</button>
     <button data-act="sip">Sip</button>
-    <button data-act="sniff">Sniff</button>
+    <button data-act="inspect">Check</button>
     <button data-act="pour">Pour</button>
     <button data-act="back">Look back</button>
   </div>
@@ -102,12 +98,13 @@
     <div class="cards">
       <div class="hcard"><b>The setup</b><p>Up to sixteen gamblers walk into a casino. One to four of them are killers. Nobody knows who.</p></div>
       <div class="hcard"><b>Gamblers</b><p>Twelve games, one crew bank. Blackjack, roulette, slots, Crash, Plinko, Mines, Dragon Tower, the duck race, street dice, the prize wheel and the coin flip. Pick your bet; the max grows with the bank. Hit the target and the house is broken. Or vote every killer out.</p></div>
-      <div class="hcard"><b>The killer</b><p>Poison an unattended drink, lace the snack bowl, stab someone alone, or kill the lights. Do it when nobody is looking.</p></div>
-      <div class="hcard"><b>Watch your drink</b><p>You only see what you are looking at. Sit at a table and your drink goes on the rail behind you. Look back now and then. Sniff before you sip.</p></div>
+      <div class="hcard"><b>The killer</b><p>Order a poisoned drink "on the house" at the bar, rig an empty machine or the snack bowl, knife someone from behind, shove them into the duck pond or drop a chandelier on a table. Then wear your victim's face for a while. Do it when nobody is looking.</p></div>
+      <div class="hcard"><b>Stay alive</b><p>You only see what you are looking at, and knives come from behind. Free drinks might be poisoned: sniff before you sip. Check a machine before you sit. Poisoned? You have a few seconds to reach the antidote at the bar. Screams carry through walls.</p></div>
       <div class="hcard"><b>Thirst and snacks</b><p>Get thirsty and you slow down, so you have to drink. Pretzels make your wins pay more for a while, if they're clean.</p></div>
-      <div class="hcard"><b>Meetings</b><p>Find a body or ring the pit bell. Everyone says what they saw (the killer lies), then votes. Your notes remember who lurked by whose drink.</p></div>
+      <div class="hcard"><b>Security and ghosts</b><p>At the security desk the crew can buy cameras (watch any room) or a guard who reports what they see. The dead can haunt one person a round; the bots near them get a bad feeling.</p></div>
+      <div class="hcard"><b>Meetings</b><p>Find a body or ring the pit bell. Everyone says what they saw (the killers lie), then votes. Your notes remember what you saw.</p></div>
     </div>
-    <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, E or click to use, F sip, R sniff, X pour, hold Space to look behind you, 1/2/3 killer moves, Esc menu.
+    <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, E or click to use, F sip, R check (a drink, machine or snack bowl), X pour, G send a drink (at the bar), hold Space to look behind you, 1-6 killer moves, H haunt (as a ghost), Esc menu.
       At a table the mouse is free for the game: drag to look around, walk to stand up.
       <b>Phone:</b> left thumb walks, right thumb drags to look, buttons on the right.</p>
     <button class="big" id="howClose">Got it</button>

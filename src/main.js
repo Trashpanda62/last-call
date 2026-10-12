@@ -6,6 +6,7 @@ import { createGame } from './sim.js';
 import { init as init3d, draw, playHand, info as gfxInfo } from './3d/render3d.js';
 import * as audio from './audio.js';
 import { $, show, toast, splash, updateHud, renderMeeting, resetMeeting, renderOver } from './ui.js';
+import { initMoves, updateMoves, keyMove, pickerOpen } from './moves.js';
 import { openPanel, closePanel, panelGame, panelView, panelTick, setHandHook } from './panels.js';
 import { hostRoom, joinRoom } from './net.js';
 
@@ -165,7 +166,7 @@ function inbox(items) {
   for (const m of items || []) {
     if (m.text) toast(m.text, m.bad); if (m.sfx) audio.sfx(m.sfx);
     if (HAND_SFX.has(m.sfx)) playHand(m.sfx === 'pour' ? 'click' : m.sfx);
-    if (m.sfx === 'poison' && S.view && S.view.priv.isKiller && /spiked|laced/.test(m.text || '')) playHand('poison');
+    if (m.sfx === 'poison' && S.view && S.view.priv.isKiller && /on its way|You rigged/.test(m.text || '')) playHand('poison');
   }
 }
 // The head direction the sim sees: where you aim, plus a turn of up to 180 degrees while looking back.
@@ -217,7 +218,7 @@ const lockOK = () => !navigator.webdriver && !S.noLock && !touchMode;
 const locked = () => document.pointerLockElement === view;
 function wantLock() {
   const v = S.view;
-  return S.screen === 'game' && !S.paused && !!v && v.pub.mode === 'play' && !v.pub.over && !v.priv.seat;
+  return S.screen === 'game' && !S.paused && !!v && v.pub.mode === 'play' && !v.pub.over && !v.priv.seat && !pickerOpen();
 }
 function requestLock(force) {
   if (!lockOK() || locked() || !(force ? S.screen === 'game' && !S.paused : wantLock())) return;
@@ -244,7 +245,7 @@ addEventListener('mousemove', e => {
   if (drag && S.screen === 'game') { lookBy(e.clientX - drag.x, e.clientY - drag.y); drag.x = e.clientX; drag.y = e.clientY; }
 });
 
-const KEYMAP = { e: 'use', f: 'sip', r: 'sniff', x: 'pour', 1: 'poison', 2: 'shiv', 3: 'lights' };
+const KEYMAP = { e: 'use', f: 'sip', r: 'inspect', x: 'pour' };
 const MOVE_KEYS = new Set(['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright']);
 addEventListener('keydown', e => {
   const k = e.key.toLowerCase();
@@ -252,7 +253,8 @@ addEventListener('keydown', e => {
   if (k === ' ' || k.startsWith('arrow')) e.preventDefault();
   if (!keys[k]) {
     const seated = S.screen === 'game' && S.view && S.view.priv.seat && S.view.pub.mode === 'play';
-    if (k === 'escape' && S.screen === 'game') { if (performance.now() - (S.unlockAt || 0) > 400) togglePause(); }
+    if (S.screen === 'game' && !S.paused && keyMove(k)) { /* a v4 move or the name picker took it */ }
+    else if (k === 'escape' && S.screen === 'game') { if (performance.now() - (S.unlockAt || 0) > 400) togglePause(); }
     else if (S.screen === 'game' && KEYMAP[k] && !S.paused) { act(KEYMAP[k]); if (k === 'e' && seated) requestLock(true); }
     if (MOVE_KEYS.has(k) && S.screen === 'game' && !S.paused) {
       if (seated && !S.standReq) { S.standReq = true; act('use'); requestLock(true); } else requestLock();
@@ -296,7 +298,7 @@ document.querySelectorAll('#touchBtns [data-act]').forEach(b => {
   b.addEventListener('touchend', e => { e.preventDefault(); if (a === 'back') touchBack = false; });
   b.addEventListener('click', () => { if (a !== 'back') act(a); });
 });
-document.querySelectorAll('#killerBar [data-act]').forEach(b => { b.onclick = () => act(b.dataset.act); });
+initMoves({ act: (k, arg) => act(k, arg), unlock: releaseLock, relock: () => requestLock() });
 
 // ---------- Buttons ----------
 $('soloBtn').onclick = () => { audio.unlock(); openSetup('solo'); };
@@ -361,13 +363,13 @@ function simStep(dt) {
   }
 }
 const TIPS = [
-  [3, 'Tip: sit at a table to win money for the crew. Your drink goes on the rail behind you.', 'g'],
-  [3, 'Tip: get next to a drink nobody is watching and Poison it. Snack bowls work too.', 'k'],
-  [14, 'Tip: hold Space (or Look back) to check the drink behind you. Do it often.', 'g'],
+  [3, 'Tip: sit at a table to win money for the crew. Press R first to check the machine: killers rig them.', 'g'],
+  [3, 'Tip: 1 poisons a drink from the bar, 2 rigs an empty seat, 3 is a knife from behind, 4 an accident.', 'k'],
+  [14, 'Tip: hold Space (or Look back) to check behind you. Knives come from behind.', 'g'],
   [14, "Tip: check who's looking first. Anyone who sees you act will say so.", 'k'],
-  [28, 'Tip: Sniff a drink before you sip. Poison smells like bitter almonds.', 'g'],
-  [28, "Tip: cut the Lights and nobody sees past arm's length for 10 seconds.", 'k'],
-  [45, 'Tip: found a body? Report it. Your notes show who hung around whose drink.'],
+  [28, 'Tip: a free drink might be poisoned. R sniffs it. Poisoned? Run to the antidote at the bar.', 'g'],
+  [28, "Tip: 5 wears your last victim's face for 30 seconds. 6 cuts the lights.", 'k'],
+  [45, 'Tip: found a body? Report it. Your notes show what you saw and heard.'],
 ];
 function frameGame(dt) {
   moveMe(dt);
@@ -375,7 +377,7 @@ function frameGame(dt) {
   else if (S.role === 'guest' && S.room) { S.sendT += dt; if (S.sendT >= 0.05) { S.sendT = 0; S.room.send({ t: 'in', ...inputPayload() }); } }
   const v = S.view; if (!v) { drawDemo(dt); return; }
   const { pub, priv } = v;
-  if (priv.seat && pub.mode === 'play' && !pub.over && panelGame() !== priv.seat.game) openPanel(priv.seat, act, v);
+  if (priv.seat && priv.seat.game !== 'cams' && pub.mode === 'play' && !pub.over && panelGame() !== priv.seat.game) openPanel(priv.seat, act, v); // the security desk has its own card
   if ((!priv.seat || pub.mode !== 'play' || pub.over) && panelGame()) closePanel();
   if (pub.mode !== S.lastMode) {
     if (pub.mode === 'meeting') { releaseLock(); splash(pub.meeting.title.toUpperCase()); only('meeting'); audio.setMood('meeting'); S.paused = false; show('pause', false); }
@@ -393,7 +395,7 @@ function frameGame(dt) {
   if (S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0]) {
     const tip = TIPS[S.tips++]; if (store.get('lc.stats', { games: 0 }).games < 3 && (!tip[2] || priv.isKiller === (tip[2] === 'k'))) toast(tip[1]);
   }
-  updateHud(v); panelTick(v);
+  updateHud(v); updateMoves(v); panelTick(v);
   const fp = pub.mode === 'play' && !pub.over;
   const away = !!priv.seat && Math.abs(angDiff(effLook(), priv.seat.face)) > 1.0;
   $('panel').classList.toggle('away', away);

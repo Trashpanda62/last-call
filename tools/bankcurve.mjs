@@ -1,7 +1,7 @@
 // How fast the crew bank grows with nobody dying: median bank / start at each minute. node tools/bankcurve.mjs [games]
 import { createGame } from '../src/sim.js';
 import { CFG } from '../src/config.js';
-Object.assign(CFG, { poisonCd: 1e9, shivCd: 1e9, lightsCd: 1e9, startCd: 1e9, closingTime: 1e9 });
+Object.assign(CFG, { orderCd: 1e9, rigCd: 1e9, bladeCd: 1e9, accidentCd: 1e9, lightsCd: 1e9, startCd: 1e9, closingTime: 1e9 });
 const games = +(process.argv[2] || 30);
 for (const n of [4, 6, 8, 10, 12, 16]) {
   const at = [[], [], [], [], [], []];
