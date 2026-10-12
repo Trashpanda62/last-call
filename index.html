@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Last Call</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="hud" class="hidden">
+  <div id="bank">
+    <div class="label">Crew bankroll</div>
+    <div id="bankText">$3,000 / $9,000</div>
+    <div class="bar"><div id="bankFill"></div></div>
+  </div>
+  <div id="role"></div>
+  <div id="bottom">
+    <div id="thirst"><span>Thirst</span><div class="bar"><div id="thirstFill"></div></div></div>
+    <div id="drinkInfo"></div>
+    <div id="hint"></div>
+    <div id="killerBar" class="hidden">
+      <button id="kPoison" data-k="1">1 · Poison drink</button>
+      <button id="kShiv" data-k="2">2 · Shiv</button>
+      <button id="kLights" data-k="3">3 · Lights out</button>
+    </div>
+  </div>
+  <div id="toasts"></div>
+</div>
+
+<div id="panel" class="hidden"></div>
+
+<div id="title" class="overlay">
+  <div class="card">
+    <h1>Last Call</h1>
+    <p class="tag">Six gamblers. One of them is a killer. Watch your drink.</p>
+    <ul class="how">
+      <li><b>Gamblers</b> win the crew $9,000 at the tables, or vote the killer out.</li>
+      <li><b>The killer</b> poisons drinks and stabs loners, but only when nobody is looking.</li>
+      <li>You only see what's in front of you. Turn your back and your drink is fair game.</li>
+    </ul>
+    <div class="keys">
+      <span><kbd>WASD</kbd> move</span><span><kbd>Mouse</kbd> look</span><span><kbd>E</kbd> use / sit / report</span>
+      <span><kbd>F</kbd> sip</span><span><kbd>R</kbd> sniff a drink</span><span><kbd>X</kbd> pour out</span>
+      <span><kbd>Space</kbd> look behind you (seated)</span>
+    </div>
+    <div class="row">
+      <button class="big" data-role="random">Deal me in</button>
+      <button data-role="gambler">Play gambler</button>
+      <button data-role="killer">Play killer</button>
+    </div>
+  </div>
+</div>
+
+<div id="meeting" class="overlay hidden">
+  <div class="card wide">
+    <h2 id="mTitle">Emergency meeting</h2>
+    <div id="mReason"></div>
+    <div class="mcols">
+      <div id="mChat"></div>
+      <div id="mSide">
+        <div id="mNotes"></div>
+        <div id="mVotes"></div>
+        <div id="mTimer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="over" class="overlay hidden">
+  <div class="card">
+    <h1 id="oTitle"></h1>
+    <p id="oText"></p>
+    <button class="big" id="again">Another round</button>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
