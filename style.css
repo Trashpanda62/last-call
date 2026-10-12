@@ -121,7 +121,11 @@ body.touch #secCard { top: auto; bottom: 60px; transform: none; width: min(60vw,
 .mcols { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
 .mleft { flex: 1 1 360px; display: flex; flex-direction: column; gap: 6px; }
 #mChat { min-height: 220px; max-height: 46vh; overflow-y: auto; background: #120b0f; border-radius: 8px; padding: 10px; }
-#mChat p { margin: 0 0 8px; animation: fade-in 0.3s; }
+#mChat p { margin: 0 0 8px; animation: fade-in 0.3s; display: flex; gap: 8px; align-items: flex-start; }
+#mChat p > .txt { flex: 1; padding-top: 3px; }
+.pf { width: 40px; height: 40px; flex: 0 0 auto; border-radius: 50%; border: 2px solid; object-fit: cover; background: #2a1c22; }
+.vrow .pf { width: 26px; height: 26px; vertical-align: middle; margin: -4px 7px -4px -3px; }
+#mVotes.many .vrow .pf { width: 20px; height: 20px; margin-right: 5px; }
 @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; } }
 #mChat .who { font-weight: bold; }
 #mChat .mood { font-size: 11px; margin: 0 2px 0 5px; padding: 0 5px; border-radius: 6px; vertical-align: 1px; background: #2a1c22; color: var(--muted); }
@@ -151,7 +155,8 @@ body.touch #secCard { top: auto; bottom: 60px; transform: none; width: min(60vw,
 #mTimer { margin-top: 10px; color: var(--muted); }
 #mTimer b { color: var(--gold); }
 #ejectStrip { position: relative; height: 34px; margin-top: 8px; border-top: 1px dashed var(--line); overflow: hidden; }
-#ejectDot { position: absolute; top: 6px; left: 0; width: 22px; height: 22px; border-radius: 50%; animation: eject 3.4s ease-in forwards; }
+#ejectDot { position: absolute; top: 2px; left: 0; width: 30px; height: 30px; border-radius: 50%; animation: eject 3.4s ease-in forwards; }
+#ejectDot .pf { width: 30px; height: 30px; display: block; }
 @keyframes eject { 0% { left: 0; transform: rotate(0); } 100% { left: 110%; transform: rotate(720deg); } }
 
 /* Touch controls */
@@ -191,6 +196,7 @@ body.touch .kb, body:not(.touch) .tb { display: none; }
   .mleft { flex: 1 1 50%; min-width: 0; }
   #mSide { flex: 1 1 50%; min-width: 0; }
   #mChat { min-height: 0; height: calc(100vh - 150px); max-height: none; font-size: 13px; }
+  #mChat .pf { width: 30px; height: 30px; }
   #mNotes { max-height: 64px; font-size: 12px; margin-bottom: 6px; }
   #mVotes { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
   .vrow button { padding: 4px 6px; font-size: 13px; }

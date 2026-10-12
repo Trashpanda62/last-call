@@ -92,6 +92,17 @@ Phase 0 approved and done 2026-10-12 (03:10-03:50 CT): 181 credits, balance 7,26
 to that look. Picks page:
 https://trashpanda62.github.io/last-call/picks/v4/ (provenance in picks/v4/provenance.json, receipts in runs/).
 
+**Built 2026-10-12 (phases 1, 3 and 9, about 940 credits).** Five Meshy 7 bodies from Nano Banana Pro designs: the bean
+(bean A), a rounder second shape (Biscuit, Duke, Coco, Ozzie, Snow, Peach), the croupier (the table dealers), the
+bartender (new, behind the bar) and the security guard. Sorceress' auto-rigger refuses bean shapes ("pose estimation
+failed", no charge), so `tools/rig_bean.py` rigs them in headless Blender: a 16-bone Mixamo-named skeleton from the mesh,
+region weights, 1024 px JPEG texture, about 0.7 MB each. `src/3d/plush.js` poses them from the same inputs as the toy
+beans (walk, sit, hold a drink, lie dead) and tints the red felt to each player's colour in the shader; hats ride the
+head bone. Frame times match the toy beans (one skinned mesh each instead of about 60 parts). Meeting portraits: 16
+characters x 5 moods (calm, nervous, angry, smug, crying), gpt-image-2.5 flare; 8 that drifted were redone from that
+character's calm portrait (2 twice, for white gloves), and Ozzie's smug one, lost to a provider outage, was made the same way. One hy-motion test clip bought (3 credits) to check the format (`sorceress-motion@1`, SMPL
+joints); the 20 gesture clips need a retarget to this skeleton and are next.
+
 Order: 0 (Steve picks a look) → 1, 3, 9 (characters) → 4, 5, 6 (tables and rooms) → 7, 8, 10. Every image is checked
 up close for extra or missing limbs and fingers before Steve sees it. Every job id and file goes in provenance.json.
 Generated meshes are remeshed to a polygon budget and instanced so phones keep their frame rate.

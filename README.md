@@ -46,8 +46,9 @@ between parts takes the nearest one); Stand and Look back stay on the right.
 ## Code
 
 - `src/sim.js` the authoritative game (no DOM), `src/config.js` every number, `src/map.js` the casino and pathing.
-- The sim is a 2D plane (1 px = 1/60 m); `src/3d/` draws it in 3D: `world.js` the casino, `chars.js` the bean
-  gamblers, `items.js` drinks, bowls, bodies and effects, `hands.js` first-person hands, `textures.js` painted
+- The sim is a 2D plane (1 px = 1/60 m); `src/3d/` draws it in 3D: `world.js` the casino, `plush.js` the plush
+  bean gamblers, staff and guard (rigged models in `assets/chars`, toy beans from `chars.js` until they load; `?toy`
+  keeps the toy beans), `items.js` drinks, bowls, bodies and effects, `hands.js` first-person hands, `textures.js` painted
   textures, `render3d.js` camera, lights, bloom and lights-out.
 - `src/games.js` every game's maths (shared by players and bots), `src/paint.js` the 2D game screens on the 3D
   machines, `src/tables.js` your table's bets and game flow (no DOM; `press(part)` in, `tableView()` out),
@@ -56,6 +57,8 @@ between parts takes the nearest one); Stand and Look back stay on the right.
 - `src/ui.js` HUD, meetings, results, `src/moves.js` the killer bar, name picker, security desk and haunts,
   `src/talk.js` the meeting conversation (personalities, moods, alibis, votes), `src/audio.js` sounds and music.
 - `src/3d/hazards.js` the security desk and camera view, the guard, haunts and the kill effects.
+- Character art: `tools/v4_chars.py` (Sorceress jobs), `tools/rig_bean.py` (Blender rig, headless), `tools/v4_export.py`
+  (meeting portraits in `assets/portraits`, provenance). Receipts stay in `runs/` (git-ignored).
 - `src/net.js` rooms, `src/main.js` screens, modes, input and the loop.
 - `node tools/batch.mjs [games] [players] [killers] [difficulty]` plays headless games (one idle human seat) and
   prints win rates. `node tools/batch.mjs 40 8 2 normal --cfg='{"bladeCd":50}'` tries a tuning change. `node tools/ev.mjs` measures

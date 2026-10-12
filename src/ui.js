@@ -1,5 +1,6 @@
 // DOM side: HUD, meetings and the results screen. Reads views, sends actions through act().
 import { money, esc, clamp } from './util.js';
+import { CAST } from './config.js';
 
 export const $ = id => document.getElementById(id);
 const show = (id, on) => $(id).classList.toggle('hidden', !on);
@@ -54,8 +55,15 @@ function deaths(st) { const p = CAUSES.filter(([k]) => st[k]).map(([k, w]) => `$
 
 // ---------- Meeting ----------
 const MOOD_TAG = { anger: 'angry', fear: 'scared', grief: 'upset', smug: 'smug' };
-let mKey = '', mLines = 0, mVoteKey = '';
-export function resetMeeting() { mKey = ''; mLines = 0; mVoteKey = ''; $('mChat').innerHTML = ''; show('ejectStrip', false); }
+// Meeting portraits (assets/portraits): one per cast member and mood; the cast is known by colour.
+const FACE = { anger: 'angry', fear: 'nervous', grief: 'crying', smug: 'smug' };
+const CAST_NAME = Object.fromEntries(CAST.map(k => [k.color, k.name]));
+function faceImg(c, emo) {
+  const n = CAST_NAME[c.color];
+  return n ? `<img class="pf" src="assets/portraits/${n}-${FACE[emo] || 'calm'}.webp" alt="" style="border-color:${c.color}">` : `<span class="dot" style="background:${c.color}"></span>`;
+}
+let mKey = '', mLines = 0, mVoteKey = '', mMood = {};
+export function resetMeeting() { mKey = ''; mLines = 0; mVoteKey = ''; mMood = {}; $('mChat').innerHTML = ''; show('ejectStrip', false); }
 export function renderMeeting(v, act, multi) {
   const { pub, priv } = v; const m = pub.meeting;
   const key = m.title + m.reason;
@@ -72,10 +80,11 @@ export function renderMeeting(v, act, multi) {
     const l = m.lines[mLines++]; const c = pub.chars[l.who];
     const p = document.createElement('p'); p.className = 'emo-' + (l.emo || 'calm');
     const tag = MOOD_TAG[l.emo] ? `<span class="mood">${MOOD_TAG[l.emo]}</span>` : '';
-    p.innerHTML = `<span class="who" style="color:${c.color}">${esc(c.name)}${c.id === priv.me ? ' (you)' : ''}</span>:${tag} ${esc(l.text)}`;
+    p.innerHTML = `${faceImg(c, l.emo)}<span class="txt"><span class="who" style="color:${c.color}">${esc(c.name)}${c.id === priv.me ? ' (you)' : ''}</span>:${tag} ${esc(l.text)}</span>`;
+    mMood[c.id] = l.emo || 'calm';
     $('mChat').appendChild(p); $('mChat').scrollTop = 1e6;
   }
-  const vk = [m.phase, priv.voted, priv.accused, m.voted.join(','), JSON.stringify(m.tally)].join('|');
+  const vk = [m.phase, priv.voted, priv.accused, m.voted.join(','), JSON.stringify(m.tally), JSON.stringify(mMood)].join('|');
   if (vk !== mVoteKey) {
     mVoteKey = vk;
     const box = $('mVotes'); box.innerHTML = '';
@@ -84,7 +93,7 @@ export function renderMeeting(v, act, multi) {
     for (const c of pub.chars.filter(c => c.alive)) {
       const row = document.createElement('div'); row.className = 'vrow';
       const vb = document.createElement('button');
-      vb.innerHTML = `<span class="dot" style="background:${c.color}"></span>${esc(c.name)}${c.id === priv.me ? ' (you)' : ''}${m.voted.includes(c.id) ? ' <span class="voted-tag">voted</span>' : ''}`;
+      vb.innerHTML = `${faceImg(c, mMood[c.id])}${esc(c.name)}${c.id === priv.me ? ' (you)' : ''}${m.voted.includes(c.id) ? ' <span class="voted-tag">voted</span>' : ''}`;
       vb.disabled = !canAct || c.id === priv.me || m.phase === 'talk'; vb.onclick = () => act('vote', c.id);
       row.appendChild(vb);
       if (c.id !== priv.me) {
@@ -100,7 +109,7 @@ export function renderMeeting(v, act, multi) {
     sk.disabled = !canAct || m.phase === 'talk'; sk.onclick = () => act('vote', -1);
     box.appendChild(sk);
     if (m.phase === 'result' && m.ejected !== null) {
-      show('ejectStrip', true); $('ejectDot').style.background = pub.chars[m.ejected].color;
+      show('ejectStrip', true); const ej = pub.chars[m.ejected]; $('ejectDot').style.background = ej.color; $('ejectDot').innerHTML = faceImg(ej, 'grief');
     }
   }
   $('mTimer').innerHTML = m.phase === 'talk' ? 'Everyone is talking...' : m.phase === 'vote' ? (priv.alive ? (priv.voted === null ? `Vote now: ${m.voteT}s` : `You voted. ${m.voteT}s left.`) : `Votes close in ${m.voteT}s`) : `<b>${esc(m.result)}</b>`;

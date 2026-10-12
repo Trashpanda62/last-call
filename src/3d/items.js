@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import * as T from './textures.js';
 import { CFG } from '../config.js';
 import { makeSeats } from '../map.js';
-import { Bean } from './chars.js';
+import { makeBean } from './plush.js';
 
 const M = 1 / 60;
 const SEATS = makeSeats();
@@ -126,7 +126,7 @@ export class Items {
       let e = this.bodies.get(key);
       if (!e) {
         const c = pub.chars[b.id];
-        const bean = new Bean({ color: c.color, hat: c.hat }); bean.setDead(true);
+        const bean = makeBean({ color: c.color, hat: c.hat, name: c.name }); bean.setDead(true);
         const pud = new THREE.Mesh(new THREE.CircleGeometry(0.55, 24), puddleMats[b.cause] || puddleMats.shiv);
         pud.rotation.x = -Math.PI / 2; pud.position.set(b.x * M + 0.1, 0.012, b.y * M + 0.05); pud.scale.set(1.3, 0.8, 1);
         this.group.add(bean.root, pud);

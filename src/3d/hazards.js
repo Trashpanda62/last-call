@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import * as T from './textures.js';
 import { SECURITY, ROOMS, makeSeats } from '../map.js';
-import { Bean } from './chars.js';
+import { makeBean, onPlushReady } from './plush.js';
 import { MAT, glowMat, rbox, box, cyl, v3, yawOf, Batch, WALL_H } from './world.js';
 
 const M = 1 / 60;
@@ -19,8 +19,12 @@ export class Hazards {
   constructor(scene) {
     this.group = new THREE.Group(); scene.add(this.group);
     this.desk();
-    this.guard = new Bean({ color: '#1d2a44', hat: 'cap', name: 'Security' }); this.guard.setLabel('SECURITY', '#9fd8ff');
-    this.guard.root.visible = false; this.group.add(this.guard.root);
+    const guard = () => {
+      if (this.guard) this.group.remove(this.guard.root);
+      this.guard = makeBean({ kind: 'guard', color: '#1d2a44', hat: 'cap', name: 'Security' }); this.guard.setLabel('SECURITY', '#9fd8ff');
+      this.guard.root.visible = false; this.group.add(this.guard.root);
+    };
+    guard(); onPlushReady(guard);
     const mk = (geo, mat, n = 120) => { const m = new THREE.InstancedMesh(geo, mat, n); m.count = 0; m.frustumCulled = false; this.group.add(m); return m; };
     this.fx = {
       sparks: mk(new THREE.BoxGeometry(0.02, 0.02, 0.06), new THREE.MeshBasicMaterial({ color: 0xfff080, toneMapped: false })),

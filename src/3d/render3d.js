@@ -7,7 +7,7 @@ import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { buildWorld, GLOWS, M, yawOf } from './world.js';
-import { Bean } from './chars.js';
+import { makeBean, loadPlush, onPlushReady, plushReady } from './plush.js';
 import { Items } from './items.js';
 import { Hands } from './hands.js';
 import { Hazards } from './hazards.js';
@@ -61,8 +61,14 @@ export function init(canvas, { lowPower = false } = {}) {
   const hazards = new Hazards(scene);
   const hands = new Hands(); hands.scene.environment = env; hands.scene.environmentIntensity = 0.3;
   const dealerSpots = world.machines.dealerSpots;
-  const dealers = dealerSpots.map(() => new Bean({ color: '#22201e', hat: 'visor', dealer: true }));
+  const dealers = dealerSpots.map(() => makeBean({ color: '#22201e', hat: 'visor', dealer: true }));
   dealers.forEach(d => scene.add(d.root));
+  // the plush models arrive in the background: swap the dealers and add the bartender
+  onPlushReady(() => {
+    dealers.forEach((d, i) => { scene.remove(d.root); dealers[i] = makeBean({ dealer: true }); scene.add(dealers[i].root); });
+    R.bartender = makeBean({ kind: 'bartender' }); scene.add(R.bartender.root);
+  });
+  loadPlush();
 
   const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: lowPower ? 0 : 4 });
   const composer = new EffectComposer(renderer, rt);
@@ -111,9 +117,10 @@ function resize() {
 
 function beanFor(c) {
   let b = R.beans.get(c.id);
-  if (!b || b.key !== c.color + c.hat) {
+  const key = c.color + c.hat + plushReady();
+  if (!b || b.key !== key) {
     if (b) R.scene.remove(b.root);
-    b = new Bean({ color: c.color, hat: c.hat, name: c.name }); b.key = c.color + c.hat; b.name = c.name;
+    b = makeBean({ color: c.color, hat: c.hat, name: c.name }); b.key = key; b.name = c.name;
     R.scene.add(b.root); R.beans.set(c.id, b);
   }
   return b;
@@ -164,6 +171,8 @@ export function draw(frame) {
 
   // dealers idle at their tables
   R.dealers.forEach((d, i) => { const s = R.dealerSpots[i]; d.update({ x: s.x * M, z: s.y * M, face: yawOf(s.a), look: yawOf(s.a) + Math.sin(t * 0.4 + i * 2) * 0.5, moving: false, t, dt }); });
+  // the bartender drifts along behind the counter, facing the room
+  if (R.bartender) { const bx = 260 + Math.sin(t * 0.13) * 150; R.bartender.update({ x: bx * M, z: 52 * M, face: yawOf(Math.PI / 2), look: yawOf(Math.PI / 2) + Math.sin(t * 0.5) * 0.6, moving: Math.abs(Math.cos(t * 0.13)) > 0.35, t, dt }); R.bartender.root.position.y = 0.32; } // on the raised floor behind the bar
 
   // characters
   const seen = new Set();
