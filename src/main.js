@@ -196,6 +196,7 @@ function moveMe(dt) {
     const mx = Math.cos(a) * f - Math.sin(a) * r, my = Math.sin(a) * f + Math.cos(a) * r;
     const sp = !p.alive ? CFG.ghostSpeed : p.thirst <= 0 ? CFG.playerSpeed * CFG.parched : CFG.playerSpeed;
     me.x += mx * sp * dt; me.y += my * sp * dt; me.moving = true;
+    if (p.alive && (S.stepD = (S.stepD || 0) + sp * dt) > 62) { S.stepD = 0; audio.sfx('step'); }
     if (p.alive) collide(me);
     me.x = clamp(me.x, 0, 1800); me.y = clamp(me.y, 0, 1200);
   }
@@ -209,15 +210,15 @@ function wantLock() {
   const v = S.view;
   return S.screen === 'game' && !S.paused && !!v && v.pub.mode === 'play' && !v.pub.over && !v.priv.seat;
 }
-function requestLock() {
-  if (!lockOK() || locked() || !wantLock()) return;
+function requestLock(force) {
+  if (!lockOK() || locked() || !(force ? S.screen === 'game' && !S.paused : wantLock())) return;
   try { const p = view.requestPointerLock(); if (p && p.catch) p.catch(() => {}); } catch (e) { /* not allowed right now */ }
 }
 function releaseLock() { if (locked()) { S.expectUnlock = true; document.exitPointerLock(); } }
 document.addEventListener('pointerlockchange', () => {
   if (locked()) return;
   if (S.expectUnlock) { S.expectUnlock = false; return; }
-  if (wantLock()) togglePause(); // Esc while walking opens the menu
+  if (wantLock()) { S.unlockAt = performance.now(); togglePause(); } // Esc while walking opens the menu
 });
 let drag = null;
 view.addEventListener('mousedown', e => {
@@ -241,9 +242,12 @@ addEventListener('keydown', e => {
   if (e.target && e.target.tagName === 'INPUT') { if (k === 'escape') e.target.blur(); return; }
   if (k === ' ' || k.startsWith('arrow')) e.preventDefault();
   if (!keys[k]) {
-    if (k === 'escape' && S.screen === 'game') togglePause();
-    else if (S.screen === 'game' && KEYMAP[k] && !S.paused) act(KEYMAP[k]);
-    if (MOVE_KEYS.has(k) && S.screen === 'game' && !S.paused) requestLock();
+    const seated = S.screen === 'game' && S.view && S.view.priv.seat && S.view.pub.mode === 'play';
+    if (k === 'escape' && S.screen === 'game') { if (performance.now() - (S.unlockAt || 0) > 400) togglePause(); }
+    else if (S.screen === 'game' && KEYMAP[k] && !S.paused) { act(KEYMAP[k]); if (k === 'e' && seated) requestLock(true); }
+    if (MOVE_KEYS.has(k) && S.screen === 'game' && !S.paused) {
+      if (seated && !S.standReq) { S.standReq = true; act('use'); requestLock(true); } else requestLock();
+    }
   }
   keys[k] = true;
 });
@@ -297,6 +301,7 @@ $('sfxBtn').onclick = $('pSfx').onclick = toggleSfx;
 $('startBtn').onclick = () => {
   if (S.role === 'host') { if (!S.code) return; hostStart(); }
   else startSolo(readOpts());
+  requestLock(true);
 };
 $('setupBack').onclick = () => toMenu();
 $('shareBtn').onclick = async () => {
@@ -314,7 +319,7 @@ $('menuBtn').onclick = togglePause;
 $('resumeBtn').onclick = () => { S.paused = false; show('pause', false); requestLock(); };
 $('pHow').onclick = () => show('how', true);
 $('quitBtn').onclick = () => toMenu();
-$('againBtn').onclick = () => { if (S.role === 'solo') startSolo(S.opts); else if (S.role === 'host') hostBackToLobby(); };
+$('againBtn').onclick = () => { if (S.role === 'solo') { startSolo(S.opts); requestLock(true); } else if (S.role === 'host') hostBackToLobby(); };
 $('overMenuBtn').onclick = () => toMenu();
 $('chatForm').onsubmit = e => { e.preventDefault(); const t = $('chatIn').value.trim(); if (t) act('chat', t); $('chatIn').value = ''; };
 

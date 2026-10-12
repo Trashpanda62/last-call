@@ -88,7 +88,7 @@ export function draw(frame) {
   const orbit = frame.mode !== 'fp' || !pub;
   const meeting = pub && pub.mode === 'meeting';
   // lights out: fade everything but the player's glow
-  const want = pub && pub.lightsT > 0 ? 1 : 0;
+  const want = pub && pub.lightsT > 0 && !pub.over && pub.mode === 'play' ? 1 : 0;
   R.dark += (want - R.dark) * Math.min(1, dt * (want ? 6 : 2));
   const lit = 1 - R.dark * 0.94;
   R.hemi.intensity = 0.55 * lit; R.fill.intensity = 0.35 * lit; R.scene.environmentIntensity = 0.35 * lit;

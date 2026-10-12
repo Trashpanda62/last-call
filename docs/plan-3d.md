@@ -34,14 +34,22 @@ If context runs low, this file is the source of truth. Tick slices as they land,
 - Never click the canvas in tests (pointer lock). Never touch Steve's mouse/keyboard.
 
 ## Slices
-- [ ] T1 Engine: vendor three, importmap, render3d skeleton, camera mapping, first-person movement + mouse look,
+- [x] T1 Engine: vendor three, importmap, render3d skeleton, camera mapping, first-person movement + mouse look,
   floors/walls/ceilings with textures, lights, bloom. Walk around solo.
-- [ ] T2 Casino dressing: bar + bottles, blackjack, roulette (spinning wheel), slots, race lounge screen + desks,
+- [x] T2 Casino dressing: bar + bottles, blackjack, roulette (spinning wheel), slots, race lounge screen + desks,
   VIP couches + TV, restrooms, bell, bowls, plants, chandeliers, neon sign, seats + drink rails, dealers.
-- [ ] T3 Characters: plush beans, hats, animation, seated pose, labels, killer partner tint, dead/pale, ghosts.
-- [ ] T4 Items + hands: drinks on rails and in hands, my-drink marker, spiked glow for killers, bodies, fx, floats,
+- [x] T3 Characters: plush beans, hats, animation, seated pose, labels, killer partner tint, dead/pale, ghosts.
+- [x] T4 Items + hands: drinks on rails and in hands, my-drink marker, spiked glow for killers, bodies, fx, floats,
   first-person hands.
-- [ ] T5 Flow: seated camera + look back, table panel restyle, lights-out darkness, meeting/over cameras, menu demo
+- [x] T5 Flow: seated camera + look back, table panel restyle, lights-out darkness, meeting/over cameras, menu demo
   scene, crosshair, HUD and how-to text for mouse/keys, touch look.
-- [ ] T6 Polish + perf: footstep/ambience sfx, performance pass (draw calls, pixel ratio), screenshots vs picks,
+- [x] T6 Polish + perf: footstep/ambience sfx, performance pass (draw calls, pixel ratio), screenshots vs picks,
   README, deploy, verify live.
+
+## Notes
+- 2026-10-12: T1-T5 built in one pass. Balance unchanged (600 games, 6 players: killer 58% vs 59% before).
+- The hidden test pane does not repaint the WebGL canvas: `__lastCall.shot(name)` posts a frame to a local helper
+  (scratchpad shotserver.mjs on 127.0.0.1:8932) so screenshots can be read from disk.
+- Two-tab online test with the 3D client: guest joins, game starts, guest renders from host snapshots, no errors.
+- Render cost on Steve's PC: about 9 ms CPU per frame at 1280x720.
+- Full solo games in the browser as gambler and as killer, rendering throughout: both ended, no console errors.

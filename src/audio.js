@@ -66,6 +66,7 @@ const SFX = {
 export function sfx(kind) {
   if (!ac || !kind) return;
   let t = ac.currentTime;
+  if (kind === 'step') { noise(sfxBus, t, 0.06, 0.035, 180); return; }
   if (kind === 'crunch') { noise(sfxBus, t, 0.12, 0.25, 1500); noise(sfxBus, t + 0.1, 0.1, 0.2, 1800); return; }
   if (kind === 'stab' || kind === 'die') noise(sfxBus, t, 0.15, 0.2, 800);
   for (const [f, d] of SFX[kind] || []) {
