@@ -43,6 +43,17 @@ export class Hazards {
       wisp: mk(new THREE.SphereGeometry(0.05, 8, 6), new THREE.MeshBasicMaterial({ map: T.glow(), color: 0x8ab0ff, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending })),
     };
     this.tmp = new THREE.Object3D();
+    this.sprites = []; // a pool for the generated effect sprites (assets/art2 fx-*), refilled every frame
+  }
+  // one effect sprite: the art's black is see-through (additive glows, or alpha from brightness for smoke and confetti)
+  sprite(i, k, x, y, z, size, opacity, rot = 0) {
+    const map = T.art2Tex('fx-' + k, k === 'smoke' || k === 'confetti'); if (!map) return i;
+    let sp = this.sprites[i];
+    if (!sp) { sp = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true, depthWrite: false })); this.sprites.push(sp); this.group.add(sp); }
+    const m = sp.material, add = !(k === 'smoke' || k === 'confetti');
+    if (m.map !== map) { m.map = map; m.blending = add ? THREE.AdditiveBlending : THREE.NormalBlending; m.needsUpdate = true; }
+    m.opacity = Math.max(0, Math.min(1, opacity)); m.rotation = rot; sp.position.set(x, y, z); sp.scale.setScalar(size); sp.visible = true;
+    return i + 1;
   }
   // a dark wood desk against the floor's west wall with three monitors; they wake up once the crew buys cameras
   desk() {
@@ -92,6 +103,21 @@ export class Hazards {
       const m = this.fx[k], i = counts[k]++; if (i >= m.instanceMatrix.count) return;
       this.tmp.position.set(x, y, z); this.tmp.rotation.set(rx, ry, 0); this.tmp.scale.setScalar(s); this.tmp.updateMatrix(); m.setMatrixAt(i, this.tmp.matrix);
     };
+    let ns = 0;
+    for (const f of pub.fx) { // sprites over the particles
+      const x = f.x * M, z = f.y * M, a = Math.max(0, f.t);
+      if (f.kind === 'sparks') { const p = 1.5 - a; ns = this.sprite(ns, 'sparks', x, 1.0, z, 0.5 + p * 0.9, a * 1.2, p); ns = this.sprite(ns, 'smoke', x, 1.1 + p * 0.5, z, 0.6 + p * 0.8, a * 0.5); }
+      else if (f.kind === 'smash') { const p = 1.5 - a; ns = this.sprite(ns, 'smoke', x, 0.4 + p * 0.4, z, 1.2 + p * 1.6, a * 0.6); ns = this.sprite(ns, 'sparks', x, 0.5, z, 0.8 + p, a * 0.9, p * 2); }
+      else if (f.kind === 'chips') { const p = 1 - a; ns = this.sprite(ns, 'confetti', x, 1.6 + p * 0.4, z, 0.8 + p * 1.2, a * 1.5, p); ns = this.sprite(ns, 'stars', x, 1.5, z, 0.6 + p * 1.0, a * 1.3); }
+      else if (f.kind === 'bubbles') { const p = (1.5 - a) / 1.5; ns = this.sprite(ns, 'fizz', x, 0.5 + p * 0.9, z, 0.5 + p * 0.4, a * 0.8); }
+      else if (f.kind === 'splat') { const p = (1.5 - a) / 1.5; ns = this.sprite(ns, 'smoke', x, 0.7 + p * 0.3, z, 0.4 + p * 0.6, a * 0.45); }
+    }
+    for (const h of pub.haunts || []) { // a ghostly wisp rising through whoever is haunted
+      const c = pub.chars[h.on]; if (!c || !c.alive) continue;
+      const b = beans.get(c.id), cx = b ? b.root.position.x : c.x * M, cz = b ? b.root.position.z : c.y * M;
+      ns = this.sprite(ns, 'ghost', cx, 1.0 + Math.sin(t * 2) * 0.1, cz, 1.3, 0.55 + Math.sin(t * 3) * 0.15, Math.sin(t) * 0.3);
+    }
+    for (let i = ns; i < this.sprites.length; i++) this.sprites[i].visible = false;
     for (const f of pub.fx) {
       const x = f.x * M, z = f.y * M, a = Math.max(0, f.t);
       if (f.kind === 'sparks') for (let i = 0; i < 14; i++) { const p = 1.5 - a, ang = i * 0.45; put('sparks', x + Math.cos(ang) * p * 0.8, 0.9 + p * 1.1 - p * p * 1.4, z + Math.sin(ang) * p * 0.8, a > 0.2 ? 1 : a * 5, p * 3, ang); }

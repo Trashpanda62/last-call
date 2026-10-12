@@ -63,9 +63,10 @@ function faceImg(c, emo) {
   return n ? `<img class="pf" src="assets/portraits/${n}-${FACE[emo] || 'calm'}.webp" alt="" style="border-color:${c.color}">` : `<span class="dot" style="background:${c.color}"></span>`;
 }
 let mKey = '', mLines = 0, mVoteKey = '', mMood = {};
-export function resetMeeting() { mKey = ''; mLines = 0; mVoteKey = ''; mMood = {}; $('mChat').innerHTML = ''; show('ejectStrip', false); }
+export function resetMeeting() { mKey = ''; mLines = 0; mVoteKey = ''; mMood = {}; $('mChat').innerHTML = ''; show('ejectStrip', false); $('meeting').classList.remove('ejected'); }
 export function renderMeeting(v, act, multi) {
   const { pub, priv } = v; const m = pub.meeting;
+  $('meeting').classList.toggle('ejected', m.phase === 'result' && m.ejected !== null && m.ejected !== undefined);
   const key = m.title + m.reason;
   if (key !== mKey) {
     resetMeeting(); mKey = key;
@@ -118,6 +119,7 @@ export function renderMeeting(v, act, multi) {
 // ---------- Results ----------
 export function renderOver(v, isHost, solo) {
   const { pub, priv } = v; const o = pub.over;
+  $('over').classList.toggle('killers', !!o.killersWin);
   $('oTitle').textContent = priv.won ? 'You win' : 'You lose';
   $('oTitle').style.color = priv.won ? 'var(--gold)' : 'var(--red)';
   $('oText').textContent = o.text;

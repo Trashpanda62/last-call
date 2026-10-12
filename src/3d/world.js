@@ -263,7 +263,12 @@ export function buildWorld(scene, opts = {}) {
 
   function sign(text, color, x, y, z, rotY, w, h, chase = true) {
     const hex = '#' + new THREE.Color(color).getHexString();
-    const t = T.neonTexture(text, hex, 1024, Math.round(1024 * h / w), `bold italic ${Math.round(1024 * h / w * 0.6)}px Georgia`);
+    const art = T.art2Tex('sign-' + text.toLowerCase().replace(/[^a-z]/g, ''));
+    if (art) { // the generated neon sign, fitted in a box a little roomier than the lettering's
+      const a = art.image.width / art.image.height, bw = w * 1.1, bh = h * 1.8;
+      [w, h] = a > bw / bh ? [bw, bw / a] : [bh * a, bh];
+    }
+    const t = art || T.neonTexture(text, hex, 1024, Math.round(1024 * h / w), `bold italic ${Math.round(1024 * h / w * 0.6)}px Georgia`);
     const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), basicGlow(t, 1.8, { blending: THREE.AdditiveBlending, transparent: true, depthWrite: false }));
     m.position.set(x, y, z); m.rotation.y = rotY; group.add(m);
     anim.push(tt => { m.material.opacity = 0.9 + Math.sin(tt * 3 + x) * 0.1; });
@@ -300,7 +305,16 @@ function night(ctx, r) {
   for (let i = 0; i < 260; i++) { g.fillStyle = `rgba(255,255,255,${Math.random() * 0.8})`; const s = Math.random() < 0.1 ? 2.5 : 1.2; g.fillRect(Math.random() * 512, Math.random() * 512, s, s); }
   const sky = new THREE.MeshBasicMaterial({ map: T.tex(c), color: 0xffffff });
   const w = r.w * M, d = r.h * M, cx = (r.x + r.w / 2) * M, cz = (r.y + r.h / 2) * M;
-  S.add(uvScale(new THREE.PlaneGeometry(w, d), 2, 1.4), sky, v3(cx, WALL_H + 1.2, cz), 0, null, Math.PI / 2);
+  const skyN = T.art2Tex('sky-north'), skyS = T.art2Tex('sky-south') || skyN, out = skyN ? 7 : 0, top = skyN ? WALL_H + 9 : WALL_H + 1.2;
+  S.add(uvScale(new THREE.PlaneGeometry(w + out * 2, d + out * 2), 2, 1.4), sky, v3(cx, top, cz), 0, null, Math.PI / 2);
+  if (skyN) { // a painted city all round, beyond the wall tops, under the starry ceiling
+    const hh = top - (WALL_H - 1);
+    for (const [x, z, len, rot, map] of [[cx, r.y * M - out, w + out * 2, 0, skyN], [cx, (r.y + r.h) * M + out, w + out * 2, Math.PI, skyS],
+      [r.x * M - out, cz, d + out * 2, Math.PI / 2, skyS], [(r.x + r.w) * M + out, cz, d + out * 2, -Math.PI / 2, skyN]]) {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(len, hh), new THREE.MeshBasicMaterial({ map }));
+      m.position.set(x, WALL_H - 1 + hh / 2, z); m.rotation.y = rot; group.add(m);
+    }
+  }
   // the walls carry on up to the sky
   for (const [x, z, len, rot] of [[cx, r.y * M, w, 0], [cx, (r.y + r.h) * M, w, Math.PI], [r.x * M, cz, d, Math.PI / 2], [(r.x + r.w) * M, cz, d, -Math.PI / 2]]) {
     S.add(uvScale(new THREE.PlaneGeometry(len, 1.2), len / 2.4, 0.5), roomMats.alley.wall, v3(x, WALL_H + 0.6, z), rot);
@@ -552,11 +566,24 @@ function decor(ctx) {
   ART.forEach(([px, py, yaw, kind], i) => {
     const nx = Math.sin(yaw), nz = Math.cos(yaw), x = px * M, z = py * M;
     B.add(rbox(1.0, 1.24, 0.06, 0.02), MAT.gold, v3(x + nx * 0.03, 1.75, z + nz * 0.03), yaw);
-    const pic = new THREE.Mesh(new THREE.PlaneGeometry(0.84, 1.05), std({ map: painting(kind, i + 1), roughness: 0.6 }));
+    const pic = new THREE.Mesh(new THREE.PlaneGeometry(0.84, 1.05), std({ map: T.art2Tex(PAINTINGS[i]) || painting(kind, i + 1), roughness: 0.6 }));
     pic.rotation.y = yaw; add(pic, v3(x + nx * 0.065, 1.75, z + nz * 0.065));
     const lamp = new THREE.Mesh(cyl(0.025, 0.025, 0.5, 10), glowMat(0xffe0b0, 1.5)); lamp.rotation.set(0, yaw, Math.PI / 2, 'YXZ'); add(lamp, v3(x + nx * 0.14, 2.42, z + nz * 0.14));
   });
+  // posters (Sorceress art only): [x, y (a wall's inner face), yaw, name, framed]
+  for (const [px, py, yaw, name, framed] of POSTERS) {
+    const map = T.art2Tex('poster-' + name); if (!map) continue;
+    const nx = Math.sin(yaw), nz = Math.cos(yaw), x = px * M, z = py * M, h = 1.05, w = h * map.image.width / map.image.height;
+    if (framed) B.add(box(w + 0.08, h + 0.08, 0.03), MAT.black, v3(x + nx * 0.015, 1.6, z + nz * 0.015), yaw);
+    const pic = new THREE.Mesh(new THREE.PlaneGeometry(w, h), std({ map, roughness: framed ? 0.35 : 0.8 }));
+    pic.rotation.y = yaw; add(pic, v3(x + nx * (framed ? 0.035 : 0.012), 1.6, z + nz * (framed ? 0.035 : 0.012)));
+  }
 }
+// the generated paintings by frame (paint-09 to 11 are in reserve), and the posters
+const PAINTINGS = ['paint-00', 'paint-07', 'paint-03', 'paint-05', 'paint-01', 'paint-04', 'paint-02', 'paint-08', 'paint-06', 'paint-11', 'paint-10'];
+const POSTERS = [[2250, 1180, Math.PI, 'derby', true], [2980, 1760, -Math.PI / 2, 'lounge', true], [1020, 1350, Math.PI / 2, 'missing', false],
+  [2020, 560, Math.PI / 2, 'rocket', true], [620, 250, -Math.PI / 2, 'cocktails', true], [500, 720, 0, 'wash', false],
+  [300, 1200, 0, 'jackpot', true], [1100, 1180, Math.PI, 'roulette', true]];
 
 // ---------- Pit bell ----------
 function pitBell(ctx) {

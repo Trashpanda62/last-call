@@ -74,6 +74,7 @@ function pay(st, back, line, per) {
   const net = back - st;
   result((line ? line + ' ' : '') + (net > 0 ? '+' + money(net) : net < 0 ? '−' + money(-net) : 'Even.'), net > 0 ? 'win' : net < 0 ? 'lose' : '');
   sfx(net > 0 ? (back >= st * 5 ? 'win' : 'coin') : net < 0 ? 'lose' : 'click');
+  if (back >= st * 20 && st > 0) sfx('jackpot');
   if (per) tb.fx = { t0: now(), per };
 }
 function dropChip(spot) {
@@ -234,11 +235,11 @@ const GAMES = {
       const s = tb.s;
       if (id === 'deal') {
         if (!this.on('deal')) return s && !s.over ? flash('Finish this hand first') : need();
-        tb.bet = stake(); tb.s = Gm.bjDeal(tb.bet); hand('press'); sfx('click'); result(''); this.sync(); if (tb.s.over) this.finish(); return;
+        tb.bet = stake(); tb.s = Gm.bjDeal(tb.bet); hand('press'); sfx('card'); later(0.14, () => sfx('card')); later(0.28, () => sfx('flip')); result(''); this.sync(); if (tb.s.over) this.finish(); return;
       }
       if (!s || s.over) return flash('Deal first');
       if (!this.on(id)) return flash("Can't " + id + ' now');
-      Gm.bjAct(s, id); hand('press'); sfx(id === 'double' || id === 'split' ? 'chip' : 'click'); this.sync(); if (s.over) this.finish();
+      Gm.bjAct(s, id); hand('press'); sfx(id === 'double' || id === 'split' ? 'chips' : id === 'hit' ? 'card' : 'click'); if (id === 'double' || id === 'split') later(0.15, () => sfx('card')); this.sync(); if (s.over) this.finish();
     },
     sync() { const s = tb.s; tb.view = s ? { dealer: s.dealer, hide: !s.over, hands: s.hands.map((h, i) => ({ cards: h.cards, active: !s.over && i === s.i, bet: h.bet })) } : null; },
     finish() { const s = tb.s, b = tb.bet; this.sync(); pay(b * s.staked, b * s.mult, s.lines.join(' '), { main: { stake: b * s.staked, back: b * s.mult } }); },
@@ -261,7 +262,7 @@ const GAMES = {
       const snap = { ...tb.bets }, bets = {};
       for (const k in snap) bets[k[0] === 'n' ? k.slice(1) : k] = snap[k];
       const lucky = Gm.rlLucky(), n = Gm.rlBall(), st = stake();
-      tb.view = { spin: { t0: now(), dur: 4, n, lucky } }; tb.spinning = true; hand('press'); sfx('click');
+      tb.view = { spin: { t0: now(), dur: 4, n, lucky } }; tb.spinning = true; hand('press'); sfx('rouletteSpin'); later(3.2, () => sfx('ballDrop'));
       result('No more bets. Lucky: ' + lucky.map(l => `${l.n} (${l.x}x)`).join(', '));
       later(4, () => {
         tb.spinning = false;
@@ -297,7 +298,8 @@ const GAMES = {
       if (!tb || tb.game !== 'slots' || tb.busy) return;
       const bet = stake(); if (bet < minBet()) return need();
       const r = Gm.slotSpin(tb.tier);
-      tb.view = { tier: tb.tier, reels: r.reels, spin: { t0: now() }, win: null, bet }; tb.busy = true; hand('pull'); sfx('click');
+      tb.view = { tier: tb.tier, reels: r.reels, spin: { t0: now() }, win: null, bet }; tb.busy = true; hand('pull'); sfx('lever'); sfx('reels');
+      for (let i = 0; i < 3; i++) later(0.9 + i * 0.35, () => sfx('reelStop'));
       later(1.75, () => {
         tb.busy = false; tb.view.win = r.mult > 0 ? `${r.line.toUpperCase()} ${P.xfmt(r.mult)}` : null;
         pay(bet, bet * r.mult, r.line);
@@ -317,6 +319,7 @@ const GAMES = {
       const bet = stake(); if (bet < minBet()) return need();
       const r = Gm.plinkoDrop(tb.risk), b = { path: r.path, t0: now() };
       tb.balls.push(b); hand('press'); sfx('click');
+      for (let i = 1; i <= Gm.PLINKO_ROWS; i++) later(i * P.PLINKO_ROW_T, () => sfx('peg'));
       later(Gm.PLINKO_ROWS * P.PLINKO_ROW_T + 0.05, () => {
         tb.hist.unshift(P.xfmt(r.mult)); tb.hist.length = Math.min(tb.hist.length, 6);
         pay(bet, bet * r.mult, P.xfmt(r.mult) + '.');
@@ -352,9 +355,9 @@ const GAMES = {
     pick(i) {
       const s = tb.s; if (!s || s.over || s.open.includes(i)) return;
       Gm.minesPick(s, i); hand('press');
-      if (s.dead) pay(tb.bet, 0, 'BOOM.', { main: { stake: tb.bet, back: 0 } });
+      if (s.dead) { sfx('mine'); pay(tb.bet, 0, 'BOOM.', { main: { stake: tb.bet, back: 0 } }); }
       else if (s.over) pay(tb.bet, tb.bet * s.mult, 'Cleared the board!', { main: { stake: tb.bet, back: tb.bet * s.mult } });
-      else sfx('coin');
+      else sfx('gem');
       this.sync();
     },
     sync() { const s = tb.s, k = s ? s.open.length : 0; tb.view = s ? { m: tb.m, open: s.open, mines: s.mines, over: s.over, dead: s.dead, mult: s.dead ? 0 : Gm.minesMult(tb.m, k), next: Gm.minesMult(tb.m, k + 1) } : null; },
@@ -403,9 +406,9 @@ const GAMES = {
       const s = tb.s; if (!s || s.over) return flash('Press CLIMB first');
       const e = this.egg(x); if (e < 0) return;
       Gm.towerPick(s, e); hand('press');
-      if (s.dead) pay(tb.bet, 0, 'A dragon!', { main: { stake: tb.bet, back: 0 } });
+      if (s.dead) { sfx('boom'); pay(tb.bet, 0, 'A dragon!', { main: { stake: tb.bet, back: 0 } }); }
       else if (s.over) pay(tb.bet, tb.bet * s.mult, 'Top of the tower!', { main: { stake: tb.bet, back: tb.bet * s.mult } });
-      else sfx('coin');
+      else sfx('step');
       this.sync();
     },
     tapLabel(x) { const e = this.egg(x); if (e < 0) return null; const live = tb.s && !tb.s.over; return { label: live ? `EGG ${e + 1} · FLOOR ${tb.s.row + 1} PAYS ${P.xfmt(Gm.towerMult(tb.mode, tb.s.row + 1))}` : 'PRESS CLIMB FIRST', on: !!live }; },
@@ -438,7 +441,7 @@ const GAMES = {
       const call = this.side();
       if (!tb.pot) { tb.bet = stake(); tb.side = call; result(''); }
       const r = Gm.coinFlip(call); tb.flying = true;
-      tb.view = { flip: { t0: now(), side: r.side } }; hand('press'); sfx('click');
+      tb.view = { flip: { t0: now(), side: r.side } }; hand('press'); sfx('coinFlip');
       later(1.25, () => {
         tb.flying = false;
         if (!r.win) { const lost = tb.pot || tb.bet; tb.pot = 0; tb.ride = 0; pay(tb.bet, 0, cap(r.side) + '.', { [call]: { stake: lost, back: 0 } }); }
@@ -459,7 +462,7 @@ const GAMES = {
     press() {
       if (!this.on()) return tb.busy ? null : need();
       const bet = stake(), r = Gm.wheelSpin(), t = now(), a = P.wheelAngle(tb.view, t), TAU = Math.PI * 2;
-      tb.view = { spin: { t0: t, from: ((a % TAU) + TAU) % TAU, to: r.i, dur: 5 } }; tb.busy = true; hand('pull'); sfx('click'); result('');
+      tb.view = { spin: { t0: t, from: ((a % TAU) + TAU) % TAU, to: r.i, dur: 5 } }; tb.busy = true; hand('pull'); sfx('wheelSpin'); result('');
       later(5, () => { tb.busy = false; pay(bet, bet * r.mult, r.mult ? P.xfmt(r.mult) + '!' : 'Blank.', { main: { stake: bet, back: bet * r.mult } }); });
     },
     extra() { return { pull: tb.view && tb.view.spin ? tb.view.spin.t0 : -9 }; },
@@ -479,7 +482,7 @@ const GAMES = {
       if (live || passB) { if (!live) { tb.s = Gm.passNew(); tb.passBet = passB; } Gm.passRoll(tb.s); d = tb.s.rolls[tb.s.rolls.length - 1]; }
       else d = Gm.roll2();
       const tot = d[0] + d[1], s = live || passB ? tb.s : null;
-      tb.rolling = true; tb.view = { roll: { t0: now(), dice: d } }; hand('throw'); sfx('click');
+      tb.rolling = true; tb.view = { roll: { t0: now(), dice: d } }; hand('throw'); sfx('diceRoll');
       later(0.95, () => {
         tb.rolling = false;
         let st = 0, back = 0; const per = {};
@@ -523,7 +526,7 @@ const GAMES = {
     press(id) {
       const C = tb.cr.C, m = tb.cr.mine;
       if (id.startsWith('auto:')) { crashAuto = +id.slice(5); sfx('click'); hand('press'); return; }
-      if (id === 'cash') { if (!this.on('cash')) return flash(m ? 'Already out' : 'You have no bet on this rocket'); tb.act('cashout'); hand('press'); return; }
+      if (id === 'cash') { if (!this.on('cash')) return flash(m ? 'Already out' : 'You have no bet on this rocket'); tb.act('cashout'); hand('press'); sfx('cashout'); return; }
       if (!this.on('bet')) return flash(m ? "You're in" : C.phase !== 'bet' ? 'Bets open after this rocket' : 'Put chips down first');
       tb.act('crash', { bet: stake(), auto: crashAuto }); hand('press'); sfx('chip');
       result(`In for ${money(stake())}${crashAuto ? `, auto cash-out at ${crashAuto}x` : ''}. Wait for launch.`);

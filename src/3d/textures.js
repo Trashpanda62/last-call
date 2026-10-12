@@ -1,5 +1,6 @@
 // Canvas-painted textures for the plush Art Deco casino. Painted here; the table felts paint on the generated felt weave.
 import * as THREE from 'three';
+import { ART as ART2 } from '../paint.js';
 
 let maxAniso = 4;
 export function setAniso(n) { maxAniso = n; }
@@ -439,3 +440,33 @@ export function crestImage() {
   g.putImageData(d, 0, 0);
   return (crestCut = c);
 }
+
+// Sorceress art for phases 7, 8 and 10 (assets/art2): slot symbols and game-screen backdrops (paint.js draws them),
+// neon signs, paintings, posters, the alley skyline, key art and effect sprites. World pieces are rebuilt once it is in.
+export const ART2_NAMES = ['sym-diamond', 'sym-seven', 'sym-bar', 'sym-bell', 'sym-cherry', 'sym-lemon',
+  ...['mines', 'tower', 'crash', 'plinko', 'wheel', 'coin'].map(k => 'screen-' + k),
+  ...['lastcall', 'bar', 'vip', 'restrooms', 'duckrace', 'slots', 'highlimit', 'dice', 'spintowin', 'flip', 'crash', 'plinko', 'mines', 'dragontower'].map(k => 'sign-' + k),
+  ...Array.from({ length: 12 }, (_, i) => 'paint-' + String(i).padStart(2, '0')),
+  ...['derby', 'jackpot', 'cocktails', 'rocket', 'roulette', 'missing', 'wash', 'lounge'].map(k => 'poster-' + k),
+  'sky-north', 'sky-south', ...['smoke', 'sparks', 'confetti', 'fizz', 'boom', 'stars', 'ghost'].map(k => 'fx-' + k)];
+const art2Waiters = [];
+let art2Done = false;
+export function loadArt2() {
+  if (/[?&](toy|noart)\b/.test(location.search)) return;
+  let n = 0;
+  const done = () => { if (++n < ART2_NAMES.length) return; art2Done = true; art2Waiters.splice(0).forEach(f => f()); };
+  for (const k of ART2_NAMES) { const im = new Image(); im.onload = () => { ART2[k] = im; done(); }; im.onerror = done; im.src = `assets/art2/${k}.webp`; }
+}
+export const art2 = k => ART2[k] || null;
+export const art2Ready = () => art2Done;
+export function onArt2(f) { if (art2Done) f(); else art2Waiters.push(f); }
+// a texture of one art2 image (null until it has loaded); `alpha` makes black transparent (sprites drawn over black)
+export const art2Tex = (k, alpha = false) => ART2[k] ? once('art2' + k + alpha, () => {
+  const im = ART2[k];
+  if (!alpha) { const t = new THREE.Texture(im); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = maxAniso; t.needsUpdate = true; return t; }
+  const [c, g] = canvas(im.width, im.height); g.drawImage(im, 0, 0);
+  const d = g.getImageData(0, 0, c.width, c.height), p = d.data;
+  for (let i = 0; i < p.length; i += 4) { const m = Math.max(p[i], p[i + 1], p[i + 2]); p[i + 3] = Math.min(255, m * 1.6); }
+  g.putImageData(d, 0, 0);
+  return tex(c, false);
+}) : null;

@@ -23,6 +23,25 @@ export function loadPlush(base = 'assets/chars/') {
     .catch(e => console.warn('Plush beans did not load; keeping the toy beans.', e));
 }
 
+// Sorceress hats (plan-v4 phase 2, assets/hats; tools/v4_more.py): each replaces the hand-built hat of its kind, sized
+// and seated like it. Beans made before they load get theirs swapped in.
+const HAT_SRC = {}, hatted = new Set();
+export function loadHats(base = 'assets/hats/') {
+  if (/[?&](toy|noprops)\b/.test(location.search)) return;
+  const loader = new GLTFLoader();
+  fetch(base + 'hats.json').then(r => r.json()) // the kinds that have a model; the rest keep the hand-built hat
+    .then(kinds => Promise.all(kinds.map(k => loader.loadAsync(base + k + '.glb').then(g => { HAT_SRC[k] = g.scene; }).catch(() => null))))
+    .then(() => { for (const r of hatted) { const b = r.deref(); if (b) b.fitHat(); } hatted.clear(); }).catch(() => null);
+}
+function hatModel(kind, color) {
+  const src = HAT_SRC[kind]; if (!src) return null;
+  const ref = new THREE.Box3().setFromObject(makeHat(kind, color)), m = src.clone(true), gb = new THREE.Box3().setFromObject(m);
+  const k = (ref.max.x - ref.min.x) / (gb.max.x - gb.min.x);
+  m.scale.setScalar(k); m.position.y = ref.min.y - gb.min.y * k;
+  m.traverse(o => { if (o.isMesh) { o.castShadow = true; o.material.envMapIntensity = 0.4; } });
+  const g = new THREE.Group(); g.add(m); g.userData.model = true; return g;
+}
+
 // The red felt's mean luminance (linear), so a tint keeps the texture's shading.
 function feltLum(img) {
   try {
@@ -154,11 +173,12 @@ export class PlushBean {
     rh.getWorldPosition(hp); this.model.worldToLocal(hp);
     this.rightHand.position.copy(hp).add(new THREE.Vector3(-0.04, -0.05, 0)); this.model.add(this.rightHand); rh.attach(this.rightHand);
     // hat on the crown, riding the head bone
-    this.hat = null;
+    this.hat = null; this.hatKind = hat; this.hatColor = color || '#888888';
     if (hat) {
       const s = S.info.trunkR / 0.31;
-      this.hat = makeHat(hat, color || '#888888'); this.hat.scale.setScalar(s); this.hat.position.set(0, H - 0.08 * s, 0.01);
+      this.hat = hatModel(hat, this.hatColor) || makeHat(hat, this.hatColor); this.hat.scale.setScalar(s); this.hat.position.set(0, H - 0.08 * s, 0.01);
       this.model.add(this.hat); this.b.Head.o.attach(this.hat);
+      if (!this.hat.userData.model) hatted.add(new WeakRef(this));
     }
     this.shadow = new THREE.Mesh(flatGeo, shadowMat); this.shadow.rotation.x = -Math.PI / 2; this.shadow.position.y = 0.01; this.root.add(this.shadow);
     this.luckyRing = new THREE.Mesh(flatGeo, luckyMat); this.luckyRing.rotation.x = -Math.PI / 2; this.luckyRing.position.y = 0.02; this.luckyRing.scale.setScalar(1.4); this.luckyRing.visible = false; this.root.add(this.luckyRing);
@@ -168,6 +188,12 @@ export class PlushBean {
     if (name) this.setLabel(name, '#f3ead8');
     this.phase = Math.random() * 10; this.walk = 0; this.yaw = 0; this.eyeYaw = 0; this.seatBlend = 0; this.dead = false; this.holding = false;
     this.seatLift = Math.max(0, 0.49 - S.info.legTop);
+  }
+  // the generated hat has arrived: put it where the hand-built one sits
+  fitHat() {
+    const m = this.hat && !this.hat.userData.model && hatModel(this.hatKind, this.hatColor); if (!m) return;
+    m.position.copy(this.hat.position); m.quaternion.copy(this.hat.quaternion); m.scale.copy(this.hat.scale);
+    this.hat.parent.add(m); this.hat.removeFromParent(); this.hat = m;
   }
   setLabel(text, color) {
     const key = text + color; if (key === this.labelKey) return; this.labelKey = key;

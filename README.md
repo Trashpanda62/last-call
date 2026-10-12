@@ -62,6 +62,10 @@ between parts takes the nearest one); Stand and Look back stay on the right.
 - Room and table art: `tools/v4_props.py` (34 hero props, Sorceress/Meshy) and `tools/prop_fit.py` (headless Blender
   fit) into `assets/props`, loaded by `src/3d/props.js`; `tools/v4_mats.py` PBR materials in `assets/mats`; `tools/v4_art.py`
   chips, court cards, card back and felt crest in `assets/art`. `?noprops`, `?nomats`, `?noart` turn each off.
+- More art and the hats: `tools/v4_more.py` (slot symbols, neon signs, screen backdrops, paintings, posters, skyline, key
+  art, effect sprites in `assets/art2`; Hunyuan hats baked in Blender into `assets/hats`).
+- Sound: `tools/v4_audio.py` (ElevenLabs effects, room ambience and music into `assets/audio`, `audio.json`); `src/audio.js`
+  plays them (`?synth` keeps the synthesized set). `audio-review.html` plays every take and stores music picks.
 - `src/net.js` rooms, `src/main.js` screens, modes, input and the loop.
 - `node tools/batch.mjs [games] [players] [killers] [difficulty]` plays headless games (one idle human seat) and
   prints win rates. `node tools/batch.mjs 40 8 2 normal --cfg='{"bladeCd":50}'` tries a tuning change. `node tools/ev.mjs` measures

@@ -118,6 +118,19 @@ under every table layout. Phase 6: six chip faces, the king, queen and jack as p
 felt crest (`tools/v4_art.py`, `assets/art`, 244 KB). `?noprops`, `?nomats` and `?noart` turn each off for comparisons;
 desktop frame times are the same with and without them.
 
+**Built 2026-10-12 (phases 7, 8, 10 and 2, 926 credits; Steve: "yes all go").** `tools/v4_more.py`, `assets/art2`,
+`assets/hats`. Phase 7: six plush slot symbols (keyed off green) on the reels, the 14 neon signs (each plane takes its
+sign's shape) and backdrops on the Crash, Mines, Tower, Plinko, wheel and coin screens; the cabinet toppers became those
+backdrops, since the Meshy cabinets carry their own. Phase 8: 12 full-bleed oil paintings of plush beans in the gilded
+frames (three are the first round's canvases, cropped, after the account ran out), 8 Art Deco posters on the walls, a
+painted city round the alley under its stars, and key art behind the menu (a portrait one on phones), the meeting, an
+ejection and both endings. Phase 10: seven effect sprites (smoke, sparks, confetti, fizz, boom, stars, ghost) over the
+particles. Phase 2: 11 of the 16 hats as Hunyuan meshes baked onto 8,000 triangles (`tools/prop_fit.py bake`); the crown
+mesh never finished and the propeller, chef, headphones and sombrero designs are made but their meshes need credits, so
+those five keep the hand-built hats. The shared Sorceress account is at 0 (the Playground Rules spend came out of it
+too). The props' cracked rails were the decimation tearing UV seams, not the models: `prop_fit.py` welds them first and
+every prop was refitted, no retakes needed.
+
 Order: 0 (Steve picks a look) → 1, 3, 9 (characters) → 4, 5, 6 (tables and rooms) → 7, 8, 10. Every image is checked
 up close for extra or missing limbs and fingers before Steve sees it. Every job id and file goes in provenance.json.
 Generated meshes are remeshed to a polygon budget and instanced so phones keep their frame rate.
@@ -139,6 +152,14 @@ shelved. Effects, ambience and music stay in the plan.
 | Ambience loops: casino floor, bar, VIP, arcade, alley, duck pond, crowd walla | 7 loops x 30 s | 2,500 |
 | Music: menu, casino lounge jazz, bar piano, VIP, arcade synthwave, alley blues, duck-race ragtime, meeting tension, ejection sting, win and lose stings (2 takes each) | 13 pieces | 45,000 |
 | **Total** | | **about 280,000** |
+
+**Built 2026-10-12 (20,060 ElevenLabs credits; no voices).** `tools/v4_audio.py`, `assets/audio` (21 MB): 93 effect
+takes of 53 sounds (chips, cards, the wheel and ball, reels and lever, jackpot, pegs, dice, coin, prize wheel, rocket
+and boom, gems and mines, starter gun, splashes, pours, sips, fizz, stab, fall, lights, bell, vote stamp, ejection,
+haunt, footsteps on carpet, wood, tile and street), eight 30 s room loops, and two takes of 13 music pieces (menu, six
+room themes, meeting, eject, win, lose and both endings). `src/audio.js` plays them (the synth stands in until they
+load): music and ambience crossfade as you walk between rooms, meetings and endings get their own, and the stings play
+over. Steve picks takes at https://trashpanda62.github.io/last-call/audio-review.html (the first take plays until then).
 
 ## 6. Checks
 

@@ -15,7 +15,15 @@ export function short(n) {
 export const xfmt = x => (x >= 100 ? Math.round(x) : x >= 10 ? x.toFixed(1) : x.toFixed(2)) + 'x';
 const ease = u => 1 - Math.pow(1 - Math.min(1, Math.max(0, u)), 3);
 
-function bg(g, w, h, top = '#141030', bot = '#05040c') {
+// Sorceress art (assets/art2: slot symbols, screen backdrops), filled in by textures.js once it loads; the painters draw
+// their own shapes until then.
+export const ART = {};
+function bg(g, w, h, top = '#141030', bot = '#05040c', art = null) {
+  const im = art && ART['screen-' + art];
+  if (im) { // cover the screen, darkened so the game reads on top
+    const k = Math.max(w / im.width, h / im.height), iw = im.width * k, ih = im.height * k;
+    g.drawImage(im, (w - iw) / 2, (h - ih) / 2, iw, ih); g.fillStyle = 'rgba(0,0,0,0.38)'; g.fillRect(0, 0, w, h); return;
+  }
   const lg = g.createLinearGradient(0, 0, 0, h); lg.addColorStop(0, top); lg.addColorStop(1, bot); g.fillStyle = lg; g.fillRect(0, 0, w, h);
 }
 function text(g, s, x, y, size, color, font = ARC, align = 'center', base = 'middle') {
@@ -28,7 +36,7 @@ function glowText(g, s, x, y, size, color, font = ARC) {
 // ---------- Crash ----------
 // state: pub.crash, plus optional `me` (my id) to highlight my bet.
 export function paintCrash(g, w, h, t, C, me) {
-  bg(g, w, h, '#120a2a', '#04030a');
+  bg(g, w, h, '#120a2a', '#04030a', 'crash');
   if (!C) return;
   const pad = h * 0.08, gx0 = pad * 1.4, gy0 = h - pad, gw = w - gx0 - pad, gh = h - pad * 2.2;
   // grid
@@ -103,6 +111,7 @@ export function paintTote(g, w, h, t, R, me) {
 // ---------- Slots ----------
 // st: { reels: [sym, sym, sym], spin: { t0, stops } | null, win, tier }
 const SYM_COL = { '💎': '#3fe0ff', '7': '#ff2a3a', BAR: '#151515', '🔔': '#ffb020', '🍒': '#e0203a', '🍋': '#f0d020' };
+const SYM_ART = { '💎': 'sym-diamond', '7': 'sym-seven', BAR: 'sym-bar', '🔔': 'sym-bell', '🍒': 'sym-cherry', '🍋': 'sym-lemon' };
 export function paintSlots(g, w, h, t, st) {
   const tier = st && st.tier || 'penny';
   bg(g, w, h, tier === 'high' ? '#2a1a04' : '#2a0418', '#080206');
@@ -124,7 +133,8 @@ export function paintSlots(g, w, h, t, st) {
       let s;
       if (base === null) s = k === 0 ? st.reels[i] : syms[(syms.indexOf(st.reels[i]) + k + 6) % 6];
       else s = syms[((base + k) % 6 + 6) % 6];
-      const yy = y0 + rh / 2 + k * rh / 3 + off;
+      const yy = y0 + rh / 2 + k * rh / 3 + off, im = ART[SYM_ART[s]];
+      if (im) { const sz = Math.min(rw * 0.9, rh * 0.31); g.drawImage(im, x + rw / 2 - sz / 2, yy - sz / 2, sz, sz); continue; }
       g.font = s === 'BAR' ? f(ARC, rh * 0.16) : s === '7' ? f(ARC, rh * 0.28) : `${Math.round(rh * 0.24)}px system-ui, "Segoe UI Emoji", sans-serif`;
       g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = SYM_COL[s] || '#000';
       if (s === 'BAR') { g.fillStyle = '#151515'; g.fillRect(x + rw * 0.15, yy - rh * 0.08, rw * 0.7, rh * 0.16); g.fillStyle = '#fff'; }
@@ -141,7 +151,7 @@ export function paintSlots(g, w, h, t, st) {
 // ---------- Mines ----------
 // st: { m, open: [tiles], mines: Set|null (shown when over), over, dead, mult, next }
 export function paintMines(g, w, h, t, st) {
-  bg(g, w, h, '#06281a', '#020a06');
+  bg(g, w, h, '#06281a', '#020a06', 'mines');
   const n = 5, s = Math.min(w * 0.62, h * 0.86) / n, x0 = w * 0.05, y0 = (h - s * n) / 2;
   for (let i = 0; i < 25; i++) {
     const x = x0 + (i % 5) * s, y = y0 + Math.floor(i / 5) * s;
@@ -173,7 +183,7 @@ function bomb(g, x, y, r) {
 // ---------- Dragon Tower ----------
 // st: { mode, eggs, row, picks, rows (Sets, shown when over), over, dead, mult }
 export function paintTower(g, w, h, t, st) {
-  bg(g, w, h, '#2a1006', '#0a0402');
+  bg(g, w, h, '#2a1006', '#0a0402', 'tower');
   const rows = Gm.TOWER.rows, eggs = st ? st.eggs : 3, rh = h * 0.86 / rows, y0 = h * 0.07, cw = w * 0.6 / eggs, x0 = w * 0.04;
   for (let r = 0; r < rows; r++) {
     const y = y0 + (rows - 1 - r) * rh, active = st && !st.over && r === st.row;
@@ -213,7 +223,7 @@ export function plinkoPos(path, u) { // u: rows travelled (float). Returns { col
   return { x: col - row / 2, y: row - bounce };
 }
 export function paintPlinko(g, w, h, t, st) {
-  bg(g, w, h, '#0a1a3a', '#020610');
+  bg(g, w, h, '#0a1a3a', '#020610', 'plinko');
   const risk = st ? st.risk : 'medium', rows = Gm.PLINKO_ROWS, mults = Gm.PLINKO[risk];
   const top = h * 0.08, sp = Math.min(w * 0.9 / (rows + 1), h * 0.78 / rows), cx = w / 2;
   g.fillStyle = '#cfe4ff';
@@ -235,7 +245,7 @@ export function paintPlinko(g, w, h, t, st) {
 // ---------- Prize wheel (panel) ----------
 export function paintWheel(g, w, h, t, st) {
   const segs = Gm.WHEEL.segs, n = segs.length, R = Math.min(w, h) * 0.46, cx = w / 2, cy = h / 2 + h * 0.02;
-  bg(g, w, h, '#1a0a2a', '#06020a');
+  bg(g, w, h, '#1a0a2a', '#06020a', 'wheel');
   const ang = wheelAngle(st, t);
   const colOf = v => v >= 20 ? '#ffd040' : v >= 5 ? '#ff3fa4' : v >= 3 ? '#8a5cff' : v >= 2 ? '#3fe0ff' : v > 0 ? '#3fff8a' : null;
   for (let i = 0; i < n; i++) {
@@ -284,7 +294,7 @@ export function paintRoulette(g, w, h, t, st) {
 
 // ---------- Coin, dice, cards (panel) ----------
 export function paintCoin(g, w, h, t, st) {
-  bg(g, w, h, '#2a1a04', '#0a0602');
+  bg(g, w, h, '#2a1a04', '#0a0602', 'coin');
   const fl = st && st.flip, u = fl ? Math.min(1, (t - fl.t0) / 1.2) : 0;
   const cx = w / 2, cy = h * 0.55 - Math.sin(u * Math.PI) * h * 0.3, R = Math.min(w, h) * 0.26;
   const turns = fl ? ease(u) * 7 + (fl.side === 'tails' ? 0.5 : 0) : t * 0.3;

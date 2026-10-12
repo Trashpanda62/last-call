@@ -1,7 +1,7 @@
 // Screens, modes (solo, host, guest), input and the main loop.
 import { CFG } from './config.js';
 import { clamp } from './util.js';
-import { collide, W, H } from './map.js';
+import { collide, roomOf, W, H } from './map.js';
 import { createGame } from './sim.js';
 import { init as init3d, draw, playHand, gesture, info as gfxInfo, pick, pickNear, partsOnScreen, screenPointOf, setHover, camPos } from './3d/render3d.js';
 import * as audio from './audio.js';
@@ -48,7 +48,7 @@ function toMenu(err) {
   if (S.room) { try { S.room.close(); } catch (e) { /* ignore */ } }
   releaseLock();
   Object.assign(S, { screen: 'menu', role: null, sim: null, view: null, room: null, paused: false, guests: new Map() });
-  closeTable(); show('hud', false); only('menu'); $('menuErr').textContent = err || ''; refreshStats(); audio.setMood('lounge');
+  closeTable(); show('hud', false); only('menu'); $('menuErr').textContent = err || ''; refreshStats(); audio.setMood('menu');
 }
 // Players 4-16; the killer choices follow the player count.
 function syncKillers() {
@@ -411,13 +411,14 @@ function frameGame(dt) {
   if (priv.seat && priv.seat.game !== 'cams' && pub.mode === 'play' && !pub.over && tableSeat() !== priv.seat.id) { closeTable(); openTable(priv.seat, act, v); } // the security desk has its own card
   if ((!priv.seat || pub.mode !== 'play' || pub.over) && tableGame()) closeTable();
   if (pub.mode !== S.lastMode) {
-    if (pub.mode === 'meeting') { releaseLock(); splash(pub.meeting.title.toUpperCase()); only('meeting'); audio.setMood('meeting'); S.paused = false; show('pause', false); }
+    if (pub.mode === 'meeting') { releaseLock(); splash(pub.meeting.title.toUpperCase()); only('meeting'); audio.setMood('meeting'); audio.sfx('meeting'); S.paused = false; show('pause', false); }
     else if (S.lastMode === 'meeting') { only(); resetMeeting(); audio.setMood('lounge'); }
     S.lastMode = pub.mode;
   }
   if (pub.mode === 'meeting' && pub.meeting) renderMeeting(v, act, pub.chars.filter(c => c.human).length > 1);
+  worldSounds(v);
   if (pub.over && !S.overShown) {
-    S.overShown = true; releaseLock();
+    S.overShown = true; releaseLock(); audio.setMood('over'); audio.sting(pub.over.killersWin ? 'killersWin' : 'gamblersWin');
     const st = store.get('lc.stats', { games: 0, wins: 0, killerGames: 0, killerWins: 0 });
     st.games++; if (priv.won) st.wins++; if (priv.isKiller) { st.killerGames++; if (priv.won) st.killerWins++; }
     store.set('lc.stats', st);
@@ -432,6 +433,22 @@ function frameGame(dt) {
   show('lockHint', fp && !touchMode && lockOK() && !locked() && wantLock());
   draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit', my: tableView(), zoom: touchMode && seatedPlay() && innerWidth > innerHeight ? 0.74 : 1 });
   seatedHud();
+}
+// Sounds of the shared world: where you are, the rocket and the duck race when you are in their room, a meeting's votes
+// and its verdict.
+function worldSounds(v) {
+  const { pub, priv } = v, room = pub.mode === 'play' && !pub.over ? roomOf(S.me) : null, was = S.heard || (S.heard = {});
+  audio.setRoom(room);
+  const C = pub.crash, R = pub.race;
+  if (C && C.phase !== was.crash) { if (room === 'arcade' && was.crash) audio.sfx(C.phase === 'fly' ? 'rocket' : C.phase === 'boom' ? 'boom' : null); was.crash = C.phase; }
+  if (R && R.phase !== was.race) { if (room === 'race' && was.race) audio.sfx(R.phase === 'run' ? 'gun' : R.phase === 'show' ? 'splash' : null); was.race = R.phase; }
+  const m = pub.mode === 'meeting' && pub.meeting;
+  if (m) {
+    const votes = (m.voted || []).length;
+    if (votes > (was.votes || 0)) audio.sfx('vote'); was.votes = votes;
+    if (m.phase !== was.meet) { if (m.phase === 'result' && m.ejected !== null && m.ejected !== undefined) { audio.sting('eject'); audio.sfx('eject'); } was.meet = m.phase; }
+  } else { was.votes = 0; was.meet = null; }
+  void priv;
 }
 // Seated: name what the crosshair is on (phones: what you just tapped), and the bet readout.
 function seatedHud() {
@@ -474,6 +491,7 @@ setInterval(() => { if (document.hidden && S.role === 'host' && S.screen === 'ga
 
 // Test hook for automation: drive a solo game without the screen.
 window.__lastCall = {
+  audio: () => audio.audioInfo(),
   start(role, extra) { startSolo({ players: 6, killers: 1, difficulty: 'normal', forceRole: role || 'random', ...(extra || {}) }); },
   step(seconds) { for (let i = 0; i < seconds * 60 && S.sim; i++) { S.sim.tick(1 / 60); } if (S.sim) { S.view = S.sim.view(S.myId); } },
   render() { if (S.screen === 'game') frameGame(0); else drawDemo(0); },

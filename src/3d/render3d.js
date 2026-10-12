@@ -7,13 +7,13 @@ import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { buildWorld, loadRoomMats, GLOWS, M, yawOf } from './world.js';
-import { makeBean, loadPlush, onPlushReady, plushReady, loadClips, PLAYED } from './plush.js';
+import { makeBean, loadPlush, onPlushReady, plushReady, loadClips, loadHats, PLAYED } from './plush.js';
 import { loadProps, onPropsReady, propsLoaded } from './props.js';
 import { GESTURES, Gestures } from './gestures.js';
 import { Items } from './items.js';
 import { Hands } from './hands.js';
 import { Hazards } from './hazards.js';
-import { setAniso, loadFelts, loadArt } from './textures.js';
+import { setAniso, loadFelts, loadArt, loadArt2, onArt2 } from './textures.js';
 import { BELL } from '../map.js';
 import { ringRadius } from '../sim.js';
 
@@ -72,9 +72,11 @@ export function init(canvas, { lowPower = false } = {}) {
     dealers.forEach((d, i) => { scene.remove(d.root); dealers[i] = makeBean({ dealer: true }); scene.add(dealers[i].root); });
     R.bartender = makeBean({ kind: 'bartender' }); scene.add(R.bartender.root);
   });
-  loadPlush(); onPlushReady(() => loadClips(GESTURES));
+  loadPlush(); onPlushReady(() => loadClips(GESTURES)); loadHats();
   // the hero props arrive in the background too: the casino is rebuilt with them once you are not seated at a game
   loadProps(); onPropsReady(() => { R.rebuild = true; });
+  // and the signs, paintings, posters and skyline (assets/art2)
+  loadArt2(); onArt2(() => { R.rebuild = true; });
 
   const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: lowPower ? 0 : 4 });
   const composer = new EffectComposer(renderer, rt);

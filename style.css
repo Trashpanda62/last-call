@@ -105,6 +105,15 @@ body.touch #secCard { top: auto; bottom: 60px; transform: none; width: min(60vw,
 .tag { color: var(--muted); margin: 4px 0 8px; }
 #menu, #setup { background: radial-gradient(ellipse at 50% 40%, rgba(40, 10, 18, 0.25), rgba(8, 5, 7, 0.78)); }
 #meeting, #over { background: rgba(8, 5, 7, 0.55); }
+/* Sorceress key art (assets/art2) behind the menu, the meeting and the results, darkened so the cards read */
+#menu, #setup { background: radial-gradient(ellipse at 50% 40%, rgba(40, 10, 18, 0.35), rgba(8, 5, 7, 0.86)), url(assets/art2/key-menu.webp) center / cover; }
+#meeting { background: linear-gradient(rgba(8, 5, 7, 0.72), rgba(8, 5, 7, 0.82)), url(assets/art2/key-meeting.webp) center / cover; }
+#meeting.ejected { background: linear-gradient(rgba(8, 5, 7, 0.62), rgba(8, 5, 7, 0.8)), url(assets/art2/key-ejected.webp) center / cover; }
+#over { background: linear-gradient(rgba(8, 5, 7, 0.55), rgba(8, 5, 7, 0.8)), url(assets/art2/key-gamblersWin.webp) center / cover; }
+#over.killers { background: linear-gradient(rgba(8, 5, 7, 0.55), rgba(8, 5, 7, 0.8)), url(assets/art2/key-killersWin.webp) center / cover; }
+@media (orientation: portrait) {
+  #menu, #setup { background: radial-gradient(ellipse at 50% 40%, rgba(40, 10, 18, 0.35), rgba(8, 5, 7, 0.86)), url(assets/art2/key-menuPhone.webp) center / cover; }
+}
 .joinRow { display: flex; gap: 8px; }
 .joinRow input { width: 100px; text-transform: uppercase; letter-spacing: 0.2em; text-align: center; }
 .joinRow button { flex: 1; }

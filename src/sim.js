@@ -227,7 +227,7 @@ function makeApi(G) {
     const v = k.lastVictim !== undefined ? byId(k.lastVictim) : null;
     if (!v) { tell(k, 'You need a victim first. Their look is your disguise.'); return false; }
     k.disguise = { as: v.id, t: CFG.disguiseDur }; k.cd.disguise = CFG.disguiseCd;
-    tell(k, `You look like ${v.name} for ${CFG.disguiseDur} seconds.`, false, 'lights');
+    tell(k, `You look like ${v.name} for ${CFG.disguiseDur} seconds.`, false, 'haunt');
     return true;
   }
   // 6. Lights out.
@@ -613,7 +613,7 @@ function makeApi(G) {
     G.haunts.push({ by: g.id, on: target.id, t: CFG.hauntTime });
     for (const o of G.chars) {
       if (!o.alive || o === target || dist(o, target) > CFG.viewRange || !los(o, target)) continue;
-      if (o.isHuman) tell(o, `A chill runs through the room. The candles around ${appearAs(target).name} flicker.`, false, 'lights');
+      if (o.isHuman) tell(o, `A chill runs through the room. The candles around ${appearAs(target).name} flicker.`, false, 'haunt');
       else if (!o.isKiller) o.sus[target.id] += CFG.hauntSus;
     }
     if (target.isHuman) tell(target, 'Something cold brushes your neck.', true, 'gasp');

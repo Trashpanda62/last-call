@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Last Call sounds</title>
+<style>
+  :root { --bg: #140c10; --card: #22161c; --ink: #f3ead8; --muted: #b8a89a; --gold: #e8c46a; --line: #4a3540; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.4 Georgia, serif; padding: 16px; }
+  h1 { color: var(--gold); font-size: 28px; margin: 0 0 6px; }
+  h2 { color: var(--gold); font-size: 20px; margin: 22px 0 8px; }
+  p { color: var(--muted); margin: 0 0 10px; }
+  .row { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin: 8px 0; }
+  .name { font-weight: bold; margin-bottom: 6px; }
+  .note { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  button { font: inherit; color: var(--ink); background: #2e1f27; border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; min-height: 40px; }
+  button.on { border-color: var(--gold); color: var(--gold); }
+  button.pick { background: var(--gold); color: #1a1014; border-color: var(--gold); }
+  #copy { position: sticky; bottom: 12px; width: 100%; margin-top: 16px; background: var(--gold); color: #1a1014; font-weight: bold; }
+  .fx { display: inline-flex; margin: 0 6px 6px 0; }
+</style>
+</head>
+<body>
+<h1>Last Call: music and sounds</h1>
+<p>Tap a take to hear it (one plays at a time; tap again to stop). Pick one take of each piece. Picks apply to the game on this phone at once; tap "Copy my picks" and send them so they become the default.</p>
+<div id="music"></div>
+<h2>Room ambience</h2>
+<div id="amb"></div>
+<h2>Effects</h2>
+<div id="sfx" class="row"></div>
+<button id="copy">Copy my picks</button>
+<script>
+const NOTES = { menu: 'Main menu', floor: 'Casino floor and slot hall', bar: 'The bar (and quietly in the restrooms)', vip: 'VIP lounge', arcade: 'Arcade', alley: 'Back alley',
+  race: 'Duck pond', meeting: 'Meetings', eject: 'Someone is thrown out', win: 'A big win at a table', lose: 'A losing hand', gamblersWin: 'Gamblers win the game', killersWin: 'Killers win the game' };
+const store = { get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* private mode */ } } };
+const player = new Audio(); let playing = null;
+function play(url, btn) {
+  if (playing === btn) { player.pause(); btn.classList.remove('on'); playing = null; return; }
+  if (playing) playing.classList.remove('on');
+  player.src = url; player.currentTime = 0; player.play(); btn.classList.add('on'); playing = btn;
+}
+player.onended = () => { if (playing) playing.classList.remove('on'); playing = null; };
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; };
+fetch('assets/audio/audio.json').then(r => r.json()).then(L => {
+  const picks = {};
+  for (const [name, takes] of Object.entries(L.music)) {
+    const row = el('div', 'row'); row.append(el('div', 'name', name), el('div', 'note', NOTES[name] || ''));
+    const btns = el('div', 'btns'), pickBtns = [];
+    picks[name] = +(store.get('lc.take.' + name) || 0);
+    takes.forEach((f, i) => {
+      const b = el('button', '', '▶ Take ' + 'AB'[i]); b.onclick = () => play('assets/audio/' + f, b);
+      const p = el('button', '', 'Pick ' + 'AB'[i]); p.onclick = () => { picks[name] = i; store.set('lc.take.' + name, i); pickBtns.forEach((q, j) => q.classList.toggle('pick', j === i)); };
+      p.classList.toggle('pick', picks[name] === i); pickBtns.push(p); btns.append(b, p);
+    });
+    row.append(btns); document.getElementById('music').append(row);
+  }
+  for (const [room, files] of Object.entries(L.amb)) {
+    const row = el('div', 'row'); row.append(el('div', 'name', room));
+    const b = el('button', '', '▶ Listen'); b.onclick = () => play('assets/audio/' + files[0], b); row.append(b);
+    document.getElementById('amb').append(row);
+  }
+  for (const [kind, files] of Object.entries(L.sfx)) files.forEach((f, i) => {
+    const b = el('button', 'fx', kind + (files.length > 1 ? ' ' + (i + 1) : '')); b.onclick = () => play('assets/audio/' + f, b);
+    document.getElementById('sfx').append(b);
+  });
+  document.getElementById('copy').onclick = () => {
+    const text = 'Last Call music picks: ' + Object.entries(picks).map(([k, i]) => k + ' ' + 'AB'[i]).join(', ');
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => { document.getElementById('copy').textContent = 'Copied'; }, () => prompt('Copy this:', text));
+  };
+});
+</script>
+</body>
+</html>

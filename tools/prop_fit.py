@@ -9,6 +9,9 @@ image from the front and a three-quarter view.
   yaw    degrees to turn it about the vertical before fitting (when the model's front isn't the image's front)
   tris   triangle budget (default 6000)
   tex    largest texture side (default 1024)
+  check  path prefix for the check renders and depth grid (or -)
+  bake   'bake': decimate a copy and bake the full model's colour onto fresh UVs (for dense meshes whose UV islands
+         tear when collapsed, like Hunyuan's); the result has one material, its colour map and a soft roughness
 """
 import bpy, sys, math, json
 from mathutils import Vector, Matrix
@@ -20,7 +23,8 @@ MODE = a[3] if len(a) > 3 else 'uniform'
 YAW = float(a[4]) if len(a) > 4 else 0.0
 TRIS = int(a[5]) if len(a) > 5 else 6000
 TEX = int(a[6]) if len(a) > 6 else 1024
-CHECK = a[7] if len(a) > 7 else None
+CHECK = a[7] if len(a) > 7 and a[7] != '-' else None
+BAKE = len(a) > 8 and a[8] == 'bake'
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=src)
@@ -37,11 +41,17 @@ if len(meshes) > 1:
 mesh = bpy.context.view_layer.objects.active
 mesh.rotation_euler[2] += math.radians(YAW)
 bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
+high = None
+if BAKE:  # the full-detail copy to bake from
+    high = mesh.copy(); high.data = mesh.data.copy(); bpy.context.collection.objects.link(high)
 
 # Decimate to the budget (collapse keeps the UVs); Meshy's unremeshed output is a few hundred thousand triangles.
 me = mesh.data
 tris0 = sum(len(p.vertices) - 2 for p in me.polygons)
 if tris0 > TRIS:
+    # Meshy splits vertices along UV seams; collapsed apart, those edges tear open (cracked rails). Weld them first.
+    import bmesh
+    bm = bmesh.new(); bm.from_mesh(me); bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-5); bm.to_mesh(me); bm.free()
     mod = mesh.modifiers.new('dec', 'DECIMATE'); mod.ratio = TRIS / tris0; mod.use_collapse_triangulate = True
     bpy.ops.object.modifier_apply(modifier='dec')
 tris1 = sum(len(p.vertices) - 2 for p in mesh.data.polygons)
@@ -62,6 +72,10 @@ c = (lo + hi) / 2
 for v in mesh.data.vertices:
     v.co = Vector(((v.co.x - c.x) * s[0], (v.co.y - c.y) * s[1], (v.co.z - lo.z) * s[2]))
 mesh.data.update()
+if high:
+    for v in high.data.vertices:
+        v.co = Vector(((v.co.x - c.x) * s[0], (v.co.y - c.y) * s[1], (v.co.z - lo.z) * s[2]))
+    high.data.update()
 size = [round(ext[0] * s[0], 3), round(ext[2] * s[2], 3), round(ext[1] * s[1], 3)]
 
 # Smooth normals that keep the hard edges Meshy baked in.
@@ -76,6 +90,31 @@ for dx, dy in ((0, 0), (r, 0), (-r, 0), (0, r), (0, -r)):
     if hit:
         hits.append(loc.z)
 top = round(max(hits), 4) if hits else None
+
+if high:
+    me = mesh.data
+    for p in high.data.polygons:
+        p.use_smooth = True
+    for uv in list(me.uv_layers):
+        me.uv_layers.remove(uv)
+    me.uv_layers.new(name='UVMap')
+    bpy.ops.object.select_all(action='DESELECT'); mesh.select_set(True); bpy.context.view_layer.objects.active = mesh
+    bpy.ops.object.mode_set(mode='EDIT'); bpy.ops.mesh.select_all(action='SELECT')
+    bpy.ops.uv.smart_project(angle_limit=math.radians(66), island_margin=0.01); bpy.ops.object.mode_set(mode='OBJECT')
+    img = bpy.data.images.new('baked', TEX, TEX)
+    mat = bpy.data.materials.new('baked'); mat.use_nodes = True
+    nt = mat.node_tree; bsdf = nt.nodes['Principled BSDF']; tn = nt.nodes.new('ShaderNodeTexImage'); tn.image = img
+    nt.links.new(tn.outputs['Color'], bsdf.inputs['Base Color']); bsdf.inputs['Roughness'].default_value = 0.85
+    bsdf.inputs['Metallic'].default_value = 0.0; nt.nodes.active = tn
+    me.materials.clear(); me.materials.append(mat)
+    for p in me.polygons:
+        p.material_index = 0
+    sc = bpy.context.scene; sc.render.engine = 'CYCLES'; sc.cycles.device = 'CPU'; sc.cycles.samples = 4
+    high.select_set(True); mesh.select_set(True); bpy.context.view_layer.objects.active = mesh
+    bpy.ops.object.bake(type='DIFFUSE', pass_filter={'COLOR'}, use_selected_to_active=True,
+                        cage_extrusion=0.02 * max(size), max_ray_distance=0.1 * max(size), margin=8)
+    img.pack()
+    bpy.data.objects.remove(high, do_unlink=True)
 
 for im in bpy.data.images:
     if im.size[0] > TEX:
