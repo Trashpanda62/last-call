@@ -3,7 +3,7 @@ import { CFG } from './config.js';
 import { clamp } from './util.js';
 import { collide, W, H } from './map.js';
 import { createGame } from './sim.js';
-import { init as init3d, draw, playHand, info as gfxInfo, pick, pickNear, partsOnScreen, screenPointOf, setHover, camPos } from './3d/render3d.js';
+import { init as init3d, draw, playHand, gesture, info as gfxInfo, pick, pickNear, partsOnScreen, screenPointOf, setHover, camPos } from './3d/render3d.js';
 import * as audio from './audio.js';
 import { $, show, toast, splash, updateHud, renderMeeting, resetMeeting, renderOver } from './ui.js';
 import { initMoves, updateMoves, keyMove, pickerOpen } from './moves.js';
@@ -488,7 +488,7 @@ window.__lastCall = {
     return 'shot';
   },
   act, get state() { return S.sim && S.sim.G; }, get view() { return S.view; }, get S() { return S; },
-  vote(id) { act('vote', id); }, gfx: gfxInfo, noLock() { S.noLock = true; },
+  vote(id) { act('vote', id); }, gfx: gfxInfo, gesture, noLock() { S.noLock = true; },
   look(a, pitch) { S.me.look = a; S.me.pitch = pitch || 0; },
   demo(seconds) { drawDemo(seconds || 0); },
   // Tables: press a part by name (as if aimed at and clicked), aim the crosshair at it, list what is on screen.

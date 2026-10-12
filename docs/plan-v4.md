@@ -100,8 +100,11 @@ region weights, 1024 px JPEG texture, about 0.7 MB each. `src/3d/plush.js` poses
 beans (walk, sit, hold a drink, lie dead) and tints the red felt to each player's colour in the shader; hats ride the
 head bone. Frame times match the toy beans (one skinned mesh each instead of about 60 parts). Meeting portraits: 16
 characters x 5 moods (calm, nervous, angry, smug, crying), gpt-image-2.5 flare; 8 that drifted were redone from that
-character's calm portrait (2 twice, for white gloves), and Ozzie's smug one, lost to a provider outage, was made the same way. One hy-motion test clip bought (3 credits) to check the format (`sorceress-motion@1`, SMPL
-joints); the 20 gesture clips need a retarget to this skeleton and are next.
+character's calm portrait (2 twice, for white gloves), and Ozzie's smug one, lost to a provider outage, was made the same way. 20 hy-motion gesture clips (60 credits; SMPL joint positions, `tools/v4_anims.py`) are retargeted in the browser by
+matching bone directions (the bean bends its spine and head less than a person) and played over the procedural pose:
+cheers, claps and bows on wins, facepalms and despair on losses, the knife's follow-through and gasps from whoever can
+see a new body, sips, the speaker acting out each meeting line's mood, idle moments, croupiers tapping and the bartender
+pouring (`src/3d/gestures.js`). Walk, sit and lie stay procedural.
 
 Order: 0 (Steve picks a look) → 1, 3, 9 (characters) → 4, 5, 6 (tables and rooms) → 7, 8, 10. Every image is checked
 up close for extra or missing limbs and fingers before Steve sees it. Every job id and file goes in provenance.json.

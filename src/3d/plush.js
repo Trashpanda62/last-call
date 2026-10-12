@@ -16,7 +16,7 @@ export const plushReady = () => ready;
 export function onPlushReady(f) { if (ready) f(); else waiters.push(f); }
 
 export function loadPlush(base = 'assets/chars/') {
-  if (/[?&]toy/.test(location.search)) return Promise.resolve(); // ?toy keeps the toy beans (comparisons)
+  if (/[?&]toy\b/.test(location.search)) return Promise.resolve(); // ?toy keeps the toy beans (comparisons)
   const loader = new GLTFLoader();
   return Promise.all(KINDS.map(k => loader.loadAsync(base + k + '.glb').then(g => { SRC[k] = prep(g.scene); })))
     .then(() => { ready = true; waiters.splice(0).forEach(f => f()); })
@@ -76,6 +76,59 @@ const flatGeo = new THREE.PlaneGeometry(0.9, 0.9), bubbleGeo = new THREE.SphereG
 const SICK = new THREE.Color(0x9ad870);
 const qa = new THREE.Quaternion(), qb = new THREE.Quaternion(), eu = new THREE.Euler();
 
+// ---------- Gestures: Sorceress hy-motion clips (SMPL joint positions), retargeted by matching bone directions ----------
+const CLIPS = {}, BAKED = {};
+export function loadClips(names, base = 'assets/anim/') {
+  return Promise.all(names.map(n => fetch(base + n + '.json').then(r => r.json()).then(c => { CLIPS[n] = { fps: c.fps, n: c.n, j: Float32Array.from(c.j) }; }).catch(() => {})));
+}
+export const hasClip = n => !!CLIPS[n];
+export const PLAYED = {}; // gestures started, by name (debug info)
+// SMPL joints: 0 pelvis, 1/2 hips (left/right), 3/6/9 spine, 4/5 knees, 7/8 ankles, 10/11 toes, 12 neck, 15 head,
+// 16/17 shoulders, 18/19 elbows, 20/21 wrists. Left is +X and the front +Z, as on our rig. A bean bends less than a person.
+const AIM = [['Spine', 0, 9, 0.45], ['Spine1', 9, 12, 0.45], ['Head', 12, 15, 0.3],
+  ['LeftArm', 16, 18, 1], ['LeftForeArm', 18, 20, 1], ['RightArm', 17, 19, 1], ['RightForeArm', 19, 21, 1],
+  ['LeftUpLeg', 1, 4, 1], ['LeftLeg', 4, 7, 1], ['LeftFoot', 7, 10, 0.6], ['RightUpLeg', 2, 5, 1], ['RightLeg', 5, 8, 1], ['RightFoot', 8, 11, 0.6]];
+const CHILD = { Spine: 'Spine1', Spine1: 'Head', LeftArm: 'LeftForeArm', LeftForeArm: 'LeftHand', RightArm: 'RightForeArm', RightForeArm: 'RightHand',
+  LeftUpLeg: 'LeftLeg', LeftLeg: 'LeftFoot', RightUpLeg: 'RightLeg', RightLeg: 'RightFoot' };
+const UPPER = new Set(['Spine', 'Spine1', 'Head', 'LeftArm', 'LeftForeArm', 'LeftHand', 'RightArm', 'RightForeArm', 'RightHand']);
+function bake(kind, name) {
+  const key = kind + ':' + name; if (BAKED[key]) return BAKED[key];
+  const C = CLIPS[name], S = SRC[kind]; if (!C || !S) return null;
+  const tpl = skClone(S.scene); tpl.updateMatrixWorld(true);
+  const bones = {}; tpl.traverse(o => { if (o.isBone) bones[o.name] = o; });
+  const rest = {}; for (const n of BONES) rest[n] = bones[n].quaternion.clone();
+  const hipsW = bones.Hips.getWorldQuaternion(new THREE.Quaternion());
+  const V = () => new THREE.Vector3(), J = (f, k, v) => v.fromArray(C.j, (f * 22 + k) * 3);
+  const a = V(), b = V(), c = V(), x = V(), y = V(), z = V(), cur = V(), want = V(), hp = V(), cp = V();
+  const q = new THREE.Quaternion(), wq = new THREE.Quaternion(), pq = new THREE.Quaternion(), m = new THREE.Matrix4(), I = new THREE.Quaternion();
+  const y0 = J(0, 0, V()).y, leg = Math.max(0.3, y0 - J(0, 7, V()).y);
+  const out = { fps: C.fps, n: C.n, q: new Float32Array(C.n * BONES.length * 4), y: new Float32Array(C.n) };
+  for (let f = 0; f < C.n; f++) {
+    for (const n of BONES) bones[n].quaternion.copy(rest[n]);
+    // the hips follow the pelvis (across the hips, up the spine), at 60%
+    x.subVectors(J(f, 1, a), J(f, 2, b)).normalize(); c.subVectors(J(f, 3, a), J(f, 0, b));
+    z.crossVectors(x, c).normalize(); y.crossVectors(z, x);
+    q.setFromRotationMatrix(m.makeBasis(x, y, z)).slerp(I, 0.4);
+    bones.Hips.parent.getWorldQuaternion(pq);
+    bones.Hips.quaternion.copy(pq.invert().multiply(q).multiply(hipsW));
+    tpl.updateMatrixWorld(true);
+    for (const [n, j0, j1, k] of AIM) {
+      const bo = bones[n], ch = bones[CHILD[n]];
+      bo.getWorldPosition(hp);
+      if (ch) cur.subVectors(ch.getWorldPosition(cp), hp).normalize(); else cur.set(0, 1, 0).applyQuaternion(bo.getWorldQuaternion(wq));
+      want.subVectors(J(f, j1, a), J(f, j0, b)).normalize().lerp(cur, 1 - k).normalize();
+      q.setFromUnitVectors(cur, want);
+      bo.getWorldQuaternion(wq).premultiply(q);
+      bo.parent.getWorldQuaternion(pq);
+      bo.quaternion.copy(pq.invert().multiply(wq));
+      bo.updateMatrixWorld(true);
+    }
+    BONES.forEach((n, i) => bones[n].quaternion.toArray(out.q, (f * BONES.length + i) * 4));
+    out.y[f] = (J(f, 0, a).y - y0) * S.info.legTop / leg; // bounces scaled to the bean's short legs
+  }
+  return (BAKED[key] = out);
+}
+
 export class PlushBean {
   constructor({ kind = 'bean', color = null, hat = null, name = null }) {
     const S = SRC[kind];
@@ -122,6 +175,9 @@ export class PlushBean {
     this.label = T.textSprite(text, { color, size: 40, h: 0.055, screen: true }); this.label.position.y = this.labelY; this.root.add(this.label);
   }
   setDead(on) { this.dead = on; if (this.label) this.label.visible = !on; }
+  // play a gesture over the procedural pose; upper: arms, spine and head only (seated, or holding still)
+  play(name, upper = false) { if (!CLIPS[name] || this.dead) return false; this.g = { name, t: 0, upper }; PLAYED[name] = (PLAYED[name] || 0) + 1; return true; }
+  get busy() { return !!this.g; }
   // a rotation given in the character's axes (x pitch forward/back, y turn, z roll), applied about the bone's joint
   rot(name, x = 0, y = 0, z = 0) {
     const B = this.b[name]; if (!B) return;
@@ -173,6 +229,7 @@ export class PlushBean {
       this.rot(`${side}Foot`, -sb * 0.1, 0, 0);
     }
     const sp = this.b.Spine1; if (sp) sp.o.scale.copy(sp.restScale).multiplyScalar(1 + breathe * 0.006);
+    if (this.g) this.gesture(dt, s.moving);
     if (this.hat && this.hat.userData.spin) this.hat.userData.spin.rotation.y += dt * (4 + w * 20);
     // poisoned: going green, bubbles over the head
     const u = this.mat.userData.u;
@@ -189,6 +246,20 @@ export class PlushBean {
     if (this.label) this.label.position.y = this.labelY + sb * this.seatLift;
   }
 }
+
+PlushBean.prototype.gesture = function (dt, moving) {
+  const g = this.g, B = bake(this.kind, g.name);
+  if (!B || (moving && !g.upper)) { this.g = null; return; }
+  g.t += dt;
+  const dur = (B.n - 1) / B.fps; if (g.t >= dur) { this.g = null; return; }
+  const w = Math.min(1, g.t / 0.2, (dur - g.t) / 0.3), fi = g.t * B.fps, f0 = Math.floor(fi), f1 = Math.min(B.n - 1, f0 + 1), u = fi - f0;
+  BONES.forEach((n, i) => {
+    if (g.upper && !UPPER.has(n)) return;
+    qa.fromArray(B.q, (f0 * BONES.length + i) * 4); qb.fromArray(B.q, (f1 * BONES.length + i) * 4);
+    this.b[n].o.quaternion.slerp(qa.slerp(qb, u), w);
+  });
+  if (!g.upper) this.model.position.y += (B.y[f0] * (1 - u) + B.y[f1] * u) * w;
+};
 
 // A plush bean once the models are in, the toy bean before.
 export function makeBean(opts) {

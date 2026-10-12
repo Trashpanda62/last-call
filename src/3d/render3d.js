@@ -7,7 +7,8 @@ import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { buildWorld, GLOWS, M, yawOf } from './world.js';
-import { makeBean, loadPlush, onPlushReady, plushReady } from './plush.js';
+import { makeBean, loadPlush, onPlushReady, plushReady, loadClips, PLAYED } from './plush.js';
+import { GESTURES, Gestures } from './gestures.js';
 import { Items } from './items.js';
 import { Hands } from './hands.js';
 import { Hazards } from './hazards.js';
@@ -68,7 +69,7 @@ export function init(canvas, { lowPower = false } = {}) {
     dealers.forEach((d, i) => { scene.remove(d.root); dealers[i] = makeBean({ dealer: true }); scene.add(dealers[i].root); });
     R.bartender = makeBean({ kind: 'bartender' }); scene.add(R.bartender.root);
   });
-  loadPlush();
+  loadPlush(); onPlushReady(() => loadClips(GESTURES));
 
   const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: lowPower ? 0 : 4 });
   const composer = new EffectComposer(renderer, rt);
@@ -196,6 +197,7 @@ export function draw(frame) {
     }
   }
   for (const [id, b] of R.beans) if (!seen.has(id)) { R.scene.remove(b.root); R.beans.delete(id); }
+  if (plushReady()) (R.gestures || (R.gestures = new Gestures())).tick(pub, priv, R.beans, { dealers: R.dealers, bartender: R.bartender }, t, dt);
 
   // camera
   const cam = R.camera;
@@ -268,8 +270,9 @@ export function partsOnScreen() {
 export function screenPointOf(x, y) { const rig = R && R.world.machines.rig, p = rig && rig.screenPoint(x, y); if (!p) return null; const v = p.clone().project(R.camera); return { x: (v.x + 1) / 2 * innerWidth, y: (1 - v.y) / 2 * innerHeight, p: p.toArray() }; }
 export function setHover(h) { const rig = R && R.world.machines.rig; if (rig) rig.setHover(h); }
 export const camPos = () => R && R.camera.position.toArray();
+export function gesture(id, name, upper) { const b = R && R.beans.get(id); return !!(b && b.play && b.play(name, upper)); }
 export function info() {
   if (!R) return null;
   const i = R.renderer.info;
-  return { calls: i.render.calls, tris: i.render.triangles, geos: i.memory.geometries, tex: i.memory.textures, cam: [R.camera.position.x, R.camera.position.y, R.camera.position.z, R.camera.rotation.x, R.camera.rotation.y].map(v => +v.toFixed(2)) };
+  return { calls: i.render.calls, tris: i.render.triangles, geos: i.memory.geometries, tex: i.memory.textures, cam: [R.camera.position.x, R.camera.position.y, R.camera.position.z, R.camera.rotation.x, R.camera.rotation.y].map(v => +v.toFixed(2)), gestures: { ...PLAYED } };
 }
