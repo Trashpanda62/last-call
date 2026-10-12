@@ -3,76 +3,142 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b0709">
+<meta name="description" content="Six gamblers, one killer. Watch your drink.">
 <title>Last Call</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6 4h20l-8 12v9h5v3H9v-3h5v-9z' fill='%23e8c46a'/%3E%3Ccircle cx='16' cy='9' r='2.5' fill='%237dff5a'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <canvas id="view"></canvas>
 
+<!-- In-game HUD -->
 <div id="hud" class="hidden">
   <div id="bank">
     <div class="label">Crew bankroll</div>
     <div id="bankText">$3,000 / $9,000</div>
     <div class="bar"><div id="bankFill"></div></div>
   </div>
-  <div id="role"></div>
+  <div id="topRight">
+    <div id="role"></div>
+    <button id="menuBtn" aria-label="Menu">II</button>
+  </div>
   <div id="bottom">
-    <div id="thirst"><span>Thirst</span><div class="bar"><div id="thirstFill"></div></div></div>
+    <div id="thirst"><span>Thirst</span><div class="bar"><div id="thirstFill"></div></div><span id="lucky"></span></div>
     <div id="drinkInfo"></div>
     <div id="hint"></div>
     <div id="killerBar" class="hidden">
-      <button id="kPoison" data-k="1">1 · Poison drink</button>
-      <button id="kShiv" data-k="2">2 · Shiv</button>
-      <button id="kLights" data-k="3">3 · Lights out</button>
+      <button data-act="poison">1 · Poison</button>
+      <button data-act="shiv">2 · Shiv</button>
+      <button data-act="lights">3 · Lights</button>
     </div>
   </div>
   <div id="toasts"></div>
   <div id="stick"><div id="knob"></div></div>
   <div id="touchBtns">
-    <button data-key="e">Use</button>
-    <button data-key="f">Sip</button>
-    <button data-key="r">Sniff</button>
-    <button data-key="x">Pour</button>
-    <button data-key="back">Look back</button>
+    <button data-act="use" id="useBtn">Use</button>
+    <button data-act="sip">Sip</button>
+    <button data-act="sniff">Sniff</button>
+    <button data-act="pour">Pour</button>
+    <button data-act="back">Look back</button>
   </div>
 </div>
 
 <div id="panel" class="hidden"></div>
+<div id="splash" class="hidden"><div id="splashText"></div></div>
 
-<div id="title" class="overlay">
+<!-- Main menu -->
+<div id="menu" class="overlay">
   <div class="card">
     <h1>Last Call</h1>
     <p class="tag">Six gamblers. One of them is a killer. Watch your drink.</p>
-    <ul class="how">
-      <li><b>Gamblers</b> win the crew $9,000 at the tables, or vote the killer out.</li>
-      <li><b>The killer</b> poisons drinks and stabs loners, but only when nobody is looking.</li>
-      <li>You only see what's in front of you. Turn your back and your drink is fair game.</li>
-    </ul>
-    <div class="keys">
-      <span><kbd>WASD</kbd> move</span><span><kbd>Mouse</kbd> look</span><span><kbd>E</kbd> use / sit / report</span>
-      <span><kbd>F</kbd> sip</span><span><kbd>R</kbd> sniff a drink</span><span><kbd>X</kbd> pour out</span>
-      <span><kbd>Space</kbd> look behind you (seated)</span>
+    <label class="field">Your name <input id="nameIn" maxlength="12" autocomplete="off" spellcheck="false"></label>
+    <div class="col">
+      <button class="big" id="soloBtn">Play solo with bots</button>
+      <button class="big alt" id="hostBtn">Host an online room</button>
+      <div class="joinRow"><input id="codeIn" maxlength="4" placeholder="CODE" autocomplete="off" spellcheck="false"><button id="joinBtn">Join room</button></div>
     </div>
-    <p class="phone">On a phone: drag your left thumb to walk, tap the floor to look that way, and use the buttons on the right. Turn your phone sideways.</p>
+    <div class="row small-row">
+      <button id="howBtn">How to play</button>
+      <button id="musicBtn"></button>
+      <button id="sfxBtn"></button>
+    </div>
+    <p id="statsLine" class="muted"></p>
+    <p id="menuErr" class="err"></p>
+  </div>
+</div>
+
+<!-- Game setup (solo) and lobby (online) share the options block -->
+<div id="setup" class="overlay hidden">
+  <div class="card">
+    <h2 id="setupTitle">Solo game</h2>
+    <div id="roomBox" class="hidden">
+      <div class="muted">Room code</div>
+      <div id="roomCode">----</div>
+      <div class="row"><button id="shareBtn">Share invite link</button></div>
+      <div id="lobbyList"></div>
+    </div>
+    <div id="opts">
+      <label class="field">Players <select id="optPlayers"><option>4</option><option>5</option><option selected>6</option><option>7</option><option>8</option></select></label>
+      <label class="field">Killers <select id="optKillers"><option value="1" selected>1</option><option value="2">2 (7+ players)</option></select></label>
+      <label class="field">Bot smarts <select id="optDiff"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="sharp">Sharp</option></select></label>
+      <label class="field" id="roleField">Your role <select id="optRole"><option value="random" selected>Random</option><option value="gambler">Gambler</option><option value="killer">Killer</option></select></label>
+      <p class="muted small">Empty seats are filled by bots.</p>
+    </div>
+    <p id="guestWait" class="muted hidden">Waiting for the host to start...</p>
     <div class="row">
-      <button class="big" data-role="random">Deal me in</button>
-      <button data-role="gambler">Play gambler</button>
-      <button data-role="killer">Play killer</button>
+      <button class="big" id="startBtn">Deal me in</button>
+      <button id="setupBack">Back</button>
     </div>
+    <p id="setupErr" class="err"></p>
+  </div>
+</div>
+
+<div id="how" class="overlay hidden">
+  <div class="card wide">
+    <h2>How to play</h2>
+    <div class="cards">
+      <div class="hcard"><b>The setup</b><p>Six gamblers walk into a casino. One is a killer (two in big games). Nobody knows who.</p></div>
+      <div class="hcard"><b>Gamblers</b><p>Win the crew bankroll at blackjack, roulette, the races and the slots. Hit the target and the house is broken. Or vote the killer out.</p></div>
+      <div class="hcard"><b>The killer</b><p>Poison an unattended drink, lace the snack bowl, stab someone alone, or kill the lights. Do it when nobody is looking.</p></div>
+      <div class="hcard"><b>Watch your drink</b><p>You only see inside your cone. Sit at a table and your drink sits behind you. Look back now and then. Sniff before you sip.</p></div>
+      <div class="hcard"><b>Thirst and snacks</b><p>Get thirsty and you slow down, so you have to drink. Pretzels make your wins pay more for a while, if they're clean.</p></div>
+      <div class="hcard"><b>Meetings</b><p>Find a body or ring the pit bell. Everyone says what they saw (the killer lies), then votes. Your notes remember who lurked by whose drink.</p></div>
+    </div>
+    <p class="muted"><b>Keys:</b> WASD move, mouse look, E use, F sip, R sniff, X pour, Space look back, 1/2/3 killer moves, Esc menu.
+      <b>Phone:</b> left thumb walks, tap the floor to look, buttons on the right.</p>
+    <button class="big" id="howClose">Got it</button>
   </div>
 </div>
 
 <div id="meeting" class="overlay hidden">
   <div class="card wide">
     <h2 id="mTitle">Emergency meeting</h2>
-    <div id="mReason"></div>
+    <div id="mReason" class="muted"></div>
     <div class="mcols">
-      <div id="mChat"></div>
+      <div class="mleft">
+        <div id="mChat"></div>
+        <form id="chatForm" class="hidden"><input id="chatIn" maxlength="140" placeholder="Say something..." autocomplete="off"><button>Send</button></form>
+      </div>
       <div id="mSide">
         <div id="mNotes"></div>
         <div id="mVotes"></div>
         <div id="mTimer"></div>
+        <div id="ejectStrip" class="hidden"><span id="ejectDot"></span></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div id="pause" class="overlay hidden">
+  <div class="card">
+    <h2>Paused</h2>
+    <div class="col">
+      <button class="big" id="resumeBtn">Resume</button>
+      <button id="pMusic"></button>
+      <button id="pSfx"></button>
+      <button id="pHow">How to play</button>
+      <button id="quitBtn">Leave game</button>
     </div>
   </div>
 </div>
@@ -81,10 +147,16 @@
   <div class="card">
     <h1 id="oTitle"></h1>
     <p id="oText"></p>
-    <button class="big" id="again">Another round</button>
+    <p id="oStats" class="muted"></p>
+    <div class="row">
+      <button class="big" id="againBtn">Play again</button>
+      <button id="overMenuBtn">Main menu</button>
+    </div>
+    <p id="overWait" class="muted hidden">Waiting for the host...</p>
   </div>
 </div>
 
-<script src="game.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js" defer></script>
+<script type="module" src="src/main.js"></script>
 </body>
 </html>
