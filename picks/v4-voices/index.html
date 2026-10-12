@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Last Call voices</title>
+<style>
+  :root { --bg: #140d11; --ink: #f3ead8; --muted: #b9ab90; --gold: #e8c46a; --card: #22161c; --line: #3a2830; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.45 Georgia, serif; padding: 16px; }
+  main { max-width: 900px; margin: 0 auto; padding-bottom: 90px; }
+  h1 { color: var(--gold); margin: 0 0 4px; font-size: 30px; }
+  h2 { color: var(--gold); margin: 26px 0 8px; font-size: 19px; }
+  p { margin: 6px 0; color: var(--muted); }
+  .role { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin: 10px 0; }
+  .role b { color: var(--ink); font-size: 17px; }
+  .role .brief { font-size: 13px; }
+  .role .line { font-style: italic; font-size: 14px; color: #d8cbb0; margin: 6px 0 8px; }
+  .takes { display: flex; gap: 8px; flex-wrap: wrap; }
+  .take { display: flex; border: 2px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .take.on { border-color: var(--gold); }
+  .take button { font: bold 15px system-ui, sans-serif; border: 0; padding: 11px 14px; background: #3a2530; color: var(--ink); }
+  .take button.play { min-width: 64px; }
+  .take button.play.playing { background: #6a3a20; }
+  .take button.pick { background: #2a1c22; color: var(--muted); }
+  .take.on button.pick { background: var(--gold); color: #1a1014; }
+  .none { font: 14px system-ui, sans-serif; color: var(--muted); align-self: center; margin-left: 4px; }
+  .none input { vertical-align: -2px; }
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(20, 13, 17, 0.96); border-top: 1px solid var(--line); padding: 10px 16px; display: flex; gap: 10px; align-items: center; }
+  .bar button { font: bold 16px system-ui, sans-serif; background: var(--gold); color: #1a1014; border: 0; border-radius: 10px; padding: 12px 18px; }
+  #count { color: var(--muted); font-size: 14px; }
+  textarea { width: 100%; min-height: 70px; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Last Call: pick the voices</h1>
+  <p>Three takes per character, made with ElevenLabs Voice Design. Tap ▶ to hear one (one plays at a time), tap Pick for the one you like. "None" asks for new takes. Then Copy my picks.</p>
+  <h2>The gamblers</h2>
+  <div id="gamblers"></div>
+  <h2>The staff</h2>
+  <div id="staff"></div>
+  <h2>Notes (optional)</h2>
+  <textarea id="notes" placeholder="Anything to change: older, rougher, less accent..."></textarea>
+</main>
+<div class="bar"><button id="copy">Copy my picks</button><span id="count"></span></div>
+<script>
+  const STAFF = new Set(['croupier', 'dealer', 'announcer', 'pa', 'bartender']);
+  const picks = {}; let roles = [], audio = null, playingBtn = null;
+  function stop() { if (audio) { audio.pause(); audio = null; } if (playingBtn) { playingBtn.classList.remove('playing'); playingBtn.textContent = '▶ ' + playingBtn.dataset.k; playingBtn = null; } }
+  function play(btn, src) {
+    const same = playingBtn === btn; stop(); if (same) return;
+    audio = new Audio(src); playingBtn = btn; btn.classList.add('playing'); btn.textContent = '■ ' + btn.dataset.k;
+    audio.onended = stop; audio.play().catch(stop);
+  }
+  function text() {
+    const parts = roles.map(r => `${r.role} ${picks[r.role] ? picks[r.role].toUpperCase() : '-'}`);
+    const n = document.getElementById('notes').value.trim();
+    return 'Last Call voices: ' + parts.join(', ') + (n ? '. Notes: ' + n : '');
+  }
+  function count() { document.getElementById('count').textContent = `${Object.keys(picks).length} of ${roles.length} picked`; }
+  fetch('ids.json').then(r => r.json()).then(ids => {
+    roles = Object.entries(ids).map(([role, v]) => ({ role, ...v }));
+    for (const r of roles) {
+      const d = document.createElement('div'); d.className = 'role';
+      d.innerHTML = `<b>${r.who}</b><div class="brief">${r.brief}</div><div class="line">“${r.line}”</div><div class="takes"></div>`;
+      const box = d.querySelector('.takes');
+      for (const t of r.takes) {
+        const k = t.take.toUpperCase();
+        const w = document.createElement('div'); w.className = 'take';
+        w.innerHTML = `<button class="play" data-k="${k}">▶ ${k}</button><button class="pick">Pick</button>`;
+        w.querySelector('.play').onclick = e => play(e.currentTarget, t.file);
+        w.querySelector('.pick').onclick = () => { box.querySelectorAll('.take').forEach(x => x.classList.remove('on')); w.classList.add('on'); picks[r.role] = t.take; nb.checked = false; count(); };
+        box.appendChild(w);
+      }
+      const lab = document.createElement('label'); lab.className = 'none'; lab.innerHTML = '<input type="checkbox"> None';
+      const nb = lab.querySelector('input');
+      nb.onchange = () => { box.querySelectorAll('.take').forEach(x => x.classList.remove('on')); if (nb.checked) picks[r.role] = 'none'; else delete picks[r.role]; count(); };
+      box.appendChild(lab);
+      document.getElementById(STAFF.has(r.role) ? 'staff' : 'gamblers').appendChild(d);
+    }
+    count();
+  });
+  document.getElementById('copy').onclick = async () => {
+    try { await navigator.clipboard.writeText(text()); document.getElementById('copy').textContent = 'Copied'; setTimeout(() => { document.getElementById('copy').textContent = 'Copy my picks'; }, 1500); }
+    catch (e) { prompt('Copy this:', text()); }
+  };
+</script>
+</body>
+</html>
