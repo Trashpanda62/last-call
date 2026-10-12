@@ -581,7 +581,7 @@ function decor(ctx) {
 }
 // the generated paintings by frame (paint-09 to 11 are in reserve), and the posters
 const PAINTINGS = ['paint-00', 'paint-07', 'paint-03', 'paint-05', 'paint-01', 'paint-04', 'paint-02', 'paint-08', 'paint-06', 'paint-11', 'paint-10'];
-const POSTERS = [[2250, 1180, Math.PI, 'derby', true], [2980, 1760, -Math.PI / 2, 'lounge', true], [1020, 1350, Math.PI / 2, 'missing', false],
+const POSTERS = [[2190, 1180, Math.PI, 'derby', true], [2980, 1760, -Math.PI / 2, 'lounge', true], [1020, 1350, Math.PI / 2, 'missing', false],
   [2020, 560, Math.PI / 2, 'rocket', true], [620, 250, -Math.PI / 2, 'cocktails', true], [500, 720, 0, 'wash', false],
   [300, 1200, 0, 'jackpot', true], [1100, 1180, Math.PI, 'roulette', true]];
 
