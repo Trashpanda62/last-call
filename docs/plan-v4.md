@@ -37,7 +37,7 @@ Our version:
 
 ## 2. Kills (replacing "the drink on the rail behind you")
 
-**Decided (Steve, 2026-10-12):** kills: rigged games, close kills from behind, staged accidents, poisoned orders (all four).
+**Built 2026-10-12 (commit 2c27b70, tuned in 476250c).** **Decided (Steve, 2026-10-12):** kills: rigged games, close kills from behind, staged accidents, poisoned orders (all four).
 Deceit: disguise only. Crew tools: buy security with crew-bank money, inspect machines, an antidote at the bar, a
 security-camera office, ghost haunting. Not picked: secret passages, hiding bodies, planting evidence, body clues,
 sheriff, lie detector, staff tip-offs. The drink on the rail behind your seat goes away; drinks are held in hand.
@@ -53,6 +53,8 @@ The candidates as asked:
 - Crew counterplay: a security office with live camera feeds, body clues (time of death, weapon), a sheriff role.
 
 ## 3. Bots that argue like people
+
+**Built 2026-10-12 (476250c, `src/talk.js`).** Portraits and voices follow the art and voice picks.
 
 - 16 personalities (hothead, nervous wreck, smug know-it-all, sweetheart, conspiracy nut, wannabe lawyer, comedian,
   drunk, gossip, high roller, grandma, rookie, ...), each with their own wording, temper and voice.

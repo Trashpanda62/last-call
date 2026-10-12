@@ -1,7 +1,11 @@
 # Last Call
 
 A first-person 3D casino social-deduction game for the browser (PC first, phones work too). Four to sixteen gamblers, one to four of them killers, twelve casino games and one crew bank.
-The killers poison drinks, lace the snack bowls, stab loners and cut the lights, but only when nobody is looking.
+The killers send poisoned drinks "on the house", rig empty machines and snack bowls, knife people from behind, shove
+them into the duck pond or drop chandeliers on them, then wear their victim's face for a while. The crew sniffs drinks,
+checks machines before sitting, runs to the antidote at the bar, buys cameras or a guard with crew money, and haunts
+people from beyond the grave. In meetings the bots argue like people: sixteen personalities, moods, alibis (the killers'
+are made up), questions, contradictions and votes that swing with the room. Type in the chat and they answer.
 Gamblers win by breaking the bank or by voting the killers out. Killers win when they match the gamblers left.
 
 Play: https://trashpanda62.github.io/last-call/
@@ -13,7 +17,7 @@ WebAudio sound. three.js r185 is vendored in `vendor/three`.
 
 ## Modes
 
-- **Solo:** you plus bots. Pick players (4-16), killers (up to 2 at 7+, 3 at 12+, 4 at 14+; the most is the balanced
+- **Solo:** you plus bots. Pick players (4-16), killers (up to 2 at 7+, 3 at 11+, 4 at 14+; the most is the balanced
   game), bot smarts and your role.
 - **Online:** host a room and share the 4-letter code or the invite link (`?join=CODE`). Empty seats are bots.
   The host's browser runs the game and the guests connect over WebRTC through PeerJS's free broker.
@@ -30,7 +34,8 @@ lose. Every game pays back a little more than it takes (about 104%), and the bot
 ## Controls
 
 PC: click to grab the mouse, mouse to look, WASD to walk, E or click to use (order, sit, stand, report, bell, snack),
-F sip, R sniff, X pour out, hold Space to look behind you, 1/2/3 killer moves, Esc menu. At a table the mouse is freed
+F sip, R check (your drink, a machine, a snack bowl), X pour out, G send someone a drink (at the bar), hold Space to
+look behind you, 1-6 killer moves (poisoned order, rig, knife, accident, disguise, lights), H haunt (as a ghost), Esc menu. At a table the mouse is freed
 for the game panel: drag to look around, press a move key or E to stand.
 Phone: left thumb walks, right thumb drags to look, buttons on the right.
 
@@ -42,10 +47,12 @@ Phone: left thumb walks, right thumb drags to look, buttons on the right.
   textures, `render3d.js` camera, lights, bloom and lights-out.
 - `src/games.js` every game's maths (shared by players and bots), `src/paint.js` the 2D game screens (shared by the
   consoles and the 3D machines), `src/panels.js` the game consoles, `src/3d/machines.js` the machines and tables.
-- `src/ui.js` HUD, meetings, results, `src/audio.js` sounds and music.
+- `src/ui.js` HUD, meetings, results, `src/moves.js` the killer bar, name picker, security desk and haunts,
+  `src/talk.js` the meeting conversation (personalities, moods, alibis, votes), `src/audio.js` sounds and music.
+- `src/3d/hazards.js` the security desk and camera view, the guard, haunts and the kill effects.
 - `src/net.js` rooms, `src/main.js` screens, modes, input and the loop.
 - `node tools/batch.mjs [games] [players] [killers] [difficulty]` plays headless games (one idle human seat) and
-  prints win rates. `CFG='{"poisonCd":50}' node tools/batch.mjs` tries a tuning change. `node tools/ev.mjs` measures
+  prints win rates. `node tools/batch.mjs 40 8 2 normal --cfg='{"bladeCd":50}'` tries a tuning change. `node tools/ev.mjs` measures
   each game's return to player. Run both through the heavy-job scheduler on Steve's PC.
 - `window.__lastCall` (start, step, place, look, act, vote, render, shot, state, view, noLock) drives a solo game from
   headless automation. Call `noLock()` first: automation must never take pointer lock. Test headless only.
