@@ -68,6 +68,7 @@ export function sfx(kind) {
   let t = ac.currentTime;
   if (kind === 'step') { noise(sfxBus, t, 0.06, 0.035, 180); return; }
   if (kind === 'crunch') { noise(sfxBus, t, 0.12, 0.25, 1500); noise(sfxBus, t + 0.1, 0.1, 0.2, 1800); return; }
+  if (kind === 'chip') { noise(sfxBus, t, 0.035, 0.14, 3500); tone(sfxBus, 2700, t, 0.06, 'sine', 0.05); tone(sfxBus, 3500, t + 0.035, 0.05, 'sine', 0.035); return; } // chips clink
   if (kind === 'stab' || kind === 'die') noise(sfxBus, t, 0.15, 0.2, 800);
   for (const [f, d] of SFX[kind] || []) {
     tone(sfxBus, f, t, d, kind === 'die' || kind === 'lights' || kind === 'boo' ? 'sawtooth' : 'triangle', 0.09);

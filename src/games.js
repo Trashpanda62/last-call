@@ -1,4 +1,4 @@
-// Every table game's math, shared by the panels (players) and the sim (bots), so both get exactly the same odds.
+// Every table game's math, shared by the tables (players) and the sim (bots), so both get exactly the same odds.
 // No DOM. Each game is player-friendly on purpose (return to player 102-110%); the house rules say so on the table.
 // A result's `mult` is what comes back per $1 bet (0 = lost it all, 2 = doubled), so the bank change is bet * (mult - 1).
 
@@ -129,13 +129,28 @@ export function rlLucky(r = rnd) {
   while (out.length < k) { const n = Math.floor(r() * 37); if (!out.some(o => o.n === n)) out.push({ n, x: pickW([50, 100, 200, 500], [50, 30, 15, 5], r) }); }
   return out;
 }
-// bet: 'red' ... or a number 0-36 (a straight-up bet).
+// Column bets (2 to 1) on the hands-on layout; same pay and zero rule as the dozens. Bots keep to RL_BETS.
+export const RL_COLS = {
+  c1: { label: '1st column', pays: 3, win: n => n > 0 && n % 3 === 1 }, c2: { label: '2nd column', pays: 3, win: n => n > 0 && n % 3 === 2 },
+  c3: { label: '3rd column', pays: 3, win: n => n > 0 && n % 3 === 0 },
+};
+export const rlBall = (r = rnd) => Math.floor(r() * 37);
+// What one bet returns per $1 when the ball lands on n. bet: 'red' ... 'c1' ... or a number 0-36 (a straight-up bet).
+export function rlMult(bet, n, lucky) {
+  const L = lucky.find(o => o.n === n);
+  if (typeof bet === 'number') return bet === n ? (L ? L.x : 36) : 0;
+  const b = RL_BETS[bet] || RL_COLS[bet]; if (!b) return 0;
+  return b.win(n) ? b.pays * (L ? 2 : 1) : n === 0 ? 1 : 0;
+}
 export function rlSpin(bet, lucky, r = rnd) {
-  const n = Math.floor(r() * 37), L = lucky.find(o => o.n === n);
-  let mult = 0;
-  if (typeof bet === 'number') mult = bet === n ? (L ? L.x : 36) : 0;
-  else { const b = RL_BETS[bet]; mult = b.win(n) ? b.pays * (L ? 2 : 1) : n === 0 ? 1 : 0; }
-  return { n, mult, lucky: !!L };
+  const n = rlBall(r), mult = rlMult(bet, n, lucky);
+  return { n, mult, lucky: !!lucky.find(o => o.n === n) };
+}
+// Several bets on one spin: bets { red: 100, 17: 50, d2: 10 } (number keys are straight-ups). Returns the total back.
+export function rlSettle(bets, n, lucky) {
+  let back = 0;
+  for (const k in bets) back += bets[k] * rlMult(/^\d+$/.test(k) ? +k : k, n, lucky);
+  return back;
 }
 
 // ---------- Slots ----------
@@ -265,10 +280,10 @@ export function passRoll(s, r = rnd) {
   else s.line = `${t}. Roll again for ${s.point}.`;
   return s;
 }
+export const fieldMult = t => t === 2 || t === 12 ? 5 : [3, 4, 9, 10, 11].includes(t) ? 2 : 0;
 export function fieldRoll(r = rnd) {
   const d = roll2(r), t = d[0] + d[1];
-  const mult = t === 2 || t === 12 ? 5 : [3, 4, 9, 10, 11].includes(t) ? 2 : 0;
-  return { dice: d, total: t, mult };
+  return { dice: d, total: t, mult: fieldMult(t) };
 }
 export function passAuto(r = rnd) { const s = passNew(); for (let g = 0; !s.over && g < 200; g++) passRoll(s, r); return s.mult; }
 

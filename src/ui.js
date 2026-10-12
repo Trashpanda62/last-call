@@ -1,4 +1,4 @@
-// DOM side: HUD, table-game panels, meetings and the results screen. Reads views, sends actions through act().
+// DOM side: HUD, meetings and the results screen. Reads views, sends actions through act().
 import { money, esc, clamp } from './util.js';
 
 export const $ = id => document.getElementById(id);

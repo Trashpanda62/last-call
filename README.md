@@ -27,17 +27,21 @@ WebAudio sound. three.js r185 is vendored in `vendor/three`.
 
 Blackjack (double, split, ties pay half, blackjack pays 2 to 1), roulette with lucky numbers up to 500x, penny and
 high-limit slots, Plinko (up to 1000x), Mines, Dragon Tower, the coin flip, the prize wheel, street dice, and two
-rounds the whole casino shares: Crash (one rocket, cash out before it blows) and the duck race. Pick your bet with chips,
-the keypad, 1/2, x2 or MAX; the max bet is a quarter of the crew bank. Every bet also pays the crew a 20% comp, win or
+rounds the whole casino shares: Crash (one rocket, cash out before it blows) and the duck race. You play on the table
+itself: take a chip from the tray and press the spots on the felt (roulette takes several at once), or type a stake on
+the table's keypad; CLEAR, 1/2, x2 and MAX sit on the rail. The max bet is a quarter of the crew bank. Every bet also pays the crew a 20% comp, win or
 lose. Every game pays back a little more than it takes (about 104%), and the bots play the same odds as you.
 
 ## Controls
 
 PC: click to grab the mouse, mouse to look, WASD to walk, E or click to use (order, sit, stand, report, bell, snack),
 F sip, R check (your drink, a machine, a snack bowl), X pour out, G send someone a drink (at the bar), hold Space to
-look behind you, 1-6 killer moves (poisoned order, rig, knife, accident, disguise, lights), H haunt (as a ghost), Esc menu. At a table the mouse is freed
-for the game panel: drag to look around, press a move key or E to stand.
-Phone: left thumb walks, right thumb drags to look, buttons on the right.
+look behind you, 1-6 killer moves (poisoned order, rig, knife, accident, disguise, lights), H haunt (as a ghost), Esc menu.
+Seated at a table the mouse stays locked: the crosshair names the chip, spot, key or button under it, and click or E
+presses it (right-click takes a chip back off a roulette spot). E with nothing aimed, or a move key, stands you up. A
+small bar shows your chip, the total on the table and the last result. At the security desk the mouse is free for its card.
+Phone: left thumb walks, right thumb drags to look, buttons on the right. Seated, tap the table's parts directly (a tap
+between parts takes the nearest one); Stand and Look back stay on the right.
 
 ## Code
 
@@ -45,8 +49,10 @@ Phone: left thumb walks, right thumb drags to look, buttons on the right.
 - The sim is a 2D plane (1 px = 1/60 m); `src/3d/` draws it in 3D: `world.js` the casino, `chars.js` the bean
   gamblers, `items.js` drinks, bowls, bodies and effects, `hands.js` first-person hands, `textures.js` painted
   textures, `render3d.js` camera, lights, bloom and lights-out.
-- `src/games.js` every game's maths (shared by players and bots), `src/paint.js` the 2D game screens (shared by the
-  consoles and the 3D machines), `src/panels.js` the game consoles, `src/3d/machines.js` the machines and tables.
+- `src/games.js` every game's maths (shared by players and bots), `src/paint.js` the 2D game screens on the 3D
+  machines, `src/tables.js` your table's bets and game flow (no DOM; `press(part)` in, `tableView()` out),
+  `src/3d/machines.js` the machines and tables, `src/3d/rig.js` the parts you press (chip tray, keypad, buttons, felt
+  layouts, touch screens, chip stacks).
 - `src/ui.js` HUD, meetings, results, `src/moves.js` the killer bar, name picker, security desk and haunts,
   `src/talk.js` the meeting conversation (personalities, moods, alibis, votes), `src/audio.js` sounds and music.
 - `src/3d/hazards.js` the security desk and camera view, the guard, haunts and the kill effects.
@@ -54,7 +60,7 @@ Phone: left thumb walks, right thumb drags to look, buttons on the right.
 - `node tools/batch.mjs [games] [players] [killers] [difficulty]` plays headless games (one idle human seat) and
   prints win rates. `node tools/batch.mjs 40 8 2 normal --cfg='{"bladeCd":50}'` tries a tuning change. `node tools/ev.mjs` measures
   each game's return to player. Run both through the heavy-job scheduler on Steve's PC.
-- `window.__lastCall` (start, step, place, look, act, vote, render, shot, state, view, noLock) drives a solo game from
-  headless automation. Call `noLock()` first: automation must never take pointer lock. Test headless only.
+- `window.__lastCall` (start, step, place, look, act, vote, render, shot, state, view, noLock; seated: parts, press,
+  pressScreen, aimAt, aim, screenPoint, table, hud) drives a solo game from headless automation. Call `noLock()` first: automation must never take pointer lock. Test headless only.
 
 Run locally with any static server, for example `python -m http.server 8931 --bind 127.0.0.1`.

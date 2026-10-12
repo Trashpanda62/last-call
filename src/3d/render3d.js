@@ -105,8 +105,8 @@ function resize() {
   R.bloom.resolution.set(w / 2, h / 2);
   // keep roughly the same horizontal view on tall screens
   const aspect = w / h, fov = aspect < 1 ? Math.min(100, 2 * Math.atan(Math.tan(FOV * Math.PI / 360) * 1.6 / aspect) * 180 / Math.PI * 0.62) : FOV;
-  R.camera.aspect = aspect; R.camera.fov = fov; R.camera.updateProjectionMatrix();
-  R.hands.setAspect(aspect, fov);
+  R.camera.aspect = aspect; R.baseFov = fov; R.camera.fov = fov * (R.zoom || 1); R.camera.updateProjectionMatrix();
+  R.hands.setAspect(aspect, R.camera.fov);
 }
 
 function beanFor(c) {
@@ -142,6 +142,9 @@ export function draw(frame) {
   resize();
   const now = performance.now(); const dt = Math.min(0.1, (now - R.last) / 1000); R.last = now;
   const { pub, priv, me } = frame;
+  // seated on a phone in landscape the view narrows a little so the table's parts are big enough to tap
+  const zoom = frame.zoom || 1;
+  if (Math.abs((R.zoom || 1) - zoom) > 0.002) { R.zoom = (R.zoom || 1) + (zoom - (R.zoom || 1)) * Math.min(1, dt * 5); if (Math.abs(R.zoom - zoom) < 0.004) R.zoom = zoom; R.camera.fov = R.baseFov * R.zoom; R.camera.updateProjectionMatrix(); R.hands.setAspect(R.camera.aspect, R.camera.fov); }
   const t = pub ? pub.t : now / 1000;
   const orbit = frame.mode !== 'fp' || !pub;
   const meeting = pub && pub.mode === 'meeting';
@@ -225,7 +228,37 @@ export function draw(frame) {
   R.composer.render(dt);
 }
 
-export function playHand(kind) { if (R) R.hands.play(kind); }
+// at: the screen point (NDC) the hand reaches for, or null for the plain animation.
+export function playHand(kind, at) { if (R) R.hands.play(kind, at); }
+
+// ---------- Pressing the table in front of you ----------
+const ray = new THREE.Raycaster(), ndcV = new THREE.Vector2(), shown = o => { for (; o; o = o.parent) if (!o.visible) return false; return true; };
+// The part of your own table under a screen point (NDC): { part, uv, point } or null.
+export function pick(nx, ny) {
+  const rig = R && R.world.machines.rig; if (!rig || !rig.active) return null;
+  ndcV.set(nx, ny); ray.setFromCamera(ndcV, R.camera); ray.far = 5;
+  for (const h of ray.intersectObjects(rig.parts, false)) { if (!shown(h.object)) continue; const r = rig.resolve(h); if (r) return r; }
+  return null;
+}
+// Phones: the nearest part within maxPx of a screen point, when a tap lands between parts.
+export function pickNear(nx, ny, maxPx) {
+  const rig = R && R.world.machines.rig; if (!rig || !rig.active) return null;
+  const w = innerWidth / 2, h = innerHeight / 2, v = new THREE.Vector3(); let best = null, bd = maxPx;
+  for (const c of rig.centers()) {
+    v.copy(c.p).project(R.camera); if (v.z > 1) continue;
+    const d = Math.hypot((v.x - nx) * w, (v.y - ny) * h); if (d < bd) { bd = d; best = { part: c.part, uv: null, point: c.p }; }
+  }
+  return best;
+}
+// Every part you can press, with its screen position in CSS px (tests).
+export function partsOnScreen() {
+  const rig = R && R.world.machines.rig; if (!rig || !rig.active) return [];
+  const v = new THREE.Vector3();
+  return rig.centers().map(c => { v.copy(c.p).project(R.camera); return { part: c.part, x: (v.x + 1) / 2 * innerWidth, y: (1 - v.y) / 2 * innerHeight, on: v.z < 1 && Math.abs(v.x) < 1 && Math.abs(v.y) < 1, p: c.p.toArray() }; });
+}
+export function screenPointOf(x, y) { const rig = R && R.world.machines.rig, p = rig && rig.screenPoint(x, y); if (!p) return null; const v = p.clone().project(R.camera); return { x: (v.x + 1) / 2 * innerWidth, y: (1 - v.y) / 2 * innerHeight, p: p.toArray() }; }
+export function setHover(h) { const rig = R && R.world.machines.rig; if (rig) rig.setHover(h); }
+export const camPos = () => R && R.camera.position.toArray();
 export function info() {
   if (!R) return null;
   const i = R.renderer.info;
