@@ -6,13 +6,14 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { buildWorld, GLOWS, M, yawOf } from './world.js';
+import { buildWorld, loadRoomMats, GLOWS, M, yawOf } from './world.js';
 import { makeBean, loadPlush, onPlushReady, plushReady, loadClips, PLAYED } from './plush.js';
+import { loadProps, onPropsReady, propsLoaded } from './props.js';
 import { GESTURES, Gestures } from './gestures.js';
 import { Items } from './items.js';
 import { Hands } from './hands.js';
 import { Hazards } from './hazards.js';
-import { setAniso } from './textures.js';
+import { setAniso, loadFelts, loadArt } from './textures.js';
 import { BELL } from '../map.js';
 import { ringRadius } from '../sim.js';
 
@@ -38,6 +39,7 @@ export function init(canvas, { lowPower = false } = {}) {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.shadowMap.enabled = !lowPower; renderer.shadowMap.type = THREE.PCFShadowMap;
   setAniso(Math.min(8, renderer.capabilities.getMaxAnisotropy()));
+  loadFelts(); loadArt();
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x0b0709);
   scene.fog = new THREE.Fog(0x1a0a0e, 18, 46);
@@ -57,7 +59,8 @@ export function init(canvas, { lowPower = false } = {}) {
   const torch = new THREE.PointLight(0xffd8a0, 0, 3.2, 1.6); scene.add(torch); // your own glow when the lights go out
   const pool = [];
   for (let i = 0; i < POOL; i++) { const l = new THREE.PointLight(0xffd29a, 0, 10, 1.6); scene.add(l); pool.push(l); }
-  const world = buildWorld(scene);
+  const g0 = GLOWS.length, world = buildWorld(scene), glowRange = [g0, GLOWS.length];
+  loadRoomMats(lowPower);
   const items = new Items(scene);
   const hazards = new Hazards(scene);
   const hands = new Hands(); hands.scene.environment = env; hands.scene.environmentIntensity = 0.3;
@@ -70,6 +73,8 @@ export function init(canvas, { lowPower = false } = {}) {
     R.bartender = makeBean({ kind: 'bartender' }); scene.add(R.bartender.root);
   });
   loadPlush(); onPlushReady(() => loadClips(GESTURES));
+  // the hero props arrive in the background too: the casino is rebuilt with them once you are not seated at a game
+  loadProps(); onPropsReady(() => { R.rebuild = true; });
 
   const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: lowPower ? 0 : 4 });
   const composer = new EffectComposer(renderer, rt);
@@ -96,9 +101,22 @@ export function init(canvas, { lowPower = false } = {}) {
   const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.45, 0.55, 0.92); composer.addPass(bloom);
   composer.addPass(new OutputPass());
 
-  R = { renderer, scene, camera, composer, bloom, gtao, hemi, fill, key, torch, pool, world, items, hazards, hands, beans: new Map(), dealers, dealerSpots, lowPower,
+  R = { renderer, scene, camera, composer, bloom, gtao, hemi, fill, key, torch, pool, world, glowRange, items, hazards, hands, beans: new Map(), dealers, dealerSpots, lowPower,
     dark: 0, orbitA: 0, tourT: 0, last: performance.now(), size: '', fp: { bob: 0 }, me: -1 };
   return R;
+}
+
+// Swap the hand-built casino for the one with the hero props. Its procedural geometry is dropped; the prop models,
+// materials and canvas textures are shared and stay.
+function rebuildWorld() {
+  R.rebuild = false;
+  const old = R.world;
+  R.scene.remove(old.group);
+  old.group.traverse(o => { if (o.geometry && !o.userData.prop) o.geometry.dispose(); });
+  GLOWS.splice(R.glowRange[0], R.glowRange[1] - R.glowRange[0]);
+  const g0 = GLOWS.length;
+  R.world = buildWorld(R.scene);
+  R.glowRange = [g0, GLOWS.length];
 }
 
 function resize() {
@@ -147,6 +165,7 @@ function placeLights(cam, lit) {
 // frame: { pub, priv, me: {x,y,look,pitch,moving}, mode: 'fp'|'orbit', my: panel view }
 export function draw(frame) {
   if (!R) return;
+  if (R.rebuild && !frame.my) rebuildWorld();
   resize();
   const now = performance.now(); const dt = Math.min(0.1, (now - R.last) / 1000); R.last = now;
   const { pub, priv, me } = frame;
@@ -274,5 +293,5 @@ export function gesture(id, name, upper) { const b = R && R.beans.get(id); retur
 export function info() {
   if (!R) return null;
   const i = R.renderer.info;
-  return { calls: i.render.calls, tris: i.render.triangles, geos: i.memory.geometries, tex: i.memory.textures, cam: [R.camera.position.x, R.camera.position.y, R.camera.position.z, R.camera.rotation.x, R.camera.rotation.y].map(v => +v.toFixed(2)), gestures: { ...PLAYED } };
+  return { calls: i.render.calls, tris: i.render.triangles, geos: i.memory.geometries, tex: i.memory.textures, cam: [R.camera.position.x, R.camera.position.y, R.camera.position.z, R.camera.rotation.x, R.camera.rotation.y].map(v => +v.toFixed(2)), gestures: { ...PLAYED }, props: propsLoaded().length, rebuildPending: !!R.rebuild };
 }

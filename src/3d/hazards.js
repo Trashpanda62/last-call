@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import * as T from './textures.js';
 import { SECURITY, ROOMS, makeSeats } from '../map.js';
 import { makeBean, onPlushReady } from './plush.js';
+import { onPropsReady, hasProp, propObject } from './props.js';
 import { MAT, glowMat, rbox, box, cyl, v3, yawOf, Batch, WALL_H } from './world.js';
 
 const M = 1 / 60;
@@ -25,6 +26,15 @@ export class Hazards {
       this.guard.root.visible = false; this.group.add(this.guard.root);
     };
     guard(); onPlushReady(guard);
+    // a camera model in each room's corner, just behind the CCTV eye so the live view never sees it
+    onPropsReady(() => {
+      if (!hasProp('camera')) return;
+      for (const k in CCTV) {
+        const { p, look } = CCTV[k], d = look.clone().sub(p), flat = Math.hypot(d.x, d.z);
+        const o = propObject('camera', { cast: false }); o.position.copy(p).addScaledVector(d.normalize(), -0.28); o.position.y -= 0.1;
+        o.rotation.set(Math.atan2(p.y - look.y, flat), Math.atan2(look.x - p.x, look.z - p.z), 0, 'YXZ'); this.group.add(o);
+      }
+    });
     const mk = (geo, mat, n = 120) => { const m = new THREE.InstancedMesh(geo, mat, n); m.count = 0; m.frustumCulled = false; this.group.add(m); return m; };
     this.fx = {
       sparks: mk(new THREE.BoxGeometry(0.02, 0.02, 0.06), new THREE.MeshBasicMaterial({ color: 0xfff080, toneMapped: false })),

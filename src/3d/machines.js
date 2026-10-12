@@ -7,9 +7,26 @@ import * as P from '../paint.js';
 import * as Gm from '../games.js';
 import { MAT, GLOWS, glowMat, basicGlow, v3, box, rbox, cyl, sph, lathe, torus, yawOf, uvScale } from './world.js';
 import { buildRig, rouletteLayoutTex, diceLayoutTex, LANE, STANDS } from './rig.js';
+import { hasProp, placeProps, propObject, propScale, dyeFelt } from './props.js';
 import { BJ_TABLES, RL_TABLE, CRASH_SCREEN, PLINKO_YS, MINES_XS, TOWER_XS, POND, RACE_XS, SLOT_WEST_YS, SLOT_SOUTH_XS, JACKPOT, DICE_TABLE, WHEEL_X, COIN, OBSTACLES } from '../map.js';
 
 const M = 1 / 60;
+// Screens and boards on the fitted prop models, in the models' own metres (from tools/prop_anchors.py's profiles of the
+// front render and the front depth grid, .dev/fit): centre x and height, front depth z, width and height as seen from
+// the front, and for a screen that leans back, slope = dz/dy.
+const ANCHOR = {
+  slot: { x: -0.01, y: 1.475, z: 0.054, w: 0.66, h: 0.70 },
+  slotHigh: { x: -0.01, y: 1.51, z: -0.024, w: 0.69, h: 0.59 },
+  jackpot: { x: -0.01, y: 1.74, z: 0.418, w: 0.48, h: 0.6 },
+  plinko: { x: 0.03, y: 1.895, z: -0.165, w: 1.1, h: 1.6 },
+  console: { x: 0, y: 1.265, z: -0.18, w: 0.94, h: 0.45, slope: -0.715 },
+  prizeWheel: { x: 0, y: 2.03, z: 0.2, r: 1.09 },
+};
+// An anchor on a placed model of scale sc: local position (x right, y up, z toward the viewer), size and lean.
+function anchorAt(kind, sc) {
+  const A = ANCHOR[kind], tilt = A.slope ? Math.atan(-A.slope * sc.z / sc.y) : 0;
+  return { x: A.x * sc.x, y: A.y * sc.y, z: A.z * sc.z, w: (A.w || 0) * sc.x, h: (A.h || 0) * sc.y / Math.cos(tilt), r: (A.r || 0) * sc.x, tilt };
+}
 
 export function buildMachines(ctx, seats) {
   const { group, B, lightSpots, bulbs } = ctx;
@@ -40,22 +57,25 @@ export function buildMachines(ctx, seats) {
   const bjCards = { mine: [], dealer: [] };
   const cardGeo = new THREE.PlaneGeometry(0.11, 0.155);
   const cardMats = {};
-  const cardMat = c => { const k = c ? c.rank + c.suit : 'back'; return cardMats[k] || (cardMats[k] = new THREE.MeshStandardMaterial({ map: c ? T.cardTex(c.rank + c.suit, c.suit === '♥' || c.suit === '♦') : T.cardBack(), roughness: 0.55 })); };
+  const cardMat = c => { const k = c ? c.rank + c.suit : 'back'; return cardMats[k] || (cardMats[k] = new THREE.MeshStandardMaterial({ map: c ? T.cardTex(c.rank + c.suit, c.suit === '♥' || c.suit === '♦') : T.cardBack(), color: 0xb4aea4, roughness: 0.7 })) ; };
   const cardPool = []; const takeCard = () => { const m = new THREE.Mesh(cardGeo, cardMat(null)); m.rotation.x = -Math.PI / 2; m.castShadow = true; add(m); cardPool.push(m); return m; };
   for (let i = 0; i < 16; i++) takeCard().visible = false;
   const decoCards = []; // two cards in front of each occupied blackjack seat
   BJ_TABLES.forEach((tb, ti) => {
     const cx = tb.x * M, z0 = tb.y * M, rx = 2.0, rz = 1.67;
     const half = (ax, az) => { const s = new THREE.Shape(); for (let i = 0; i <= 40; i++) { const t = Math.PI * i / 40; s.lineTo(Math.cos(t) * ax, -Math.sin(t) * az); } s.closePath(); return s; };
-    const rail = new THREE.ExtrudeGeometry(half(rx + 0.2, rz + 0.2), { depth: 0.07, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.07, bevelSegments: 5, curveSegments: 40 });
-    B.add(rail, MAT.leather, v3(cx, 0.74, z0), 0, null, -Math.PI / 2);
+    const model = hasProp('bjTable');
+    if (model) { const ims = placeProps(group, 'bjTable', [{ x: cx, z: z0 + 0.84, fit: [rx * 2 + 0.55, 0, rz + 0.62], stretch: true, top: 0.872 }]); if (ti) ims.forEach(im => { im.material = dyeFelt(im.material, '#1a3a7a'); }); }
+    else B.add(new THREE.ExtrudeGeometry(half(rx + 0.2, rz + 0.2), { depth: 0.07, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.07, bevelSegments: 5, curveSegments: 40 }), MAT.leather, v3(cx, 0.74, z0), 0, null, -Math.PI / 2);
     const top = new THREE.ShapeGeometry(half(rx, rz), 48);
     const pos = top.attributes.position, uv = top.attributes.uv;
     for (let i = 0; i < pos.count; i++) uv.setXY(i, (pos.getX(i) + rx) / (2 * rx), 1 + pos.getY(i) / rz);
     const felt = new THREE.Mesh(top, new THREE.MeshStandardMaterial({ map: T.bjFelt(ti ? '#1a3a7a' : '#1b6a40'), roughness: 0.95 }));
     felt.rotation.x = -Math.PI / 2; felt.position.set(cx, 0.875, z0); felt.receiveShadow = true; add(felt);
-    B.add(cyl(0.45, 0.6, 0.74, 24), MAT.darkWood, v3(cx, 0.37, z0 + rz * 0.4));
-    B.add(rbox(rx * 2 + 0.4, 0.14, 0.32, 0.04), MAT.darkWood, v3(cx, 0.82, z0 - 0.1));
+    if (!model) {
+      B.add(cyl(0.45, 0.6, 0.74, 24), MAT.darkWood, v3(cx, 0.37, z0 + rz * 0.4));
+      B.add(rbox(rx * 2 + 0.4, 0.14, 0.32, 0.04), MAT.darkWood, v3(cx, 0.82, z0 - 0.1));
+    }
     B.add(rbox(0.8, 0.05, 0.22, 0.02), MAT.black, v3(cx, 0.895, z0 + 0.15));
     B.add(rbox(0.22, 0.13, 0.32, 0.02), MAT.blackGloss, v3(cx + 0.75, 0.94, z0 + 0.22), -0.4);
     chipRack(B, cx, z0 + 0.15);
@@ -98,8 +118,11 @@ export function buildMachines(ctx, seats) {
   // ---------- Roulette ----------
   {
     const o = RL_TABLE, cx = (o.x + o.w / 2) * M, cz = (o.y + o.h / 2) * M, w = o.w * M, d = o.h * M;
-    B.add(rbox(w + 0.3, 0.14, d + 0.3, 0.07), MAT.leather, v3(cx, 0.81, cz));
-    B.add(rbox(w - 0.3, 0.74, d - 0.5, 0.05), MAT.darkWood, v3(cx, 0.37, cz));
+    if (hasProp('rouletteTable')) placeProps(group, 'rouletteTable', [{ x: cx, z: cz, fit: [w + 0.3, 0, d + 0.3], stretch: true, top: 0.88 }]);
+    else {
+      B.add(rbox(w + 0.3, 0.14, d + 0.3, 0.07), MAT.leather, v3(cx, 0.81, cz));
+      B.add(rbox(w - 0.3, 0.74, d - 0.5, 0.05), MAT.darkWood, v3(cx, 0.37, cz));
+    }
     const fw = (o.w - 110) * M;
     const felt = new THREE.Mesh(new THREE.PlaneGeometry(fw, d - 0.05), new THREE.MeshStandardMaterial({ map: rouletteLayoutTex(), roughness: 0.95 }));
     felt.rotation.set(-Math.PI / 2, 0, 0); felt.position.set(o.x * M + fw / 2 + 0.05, 0.885, cz); felt.receiveShadow = true; add(felt); felts.roulette = felt;
@@ -128,6 +151,7 @@ export function buildMachines(ctx, seats) {
 
   // ---------- Slots ----------
   const slotColors = [0xb01828, 0x6a1ab0, 0x1a8a9a, 0xd0306a, 0x2a50c0, 0xb06a10];
+  const slotModels = {};
   const slotDefs = [
     ...SLOT_WEST_YS.map((y, i) => ({ x: 45, y, face: 0, machine: i })),
     ...SLOT_SOUTH_XS.map((x, i) => ({ x, y: 1855, face: -Math.PI / 2, machine: 5 + i })),
@@ -136,6 +160,18 @@ export function buildMachines(ctx, seats) {
     const s = seatOf('slots', sd.machine), high = s.tier === 'high';
     const yaw = yawOf(sd.face), fwd = v3(Math.sin(yaw), 0, Math.cos(yaw)), right = v3(Math.cos(yaw), 0, -Math.sin(yaw));
     const at = (f, u, y) => v3(sd.x * M, y, sd.y * M).addScaledVector(fwd, f).addScaledVector(right, u);
+    const kind = high ? 'slotHigh' : 'slot';
+    if (hasProp(kind)) { // the model's own screen window carries the live reels; the lever stays ours
+      const sc = propScale(kind, { fit: [0.85, 2.2, 0.85], stretch: true }), A = anchorAt(kind, sc), base = at(0, 0, 0);
+      (slotModels[kind] || (slotModels[kind] = [])).push({ x: base.x, z: base.z, yaw, scale: sc });
+      const lever = new THREE.Group(); lever.position.copy(at(0.05, 0.46, 1.0)); lever.rotation.set(0, yaw, 0, 'YXZ'); add(lever);
+      const stick = new THREE.Mesh(cyl(0.02, 0.02, 0.5, 8), MAT.chrome); stick.position.y = 0.25; lever.add(stick);
+      const knob = new THREE.Mesh(sph(0.055, 12), MAT.candy(0xe0203a)); knob.position.y = 0.52; knob.castShadow = true; lever.add(knob);
+      B.add(cyl(0.045, 0.05, 0.08, 14), MAT.chrome, at(0.05, 0.44, 1.0), yaw, null, 0, Math.PI / 2);
+      RC.slotLevers[s.id] = lever;
+      screen({ w: A.w, h: A.h, cw: 384, ch: 300, paint: (g, w, h, t, a) => P.paintSlots(g, w, h, t, a), pos: at(A.z + 0.006, A.x, A.y), yaw, tilt: 0, every: 0.25, seat: s.id, arg: st => st.my && st.my.seat === s.id ? { tier: s.tier, ...st.my.view, bet: st.my.extra && st.my.extra.bet } : { tier: s.tier } });
+      continue;
+    }
     const body = high ? MAT.blackGloss : MAT.candy(slotColors[sd.machine % slotColors.length]);
     const trim = high ? MAT.gold : MAT.chrome;
     B.add(rbox(0.78, 1.05, 0.62, 0.06), body, at(0, 0, 0.525), yaw);
@@ -160,16 +196,24 @@ export function buildMachines(ctx, seats) {
     screen({ w: 0.62, h: 0.48, cw: 384, ch: 300, paint: (g, w, h, t, a) => P.paintSlots(g, w, h, t, a), pos: at(0.205, 0, 1.62), yaw, tilt: 0, every: 0.25, seat: s.id, arg: st => st.my && st.my.seat === s.id ? { tier: s.tier, ...st.my.view, bet: st.my.extra && st.my.extra.bet } : { tier: s.tier } });
     for (let k = 0; k < 9; k++) bulbs.push({ p: at(0.2, Math.cos(Math.PI * k / 8) * 0.43, 2.13 + Math.sin(Math.PI * k / 8) * 0.43), phase: k + sd.machine });
   }
+  for (const k in slotModels) placeProps(group, k, slotModels[k]);
   lightSpots.push({ p: v3(110 * M, 2.6, 1520 * M), color: 0xff70c0, power: 4, range: 7 }, { p: v3(620 * M, 2.6, 1790 * M), color: 0xffc040, power: 4, range: 7 });
   // The jackpot tower: the crew bank and the target on four screens.
   {
     const x = JACKPOT.x * M, z = JACKPOT.y * M;
-    B.add(rbox(1.25, 0.3, 1.25, 0.06), MAT.gold, v3(x, 0.15, z)); B.add(rbox(1.1, 2.6, 1.1, 0.08), MAT.blackGloss, v3(x, 1.6, z)); B.add(rbox(1.3, 0.2, 1.3, 0.06), MAT.gold, v3(x, 2.95, z));
     const live = T.liveCanvas(512, 320, (g, w, h, t, pub) => P.paintBankBoard(g, w, h, t, pub));
     const mat = basicGlow(live.tex, 1.15);
-    for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2, m = new THREE.Mesh(new THREE.PlaneGeometry(1.0, 0.62), mat); m.position.set(x + Math.sin(a) * 0.56, 2.1, z + Math.cos(a) * 0.56); m.rotation.y = a; add(m); }
-    screens.push({ live, center: v3(x, 2.1, z), every: 0.3, acc: 0, arg: st => st.pub, far: 30 });
-    for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2; bulbs.push({ p: v3(x + Math.cos(a) * 0.72, 3.08, z + Math.sin(a) * 0.72), phase: i }); }
+    let S = { w: 1.0, h: 0.62, y: 2.1, d: 0.56, x: 0 };
+    if (hasProp('jackpot')) { // the tower's own four screens carry the board
+      const sc = propScale('jackpot', { fit: [1.33, 0, 1.33] }), A = anchorAt('jackpot', sc);
+      placeProps(group, 'jackpot', [{ x, z, scale: sc }]);
+      S = { w: A.w, h: A.h, y: A.y, d: A.z + 0.006, x: A.x };
+    } else {
+      B.add(rbox(1.25, 0.3, 1.25, 0.06), MAT.gold, v3(x, 0.15, z)); B.add(rbox(1.1, 2.6, 1.1, 0.08), MAT.blackGloss, v3(x, 1.6, z)); B.add(rbox(1.3, 0.2, 1.3, 0.06), MAT.gold, v3(x, 2.95, z));
+      for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2; bulbs.push({ p: v3(x + Math.cos(a) * 0.72, 3.08, z + Math.sin(a) * 0.72), phase: i }); }
+    }
+    for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2, m = new THREE.Mesh(new THREE.PlaneGeometry(S.w, S.h), mat); m.position.set(x + Math.sin(a) * S.d + Math.cos(a) * S.x, S.y, z + Math.cos(a) * S.d - Math.sin(a) * S.x); m.rotation.y = a; add(m); }
+    screens.push({ live, center: v3(x, S.y, z), every: 0.3, acc: 0, arg: st => st.pub, far: 30 });
   }
 
   // ---------- Crash ----------
@@ -196,23 +240,31 @@ export function buildMachines(ctx, seats) {
     const s = seatOf('plinko', i), yaw = yawOf(Math.PI), fwd = v3(Math.sin(yaw), 0, Math.cos(yaw)), right = v3(Math.cos(yaw), 0, -Math.sin(yaw));
     const base = v3(2955 * M, 0, y * M);
     const at = (f, u, yy) => base.clone().addScaledVector(fwd, f).addScaledVector(right, u).setY(yy);
-    B.add(rbox(1.5, 0.8, 0.9, 0.06), MAT.candy(0x1a2a8a), at(0, 0, 0.4), yaw);
-    B.add(rbox(1.5, 1.9, 0.3, 0.06), MAT.candy(0x1a2a8a), at(-0.3, 0, 1.75), yaw);
-    B.add(rbox(1.56, 0.1, 0.36, 0.03), MAT.chrome, at(-0.3, 0, 2.72), yaw);
-    const back = new THREE.Mesh(new THREE.PlaneGeometry(1.38, 1.75), new THREE.MeshStandardMaterial({ color: 0x050a20, roughness: 0.6 })); back.position.copy(at(-0.14, 0, 1.75)); back.rotation.y = yaw; add(back);
-    const rows = Gm.PLINKO_ROWS, sp = 0.078, topY = 2.48;
+    // the board: the model's dark panel, or the hand-built cabinet's; pegs, balls and buckets scale to it
+    let bd = { f: -0.14, u: 0, y: 1.75, w: 1.38, h: 1.75 };
+    if (hasProp('plinko')) {
+      const sc = propScale('plinko', { fit: [1.5, 0, 0.9], stretch: true }), A = anchorAt('plinko', sc), mb = at(-0.1, 0, 0);
+      placeProps(group, 'plinko', [{ x: mb.x, z: mb.z, yaw, scale: sc }]);
+      bd = { f: -0.1 + A.z + 0.004, u: A.x, y: A.y, w: A.w, h: A.h };
+    } else {
+      B.add(rbox(1.5, 0.8, 0.9, 0.06), MAT.candy(0x1a2a8a), at(0, 0, 0.4), yaw);
+      B.add(rbox(1.5, 1.9, 0.3, 0.06), MAT.candy(0x1a2a8a), at(-0.3, 0, 1.75), yaw);
+      B.add(rbox(1.56, 0.1, 0.36, 0.03), MAT.chrome, at(-0.3, 0, 2.72), yaw);
+    }
+    const back = new THREE.Mesh(new THREE.PlaneGeometry(bd.w, bd.h), new THREE.MeshStandardMaterial({ color: 0x050a20, roughness: 0.6 })); back.position.copy(at(bd.f, bd.u, bd.y)); back.rotation.y = yaw; add(back);
+    const rows = Gm.PLINKO_ROWS, sp = Math.min(0.078, bd.w / 17.7, bd.h / (rows + 4)), topY = bd.y + bd.h / 2 - sp * 3.5;
     const pegs = []; for (let r = 0; r < rows; r++) for (let k = 0; k <= r + 2; k++) pegs.push([(k - (r + 2) / 2) * sp, topY - r * sp]);
     const im = new THREE.InstancedMesh(pegGeo, pegMat, pegs.length);
-    pegs.forEach(([u, yy], j) => im.setMatrixAt(j, new THREE.Matrix4().makeTranslation(at(-0.12, u, yy))));
+    pegs.forEach(([u, yy], j) => im.setMatrixAt(j, new THREE.Matrix4().compose(at(bd.f + 0.02, bd.u + u, yy), new THREE.Quaternion(), v3(1, 1, 1).multiplyScalar(sp / 0.078))));
     add(im);
     const bucketY = topY - rows * sp - 0.02;
     const [bc, bg] = T.canvas(1024, 64);
     const mults = Gm.PLINKO.high;
     mults.forEach((m, j) => { const hot = Math.abs(j - rows / 2) / (rows / 2); bg.fillStyle = `hsl(${50 - hot * 50},95%,${45 + hot * 10}%)`; bg.fillRect(j * 1024 / 17 + 3, 4, 1024 / 17 - 6, 56); bg.fillStyle = '#1a0a00'; bg.font = '900 22px Arial Black, sans-serif'; bg.textAlign = 'center'; bg.textBaseline = 'middle'; bg.fillText(m >= 100 ? m : m + 'x', j * 1024 / 17 + 30, 32); });
-    const bucket = new THREE.Mesh(new THREE.PlaneGeometry(sp * 17, 0.07), basicGlow(T.tex(bc, false), 1.2)); bucket.position.copy(at(-0.12, 0, bucketY)); bucket.rotation.y = yaw; add(bucket);
-    const glass = new THREE.Mesh(new THREE.PlaneGeometry(1.38, 1.75), new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.02, transparent: true, opacity: 0.08, clearcoat: 1 })); glass.position.copy(at(-0.06, 0, 1.75)); glass.rotation.y = yaw; add(glass);
-    for (const side of [-1, 1]) B.add(box(0.03, 1.8, 0.03), glowMat(0x3fe0ff, 2.4), at(-0.08, side * 0.72, 1.75), yaw);
-    B.add(rbox(0.6, 0.18, 0.3, 0.04), MAT.candy(0x1a2a8a), at(0.38, 0, 0.92), yaw, null, 0.4);
+    const bucket = new THREE.Mesh(new THREE.PlaneGeometry(sp * 17, sp * 0.9), basicGlow(T.tex(bc, false), 1.2)); bucket.position.copy(at(bd.f + 0.02, bd.u, bucketY)); bucket.rotation.y = yaw; add(bucket);
+    const glass = new THREE.Mesh(new THREE.PlaneGeometry(bd.w, bd.h), new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.02, transparent: true, opacity: 0.08, clearcoat: 1 })); glass.position.copy(at(bd.f + 0.08, bd.u, bd.y)); glass.rotation.y = yaw; add(glass);
+    for (const side of [-1, 1]) B.add(box(0.03, bd.h, 0.03), glowMat(0x3fe0ff, 2.4), at(bd.f + 0.06, bd.u + side * (bd.w / 2 + 0.02), bd.y), yaw);
+    if (!hasProp('plinko')) B.add(rbox(0.6, 0.18, 0.3, 0.04), MAT.candy(0x1a2a8a), at(0.38, 0, 0.92), yaw, null, 0.4);
     const go = new THREE.Mesh(cyl(0.07, 0.07, 0.03, 20), glowMat(0xff3fa4, 2.4)); go.position.copy(at(0.45, 0, 1.0)); add(go); RC.deco[s.id] = [go];
     const balls = []; for (let k = 0; k < 6; k++) { const b = add(new THREE.Mesh(ballGeo, ballMat)); b.visible = false; balls.push(b); }
     let idle = [];
@@ -224,23 +276,33 @@ export function buildMachines(ctx, seats) {
         const it = list[list.length - 1 - k];
         if (!it) { b.visible = false; return; }
         const p = P.plinkoPos(it.path, (t - it.t0) / P.PLINKO_ROW_T);
-        b.visible = true; b.position.copy(at(-0.1, p.x * sp, topY + sp * 0.6 - (p.y + 0.4) * sp));
+        b.visible = true; b.position.copy(at(bd.f + 0.04, bd.u + p.x * sp, topY + sp * 0.6 - (p.y + 0.4) * sp)); b.scale.setScalar(sp / 0.078);
       });
     });
     lightSpots.push({ p: at(1.2, 0, 2.4), color: 0x60d0ff, power: 3, range: 5 });
   });
 
   // ---------- Mines and Dragon Tower consoles ----------
+  const consoleModels = [];
   const consoles = [...MINES_XS.map((x, i) => ({ x, game: 'mines', i, col: 0x0e6a3a, glow: 0x3fff8a })), ...TOWER_XS.map((x, i) => ({ x, game: 'tower', i, col: 0x8a3a0e, glow: 0xffa040 }))];
   for (const c of consoles) {
     const s = seatOf(c.game, c.i), yaw = yawOf(-Math.PI / 2);
     const x = c.x * M, z = 676 * M;
-    B.add(rbox(0.8, 0.95, 0.55, 0.06), MAT.candy(c.col), v3(x, 0.475, z), yaw);
-    B.add(rbox(0.86, 0.6, 0.12, 0.05), MAT.candy(c.col), v3(x, 1.3, z + 0.08), yaw, null, -0.45);
-    B.add(box(0.84, 0.03, 0.03), glowMat(c.glow, 2.4), v3(x, 0.97, z - 0.29), yaw);
+    let sp = { w: 0.74, h: 0.46, pos: v3(x, 1.3, z), tilt: 0.45 };
+    if (hasProp('console')) { // the model leans its screen back; ours sits on it. A glow strip in the game's colour.
+      const sc = propScale('console', { fit: [0.83, 1.55, 0.8], stretch: true }), A = anchorAt('console', sc);
+      consoleModels.push({ x, z, yaw, scale: sc });
+      sp = { w: A.w, h: A.h, pos: v3(x - A.x, A.y, z - A.z - 0.008), tilt: A.tilt };
+      B.add(box(0.8, 0.03, 0.03), glowMat(c.glow, 2.4), v3(x, 0.98, z - 0.41), yaw);
+    } else {
+      B.add(rbox(0.8, 0.95, 0.55, 0.06), MAT.candy(c.col), v3(x, 0.475, z), yaw);
+      B.add(rbox(0.86, 0.6, 0.12, 0.05), MAT.candy(c.col), v3(x, 1.3, z + 0.08), yaw, null, -0.45);
+      B.add(box(0.84, 0.03, 0.03), glowMat(c.glow, 2.4), v3(x, 0.97, z - 0.29), yaw);
+    }
     const pt = c.game === 'mines' ? P.paintMines : P.paintTower;
-    RC.seatScreens[s.id] = screen({ w: 0.74, h: 0.46, cw: 512, ch: 320, paint: (g, w, h, t, a) => { pt(g, w, h, t, a && a.v); if (a && a.ui) P.paintUI(g, w, h, a.ui, c.game === 'mines' ? '#3fff8a' : '#ffa040'); }, pos: v3(x, 1.3, z + 0.0), yaw, tilt: 0.45, every: 0.3, seat: s.id, arg: st => st.my && st.my.seat === s.id ? { v: st.my.view, ui: st.my.ui } : null });
+    RC.seatScreens[s.id] = screen({ w: sp.w, h: sp.h, cw: 512, ch: 320, paint: (g, w, h, t, a) => { pt(g, w, h, t, a && a.v); if (a && a.ui) P.paintUI(g, w, h, a.ui, c.game === 'mines' ? '#3fff8a' : '#ffa040'); }, pos: sp.pos, yaw, tilt: sp.tilt, every: 0.3, seat: s.id, arg: st => st.my && st.my.seat === s.id ? { v: st.my.view, ui: st.my.ui } : null });
   }
+  if (consoleModels.length) placeProps(group, 'console', consoleModels);
   lightSpots.push({ p: v3(2210 * M, 2.5, 560 * M), color: 0x60ffa0, power: 3, range: 6 }, { p: v3(2770 * M, 2.5, 560 * M), color: 0xffa060, power: 3, range: 6 });
 
   // ---------- Duck pond ----------
@@ -269,6 +331,14 @@ export function buildMachines(ctx, seats) {
     }
     // the ducks
     const ducks = Gm.DUCKS.map((d, i) => {
+      if (hasProp('duck')) { // the felt duck turned to swim east, its white felt dyed the lane's colour
+        const g = new THREE.Group(), o = propObject('duck', { x: 0, z: 0, y: -0.12, yaw: Math.PI / 2, fit: [0, 0.42, 0] });
+        o.traverse(m => { if (m.isMesh) m.material = duckMat(m.material, d.color); }); g.add(o);
+        const tag = new THREE.Mesh(new THREE.PlaneGeometry(0.13, 0.13), basicGlow(T.plaque(String(i + 1), { w: 64, h: 64, bg: '#fff', ink: '#111', font: '900 44px Arial Black, sans-serif', border: false }), 1));
+        tag.position.set(-0.04, 0.08, 0.15); g.add(tag);
+        g.position.set(x0 + 0.6, 0.45, z0 + (i + 0.5) * lw); add(g);
+        return g;
+      }
       const g = new THREE.Group(), body = MAT.candy(new THREE.Color(d.color).getHex());
       const b = new THREE.Mesh(sph(0.16, 18), body); b.scale.set(1.25, 0.8, 1); b.castShadow = true; g.add(b);
       const tail = new THREE.Mesh(new THREE.ConeGeometry(0.06, 0.12, 10), body); tail.position.set(-0.2, 0.08, 0); tail.rotation.z = 0.9; g.add(tail);
@@ -327,8 +397,11 @@ export function buildMachines(ctx, seats) {
   // ---------- Street dice ----------
   {
     const o = DICE_TABLE, cx = (o.x + o.w / 2) * M, cz = (o.y + o.h / 2) * M, w = o.w * M, d = o.h * M;
-    B.add(rbox(w, 0.88, d, 0.3), MAT.darkWood, v3(cx, 0.44, cz));
-    for (const [x, z, ww, dd] of [[cx, cz - d / 2 + 0.09, w - 0.1, 0.18], [cx, cz + d / 2 - 0.09, w - 0.1, 0.18], [cx - w / 2 + 0.09, cz, 0.18, d - 0.1], [cx + w / 2 - 0.09, cz, 0.18, d - 0.1]]) B.add(rbox(ww, 0.12, dd, 0.05), MAT.leather, v3(x, 0.92, z));
+    if (hasProp('diceTable')) placeProps(group, 'diceTable', [{ x: cx, z: cz, fit: [w + 0.2, 1.06, d + 0.2], stretch: true }]); // our felt floats in its tub at the hand-built height
+    else {
+      B.add(rbox(w, 0.88, d, 0.3), MAT.darkWood, v3(cx, 0.44, cz));
+      for (const [x, z, ww, dd] of [[cx, cz - d / 2 + 0.09, w - 0.1, 0.18], [cx, cz + d / 2 - 0.09, w - 0.1, 0.18], [cx - w / 2 + 0.09, cz, 0.18, d - 0.1], [cx + w / 2 - 0.09, cz, 0.18, d - 0.1]]) B.add(rbox(ww, 0.12, dd, 0.05), MAT.leather, v3(x, 0.92, z));
+    }
     const felt = new THREE.Mesh(new THREE.PlaneGeometry(w - 0.36, d - 0.36), new THREE.MeshStandardMaterial({ map: diceLayoutTex(), roughness: 0.95 }));
     felt.rotation.x = -Math.PI / 2; felt.position.set(cx, 0.89, cz); felt.receiveShadow = true; add(felt); felts.dice = felt;
     const pip = v => { const [c, g] = T.canvas(64, 64); g.fillStyle = '#f8f4ec'; g.fillRect(0, 0, 64, 64); g.fillStyle = '#c0302a'; const P2 = { 1: [[0, 0]], 2: [[-1, -1], [1, 1]], 3: [[-1, -1], [0, 0], [1, 1]], 4: [[-1, -1], [1, -1], [-1, 1], [1, 1]], 5: [[-1, -1], [1, -1], [0, 0], [-1, 1], [1, 1]], 6: [[-1, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [1, 1]] }[v]; for (const [a, b] of P2) { g.beginPath(); g.arc(32 + a * 17, 32 + b * 17, 6, 0, 7); g.fill(); } return new THREE.MeshStandardMaterial({ map: T.tex(c, false), roughness: 0.3 }); };
@@ -354,15 +427,22 @@ export function buildMachines(ctx, seats) {
 
   // ---------- Prize wheel ----------
   {
-    const cx = WHEEL_X * M, z = 1880 * M - 0.25, cy = 2.0, R = 1.5;
-    B.add(cyl(R + 0.15, R + 0.15, 0.2, 64), MAT.candy(0x3a1a5a), v3(cx, cy, z + 0.08), 0, null, Math.PI / 2);
-    B.add(box(0.3, cy, 0.3), MAT.gold, v3(cx, cy / 2, z + 0.1));
-    const wheel = new THREE.Group(); wheel.position.set(cx, cy, z - 0.05); wheel.rotation.y = Math.PI; add(wheel);
+    let cx = WHEEL_X * M, z = 1880 * M - 0.25, cy = 2.0, R = 1.5, face = z - 0.05;
+    const model = hasProp('prizeWheel');
+    if (model) { // the stand faces into the alley; our segmented disc spins on its plain gold face
+      const sc = propScale('prizeWheel', { fit: [0, 4.0, 0] }), A = anchorAt('prizeWheel', sc);
+      placeProps(group, 'prizeWheel', [{ x: cx, z: z + 0.05, yaw: Math.PI, scale: sc }]);
+      cy = A.y; R = A.r * 0.98; face = z + 0.05 - A.z - 0.012;
+    } else {
+      B.add(cyl(R + 0.15, R + 0.15, 0.2, 64), MAT.candy(0x3a1a5a), v3(cx, cy, z + 0.08), 0, null, Math.PI / 2);
+      B.add(box(0.3, cy, 0.3), MAT.gold, v3(cx, cy / 2, z + 0.1));
+    }
+    const wheel = new THREE.Group(); wheel.position.set(cx, cy, face); wheel.rotation.y = Math.PI; add(wheel);
     const disc = new THREE.Mesh(new THREE.CircleGeometry(R, 96), new THREE.MeshStandardMaterial({ map: T.prizeWheel(Gm.WHEEL.segs), roughness: 0.35, emissive: 0xffffff, emissiveMap: T.prizeWheel(Gm.WHEEL.segs), emissiveIntensity: 0.35 }));
     wheel.add(disc);
     const rim = new THREE.Mesh(torus(R, 0.06, 10, 96), MAT.gold); wheel.add(rim);
-    const ptr = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.3, 3), MAT.gold); ptr.position.set(cx, cy + R + 0.1, z - 0.15); ptr.rotation.z = Math.PI; add(ptr);
-    for (let k = 0; k < 40; k++) { const a = k / 40 * Math.PI * 2; bulbs.push({ p: v3(cx + Math.cos(a) * (R + 0.12), cy + Math.sin(a) * (R + 0.12), z - 0.12), phase: k }); }
+    const ptr = new THREE.Mesh(new THREE.ConeGeometry(0.1, 0.26, 3), MAT.gold); ptr.position.set(cx, cy + R + 0.02, face - 0.06); ptr.rotation.z = Math.PI; add(ptr);
+    if (!model) for (let k = 0; k < 40; k++) { const a = k / 40 * Math.PI * 2; bulbs.push({ p: v3(cx + Math.cos(a) * (R + 0.12), cy + Math.sin(a) * (R + 0.12), z - 0.12), phase: k }); }
     for (const o of OBSTACLES.filter(o => o.kind === 'wheelDesk')) {
       const x = (o.x + o.w / 2) * M, dz = (o.y + o.h / 2) * M;
       B.add(rbox(0.6, 0.95, 0.45, 0.05), MAT.candy(0x3a1a5a), v3(x, 0.475, dz));
@@ -434,6 +514,21 @@ export function buildMachines(ctx, seats) {
       rig.update(t, dt, state.my);
     },
   };
+}
+
+// The felt duck's white dyed a lane colour (the orange beak and black eyes keep theirs).
+const duckMats = new Map();
+function duckMat(src, color) {
+  const key = src.uuid + color; if (duckMats.has(key)) return duckMats.get(key);
+  const m = src.clone(), u = { uDye: { value: new THREE.Color(color) } };
+  m.onBeforeCompile = sh => {
+    sh.uniforms.uDye = u.uDye;
+    sh.fragmentShader = 'uniform vec3 uDye;\n' + sh.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+  float white = smoothstep(0.45, 0.7, min(diffuseColor.r, min(diffuseColor.g, diffuseColor.b)));
+  diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * uDye * 1.15, white);`);
+  };
+  m.customProgramCacheKey = () => 'duckDye';
+  duckMats.set(key, m); return m;
 }
 
 function chipRack(B, x, z) {

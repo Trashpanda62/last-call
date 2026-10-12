@@ -59,6 +59,9 @@ between parts takes the nearest one); Stand and Look back stay on the right.
 - `src/3d/hazards.js` the security desk and camera view, the guard, haunts and the kill effects.
 - Character art: `tools/v4_chars.py` (Sorceress jobs), `tools/v4_anims.py` (20 hy-motion gesture clips in `assets/anim`), `tools/rig_bean.py` (Blender rig, headless), `tools/v4_export.py`
   (meeting portraits in `assets/portraits`, provenance). Receipts stay in `runs/` (git-ignored).
+- Room and table art: `tools/v4_props.py` (34 hero props, Sorceress/Meshy) and `tools/prop_fit.py` (headless Blender
+  fit) into `assets/props`, loaded by `src/3d/props.js`; `tools/v4_mats.py` PBR materials in `assets/mats`; `tools/v4_art.py`
+  chips, court cards, card back and felt crest in `assets/art`. `?noprops`, `?nomats`, `?noart` turn each off.
 - `src/net.js` rooms, `src/main.js` screens, modes, input and the loop.
 - `node tools/batch.mjs [games] [players] [killers] [difficulty]` plays headless games (one idle human seat) and
   prints win rates. `node tools/batch.mjs 40 8 2 normal --cfg='{"bladeCd":50}'` tries a tuning change. `node tools/ev.mjs` measures

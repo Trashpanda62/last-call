@@ -1,4 +1,4 @@
-// Canvas-painted textures for the plush Art Deco casino. Everything is generated here: no image files.
+// Canvas-painted textures for the plush Art Deco casino. Painted here; the table felts paint on the generated felt weave.
 import * as THREE from 'three';
 
 let maxAniso = 4;
@@ -188,10 +188,38 @@ export const ceiling = (base = '#2a1418') => once('ceil' + base, () => {
 });
 
 // ---------- Tables ----------
+// Sorceress felt (plan-v4 phase 5, assets/mats/felt*-color.jpg): the table layouts paint on its weave, recoloured to
+// their own green, blue or red, and repaint once it has loaded. Until then (or with ?toy or ?nomats) a flat colour.
+const FELTS = {}, feltWaiters = [];
+let feltsDone = false;
+export function loadFelts() {
+  if (/[?&](toy|nomats)\b/.test(location.search)) return;
+  let n = 0;
+  const done = () => { if (++n < 3) return; feltsDone = true; feltWaiters.splice(0).forEach(f => f()); };
+  for (const k of ['Green', 'Blue', 'Red']) { const im = new Image(); im.onload = () => { FELTS[k] = im; done(); }; im.onerror = done; im.src = `assets/mats/felt${k}-color.jpg`; }
+}
+export function onFelts(f) { if (!feltsDone) feltWaiters.push(f); }
+export function feltFill(g, w, h, color, scale = 0.5) {
+  g.fillStyle = color; g.fillRect(0, 0, w, h);
+  const hsl = new THREE.Color(color).getHSL({}), k = hsl.h > 0.2 && hsl.h < 0.5 ? 'Green' : hsl.h >= 0.5 && hsl.h < 0.8 ? 'Blue' : 'Red', im = FELTS[k];
+  if (!im) return;
+  const pat = g.createPattern(im, 'repeat'); pat.setTransform(new DOMMatrix().scale(scale));
+  g.save(); g.fillStyle = pat; g.fillRect(0, 0, w, h);
+  g.globalCompositeOperation = 'color'; g.fillStyle = color; g.fillRect(0, 0, w, h); // its weave, our colour
+  g.restore();
+}
 // Blackjack felt, mapped 0..1 over the half-ellipse's bounding box (flat dealer edge at v=0).
 export const bjFelt = (color = '#1b6a40') => once('bj' + color, () => {
-  const [c, g] = canvas(1024, 512), r = srand(29);
-  g.fillStyle = color; g.fillRect(0, 0, 1024, 512);
+  const [c, g] = canvas(1024, 512);
+  const t = tex(c, false), paint = () => { paintBj(g, color); t.needsUpdate = true; };
+  paint(); onFelts(paint); onArt(paint);
+  return t;
+});
+function paintBj(g, color) {
+  const r = srand(29);
+  feltFill(g, 1024, 512, color, 0.35);
+  const crest = crestImage();
+  if (crest) { g.save(); g.globalAlpha = 0.85; g.drawImage(crest, 512 - 70, 210, 140, 140); g.restore(); }
   const rg = g.createRadialGradient(512, 0, 50, 512, 0, 560); rg.addColorStop(0, 'rgba(255,255,255,0.12)'); rg.addColorStop(1, 'rgba(0,0,0,0.3)');
   g.fillStyle = rg; g.fillRect(0, 0, 1024, 512);
   noiseFill(g, 1024, 512, 0.06, 5000, r);
@@ -207,8 +235,7 @@ export const bjFelt = (color = '#1b6a40') => once('bj' + color, () => {
     const a = Math.PI * (1 / 6 + i / 6), x = 512 + Math.cos(a) * 430, y = Math.sin(a) * 400;
     g.save(); g.translate(x, y); g.rotate(a - Math.PI / 2); g.strokeRect(-36, -26, 72, 52); g.beginPath(); g.arc(0, 52, 18, 0, 7); g.stroke(); g.restore();
   }
-  return tex(c, false);
-});
+}
 export const rouletteFelt = () => once('rl', () => {
   const [c, g] = canvas(1024, 512), r = srand(31);
   g.fillStyle = '#1b6a40'; g.fillRect(0, 0, 1024, 512);
@@ -359,18 +386,56 @@ export const beam = () => once('beam', () => {
   g.globalCompositeOperation = 'destination-out'; g.fillStyle = sg; g.fillRect(0, 0, 128, 256);
   return tex(c, false);
 });
-export const cardTex = (label, red) => once('card' + label, () => {
-  const [c, g] = canvas(128, 180);
-  g.fillStyle = '#fbf6ea'; g.beginPath(); g.roundRect(0, 0, 128, 180, 12); g.fill();
-  g.strokeStyle = '#c8b890'; g.lineWidth = 3; g.stroke();
-  g.fillStyle = red ? '#c0302a' : '#151515'; g.font = `bold 44px ${FONT}`; g.textAlign = 'center'; g.textBaseline = 'middle';
-  g.fillText(label, 64, 90); g.font = `bold 26px ${FONT}`; g.fillText(label, 22, 22);
-  return tex(c, false);
-});
-export const cardBack = () => once('cardback', () => {
-  const [c, g] = canvas(128, 180);
-  g.fillStyle = '#8a1a2a'; g.beginPath(); g.roundRect(0, 0, 128, 180, 12); g.fill();
-  g.strokeStyle = '#e8c46a'; g.lineWidth = 4; g.strokeRect(12, 12, 104, 156);
-  for (let i = 0; i < 8; i++) { g.beginPath(); g.moveTo(12 + i * 13, 12); g.lineTo(116, 168 - i * 20); g.stroke(); }
-  return tex(c, false);
-});
+// Sorceress table art (plan-v4 phase 6, assets/art): chip faces, the court cards, the card back and the felt crest.
+// Painters draw without it and repaint once it has loaded.
+const ART = {}, artWaiters = [];
+let artDone = false;
+export const ART_NAMES = ['chip0', 'chip1', 'chip2', 'chip3', 'chip4', 'chip5', 'king', 'queen', 'jack', 'cardBack', 'crest'];
+export function loadArt() {
+  if (/[?&](toy|noart)\b/.test(location.search)) return;
+  let n = 0;
+  const done = () => { if (++n < ART_NAMES.length) return; artDone = true; artWaiters.splice(0).forEach(f => f()); };
+  for (const k of ART_NAMES) { const im = new Image(); im.onload = () => { ART[k] = im; done(); }; im.onerror = done; im.src = `assets/art/${k}.webp`; }
+}
+export const artImage = k => ART[k] || null;
+export function onArt(f) { if (!artDone) artWaiters.push(f); }
+// a canvas texture painted now and again once the art has loaded
+function artTex(w, h, paint) {
+  const [c, g] = canvas(w, h), t = tex(c, false);
+  const draw = () => { g.clearRect(0, 0, w, h); paint(g, w, h); t.needsUpdate = true; };
+  draw(); onArt(draw);
+  return t;
+}
+const COURT = { J: 'jack', Q: 'queen', K: 'king' };
+export const cardTex = (label, red) => once('card' + label, () => artTex(256, 360, (g, W, H) => {
+  const ink = red ? '#c0302a' : '#151515', rank = label.slice(0, -1), suit = label.slice(-1), court = ART[COURT[rank]];
+  g.fillStyle = '#fbf6ea'; g.beginPath(); g.roundRect(0, 0, W, H, 22); g.fill();
+  g.strokeStyle = '#c8b890'; g.lineWidth = 5; g.stroke();
+  g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = ink;
+  if (court) { // the court portrait inside the corner indices
+    g.save(); g.beginPath(); g.roundRect(40, 44, W - 80, H - 88, 10); g.clip(); g.drawImage(court, 40, 44, W - 80, H - 88); g.restore();
+  } else { g.font = `bold 100px ${FONT}`; g.fillText(suit, W / 2, H / 2 + 56); g.font = `bold 96px ${FONT}`; g.fillText(rank, W / 2, H / 2 - 50); }
+  g.font = `bold 40px ${FONT}`; g.fillText(rank, 24, 32); g.font = `bold 34px ${FONT}`; g.fillText(suit, 24, 68);
+  g.save(); g.translate(W, H); g.rotate(Math.PI); g.font = `bold 40px ${FONT}`; g.fillText(rank, 24, 32); g.font = `bold 34px ${FONT}`; g.fillText(suit, 24, 68); g.restore();
+}));
+export const cardBack = () => once('cardback', () => artTex(256, 360, (g, W, H) => {
+  const im = ART.cardBack;
+  g.save(); g.beginPath(); g.roundRect(0, 0, W, H, 22); g.clip();
+  if (im) g.drawImage(im, 0, 0, W, H);
+  else {
+    g.fillStyle = '#8a1a2a'; g.fillRect(0, 0, W, H);
+    g.strokeStyle = '#e8c46a'; g.lineWidth = 8; g.strokeRect(24, 24, W - 48, H - 48);
+    for (let i = 0; i < 8; i++) { g.beginPath(); g.moveTo(24 + i * 26, 24); g.lineTo(W - 24, H - 24 - i * 40); g.stroke(); }
+  }
+  g.restore();
+}));
+// The gold of the embroidered crest on a transparent ground, for drawing onto any felt.
+let crestCut = null;
+export function crestImage() {
+  if (crestCut || !ART.crest) return crestCut;
+  const im = ART.crest, [c, g] = canvas(im.width, im.height); g.drawImage(im, 0, 0);
+  const d = g.getImageData(0, 0, c.width, c.height), p = d.data;
+  for (let i = 0; i < p.length; i += 4) { const gold = (p[i] - p[i + 2]) / 255; p[i + 3] = Math.max(0, Math.min(255, (gold - 0.12) * 900)); }
+  g.putImageData(d, 0, 0);
+  return (crestCut = c);
+}

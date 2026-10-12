@@ -1,0 +1,1260 @@
+[
+ {
+  "file": "assets/props/bjTable.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "9b8fc0f8-065e-48aa-8222-ba53e62b03e8",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/b83ed68c-5f8c-40cf-bd95-702d8ec12824/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/bjTable-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/bjTable.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "bc5dc717-2dc2-4dca-bded-6c4eb0e137ad",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "A casino blackjack table shaped like a capital letter D lying flat, so seen from above it is exactly half a circle: one long straight edge at the back for the dealer and one semicircular curved edge facing the viewer, about twice as wide as it is deep and waist high: a plain dark green felt top with no markings, a thick padded oxblood leather rail along the curved edge only, a solid dark wood apron with gold trim on a pedestal base. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/bjTable-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/rouletteTable.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "ae270a5a-998d-4f0d-a149-64c0f0dd9ead",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/21a4b0cb-2850-4330-9fdc-d9733465ea4d/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/rouletteTableMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/rouletteTable.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "5bf24316-7533-4278-8c00-2b62da8e5c98",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A long rectangular casino table with no wheel, about two and a half times as long as it is deep and waist high: a flat top of plain dark green felt with no markings, a thick padded oxblood leather rail all around, a dark wood apron with gold inlay, six turned dark wood legs. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/rouletteTable",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/diceTable.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "e6935b77-23d0-44e0-b680-20709e5643e7",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/e8409513-476f-41bd-8cde-44ccfe297ec9/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/diceTable-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/diceTable.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "6afc9d98-d82b-4292-8cdf-ac79b4b8bd6b",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "A casino craps table, about twice as long as it is wide and waist high: a deep rounded-rectangle tub with high padded oxblood leather walls and a polished wood drink rail around the top, the floor of the tub plain dark green felt with no markings or writing at all, a solid dark wood base with gold trim. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/diceTable-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/slot.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "48f404c9-182b-443e-a8b5-4aaf8e2002c9",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/a8ff13d1-cd04-49c8-b2a4-ba5da834ca9c/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/slot-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/slot.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "4fc36b7d-f5a5-405c-96a3-8f239cde3142",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:19",
+  "prompt": "A tall upright casino slot machine standing on the floor, three times as tall as it is wide, in glossy cherry-red lacquer with chrome trim: a plinth base with a coin tray, a sloped button deck at waist height with three round candy buttons, above it at eye height a big flat empty black rectangular screen window, and an arched light-up topper on top. No pull lever. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/slot-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/slotHigh.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "62d254a0-366d-4da5-8d64-ef07e57535f8",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/8af7601b-135b-4ce5-ab4f-8885d2782e19/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/slotHighMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/slotHigh.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "53c27891-7658-41bb-b6ab-131abc2d2703",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A tall upright luxury high-limit casino slot machine standing on the floor, three times as tall as it is wide, in glossy black lacquer with gold trim and gold filigree: a plinth base with a coin tray, a sloped button deck at waist height with three round buttons, above it at eye height a big flat empty black rectangular screen window, and a tall arched gold crown topper. No pull lever. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/slotHigh",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/jackpot.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "7b54204e-17e2-4086-8a37-db481dc43b28",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/ea61e86e-bce0-42d1-9140-23c1a5df22f7/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/jackpotMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/jackpot.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "0fc12921-2c11-4f3b-8d22-a677d6b4bd4f",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A tall square Art Deco jackpot tower, more than twice as tall as it is wide: a black lacquer column on a stepped gold base, a big flat empty black rectangular screen on each of its four sides near the top, a stepped gold crown with a ring of round marquee bulbs. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/jackpot",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/plinko.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "834afe38-1740-429d-a86c-453217d2ea56",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/8ee8826f-5605-4e26-a89a-82c9347e9752/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/plinko-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/plinko.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "9afa4fc6-8bcd-453f-9582-b4f641e195f5",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "An upright Plinko arcade cabinet in glossy royal blue lacquer with chrome trim, twice as tall as it is wide: a waist-high base, above it a tall flat back panel framed like a window that is a plain empty dark navy board with nothing on it, a sloped control shelf with one big round button. No pegs, no balls, no chips, no sign, no lettering. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/plinko-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/console.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "4ac81f19-9e5a-4514-896b-e729b70db4aa",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/1ec160cb-c0d2-4492-abc3-4975ae6c58ff/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/consoleMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/console.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "c15248d5-b2a5-4c92-915a-9f19a1ca6f19",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A sit-down arcade game console in glossy emerald green lacquer with chrome trim, as tall as a desk: a waist-high cabinet with a big flat empty black screen tilted back on top, a glowing strip along its front edge. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/console",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/prizeWheel.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "faf5db71-c980-4b58-acb8-6b25a2672e16",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/597d2e03-0a02-4ae9-923a-8eac76798d04/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/prizeWheelMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/prizeWheel.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "236741d0-e5ec-4452-9e1d-fa8951e6fa9e",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A carnival prize wheel stand, as wide as it is tall: a big vertical circular wheel with a plain gold face and no segments or writing, a thick purple velvet rim studded with round marquee bulbs, a gold pointer at the top, standing on a sturdy gold post with a round base. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/prizeWheel",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/duck.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "a0897533-7262-44cd-b25d-8676efdeccce",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/c36ba13f-9754-4545-bbfd-6842ac18fe88/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/duck-r2Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/duck.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "48ecf839-9c8e-4beb-b2bd-ad70ffcff87e",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:31",
+  "prompt": "A plain plush rubber duck made of soft white felt with a bright orange felt beak and black button eyes, a smooth round body with no clothes, no number and no accessories, seen from the side. It floats in the air by itself: no stand, no plinth, no base, no water. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/duck-r2",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/barCounter.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "e5fefc08-5e7c-4b53-bf26-64ce36181470",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/ea001052-b569-4f83-be81-d52dcf58f22e/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/barCounterMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/barCounter.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "f41c2ab8-59d1-4f27-abc8-23658c631f41",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "One straight section of an Art Deco bar counter seen from the customer side, twice as wide as it is tall: a polished dark wood front with gold vertical inlay strips and a curved brass foot rail, a thick glossy wood top with a rounded edge. Straight and plain at both cut ends so sections can line up. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/barCounter",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/backBar.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "e9b25cf6-6a48-4ea6-8b1c-285ba6dec19f",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/e2d8cd96-b954-4dcd-b52c-831c0b18126b/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/backBarMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/backBar.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "b4f5a917-cb75-4e3b-b156-233ef39f661d",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "One section of a bar back-bar, as wide as it is tall: a dark wood cabinet below, a tall mirror behind three warmly lit glass shelves full of colourful liquor bottles, gold trim and a carved crown on top. Straight at both ends so sections can line up. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/backBar",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/stool.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "397b82c0-bb90-4cb2-9132-af9512560bd5",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/43c3a91b-5684-49fe-ac4e-cf3c8c2f1912/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/stoolMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/stool.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "0190a285-050f-4b09-ba01-3896613a8f84",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A tall casino bar stool: a round tufted red velvet seat with a low curved backrest, a single polished brass column, a brass foot ring and a round brass base. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/stool",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/chair.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "6c0a6469-ac7d-4ce6-a093-2990a482cf32",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/6badef37-0395-4c6b-84e1-58e0b0e4abb1/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/chair-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/chair.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "47f906b1-b885-403e-8995-ac93bffec4f2",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:14",
+  "prompt": "A casino table chair: a tufted red velvet seat and a curved tufted back with a gold top rail, four slim gold legs. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/chair-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/booth.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "e4300cc3-624d-4d4e-97bf-dffdaba7a470",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/354eec40-7454-4b1b-adb2-c25bae509858/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/boothMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/booth.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "7ee7cb14-b6d3-4981-a62e-71aa9991c6d8",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "One bar booth bench, as wide as it is tall: a tufted oxblood velvet seat with a tall rounded channel-tufted back, gold buttons, a dark wood base. Straight at both ends. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/booth",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/couch.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "9b29e378-72c1-4578-83fb-85a21992a696",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/81382117-e722-453d-8e8d-c4f11aa28878/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/couchMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/couch.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "6474e1d3-c54a-4cbb-a31d-23fd224238fb",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A long three-seat Art Deco lounge sofa in plush purple velvet, four times as long as it is tall: rounded arms, a channel-tufted back, three seat cushions, short gold feet. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/couch",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/armchair.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "1341b908-b855-452a-b231-10ba911e6585",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/c3ed9d23-e251-4bb0-8936-1b49eaa1d980/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/armchairMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/armchair.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "a6f810bd-908e-41a9-bf7f-babad037bda9",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A plush purple velvet Art Deco club armchair with rounded arms, a deep tufted back, a thick seat cushion and short gold feet. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/armchair",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/chandelier.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "75cad488-359c-4eb4-a21e-e68238a6aea1",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/1f254da2-37d6-4a1f-8fce-eabfd0f4564f/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/chandelierMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/chandelier.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "caa10d37-3cde-4119-b301-ae3f4650b475",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A crystal chandelier, wider than it is tall: three tiers of gold rings hung with sparkling crystal drops, little candle bulbs around the rims, a short gold chain and canopy at the top. Seen from the side. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/chandelier",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/piano.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "ed0a793c-2a73-4f45-b6ee-100d05256c46",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/1e31b9f0-58c9-446d-8aa5-8bc7333b5a09/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/pianoMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/piano.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "4dddd9f8-d0bb-4b0a-9f3c-3c22b706ca60",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A black lacquer baby grand piano with the lid propped open, ivory and black keys, three turned legs with brass casters. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/piano",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/poolTable.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "d4962d09-3dd9-42bb-9b33-6820ef2ac1e5",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:32",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/68034373-459f-4b31-a537-df096b1bfe2d/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/poolTable-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/poolTable.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "f9e23283-58f8-4e01-8377-8699037ff14a",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "A pool table, twice as long as it is wide: a dark wood frame, plain green felt bed, six leather pockets, carved legs, the balls racked in a triangle and a cue lying on top. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/poolTable-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/jukebox.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "891ab1b1-7700-4c36-9142-456a96097b5b",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:44",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/2027c3f2-71d3-47d0-a86f-030cfc278bf9/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/jukebox-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/jukebox.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "455ae556-a25f-4eef-9d33-49bc6b8b2681",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "A classic 1940s jukebox, twice as tall as it is wide: a rounded arch top with glowing pink and cyan tubes, a polished wood body, a chrome grille at the bottom, a lit record window in the middle. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/jukebox-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/champagne.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "f788efb1-0733-4e89-804c-003bba907e7b",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:44",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/6ba78f41-fa8c-47d3-9c58-5ce1f3c4521e/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/champagne-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/champagne.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "9f306b38-d80d-4090-8923-af2887f77ebe",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "A champagne tower: a pyramid of four tiers of coupe glasses filled with golden champagne on a round marble pedestal table with a gold stem, a green champagne bottle on top, nothing else beside it. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/champagne-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/snackBowl.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "28b0a1e8-b0a1-42e3-b6a6-a292e32002ed",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:44",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/973a4d9c-8ef9-4024-9e1b-fb77760e1a58/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/snackBowlMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/snackBowl.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "a39aa3ef-d929-4246-bd6e-eadf547cc8fb",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A big brass bowl heaped with golden pretzels on a slim brass pedestal stand with a round base, waist high. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/snackBowl",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/palm.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "7e529c10-9528-4bc9-bf40-3d66f0292f10",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:14",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/9e4d46f5-46ca-474d-b411-d112eb3923a6/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/palmMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/palm.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "d26bd4ef-b9e1-4d67-a44e-9989f8ccd7ba",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:11",
+  "prompt": "A potted indoor palm in a glossy black Art Deco urn with a gold rim, a short trunk and a full crown of soft felt fronds. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/palm",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/camera.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "fd6894e7-3457-4f63-ac89-f96298576bbf",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:44",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/2c280152-9c4a-4254-932c-d1b95d65be4a/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/camera-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/camera.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "5ebc1a78-1ec1-4792-80bb-abd256666e2a",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "A small casino security camera on a wall bracket: a white rounded camera housing with a dark glass lens and a tiny red light, an angled grey metal arm and a square wall plate. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/camera-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/dumpster.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "3fd3b062-c829-404a-bb31-6d0f4d252163",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:48",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/01420105-e33e-40fb-914c-a7deed4755d9/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/dumpster-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/dumpster.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "aff116be-6b07-4818-bc1b-663712fd78ad",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "A dark green painted steel dumpster with two black plastic lids, one lid slightly open with a black trash bag peeking out, small black wheels, dented and a bit grimy. Handcrafted miniature prop for a stop-motion film set with chunky soft rounded proportions like a toy, made of exactly the materials described and nothing else. Only the object: no characters, no hats, nothing resting on it. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/dumpster-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/pitBell.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "2724644c-54b5-41c1-807f-c88e358a61b0",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:48",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/d5267cf4-3dd4-4a48-90bb-a753a2768c27/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/pitBellMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/pitBell.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "5d290f66-e169-4604-a2ff-22ee4d7f59e7",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A brass service bell on a fluted white marble pedestal with a gold base and a gold capital, waist high. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/pitBell",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/hightop.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "686efabe-29ea-46b3-8084-b5eb28a4d88e",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:48",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/73d70060-b0cd-4121-b887-af0c4d4303e7/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/hightopMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/hightop.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "99e504e8-e9be-4447-8edf-8987a98522c4",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A round bar high-top table: a glossy dark wood top with a gold edge band, a single brass column, a round brass foot base, a little glowing table lamp in the middle. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/hightop",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/toilet.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "4198bea9-74fb-4020-b7d1-3fc07d90887f",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:48",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/a1bfb147-89e2-4588-a6f6-04c996a57724/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/toilet-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/toilet.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "43776889-67d7-4502-a8fb-3f0d9b4fe93d",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "A glossy white porcelain toilet with the lid down and a white porcelain tank with a chrome flush lever, soft Art Deco curves; all white porcelain and chrome. Handcrafted miniature prop for a stop-motion film set with chunky soft rounded proportions like a toy, made of exactly the materials described and nothing else. Only the object: no characters, no hats, nothing resting on it. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/toilet-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/sink.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "5b9114f7-59ed-43d3-9b4d-34cb7e2b9a40",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:51",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/83456a41-6bfc-473b-939c-5cbf6c8165ab/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/sink-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/sink.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "cbd1ca91-d691-4222-8b1a-fc4d9954e7ac",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "One restroom vanity unit, as wide as it is tall: a white marble counter top on a dark wood cabinet with plain wooden doors, one round white porcelain basin and a tall chrome faucet. Straight at both ends so units can line up. Handcrafted miniature prop for a stop-motion film set with chunky soft rounded proportions like a toy, made of exactly the materials described and nothing else. Only the object: no characters, no hats, nothing resting on it. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/sink-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/rocket.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "99666e1f-e0da-4366-b48f-0899bd8e6636",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:51",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/0cfa70ab-9831-4eb3-a4b6-ec3729f22b45/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/rocketMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/rocket.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "3ddac1fe-2da4-4bc7-8289-dc08ca7e29f3",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A cartoon rocket ship standing on three fins, three times as tall as it is wide: a round pointy nose cone, chunky red and cream striped felt body, a round porthole window, brass rivets. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/rocket",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/ottoman.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "ff874fbd-fd02-4cf3-bd40-71ab770feedb",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:51",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/b98446cf-6331-4151-948d-a003f8a1064a/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/ottomanMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/ottoman.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "83504202-5598-49af-93ef-d4777fccdc4b",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:20",
+  "prompt": "A big round tufted red velvet ottoman with gold buttons and a gold base band, three times as wide as it is tall. Handcrafted miniature prop for a stop-motion film set, matching the materials and colours of the reference image: lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it unless described. Three-quarter front view from slightly above, the whole object visible and centred, isolated on a plain light grey background, even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/ottoman",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/crates.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "c6293646-d142-4c72-baa5-b9def5f41b08",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:55",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/a7d17367-51cf-4b11-b4b8-e1858b69baec/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/crates-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/crates.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "f31c3003-e85e-42ac-b4f3-f9a40f11f169",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "A small stack of three rough weathered pine shipping crates of different sizes with nailed slats, no writing. Handcrafted miniature prop for a stop-motion film set with chunky soft rounded proportions like a toy, made of exactly the materials described and nothing else. Only the object: no characters, no hats, nothing resting on it. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/crates-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/streetLamp.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "b6070fd8-2d8d-4aad-b0c1-c357c43ce319",
+  "credits": 50,
+  "date": "2026-10-12",
+  "time_ct": "12:55",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/8aff647d-9c56-478e-b257-276982ef21b0/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/streetLamp-r1Mesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/streetLamp.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "8ac258d0-cf6e-4b20-a68f-00d9a9154080",
+  "credits": 9,
+  "date": "2026-10-12",
+  "time_ct": "12:25",
+  "prompt": "A black cast-iron Victorian street lamp post with a fluted black pole and a glowing glass lantern on top. Handcrafted miniature prop for a stop-motion film set with chunky soft rounded proportions like a toy, made of exactly the materials described and nothing else. Only the object: no characters, no hats, nothing resting on it. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/streetLamp-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ }
+]

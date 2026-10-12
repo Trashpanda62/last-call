@@ -106,6 +106,18 @@ cheers, claps and bows on wins, facepalms and despair on losses, the knife's fol
 see a new body, sips, the speaker acting out each meeting line's mood, idle moments, croupiers tapping and the bartender
 pouring (`src/3d/gestures.js`). Walk, sit and lie stay procedural.
 
+**Built 2026-10-12 (phases 4, 5 and 6, 2,649 credits by the receipts).** Phase 4: 34 hero props (designs from
+nano-banana-2 in look A, Meshy 7 textured meshes) fitted in headless Blender by `tools/prop_fit.py` (decimated, sized in
+metres, front +Z, WEBP textures; 14 MB in `assets/props`). The coin podium's fluting decimated into red streaks, so the
+hand-built podium stays, and a squat pilot slot mesh went unused. `src/3d/props.js` loads them in the background and
+the world is rebuilt once they arrive (not while you sit at a table); every prop keeps its hand-built stand-in. Screens,
+reels, Plinko boards and the prize wheel sit on anchors measured from each model's renders (`tools/prop_anchors.py`).
+Phase 5: 25 PBR materials (`tools/v4_mats.py`; colour 1024 px and normal 512 px JPEGs in `assets/mats`, 7.3 MB) on
+every room's walls and floor, the ceilings, dark wood, marble, velvet, leather, gold leaf and brass, and the felt weave
+under every table layout. Phase 6: six chip faces, the king, queen and jack as plush beans, the card back and a gold
+felt crest (`tools/v4_art.py`, `assets/art`, 244 KB). `?noprops`, `?nomats` and `?noart` turn each off for comparisons;
+desktop frame times are the same with and without them.
+
 Order: 0 (Steve picks a look) → 1, 3, 9 (characters) → 4, 5, 6 (tables and rooms) → 7, 8, 10. Every image is checked
 up close for extra or missing limbs and fingers before Steve sees it. Every job id and file goes in provenance.json.
 Generated meshes are remeshed to a polygon budget and instanced so phones keep their frame rate.

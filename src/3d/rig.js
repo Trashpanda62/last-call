@@ -32,24 +32,28 @@ let rlTex = null;
 export function rouletteLayoutTex() {
   if (rlTex) return rlTex;
   const P = 512, W = Math.round(RL_FELT.w * P), H = Math.round(RL_FELT.d * P), [c, g] = T.canvas(W, H);
-  feltBase(g, W, H, '#17643c');
-  g.textAlign = 'center'; g.textBaseline = 'middle';
-  for (const cl of RL_CELLS) {
-    const x = cl.x * P, y = cl.y * P, w = cl.w * P, h = cl.h * P, cx = x + w / 2, cy = y + h / 2;
-    if (cl.id[0] === 'n') {
-      const n = +cl.id.slice(1);
-      g.fillStyle = n === 0 ? '#1f9a5a' : RED.has(n) ? '#b8282a' : '#161616';
-      g.beginPath(); g.roundRect(x + 7, y + 7, w - 14, h - 14, 10); g.fill();
-      g.fillStyle = '#fff'; g.font = ARC(n === 0 ? 74 : 50); g.fillText(String(n), cx, cy + 2);
-    } else if (cl.id === 'red' || cl.id === 'black') {
-      g.fillStyle = cl.id === 'red' ? '#c0302a' : '#111'; g.strokeStyle = '#e8c46a'; g.lineWidth = 3;
-      g.beginPath(); g.moveTo(cx, cy - h * 0.36); g.lineTo(cx + w * 0.3, cy); g.lineTo(cx, cy + h * 0.36); g.lineTo(cx - w * 0.3, cy); g.closePath(); g.fill(); g.stroke();
-    } else { g.fillStyle = '#f3e6c0'; g.font = ARC(cl.id[0] === 'c' ? 30 : 40); g.fillText(RL_LABELS[cl.id], cx, cy + 2); }
-    g.strokeStyle = '#e8c46a'; g.lineWidth = 5; g.strokeRect(x, y, w, h);
-  }
-  g.fillStyle = '#ffd040'; g.font = `bold italic 50px Georgia, serif`; g.fillText('LUCKY NUMBERS PAY UP TO 500x', (NX + 6 * CW) * P, 0.2 * P);
-  g.fillStyle = 'rgba(243,230,192,0.8)'; g.font = `italic 30px Georgia, serif`; g.fillText('Zero gives outside bets back · Columns and dozens pay 3x', (NX + 6 * CW) * P, 0.32 * P);
+  const paint = () => {
+    feltBase(g, W, H, '#17643c');
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    for (const cl of RL_CELLS) {
+      const x = cl.x * P, y = cl.y * P, w = cl.w * P, h = cl.h * P, cx = x + w / 2, cy = y + h / 2;
+      if (cl.id[0] === 'n') {
+        const n = +cl.id.slice(1);
+        g.fillStyle = n === 0 ? '#1f9a5a' : RED.has(n) ? '#b8282a' : '#161616';
+        g.beginPath(); g.roundRect(x + 7, y + 7, w - 14, h - 14, 10); g.fill();
+        g.fillStyle = '#fff'; g.font = ARC(n === 0 ? 74 : 50); g.fillText(String(n), cx, cy + 2);
+      } else if (cl.id === 'red' || cl.id === 'black') {
+        g.fillStyle = cl.id === 'red' ? '#c0302a' : '#111'; g.strokeStyle = '#e8c46a'; g.lineWidth = 3;
+        g.beginPath(); g.moveTo(cx, cy - h * 0.36); g.lineTo(cx + w * 0.3, cy); g.lineTo(cx, cy + h * 0.36); g.lineTo(cx - w * 0.3, cy); g.closePath(); g.fill(); g.stroke();
+      } else { g.fillStyle = '#f3e6c0'; g.font = ARC(cl.id[0] === 'c' ? 30 : 40); g.fillText(RL_LABELS[cl.id], cx, cy + 2); }
+      g.strokeStyle = '#e8c46a'; g.lineWidth = 5; g.strokeRect(x, y, w, h);
+    }
+    g.fillStyle = '#ffd040'; g.font = `bold italic 50px Georgia, serif`; g.fillText('LUCKY NUMBERS PAY UP TO 500x', (NX + 6 * CW) * P, 0.2 * P);
+    g.fillStyle = 'rgba(243,230,192,0.8)'; g.font = `italic 30px Georgia, serif`; g.fillText('Zero gives outside bets back · Columns and dozens pay 3x', (NX + 6 * CW) * P, 0.32 * P);
+  };
+  paint();
   rlTex = T.tex(c, false); rlTex.center.set(0.5, 0.5);
+  T.onFelts(() => { paint(); rlTex.needsUpdate = true; });
   return rlTex;
 }
 // Street dice: the point boxes down the middle, a FIELD and a PASS LINE on each long side (the far one upside down).
@@ -64,26 +68,30 @@ let diceTex = null;
 export function diceLayoutTex() {
   if (diceTex) return diceTex;
   const P = 300, W = Math.round(DF.w * P), H = Math.round(DF.d * P), [c, g] = T.canvas(W, H);
-  feltBase(g, W, H, '#1a5a8a');
-  g.textAlign = 'center'; g.textBaseline = 'middle'; g.strokeStyle = '#fff'; g.lineWidth = 4;
-  for (const p of DICE_POINTS) { g.strokeRect(p.x * P, p.y * P, p.w * P, p.h * P); g.fillStyle = '#fff'; g.font = ARC(56); g.fillText(p.n === 6 ? 'SIX' : p.n === 9 ? 'NINE' : String(p.n), (p.x + p.w / 2) * P, (p.y + p.h / 2) * P); }
-  for (const half of [1, -1]) {
-    g.save(); if (half < 0) { g.translate(W, H); g.rotate(Math.PI); }
-    const f = DICE_RECTS[0], ps = DICE_RECTS[1];
-    g.strokeStyle = '#fff'; g.lineWidth = 5;
-    g.strokeRect(f.x * P, f.y * P, f.w * P, f.h * P); g.strokeRect(ps.x * P, ps.y * P, ps.w * P, ps.h * P);
-    g.fillStyle = '#fff'; g.font = ARC(38); g.fillText('FIELD', (f.x + 0.5) * P, (f.y + f.h / 2) * P);
-    g.font = `bold 40px Georgia, serif`; g.fillText('2  ·  3  ·  4  ·  9  ·  10  ·  11  ·  12', (f.x + f.w / 2) * P, (f.y + f.h / 2) * P);
-    g.fillStyle = '#ffd040'; g.font = `bold italic 26px Georgia, serif`; g.fillText('2 and 12 pay 5x', (f.x + f.w - 0.5) * P, (f.y + f.h / 2) * P);
-    g.fillStyle = '#fff'; g.font = ARC(60); g.fillText('PASS LINE', (ps.x + ps.w / 2) * P, (ps.y + ps.h / 2) * P);
-    g.fillStyle = '#ffd040'; g.font = `bold italic 26px Georgia, serif`; g.fillText('12 WINS ON THE COME-OUT · 2x', (ps.x + ps.w / 2) * P, (ps.y + ps.h + 0.07) * P);
-    g.restore();
-  }
+  const paint = () => {
+    feltBase(g, W, H, '#1a5a8a');
+    g.textAlign = 'center'; g.textBaseline = 'middle'; g.strokeStyle = '#fff'; g.lineWidth = 4;
+    for (const p of DICE_POINTS) { g.strokeRect(p.x * P, p.y * P, p.w * P, p.h * P); g.fillStyle = '#fff'; g.font = ARC(56); g.fillText(p.n === 6 ? 'SIX' : p.n === 9 ? 'NINE' : String(p.n), (p.x + p.w / 2) * P, (p.y + p.h / 2) * P); }
+    for (const half of [1, -1]) {
+      g.save(); if (half < 0) { g.translate(W, H); g.rotate(Math.PI); }
+      const f = DICE_RECTS[0], ps = DICE_RECTS[1];
+      g.strokeStyle = '#fff'; g.lineWidth = 5;
+      g.strokeRect(f.x * P, f.y * P, f.w * P, f.h * P); g.strokeRect(ps.x * P, ps.y * P, ps.w * P, ps.h * P);
+      g.fillStyle = '#fff'; g.font = ARC(38); g.fillText('FIELD', (f.x + 0.5) * P, (f.y + f.h / 2) * P);
+      g.font = `bold 40px Georgia, serif`; g.fillText('2  ·  3  ·  4  ·  9  ·  10  ·  11  ·  12', (f.x + f.w / 2) * P, (f.y + f.h / 2) * P);
+      g.fillStyle = '#ffd040'; g.font = `bold italic 26px Georgia, serif`; g.fillText('2 and 12 pay 5x', (f.x + f.w - 0.5) * P, (f.y + f.h / 2) * P);
+      g.fillStyle = '#fff'; g.font = ARC(60); g.fillText('PASS LINE', (ps.x + ps.w / 2) * P, (ps.y + ps.h / 2) * P);
+      g.fillStyle = '#ffd040'; g.font = `bold italic 26px Georgia, serif`; g.fillText('12 WINS ON THE COME-OUT · 2x', (ps.x + ps.w / 2) * P, (ps.y + ps.h + 0.07) * P);
+      g.restore();
+    }
+  };
+  paint();
   diceTex = T.tex(c, false); diceTex.center.set(0.5, 0.5);
+  T.onFelts(() => { paint(); diceTex.needsUpdate = true; });
   return diceTex;
 }
 function feltBase(g, W, H, col) {
-  g.fillStyle = col; g.fillRect(0, 0, W, H);
+  T.feltFill(g, W, H, col);
   const rg = g.createRadialGradient(W * 0.5, H * 0.5, 40, W * 0.5, H * 0.5, W * 0.7); rg.addColorStop(0, 'rgba(255,255,255,0.1)'); rg.addColorStop(1, 'rgba(0,0,0,0.28)');
   g.fillStyle = rg; g.fillRect(0, 0, W, H);
   let s = 7; const r = () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
@@ -101,13 +109,22 @@ function label(text, w, d, { ink = '#1a1014', bg = null, size = 0.55, sub = '' }
   return T.tex(c, false);
 }
 function chipTop(i) {
-  const [c, g] = T.canvas(128, 128), col = CHIP_COL[i];
-  g.fillStyle = col; g.beginPath(); g.arc(64, 64, 64, 0, 7); g.fill();
-  g.fillStyle = 'rgba(255,255,255,0.92)';
-  for (let k = 0; k < 8; k++) { g.save(); g.translate(64, 64); g.rotate(k * Math.PI / 4); g.fillRect(-9, -63, 18, 17); g.restore(); }
-  g.strokeStyle = 'rgba(255,255,255,0.7)'; g.lineWidth = 3; g.beginPath(); g.arc(64, 64, 40, 0, 7); g.stroke();
-  g.fillStyle = CHIP_INK[i]; g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = ARC(i >= 4 ? 30 : 34); g.fillText(chipLabel(CHIPS[i]), 64, 67);
-  return T.tex(c, false);
+  const [c, g] = T.canvas(256, 256), col = CHIP_COL[i], t = T.tex(c, false);
+  const paint = () => {
+    const art = T.artImage('chip' + i);
+    g.clearRect(0, 0, 256, 256);
+    if (art) { g.save(); g.beginPath(); g.arc(128, 128, 128, 0, 7); g.clip(); g.drawImage(art, 0, 0, 256, 256); g.restore(); }
+    else {
+      g.fillStyle = col; g.beginPath(); g.arc(128, 128, 128, 0, 7); g.fill();
+      g.fillStyle = 'rgba(255,255,255,0.92)';
+      for (let k = 0; k < 8; k++) { g.save(); g.translate(128, 128); g.rotate(k * Math.PI / 4); g.fillRect(-18, -126, 36, 34); g.restore(); }
+      g.strokeStyle = 'rgba(255,255,255,0.7)'; g.lineWidth = 6; g.beginPath(); g.arc(128, 128, 80, 0, 7); g.stroke();
+    }
+    g.fillStyle = CHIP_INK[i]; g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = ARC(i >= 4 ? 60 : 68); g.fillText(chipLabel(CHIPS[i]), 128, 134);
+    t.needsUpdate = true;
+  };
+  paint(); T.onArt(paint);
+  return t;
 }
 // One grey stripe mask for the stacked chips; the instance colour fills the rest (see stackMat).
 function stripes(side) {
