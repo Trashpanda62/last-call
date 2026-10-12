@@ -265,7 +265,7 @@ export function buildRig(ctx, seats, felts) {
   const slotBar = new THREE.Group(); root.add(slotBar);
   const slotBtns = [['betdn', 'BET −', 0xe8e0cc], ['betup', 'BET +', 0xe8e0cc], ['maxbet', 'MAX BET', 0xe8b440], ['auto', 'AUTO', 0x3fe0ff]].map(([id, t, c], i) => {
     const b = button('btn:' + id, t, 0.13, 0.085, c, { size: 0.42, h: 0.03 }); b.position.set((i - 1.5) * 0.145, 0, 0); slotBar.add(b); return b; });
-  slotBar.add(at(new THREE.Mesh(rbox(0.62, 0.02, 0.12, 0.01), MAT.blackGloss), 0, -0.01, 0));
+  slotBar.add(at(new THREE.Mesh(rbox(0.62, 0.02, 0.12, 0.01), SLAB), 0, -0.01, 0));
   const plScr = liveLabel(512, 248, (g, w, h, t, my) => {
     const lg = g.createLinearGradient(0, 0, 0, h); lg.addColorStop(0, '#0a1a3a'); lg.addColorStop(1, '#020610'); g.fillStyle = lg; g.fillRect(0, 0, w, h);
     g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#9fd0ff'; g.font = ARC(h * 0.11); g.fillText('PICK YOUR RISK', w / 2, h * 0.14);
@@ -342,7 +342,7 @@ export function buildRig(ctx, seats, felts) {
     hit.length = 0;
     const addHits = (obj) => obj.traverse(m => { if (m.isMesh && (m.userData.part || m.userData.uvPart || m.userData.scr)) hit.push(m); });
     if (A.kit) { // on a tall phone the chips and buttons sit straight ahead and the keypad off to the left
-      place(kit, F, portrait && touch ? [A.kit[0], A.kit[1] - 0.15 * sc, A.kit[2], A.kit[3]] : A.kit, sc);
+      place(kit, F, portrait && touch ? [A.kit[0], A.kit[1] - (A.kit[0] > 0.55 ? 0.21 : 0.15) * sc, A.kit[2], A.kit[3]] : A.kit, sc);
       for (const b of keys) addHits(b); for (const c of chipBtns) addHits(c); for (const b of rails) addHits(b);
       const row = gameRow(my.game); row.visible = true; addHits(row);
     }
@@ -355,7 +355,7 @@ export function buildRig(ctx, seats, felts) {
     if (A.plunger) { place(plunger, F, A.plunger, sc); addHits(plunger); }
     if (A.autos) { place(autos, F, A.autos, sc); for (const b of autoBtns) addHits(b); }
     if (A.handle) { place(handle, F, A.handle, sc); addHits(handle); }
-    if (A.bar) { place(slotBar, F, A.bar, sc); for (const b of slotBtns) addHits(b); }
+    if (A.bar) { place(slotBar, F, A.bar, portrait ? SCALE.desk : sc); for (const b of slotBtns) addHits(b); } // a tall phone sees the whole bar, clear of the side buttons
     if (A.scr) { place(plScrMesh, F, A.scr); plScrMesh.rotation.set(-Math.PI / 2 + (A.scr[3] || 0), F.yaw, 0, 'YXZ'); plScrMesh.position.y += 0.012; hit.push(plScrMesh); cur.scr = plScrMesh; }
     if (my.game === 'roulette') { rlFlip = seat.face > 0; rouletteLayoutTex().rotation = rlFlip ? Math.PI : 0; hit.push(rl); }
     if (my.game === 'dice') { dcFlip = seat.face > 0; diceLayoutTex().rotation = dcFlip ? Math.PI : 0; hit.push(dc); }

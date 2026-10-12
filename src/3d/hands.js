@@ -47,7 +47,8 @@ export class Hands {
   play(kind, at) {
     this.anim = { kind, t: 0, dur: { sip: 1.0, poison: 1.1, stab: 0.5, crunch: 0.8, coin: 0.45, click: 0.3, press: 0.38, pull: 0.65, throw: 0.6 }[kind] || 0.5 };
     if (at && kind !== 'throw' && kind !== 'sip') {
-      const d = new THREE.Vector3(at.x, at.y, 0.5).unproject(this.camera).normalize(), k = 0.52 / Math.max(0.3, -d.z);
+      // on a tall screen the hand stops further out, or it fills the narrow view
+      const d = new THREE.Vector3(at.x, at.y, 0.5).unproject(this.camera).normalize(), k = (this.camera.aspect < 1 ? 0.72 : 0.52) / Math.max(0.3, -d.z);
       this.anim.to = d.multiplyScalar(k).add(new THREE.Vector3(0, -0.035, 0.11)); // the wrist sits behind the fingertip
       this.anim.hand = at.x < -0.12 ? this.left : this.right;
     }
@@ -87,6 +88,9 @@ export class Hands {
       const a = this.anim; a.t += dt; const p = Math.min(1, a.t / a.dur), k = Math.sin(p * Math.PI);
       if (a.to) { // reach: out to the point and back, finger out; a pull drags down at the end
         const h = a.hand, e = p < 0.45 ? Math.sin(p / 0.45 * Math.PI / 2) : Math.cos((p - 0.45) / 0.55 * Math.PI / 2);
+        // the arm points from where the hand rests to the target, so the sleeve trails off the bottom of the view
+        const fwd = Math.max(0.05, h.position.z - a.to.z);
+        h.rotation.x += Math.atan2(a.to.y - h.position.y, fwd) * e; h.rotation.y -= Math.atan2(a.to.x - h.position.x, fwd) * e;
         h.position.lerp(a.to, e);
         if (a.kind === 'pull') { h.position.y -= Math.max(0, Math.sin((p - 0.35) / 0.65 * Math.PI)) * 0.12 * (p > 0.35 ? 1 : 0); h.userData.glove.userData.curl(0.95); }
         else h.userData.glove.userData.curl(0.25 + 0.5 * e);

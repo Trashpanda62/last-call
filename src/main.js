@@ -184,7 +184,7 @@ function moveMe(dt) {
   const p = v.priv, me = S.me;
   if (p.posVer !== me.posVer) {
     me.x = p.x; me.y = p.y; me.posVer = p.posVer; S.standReq = false;
-    if (p.seat) { me.look = p.seat.face; me.pitch = (SEAT_PITCH[p.seat.game] ?? -0.4) + (touchMode ? (innerHeight > innerWidth ? 0.14 : 0.05) : 0); } else if (S.wasSeated) me.pitch = 0;
+    if (p.seat) { me.look = p.seat.face; me.pitch = (SEAT_PITCH[p.seat.game] ?? -0.4) + (touchMode ? (innerHeight > innerWidth ? (p.seat.game === 'slots' ? 0 : 0.14) : 0.05) : 0); } else if (S.wasSeated) me.pitch = 0;
     else { const c = v.pub.chars[p.me]; if (c) me.look = c.look; me.pitch = 0; }
     S.wasSeated = !!p.seat;
   }
