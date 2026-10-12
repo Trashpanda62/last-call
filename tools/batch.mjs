@@ -2,9 +2,12 @@
 // The one human seat idles (never moves, never votes), so this is the killer's best case.
 import { createGame } from '../src/sim.js';
 import { CFG } from '../src/config.js';
+// overrides: CFG='{"voteThreshold":40}' in the environment, or --cfg={...} as an argument (survives job schedulers)
+const cfgArg = process.argv.find(a => a.startsWith('--cfg='));
 if (process.env.CFG) Object.assign(CFG, JSON.parse(process.env.CFG));
+if (cfgArg) Object.assign(CFG, JSON.parse(cfgArg.slice(6)));
 
-const [games = 40, players = 6, killers = 1, difficulty = 'normal'] = process.argv.slice(2).map((v, i) => i < 3 ? +v : v);
+const [games = 40, players = 6, killers = 1, difficulty = 'normal'] = process.argv.slice(2).filter(a => !a.startsWith('--')).map((v, i) => i < 3 ? +v : v);
 const res = { killers: 0, gamblers: 0, timeout: 0, bankWins: 0, ejectWins: 0, len: [], meetings: 0, ejectsRight: 0, ejectsWrong: 0, errors: 0 };
 for (let i = 0; i < games; i++) {
   try {

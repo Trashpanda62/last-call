@@ -169,6 +169,12 @@ body.touch #secCard { top: auto; bottom: 60px; transform: none; width: min(60vw,
 #mChat p { margin: 0 0 8px; animation: fade-in 0.3s; }
 @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; } }
 #mChat .who { font-weight: bold; }
+#mChat .mood { font-size: 11px; margin: 0 2px 0 5px; padding: 0 5px; border-radius: 6px; vertical-align: 1px; background: #2a1c22; color: var(--muted); }
+#mChat .emo-anger .mood { background: #4a1414; color: #ffb0a0; }
+#mChat .emo-fear .mood { background: #1c2c40; color: #a8d0ff; }
+#mChat .emo-grief .mood { background: #2a2440; color: #c8b8ff; }
+#mChat .emo-smug .mood { background: #3a3014; color: #ffe08a; }
+#mChat .emo-anger { color: #ffe2dc; }
 #chatForm { display: flex; gap: 6px; }
 #chatForm input { flex: 1; }
 #mSide { flex: 0 1 300px; }

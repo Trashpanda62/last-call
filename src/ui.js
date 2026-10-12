@@ -53,6 +53,7 @@ const CAUSES = [['poison', 'poisoned'], ['trap', 'rigged'], ['blade', 'knifed'],
 function deaths(st) { const p = CAUSES.filter(([k]) => st[k]).map(([k, w]) => `${st[k]} ${w}`); return p.length ? p.join(', ') : 'nobody died'; }
 
 // ---------- Meeting ----------
+const MOOD_TAG = { anger: 'angry', fear: 'scared', grief: 'upset', smug: 'smug' };
 let mKey = '', mLines = 0, mVoteKey = '';
 export function resetMeeting() { mKey = ''; mLines = 0; mVoteKey = ''; $('mChat').innerHTML = ''; show('ejectStrip', false); }
 export function renderMeeting(v, act, multi) {
@@ -65,11 +66,13 @@ export function renderMeeting(v, act, multi) {
     $('mNotes').innerHTML = priv.alive
       ? '<b>Your notes</b><br>' + (notes.length ? notes.slice(-8).map(n => `<div class="${n.hard ? 'hard' : ''}">· ${n.text}</div>`).join('') : 'You saw nothing useful.')
       : "<b>You're a ghost.</b> Ghosts can't vote, but they can watch.";
-    show('chatForm', multi && priv.alive);
+    show('chatForm', priv.alive); // the bots read the chat too
   }
   while (mLines < m.lines.length) {
     const l = m.lines[mLines++]; const c = pub.chars[l.who];
-    const p = document.createElement('p'); p.innerHTML = `<span class="who" style="color:${c.color}">${esc(c.name)}${c.id === priv.me ? ' (you)' : ''}</span>: ${esc(l.text)}`;
+    const p = document.createElement('p'); p.className = 'emo-' + (l.emo || 'calm');
+    const tag = MOOD_TAG[l.emo] ? `<span class="mood">${MOOD_TAG[l.emo]}</span>` : '';
+    p.innerHTML = `<span class="who" style="color:${c.color}">${esc(c.name)}${c.id === priv.me ? ' (you)' : ''}</span>:${tag} ${esc(l.text)}`;
     $('mChat').appendChild(p); $('mChat').scrollTop = 1e6;
   }
   const vk = [m.phase, priv.voted, priv.accused, m.voted.join(','), JSON.stringify(m.tally)].join('|');

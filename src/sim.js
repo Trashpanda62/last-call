@@ -3,6 +3,7 @@ import { CFG, DIFF, CAST, DRINKS } from './config.js';
 import { rand, pick, clamp, dist, angDiff, money, shuffle } from './util.js';
 import { ROOMS, TAP, BELL, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, W, H, makeSeats, los, collide, roomOf, route } from './map.js';
 import * as Gm from './games.js';
+import { makeTalk } from './talk.js';
 
 // "Red", "Red and Mint", "Red, Mint and Pip"
 export const nameList = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
@@ -52,7 +53,7 @@ export function createGame(opts) {
       heard: [], hauntUsed: false, disguise: null, trapT: 0, killedBy: null,
     });
   }
-  for (const c of G.chars) for (const o of G.chars) c.sus[o.id] = 0;
+  for (const c of G.chars) { for (const o of G.chars) c.sus[o.id] = 0; c.friend = pick(G.chars.filter(o => o !== c)).id; c.trail = [{ t: 0, room: roomOf(c) }]; c.seenLog = {}; }
   const api = makeApi(G);
   G.crash = api.newCrash(); G.race = api.newRace();
   for (const c of G.chars) if (c.isHuman) {
@@ -581,7 +582,10 @@ function makeApi(G) {
       for (const c of G.chars) {
         if (c === v || !c.alive || !canSee(v, c)) continue;
         const a = appearAs(c);
-        v.lastSeen[a.id] = { t: G.t, room: roomOf(c), with: G.chars.filter(o => o !== c && o !== v && o.alive && dist(o, c) < 90).map(o => appearAs(o).id) };
+        const room = roomOf(c);
+        v.lastSeen[a.id] = { t: G.t, room, with: G.chars.filter(o => o !== c && o !== v && o.alive && dist(o, c) < 90).map(o => appearAs(o).id) };
+        const log = v.seenLog[a.id] || (v.seenLog[a.id] = []), le = log[log.length - 1];
+        if (!le || le.room !== room || G.t - le.t > 5) { log.push({ t: G.t, room }); if (log.length > 40) log.shift(); }
         for (const b of G.bowls) {
           if (dist(c, b) > 40) continue;
           const key = a.id + ':bowl' + b.id + ':' + Math.floor(G.t / 30);
@@ -635,9 +639,10 @@ function makeApi(G) {
     G.guardSaw = null;
     G.meeting = {
       title: body ? 'Body reported' : spiked ? 'Murder plot!' : gs ? 'Security report' : 'Emergency meeting', reason,
-      queue: buildStatements(victims, spiked, caller), lines: [], extra: [], phase: 'talk', talkT: 0.6, voteT: CFG.voteTime, resultT: CFG.resultTime,
+      lines: [], extra: [], phase: 'talk', talkT: 0.6, voteT: CFG.voteTime, resultT: CFG.resultTime,
       result: '', tally: null, victims: victims.map(v => v.id),
     };
+    talk.open(G.meeting, victims, spiked, caller);
     for (const h of humans()) sfxTo(h, 'meeting');
   }
   function guardMeeting(body) {
@@ -646,107 +651,46 @@ function makeApi(G) {
     const found = body ? `The security guard found ${byId(body.id).name}'s body.` : '';
     callMeeting(null, body, [found, what].filter(Boolean).join(' '), null);
   }
-  const CAUSE_WORDS = { poison: 'poisoned', trap: 'killed by a rigged machine', blade: 'strangled', chandelier: 'crushed by a chandelier', drown: 'drowned in the duck pond' };
-  function buildStatements(victims, spiked, caller) {
-    const out = [];
-    const order = shuffle(G.chars.filter(c => c.alive && !c.isHuman));
-    if (caller && !caller.isHuman && order.includes(caller)) { order.splice(order.indexOf(caller), 1); order.unshift(caller); }
-    const poisoned = victims.filter(v => v.cause === 'poison').map(v => v.id);
-    if (spiked && spiked.owner !== undefined) poisoned.push(spiked.owner);
-    const rigged = victims.some(v => v.cause === 'trap') || (spiked && spiked.trap);
-    for (const b of order) {
-      const acc = {}; let text = '';
-      const say = (id, n, s) => { acc[id] = (acc[id] || 0) + n; text += s + ' '; };
-      if (b.isKiller) {
-        const others = G.chars.filter(c => c.alive && c !== b && !c.isKiller);
-        const accusedMe = out.find(l => l.acc[b.id] > 0);
-        if (accusedMe && Math.random() < 0.7) { const liar = byId(accusedMe.who); acc[liar.id] = 40; text = `That's a lie. ${liar.name} is trying to pin this on me. I was at ${pick(Object.values(ROOMS)).name}.`; }
-        else if (Math.random() < 0.6 && others.length) {
-          const x = pick(others);
-          if (poisoned.length) say(x.id, 35, `I saw ${x.name} at the bar sending drinks around.`);
-          else if (rigged) say(x.id, 35, `${x.name} was messing with machines all night.`);
-          else say(x.id, 25, `${x.name} was alone with them right before. Just saying.`);
-        } else text = pick(["I was at the tables the whole time. Didn't see a thing.", 'I was getting a drink. This is terrifying.', 'Can we skip? We have no proof.']);
-      } else {
-        for (const w of b.witnessed.filter(w => !w.used && w.hard)) {
-          w.used = true;
-          if (w.fake) text += `I saw ${byId(w.who).name} ${w.phrase}... but ${byId(w.who).name} was already dead. Someone is wearing their face. `;
-          else say(w.who, w.what === 'rig' || w.what === 'chandelier' ? 80 : 120, `I SAW ${byId(w.who).name} ${w.phrase}!`);
-        }
-        for (const w of b.witnessed.filter(w => !w.used && !w.hard && w.what === 'send' && poisoned.includes(w.victim))) {
-          w.used = true;
-          if (!w.fake && byId(w.who).alive) say(w.who, 60, `${byId(w.who).name} sent ${byId(w.victim).name} a drink right before. That drink was poisoned.`);
-        }
-        for (const v of victims.filter(v => v.cause === 'poison' && String(v.drinkId).startsWith('bowl'))) {
-          const sus = [...(b.touches[v.drinkId] || [])].filter(id => id !== b.id && id !== v.id && byId(id).alive);
-          if (sus.length) { const x = byId(pick(sus)); say(x.id, 35, `${x.name} was at that snack bowl.`); }
-        }
-        for (const h of b.heard.filter(h => !h.used)) {
-          h.used = true;
-          text += `I heard a scream from ${ROOMS[h.room].name}. `;
-          const near = Object.entries(b.lastSeen).filter(([id, s]) => +id !== h.victim && s.room === h.room && h.t - s.t < 25 && s.t <= h.t + 1 && byId(id).alive);
-          if (near.length) { const x = byId(pick(near)[0]); say(x.id, 30, `${x.name} was in there just before.`); }
-        }
-        if (!text) for (const v of victims.filter(v => v.cause !== 'poison')) {
-          const ls = b.lastSeen[v.id];
-          if (ls && ls.with.length && G.t - ls.t < 60) { const x = byId(pick(ls.with)); if (x !== b && x.alive) say(x.id, 25, `Last I saw ${byId(v.id).name}, ${x.name} was right next to them in ${ROOMS[ls.room].name}.`); }
-        }
-        if (!text) {
-          const top = Object.entries(b.sus).filter(([id]) => +id !== b.id && byId(id).alive).sort((x, y) => y[1] - x[1])[0];
-          if (top && top[1] > 20) { acc[top[0]] = 15; text = `I still don't trust ${byId(top[0]).name}.`; }
-          else text = pick([`I was at ${b.seat ? GAME_NAMES[b.seat.game] : 'the tables'}. Didn't see anything.`, 'I was busy losing money, sorry.', 'No idea. Somebody start talking.', "I didn't see it. Check your seats before you sit, people."]);
-        }
-      }
-      out.push({ who: b.id, text: text.trim(), acc });
-    }
-    return out;
-  }
   function trust(listener, speaker) {
     if (listener === speaker) return 0;
     if (listener.witnessed.some(w => w.who === speaker.id)) return 0;
     return clamp(0.6 - listener.sus[speaker.id] / 200, 0, 0.8);
   }
+  const talk = makeTalk(G, { byId, trust, humans, sfxTo, tell, GAME_NAMES });
+  // Lines come one at a time; longer ones stay up longer.
+  function pushLine(m, l) {
+    m.lines.push({ who: l.who, text: l.text, emo: l.emo || 'calm' });
+    if (l.acc && Object.keys(l.acc).length) m.extra.push({ who: l.who, acc: l.acc });
+    m.talkT = clamp(0.35 + l.text.length / 60, 0.8, 3) * CFG.talkGap / 0.9;
+    for (const h of humans()) sfxTo(h, 'chat');
+  }
   function meetingTick(dt) {
     const m = G.meeting;
+    m.talkT -= dt;
     if (m.phase === 'talk') {
-      m.talkT -= dt;
-      if (m.talkT <= 0) {
-        if (!m.queue.length) { m.phase = 'vote'; return; }
-        const l = m.queue.shift(); m.lines.push({ who: l.who, text: l.text }); m.extra.push(l); m.talkT = CFG.talkGap;
-        for (const h of humans()) sfxTo(h, 'chat');
-      }
+      if (m.talkT > 0) return;
+      const l = talk.next(m);
+      if (l) pushLine(m, l); else { m.phase = 'vote'; talk.startVote(m); }
       return;
     }
     if (m.phase === 'vote') {
       m.voteT -= dt;
-      const voters = humans().filter(h => h.alive);
-      if (m.voteT <= 0 || (voters.length && voters.every(h => h.voted !== null)) || (!voters.length && m.voteT < CFG.voteTime - 3)) resolveVotes();
+      talk.voteTick(m, dt);
+      if (m.talkT <= 0) { const l = talk.next(m, true); if (l) pushLine(m, l); }
+      if (m.voteT <= 0 || talk.allVoted()) resolveVotes();
       return;
     }
     m.resultT -= dt;
+    if (m.talkT <= 0) { const l = talk.next(m, true); if (l) pushLine(m, l); }
     if (m.resultT <= 0) endMeeting();
   }
   function resolveVotes() {
     const m = G.meeting; m.phase = 'result';
     const alive = G.chars.filter(c => c.alive);
-    const statements = m.extra;
+    for (const b of alive) if (!b.isHuman && b.voted === null) b.voted = talk.decide(b);
+    for (const b of alive.filter(c => !c.isHuman)) for (const st of m.extra) for (const id in st.acc) if (+id !== b.id && byId(st.who)) b.sus[id] += st.acc[id] * trust(b, byId(st.who)) * 0.3;
     const tally = {}; let skips = 0;
-    for (const b of alive.filter(c => !c.isHuman)) {
-      const score = {};
-      for (const c of alive) score[c.id] = c === b || (b.isKiller && c.isKiller) ? -999 : b.sus[c.id];
-      for (const st of statements) {
-        const sp = byId(st.who); const tr = trust(b, sp);
-        for (const id in st.acc) {
-          if (+id === b.id && !b.isKiller) { b.sus[sp.id] += 45; continue; } // they know that's a lie
-          if (score[id] !== undefined && score[id] > -999) score[id] += st.acc[id] * tr;
-        }
-      }
-      for (const id in score) score[id] += rand(-8, 8);
-      const best = Object.entries(score).sort((x, y) => y[1] - x[1])[0];
-      if (best && best[1] >= CFG.voteThreshold + Math.max(0, alive.length - 7) * CFG.voteThresholdPer) tally[best[0]] = (tally[best[0]] || 0) + 1; else skips++;
-      for (const st of statements) for (const id in st.acc) if (+id !== b.id) b.sus[id] += st.acc[id] * trust(b, byId(st.who)) * 0.3;
-    }
-    for (const h of humans().filter(h => h.alive)) { if (h.voted !== null && h.voted >= 0) tally[h.voted] = (tally[h.voted] || 0) + 1; else skips++; }
+    for (const c of alive) { if (c.voted !== null && c.voted >= 0 && byId(c.voted).alive) tally[c.voted] = (tally[c.voted] || 0) + 1; else skips++; }
     const sorted = Object.entries(tally).sort((x, y) => y[1] - x[1]);
     let ej = null;
     if (sorted.length && sorted[0][1] > skips && !(sorted[1] && sorted[1][1] === sorted[0][1])) ej = byId(sorted[0][0]);
@@ -762,6 +706,8 @@ function makeApi(G) {
         : `${ej.name} got thrown out by security. ${ej.name} was NOT ${G.killerIds.length > 1 ? 'a' : 'the'} killer.`;
       if (ej.isHuman) tell(ej, "Security threw you out. You're a ghost now.", true);
     }
+    talk.after(m, ej);
+    m.talkT = 1.2; m.resultT = CFG.resultTime + m.talk.replies.length * 1.8;
     for (const h of humans()) sfxTo(h, ej ? (ej.isKiller ? 'cheer' : 'boo') : 'chat');
   }
   function endMeeting() {
@@ -872,12 +818,12 @@ function makeApi(G) {
       const m = G.meeting;
       if (k === 'chat' && c.alive && typeof arg === 'string') {
         const text = arg.replace(/\s+/g, ' ').trim().slice(0, 140);
-        if (text) { m.lines.push({ who: c.id, text }); for (const h of humans()) sfxTo(h, 'chat'); }
+        if (text) { m.lines.push({ who: c.id, text, emo: 'calm' }); for (const h of humans()) sfxTo(h, 'chat'); if (m.phase !== 'result') talk.hear(m, c, text); }
       }
       if (m.phase === 'result' || !c.alive) return;
       if (k === 'vote' && c.voted === null && (arg === -1 || (byId(arg) && byId(arg).alive && arg !== c.id))) c.voted = arg;
       if (k === 'accuse' && !c.accused && byId(arg) && byId(arg).alive && arg !== c.id) {
-        c.accused = true; m.extra.push({ who: c.id, acc: { [arg]: 40 } }); m.lines.push({ who: c.id, text: `I think it's ${byId(arg).name}.` });
+        c.accused = true; m.lines.push({ who: c.id, text: `I think it's ${byId(arg).name}.`, emo: 'anger' }); talk.hear(m, c, `${byId(arg).name} is the killer`);
       }
       return;
     }
@@ -978,6 +924,7 @@ function makeApi(G) {
         if (!c.sickTold && sick(c)) { c.sickTold = true; tell(c, G.antidotes > 0 ? `You feel sick. Poison! Get the antidote at the bar in ${Math.floor(c.poisonT)} seconds.` : 'You feel sick. Poison, and the antidote is gone.', true, 'poison'); }
       }
       if (c.isHuman) humanTick(c, dt); else botTick(c, dt);
+      const room = roomOf(c), tr = c.trail; if (tr[tr.length - 1].room !== room) { tr.push({ t: G.t, room }); if (tr.length > 60) tr.shift(); }
       if (c.drink) { c.drink.x = c.x + Math.cos(c.face + 0.9) * 16; c.drink.y = c.y + Math.sin(c.face + 0.9) * 16; }
       if (G.mode !== 'play') break;
     }
@@ -1024,7 +971,7 @@ function makeApi(G) {
       race: { phase: G.race.phase, t: +G.race.t.toFixed(2), pays: G.race.form.pays, winner: G.race.phase === 'bet' ? null : G.race.winner, seed: G.race.seed, round: G.race.round,
         bets: [...G.race.bets].map(([id, b]) => [id, b.duck, b.bet]) },
       meeting: m && { title: m.title, reason: m.reason, phase: m.phase, lines: m.lines.slice(), voteT: Math.ceil(m.voteT), result: m.result, tally: m.tally, skips: m.skips,
-        ejected: m.ejected ?? null, ejectedKiller: !!m.ejectedKiller, voted: G.chars.filter(c => c.alive && c.isHuman && c.voted !== null).map(c => c.id) },
+        ejected: m.ejected ?? null, ejectedKiller: !!m.ejectedKiller, voted: G.chars.filter(c => c.alive && c.voted !== null).map(c => c.id) },
       over: G.over,
     };
   }
