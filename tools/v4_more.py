@@ -296,8 +296,12 @@ def export():
             if f != folder_of(n) and (f / 'result.json').is_file():
                 prov.append(dict(row(n, f, None), note='superseded by ' + folder_of(n).name))
     hats = ROOT / 'assets' / 'hats'; hats.mkdir(parents=True, exist_ok=True)
+    UPRIGHT = {'beanie': 'upright', 'chef': 'tilt=60,0'}  # came out tipped on their sides (the chef's puff fools the search)
+    only = set(sys.argv[2].split(',')) if len(sys.argv) > 2 and sys.argv[1] == 'export' else None
     for who, (kind, _) in HATS.items():
         n = 'hat-' + kind
+        if only and kind not in only:
+            prov.append(row(n, folder_of(n), None)); prov.append(row(n + 'Mesh', RUNS / f'{n}Mesh', f'assets/hats/{kind}.glb')); continue
         g = sorted((RUNS / f'{n}Mesh' / 'assets').glob('*.glb'))
         if not g:
             print('no mesh', n)
@@ -306,7 +310,8 @@ def export():
         chk = str(ROOT / '.dev' / 'fit' / n)
         size = '0.62,0,0' if kind in ('sombrero', 'cowboy') else '0.5,0,0' if kind in ('tophat', 'fedora', 'bowler', 'pirate', 'flower') else '0.46,0,0'
         r = subprocess.run(SCHED + [BLENDER, '-b', '--factory-startup', '--python', str(ROOT / 'tools' / 'prop_fit.py'), '--', str(g[0]),
-                                    str(hats / f'{kind}.glb'), size, 'uniform', '0', '8000', '512', chk, 'bake'], capture_output=True, text=True)
+                                    str(hats / f'{kind}.glb'), size, 'uniform', '0', '8000', '512', chk, 'bake',
+                                    UPRIGHT.get(kind, '-')], capture_output=True, text=True)
         print(next((l for l in r.stdout.splitlines() if l.startswith('FIT')), 'FAILED ' + n + ' ' + (r.stderr or r.stdout)[-300:]))
         prov.append(row(n, folder_of(n), None)); prov.append(row(n + 'Mesh', RUNS / f'{n}Mesh', f'assets/hats/{kind}.glb'))
     (hats / 'hats.json').write_text(json.dumps(sorted(p.stem for p in hats.glob('*.glb'))) + '\n', encoding='utf-8')  # what plush.js loads

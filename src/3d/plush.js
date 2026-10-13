@@ -26,6 +26,7 @@ export function loadPlush(base = 'assets/chars/') {
 // Sorceress hats (plan-v4 phase 2, assets/hats; tools/v4_more.py): each replaces the hand-built hat of its kind, sized
 // and seated like it. Beans made before they load get theirs swapped in.
 const HAT_SRC = {}, hatted = new Set();
+const HAT_GROW = { party: 1.6 }; // the hand-built party hat is a thin cone; the model reads too small at its width
 export function loadHats(base = 'assets/hats/') {
   if (/[?&](toy|noprops)\b/.test(location.search)) return;
   const loader = new GLTFLoader();
@@ -36,7 +37,7 @@ export function loadHats(base = 'assets/hats/') {
 function hatModel(kind, color) {
   const src = HAT_SRC[kind]; if (!src) return null;
   const ref = new THREE.Box3().setFromObject(makeHat(kind, color)), m = src.clone(true), gb = new THREE.Box3().setFromObject(m);
-  const k = (ref.max.x - ref.min.x) / (gb.max.x - gb.min.x);
+  const k = (ref.max.x - ref.min.x) / (gb.max.x - gb.min.x) * (HAT_GROW[kind] || 1);
   m.scale.setScalar(k); m.position.y = ref.min.y - gb.min.y * k;
   m.traverse(o => { if (o.isMesh) { o.castShadow = true; o.material.envMapIntensity = 0.4; } });
   const g = new THREE.Group(); g.add(m); g.userData.model = true; return g;

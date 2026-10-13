@@ -29,11 +29,12 @@ let LIB = null;
 const BUF = {};
 // Steve's pick of each music piece's two takes (0 = the first); the review page sets lc.take.<name> to compare.
 const TAKE = {};
+const PICKS = { alley: 1, bar: 1, eject: 1 }; // Steve's picks, 2026-10-13; the rest take A
 async function loadLibrary() {
   if (/[?&]synth\b/.test(location.search)) return; // the synthesized set (comparisons)
   try {
     LIB = await (await fetch('assets/audio/audio.json')).json();
-    for (const k in LIB.music) { const t = +load('lc.take.' + k); TAKE[k] = t >= 0 && t < LIB.music[k].length ? t : 0; }
+    for (const k in LIB.music) { const s = load('lc.take.' + k), t = s == null ? PICKS[k] || 0 : +s; TAKE[k] = t >= 0 && t < LIB.music[k].length ? t : 0; }
     playMood();
     await Promise.all(Object.entries(LIB.sfx).map(async ([k, files]) => {
       BUF[k] = (await Promise.all(files.map(f => fetch('assets/audio/' + f).then(r => r.arrayBuffer()).then(b => ac.decodeAudioData(b)).catch(() => null)))).filter(Boolean);

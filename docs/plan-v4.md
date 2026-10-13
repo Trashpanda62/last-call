@@ -122,13 +122,13 @@ desktop frame times are the same with and without them.
 `assets/hats`. Phase 7: six plush slot symbols (keyed off green) on the reels, the 14 neon signs (each plane takes its
 sign's shape) and backdrops on the Crash, Mines, Tower, Plinko, wheel and coin screens; the cabinet toppers became those
 backdrops, since the Meshy cabinets carry their own. Phase 8: 12 full-bleed oil paintings of plush beans in the gilded
-frames (three are the first round's canvases, cropped, after the account ran out), 8 Art Deco posters on the walls, a
+frames (the last three redone full-bleed after the credits were refilled), 8 Art Deco posters on the walls, a
 painted city round the alley under its stars, and key art behind the menu (a portrait one on phones), the meeting, an
 ejection and both endings. Phase 10: seven effect sprites (smoke, sparks, confetti, fizz, boom, stars, ghost) over the
-particles. Phase 2: 11 of the 16 hats as Hunyuan meshes baked onto 8,000 triangles (`tools/prop_fit.py bake`); the crown
-mesh never finished and the propeller, chef, headphones and sombrero designs are made but their meshes need credits, so
-those five keep the hand-built hats. The shared Sorceress account is at 0 (the Playground Rules spend came out of it
-too). The props' cracked rails were the decimation tearing UV seams, not the models: `prop_fit.py` welds them first and
+particles. Phase 2: all 16 hats as Hunyuan meshes baked onto 8,000 triangles (`tools/prop_fit.py bake`); the last five
+(crown, propeller, chef, headphones, sombrero) came after the shared account was refilled. The beanie and chef came
+out on their sides and are stood up in the fit (`upright`, `tilt=`); the party hat is drawn 1.6 times its hand-built
+cone's width. The props' cracked rails were the decimation tearing UV seams, not the models: `prop_fit.py` welds them first and
 every prop was refitted, no retakes needed.
 
 Order: 0 (Steve picks a look) → 1, 3, 9 (characters) → 4, 5, 6 (tables and rooms) → 7, 8, 10. Every image is checked
@@ -159,7 +159,8 @@ and boom, gems and mines, starter gun, splashes, pours, sips, fizz, stab, fall, 
 haunt, footsteps on carpet, wood, tile and street), eight 30 s room loops, and two takes of 13 music pieces (menu, six
 room themes, meeting, eject, win, lose and both endings). `src/audio.js` plays them (the synth stands in until they
 load): music and ambience crossfade as you walk between rooms, meetings and endings get their own, and the stings play
-over. Steve picks takes at https://trashpanda62.github.io/last-call/audio-review.html (the first take plays until then).
+over. Steve's picks (2026-10-13): take B of the alley, bar and eject, take A of the rest; `audio.js` and
+https://trashpanda62.github.io/last-call/audio-review.html default to them (a pick made on the page still wins on that device).
 
 ## 6. Checks
 

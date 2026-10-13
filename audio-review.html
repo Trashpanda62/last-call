@@ -34,6 +34,7 @@
 <script>
 const NOTES = { menu: 'Main menu', floor: 'Casino floor and slot hall', bar: 'The bar (and quietly in the restrooms)', vip: 'VIP lounge', arcade: 'Arcade', alley: 'Back alley',
   race: 'Duck pond', meeting: 'Meetings', eject: 'Someone is thrown out', win: 'A big win at a table', lose: 'A losing hand', gamblersWin: 'Gamblers win the game', killersWin: 'Killers win the game' };
+const PICKS = { alley: 1, bar: 1, eject: 1 }; // Steve's picks, 2026-10-13; the rest take A
 const store = { get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* private mode */ } } };
 const player = new Audio(); let playing = null;
 function play(url, btn) {
@@ -48,7 +49,8 @@ fetch('assets/audio/audio.json').then(r => r.json()).then(L => {
   for (const [name, takes] of Object.entries(L.music)) {
     const row = el('div', 'row'); row.append(el('div', 'name', name), el('div', 'note', NOTES[name] || ''));
     const btns = el('div', 'btns'), pickBtns = [];
-    picks[name] = +(store.get('lc.take.' + name) || 0);
+    const s = store.get('lc.take.' + name);
+    picks[name] = s == null ? (PICKS[name] || 0) : +s;
     takes.forEach((f, i) => {
       const b = el('button', '', '▶ Take ' + 'AB'[i]); b.onclick = () => play('assets/audio/' + f, b);
       const p = el('button', '', 'Pick ' + 'AB'[i]); p.onclick = () => { picks[name] = i; store.set('lc.take.' + name, i); pickBtns.forEach((q, j) => q.classList.toggle('pick', j === i)); };

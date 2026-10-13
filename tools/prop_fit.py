@@ -12,6 +12,8 @@ image from the front and a three-quarter view.
   check  path prefix for the check renders and depth grid (or -)
   bake   'bake': decimate a copy and bake the full model's colour onto fresh UVs (for dense meshes whose UV islands
          tear when collapsed, like Hunyuan's); the result has one material, its colour map and a soft roughness
+  upright 'upright': tip it about x and y so its widest flat rim sits at the bottom (a hat that came out on its side),
+         or 'tilt=RX,RY' to tip it by those degrees
 """
 import bpy, sys, math, json
 from mathutils import Vector, Matrix
@@ -25,6 +27,8 @@ TRIS = int(a[5]) if len(a) > 5 else 6000
 TEX = int(a[6]) if len(a) > 6 else 1024
 CHECK = a[7] if len(a) > 7 and a[7] != '-' else None
 BAKE = len(a) > 8 and a[8] == 'bake'
+UPRIGHT = len(a) > 9 and a[9] == 'upright'
+TILT = [float(v) for v in a[9][5:].split(',')] if len(a) > 9 and a[9].startswith('tilt=') else None
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=src)
@@ -41,6 +45,25 @@ if len(meshes) > 1:
 mesh = bpy.context.view_layer.objects.active
 mesh.rotation_euler[2] += math.radians(YAW)
 bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
+if UPRIGHT:
+    # Score a tilt by the area of the hull of the points in its bottom 4%: a rim lying flat makes the biggest one.
+    from mathutils import geometry
+    pts = [v.co.copy() for v in mesh.data.vertices][::max(1, len(mesh.data.vertices) // 20000)]
+    def score(rx, ry):
+        R = Matrix.Rotation(math.radians(ry), 3, 'Y') @ Matrix.Rotation(math.radians(rx), 3, 'X')
+        q = [R @ p for p in pts]; z0 = min(p.z for p in q); h = max(p.z for p in q) - z0
+        low = [(p.x, p.y) for p in q if p.z < z0 + 0.04 * h]
+        if len(low) < 3:
+            return 0
+        hull = [low[i] for i in geometry.convex_hull_2d(low)]
+        return abs(sum(hull[i][0] * hull[i - 1][1] - hull[i - 1][0] * hull[i][1] for i in range(len(hull)))) / 2
+    best = max(((score(rx, ry), rx, ry) for rx in range(-90, 91, 10) for ry in range(-90, 91, 10)))
+    best = max(((score(rx, ry), rx, ry) for rx in range(best[1] - 8, best[1] + 9, 2) for ry in range(best[2] - 8, best[2] + 9, 2)))
+    print('UPRIGHT', best[1], best[2])
+    TILT = best[1:]
+if TILT:
+    mesh.matrix_world = Matrix.Rotation(math.radians(TILT[1]), 4, 'Y') @ Matrix.Rotation(math.radians(TILT[0]), 4, 'X')
+    bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
 high = None
 if BAKE:  # the full-detail copy to bake from
     high = mesh.copy(); high.data = mesh.data.copy(); bpy.context.collection.objects.link(high)
