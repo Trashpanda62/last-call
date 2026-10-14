@@ -86,6 +86,8 @@ mines 3, tower 3, coin 2, wheel 2, dice 4, VIP 4 (57).
   corners), same matrix: 4p1k 0.57, 5p1k 0.64, 6p1k 0.44, 7p2k 0.56, 8p2k 0.58, 9p2k 0.53, 10p2k 0.39, 11p3k 0.68,
   12p3k 0.43, 13p4k 0.58, 14p4k 0.57, 15p4k 0.52, 16p4k 0.47; 0 errors, 0 timeouts, 1.8-3.4 minutes. Within the noise
   of the run before; balance is retuned separately (studio step balance).
+- 2026-10-14: Steve set the round length to about 15 minutes on average (`docs/brief.md`); the 2-5 minute goal in the
+  notes above is the old one, and every matrix here is far short of the new one.
 - RTP measured by tools/ev.mjs: blackjack 1.06, roulette 1.05, slots 1.05/1.06, plinko 1.04, mines 1.03, crash 1.04,
   dice 1.04/1.06, wheel 1.05, duck race 1.05.
 - Checks (headless Chrome on the GPU, through the scheduler): every console seats and settles; 16-player meeting fits;

@@ -15,6 +15,9 @@ Kept current with the code; each entry says when it was checked and how. Last ch
 - Bank settlement: bets decided as a meeting starts were dropped, rounds you stand up from mid-hand settled nothing,
   and the bank could still change after the verdict. Being fixed (studio step systems), with the coin ride capped at
   16 wins so its biggest pot stays under the settlement ceiling (`MAX_MULT`; 20 wins promise more than it pays).
+- Round length: Steve wants rounds of about 15 minutes on average (2026-10-14); bot rounds average 2-3 minutes of play
+  (bank wins in 1.5-2 minutes, fast ejections). To tune together with the killer win rate (`tools/batch.mjs`,
+  `tools/bankcurve.mjs`: closing time, bank targets, bot stakes, kill cooldowns, bot suspicion).
 - Balance: at 10, 12 and 16 players the killers win under the 50-58% goal (the crew votes them out); see
   `docs/plan-v3.md` Notes. To retune once the comp change lands.
 - First-time player: the tips are timed rather than taught by doing, cannot be skipped or replayed from How to play,
