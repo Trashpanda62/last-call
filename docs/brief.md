@@ -62,8 +62,9 @@ argue like people; the killers win by matching the gamblers left or by lasting t
   one idle human gambler seat (`node tools/batch.mjs 120 <players> <killers> normal`, on the ml350). Latest matrix: `docs/plan-v3.md` Notes.
 - Session: rounds last about 15 minutes on average (Steve, 2026-10-14), with the killers still winning about half of
   them. Length is play on the game clock (`G.t`, what `tools/batch.mjs` reports as avgMinutes; it is also the
-  closing-time clock and stops during meetings) plus the meetings, each its talk, up to 30 s of voting and 4 s of
-  results. Never past closing time at 12 minutes of play; batches report 0 timeouts and 0 errors.
+  closing-time clock and stops during meetings) plus the meetings, each its talk, up to 30 s of voting and the results
+  (4 s plus 1.8 s for each bot reaction to the verdict). Never past closing time at 12 minutes of play; batches report
+  0 timeouts and 0 errors.
   Not met yet: the bots' rounds average 2-3 minutes of play (1.8-3.4 across 4-16 players, `docs/plan-v3.md` Notes),
   ended early by bank wins and fast ejections. Lengthening them together with the killer win rate is an open tuning
   item (`docs/known-issues.md`).
