@@ -6,14 +6,16 @@ them into the duck pond or drop chandeliers on them, then wear their victim's fa
 checks machines before sitting, runs to the antidote at the bar, buys cameras or a guard with crew money, and haunts
 people from beyond the grave. In meetings the bots argue like people: sixteen personalities, moods, alibis (the killers'
 are made up), questions, contradictions and votes that swing with the room. Type in the chat and they answer.
-Gamblers win by breaking the bank or by voting the killers out. Killers win when they match the gamblers left.
+Gamblers win by breaking the bank or by voting the killers out. Killers win when they match the gamblers left, or
+when the casino closes (12 minutes) before the bank breaks.
 
 Play: https://trashpanda62.github.io/last-call/
 
 Inspired by the hidden-role casino setup of LumenLabs' *Who's Cheating?*, with its guard and cheater swapped for an
 Among Us-style killer. The look is plush toy gamblers (bean bodies, suits, hats, mitten gloves) in a warm Art Deco
-casino, picked from the previews in `picks/`. Everything is built in code: three.js geometry, canvas-painted textures,
-WebAudio sound. three.js r185 is vendored in `vendor/three`.
+casino, picked from the previews in `picks/`. It runs on three.js geometry, canvas-painted textures and WebAudio sound
+built in code, dressed with generated models, art and recorded sound in `assets/` (each folder has a provenance.json;
+see Code below). three.js r185 is vendored in `vendor/three`. The one-page brief is `docs/brief.md`.
 
 ## Modes
 

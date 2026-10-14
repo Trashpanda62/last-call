@@ -84,7 +84,7 @@ The candidates as asked:
 | 9 | Meeting portraits: 16 characters x 5 emotions (calm, nervous, angry, smug, crying), from the 3D design as reference | gpt-image-2.5 flare 1K | 480 |
 | 10 | Effect sprites: smoke, sparks, confetti, poison fizz, explosion | gpt-image-2 | 80 |
 | | Reserve for retakes (about 15%) | | 1,000 |
-| | **Total** | | **6,550** |
+| | **Total** (the rows add to 6,050; first written as 6,550) | | **6,050** |
 
 Phase 0 approved and done 2026-10-12 (03:10-03:50 CT): 181 credits, balance 7,266 after.
 
@@ -152,6 +152,7 @@ shelved. Effects, ambience and music stay in the plan.
 | Ambience loops: casino floor, bar, VIP, arcade, alley, duck pond, crowd walla | 7 loops x 30 s | 2,500 |
 | Music: menu, casino lounge jazz, bar piano, VIP, arcade synthwave, alley blues, duck-race ragtime, meeting tension, ejection sting, win and lose stings (2 takes each) | 13 pieces | 45,000 |
 | **Total** | | **about 280,000** |
+| Without the five shelved voice rows (casting, dialogue, names, reactions, callouts: 225,000) | | about 52,500 |
 
 **Built 2026-10-12 (20,060 ElevenLabs credits; no voices).** `tools/v4_audio.py`, `assets/audio` (21 MB): 93 effect
 takes of 53 sounds (chips, cards, the wheel and ball, reels and lever, jackpot, pegs, dice, coin, prize wheel, rocket
@@ -167,3 +168,5 @@ https://trashpanda62.github.io/last-call/audio-review.html default to them (a pi
 - `node --check` every file; balance batches through the heavy-job scheduler (killers 50-58%).
 - Headless Chrome only (GPU, through the scheduler): every table played by aiming and clicking, phone taps, a full game
   per new kill, a 16-player meeting, two-tab online, frame times.
+- Phones: PC first (Steve 2026-10-14). Phone polish is out of scope for now; the phone taps above only keep the
+  phone build working.
