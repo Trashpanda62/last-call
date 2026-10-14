@@ -648,5 +648,18 @@
   "prompt": "Dark mahogany wood planks with a rich glossy grain. Seamless tileable texture, perfectly flat top-down orthographic view, even shadowless lighting, the pattern repeats cleanly at the edges, no perspective, no objects, no text.",
   "receipt": "runs/sorceress/v4-mats/darkWood",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/mats/mats.json",
+  "provider": "local",
+  "tool": "tools/v4_mats.py",
+  "model": null,
+  "job_id": null,
+  "credits": 0,
+  "date": "2026-10-12",
+  "commit": "853ba92",
+  "prompt": null,
+  "note": "Roughness and normal-map flags for the materials above, written by tools/v4_mats.py; no generated media of its own.",
+  "rights": "Ours (generated index)"
  }
 ]

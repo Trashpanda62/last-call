@@ -1578,5 +1578,18 @@
   "refImages": null,
   "receipt": "runs/sorceress/v4-more/hat-sombreroMesh",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/hats/hats.json",
+  "provider": "local",
+  "tool": "tools/v4_more.py",
+  "model": null,
+  "job_id": null,
+  "credits": 0,
+  "date": "2026-10-13",
+  "commit": "1148ade",
+  "prompt": null,
+  "note": "List of the hat meshes in assets/hats that plush.js loads, written by tools/v4_more.py; the meshes are listed above.",
+  "rights": "Ours (generated index)"
  }
 ]
