@@ -1,13 +1,13 @@
 // The authoritative game. No DOM: the host (or solo client) runs it; every human sees it through view(id).
 import { CFG, DIFF, CAST, DRINKS } from './config.js';
-import { rand, pick, clamp, dist, angDiff, money, shuffle } from './util.js';
+import { rand, pick, clamp, dist, angDiff, money, shuffle, secs } from './util.js';
 import { ROOMS, TAP, BELL, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, W, H, makeSeats, los, collide, roomOf, route, openSpot, clearSpot } from './map.js';
 import * as Gm from './games.js';
 import { makeTalk } from './talk.js';
 
 // "Red", "Red and Mint", "Red, Mint and Pip"
 export const nameList = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
-export const ringRadius = n => n > 10 ? 175 : n > 7 ? 150 : 130;
+export const ringRadius = n => n > 13 ? 215 : n > 10 ? 190 : n > 7 ? 150 : 130; // about 1.4 m between neighbours at 16, so nobody stands in your eye line
 const rectDist = (p, r) => Math.hypot(Math.max(r.x - p.x, 0, p.x - r.x - r.w), Math.max(r.y - p.y, 0, p.y - r.y - r.h));
 const KILLS = ['order', 'rig', 'blade', 'accident'];
 // What a killer actually tampers with at each kind of seat.
@@ -259,8 +259,9 @@ function makeApi(G) {
     v.alive = false; v.poisonT = 0; v.trapT = 0; v.inspect = null;
     v.killedBy = knew ? appearAs(by).id : null;
     if (by) by.lastVictim = v.id;
-    if (v.seat) { v.seat.occ = null; v.seat = null; v.posVer++; }
-    if (v.drink) { v.drink.holder = null; v.drink.x = v.x + 18; v.drink.y = v.y + 6; v.drink = null; }
+    if (v.seat) { v.seat.occ = null; v.seat = null; v.leftSeatT = G.t; v.posVer++; }
+    if (v.target && v.target.claim === v.id) v.target.claim = null;
+    if (v.drink) { v.drink.holder = null; v.drink.x = v.x + 18; v.drink.y = v.y + 6; v.drink.dropped = true; v.drink = null; }
     G.bodies.push({ x: v.x, y: v.y, id: v.id, cause, by: by ? by.id : null, drinkId: v.poisonDrink, kind: v.poisonKind, item: v.trapItem || null, reported: false, t: G.t, seenBy: new Set() });
     G.deaths++; G.stats[cause] = (G.stats[cause] || 0) + 1;
     G.fx.push({ kind: cause === 'poison' ? 'bubbles' : cause === 'trap' ? 'sparks' : 'splat', x: v.x, y: v.y, t: 1.5 });
@@ -298,7 +299,7 @@ function makeApi(G) {
   }
   function sit(c, seat) {
     if (c.target && c.target.claim === c.id) c.target.claim = null;
-    seat.occ = c; seat.claim = null; c.seat = seat; c.x = seat.x; c.y = seat.y; c.face = c.look = seat.face; c.posVer++;
+    seat.occ = c; seat.claim = null; c.seat = seat; c.lastGame = seat.game; c.mbPeak = Gm.maxBet(G.bank); c.x = seat.x; c.y = seat.y; c.face = c.look = seat.face; c.posVer++;
     const trap = trapAt('seat', seat.id);
     if (trap && !c.isKiller) { removeTrap(trap); c.trapT = CFG.rigDelay; c.trapBy = trap.by; c.trapItem = trap.label; }
   }
@@ -325,7 +326,8 @@ function makeApi(G) {
   }
   function busyRoom(me) { const n = roomCrowd(me), ks = Object.keys(ROOMS); return ks[pickIdx(ks.map(k => 1 + CFG.social * (n[k] || 0)))]; }
   // Bots play the very same games as players, betting a share of the bank.
-  const botBet = () => Gm.clampBet(G.bank * CFG.bot.frac * rand(0.5, 1.5), G.bank);
+  // Stakes follow the bank only up to bot.ceil starting banks, so a hot streak can't snowball the crew to the target in a minute.
+  const botBet = () => Gm.clampBet(Math.min(G.bank, CFG.startBank * CFG.bot.ceil) * CFG.bot.frac * rand(0.5, 1.5), G.bank);
   function botPlay(c) {
     const s = c.seat, every = CFG.bot.every[s.game];
     if (!every) { c.gameT = 99; return; }
@@ -354,9 +356,15 @@ function makeApi(G) {
     settle(c, b * units, b * m);
   }
   // A bet of `staked` came back as `back`. The crew bank takes the difference plus the comp on the bet.
-  function settle(c, staked, back) { addBank(back - staked, c, staked); }
-  function addBank(delta, c, staked = 0) {
-    if (c && c.lucky > 0 && delta > 0) delta = delta * (1 + CFG.luckyBonus);
+  // A bot wins the crew at most bot.maxWin times its stake, plus bot.comp of it, so the bank climbs steadily through the night
+  // instead of one lucky straight up ending it in a minute.
+  function settle(c, staked, back) {
+    if (c && !c.isHuman) back = Math.min(back, staked * (1 + CFG.bot.maxWin)) + staked * CFG.bot.comp;
+    addBank(back - staked, c, staked);
+  }
+  function addBank(delta, c, staked = 0, lucky = !!(c && c.lucky > 0)) {
+    if (G.over) return; // the verdict is final: a payout later in the same crash or race loop can't move the bank
+    if (lucky && delta > 0) delta = delta * (1 + CFG.luckyBonus);
     const net = Math.round(delta + staked * CFG.comp);
     const x = c ? c.x : BELL.x, y = c ? c.y - 30 : BELL.y;
     if (!net) { G.floats.push({ x, y, text: 'push', color: '#b9ab90', t: 1.6 }); return; }
@@ -433,7 +441,10 @@ function makeApi(G) {
     if (c.glancing > 0) c.glancing -= dt;
     else if (c.glanceT <= 0) { c.glancing = rand(0.8, 1.8); c.glanceOff = rand(-1, 1) * Math.PI; c.glanceT = rand(...D().glance); }
     if (c.isKiller && killerBrain(c, dt)) { c.look = c.face; return; }
-    if (sick(c) && c.state !== 'antidote' && c.state !== 'seated' && G.antidotes > 0 && !c.isKiller) { c.path = []; c.state = 'idle'; }
+    if (sick(c) && c.state !== 'antidote' && c.state !== 'seated' && G.antidotes > 0 && !c.isKiller && dist(c, TAP) / CFG.botSpeed < c.poisonT - 1) {
+      if (c.target && c.target.claim === c.id) c.target.claim = null;
+      c.path = []; c.state = 'idle';
+    }
     switch (c.state) {
       case 'idle': botChoose(c); break;
       case 'getDrink':
@@ -609,7 +620,7 @@ function makeApi(G) {
   }
   // Ghosts can haunt one living person a round: a cold chill that makes the bots near them uneasy.
   function haunt(g, target) {
-    if (g.alive || g.hauntUsed || !target || !target.alive) return false;
+    if (g.alive || g.isKiller || g.hauntUsed || !target || !target.alive) return false;
     g.hauntUsed = true;
     G.haunts.push({ by: g.id, on: target.id, t: CFG.hauntTime });
     for (const o of G.chars) {
@@ -618,6 +629,7 @@ function makeApi(G) {
       else if (!o.isKiller) o.sus[target.id] += CFG.hauntSus;
     }
     if (target.isHuman) tell(target, 'Something cold brushes your neck.', true, 'gasp');
+    if (g.isHuman) tell(g, `You haunt ${appearAs(target).name}. Anyone who can see them feels the chill.`, false, 'haunt');
     return true;
   }
   function botGhost(g) {
@@ -631,6 +643,7 @@ function makeApi(G) {
   function callMeeting(caller, body, reason, spiked) {
     if (G.mode !== 'play') return;
     G.mode = 'meeting'; G.pending = null; G.stats.meetings++;
+    if (G.crash.phase === 'fly') for (const [id, b] of G.crash.bets) if (!b.out) crashCash(id, b, G.crash.mult);
     const victims = G.bodies.filter(b => !b.reported);
     victims.forEach(b => { b.reported = true; });
     for (const c of G.chars) { c.voted = null; c.accused = false; c.inspect = null; if (c.disguise) c.disguise.t = 0; }
@@ -698,8 +711,11 @@ function makeApi(G) {
     m.tally = tally; m.skips = skips;
     if (!ej) m.result = `No one was thrown out (${skips} skipped).`;
     else {
-      ej.alive = false; ej.ejected = true;
+      ej.alive = false; ej.ejected = true; ej.poisonT = 0; ej.trapT = 0; ej.inspect = null;
       if (ej.seat) { ej.seat.occ = null; ej.seat = null; }
+      if (ej.target && ej.target.claim === ej.id) ej.target.claim = null;
+      if (ej.drink) { const d = ej.drink; ej.drink = null; removeDrink(d); }
+      ej.posVer++;
       const left = killersAlive().length;
       m.ejected = ej.id; m.ejectedKiller = ej.isKiller;
       m.result = ej.isKiller
@@ -714,14 +730,17 @@ function makeApi(G) {
   function endMeeting() {
     const msg = G.meeting.result;
     G.bodies = [];
+    for (const d of G.drinks.filter(d => d.dropped)) removeDrink(d);
     const alive = G.chars.filter(c => c.alive);
     alive.forEach((c, i) => {
-      if (c.seat) { c.seat.occ = null; c.seat = null; }
+      if (c.seat) { c.seat.occ = null; c.seat = null; c.leftSeatT = G.t; }
       const a = i / alive.length * Math.PI * 2, rr = ringRadius(alive.length);
       c.x = BELL.x + Math.cos(a) * rr; c.y = BELL.y + Math.sin(a) * rr; c.face = c.look = a + Math.PI; c.posVer++;
       c.state = 'idle'; c.path = []; c.hunt = null; c.cd.blade = Math.max(c.cd.blade, 15);
     });
-    for (const c of G.chars) { c.hauntUsed = false; if (!c.alive && c.isHuman) { c.x = BELL.x; c.y = BELL.y - 70; c.posVer++; } }
+    // a human ghost drifts in just outside the ring, looking at it, not inside someone's head
+    const gr = ringRadius(alive.length) + 90;
+    for (const c of G.chars) { c.hauntUsed = false; if (!c.alive && c.isHuman) { c.x = BELL.x; c.y = BELL.y - gr; c.face = c.look = Math.PI / 2; c.posVer++; } }
     G.haunts = [];
     G.seats.forEach(s => { s.claim = null; });
     G.mode = 'play'; G.meeting = null;
@@ -741,7 +760,7 @@ function makeApi(G) {
     else if (G.closed) { killersWin = true; text = `Closing time. The crew never broke the bank, and ${kn} walked out free.`; }
     else if (G.bank >= G.target) { killersWin = false; text = `The crew broke the bank with ${money(G.bank)}. ${kn} ${was}, and it didn't matter.`; }
     if (killersWin === null) return;
-    if (G.mode === 'meeting' && G.meeting.phase !== 'result') return;
+    if (G.mode === 'meeting' && (!G.meeting || G.meeting.phase !== 'result')) return; // (no meeting object yet: a crash cash-out as one starts)
     G.over = { killersWin, text, killers: G.killerIds.slice(), t: G.t, stats: Object.assign({}, G.stats) };
     for (const h of humans()) sfxTo(h, (killersWin === h.isKiller) ? 'win' : 'lose');
   }
@@ -749,6 +768,7 @@ function makeApi(G) {
   // ---------- Security: bought with crew-bank money at the security desk ----------
   const price = item => Gm.niceDown(G.target * CFG[item + 'Price']);
   function buy(c, item) {
+    if (G.over) return;
     const p = price(item);
     if ((item === 'cams' && G.security.cams) || (item === 'guard' && G.guard)) return tell(c, item === 'cams' ? 'The cameras are already on.' : 'The guard is already on patrol.');
     if (G.bank < p * 2) return tell(c, `The crew bank can't spare ${money(p)} right now.`);
@@ -774,7 +794,7 @@ function makeApi(G) {
   // ---------- Human actions ----------
   function nearest(list, p, max) { let best = null, bd = max; for (const o of list) { const d = dist(o, p); if (d < bd) { bd = d; best = o; } } return best; }
   function contextFor(c) {
-    if (!c.alive || G.mode !== 'play') return null;
+    if (!c.alive || G.mode !== 'play' || G.over) return null;
     const body = G.bodies.find(b => !b.reported && dist(b, c) < 90 && canSee(c, b));
     if (body) return { label: 'Report body', act: () => callMeeting(c, body, `${c.name} found ${byId(body.id).name}'s body.`) };
     if (c.seat) return { label: 'Stand up', act: () => standUp(c) };
@@ -813,8 +833,35 @@ function makeApi(G) {
     }
   }
   const living = id => { const o = byId(id); return o && o.alive ? o : null; };
+  const mbOf = c => Math.max(Gm.maxBet(G.bank), c.mbPeak || 0);
+  // A player's settlements are metered: about one max bet a second reaches the bank (no real table turns faster), four
+  // in a burst (a split blackjack hand with both halves doubled). A settlement over that waits its turn, in order, and
+  // is paid whole (one rounding, its lucky bonus as it stood when the round ended) once the meter covers it (a full
+  // meter always pays the next one); tick calls this too, meetings included. Nothing owed is paid after the verdict.
+  function payOwed(c) {
+    const mb = mbOf(c), rt = G.rt || 0;
+    c.bankAllow = Math.min(4, (c.bankAllow ?? 4) + (rt - (c.bankT ?? rt))); c.bankT = rt;
+    while (c.owed.length && !G.over && (c.owed[0].b <= c.bankAllow * mb + 1e-6 || c.bankAllow >= 4 - 1e-9)) {
+      const o = c.owed.shift();
+      c.bankAllow -= o.b / mb;
+      addBank(o.d, c, o.b, o.lucky);
+    }
+  }
   function action(id, k, arg) {
-    const c = byId(id); if (!c || !c.isHuman) return;
+    const c = byId(id); if (!c || !c.isHuman || G.over) return;
+    if (k === 'bank') { // a finished round at a table (also one that lands as a meeting starts)
+      const top = Gm.GAME_MAX[c.lastGame];
+      if (top && (G.mode === 'play' || G.mode === 'meeting') && (c.seat || G.t - (c.leftSeatT ?? -99) < 8) && arg && isFinite(arg.d) && isFinite(arg.b)) {
+        // d is what came back minus the stake, b the stake (doubles and splits count); no more than the game can pay.
+        // A round decided before you died still counts (death sets leftSeatT, so only for a few seconds).
+        // The stake went down under the highest table max seen while seated (the max falls when the bank does).
+        const b = clamp(arg.b, 0, mbOf(c) * (c.lastGame === 'bj' ? 4 : 2));
+        (c.owed || (c.owed = [])).push({ d: clamp(arg.d, -b, b * (top - 1)), b, lucky: c.lucky > 0 });
+        payOwed(c);
+      }
+      return;
+    }
+    if (typeof arg === 'string' && (k === 'vote' || k === 'accuse' || k === 'haunt') && arg !== '' && isFinite(arg)) arg = +arg;
     if (G.mode === 'meeting') {
       const m = G.meeting;
       if (k === 'chat' && c.alive && typeof arg === 'string') {
@@ -830,6 +877,7 @@ function makeApi(G) {
     }
     if (G.mode !== 'play') return;
     if (k === 'haunt' && !c.alive) {
+      if (c.isKiller) return tell(c, "Killers don't haunt. Watch the crew squirm.");
       if (c.hauntUsed) return tell(c, 'You can haunt again after the next meeting.');
       if (!haunt(c, living(arg))) tell(c, 'Pick someone alive to haunt.');
       return;
@@ -852,10 +900,6 @@ function makeApi(G) {
       G.security.feed = arg; G.security.feedT = 12;
     } else if (k === 'buy' && (arg === 'cams' || arg === 'guard')) {
       if (!c.seat || c.seat.game !== 'cams') tell(c, 'Security is bought at the security desk.'); else buy(c, arg);
-    } else if (k === 'bank' && (c.seat || G.t - (c.leftSeatT ?? -99) < 8) && c.alive && arg && isFinite(arg.d) && isFinite(arg.b)) {
-      // a finished round at a table: d is what came back minus the stake, b the stake (doubles and splits count)
-      const b = clamp(arg.b, 0, Gm.maxBet(G.bank) * 6);
-      addBank(clamp(arg.d, -b, b * Gm.MAX_MULT), c, b);
     } else if (k === 'crash' && c.seat && c.seat.game === 'crash' && G.crash.phase === 'bet' && !G.crash.bets.has(c.id) && arg && isFinite(arg.bet)) {
       const auto = isFinite(arg.auto) && arg.auto >= 1.01 ? Math.min(arg.auto, Gm.CRASH.cap) : 0;
       G.crash.bets.set(c.id, { bet: Gm.clampBet(arg.bet, G.bank), auto, out: 0 }); sfxTo(c, 'chip');
@@ -864,7 +908,7 @@ function makeApi(G) {
     } else if (k === 'race' && c.seat && c.seat.game === 'race' && G.race.phase === 'bet' && !G.race.bets.has(c.id) && arg && isFinite(arg.bet) && arg.duck >= 0 && arg.duck < Gm.DUCKS.length) {
       G.race.bets.set(c.id, { duck: arg.duck | 0, bet: Gm.clampBet(arg.bet, G.bank) }); sfxTo(c, 'chip');
     } else if (c.isKiller && KILLS.concat(['disguise', 'lights']).includes(k)) {
-      if (c.cd[k] > 0) return tell(c, `Ready in ${Math.ceil(c.cd[k])}s.`);
+      if (c.cd[k] > 0) return tell(c, `Ready in ${secs(c.cd[k])}.`);
       if (k === 'order') {
         const v = living(arg);
         if (dist(c, TAP) > 90) tell(c, 'Poisoned drinks are ordered at the bar.');
@@ -876,13 +920,20 @@ function makeApi(G) {
         if (v) doBlade(c, v); else tell(c, 'Get right behind someone.');
       } else if (k === 'accident') { if (!doAccident(c)) tell(c, 'Get next to someone by the duck pond, or under a chandelier\'s chain (stand near one with someone under it).'); }
       else if (k === 'disguise') doDisguise(c);
-      else if (!doLights(c)) tell(c, `Lights out ready in ${Math.ceil(c.cd.lights)}s.`);
+      else if (!doLights(c)) tell(c, `Lights out ready in ${secs(c.cd.lights)}.`);
     }
   }
-  function setInput(id, inp) {
+  function setInput(id, inp, remote = false) {
     const c = byId(id); if (!c || !c.isHuman || !inp) return;
     if (inp.posVer !== c.posVer) return; // client hasn't caught up with a teleport yet
+    if (remote && G.mode !== 'play') { c.inT = G.t; c.mvBudget = 60; return; }
     if (!c.seat && typeof inp.x === 'number' && typeof inp.y === 'number' && isFinite(inp.x) && isFinite(inp.y)) {
+      if (remote) { // guests: a walking budget that refills with time (a little slack for lag), so bursts of messages can't add up
+        const reach = Math.min(60, (c.mvBudget ?? 60) + (c.alive ? CFG.playerSpeed : CFG.ghostSpeed) * 1.3 * Math.min(1, G.t - (c.inT ?? G.t))), d = dist(c, inp);
+        c.inT = G.t;
+        if (d > reach) inp = { ...inp, x: c.x + (inp.x - c.x) * reach / d, y: c.y + (inp.y - c.y) * reach / d };
+        c.mvBudget = Math.max(0, reach - Math.min(d, reach));
+      }
       if (c.inspect && c.inspect.kind !== 'drink' && dist(c, inp) > 3) { c.inspect = null; tell(c, 'Interrupted.'); }
       c.x = clamp(inp.x, 0, W); c.y = clamp(inp.y, 0, H);
       if (c.alive) collide(c);
@@ -904,7 +955,13 @@ function makeApi(G) {
   // ---------- Tick ----------
   const sick = c => c.poisonT > 0 && CFG.poisonDelay - c.poisonT > CFG.sickAfter;
   function tick(dt) {
+    G.rt = (G.rt || 0) + dt; // real time, meetings included: the settlement meter refills on it
     if (G.over) { G.t += dt; return; }
+    for (const c of G.chars) {
+      if (c.isHuman && c.seat) c.mbPeak = Math.max(c.mbPeak || 0, Gm.maxBet(G.bank));
+      if (c.owed && c.owed.length) payOwed(c); // (still paid if a bot has taken over the seat since)
+    }
+    if (G.over) return;
     if (G.mode === 'meeting') { meetingTick(dt); return; }
     G.t += dt;
     if (G.lightsT > 0) G.lightsT -= dt;
@@ -927,14 +984,15 @@ function makeApi(G) {
       if (c.isHuman) humanTick(c, dt); else botTick(c, dt);
       const room = roomOf(c), tr = c.trail; if (tr[tr.length - 1].room !== room) { tr.push({ t: G.t, room }); if (tr.length > 60) tr.shift(); }
       if (c.drink) { c.drink.x = c.x + Math.cos(c.face + 0.9) * 16; c.drink.y = c.y + Math.sin(c.face + 0.9) * 16; }
-      if (G.mode !== 'play') break;
+      if (G.mode !== 'play' || G.over) break; // a death or a payout can end the game partway through the crowd
     }
-    if (G.mode !== 'play') return;
+    if (G.mode !== 'play' || G.over) return;
     for (const ch of G.chandeliers) if (ch.state === 'falling' && (ch.t -= dt) <= 0) { dropChandelier(ch); if (G.over) return; }
     if (G.guard) guardTick(dt);
     for (const h of G.haunts) h.t -= dt;
     G.haunts = G.haunts.filter(h => h.t > 0);
     crashTick(dt); raceTick(dt);
+    if (G.over) return;
     G.obsT -= dt; if (G.obsT <= 0) { G.obsT = 0.25; observe(); }
     if (G.pending) {
       G.pending.t -= dt;
@@ -956,7 +1014,7 @@ function makeApi(G) {
     return {
       t: G.t, mode: G.mode, bank: G.bank, target: G.target, closeT: Math.max(0, Math.ceil(CFG.closingTime - G.t)), lightsT: G.lightsT, nk: G.killerIds.length,
       chars: G.chars.map(c => { const a = appearAs(c); return { id: c.id, name: a.name, color: a.color, hat: a.hat, x: Math.round(c.x), y: Math.round(c.y), look: +c.look.toFixed(2), face: +c.face.toFixed(2),
-        alive: c.alive, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: sick(c), human: c.isHuman, lucky: c.lucky > 0, inspecting: !!c.inspect }; }),
+        alive: c.alive, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: sick(c), human: a === c ? c.isHuman : !!a.isHuman, lucky: c.lucky > 0, inspecting: !!c.inspect }; }),
       drinks: G.drinks.map(d => ({ id: d.id, owner: d.owner, holder: d.holder, x: Math.round(d.x), y: Math.round(d.y), sips: d.sips, color: d.color, kind: d.kind })),
       bodies: G.bodies.map(b => ({ id: b.id, x: Math.round(b.x), y: Math.round(b.y), cause: b.cause })),
       bowls: G.bowls.map(b => ({ id: b.id, x: b.x, y: b.y })),
@@ -989,7 +1047,7 @@ function makeApi(G) {
       drink: myDrink ? { kind: myDrink.kind, sips: myDrink.sips, held: true } : null,
       sniffT: c.inspect ? c.inspect.t : 0, inspectT: c.inspect ? c.inspect.t : 0, bellUsed: c.bellUsed, voted: c.voted, accused: c.accused, lucky: Math.ceil(c.lucky),
       sick: sick(c), poisonT: sick(c) ? Math.ceil(c.poisonT) : 0, hauntUsed: !!c.hauntUsed, atBar: dist(c, TAP) < 90,
-      disguise: c.disguise && c.disguise.t > 0 ? { as: c.disguise.as, t: Math.ceil(c.disguise.t) } : null,
+      disguise: c.disguise && c.disguise.t > 0 ? { as: c.disguise.as, t: Math.ceil(c.disguise.t) } : null, canDisguise: c.lastVictim !== undefined,
       spiked: c.isKiller ? G.drinks.filter(d => d.poisoned).map(d => d.id).concat(G.traps.filter(t => t.kind === 'bowl').map(t => 'bowl' + t.id)) : [],
       rigged: c.isKiller ? G.traps.filter(t => t.kind === 'seat').map(t => t.id) : [],
     };

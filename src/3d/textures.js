@@ -262,23 +262,27 @@ export const rouletteFelt = () => once('rl', () => {
   return tex(c, false);
 });
 export const wheelTex = () => once('wheel', () => {
-  const [c, g] = canvas(512, 512);
+  // The rotor seen from above: the numbers on the outer ring, the pockets inside it, a wooden cone to a gold turret.
+  const S = 1024, [c, g] = canvas(S, S), R = S / 2 - 4;
   const ORDER = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
   const RED = new Set([1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]);
-  const n = 37;
-  g.fillStyle = '#3a1e12'; g.fillRect(0, 0, 512, 512);
-  g.translate(256, 256);
+  const n = 37, ring = (r0, r1, a0, a1) => { g.beginPath(); g.arc(0, 0, r1, a0, a1); g.arc(0, 0, r0, a1, a0, true); g.closePath(); };
+  g.clearRect(0, 0, S, S); g.translate(S / 2, S / 2);
+  g.fillStyle = '#d8b060'; g.beginPath(); g.arc(0, 0, R, 0, 7); g.fill();
   for (let i = 0; i < n; i++) {
-    const num = ORDER[i];
-    g.fillStyle = num === 0 ? '#1e8f55' : RED.has(num) ? '#c0302a' : '#151515';
-    g.beginPath(); g.moveTo(0, 0); g.arc(0, 0, 250, i / n * Math.PI * 2, (i + 1) / n * Math.PI * 2); g.fill();
-    g.save(); g.rotate((i + 0.5) / n * Math.PI * 2); g.fillStyle = '#fff'; g.font = `bold 20px ${FONT}`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.translate(225, 0); g.rotate(Math.PI / 2); g.fillText(String(num), 0, 0); g.restore();
+    const num = ORDER[i], a0 = i / n * Math.PI * 2, a1 = (i + 1) / n * Math.PI * 2, col = num === 0 ? '#1e9a50' : RED.has(num) ? '#d23a28' : '#141414';
+    g.fillStyle = col; ring(R * 0.8, R * 0.985, a0, a1); g.fill();                       // the number band
+    g.fillStyle = num === 0 ? '#14783c' : RED.has(num) ? '#a82a1e' : '#0c0c0c'; ring(R * 0.6, R * 0.79, a0, a1); g.fill(); // the pocket
+    g.save(); g.rotate((i + 0.5) / n * Math.PI * 2); g.translate(R * 0.895, 0); g.rotate(Math.PI / 2);
+    g.fillStyle = '#fff'; g.font = `900 ${Math.round(R * 0.1)}px Impact, "Arial Black", sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(String(num), 0, 2); g.restore();
   }
-  g.strokeStyle = '#e8c46a'; g.lineWidth = 3;
-  for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2; g.beginPath(); g.moveTo(Math.cos(a) * 150, Math.sin(a) * 150); g.lineTo(Math.cos(a) * 250, Math.sin(a) * 250); g.stroke(); }
-  const rg = g.createRadialGradient(0, 0, 20, 0, 0, 160); rg.addColorStop(0, '#e8c46a'); rg.addColorStop(0.3, '#8a5835'); rg.addColorStop(1, '#5a3220');
-  g.fillStyle = rg; g.beginPath(); g.arc(0, 0, 150, 0, 7); g.fill();
-  g.strokeStyle = '#e8c46a'; g.lineWidth = 6; g.beginPath(); g.arc(0, 0, 150, 0, 7); g.stroke();
+  g.strokeStyle = '#f0d080'; g.lineWidth = 5;
+  for (let i = 0; i < n; i++) { const a = i / n * Math.PI * 2; g.beginPath(); g.moveTo(Math.cos(a) * R * 0.6, Math.sin(a) * R * 0.6); g.lineTo(Math.cos(a) * R * 0.985, Math.sin(a) * R * 0.985); g.stroke(); }
+  for (const r of [R * 0.6, R * 0.795, R * 0.985]) { g.lineWidth = r > R * 0.9 ? 8 : 6; g.beginPath(); g.arc(0, 0, r, 0, 7); g.stroke(); }
+  const rg = g.createRadialGradient(0, 0, R * 0.05, 0, 0, R * 0.6); rg.addColorStop(0, '#f2cf70'); rg.addColorStop(0.18, '#b07a3a'); rg.addColorStop(0.5, '#7a4424'); rg.addColorStop(1, '#4e2814');
+  g.fillStyle = rg; g.beginPath(); g.arc(0, 0, R * 0.597, 0, 7); g.fill();
+  g.strokeStyle = 'rgba(240,208,128,0.55)'; g.lineWidth = 4;
+  for (let i = 0; i < 8; i++) { const a = i / 8 * Math.PI * 2; g.beginPath(); g.moveTo(Math.cos(a) * R * 0.14, Math.sin(a) * R * 0.14); g.lineTo(Math.cos(a) * R * 0.56, Math.sin(a) * R * 0.56); g.stroke(); }
   return tex(c, false);
 });
 export const diceFelt = () => once('dice', () => {

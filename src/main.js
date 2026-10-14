@@ -3,11 +3,11 @@ import { CFG } from './config.js';
 import { clamp } from './util.js';
 import { collide, roomOf, W, H } from './map.js';
 import { createGame } from './sim.js';
-import { init as init3d, draw, playHand, gesture, info as gfxInfo, pick, pickNear, partsOnScreen, screenPointOf, setHover, camPos } from './3d/render3d.js';
+import { init as init3d, draw, playHand, gesture, info as gfxInfo, debugScene, pick, pickNear, partsOnScreen, screenPointOf, setHover, camPos } from './3d/render3d.js';
 import * as audio from './audio.js';
 import { $, show, toast, splash, updateHud, renderMeeting, resetMeeting, renderOver } from './ui.js';
-import { initMoves, updateMoves, keyMove, pickerOpen } from './moves.js';
-import { openTable, closeTable, tableGame, tableSeat, tableView, tableTick, tableHud, setHandHook, press as pressPart, partInfo } from './tables.js';
+import { initMoves, updateMoves, keyMove, pickerOpen, resetMoves } from './moves.js';
+import { openTable, closeTable, tableGame, tableSeat, tableView, tableTick, tableBar, cycleChip, setHandHook, press as pressPart, partInfo } from './tables.js';
 import { hostRoom, joinRoom } from './net.js';
 
 const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* optional */ } } };
@@ -45,12 +45,17 @@ if (joinParam) $('codeIn').value = joinParam.toUpperCase().slice(0, 4);
 const OVERLAYS = ['menu', 'setup', 'how', 'meeting', 'pause', 'over'];
 function only(...ids) { for (const o of OVERLAYS) show(o, ids.includes(o)); }
 function toMenu(err) {
+  closeTable(); // first, while the game and the line to the host are still there: an open round is settled, not dropped
   if (S.room) { try { S.room.close(); } catch (e) { /* ignore */ } }
   releaseLock();
   Object.assign(S, { screen: 'menu', role: null, sim: null, view: null, room: null, paused: false, guests: new Map() });
-  closeTable(); show('hud', false); only('menu'); $('menuErr').textContent = err || ''; refreshStats(); audio.setMood('menu');
+  show('hud', false); only('menu'); $('menuErr').textContent = err || ''; refreshStats(); audio.setMood('menu'); clearGameUI();
 }
+// Whatever a game left on the page: the name picker, the camera filter, the table cursor.
+function clearGameUI() { resetMoves(); document.body.classList.remove('cctv', 'tablecam', 'seated'); view.style.cursor = ''; show('how', false); }
 // Players 4-16; the killer choices follow the player count.
+// The line under the lobby: progress and tips in grey, real errors in red.
+function setupNote(text, err = false) { const e = $('setupErr'); e.textContent = text; e.classList.toggle('info', !err); }
 function syncKillers() {
   const n = +$('optPlayers').value, max = CFG.maxKillers(n);
   $('optKillers').innerHTML = [1, 2, 3, 4].filter(k => k <= max).map(k => `<option value="${k}" ${k === max ? 'selected' : ''}>${k}${k === max ? ' (balanced)' : ' (easier)'}</option>`).join('');
@@ -71,7 +76,7 @@ function readOpts() {
 }
 function enterGame() {
   S.screen = 'game'; S.view = null; S.tips = 0; S.backT = 0; S.me.pitch = 0; S.wasSeated = false; S.me.posVer = -1; S.lastMode = null; S.overShown = false; S.paused = false; S.disp = {}; S.acc = 0;
-  only(); show('hud', true); closeTable(); resetMeeting(); audio.setMood('lounge');
+  only(); show('hud', true); closeTable(); resetMeeting(); audio.setMood('lounge'); clearGameUI();
 }
 
 // ---------- Solo ----------
@@ -91,16 +96,16 @@ function broadcastLobby() { const names = lobbyNames(); renderLobby(names, S.cod
 function startHosting() {
   S.role = 'host'; S.code = ''; S.guests = new Map();
   openSetup('host'); renderLobby([myName() + ' (host)'], '');
-  $('setupErr').textContent = 'Opening a room...';
+  setupNote('Opening a room...');
   S.room = hostRoom({
-    onOpen: code => { S.code = code; $('setupErr').textContent = 'Share the code or the invite link. Empty seats get bots.'; broadcastLobby(); },
+    onOpen: code => { S.code = code; setupNote('Share the code or the invite link.'); broadcastLobby(); },
     onData: hostData,
     onLeave: conn => {
       const g = S.guests.get(conn); S.guests.delete(conn);
       if (g && S.sim && g.id !== null) S.sim.dropHuman(g.id);
       if (S.screen === 'lobby') broadcastLobby();
     },
-    onError: err => { if (S.screen === 'lobby') $('setupErr').textContent = err; else toast(err, true); },
+    onError: err => { if (S.screen === 'lobby') setupNote(err, true); else toast(err, true); },
   });
 }
 function hostData(conn, msg) {
@@ -116,10 +121,19 @@ function hostData(conn, msg) {
     return;
   }
   if (!g || g.id === null || !S.sim) return;
-  if (msg.t === 'in') S.sim.setInput(g.id, msg);
+  if (msg.t === 'in') S.sim.setInput(g.id, msg, true);
   else if (msg.t === 'act') S.sim.action(g.id, msg.k, msg.arg);
 }
+let startWait = null;
 function hostStart() {
+  // A guest whose link just opened has not said hello yet; give them a moment instead of turning them away.
+  const joining = S.room ? [...S.room.conns].some(c => !S.guests.has(c)) : false;
+  if (joining && !startWait) {
+    setupNote('Someone is still joining...');
+    startWait = setTimeout(() => { if (S.role === 'host' && S.screen === 'lobby') hostStart(); startWait = null; }, 1200);
+    return;
+  }
+  if (startWait) { clearTimeout(startWait); startWait = null; }
   const opts = readOpts();
   const guests = [...S.guests.entries()];
   const humans = [{ name: myName(), key: 'host' }, ...guests.map(([conn, g]) => ({ name: g.name, key: conn.peer }))];
@@ -132,7 +146,7 @@ function hostStart() {
 function hostBackToLobby() {
   S.sim = null; S.view = null;
   for (const g of S.guests.values()) g.id = null;
-  closeTable(); show('hud', false); openSetup('host'); broadcastLobby();
+  closeTable(); show('hud', false); openSetup('host'); broadcastLobby(); clearGameUI(); audio.setMood('menu');
 }
 
 // ---------- Joining ----------
@@ -140,7 +154,7 @@ function startJoin(code) {
   code = code.toUpperCase().replace(/[^A-Z]/g, '');
   if (code.length !== 4) { $('menuErr').textContent = 'Room codes are 4 letters.'; return; }
   S.role = 'guest'; S.code = code;
-  openSetup('guest'); renderLobby([], code); $('setupErr').textContent = 'Connecting...';
+  openSetup('guest'); renderLobby([], code); setupNote('Connecting...');
   S.room = joinRoom(code, {
     onOpen: () => { $('setupErr').textContent = ''; S.room.send({ t: 'hello', name: myName() }); },
     onData: guestData,
@@ -150,7 +164,7 @@ function startJoin(code) {
 }
 function guestData(msg) {
   if (!msg || typeof msg !== 'object') return;
-  if (msg.t === 'lobby') { if (S.screen !== 'lobby') { closeTable(); show('hud', false); openSetup('guest'); } renderLobby(msg.names, msg.code); }
+  if (msg.t === 'lobby') { if (S.screen !== 'lobby') { closeTable(); show('hud', false); openSetup('guest'); clearGameUI(); audio.setMood('menu'); } renderLobby(msg.names, msg.code); }
   else if (msg.t === 'busy') toMenu(msg.why);
   else if (msg.t === 'start') { S.myId = msg.id; enterGame(); }
   else if (msg.t === 'snap' && S.screen === 'game') { S.view = { pub: msg.pub, priv: msg.priv }; inbox(msg.priv.inbox); }
@@ -216,6 +230,8 @@ function moveMe(dt) {
 // Seated, the camera starts tilted down toward the felt and the chips (phones zoom in a little instead, see draw).
 const SEAT_PITCH = { bj: -0.55, roulette: -0.66, dice: -0.6, slots: -0.14, plinko: -0.3, mines: -0.32, tower: -0.32, crash: -0.42, race: -0.56, coin: -0.5, wheel: -0.44, vip: -0.2 };
 const seatedPlay = () => S.screen === 'game' && !S.paused && S.view && S.view.priv.seat && S.view.pub.mode === 'play' && !S.view.pub.over;
+// Seated at a game: the table camera looks down on it and the mouse is free to click the felt and the table bar.
+const tableMode = () => !!(seatedPlay() && tableGame() && tableGame() !== 'vip');
 // Press the part of your table under a screen point (NDC). alt: take chips back. near: phones snap to the
 // nearest part within that many px. Returns true if something was there.
 let aim = null, tapShow = null;
@@ -236,7 +252,7 @@ const lockOK = () => !navigator.webdriver && !S.noLock && !touchMode;
 const locked = () => document.pointerLockElement === view;
 function wantLock() {
   const v = S.view;
-  return S.screen === 'game' && !S.paused && !!v && v.pub.mode === 'play' && !v.pub.over && !pickerOpen() && !(v.priv.seat && v.priv.seat.game === 'cams');
+  return S.screen === 'game' && !S.paused && !!v && v.pub.mode === 'play' && !v.pub.over && !pickerOpen() && !(v.priv.seat && v.priv.seat.game !== 'vip');
 }
 function requestLock(force) {
   if (!lockOK() || locked() || !(force ? S.screen === 'game' && !S.paused : wantLock())) return;
@@ -252,6 +268,8 @@ let drag = null;
 view.addEventListener('mousedown', e => {
   audio.unlock();
   if (touchMode) return;
+  mouse.x = e.clientX; mouse.y = e.clientY;
+  if (tableMode() && !locked()) { if (e.button === 0 || e.button === 2) pressAtNdc(...ndcOf(e.clientX, e.clientY), e.button === 2); return; } // click the felt
   if (locked()) {
     if (seatedPlay()) { if (e.button === 0 || e.button === 2) pressAtNdc(0, 0, e.button === 2); return; } // seated: click presses what the crosshair is on
     if (e.button === 0 && S.view && S.view.priv.ctx) act('use'); return;
@@ -264,7 +282,15 @@ addEventListener('mouseup', e => {
   drag = null;
 });
 view.addEventListener('contextmenu', e => e.preventDefault());
+view.addEventListener('wheel', e => { if (tableMode()) { e.preventDefault(); cycleChip(e.deltaY > 0 ? -1 : 1); } }, { passive: false }); // the wheel changes your chip
+// The table bar's buttons and chips.
+$('tableBar').addEventListener('click', e => {
+  const b = e.target.closest('[data-p]'); if (!b || !tableMode()) return;
+  audio.unlock(); pressAt = null; pressPart(b.dataset.p);
+});
+$('tableBar').addEventListener('contextmenu', e => e.preventDefault());
 addEventListener('mousemove', e => {
+  mouse.x = e.clientX; mouse.y = e.clientY;
   if (locked()) { lookBy(e.movementX, e.movementY); return; }
   if (drag && S.screen === 'game') { lookBy(e.clientX - drag.x, e.clientY - drag.y); drag.x = e.clientX; drag.y = e.clientY; }
 });
@@ -274,12 +300,13 @@ const MOVE_KEYS = new Set(['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowlef
 addEventListener('keydown', e => {
   const k = e.key.toLowerCase();
   if (e.target && e.target.tagName === 'INPUT') { if (k === 'escape') e.target.blur(); return; }
-  if (k === ' ' || k.startsWith('arrow')) e.preventDefault();
+  if ((k === ' ' || k.startsWith('arrow')) && S.screen === 'game' && !(e.target && /^(BUTTON|SELECT)$/.test(e.target.tagName))) e.preventDefault();
   if (!keys[k]) {
     const seated = S.screen === 'game' && S.view && S.view.priv.seat && S.view.pub.mode === 'play';
     if (S.screen === 'game' && !S.paused && keyMove(k)) { /* a v4 move or the name picker took it */ }
     else if (k === 'escape' && S.screen === 'game') { if (performance.now() - (S.unlockAt || 0) > 400) togglePause(); }
-    else if (k === 'e' && seated && !S.paused && aim) pressAtNdc(0, 0, false); // seated: E presses what you aim at
+    else if (k === 'e' && seated && !S.paused && aim && !tableMode()) pressAtNdc(0, 0, false); // seated (mouse locked): E presses what you aim at
+    else if (k === 'q' && tableMode() && !S.standReq) { S.standReq = true; act('use'); requestLock(true); } // Q leaves the table too
     else if (S.screen === 'game' && KEYMAP[k] && !S.paused) { act(KEYMAP[k]); if (k === 'e' && seated) requestLock(true); }
     if (MOVE_KEYS.has(k) && S.screen === 'game' && !S.paused) {
       if (seated && !S.standReq) { S.standReq = true; act('use'); requestLock(true); } else requestLock();
@@ -289,11 +316,13 @@ addEventListener('keydown', e => {
 });
 addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
 addEventListener('blur', () => { for (const k in keys) keys[k] = false; drag = null; });
+addEventListener('pagehide', () => { closeTable(); if (S.room) S.room.close(); }); // settles an open round, then tells the other side now instead of after the heartbeat gives up
 addEventListener('pointerdown', () => audio.unlock(), { passive: true });
 
 // Touch: left thumb walks, right thumb drags to look, buttons on the right edge.
 function setTouch() { if (!touchMode) { touchMode = true; document.body.classList.add('touch'); } }
 addEventListener('touchstart', setTouch, { passive: true });
+addEventListener('pointerdown', e => { if (e.pointerType === 'mouse' && touchMode) { touchMode = false; document.body.classList.remove('touch'); } }, { passive: true, capture: true });
 const looks = new Map();
 const taps = new Map(); // touch id -> where and when it started (a short, still touch is a tap)
 view.addEventListener('touchstart', e => {
@@ -327,6 +356,7 @@ document.querySelectorAll('#touchBtns [data-act]').forEach(b => {
   const a = b.dataset.act;
   b.addEventListener('touchstart', e => { e.preventDefault(); setTouch(); if (a === 'back') touchBack = true; else act(a); }, { passive: false });
   b.addEventListener('touchend', e => { e.preventDefault(); if (a === 'back') touchBack = false; });
+  b.addEventListener('touchcancel', () => { if (a === 'back') touchBack = false; });
   b.addEventListener('click', () => { if (a !== 'back') act(a); });
 });
 initMoves({ act: (k, arg) => act(k, arg), unlock: releaseLock, relock: () => requestLock() });
@@ -348,17 +378,17 @@ $('startBtn').onclick = () => {
 $('setupBack').onclick = () => toMenu();
 $('shareBtn').onclick = async () => {
   const url = location.origin + location.pathname + '?join=' + S.code;
-  try { if (navigator.share) await navigator.share({ title: 'Last Call', text: `Join my Last Call room: ${S.code}`, url }); else { await navigator.clipboard.writeText(url); $('setupErr').textContent = 'Invite link copied.'; } }
-  catch (e) { $('setupErr').textContent = url; }
+  try { if (navigator.share) await navigator.share({ title: 'Last Call', text: `Join my Last Call room: ${S.code}`, url }); else { await navigator.clipboard.writeText(url); setupNote('Invite link copied.'); } }
+  catch (e) { setupNote(url); }
 };
 function togglePause() {
   S.paused = !S.paused;
-  if (S.paused) releaseLock(); else requestLock();
+  if (S.paused) releaseLock(); else { requestLock(); show('how', false); }
   show('pause', S.paused);
   document.querySelector('#pause h2').textContent = S.role === 'solo' ? 'Paused' : 'Menu (the game keeps going)';
 }
 $('menuBtn').onclick = togglePause;
-$('resumeBtn').onclick = () => { S.paused = false; show('pause', false); requestLock(); };
+$('resumeBtn').onclick = () => { S.paused = false; show('pause', false); show('how', false); requestLock(); };
 $('pHow').onclick = () => show('how', true);
 $('quitBtn').onclick = () => toMenu();
 $('againBtn').onclick = () => { if (S.role === 'solo') { startSolo(S.opts); requestLock(true); } else if (S.role === 'host') hostBackToLobby(); };
@@ -412,7 +442,7 @@ function frameGame(dt) {
   if ((!priv.seat || pub.mode !== 'play' || pub.over) && tableGame()) closeTable();
   if (pub.mode !== S.lastMode) {
     if (pub.mode === 'meeting') { releaseLock(); splash(pub.meeting.title.toUpperCase()); only('meeting'); audio.setMood('meeting'); audio.sfx('meeting'); S.paused = false; show('pause', false); }
-    else if (S.lastMode === 'meeting') { only(); resetMeeting(); audio.setMood('lounge'); }
+    else if (S.lastMode === 'meeting') { only(...(S.paused ? ['pause'] : [])); resetMeeting(); audio.setMood('lounge'); }
     S.lastMode = pub.mode;
   }
   if (pub.mode === 'meeting' && pub.meeting) renderMeeting(v, act, pub.chars.filter(c => c.human).length > 1);
@@ -424,14 +454,19 @@ function frameGame(dt) {
     store.set('lc.stats', st);
     setTimeout(() => { if (S.screen === 'game') { only('over'); renderOver(v, S.role === 'host', S.role === 'solo'); } }, 900);
   }
-  if (S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0]) {
+  // a tip waits until no other message is up (they used to stack four deep over the top of the screen)
+  if (S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0] && !$('toasts').children.length) {
     const tip = TIPS[S.tips++]; if (store.get('lc.stats', { games: 0 }).games < 3 && (!tip[2] || priv.isKiller === (tip[2] === 'k'))) toast(tip[1]);
   }
   updateHud(v); updateMoves(v); tableTick(v);
   const fp = pub.mode === 'play' && !pub.over;
   show('cross', fp && !touchMode);
   show('lockHint', fp && !touchMode && lockOK() && !locked() && wantLock());
-  draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit', my: tableView(), zoom: touchMode && seatedPlay() && innerWidth > innerHeight ? 0.74 : 1 });
+  const tm = tableMode();
+  if (tm && locked()) releaseLock();
+  document.body.classList.toggle('tablecam', tm);
+  draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit', my: tableView(), zoom: touchMode && seatedPlay() && !tm && innerWidth > innerHeight ? 0.74 : 1,
+    table: tm, lookBack: S.backT > 0.3, safe: tm ? hudSafe() : null });
   seatedHud();
 }
 // Sounds of the shared world: where you are, the rocket and the duck race when you are in their room, a meeting's votes
@@ -450,26 +485,63 @@ function worldSounds(v) {
   } else { was.votes = 0; was.meet = null; }
   void priv;
 }
-// Seated: name what the crosshair is on (phones: what you just tapped), and the bet readout.
+// The screen the HUD covers at the table (CSS px): the table camera keeps the game clear of it.
+function hudSafe() {
+  const H = innerHeight;
+  let top = 0, low = H;
+  for (const id of ['bank', 'topRight', 'bottom', 'tableBar']) {
+    const r = $(id).getBoundingClientRect(); if (!r.height) continue;
+    if (id !== 'tableBar' && r.top < H / 2) top = Math.max(top, r.bottom + 6); else low = Math.min(low, r.top - 6);
+  }
+  return { top: Math.min(top, H * 0.2), bottom: Math.min(H - low, H * 0.42) };
+}
+// Seated: name what the cursor (or crosshair) is on (phones: what you just tapped), and the table bar.
 function seatedHud() {
-  const seated = seatedPlay() && tableGame();
+  const seated = seatedPlay() && tableGame(), tm = tableMode();
   document.body.classList.toggle('seated', !!seated);
-  aim = seated && !touchMode && S.backT < 0.3 ? pick(0, 0) : null;
+  const overBar = tm && !touchMode && document.elementFromPoint(mouse.x, mouse.y) !== view;
+  aim = seated && !touchMode && S.backT < 0.3 && !overBar ? (tm ? pick(...ndcOf(mouse.x, mouse.y)) : pick(0, 0)) : null;
   const tap = touchMode && tapShow && performance.now() - tapShow.t < 900 ? tapShow.h : null;
   const h = aim || tap; setHover(seated ? h : null);
   const info = seated && h ? partInfo(h.part, h.uv) : null;
-  $('aim').textContent = info ? info.label : ''; $('aim').className = info && !info.on ? 'off' : '';
-  if (info) $('hint').textContent = '';
-  const hd = seated ? tableHud() : null;
-  show('tableHud', !!hd);
-  if (hd) {
-    const key = JSON.stringify(hd);
-    if (key !== S.hudKey) {
-      S.hudKey = key;
-      $('tableHud').innerHTML = (hd.chip ? `<span>CHIP <b>${hd.chip}</b></span>` : '') + `<span>ON THE TABLE <b>${hd.total}</b></span><span class="muted">MAX ${hd.max}</span>`
-        + (hd.flash ? `<span class="flash">${esc(hd.flash)}</span>` : hd.res.text ? `<span class="${hd.res.cls}">${esc(hd.res.text)}</span>` : '');
-    }
-  }
+  const al = $('aim'); al.textContent = info ? info.label : ''; al.className = (info && !info.on ? 'off' : '') + (tm && !touchMode ? ' follow' : '');
+  if (tm && !touchMode) { al.style.left = Math.min(mouse.x + 18, innerWidth - al.offsetWidth - 8) + 'px'; al.style.top = mouse.y + 20 + 'px'; } else al.style.left = al.style.top = '';
+  view.style.cursor = tm && !touchMode ? (h ? 'pointer' : 'default') : '';
+  if (info || tm) $('hint').textContent = '';
+  drawBar(seated ? tableBar() : null);
+}
+// The bar along the bottom at the table: the chip in hand, UNDO, CLEAR, ×2, MAX, the game's buttons, a status line,
+// the chips on the table and the last result. Redrawn only when it changes.
+const CHIP_CSS = ['#ece6da', '#c8302a', '#202024', '#6a2ac0', '#e8a830', '#22b066'], CHIP_INK = ['#3a3030', '#fff', '#ffd040', '#fff', '#3a1a04', '#fff'];
+function drawBar(b) {
+  show('tableBar', !!b);
+  if (!b) return;
+  const set = (id, text) => { const e = $(id); if (e.textContent !== text) e.textContent = text; };
+  set('tbStatus', b.status); set('tbTotal', b.total); set('tbMax', 'MAX ' + b.max);
+  // The buttons are only rebuilt when the set of buttons changes; labels and states update in place, so a click
+  // (press and release) always lands on the same button even while Crash's numbers tick many times a second.
+  const fill = (id, items, html, cls) => {
+    const el = $(id), ids = items.map(x => x.id).join('|');
+    if (el.dataset.ids !== ids) { el.dataset.ids = ids; el.innerHTML = html(); }
+    const bs = el.querySelectorAll('button');
+    items.forEach((x, i) => {
+      const e = bs[i]; if (!e) return;
+      const c = cls(x); if (e.className !== c) e.className = c;
+      if (x.label !== undefined && e.textContent !== x.label) e.textContent = x.label;
+      const t = x.tip || x.label || ''; if (e.title !== t) e.title = t;
+    });
+  };
+  const tone = (x, c) => `${c} ${x.tone}${x.on ? '' : ' off'}${x.sel ? ' sel' : ''}`;
+  const btn = (x, c) => `<button data-p="${x.id}" class="${tone(x, c)}" title="${esc(x.tip || x.label)}">${esc(x.label)}</button>`;
+  const chips = (b.chips || []).map(c => ({ ...c, id: 'chip:' + c.v, tip: '$' + c.v.toLocaleString() }));
+  fill('tbChips', chips, () => chips.length ? '<span class="tb-k">CHIP VALUE</span>' + chips.map(c => `<button data-p="${c.id}" class="chip" style="--c:${CHIP_CSS[c.i]};--k:${CHIP_INK[c.i]}">${c.label}</button>`).join('') : '', c => `chip${c.sel ? ' sel' : ''}${c.on ? '' : ' off'}`);
+  fill('tbTools', b.tools || [], () => (b.tools || []).map(x => btn(x, 'tool')).join(''), x => tone(x, 'tool'));
+  fill('tbActs', b.acts, () => b.acts.map(x => btn(x, 'act')).join(''), x => tone(x, 'act'));
+  const many = b.acts.length > 3 ? 'many' : ''; if ($('tbActs').className !== many) $('tbActs').className = many;
+  const note = b.flash ? ['flash', b.flash] : b.res.text ? [b.res.cls, b.res.text] : null, nk = note ? note.join('|') : '';
+  if (nk !== S.noteKey) { S.noteKey = nk; const n = $('tbNote'); n.className = note ? note[0] : ''; n.textContent = note ? note[1] : ''; }
+  const pk = b.placed ? b.placed.k : 0;
+  if (pk !== S.placedKey) { S.placedKey = pk; const p = $('tbPlaced'); if (b.placed) { p.innerHTML = `<b>−${esc(b.placed.amt)}</b><span>BET PLACED</span>`; p.classList.remove('pop'); void p.offsetWidth; p.classList.add('pop'); } }
 }
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 // Behind the menus: an all-bot game plays out under a slow camera.
@@ -486,8 +558,14 @@ function frame(now) {
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
-// A hidden host tab still has to run the game for its guests.
-setInterval(() => { if (document.hidden && S.role === 'host' && S.screen === 'game') { const now = performance.now(); simStep(Math.min(0.25, (now - last) / 1000)); last = now; } }, 50);
+// A hidden host tab still has to run the game for its guests, and a hidden tab's table still has to settle its rounds
+// on time and close when the seat goes (a death, a meeting), as frameGame does when the tab is showing.
+setInterval(() => {
+  if (!document.hidden || S.screen !== 'game') return;
+  if (S.role === 'host') { const now = performance.now(); simStep(Math.min(0.25, (now - last) / 1000)); last = now; }
+  const v = S.view; if (!v || !tableGame()) return;
+  if (!v.priv.seat || v.pub.mode !== 'play' || v.pub.over) closeTable(); else tableTick(v);
+}, 50);
 
 // Test hook for automation: drive a solo game without the screen.
 window.__lastCall = {
@@ -506,7 +584,7 @@ window.__lastCall = {
     return 'shot';
   },
   act, get state() { return S.sim && S.sim.G; }, get view() { return S.view; }, get S() { return S; },
-  vote(id) { act('vote', id); }, gfx: gfxInfo, gesture, noLock() { S.noLock = true; },
+  vote(id) { act('vote', id); }, gfx: gfxInfo, scene: debugScene, gesture, noLock() { S.noLock = true; },
   look(a, pitch) { S.me.look = a; S.me.pitch = pitch || 0; },
   demo(seconds) { drawDemo(seconds || 0); },
   // Tables: press a part by name (as if aimed at and clicked), aim the crosshair at it, list what is on screen.
@@ -519,6 +597,6 @@ window.__lastCall = {
     const c = part === 'scr' ? screenPointOf(0.5, 0.5) : partsOnScreen().find(q => q.part === part), cam = camPos(); if (!c || !cam) return false;
     const d = c.p.map((v, i) => v - cam[i]); S.me.look = Math.atan2(d[2], d[0]); S.me.pitch = Math.atan2(d[1], Math.hypot(d[0], d[2])); return true;
   },
-  parts: () => partsOnScreen(), screenPoint: (x, y) => screenPointOf(x, y), table: () => tableView(), hud: () => tableHud(), aim: () => aim && aim.part,
+  parts: () => partsOnScreen(), screenPoint: (x, y) => screenPointOf(x, y), table: () => tableView(), hud: () => tableBar(), bar: () => tableBar(), aim: () => aim && aim.part,
   place(x, y) { S.me.x = x; S.me.y = y; if (S.sim) { S.me.posVer = S.sim.G.chars[S.myId].posVer; S.sim.setInput(S.myId, inputPayload()); S.view = S.sim.view(S.myId); } },
 };

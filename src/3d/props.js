@@ -4,10 +4,11 @@
 // that fails to load keeps its hand-built stand-in.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { roomOf } from '../map.js';
 
 export const PROP_NAMES = ['bjTable', 'rouletteTable', 'diceTable', 'slot', 'slotHigh', 'jackpot', 'plinko', 'console', 'prizeWheel', 'duck',
   'barCounter', 'backBar', 'stool', 'chair', 'booth', 'couch', 'armchair', 'chandelier', 'piano', 'poolTable', 'jukebox', 'champagne',
-  'snackBowl', 'palm', 'camera', 'dumpster', 'pitBell', 'hightop', 'toilet', 'sink', 'rocket', 'ottoman', 'crates', 'streetLamp']; // coinPodium: its fluting decimated into red streaks; the hand-built podium stays
+  'snackBowl', 'palm', 'camera', 'dumpster', 'pitBell', 'toilet', 'sink', 'rocket', 'ottoman', 'crates', 'streetLamp']; // coinPodium: its fluting decimated into red streaks; hightop: its column decimated away. The hand-built ones stay
 const SRC = {};
 let ready = false;
 const waiters = [];
@@ -83,13 +84,16 @@ export function propObject(name, o = {}) {
 }
 
 // Many of one prop that never move: one instanced mesh per part. list: [{ x, y, z, yaw, fit, stretch, top, scale }]
+// Each room gets its own batch (userData.room), so the renderer can skip rooms you can't see.
 export function placeProps(group, name, list, { cast = true } = {}) {
   if (!list.length) return null;
+  const rooms = new Map();
+  for (const o of list) { const r = roomOf({ x: o.x * 60, y: o.z * 60 }); if (!rooms.has(r)) rooms.set(r, []); rooms.get(r).push(o); }
   const out = [];
-  for (const p of SRC[name].parts) {
-    const im = new THREE.InstancedMesh(p.geometry, p.material, list.length);
-    list.forEach((o, i) => im.setMatrixAt(i, matOf(name, o).multiply(p.matrix)));
-    im.castShadow = cast; im.receiveShadow = true; im.userData.prop = true; im.computeBoundingSphere(); group.add(im); out.push(im);
+  for (const [room, some] of rooms) for (const p of SRC[name].parts) {
+    const im = new THREE.InstancedMesh(p.geometry, p.material, some.length);
+    some.forEach((o, i) => im.setMatrixAt(i, matOf(name, o).multiply(p.matrix)));
+    im.castShadow = cast; im.receiveShadow = true; im.userData.prop = true; im.userData.room = room; im.computeBoundingSphere(); group.add(im); out.push(im);
   }
   return out;
 }

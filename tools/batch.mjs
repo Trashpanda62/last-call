@@ -13,11 +13,11 @@ for (let i = 0; i < games; i++) {
   try {
     const g = createGame({ humans: [{ name: 'Idle', key: 'me' }], players, killers, difficulty, forceRole: 'gambler' });
     let steps = 0;
-    while (!g.G.over && steps < 60 * 60 * 30) { g.tick(1 / 60); steps++; }
+    while (!g.G.over && steps < 60 * 60 * 45) { g.tick(1 / 60); steps++; }
     const o = g.G.over;
     if (!o) { res.timeout++; continue; }
-    if (o.killersWin) res.killers++; else { res.gamblers++; if (g.G.bank >= g.G.target) res.bankWins++; else res.ejectWins++; }
-    res.len.push(o.t); res.meetings += o.stats.meetings; for (const k of ['poison', 'trap', 'blade', 'chandelier', 'drown']) res[k] = (res[k] || 0) + (o.stats[k] || 0); res.saved = (res.saved || 0) + (CFG.antidotes - g.G.antidotes); res.cams = (res.cams || 0) + (g.G.security.cams ? 1 : 0); res.bankRatio = (res.bankRatio || 0) + g.G.bank / g.G.target; if (!o.killersWin && g.G.bank >= g.G.target) (res.bankT = res.bankT || []).push(o.t);
+    if (o.killersWin) { res.killers++; if (g.G.closed) res.closeWins = (res.closeWins || 0) + 1; } else { res.gamblers++; if (g.G.bank >= g.G.target) res.bankWins++; else res.ejectWins++; }
+    res.len.push(o.t); (res.wall = res.wall || []).push(steps / 60); res.meetings += o.stats.meetings; for (const k of ['poison', 'trap', 'blade', 'chandelier', 'drown']) res[k] = (res[k] || 0) + (o.stats[k] || 0); res.saved = (res.saved || 0) + (CFG.antidotes - g.G.antidotes); res.cams = (res.cams || 0) + (g.G.security.cams ? 1 : 0); res.bankRatio = (res.bankRatio || 0) + g.G.bank / g.G.target; if (!o.killersWin && g.G.bank >= g.G.target) (res.bankT = res.bankT || []).push(o.t);
     for (const c of g.G.chars) if (c.ejected) c.isKiller ? res.ejectsRight++ : res.ejectsWrong++;
   } catch (e) { res.errors++; console.error(e.stack); }
 }
@@ -25,7 +25,7 @@ const avg = a => a.length ? (a.reduce((s, x) => s + x, 0) / a.length) : 0;
 console.log(JSON.stringify({
   games, players, killers, difficulty,
   killerWinRate: +(res.killers / games).toFixed(2), gamblerWins: res.gamblers, bankWins: res.bankWins, ejectWins: res.ejectWins,
-  timeouts: res.timeout, errors: res.errors, avgMinutes: +(avg(res.len) / 60).toFixed(1), meetingsPerGame: +(res.meetings / games).toFixed(1),
-  ejectsRight: res.ejectsRight, ejectsWrong: res.ejectsWrong, endBankOfTarget: +((res.bankRatio || 0) / games).toFixed(2), bankWinMinutes: +(avg(res.bankT || []) / 60).toFixed(1),
+  timeouts: res.timeout, closeWins: res.closeWins || 0, errors: res.errors, avgMinutes: +(avg(res.len) / 60).toFixed(1), wallMinutes: +(avg(res.wall || []) / 60).toFixed(1), meetingsPerGame: +(res.meetings / games).toFixed(1),
+  ejectsRight: res.ejectsRight, ejectsWrong: res.ejectsWrong, endBankOfTarget: +((res.bankRatio || 0) / games).toFixed(2), bankWinMinutes: +(avg(res.bankT || []) / 60).toFixed(1), bankWinsUnder3: (res.bankT || []).filter(t => t < 180).length,
   kills: { poison: res.poison, trap: res.trap, blade: res.blade, chandelier: res.chandelier, drown: res.drown }, antidotes: res.saved, camsGames: res.cams,
 }));

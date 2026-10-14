@@ -50,6 +50,7 @@ export function bjAct(s, a) {
     h.cards.push(card(s.r)); h.fromSplit = true;
     s.hands.push(b);
     if (h.cards[0].rank === 'A') { h.done = true; b.done = true; } // split aces get one card each
+    for (const x of [h, b]) if (bjTotal(x.cards).t === 21) x.done = true; // a made 21 stands by itself
   }
   while (s.i < s.hands.length && s.hands[s.i].done) s.i++;
   if (s.i >= s.hands.length) bjFinish(s);
@@ -214,7 +215,7 @@ export function minesMult(m, k) {
   return Math.min(MINES.cap, Math.floor(x * 100) / 100);
 }
 export function minesPick(s, tile) {
-  if (s.over || s.open.includes(tile)) return s;
+  if (s.over || !Number.isInteger(tile) || tile < 0 || tile >= MINES.tiles || s.open.includes(tile)) return s;
   s.open.push(tile);
   if (s.mines.has(tile)) { s.dead = true; s.over = true; s.mult = 0; }
   else if (s.open.length >= 25 - s.m) { s.over = true; s.mult = minesMult(s.m, s.open.length); }
@@ -238,7 +239,7 @@ export function towerMult(mode, rows) {
   return Math.min(TOWER.cap, Math.floor(TOWER.rtp * Math.pow(M.eggs / (M.eggs - M.dragons), rows) * 100) / 100);
 }
 export function towerPick(s, egg) {
-  if (s.over) return s;
+  if (s.over || !Number.isInteger(egg) || egg < 0 || egg >= s.eggs) return s;
   s.picks.push(egg);
   if (s.rows[s.row].has(egg)) { s.dead = true; s.over = true; s.mult = 0; return s; }
   s.row++;
@@ -248,7 +249,7 @@ export function towerPick(s, egg) {
 export function towerCash(s) { if (!s.over && s.row > 0) { s.over = true; s.mult = towerMult(s.mode, s.row); } return s; }
 
 // ---------- Coin flip ----------
-export const COIN = { p: 0.51, maxRide: 20, label: 'LUCKY COIN · LANDS YOUR WAY 51% OF THE TIME' };
+export const COIN = { p: 0.51, maxRide: 16, label: 'LUCKY COIN · LANDS YOUR WAY 51% OF THE TIME' };
 export function coinFlip(call, r = rnd) { const win = r() < COIN.p; const side = win ? call : call === 'heads' ? 'tails' : 'heads'; return { side, win }; }
 
 // ---------- Prize wheel (50 segments) ----------
@@ -259,6 +260,10 @@ export const WHEEL = (() => {
   order.forEach((v, i) => { segs[Math.round(i * 50 / order.length)] = v; });
   return { segs, label: 'SPIN TO WIN · TOP PRIZE 20x' };
 })();
+// The most each table game can pay back for a stake (the host caps reported results with it; Crash and the duck race
+// are settled by the host itself).
+export const GAME_MAX = { bj: BJ.bjPays, roulette: 500, slots: Math.max(...Object.values(SLOT_TIERS).map(T => T.pays['💎'])), plinko: 1000,
+  mines: MINES.cap, tower: TOWER.cap, coin: 2 ** COIN.maxRide, wheel: Math.max(...WHEEL.segs), dice: 5 };
 export function wheelSpin(r = rnd) { const i = Math.floor(r() * WHEEL.segs.length); return { i, mult: WHEEL.segs[i] }; }
 export const wheelRTP = () => WHEEL.segs.reduce((a, b) => a + b, 0) / WHEEL.segs.length;
 

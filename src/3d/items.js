@@ -9,16 +9,19 @@ const M = 1 / 60;
 const SEATS = makeSeats();
 const RAIL_H = 1.02, BOWL_H = 0.95;
 
-const glassMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.04, metalness: 0, transparent: true, opacity: 0.28, depthWrite: false });
+const glassMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.04, metalness: 0, transparent: true, opacity: 0.34, depthWrite: false });
+// a bright lip on every glass, so its shape reads even end-on (a sip tips the mouth toward you)
+const rimMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.1, metalness: 0.3, transparent: true, opacity: 0.75, emissive: 0x404040 });
+const rim = (r, y) => ({ geo: new THREE.TorusGeometry(r, 0.0035, 6, 28), y });
 const liquidMats = {};
 const liquidMat = c => liquidMats[c] || (liquidMats[c] = new THREE.MeshStandardMaterial({ color: c, roughness: 0.1, transparent: true, opacity: 0.88, emissive: new THREE.Color(c).multiplyScalar(0.3) }));
 const lathe = (pts, s = 20) => new THREE.LatheGeometry(pts.map(([x, y]) => new THREE.Vector2(x, y)), s);
 const GEO = {
-  martini: { glass: lathe([[0.04, 0], [0.04, 0.005], [0.006, 0.01], [0.006, 0.09], [0.075, 0.16], [0.078, 0.162]]), liquid: new THREE.ConeGeometry(0.068, 0.062, 20), ly: 0.123, cone: true },
+  martini: { glass: lathe([[0.04, 0], [0.04, 0.005], [0.006, 0.01], [0.006, 0.09], [0.075, 0.16], [0.078, 0.162]]), liquid: new THREE.ConeGeometry(0.068, 0.062, 20), ly: 0.123, cone: true, rim: rim(0.078, 0.162) },
   cosmo: null,
-  beer: { glass: lathe([[0.048, 0], [0.05, 0.005], [0.05, 0.15], [0.052, 0.152]]), liquid: new THREE.CylinderGeometry(0.046, 0.046, 0.13, 20), ly: 0.07, foam: true, handle: true },
-  whiskey: { glass: lathe([[0.045, 0], [0.047, 0.02], [0.047, 0.095], [0.049, 0.097]]), liquid: new THREE.CylinderGeometry(0.043, 0.043, 0.05, 20), ly: 0.045, ice: true },
-  mojito: { glass: lathe([[0.036, 0], [0.038, 0.01], [0.038, 0.17], [0.04, 0.172]]), liquid: new THREE.CylinderGeometry(0.035, 0.035, 0.14, 18), ly: 0.08, mint: true, straw: true },
+  beer: { glass: lathe([[0.048, 0], [0.05, 0.005], [0.05, 0.15], [0.052, 0.152]]), liquid: new THREE.CylinderGeometry(0.046, 0.046, 0.13, 20), ly: 0.07, foam: true, handle: true, rim: rim(0.052, 0.152) },
+  whiskey: { glass: lathe([[0.045, 0], [0.047, 0.02], [0.047, 0.095], [0.049, 0.097]]), liquid: new THREE.CylinderGeometry(0.043, 0.043, 0.05, 20), ly: 0.045, ice: true, rim: rim(0.049, 0.097) },
+  mojito: { glass: lathe([[0.036, 0], [0.038, 0.01], [0.038, 0.17], [0.04, 0.172]]), liquid: new THREE.CylinderGeometry(0.035, 0.035, 0.14, 18), ly: 0.08, mint: true, straw: true, rim: rim(0.04, 0.172) },
 };
 GEO.cosmo = GEO.martini;
 
@@ -28,6 +31,7 @@ export function makeGlass(kind, color) {
   const g = new THREE.Group();
   const liq = new THREE.Mesh(def.liquid, liquidMat(color)); liq.position.y = def.ly; liq.rotation.x = def.cone ? Math.PI : 0; g.add(liq);
   const gl = new THREE.Mesh(def.glass, glassMat); gl.renderOrder = 2; g.add(gl);
+  if (def.rim) { const r = new THREE.Mesh(def.rim.geo, rimMat); r.rotation.x = Math.PI / 2; r.position.y = def.rim.y; r.renderOrder = 3; g.add(r); }
   if (def.foam) { const f = new THREE.Mesh(new THREE.CylinderGeometry(0.047, 0.046, 0.02, 18), new THREE.MeshStandardMaterial({ color: 0xfff8e8, roughness: 0.9 })); f.position.y = def.ly + 0.07; liq.add(f); f.position.set(0, 0.07, 0); }
   if (def.handle) { const h = new THREE.Mesh(new THREE.TorusGeometry(0.035, 0.009, 6, 14, Math.PI), glassMat); h.position.set(0.05, 0.08, 0); h.rotation.z = -Math.PI / 2; g.add(h); }
   if (def.ice) for (let i = 0; i < 2; i++) { const c = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.03, 0.03), new THREE.MeshStandardMaterial({ color: 0xe8f6ff, transparent: true, opacity: 0.6, roughness: 0.05 })); c.position.set(-0.012 + i * 0.022, 0.06, i * 0.01); c.rotation.set(i, i * 0.5, 0.3); g.add(c); }
@@ -44,14 +48,33 @@ export function setFill(glass, frac) {
   else { liq.scale.y = frac; liq.position.y = def.ly - (1 - frac) * def.liquid.parameters.height / 2; }
 }
 
+// A glass's own extras (foam, ice, mint, straw, handle, glow) are freed with it; the shared shapes and materials stay.
+const SHARED_GEO = new Set(Object.values(GEO).flatMap(d => [d.glass, d.liquid, d.rim && d.rim.geo]));
+export function freeGlass(g) {
+  g.traverse(o => {
+    if (o.geometry && !SHARED_GEO.has(o.geometry)) o.geometry.dispose();
+    if (o.material && o.material !== glassMat && o.material !== rimMat && o.material !== spikeMat && !Object.values(liquidMats).includes(o.material)) o.material.dispose();
+  });
+}
+
 const markerMat = new THREE.MeshStandardMaterial({ color: 0xffd060, emissive: 0xffb020, emissiveIntensity: 0.6, metalness: 0.6, roughness: 0.2 });
 const spikeMat = new THREE.MeshBasicMaterial({ map: T.glow(), color: 0x7dff5a, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
 const bubbleMat = new THREE.MeshBasicMaterial({ color: 0x7dff5a, transparent: true, opacity: 0.8 });
+// a spill, not a disc: a lumpy blob with a few drops round it (the alpha mask every puddle shares)
+const splat = (() => {
+  const [c, g] = T.canvas(256, 256); let s = 7;
+  const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  g.fillStyle = '#fff';
+  for (let i = 0; i < 14; i++) { const a = r() * 7, d = r() * 46; g.beginPath(); g.arc(128 + Math.cos(a) * d, 128 + Math.sin(a) * d, 34 + r() * 30, 0, 7); g.fill(); }
+  for (let i = 0; i < 9; i++) { const a = r() * 7, d = 92 + r() * 26; g.beginPath(); g.arc(128 + Math.cos(a) * d, 128 + Math.sin(a) * d, 4 + r() * 9, 0, 7); g.fill(); }
+  return T.tex(c, false);
+})();
+const puddle = o => new THREE.MeshStandardMaterial({ transparent: true, alphaMap: splat, depthWrite: false, ...o });
 const puddleMats = {
-  poison: new THREE.MeshStandardMaterial({ color: 0x5aff40, emissive: 0x2a8020, transparent: true, opacity: 0.6, roughness: 0.1 }),
-  shiv: new THREE.MeshStandardMaterial({ color: 0x9a0a10, transparent: true, opacity: 0.85, roughness: 0.15 }),
-  drown: new THREE.MeshStandardMaterial({ color: 0x3fb8e0, transparent: true, opacity: 0.6, roughness: 0.05 }),
-  trap: new THREE.MeshStandardMaterial({ color: 0x2a2224, transparent: true, opacity: 0.75, roughness: 0.6 }), // scorch
+  poison: puddle({ color: 0x5aff40, emissive: 0x2a8020, opacity: 0.6, roughness: 0.1 }),
+  shiv: puddle({ color: 0x9a0a10, opacity: 0.85, roughness: 0.15 }),
+  drown: puddle({ color: 0x3fb8e0, opacity: 0.6, roughness: 0.05 }),
+  trap: puddle({ color: 0x2a2224, opacity: 0.75, roughness: 0.6 }), // scorch
 };
 
 export class Items {
@@ -115,7 +138,7 @@ export class Items {
       g.userData.glow.visible = sp;
       if (sp) { g.userData.glow.position.y = 0.08; g.userData.glow.quaternion.copy(opts.camera.quaternion); g.userData.glow.material.opacity = 0.5 + Math.sin(t * 6) * 0.3; }
     }
-    for (const [id, g] of this.drinks) if (!seen.has(id)) { if (g.parent) g.parent.remove(g); this.drinks.delete(id); }
+    for (const [id, g] of this.drinks) if (!seen.has(id)) { if (g.parent) g.parent.remove(g); freeGlass(g); this.drinks.delete(id); }
     this.marker.visible = !!myPlaced && priv.alive;
     if (myPlaced) { this.marker.position.set(myPlaced.position.x, myPlaced.position.y + 0.42 + Math.sin(t * 3) * 0.02, myPlaced.position.z); this.marker.rotation.y = t * 2; }
 
@@ -127,14 +150,18 @@ export class Items {
       if (!e) {
         const c = pub.chars[b.id];
         const bean = makeBean({ color: c.color, hat: c.hat, name: c.name }); bean.setDead(true);
-        const pud = new THREE.Mesh(new THREE.CircleGeometry(0.55, 24), puddleMats[b.cause] || puddleMats.shiv);
-        pud.rotation.x = -Math.PI / 2; pud.position.set(b.x * M + 0.1, 0.012, b.y * M + 0.05); pud.scale.set(1.3, 0.8, 1);
+        const pud = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 1.3), puddleMats[b.cause] || puddleMats.shiv);
+        pud.rotation.set(-Math.PI / 2, 0, Math.random() * 6.28); pud.position.set(b.x * M + 0.1, 0.012, b.y * M + 0.05); pud.scale.set(1.3, 0.8, 1);
         this.group.add(bean.root, pud);
         e = { bean, pud, face: Math.random() * Math.PI * 2 }; this.bodies.set(key, e);
       }
       e.bean.update({ x: b.x * M, z: b.y * M, face: e.face, look: e.face, t, dt });
     }
-    for (const [k, e] of this.bodies) if (!bseen.has(k)) { this.group.remove(e.bean.root, e.pud); this.bodies.delete(k); }
+    for (const [k, e] of this.bodies) if (!bseen.has(k)) {
+      this.group.remove(e.bean.root, e.pud); e.pud.geometry.dispose();
+      const l = e.bean.label; if (l) { l.material.map?.dispose(); l.material.dispose(); } // the name tag is the body's own canvas
+      this.bodies.delete(k);
+    }
 
     // fx
     const counts = { chips: 0, bubbles: 0, splat: 0, crumbs: 0 };
@@ -160,16 +187,23 @@ export class Items {
       let s = this.floatPool[fi];
       if (!s || s.userData.key !== key) {
         if (!this.floatCache.has(key)) {
-          if (this.floatCache.size > 80) { const [k0, m0] = this.floatCache.entries().next().value; if (!this.floatPool.some(sp => sp.material === m0)) { m0.map.dispose(); m0.dispose(); this.floatCache.delete(k0); } }
+          if (this.floatCache.size > 80) for (const [k0, m0] of this.floatCache) { // the oldest text nobody is showing
+            if (this.floatPool.some(sp => sp.visible && sp.material === m0)) continue;
+            for (const sp of this.floatPool) if (sp.material === m0) sp.userData.key = null; // hidden ones pick a fresh one next time
+            m0.map.dispose(); m0.dispose(); this.floatCache.delete(k0); break;
+          }
           this.floatCache.set(key, T.textSprite(f.text, { color: f.color, size: 56, bg: null, h: 0.3 }).material);
         }
         if (!s) { s = new THREE.Sprite(); this.group.add(s); this.floatPool[fi] = s; }
         s.material = this.floatCache.get(key); s.userData.key = key;
-        const img = s.material.map.image, hh = f.big ? 0.5 : 0.3; s.scale.set(hh * img.width / img.height, hh, 1);
+        const img = s.material.map.image, hh = f.big ? 0.5 : 0.3; s.userData.w = hh * img.width / img.height; s.userData.h = hh;
       }
       const life = 1.6 - f.t;
-      s.position.set(f.x * M, 1.9 + life * 0.45, (f.y + 18 * life) * M);
-      s.material.opacity = Math.min(1, f.t); s.visible = true; fi++;
+      s.position.set(f.x * M, 2.35 + life * 0.4, (f.y + 18 * life) * M); // starts above the name tags (about 2 m) and rises
+      // right under a camera (the table view looks down on your own seat) a float would fill the screen: it shrinks and fades
+      const near = opts.camera ? Math.min(1, Math.max(0, (s.position.distanceTo(opts.camera.position) - 1.2) / 2)) : 1;
+      s.scale.set(s.userData.w * (0.5 + near / 2), s.userData.h * (0.5 + near / 2), 1);
+      s.material.opacity = Math.min(1, f.t) * near; s.visible = near > 0; fi++;
     }
   }
 }

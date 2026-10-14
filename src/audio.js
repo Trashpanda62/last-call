@@ -79,7 +79,9 @@ export function setRoom(r) { if (r === room) return; room = r; if (mood === 'lou
 export function sting(name, vol = 0.9) {
   const f = pieceFile(name); if (!ac || !f || !musicOn) return;
   const el = new Audio('assets/audio/' + f), g = ac.createGain(); g.gain.value = vol;
-  ac.createMediaElementSource(el).connect(g).connect(musicBus); el.play().catch(() => {});
+  const src = ac.createMediaElementSource(el); src.connect(g).connect(musicBus);
+  el.onended = () => { src.disconnect(); g.disconnect(); }; // a long table session plays hundreds of these
+  el.play().catch(() => {});
 }
 
 // ---------- The synthesized fallback ----------
@@ -148,7 +150,7 @@ const STINGS = new Set(['win', 'lose']); // the recorded music stings stand in f
 const lastAt = {};
 export function sfx(kind, vol = 1) {
   if (!ac || !kind) return;
-  if (STINGS.has(kind) && pieceFile(kind)) { sting(kind, kind === 'win' ? 0.7 : 0.6); return; }
+  if (STINGS.has(kind) && pieceFile(kind) && musicOn) { sting(kind, kind === 'win' ? 0.7 : 0.6); return; } // music off: the plain effect
   const k = kind === 'step' ? FLOOR[room] || 'fallCarpet' : kind, bufs = BUF[k];
   if (!bufs || !bufs.length) { synth(kind); return; }
   if (ac.currentTime - (lastAt[k] || -1) < 0.03) return; lastAt[k] = ac.currentTime; // a burst of the same sound in one frame

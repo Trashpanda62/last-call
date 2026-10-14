@@ -462,7 +462,9 @@ export function makeTalk(G, h) {
   function hear(m, c, text) {
     const k = m.talk; if (!k) return;
     const low = text.toLowerCase();
-    const named = G.chars.filter(o => o.alive && o !== c && low.includes(o.name.toLowerCase()));
+    // whole names only ("drink" is not Ink), the first one said first
+    const at = o => { const m = new RegExp('(^|[^a-z0-9])' + o.name.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?![a-z0-9])').exec(low); return m ? m.index : -1; };
+    const named = G.chars.filter(o => o.alive && o !== c && at(o) >= 0).sort((p, q) => at(p) - at(q));
     const claim = /\bi was\b|\bi'?m\b|\bme\b|^at |^in |^on /.test(low) && Object.entries(ROOM_WORDS).find(([, re]) => re.test(low));
     if (claim && k.claims[c.id] === undefined && m.phase !== 'result') { k.claims[c.id] = claim[0]; queueChecks(c, claim[0]); }
     if (!named.length) return;

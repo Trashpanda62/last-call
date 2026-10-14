@@ -1,6 +1,6 @@
 // The HUD for the v4 moves: the killer bar (6 moves), the name picker for drinks and haunts, the security desk card,
 // the ghost's haunt button and the poison warning. Everything goes to the sim through act().
-import { money, esc } from './util.js';
+import { money, esc, secs } from './util.js';
 import { $ } from './ui.js';
 
 const KILL_KEYS = ['order', 'rig', 'blade', 'accident', 'disguise', 'lights'];
@@ -50,11 +50,11 @@ function move(k) {
   const { pub, priv } = v;
   if (k === 'order' || k === 'send') {
     if (!priv.alive || (k === 'order' && !priv.isKiller)) return;
-    if (!priv.atBar) return act(k); // the sim says where to go
+    if (!priv.atBar || (k === 'order' && priv.cd.order > 0)) return act(k); // the sim says where to go, or how long to wait
     const who = pub.chars.filter(c => c.alive && c.id !== priv.me && !(k === 'order' && priv.killers.includes(c.id)));
     openPicker(k === 'order' ? 'Poison a drink for...' : 'Send a free drink to...', who, id => act(k, id));
   } else if (k === 'haunt') {
-    if (priv.alive || priv.hauntUsed) return;
+    if (priv.alive || priv.hauntUsed || priv.isKiller) return;
     openPicker('Haunt...', pub.chars.filter(c => c.alive), id => act('haunt', id));
   } else if (priv.isKiller && priv.alive) act(k);
 }
@@ -73,6 +73,8 @@ function openPicker(title, chars, pick) {
 }
 function closePicker() { if (!picker) return; picker = null; $('picker').classList.add('hidden'); relock(); }
 export const pickerOpen = () => !!picker;
+// Leaving a game: nothing it opened stays on screen.
+export function resetMoves() { picker = null; last = null; $('picker').classList.add('hidden'); document.body.classList.remove('sick', 'ghost'); }
 
 export function updateMoves(v) {
   last = v;
@@ -83,11 +85,13 @@ export function updateMoves(v) {
   $('killerBar').classList.toggle('hidden', !(priv.isKiller && priv.alive));
   if (priv.isKiller && priv.alive) for (const k of KILL_KEYS) {
     const b = document.querySelector(`#killerBar [data-move=${k}]`), cd = priv.cd[k] || 0;
-    b.disabled = cd > 0; b.querySelector('i').textContent = cd > 0 ? ` ${cd}s` : k === 'disguise' && priv.disguise ? ` ${priv.disguise.t}s on` : '';
+    const noVictim = k === 'disguise' && !priv.disguise && !priv.canDisguise; // a disguise is your last victim's look
+    b.disabled = cd > 0 || noVictim; b.title = noVictim ? 'Needs a victim first' : '';
+    b.querySelector('i').textContent = k === 'disguise' && priv.disguise ? ` ${priv.disguise.t}s on` : cd > 0 ? ' ' + secs(cd) : noVictim ? ' no victim' : ''; // while it's on, the time left beats the cooldown
   }
   $('sendBtn').classList.toggle('hidden', !(play && priv.alive && priv.atBar && !priv.seat));
   // ghosts
-  $('ghostBar').classList.toggle('hidden', !(play && !priv.alive));
+  $('ghostBar').classList.toggle('hidden', !(play && !priv.alive && !priv.isKiller)); // killers' ghosts don't haunt
   if (!priv.alive) { $('hauntBtn').disabled = priv.hauntUsed; $('hauntBtn').textContent = priv.hauntUsed ? 'Haunted (again after the next meeting)' : 'H · Haunt someone'; }
   // poison
   const sick = play && priv.alive && priv.sick;
@@ -111,4 +115,6 @@ export function updateMoves(v) {
     }
   } else card.dataset.key = '';
   document.body.classList.toggle('cctv', !!(desk && pub.security.cams));
+  document.body.classList.toggle('sick', !!sick);
+  document.body.classList.toggle('ghost', play && !priv.alive);
 }

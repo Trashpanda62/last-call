@@ -6,7 +6,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import { buildWorld, loadRoomMats, GLOWS, M, yawOf } from './world.js';
+import { buildWorld, loadRoomMats, GLOWS, M, WALL_H, yawOf } from './world.js';
 import { makeBean, loadPlush, onPlushReady, plushReady, loadClips, loadHats, PLAYED } from './plush.js';
 import { loadProps, onPropsReady, propsLoaded } from './props.js';
 import { GESTURES, Gestures } from './gestures.js';
@@ -14,7 +14,7 @@ import { Items } from './items.js';
 import { Hands } from './hands.js';
 import { Hazards } from './hazards.js';
 import { setAniso, loadFelts, loadArt, loadArt2, onArt2 } from './textures.js';
-import { BELL } from '../map.js';
+import { BELL, ROOMS, roomOf, DOORS, DOOR_GAPS } from '../map.js';
 import { ringRadius } from '../sim.js';
 
 export const EYE = { stand: 1.12, seat: 1.42, ghost: 1.6 };
@@ -38,9 +38,11 @@ export function init(canvas, { lowPower = false } = {}) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.shadowMap.enabled = !lowPower; renderer.shadowMap.type = THREE.PCFShadowMap;
+  // the AO pass draws the scene again; the shadow map and world matrices are brought up to date once per frame in draw()
+  renderer.shadowMap.autoUpdate = false; renderer.info.autoReset = false;
   setAniso(Math.min(8, renderer.capabilities.getMaxAnisotropy()));
   loadFelts(); loadArt();
-  const scene = new THREE.Scene();
+  const scene = new THREE.Scene(); scene.matrixWorldAutoUpdate = false;
   scene.background = new THREE.Color(0x0b0709);
   scene.fog = new THREE.Fog(0x1a0a0e, 18, 46);
   const pmrem = new THREE.PMREMGenerator(renderer);
@@ -74,9 +76,11 @@ export function init(canvas, { lowPower = false } = {}) {
   });
   loadPlush(); onPlushReady(() => loadClips(GESTURES)); loadHats();
   // the hero props arrive in the background too: the casino is rebuilt with them once you are not seated at a game
-  loadProps(); onPropsReady(() => { R.rebuild = true; });
-  // and the signs, paintings, posters and skyline (assets/art2)
-  loadArt2(); onArt2(() => { R.rebuild = true; });
+  // and the signs, paintings, posters and skyline (assets/art2). One rebuild once both are in (a slow one gets 8 s).
+  let waiting = 2;
+  const loaded = () => { if (--waiting <= 0) R.rebuild = true; else setTimeout(() => { if (waiting > 0) R.rebuild = true; }, 8000); };
+  loadProps(); onPropsReady(loaded);
+  loadArt2(); onArt2(loaded);
 
   const rt = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: lowPower ? 0 : 4 });
   const composer = new EffectComposer(renderer, rt);
@@ -114,11 +118,40 @@ function rebuildWorld() {
   R.rebuild = false;
   const old = R.world;
   R.scene.remove(old.group);
-  old.group.traverse(o => { if (o.geometry && !o.userData.prop) o.geometry.dispose(); });
-  GLOWS.splice(R.glowRange[0], R.glowRange[1] - R.glowRange[0]);
-  const g0 = GLOWS.length;
+  const oldGlows = new Set(GLOWS.slice(R.glowRange[0], R.glowRange[1])), g0 = GLOWS.length;
   R.world = buildWorld(R.scene);
-  R.glowRange = [g0, GLOWS.length];
+  const newGlows = new Set(GLOWS.slice(g0));
+  // free what only the old casino used (its screens' canvases, per-build materials); anything the new one shares stays
+  const keepM = new Set(), keepT = new Set();
+  const mats = o => o.material ? [].concat(o.material) : [];
+  const maps = m => ['map', 'emissiveMap', 'alphaMap', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap'].map(k => m[k]).filter(Boolean);
+  R.world.group.traverse(o => { for (const m of mats(o)) { keepM.add(m); for (const t of maps(m)) keepT.add(t); } });
+  old.group.traverse(o => {
+    if (o.geometry && !o.userData.prop) o.geometry.dispose();
+    if (o.userData.prop) return;
+    for (const m of mats(o)) if (!keepM.has(m)) { for (const t of maps(m)) if (!keepT.has(t) && t.image instanceof HTMLCanvasElement) t.dispose(); m.dispose(); }
+  });
+  // the lights-out list: one entry per material (the new build re-adds the shared ones it uses, so keep the first)
+  const seen = new Set();
+  for (let i = 0; i < GLOWS.length; i++) {
+    const e = GLOWS[i], k = e.m.uuid + e.k;
+    if (seen.has(k) || (oldGlows.has(e) && !keepM.has(e.m))) GLOWS.splice(i--, 1);
+    else { seen.add(k); if (oldGlows.has(e)) newGlows.add(e); }
+  }
+  // the world's entries sit together again at the end, so the next rebuild can find them
+  const rest = GLOWS.filter(e => !newGlows.has(e)), mine = GLOWS.filter(e => newGlows.has(e));
+  GLOWS.length = 0; GLOWS.push(...rest, ...mine);
+  R.glowRange = [rest.length, GLOWS.length];
+  // compile the new casino's shaders now (off the main thread where the GPU allows), not on first sight of each room
+  try {
+    if (R.renderer.extensions.has('KHR_parallel_shader_compile')) R.renderer.compileAsync(R.scene, R.camera).catch(() => {});
+    else R.renderer.compile(R.scene, R.camera);
+    // and upload every texture now: the first look into the bar used to stall on them
+    const seenT = new Set();
+    R.scene.traverse(o => { for (const m of o.material ? [].concat(o.material) : []) for (const k of ['map', 'emissiveMap', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'alphaMap']) {
+      const t = m[k]; if (t && !seenT.has(t)) { seenT.add(t); R.renderer.initTexture(t); }
+    } });
+  } catch (e) { /* it compiles lazily instead */ }
 }
 
 function resize() {
@@ -136,11 +169,32 @@ function resize() {
   R.hands.setAspect(aspect, R.camera.fov);
 }
 
+// Name tags in a crowd: nearest first, and a tag that would sit on top of a nearer one stays hidden this frame.
+const camFwd = new THREE.Vector3(), lp = new THREE.Vector3(), ls = new THREE.Vector3(), tags = [], placed = [];
+function declutterLabels(cam) {
+  tags.length = 0; placed.length = 0;
+  const P = cam.projectionMatrix.elements;
+  for (const b of R.beans.values()) {
+    const l = b.label; if (!l || !b.root.visible) continue;
+    l.visible = true;
+    l.getWorldPosition(lp); const d = lp.distanceToSquared(cam.position); lp.project(cam);
+    if (lp.z > 1 || Math.abs(lp.x) > 1.3 || Math.abs(lp.y) > 1.3) continue;
+    l.getWorldScale(ls); // screen-sized sprites: half their size in NDC is scale x projection / 2
+    tags.push({ l, d, x: lp.x, y: lp.y, w: ls.x * P[0] / 2, h: ls.y * P[5] / 2 });
+  }
+  tags.sort((a, b) => a.d - b.d);
+  for (const e of tags) {
+    if (placed.some(a => Math.abs(a.x - e.x) < a.w + e.w && Math.abs(a.y - e.y) < (a.h + e.h) * 0.9)) e.l.visible = false;
+    else placed.push(e);
+  }
+}
+// A character leaving the scene frees its name tag (its own canvas).
+function dropBean(b) { R.scene.remove(b.root); const l = b.label; if (l) { l.material.map?.dispose(); l.material.dispose(); } }
 function beanFor(c) {
   let b = R.beans.get(c.id);
   const key = c.color + c.hat + plushReady();
   if (!b || b.key !== key) {
-    if (b) R.scene.remove(b.root);
+    if (b) dropBean(b);
     b = makeBean({ color: c.color, hat: c.hat, name: c.name }); b.key = key; b.name = c.name;
     R.scene.add(b.root); R.beans.set(c.id, b);
   }
@@ -164,21 +218,125 @@ function placeLights(cam, lit) {
   }
 }
 
-// frame: { pub, priv, me: {x,y,look,pitch,moving}, mode: 'fp'|'orbit', my: panel view }
+// ---------- The table camera ----------
+// Seated at a game, the camera rises behind your seat and looks down on the whole game, like a dealer's-eye view:
+// the points the rig names (rig.focus()) are fitted into the part of the screen the HUD leaves free. Extra points
+// (the roulette wheel, the pond, the Crash screen) come along when they fit under the ceiling.
+const CEIL = 3.45, shotCam = new THREE.PerspectiveCamera(46, 1, 0.05, 90), pv = new THREE.Vector3(), pc = new THREE.Vector3();
+shotCam.rotation.order = 'YXZ';
+function fitShot(pts, look, pitch, fov, aspect, safe) {
+  shotCam.fov = fov; shotCam.aspect = aspect; shotCam.updateProjectionMatrix();
+  shotCam.rotation.set(pitch, -look - Math.PI / 2, 0); shotCam.updateMatrix();
+  const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(shotCam.quaternion), right = new THREE.Vector3(1, 0, 0).applyQuaternion(shotCam.quaternion), up = new THREE.Vector3(0, 1, 0).applyQuaternion(shotCam.quaternion);
+  const box = new THREE.Box3().setFromPoints(pts), c = box.getCenter(new THREE.Vector3());
+  const th = Math.tan(fov * Math.PI / 360), tw = th * aspect;
+  const sx = (safe.x0 + safe.x1) / 2, sy = (safe.y0 + safe.y1) / 2, sw = safe.x1 - safe.x0, sh = safe.y1 - safe.y0;
+  const at = D => {
+    const pos = c.clone().addScaledVector(fwd, -D);
+    let b = null;
+    for (let it = 0; it < 5; it++) {
+      shotCam.position.copy(pos); shotCam.updateMatrixWorld(true);
+      b = { x0: 9, x1: -9, y0: 9, y1: -9, behind: false };
+      for (const p of pts) {
+        pc.copy(p).applyMatrix4(shotCam.matrixWorldInverse); if (pc.z > -0.05) { b.behind = true; break; }
+        pv.copy(p).project(shotCam); b.x0 = Math.min(b.x0, pv.x); b.x1 = Math.max(b.x1, pv.x); b.y0 = Math.min(b.y0, pv.y); b.y1 = Math.max(b.y1, pv.y);
+      }
+      if (b.behind) break;
+      pos.addScaledVector(right, ((b.x0 + b.x1) / 2 - sx) * tw * D).addScaledVector(up, ((b.y0 + b.y1) / 2 - sy) * th * D);
+    }
+    return { pos, ok: !b.behind && b.x1 - b.x0 <= sw && b.y1 - b.y0 <= sh };
+  };
+  let lo = 0.4, hi = 16;
+  if (!at(hi).ok) return null;
+  for (let i = 0; i < 22; i++) { const mid = (lo + hi) / 2; if (at(mid).ok) hi = mid; else lo = mid; }
+  const r = at(hi);
+  return { pos: r.pos, quat: shotCam.quaternion.clone(), fov };
+}
+function tableShot(F, aspect, safe) {
+  const key = [F.key, aspect.toFixed(3), safe.y0.toFixed(3), safe.y1.toFixed(3)].join();
+  if (R.shotKey === key) return R.shot;
+  if (F.fixed) { shotCam.position.copy(F.fixed.pos); shotCam.lookAt(F.fixed.at); R.shotKey = key; return (R.shot = { pos: F.fixed.pos.clone(), quat: shotCam.quaternion.clone(), fov: F.fixed.fov }); }
+  // the camera has to stay under the ceiling and inside your room (a seat with its back to a wall looks down steeper)
+  const room = ROOMS[roomOf({ x: F.at[0], y: F.at[1] })], pad = 12;
+  const ok = s => s && s.pos.y <= CEIL && s.pos.x / M > room.x + pad && s.pos.x / M < room.x + room.w - pad && s.pos.z / M > room.y + pad && s.pos.z / M < room.y + room.h - pad;
+  let best = null;
+  for (const pts of F.extra.length ? [F.core.concat(F.extra), F.core] : [F.core]) {
+    for (const dp of [0, 0.15, -0.2, 0.3, -0.4, -0.6]) {
+      const pitch = Math.max(-1.45, Math.min(-0.05, F.pitch + dp));
+      for (let fov = F.fov; fov <= 72 && !best; fov += 4) { const s = fitShot(pts, F.look, pitch, fov, aspect, safe); if (ok(s)) best = s; }
+      if (best) break;
+    }
+    if (best) break;
+  }
+  if (!best) { best = fitShot(F.core, F.look, F.pitch, 76, aspect, safe); if (best) { const p = best.pos; p.y = Math.min(p.y, CEIL); p.x = Math.max((room.x + pad) * M, Math.min((room.x + room.w - pad) * M, p.x)); p.z = Math.max((room.y + pad) * M, Math.min((room.y + room.h - pad) * M, p.z)); } }
+  R.shotKey = key; R.shot = best;
+  return best;
+}
+
+// frame: { pub, priv, me: {x,y,look,pitch,moving}, mode: 'fp'|'orbit', my: panel view, table: seated at a game (the
+// table camera), lookBack, safe: { top, bottom } CSS px the HUD covers }
+// Hero props are most of the triangles. In first person only the rooms you can see into are drawn: your own, then any
+// room whose doorway shows on screen inside the doorway you are already looking through.
+const PORTALS = DOORS.map(d => {
+  const mx = (d.pa.x + d.pb.x) / 2, my = (d.pa.y + d.pb.y) / 2;
+  const g = DOOR_GAPS.find(g => mx >= g.x - 1 && mx <= g.x + g.w + 1 && my >= g.y - 1 && my <= g.y + g.h + 1);
+  return { a: d.a, b: d.b, box: new THREE.Box3(new THREE.Vector3(g.x * M, 0, g.y * M), new THREE.Vector3((g.x + g.w) * M, WALL_H, (g.y + g.h) * M)) };
+});
+const cornerV = new THREE.Vector3(), cullFr = new THREE.Frustum(), cullVP = new THREE.Matrix4();
+// A doorway's extent on screen as [x0, y0, x1, y1] in NDC, the whole screen when it reaches behind you, null when off it.
+function portalRect(box, cam) {
+  if (!cullFr.intersectsBox(box)) return null;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (let i = 0; i < 8; i++) {
+    cornerV.set(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).applyMatrix4(cam.matrixWorldInverse);
+    if (cornerV.z > -cam.near) return [-1, -1, 1, 1];
+    cornerV.applyMatrix4(cam.projectionMatrix);
+    x0 = Math.min(x0, cornerV.x); y0 = Math.min(y0, cornerV.y); x1 = Math.max(x1, cornerV.x); y1 = Math.max(y1, cornerV.y);
+  }
+  return x1 < -1 || x0 > 1 || y1 < -1 || y0 > 1 ? null : [x0, y0, x1, y1];
+}
+function cullRooms(cam, all) {
+  if (!R.roomProps || R.roomProps.world !== R.world) { const list = []; R.world.group.traverse(o => { if (o.userData.room) list.push(o); }); R.roomProps = { world: R.world, list }; }
+  let seen = null;
+  if (!all) {
+    cullFr.setFromProjectionMatrix(cullVP.multiplyMatrices(cam.projectionMatrix, cam.matrixWorldInverse));
+    const start = roomOf({ x: cam.position.x / M, y: cam.position.z / M });
+    seen = new Set([start]);
+    for (const q = [[start, [-1, -1, 1, 1], null]]; q.length;) {
+      const [r, win, via] = q.pop();
+      for (const p of PORTALS) {
+        if (p === via) continue;
+        const o = p.a === r ? p.b : p.b === r ? p.a : null; if (!o || seen.has(o)) continue;
+        const pr = portalRect(p.box, cam); if (!pr) continue;
+        const cut = [Math.max(pr[0], win[0]), Math.max(pr[1], win[1]), Math.min(pr[2], win[2]), Math.min(pr[3], win[3])];
+        if (cut[0] < cut[2] && cut[1] < cut[3]) { seen.add(o); q.push([o, cut, p]); }
+      }
+    }
+  }
+  for (const o of R.roomProps.list) o.visible = !seen || seen.has(o.userData.room);
+  R.roomsSeen = seen ? [...seen] : null;
+}
 export function draw(frame) {
   if (!R) return;
   if (R.rebuild && !frame.my) rebuildWorld();
+  R.renderer.info.reset();
   resize();
   const now = performance.now(); const dt = Math.min(0.1, (now - R.last) / 1000); R.last = now;
+  // a machine that can't hold about 45 fps for five seconds of play drops the ambient occlusion pass (a whole extra draw)
+  if (R.gtao && R.gtao.enabled && frame.pub && document.visibilityState === 'visible') {
+    R.slowT = dt > 1 / 45 ? (R.slowT || 0) + dt : Math.max(0, (R.slowT || 0) - dt * 0.5);
+    if (R.slowT > 5) R.gtao.enabled = false;
+  }
   const { pub, priv, me } = frame;
   // seated on a phone in landscape the view narrows a little so the table's parts are big enough to tap
   const zoom = frame.zoom || 1;
-  if (Math.abs((R.zoom || 1) - zoom) > 0.002) { R.zoom = (R.zoom || 1) + (zoom - (R.zoom || 1)) * Math.min(1, dt * 5); if (Math.abs(R.zoom - zoom) < 0.004) R.zoom = zoom; R.camera.fov = R.baseFov * R.zoom; R.camera.updateProjectionMatrix(); R.hands.setAspect(R.camera.aspect, R.camera.fov); }
+  if (Math.abs((R.zoom || 1) - zoom) > 0.002) { R.zoom = (R.zoom || 1) + (zoom - (R.zoom || 1)) * Math.min(1, dt * 5); if (Math.abs(R.zoom - zoom) < 0.004) R.zoom = zoom; R.hands.setAspect(R.camera.aspect, R.baseFov * R.zoom); }
   const t = pub ? pub.t : now / 1000;
   const orbit = frame.mode !== 'fp' || !pub;
   const meeting = pub && pub.mode === 'meeting';
   // lights out: fade everything but your own glow
-  const want = pub && pub.lightsT > 0 && !pub.over && pub.mode === 'play' ? 1 : 0;
+  // (killers knew it was coming: their eyes are used to the dark)
+  const want = pub && pub.lightsT > 0 && !pub.over && pub.mode === 'play' ? (priv && priv.isKiller && priv.alive ? 0.62 : 1) : 0;
   R.dark += (want - R.dark) * Math.min(1, dt * (want ? 6 : 2));
   const lit = 1 - R.dark * 0.94;
   R.hemi.intensity = 0.42 * lit; R.fill.intensity = 0.28 * lit; R.key.intensity = 0.75 * lit; R.scene.environmentIntensity = 0.32 * lit;
@@ -217,7 +375,7 @@ export function draw(frame) {
       b.setLabel(isMe ? 'You' : c.name, partner ? '#ff8a80' : '#f3ead8');
     }
   }
-  for (const [id, b] of R.beans) if (!seen.has(id)) { R.scene.remove(b.root); R.beans.delete(id); }
+  for (const [id, b] of R.beans) if (!seen.has(id)) { dropBean(b); R.beans.delete(id); }
   if (plushReady()) (R.gestures || (R.gestures = new Gestures())).tick(pub, priv, R.beans, { dealers: R.dealers, bartender: R.bartender }, t, dt);
 
   // camera
@@ -226,7 +384,7 @@ export function draw(frame) {
   if (orbit && meeting) {
     R.orbitA += dt * 0.12;
     const cx = BELL.x * M, cz = BELL.y * M, rad = 4.2 + (pub.chars.length > 10 ? 1 : 0);
-    cam.position.set(cx + Math.cos(R.orbitA) * rad, 2.4, cz + Math.sin(R.orbitA) * rad);
+    cam.position.set(cx + Math.cos(R.orbitA) * rad, 2.15, cz + Math.sin(R.orbitA) * rad); // under the chandeliers' drops
     cam.lookAt(cx, 1.0, cz);
   } else if (orbit) {
     R.tourT += dt;
@@ -237,14 +395,46 @@ export function draw(frame) {
     const ghost = !priv.alive, seated = !!priv.seat;
     R.fp.bob += dt * (me.moving ? 10 : 0);
     const eye = ghost ? EYE.ghost : seated ? EYE.seat : EYE.stand;
-    cam.position.set(me.x * M, eye + (me.moving && !ghost ? Math.abs(Math.sin(R.fp.bob)) * 0.03 : 0), me.y * M);
-    cam.rotation.set(me.pitch || 0, -me.look - Math.PI / 2, 0);
+    // standing, the eye sits a little behind the body's centre, so someone at arm's length (a knife's reach) is a face, not a wall of plush
+    const back = seated || ghost ? 0 : 0.12; // (the body keeps 0.25 m off walls, so this never pokes through one)
+    cam.position.set(me.x * M - Math.cos(me.look) * back, eye + (me.moving && !ghost ? Math.abs(Math.sin(R.fp.bob)) * 0.03 : 0), me.y * M - Math.sin(me.look) * back);
+    cam.rotation.set(seated && frame.lookBack ? 0 : me.pitch || 0, -me.look - Math.PI / 2, 0); // a seated look back is level: the room, not the carpet
     handsHidden = false;
     const myChar = pub.chars[meIdx];
     R.hands.setSuit(myChar.color);
     const d = priv.drink && priv.drink.held ? pub.drinks.find(x => x.holder === meIdx) : null;
     R.hands.update({ dt, t, drink: d ? { kind: d.kind, color: d.color, sips: d.sips } : null, seated, game: priv.seat && priv.seat.game, moving: me.moving, ghost, light: lit + R.dark * 0.25, hidden: false });
     if (R.hazards.cctv(cam, pub, priv)) handsHidden = true; // the security desk shows the live camera
+  }
+  // the table camera, blended in from (and back out to) your eyes
+  const rig = R.world.machines.rig, F = !orbit && frame.table && rig.focus();
+  const wantT = F && !frame.lookBack ? 1 : 0;
+  R.tk = (R.tk || 0) + (wantT - (R.tk || 0)) * Math.min(1, dt * 5);
+  if (R.tk < 0.002 && !wantT) R.tk = 0;
+  const e = R.tk * R.tk * (3 - 2 * R.tk);
+  if (F) { const H = innerHeight, sf = frame.safe || {}; R.lastShot = tableShot(F, cam.aspect, { x0: -0.95, x1: 0.95, y0: -1 + 2 * (sf.bottom || 0) / H, y1: 1 - 2 * (sf.top || 0) / H }); }
+  const shot = R.tk > 0 && !orbit ? R.lastShot : null;
+  const baseFov = R.baseFov * (R.zoom || 1);
+  let fov = baseFov;
+  if (shot) { // glide between shots (the duck race changes its shot when they run)
+    const cs = R.cs && R.tk < 1 && e < 0.02 ? null : R.cs, k = Math.min(1, dt * 2.5);
+    if (!cs) R.cs = { pos: shot.pos.clone(), quat: shot.quat.clone(), fov: shot.fov };
+    else { cs.pos.lerp(shot.pos, k); cs.quat.slerp(shot.quat, k); cs.fov += (shot.fov - cs.fov) * k; }
+    cam.position.lerp(R.cs.pos, e); cam.quaternion.slerp(R.cs.quat, e); fov = baseFov + (R.cs.fov - baseFov) * e;
+    if (e > 0.25) handsHidden = true;
+  }
+  if (Math.abs(cam.fov - fov) > 0.01) { cam.fov = fov; cam.updateProjectionMatrix(); }
+  R.bloom.strength = 0.45 * (1 - 0.8 * e); // the felt's white print would glow
+  // a chandelier right over the table camera would hang in the shot (one that is coming down still shows)
+  for (const ch of R.world.chandeliers || []) if (ch) ch.g.visible = !(shot && e > 0.3 && ch.g.position.y === 0 && ch.g.rotation.x === 0 && Math.hypot(ch.g.position.x - cam.position.x, ch.g.position.z - cam.position.z) < 2.4);
+  // other players standing right under the table camera would block the game: they step out of the shot
+  if (shot && e > 0.5) {
+    cam.getWorldDirection(camFwd); const fl = Math.hypot(camFwd.x, camFwd.z) || 1;
+    for (const [id, b] of R.beans) {
+      if (id === meIdx || !b.root.visible) continue;
+      const dx = b.root.position.x - cam.position.x, dz = b.root.position.z - cam.position.z, d = Math.hypot(dx, dz);
+      if (d < 1.5 || (d < 3 && (dx * camFwd.x + dz * camFwd.z) / (fl * d) > 0.3)) b.root.visible = false; // close, or close and ahead
+    }
   }
   if (handsHidden) R.hands.update({ hidden: true, dt });
   cam.updateMatrixWorld();
@@ -254,9 +444,12 @@ export function draw(frame) {
   const ahead = new THREE.Vector3(0, 0, -5).applyQuaternion(cam.quaternion); ahead.y = 0;
   const step = 22 / 2048, tx = Math.round((cam.position.x + ahead.x) / step) * step, tz = Math.round((cam.position.z + ahead.z) / step) * step;
   R.key.target.position.set(tx, 0, tz); R.key.position.set(tx + 2.5, 12, tz + 3.5); R.key.target.updateMatrixWorld();
-  R.world.update(now / 1000, dt, { pub, priv, my: frame.my || null, cam: cam.position });
+  R.world.update(now / 1000, dt, { pub, priv, my: frame.my || null, cam: cam.position, camObj: cam });
+  declutterLabels(cam);
   if (pub) R.items.update(pub, priv || { me: -1, spiked: [], alive: true }, R.beans, t, dt, { firstPerson: !orbit, camera: cam });
-  if (pub) R.hazards.update(pub, priv, R.beans, t, dt);
+  if (pub) R.hazards.update(pub, priv, R.beans, t, dt, cam);
+  R.scene.updateMatrixWorld(); R.renderer.shadowMap.needsUpdate = true;
+  cullRooms(cam, orbit);
   R.composer.render(dt);
 }
 
@@ -268,7 +461,7 @@ const ray = new THREE.Raycaster(), ndcV = new THREE.Vector2(), shown = o => { fo
 // The part of your own table under a screen point (NDC): { part, uv, point } or null.
 export function pick(nx, ny) {
   const rig = R && R.world.machines.rig; if (!rig || !rig.active) return null;
-  ndcV.set(nx, ny); ray.setFromCamera(ndcV, R.camera); ray.far = 5;
+  ndcV.set(nx, ny); ray.setFromCamera(ndcV, R.camera); ray.far = 20;
   for (const h of ray.intersectObjects(rig.parts, false)) { if (!shown(h.object)) continue; const r = rig.resolve(h); if (r) return r; }
   return null;
 }
@@ -292,8 +485,10 @@ export function screenPointOf(x, y) { const rig = R && R.world.machines.rig, p =
 export function setHover(h) { const rig = R && R.world.machines.rig; if (rig) rig.setHover(h); }
 export const camPos = () => R && R.camera.position.toArray();
 export function gesture(id, name, upper) { const b = R && R.beans.get(id); return !!(b && b.play && b.play(name, upper)); }
+// automation: the live scene, for headless checks that need to look inside it
+export const debugScene = () => R && { scene: R.scene, camera: R.camera };
 export function info() {
   if (!R) return null;
   const i = R.renderer.info;
-  return { calls: i.render.calls, tris: i.render.triangles, geos: i.memory.geometries, tex: i.memory.textures, cam: [R.camera.position.x, R.camera.position.y, R.camera.position.z, R.camera.rotation.x, R.camera.rotation.y].map(v => +v.toFixed(2)), gestures: { ...PLAYED }, props: propsLoaded().length, rebuildPending: !!R.rebuild };
+  return { calls: i.render.calls, tris: i.render.triangles, geos: i.memory.geometries, tex: i.memory.textures, cam: [R.camera.position.x, R.camera.position.y, R.camera.position.z, R.camera.rotation.x, R.camera.rotation.y].map(v => +v.toFixed(2)), gestures: { ...PLAYED }, props: propsLoaded().length, rebuildPending: !!R.rebuild, rooms: R.roomsSeen || null, ao: !!(R.gtao && R.gtao.enabled) };
 }

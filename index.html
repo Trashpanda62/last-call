@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#0b0709">
-<meta name="description" content="Six gamblers, one killer. Watch your drink.">
+<meta name="description" content="A casino full of gamblers. Some of them are killers. Watch your drink.">
 <title>Last Call</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6 4h20l-8 12v9h5v3H9v-3h5v-9z' fill='%23e8c46a'/%3E%3Ccircle cx='16' cy='9' r='2.5' fill='%237dff5a'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
@@ -17,7 +17,13 @@
   <div id="cross"></div>
   <div id="aim"></div>
   <div id="hint"></div>
-  <div id="tableHud" class="hidden"></div>
+  <div id="tableBar" class="hidden">
+    <div id="tbNote"></div>
+    <div id="tbPlaced"></div>
+    <div class="tb-top"><span><span class="tb-k">ON TABLE</span> <b id="tbTotal"></b></span><span id="tbStatus"></span><span id="tbMax"></span></div>
+    <div class="tb-row"><div id="tbChips"></div><div id="tbTools"></div><div id="tbActs"></div></div>
+    <div class="tb-foot"><span class="kb">[E] or [Q] stand up · wheel changes your chip · right-click takes chips back · hold Space to look behind you</span><span class="tb">Tap the felt to bet · Use stands you up</span></div>
+  </div>
   <div id="lockHint" class="hidden">Click to look around</div>
   <div id="bank">
     <div class="label">Bankroll <span id="closeT"></span></div>
@@ -50,7 +56,7 @@
 <div id="menu" class="overlay">
   <div class="card">
     <h1>Last Call</h1>
-    <p class="tag">Six gamblers. One of them is a killer. Watch your drink.</p>
+    <p class="tag">A casino full of gamblers. Some of them are killers. Watch your drink.</p>
     <label class="field">Your name <input id="nameIn" maxlength="12" autocomplete="off" spellcheck="false"></label>
     <div class="col">
       <button class="big" id="soloBtn">Play solo with bots</button>
@@ -106,9 +112,7 @@
       <div class="hcard"><b>Meetings</b><p>Find a body or ring the pit bell. Everyone says what they saw (the killers lie), then votes. Your notes remember what you saw.</p></div>
     </div>
     <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, E or click to use, F sip, R check (a drink, machine or snack bowl), X pour, G send a drink (at the bar), hold Space to look behind you, 1-6 killer moves, H haunt (as a ghost), Esc menu.
-      At a table you play with your hands: aim at a chip, a square on the felt or a button and click (or E) to press it,
-      right-click a stack to take it back; walk to stand up.
-      <b>Phone:</b> left thumb walks, right thumb drags to look, buttons on the right; at a table, tap the chips, squares and buttons.</p>
+      <b>At a table</b> the camera looks down on the game and the mouse is free: pick a chip on the bar (or turn the wheel), click the felt to bet, right-click a bet to take it back, then press the game's big button. UNDO, CLEAR, x2 and MAX sit by the chips. Q, E or a walk key stands you up.</p>
     <button class="big" id="howClose">Got it</button>
   </div>
 </div>

@@ -1,6 +1,7 @@
 // Bean gamblers (look A): a soft vinyl bean with a big face, a suit, a bow tie, four-finger cartoon gloves and a hat.
 // Local +Z is the front. Feet at y=0. Standing eye height is about 1.05 m.
 import * as THREE from 'three';
+const SICK = new THREE.Color(0xa8e890);
 import * as T from './textures.js';
 
 const BODY_R = 0.31, BODY_LEN = 0.6, BODY_Y = 0.8; // capsule centre
@@ -284,7 +285,7 @@ export class Bean {
     if (this.hat.userData.spin) this.hat.userData.spin.rotation.y += dt * (4 + this.walk * 20);
     // poisoned: going green, bubbles over the head
     const pale = s.pale ? 0.55 + Math.sin(s.t * 4) * 0.1 : 0;
-    this.mats.skin.color.copy(this.mats.skinBase).lerp(new THREE.Color(0xa8e890), pale);
+    if (pale || this.wasPale) this.mats.skin.color.copy(this.mats.skinBase).lerp(SICK, pale); this.wasPale = pale > 0;
     this.bubbles.forEach((b, i) => {
       b.visible = !!s.pale;
       if (!s.pale) return;

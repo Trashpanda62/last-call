@@ -1,19 +1,18 @@
-// The hands-on parts of the station you sit at: a chip tray, a keypad with its display, the rail buttons (CLEAR, ½,
-// ×2, MAX), big game buttons, betting spots, the roulette and dice layouts on the felt, chips stacked where you bet,
-// the slot lever, the Crash plunger, the wheel handle and the touch screens. Only your own station gets them; every
-// part carries userData.part (or a uv mapper) that main.js raycasts and src/tables.js understands.
+// The parts of the station you sit at that you click: betting spots, the roulette and dice layouts on the felt, chips
+// stacked where you bet, the slot lever, the Crash plunger, the wheel handle and the touch screens (the chips, UNDO,
+// CLEAR and the game's buttons are on the table bar, main.js). Only your own station gets them; every part carries
+// userData.part (or a uv mapper) that main.js raycasts and src/tables.js understands. focus() tells the renderer what
+// the table camera has to frame.
 import * as THREE from 'three';
 import * as T from './textures.js';
 import * as Gm from '../games.js';
-import { CHIPS, chipLabel, RAIL, RAIL_LABEL, KEYS, CRASH_AUTOS } from '../tables.js';
+import { CHIPS } from '../tables.js';
 import { MAT, v3, rbox, cyl, yawOf } from './world.js';
-import { RL_TABLE, DICE_TABLE, BJ_TABLES } from '../map.js';
-import { paintUI } from '../paint.js';
+import { RL_TABLE, DICE_TABLE, BJ_TABLES, COIN, POND } from '../map.js';
 
 const M = 1 / 60;
 const ARC = s => `900 ${Math.round(s)}px "Arial Black", Impact, system-ui, sans-serif`;
 export const CHIP_COL = ['#ece6da', '#c8302a', '#202024', '#6a2ac0', '#e8a830', '#22b066'];
-const CHIP_INK = ['#3a3030', '#fff', '#ffd040', '#fff', '#3a1a04', '#fff'];
 const RED = Gm.RL_RED;
 
 // ---------- Felt layouts (metres from the felt's top-left corner, as a player on the south side sees it) ----------
@@ -27,29 +26,37 @@ export const RL_CELLS = (() => {
   ['low', 'even', 'red', 'black', 'odd', 'high'].forEach((id, k) => c.push({ id, x: NX + k * 2 * CW, y: RY + 3 * RH + DH, w: 2 * CW, h: EH }));
   return c;
 })();
-const RL_LABELS = { d1: '1st 12', d2: '2nd 12', d3: '3rd 12', low: '1-18', even: 'EVEN', odd: 'ODD', high: '19-36', c1: '2 to 1', c2: '2 to 1', c3: '2 to 1' };
+const RL_LABELS = { d1: '1ST 12', d2: '2ND 12', d3: '3RD 12', low: '1 TO 18', even: 'EVEN', odd: 'ODD', high: '19 TO 36', c1: '2 TO 1', c2: '2 TO 1', c3: '2 TO 1' };
+export const RL_COLORS = { red: '#e0402c', black: '#171717', zero: '#1f9a4a', felt: '#166a32', line: '#f2f0e6' };
 let rlTex = null;
+// The layout as the table camera sees it: solid red and black numbers, a white grid, a pointed zero, the columns'
+// 2 TO 1 turned on its side.
 export function rouletteLayoutTex() {
   if (rlTex) return rlTex;
-  const P = 512, W = Math.round(RL_FELT.w * P), H = Math.round(RL_FELT.d * P), [c, g] = T.canvas(W, H);
+  const P = 512, W = Math.round(RL_FELT.w * P), H = Math.round(RL_FELT.d * P), [c, g] = T.canvas(W, H), C = RL_COLORS;
   const paint = () => {
-    feltBase(g, W, H, '#17643c');
-    g.textAlign = 'center'; g.textBaseline = 'middle';
+    feltBase(g, W, H, C.felt);
+    g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+    const text = (s, x, y, size, col = '#fff') => { g.font = `900 ${size}px Impact, "Arial Black", sans-serif`; g.fillStyle = 'rgba(0,0,0,0.35)'; g.fillText(s, x + 3, y + 5); g.fillStyle = col; g.fillText(s, x, y + 2); };
     for (const cl of RL_CELLS) {
       const x = cl.x * P, y = cl.y * P, w = cl.w * P, h = cl.h * P, cx = x + w / 2, cy = y + h / 2;
+      g.strokeStyle = C.line; g.lineWidth = 7;
+      if (cl.id === 'n0') { // a pentagon pointing away from the numbers
+        g.fillStyle = C.zero; g.beginPath(); g.moveTo(x + w, y); g.lineTo(x + w * 0.42, y); g.lineTo(x, cy); g.lineTo(x + w * 0.42, y + h); g.lineTo(x + w, y + h); g.closePath(); g.fill(); g.stroke();
+        g.save(); g.translate(cx + w * 0.1, cy); g.rotate(-Math.PI / 2); text('0', 0, 0, 92); g.restore(); continue;
+      }
       if (cl.id[0] === 'n') {
         const n = +cl.id.slice(1);
-        g.fillStyle = n === 0 ? '#1f9a5a' : RED.has(n) ? '#b8282a' : '#161616';
-        g.beginPath(); g.roundRect(x + 7, y + 7, w - 14, h - 14, 10); g.fill();
-        g.fillStyle = '#fff'; g.font = ARC(n === 0 ? 74 : 50); g.fillText(String(n), cx, cy + 2);
+        g.fillStyle = RED.has(n) ? C.red : C.black; g.fillRect(x + 6, y + 6, w - 12, h - 12);
+        text(String(n), cx, cy, 78);
       } else if (cl.id === 'red' || cl.id === 'black') {
-        g.fillStyle = cl.id === 'red' ? '#c0302a' : '#111'; g.strokeStyle = '#e8c46a'; g.lineWidth = 3;
-        g.beginPath(); g.moveTo(cx, cy - h * 0.36); g.lineTo(cx + w * 0.3, cy); g.lineTo(cx, cy + h * 0.36); g.lineTo(cx - w * 0.3, cy); g.closePath(); g.fill(); g.stroke();
-      } else { g.fillStyle = '#f3e6c0'; g.font = ARC(cl.id[0] === 'c' ? 30 : 40); g.fillText(RL_LABELS[cl.id], cx, cy + 2); }
-      g.strokeStyle = '#e8c46a'; g.lineWidth = 5; g.strokeRect(x, y, w, h);
+        g.fillStyle = cl.id === 'red' ? C.red : C.black; g.strokeStyle = C.line; g.lineWidth = 5;
+        g.beginPath(); g.moveTo(cx, cy - h * 0.34); g.lineTo(cx + w * 0.26, cy); g.lineTo(cx, cy + h * 0.34); g.lineTo(cx - w * 0.26, cy); g.closePath(); g.fill(); g.stroke();
+        g.strokeStyle = C.line; g.lineWidth = 7;
+      } else if (cl.id[0] === 'c') { g.save(); g.translate(cx, cy); g.rotate(-Math.PI / 2); text(RL_LABELS[cl.id], 0, 0, 46); g.restore(); }
+      else text(RL_LABELS[cl.id], cx, cy, cl.id[0] === 'd' ? 60 : 50);
+      g.strokeRect(x, y, w, h);
     }
-    g.fillStyle = '#ffd040'; g.font = `bold italic 50px Georgia, serif`; g.fillText('LUCKY NUMBERS PAY UP TO 500x', (NX + 6 * CW) * P, 0.2 * P);
-    g.fillStyle = 'rgba(243,230,192,0.8)'; g.font = `italic 30px Georgia, serif`; g.fillText('Zero gives outside bets back · Columns and dozens pay 3x', (NX + 6 * CW) * P, 0.32 * P);
   };
   paint();
   rlTex = T.tex(c, false); rlTex.center.set(0.5, 0.5);
@@ -108,24 +115,6 @@ function label(text, w, d, { ink = '#1a1014', bg = null, size = 0.55, sub = '' }
   if (sub) { g.font = ARC(H * 0.2); g.globalAlpha = 0.8; g.fillText(sub, W / 2, H * 0.78); g.globalAlpha = 1; }
   return T.tex(c, false);
 }
-function chipTop(i) {
-  const [c, g] = T.canvas(256, 256), col = CHIP_COL[i], t = T.tex(c, false);
-  const paint = () => {
-    const art = T.artImage('chip' + i);
-    g.clearRect(0, 0, 256, 256);
-    if (art) { g.save(); g.beginPath(); g.arc(128, 128, 128, 0, 7); g.clip(); g.drawImage(art, 0, 0, 256, 256); g.restore(); }
-    else {
-      g.fillStyle = col; g.beginPath(); g.arc(128, 128, 128, 0, 7); g.fill();
-      g.fillStyle = 'rgba(255,255,255,0.92)';
-      for (let k = 0; k < 8; k++) { g.save(); g.translate(128, 128); g.rotate(k * Math.PI / 4); g.fillRect(-18, -126, 36, 34); g.restore(); }
-      g.strokeStyle = 'rgba(255,255,255,0.7)'; g.lineWidth = 6; g.beginPath(); g.arc(128, 128, 80, 0, 7); g.stroke();
-    }
-    g.fillStyle = CHIP_INK[i]; g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = ARC(i >= 4 ? 60 : 68); g.fillText(chipLabel(CHIPS[i]), 128, 134);
-    t.needsUpdate = true;
-  };
-  paint(); T.onArt(paint);
-  return t;
-}
 // One grey stripe mask for the stacked chips; the instance colour fills the rest (see stackMat).
 function stripes(side) {
   const [c, g] = T.canvas(128, side ? 16 : 128);
@@ -147,29 +136,22 @@ function stackMat(mask) {
 const at = (o, x, y, z) => { o.position.set(x, y, z); return o; };
 function liveLabel(w, h, paint) { const lc = T.liveCanvas(w, h, paint); lc.key = ''; return lc; }
 
-// Where each game's parts sit, in the seat's frame: [ahead, right, height, tilt]. The kit is the chip tray, keypad,
-// rail and game buttons on one slab.
+// Where each game's parts sit, in the seat's frame: [ahead, right, height, tilt].
 const AT = {
-  bj: { kit: [0.66, 0, 0.885, 0.06] },
-  roulette: { kit: [0.47, 0, 0.885, 0.1] },
-  dice: { kit: [0.5, 0, 0.99, 0.1] },
-  plinko: { kit: [0.6, 0, 0.86, 0.12], pad: [0.9, 0, 0.862], scr: [1.24, 0, 1.04, 0.4] }, // on a betting stand (machines.js)
-  mines: { kit: [0.6, 0, 0.9, 0.1], pad: [0.9, 0, 0.952] },
-  tower: { kit: [0.6, 0, 0.9, 0.1], pad: [0.9, 0, 0.952] },
-  crash: { kit: [0.5, 0, 0.95, 0.12], pad: [0.8, -0.17, 1.012], plunger: [0.8, 0.17, 1.012], autos: [1.0, 0, 1.012] },
-  race: { kit: [0.4, 0, 0.86, 0.1], lanes: [0.82, 0, 0.893] },
-  coin: { kit: [0.56, 0, 0.925, 0.06], heads: [0.88, -0.17, 0.925], tails: [0.88, 0.17, 0.925] },
-  wheel: { kit: [0.46, 0, 0.92, 0.1], pad: [0.8, -0.14, 0.952], handle: [0.86, 0.17, 0.952] },
-  slots: { bar: [0.64, 0, 1.08, 0.5] },
+  plinko: { pad: [0.9, 0, 0.862] }, // on a betting stand (machines.js)
+  mines: { pad: [0.9, 0, 0.952] },
+  tower: { pad: [0.9, 0, 0.952] },
+  crash: { pad: [0.8, -0.17, 1.012], plunger: [0.8, 0.17, 1.012] },
+  race: { lanes: [0.82, 0, 0.893] },
+  coin: { heads: [0.88, -0.17, 0.925], tails: [0.88, 0.17, 0.925] },
+  wheel: { pad: [0.8, -0.14, 0.952], handle: [0.86, 0.17, 0.952] },
 };
-// The big buttons in the kit's front row: [id, label, colour]
-const GAME_BTNS = {
-  bj: [['deal', 'DEAL', 0xe8b440], ['hit', 'HIT', 0x2ac070], ['stand', 'STAND', 0xd83a3a], ['double', 'DOUBLE', 0x3a7ae8], ['split', 'SPLIT', 0xa04ae8]],
-  roulette: [['spin', 'SPIN', 0xe8b440]], dice: [['roll', 'ROLL', 0xe8b440]], plinko: [['drop', 'DROP', 0xff3fa4]],
-  mines: [['start', 'START', 0x2ac070], ['cash', 'CASH OUT', 0xe8b440]], tower: [['start', 'CLIMB', 0x2ac070], ['cash', 'CASH OUT', 0xe8b440]],
-  crash: [['bet', 'BET', 0x2ac070]], race: [['bet', 'BET', 0x2ac070]], coin: [['flip', 'FLIP', 0xe8b440], ['take', 'TAKE', 0x2ac070]], wheel: [['spin', 'SPIN', 0xe8b440]],
-};
-export const SCALE = { desk: 0.86, touch: 1.15 }; // the kit's size: smaller with a mouse, bigger for thumbs
+// The table camera: how steeply it looks down (radians) and its narrowest field of view (degrees; it widens when the
+// ceiling is in the way).
+const SHOT = { roulette: [-1.1, 44], bj: [-0.92, 46], dice: [-0.95, 46], slots: [-0.12, 44], plinko: [-0.22, 46], mines: [-0.3, 40], tower: [-0.3, 40],
+  crash: [-0.22, 50], race: [-0.62, 50], coin: [-0.55, 46], wheel: [-0.16, 50] };
+// Chips on the felt are drawn bigger than life so they read from the table camera.
+const CHIP_SCALE = { roulette: 2.1, dice: 1.9, bj: 1.6 };
 export const STANDS = { plinko: [0.68, 0.96, 0.62, 0.86] }; // betting stands in front of these seats: [ahead, width, depth, height]
 export const LANE = { w: 0.98, d: 0.36 }; // the duck-race desk card
 
@@ -180,67 +162,6 @@ export function buildRig(ctx, seats, felts) {
   const parts = [];      // what the crosshair can hit this frame
   const hit = [];        // [mesh, id] for every part mesh, filled per station
   let cur = null;        // { seat, game, frame }
-
-  // ----- a button: a lit rounded body and a painted cap -----
-  function button(id, text, w, d, color, { h = 0.028, ink = '#1a1014', size = 0.55, sub = '' } = {}) {
-    const g = new THREE.Group(), base = new THREE.Color(color);
-    const glow = base.r * 0.3 + base.g * 0.55 + base.b * 0.15 > 0.6 ? 0.0 : 0.3; // pale keys would bloom white
-    const bodyMat = new THREE.MeshStandardMaterial({ color: base, roughness: 0.32, metalness: 0.05, emissive: base.clone(), emissiveIntensity: glow });
-    const body = new THREE.Mesh(rbox(w, h, d, Math.min(0.012, w / 4)), bodyMat); body.position.y = h / 2; g.add(body);
-    const capMat = new THREE.MeshBasicMaterial({ map: label(text, w, d, { ink, size, sub }), transparent: true, depthWrite: false });
-    const cap = new THREE.Mesh(new THREE.PlaneGeometry(w * 0.94, d * 0.9), capMat); cap.rotation.x = -Math.PI / 2; cap.position.y = h + 0.0012; g.add(cap);
-    body.castShadow = true;
-    g.userData = { id, body, bodyMat, capMat, base, glow };
-    body.userData.part = cap.userData.part = id;
-    return g;
-  }
-  function light(b, on, hover, sel) {
-    const u = b.userData;
-    u.bodyMat.color.copy(u.base).multiplyScalar(on ? 1 : 0.28);
-    u.bodyMat.emissiveIntensity = on ? (sel ? 0.9 : u.glow) + (hover ? 0.22 : 0) : hover ? 0.08 : 0.02;
-    u.capMat.opacity = on ? 1 : 0.4;
-  }
-
-  // ----- the kit: slab, keypad and display, chips, rail buttons; game buttons per game -----
-  const kit = new THREE.Group(); root.add(kit);
-  const SLAB = new THREE.MeshStandardMaterial({ color: 0x141016, roughness: 0.82, metalness: 0 });
-  kit.add(at(new THREE.Mesh(rbox(0.88, 0.024, 0.36, 0.012), SLAB), -0.014, -0.012, -0.024)); // matte: a gloss slab mirrors the ceiling lights into a bloom under your hands
-  kit.add(at(new THREE.Mesh(rbox(0.9, 0.012, 0.38, 0.006), MAT.gold), -0.014, -0.022, -0.024));
-  // 7 8 9 C / 4 5 6 OK / 1 2 3 OK / 0 000 OK: [column, row, columns wide, rows tall]
-  const KP = 0.066, KX = -0.395, KZ = -0.075, keys = [];
-  const KPOS = { 7: [0, 0], 8: [1, 0], 9: [2, 0], C: [3, 0], 4: [0, 1], 5: [1, 1], 6: [2, 1], OK: [3, 1, 1, 3], 1: [0, 2], 2: [1, 2], 3: [2, 2], 0: [0, 3], '000': [1, 3, 2, 1] };
-  KEYS.forEach(k => {
-    const [c, r, cw = 1, rh = 1] = KPOS[k], w = KP * cw - 0.008, d = KP * rh - 0.008, x = KX + (c + (cw - 1) / 2) * KP, z = KZ + (r + (rh - 1) / 2) * KP;
-    const b = button('key:' + k, k, w, d, k === 'OK' ? 0x2ac070 : k === 'C' ? 0xd83a3a : 0xd6ccb4, { size: k.length > 1 ? 0.42 : 0.6, h: 0.022 });
-    b.position.set(x, 0, z); kit.add(b); keys.push(b);
-  });
-  const disp = liveLabel(256, 56, (g, w, h, t, s) => {
-    g.fillStyle = '#0a1408'; g.fillRect(0, 0, w, h); g.fillStyle = s.typing ? '#ffe070' : '#7dff8a';
-    g.font = ARC(34); g.textAlign = 'right'; g.textBaseline = 'middle'; g.fillText(s.text, w - 10, h / 2 + 2);
-    g.font = ARC(13); g.textAlign = 'left'; g.fillStyle = 'rgba(125,255,138,0.6)'; g.fillText(s.typing ? 'TYPE · OK' : 'BET', 8, 14);
-  });
-  const dispMesh = new THREE.Mesh(new THREE.PlaneGeometry(KP * 4 - 0.008, 0.052), new THREE.MeshBasicMaterial({ map: disp.tex, toneMapped: false }));
-  dispMesh.rotation.x = -Math.PI / 2; dispMesh.position.set(KX + 1.5 * KP, 0.004, KZ - 0.068); kit.add(dispMesh);
-  // chips: little stacks of three, the top one painted with its value
-  const chipGeo = cyl(0.034, 0.034, 0.013, 28), chipBtns = [];
-  CHIPS.forEach((v, i) => {
-    const g = new THREE.Group(), col = new THREE.Color(CHIP_COL[i]);
-    const side = new THREE.MeshStandardMaterial({ color: col, roughness: 0.4, emissive: col.clone(), emissiveIntensity: 0 }), top = new THREE.MeshStandardMaterial({ map: chipTop(i), roughness: 0.4, emissive: 0xffffff, emissiveIntensity: 0 });
-    for (let k = 0; k < 3; k++) { const m = new THREE.Mesh(chipGeo, [side, top, side]); m.position.y = 0.0065 + k * 0.0135; m.castShadow = true; m.userData.part = 'chip:' + v; g.add(m); }
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.04, 0.004, 6, 28), new THREE.MeshBasicMaterial({ color: 0xffe080, toneMapped: false })); ring.rotation.x = Math.PI / 2; ring.position.y = 0.002; g.add(ring);
-    g.position.set(-0.06 + i * 0.083, 0, -0.125); kit.add(g);
-    g.userData = { id: 'chip:' + v, v, side, top, ring };
-    chipBtns.push(g);
-  });
-  const rails = RAIL.map((k, i) => { const b = button('rail:' + k, RAIL_LABEL[k], 0.112, 0.064, k === 'clear' ? 0xc8c0b0 : 0x8a7aa8, { size: k === 'clear' ? 0.4 : 0.62 }); b.position.set(-0.0375 + i * 0.125, 0, -0.033); kit.add(b); return b; });
-  const gameRows = {};
-  function gameRow(game) {
-    if (gameRows[game]) return gameRows[game];
-    const list = GAME_BTNS[game] || [], n = list.length, g = new THREE.Group(), w = 0.5 / Math.max(1, n);
-    const btns = list.map(([id, text, col], i) => { const b = button('btn:' + id, text, w - 0.012, 0.094, col, { size: n > 3 ? 0.36 : 0.5, h: 0.032 }); b.position.set(-0.1 + (i + 0.5) * w, 0, 0.078); g.add(b); return b; });
-    g.userData.btns = btns; kit.add(g);
-    return (gameRows[game] = g);
-  }
 
   // ----- betting spots that are meshes: a disc with a gold ring (a blackjack circle, a machine's BET pad, heads/tails) -----
   function padTex(text, ring = '#e8c46a', fill = 'rgba(0,0,0,0.25)') {
@@ -259,7 +180,7 @@ export function buildRig(ctx, seats, felts) {
   const pads = { main: pad('main', 'BET'), circle: pad('main', '', 0.13), heads: pad('heads', 'HEADS', 0.12, '#ffd040'), tails: pad('tails', 'TAILS', 0.12, '#ffd040') };
   pads.circle.material.color.setRGB(1, 1, 1);
 
-  // ----- Crash: the plunger and the auto cash-out row; the wheel handle; the slot bar; the Plinko touch screen -----
+  // ----- Crash: the plunger; the wheel handle -----
   const plunger = new THREE.Group(); root.add(plunger);
   { const base = new THREE.Mesh(cyl(0.07, 0.08, 0.04, 24), MAT.chrome); base.position.y = 0.02; plunger.add(base);
     const cap = new THREE.Mesh(new THREE.SphereGeometry(0.075, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: 0xe0202a, emissive: 0xff2030, emissiveIntensity: 0.6, roughness: 0.25 }));
@@ -268,10 +189,6 @@ export function buildRig(ctx, seats, felts) {
     lb.rotation.x = -Math.PI / 2; lb.position.set(0, 0.002, 0.11); plunger.add(lb);
     base.userData.part = cap.userData.part = lb.userData.part = 'btn:cash';
     plunger.userData = { cap, capMat: cap.material }; }
-  const autos = new THREE.Group(); root.add(autos);
-  const autoBtns = CRASH_AUTOS.map((a, i) => { const b = button('btn:auto:' + a, a ? a + 'x' : 'OFF', 0.074, 0.06, 0x3fe0ff, { size: 0.5 }); b.position.set((i - 3) * 0.085, 0, 0); autos.add(b); return b; });
-  const autoTitle = new THREE.Mesh(new THREE.PlaneGeometry(0.4, 0.035), new THREE.MeshBasicMaterial({ map: label('AUTO CASH-OUT', 0.4, 0.035, { ink: '#3fe0ff', size: 0.75 }), transparent: true, depthWrite: false }));
-  autoTitle.rotation.x = -Math.PI / 2; autoTitle.position.set(0, 0.002, 0.058); autos.add(autoTitle);
   const handle = new THREE.Group(); root.add(handle);
   { const base = new THREE.Mesh(rbox(0.1, 0.05, 0.1, 0.02), MAT.gold); base.position.y = 0.025; handle.add(base);
     const arm = new THREE.Group(); arm.position.y = 0.05; handle.add(arm);
@@ -279,20 +196,6 @@ export function buildRig(ctx, seats, felts) {
     const knob = new THREE.Mesh(new THREE.SphereGeometry(0.045, 18, 12), new THREE.MeshStandardMaterial({ color: 0xffd040, emissive: 0xffa020, emissiveIntensity: 0.5, roughness: 0.3 })); knob.position.y = 0.27; arm.add(knob);
     base.userData.part = stick.userData.part = knob.userData.part = 'btn:spin';
     handle.userData = { arm, knob }; }
-  const slotBar = new THREE.Group(); root.add(slotBar);
-  const slotBtns = [['betdn', 'BET −', 0xe8e0cc], ['betup', 'BET +', 0xe8e0cc], ['maxbet', 'MAX BET', 0xe8b440], ['auto', 'AUTO', 0x3fe0ff]].map(([id, t, c], i) => {
-    const b = button('btn:' + id, t, 0.13, 0.085, c, { size: 0.42, h: 0.03 }); b.position.set((i - 1.5) * 0.145, 0, 0); slotBar.add(b); return b; });
-  slotBar.add(at(new THREE.Mesh(rbox(0.62, 0.02, 0.12, 0.01), SLAB), 0, -0.01, 0));
-  const plScr = liveLabel(512, 248, (g, w, h, t, my) => {
-    const lg = g.createLinearGradient(0, 0, 0, h); lg.addColorStop(0, '#0a1a3a'); lg.addColorStop(1, '#020610'); g.fillStyle = lg; g.fillRect(0, 0, w, h);
-    g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#9fd0ff'; g.font = ARC(h * 0.11); g.fillText('PICK YOUR RISK', w / 2, h * 0.14);
-    if (my.ui) paintUI(g, w, h, my.ui, '#ff3fa4');
-    const x = my.extra || {}; g.fillStyle = '#ffd040'; g.font = ARC(h * 0.09);
-    g.fillText('EDGES PAY ' + Gm.PLINKO[x.risk || 'medium'][0] + 'x', w / 2, h * 0.81);
-    g.fillStyle = 'rgba(255,255,255,0.7)'; g.font = ARC(h * 0.075); g.fillText((x.hist || []).join('  '), w / 2, h * 0.93);
-  });
-  const plScrMesh = new THREE.Mesh(new THREE.PlaneGeometry(0.54, 0.26), new THREE.MeshBasicMaterial({ map: plScr.tex, toneMapped: false }));
-  plScrMesh.userData.scr = true; root.add(plScrMesh);
 
   // ----- chip stacks: one instanced mesh for every chip on the table -----
   const MAXC = 900, sGeo = cyl(0.03, 0.03, 0.0095, 24);
@@ -304,8 +207,33 @@ export function buildRig(ctx, seats, felts) {
   const mtx = new THREE.Matrix4(), q = new THREE.Quaternion(), sc = v3(1, 1, 1), pp = v3(0, 0, 0);
   function chipsFor(a) { const out = []; for (let i = CHIPS.length - 1; i >= 0 && out.length < 18; i--) { let n = Math.floor(a / CHIPS[i] + 1e-9); a -= n * CHIPS[i]; while (n-- > 0 && out.length < 18) out.push(i); } return out.length ? out : [0]; }
 
+  // ----- roulette: the LAST SPINS board along the far edge of the layout (the lucky numbers while the ball rolls) -----
+  const board = liveLabel(1024, 128, (g, w, h, t, x) => {
+    g.clearRect(0, 0, w, h);
+    g.fillStyle = 'rgba(10,52,26,0.96)'; g.beginPath(); g.roundRect(3, 3, w - 6, h - 6, 16); g.fill();
+    g.strokeStyle = '#f4f0e0'; g.lineWidth = 5; g.stroke();
+    g.textBaseline = 'middle'; g.textAlign = 'center';
+    const hist = x.hist || [], lucky = x.lucky;
+    g.fillStyle = lucky ? '#ffd040' : '#f4f0e0'; g.font = ARC(30); g.fillText(lucky ? 'LUCKY' : hist.length ? 'LAST SPINS' : 'NO LAST SPIN', 140, h / 2 - (lucky ? 0 : 12));
+    if (!lucky) { g.font = ARC(13); g.globalAlpha = 0.75; g.fillText('0 RETURNS OUTSIDE BETS', 140, h / 2 + 22); g.globalAlpha = 1; }
+    const bw = 76, gap = 8, x0 = 282;
+    for (let i = 0; i < 9; i++) {
+      const bx = x0 + i * (bw + gap), by = 18, bh = h - 36;
+      const L = lucky ? lucky[i] : null, n = lucky ? (L ? L.n : null) : hist[i];
+      g.strokeStyle = 'rgba(244,240,224,0.8)'; g.lineWidth = 4; g.strokeRect(bx, by, bw, bh);
+      if (n === null || n === undefined) continue;
+      g.fillStyle = n === 0 ? '#1f9a4a' : RED.has(n) ? '#e0402c' : '#141414'; g.fillRect(bx + 4, by + 4, bw - 8, bh - 8);
+      g.fillStyle = '#fff'; g.font = ARC(lucky ? 34 : 40); g.fillText(String(n), bx + bw / 2, by + bh / 2 - (lucky ? 12 : 0) + 2);
+      if (lucky) { g.fillStyle = '#ffd040'; g.font = ARC(20); g.fillText(L.x + 'x', bx + bw / 2, by + bh / 2 + 22); }
+      if (!lucky && i === 0) { g.strokeStyle = '#ffd040'; g.lineWidth = 6; g.strokeRect(bx - 3, by - 3, bw + 6, bh + 6); }
+    }
+  });
+  const BOARD = { x: NX, y: 0.05, w: 12 * CW + 0.2, h: 0.3 };
+  const boardMesh = new THREE.Mesh(new THREE.PlaneGeometry(BOARD.w, BOARD.h), new THREE.MeshBasicMaterial({ map: board.tex, transparent: true, depthWrite: false, toneMapped: false }));
+  boardMesh.rotation.order = 'YXZ'; boardMesh.visible = false; root.add(boardMesh);
+
   // ----- felt highlight, roulette lucky markers, the dolly, the dice puck -----
-  const hlMat = new THREE.MeshBasicMaterial({ color: 0xffe080, transparent: true, opacity: 0.28, depthWrite: false, toneMapped: false, blending: THREE.AdditiveBlending });
+  const hlMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.3, depthWrite: false, toneMapped: false });
   const hl = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), hlMat); hl.rotation.order = 'YXZ'; hl.visible = false; root.add(hl);
   const luckyMarks = [0, 1, 2].map(() => {
     const lc = liveLabel(128, 64, (g, w, h, t, x) => { g.clearRect(0, 0, w, h); g.fillStyle = 'rgba(255,208,64,0.92)'; g.beginPath(); g.roundRect(4, 4, w - 8, h - 8, 14); g.fill(); g.fillStyle = '#2a1404'; g.font = ARC(34); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(x + 'x', w / 2, h / 2 + 2); });
@@ -350,19 +278,12 @@ export function buildRig(ctx, seats, felts) {
 
   // Set up the parts for the seat I just sat at.
   function setup(my) {
-    const seat = seats[my.seat], F = frameOf(seat), A = AT[my.game] || {}, touch = document.body.classList.contains('touch'), sc = touch ? SCALE.touch : SCALE.desk;
-    const portrait = innerHeight > innerWidth;
-    cur = { seat: my.seat, game: my.game, F, A, lanes: null, scr: null, lever: null, portrait };
+    const seat = seats[my.seat], F = frameOf(seat), A = AT[my.game] || {}, sc = document.body.classList.contains('touch') ? 1.25 : 1;
+    cur = { seat: my.seat, game: my.game, F, A, lanes: null, scr: null, lever: null };
     root.visible = true;
-    for (const o of [kit, plunger, autos, handle, slotBar, plScrMesh, ...Object.values(pads)]) o.visible = false;
-    for (const g in gameRows) gameRows[g].visible = false;
+    for (const o of [plunger, handle, boardMesh, ...Object.values(pads)]) o.visible = false;
     hit.length = 0;
     const addHits = (obj) => obj.traverse(m => { if (m.isMesh && (m.userData.part || m.userData.uvPart || m.userData.scr)) hit.push(m); });
-    if (A.kit) { // on a tall phone the chips and buttons sit straight ahead and the keypad off to the left
-      place(kit, F, portrait && touch ? [A.kit[0], A.kit[1] - (A.kit[0] > 0.55 ? 0.21 : 0.15) * sc, A.kit[2], A.kit[3]] : A.kit, sc);
-      for (const b of keys) addHits(b); for (const c of chipBtns) addHits(c); for (const b of rails) addHits(b);
-      const row = gameRow(my.game); row.visible = true; addHits(row);
-    }
     if (my.game === 'bj') { // the painted box in front of the seat is the betting circle
       const tb = BJ_TABLES[seat.table], a = Math.atan2((seat.y - tb.y) / 152, (seat.x - tb.x) / 168);
       pads.circle.position.set(tb.x * M + Math.cos(a) * 1.68, 0.878, tb.y * M + Math.sin(a) * 1.305); pads.circle.rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads.circle.visible = true; addHits(pads.circle);
@@ -370,16 +291,45 @@ export function buildRig(ctx, seats, felts) {
     if (A.pad) { place(pads.main, F, A.pad); pads.main.rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads.main.position.y += 0.002; addHits(pads.main); }
     if (A.heads) for (const k of ['heads', 'tails']) { place(pads[k], F, A[k]); pads[k].rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads[k].position.y += 0.002; addHits(pads[k]); }
     if (A.plunger) { place(plunger, F, A.plunger, sc); addHits(plunger); }
-    if (A.autos) { place(autos, F, A.autos, sc); for (const b of autoBtns) addHits(b); }
     if (A.handle) { place(handle, F, A.handle, sc); addHits(handle); }
-    if (A.bar) { place(slotBar, F, A.bar, portrait ? SCALE.desk : sc); for (const b of slotBtns) addHits(b); } // a tall phone sees the whole bar, clear of the side buttons
-    if (A.scr) { place(plScrMesh, F, A.scr); plScrMesh.rotation.set(-Math.PI / 2 + (A.scr[3] || 0), F.yaw, 0, 'YXZ'); plScrMesh.position.y += 0.012; hit.push(plScrMesh); cur.scr = plScrMesh; }
-    if (my.game === 'roulette') { rlFlip = seat.face > 0; rouletteLayoutTex().rotation = rlFlip ? Math.PI : 0; hit.push(rl); }
+    if (my.game === 'roulette') {
+      rlFlip = seat.face > 0; rouletteLayoutTex().rotation = rlFlip ? Math.PI : 0; hit.push(rl);
+      boardMesh.position.copy(feltWorld(rl, RL_FELT.w, RL_FELT.d, BOARD.x + BOARD.w / 2, BOARD.y + BOARD.h / 2, rlFlip)).setY(0.888);
+      boardMesh.rotation.set(-Math.PI / 2, rlFlip ? Math.PI : 0, 0, 'YXZ'); boardMesh.visible = true; board.key = '';
+    }
     if (my.game === 'dice') { dcFlip = seat.face > 0; diceLayoutTex().rotation = dcFlip ? Math.PI : 0; hit.push(dc); }
     const scr = ctx.seatScreens[my.seat]; if (scr) { scr.userData.scr = true; hit.push(scr); cur.scr = scr; }
     const lane = ctx.lanePlates[my.seat]; if (lane) { lane.userData.uvPart = uv => 'spot:duck' + Math.max(0, Math.min(5, Math.floor(uv.x * 6))); hit.push(lane); cur.lanes = lane; }
     const lever = ctx.slotLevers[my.seat]; if (lever) { lever.traverse(m => { if (m.isMesh) m.userData.part = 'btn:lever'; }); addHits(lever); cur.lever = lever; }
     cur.hidden = ctx.deco[my.seat] || []; for (const m of cur.hidden) m.visible = false;
+    cur.focus = focusOf(my, seat, F);
+    if (my.game === 'race') { // while they run: down the pond from the start toward the finish and the tote board
+      const z = (POND.y + POND.h / 2) * M;
+      cur.runFocus = { fixed: { pos: v3(POND.x * M - 1.5, 3.25, z), at: v3(POND.x * M + 5.2, 0.45, z), fov: 62 }, key: seat.id + 'run' };
+    }
+  }
+  // What the table camera frames: the core points always, the extra ones when they fit under the ceiling.
+  const corners = (obj, out, pad = 0) => {
+    obj.updateWorldMatrix(true, true);
+    const b = new THREE.Box3().setFromObject(obj).expandByScalar(pad);
+    for (const x of [b.min.x, b.max.x]) for (const y of [b.min.y, b.max.y]) for (const z of [b.min.z, b.max.z]) out.push(v3(x, y, z));
+  };
+  function focusOf(my, seat, F) {
+    const core = [], extra = [], g = my.game, [pitch, fov] = SHOT[g] || [-0.5, 46], f = ctx.focus[seat.id] || {};
+    const add = (list, items) => { for (const it of items || []) if (it.isVector3) list.push(it.clone()); else corners(it, list); };
+    for (const m of hit) if (m.visible && m !== rl && m !== dc) corners(m, core, 0.03);
+    if (g === 'roulette') for (const lx of [RX - 0.05, CX + 0.25]) for (const ly of [0.02, RY + 3 * RH + DH + EH + 0.04]) core.push(feltWorld(rl, RL_FELT.w, RL_FELT.d, lx, ly, rlFlip));
+    else if (g === 'dice') corners(dc, core);
+    else if (g === 'bj') {
+      const tb = BJ_TABLES[seat.table];
+      for (const dx of [-0.42, 0.42]) core.push(v3(tb.x * M + dx, 0.88, tb.y * M + 0.3), v3(tb.x * M + dx, 0.88, tb.y * M + 0.55));
+      for (const d of [-0.12, 0.42]) for (const l of [-0.3, 0.3]) core.push(pads.circle.position.clone().addScaledVector(F.f, d).addScaledVector(F.r, l));
+    } else if (g === 'coin') for (const dy of [0.95, 2.5]) for (const d of [-0.5, 0.5]) core.push(v3(COIN.x * M, dy, COIN.y * M).addScaledVector(F.r, d)); // up to the top of the toss
+    add(core, f.core); add(extra, f.extra);
+    if (g === 'race') for (const dx of [-2.2, 2.2]) extra.push(v3(seat.x * M + dx, 0.45, POND.y * M + 0.4), v3(seat.x * M + dx, 0.45, (POND.y + POND.h) * M - 0.15)); // every lane, near to far, above the card
+    // blackjack seats sit round an arc: look from yours toward the dealer's cards
+    const look = g === 'bj' ? Math.atan2(BJ_TABLES[seat.table].y + 25 - seat.y, BJ_TABLES[seat.table].x - seat.x) : seat.face;
+    return { core, extra, pitch, fov, look, key: seat.id, at: [seat.x, seat.y] };
   }
   function teardown() {
     if (!cur) return;
@@ -392,6 +342,7 @@ export function buildRig(ctx, seats, felts) {
   return {
     get parts() { return hit; },
     get active() { return cur; },
+    focus() { return cur && (cur.runFocus && cur.phase && cur.phase !== 'bet' ? cur.runFocus : cur.focus); },
     // A raycast hit -> { part, uv }
     resolve(h) {
       if (!h) return null;
@@ -419,29 +370,16 @@ export function buildRig(ctx, seats, felts) {
     screenPoint(x, y) { const s = cur && cur.scr; if (!s) return null; const g = s.geometry.parameters; return s.localToWorld(v3((x - 0.5) * g.width, (0.5 - y) * g.height, 0.001)); },
     update(t, dt, my) {
       if (!my || my.game === 'vip') { teardown(); return; }
-      if (!cur || cur.seat !== my.seat || cur.portrait !== innerHeight > innerWidth) { teardown(); setup(my); }
+      if (!cur || cur.seat !== my.seat) { teardown(); setup(my); }
       const on = my.on || {}, pr = my.pressed && t - my.pressed.t < 0.16 ? my.pressed.id : '';
-      const dip = (b, id) => { b.children[0].position.y = b.userData.body.geometry.parameters.height / 2 - (pr === id ? 0.012 : 0); b.children[1].position.y = b.userData.body.geometry.parameters.height + 0.0012 - (pr === id ? 0.012 : 0); };
-      // buttons light up when they do something
-      if (kit.visible) {
-        for (const b of keys) { light(b, true, hoverId === b.userData.id); dip(b, b.userData.id); }
-        for (const b of rails) { light(b, true, hoverId === b.userData.id); dip(b, b.userData.id); }
-        for (const b of gameRow(my.game).userData.btns) { const id = b.userData.id; light(b, !!on[id.slice(4)], hoverId === id); dip(b, id); }
-        for (const c of chipBtns) {
-          const u = c.userData, ok = u.v <= my.maxBet, sel = u.v === my.chip;
-          c.visible = ok; c.position.y = sel ? 0.012 + Math.sin(t * 4) * 0.003 : 0; u.ring.visible = sel;
-          u.top.emissiveIntensity = (hoverId === u.id ? 0.35 : 0) + (sel ? 0.15 : 0);
-        }
-        const key = my.display + my.typing;
-        if (disp.key !== key) { disp.key = key; disp.update(t, { text: my.display, typing: my.typing }); }
-      }
-      for (const b of autoBtns) { if (!autos.visible) break; const id = b.userData.id, a = +id.slice(9); light(b, !!on[id.slice(4)], hoverId === id, my.extra && my.extra.auto === a); dip(b, id); }
-      for (const b of slotBtns) { if (!slotBar.visible) break; const id = b.userData.id; light(b, !!on[id.slice(4)], hoverId === id, id === 'btn:auto' && my.extra && my.extra.auto); dip(b, id); }
       if (plunger.visible) { const ok = !!on.cash, pu = plunger.userData; pu.capMat.emissiveIntensity = ok ? 0.9 + Math.sin(t * 10) * 0.4 + (hoverId === 'btn:cash' ? 0.5 : 0) : 0.08; pu.cap.position.y = pr === 'btn:cash' ? 0.03 : 0.05; }
       if (handle.visible) { const pull = my.extra ? t - my.extra.pull : 9, u = pull < 0.7 ? Math.sin(pull / 0.7 * Math.PI) : 0; handle.userData.arm.rotation.x = u * 1.0; handle.userData.knob.material.emissiveIntensity = on.spin ? 0.6 + (hoverId === 'btn:spin' ? 0.6 : 0) : 0.05; }
       if (cur.lever) { const pull = my.extra ? t - my.extra.pull : 9; cur.lever.rotation.x = pull < 0.6 ? Math.sin(pull / 0.6 * Math.PI) * 0.9 : 0; }
       for (const k of ['main', 'circle', 'heads', 'tails']) { const m = pads[k]; if (m.visible) m.material.color.setScalar(hoverId === m.userData.part ? 1.6 : 1); }
-      if (cur.scr === plScrMesh) { const key = JSON.stringify([my.ui, my.extra]); if (plScr.key !== key) { plScr.key = key; plScr.update(t, my); } }
+      if (boardMesh.visible) {
+        const lk = my.extra && my.extra.n === null ? my.extra.lucky : null, key = JSON.stringify([my.hist, lk]);
+        if (board.key !== key) { board.key = key; board.update(t, { hist: my.hist, lucky: lk }); }
+      }
       // hover glow on felt spots
       hl.visible = false;
       if (hover && hover.part && hover.part.startsWith('spot:')) {
@@ -449,10 +387,11 @@ export function buildRig(ctx, seats, felts) {
         if (cur.game === 'roulette') { const c = RL_CELLS.find(c => c.id === id); if (c) R = rlRect(c); }
         else if (cur.game === 'dice') { const c = DICE_RECTS.find(c => c.id === id && c.side === 1); if (c) R = dcRect(c); }
         else if (cur.game === 'race' && cur.lanes) R = { p: spotPos(id), w: LANE.w / 6, d: LANE.d, yaw: cur.F.yaw };
-        if (R) { hl.position.copy(R.p).setY(R.p.y + 0.004); hl.scale.set(R.w, R.d, 1); hl.rotation.set(-Math.PI / 2, R.yaw || 0, 0, 'YXZ'); hl.visible = true; hlMat.opacity = 0.22 + Math.sin(t * 6) * 0.06; }
+        if (R) { hl.position.copy(R.p).setY(R.p.y + 0.004); hl.scale.set(R.w, R.d, 1); hl.rotation.set(-Math.PI / 2, R.yaw || 0, 0, 'YXZ'); hl.visible = true; hlMat.opacity = 0.26 + Math.sin(t * 6) * 0.06; }
       }
       // roulette: lucky numbers and the dolly on the winner
       const x = my.extra;
+      cur.phase = cur.game === 'race' && x ? x.phase : null;
       luckyMarks.forEach((m, i) => {
         const L = cur.game === 'roulette' && x && x.lucky && x.lucky[i];
         m.visible = !!L; if (!L) return;
@@ -469,11 +408,11 @@ export function buildRig(ctx, seats, felts) {
         puck.position.copy(P ? feltWorld(dc, DF.w, DF.d, P.x + P.w / 2, P.y + 0.1, dcFlip) : feltWorld(dc, DF.w, DF.d, PX0 - 0.25, MID.y + MID.h / 2, dcFlip)).setY(0.905);
       }
       // the chips on the table
-      let n = 0;
+      let n = 0; const cs = CHIP_SCALE[cur.game] || 1.25;
       for (const s of my.stacks || []) {
         const base = spotPos(s.spot); if (!base) continue;
         const list = chipsFor(s.amount), F = cur.F;
-        if (s.slot) base.addScaledVector(F.r, 0.062);
+        if (s.slot) base.addScaledVector(F.r, 0.062 * cs);
         let k = 1, dy = 0;
         if (s.anim === 'sweep') { base.addScaledVector(F.f, 0.5 * s.u); k = s.u > 0.6 ? 1 - (s.u - 0.6) / 0.4 : 1; }
         else if (s.anim === 'collect') { base.addScaledVector(F.f, -0.4 * s.u); dy = Math.sin(s.u * Math.PI) * 0.05; k = 1 - s.u * s.u; }
@@ -482,8 +421,8 @@ export function buildRig(ctx, seats, felts) {
         const fresh = s.add ? t - s.add : 9;
         for (let j = 0; j < list.length && n < MAXC; j++, n++) {
           const top = j === list.length - 1 && fresh < 0.2 ? (1 - fresh / 0.2) * 0.07 : 0;
-          pp.copy(base); pp.y += 0.005 + j * 0.0097 + dy + top;
-          sc.set(k, k, k); q.setFromAxisAngle(Y, j * 0.7 + s.spot.length);
+          pp.copy(base); pp.y += (0.005 + j * 0.0097) * cs + dy + top;
+          sc.set(k * cs, k * cs, k * cs); q.setFromAxisAngle(Y, j * 0.7 + s.spot.length);
           mtx.compose(pp, q, sc); stackMesh.setMatrixAt(n, mtx); stackMesh.setColorAt(n, chipCols[list[j]]);
         }
       }

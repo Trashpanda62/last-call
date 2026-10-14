@@ -158,7 +158,8 @@ export class PlushBean {
     this.model = skClone(S.scene); this.root.add(this.model);
     this.color = color ? new THREE.Color(color) : null;
     this.mat = feltMat(S, kind === 'bean' || kind === 'round' ? color : null);
-    this.model.traverse(o => { if (o.isSkinnedMesh) { o.material = this.mat; o.castShadow = true; o.frustumCulled = false; } });
+    // culled with a roomy bounds (poses, hats and lying down stay inside it): off-camera plush cost nothing
+    this.model.traverse(o => { if (o.isSkinnedMesh) { o.material = this.mat; o.castShadow = true; if (!o.boundingSphere) o.computeBoundingSphere(); o.boundingSphere.radius *= 1.6; } });
     // each bone's rest pose, and its rest orientation in the model's frame, so poses can be given in character axes
     this.model.updateMatrixWorld(true);
     const inv = this.model.getWorldQuaternion(new THREE.Quaternion()).invert();

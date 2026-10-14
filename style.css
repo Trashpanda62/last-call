@@ -224,16 +224,9 @@ body.touch #hud > #hint { display: none; }
   padding: 3px 10px; font: 800 13px/1.3 system-ui, sans-serif; letter-spacing: 0.05em; color: var(--gold); pointer-events: none; white-space: nowrap; }
 #aim.off { color: var(--muted); }
 #aim:empty { display: none; }
-#tableHud { left: 50%; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 96px); transform: translateX(-50%); display: flex; gap: 12px; align-items: center;
-  background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; font: 700 13px system-ui, sans-serif; letter-spacing: 0.03em;
-  pointer-events: none; white-space: nowrap; max-width: calc(100vw - 24px); overflow: hidden; }
-#tableHud b { color: var(--gold); }
-#tableHud .win { color: #5aff9a; } #tableHud .lose { color: #ff6a6a; } #tableHud .flash { color: #ffd040; }
-body.touch #tableHud { left: 50%; top: max(8px, env(safe-area-inset-top)); bottom: auto; font-size: 12px; padding: 4px 10px; gap: 8px; max-width: calc(100vw - 420px); }
 body.touch #aim { top: calc(max(8px, env(safe-area-inset-top)) + 36px); }
 body.touch.seated #drinkInfo { display: none; }
 @media (orientation: portrait) and (max-width: 640px) {
-  body.touch #tableHud { top: auto; bottom: calc(max(10px, env(safe-area-inset-bottom)) + 96px); left: 10px; transform: none; max-width: calc(100vw - 110px); flex-wrap: wrap; white-space: normal; }
   body.touch #aim { top: auto; bottom: calc(max(10px, env(safe-area-inset-bottom)) + 66px); left: 10px; transform: none; max-width: calc(100vw - 110px); white-space: normal; }
 }
 
@@ -241,3 +234,102 @@ body.touch.seated #drinkInfo { display: none; }
 body.cctv #view { filter: saturate(0.25) contrast(1.2) brightness(1.15); }
 body.cctv #hud::after { content: ''; position: fixed; inset: 0; pointer-events: none;
   background: repeating-linear-gradient(0deg, rgba(160, 230, 255, 0.06) 0 1px, transparent 1px 3px); }
+
+/* The table bar: the chip in hand, UNDO, CLEAR, x2, MAX and the game's buttons (the table camera keeps the game clear of it) */
+#tableBar { left: 50%; bottom: max(10px, env(safe-area-inset-bottom)); transform: translateX(-50%); width: min(1000px, calc(100vw - 24px));
+  background: rgba(14, 10, 12, 0.9); border: 1px solid rgba(232, 196, 106, 0.4); border-radius: 12px; padding: 7px 12px 6px;
+  font: 900 13px/1.2 "Arial Black", Impact, system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5); }
+.tb-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; white-space: nowrap; }
+.tb-k { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; }
+#tbTotal { color: #ffb84a; font-size: 16px; }
+#tbStatus { color: #f3ead8; font-size: 12px; overflow: hidden; text-overflow: ellipsis; }
+#tbMax { color: var(--muted); font-size: 11px; }
+.tb-row { display: flex; align-items: center; gap: 10px; margin-top: 7px; }
+#tbChips { display: flex; align-items: center; gap: 5px; }
+#tbChips:empty, #tbTools:empty { display: none; }
+#tbChips .tb-k { width: 40px; line-height: 1.1; }
+#tableBar button { font: 900 15px/1 "Arial Black", Impact, system-ui, sans-serif; letter-spacing: 0.03em; text-transform: uppercase; border-radius: 8px;
+  border: 2px solid rgba(0, 0, 0, 0.35); box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.28), 0 2px 0 rgba(0, 0, 0, 0.4); padding: 10px 10px 12px; cursor: pointer;
+  transition: transform 0.08s, filter 0.15s; }
+#tableBar button:hover:not(.off) { filter: brightness(1.15); border-color: rgba(255, 255, 255, 0.5); }
+#tableBar button:active:not(.off) { transform: translateY(2px); box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.28); }
+#tableBar button.chip { width: 42px; height: 42px; border-radius: 50%; padding: 0; font-size: 11px; background: var(--c); color: var(--k);
+  border: 4px dashed rgba(255, 255, 255, 0.85); box-shadow: 0 0 0 2px var(--c), 0 3px 0 2px rgba(0, 0, 0, 0.45); }
+#tableBar button.chip.sel { transform: translateY(-5px); box-shadow: 0 0 0 2px var(--c), 0 0 0 5px #ffd040, 0 6px 10px rgba(0, 0, 0, 0.5); }
+#tbTools { display: flex; gap: 6px; }
+#tbTools button { min-width: 62px; }
+#tbActs { display: flex; gap: 8px; flex: 1; min-width: 0; }
+#tbActs button { flex: 1; min-width: 74px; font-size: 21px; padding: 12px 8px 14px; }
+#tbActs button.plain { flex: 0.6; font-size: 14px; }
+#tbActs.many button { font-size: 14px; letter-spacing: 0; min-width: 0; padding: 12px 4px 14px; }
+#tableBar button.sel { background: #f2d36a; color: #2a1802; box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.28), 0 0 0 2px #fff4c0; }
+#tableBar .go { background: #33e07c; color: #062410; }
+#tableBar .red { background: #ef3d52; color: #2a0408; }
+#tableBar .blue { background: #5c62f2; color: #0a0a2e; }
+#tableBar .violet { background: #a456ec; color: #1c0630; }
+#tableBar .gold { background: #f2b234; color: #2a1802; }
+#tableBar .plain { background: #3a2a32; color: var(--ink); }
+#tableBar button.off { filter: grayscale(0.75) brightness(0.5); cursor: default; }
+.tb-foot { margin-top: 6px; font: 700 10px/1.2 system-ui, sans-serif; color: var(--muted); text-align: center; letter-spacing: 0.06em; text-transform: uppercase; }
+#tbNote { position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%); background: rgba(14, 10, 12, 0.88); border-radius: 10px;
+  padding: 6px 16px; font-size: 20px; white-space: nowrap; color: var(--ink); border: 1px solid rgba(232, 196, 106, 0.3); max-width: calc(100vw - 24px); overflow: hidden; text-overflow: ellipsis; }
+#tbNote:empty { display: none; }
+#tbNote.win { color: #5aff9a; border-color: #2a8a50; } #tbNote.lose { color: #ff7a7a; border-color: #8a2a2a; } #tbNote.flash { color: #ffd040; }
+#tbPlaced { position: absolute; left: 50%; bottom: calc(100% + 58px); transform: translateX(-50%); display: none; background: #3a1a0c; border: 2px solid #c87a2a;
+  border-radius: 8px; padding: 5px 18px 6px; text-align: center; color: #fff; pointer-events: none; }
+#tbPlaced b { display: block; font-size: 26px; }
+#tbPlaced span { font-size: 10px; color: #ffcf8a; letter-spacing: 0.1em; }
+#tbPlaced.pop { display: block; animation: placed 1.3s forwards; }
+@keyframes placed { 0% { opacity: 0; transform: translate(-50%, 8px); } 12% { opacity: 1; transform: translate(-50%, 0); } 75% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -12px); } }
+#aim.follow { transform: none; }
+body.tablecam #cross, body.tablecam #hud > #hint, body.tablecam #drinkInfo { display: none; }
+body.tablecam #bottom { top: max(12px, env(safe-area-inset-top)); bottom: auto; }
+body.touch #tableBar { left: max(8px, env(safe-area-inset-left)); transform: none; width: calc(100vw - 112px); padding: 5px 8px; }
+body.touch #tableBar button { font-size: 13px; padding: 8px 6px 10px; }
+body.touch #tbActs button { font-size: 16px; }
+body.touch #tableBar button.chip { width: 34px; height: 34px; font-size: 9px; border-width: 3px; }
+body.touch .tb-foot, body.touch #tbChips .tb-k { display: none; }
+@media (max-width: 760px) { #tbTools button { min-width: 0; padding: 8px 6px 10px; font-size: 12px; } #tbChips .tb-k { display: none; } #tbStatus { display: none; } }
+@media (orientation: portrait) and (max-width: 640px) { body.touch .tb-row { flex-wrap: wrap; } body.touch #tbActs { flex-basis: 100%; } }
+/* Centred one-line messages use the screen's width, not half of it. */
+#sickBar, #ghostBar, #sendBtn, #hud > #hint, #lockHint { width: max-content; max-width: calc(100vw - 24px); text-align: center; }
+/* The POISONED bar sits above the toasts instead of on the first one. */
+body.sick #toasts { top: 120px; }
+/* Ghosts: no thirst, and the world goes cold. */
+body.ghost #thirst { display: none; }
+body.ghost #view { filter: saturate(0.35) brightness(0.92) hue-rotate(-12deg); }
+/* Phones: the role shows as a short chip next to the menu button; toasts start under the bankroll. */
+body.touch #role { display: block; font-size: 0; padding: 5px 9px; max-width: none; }
+body.touch #role b { font-size: 12px; }
+body.touch #toasts { top: 96px; }
+body.touch.sick #toasts { top: 132px; }
+/* Phones at a table: thirst and the killer bar go under the bankroll instead of over it. */
+body.touch.tablecam #bottom { top: calc(max(12px, env(safe-area-inset-top)) + 76px); }
+@media (orientation: portrait) and (max-width: 640px) {
+  #toasts, body.touch #toasts { top: 104px; }
+  body.touch.seated #aim { top: calc(max(8px, env(safe-area-inset-top)) + 130px); bottom: auto; }
+}
+/* Meetings: your vote stays lit, the chat fades in at the top, the thrown-out face is big enough to see. */
+.vrow.mine > button:first-child, #mVotes > button.mine { opacity: 1; outline: 2px solid var(--gold); outline-offset: -2px; }
+#mChat { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 22px); mask-image: linear-gradient(to bottom, transparent 0, #000 22px); }
+#ejectStrip { height: 66px; }
+#ejectDot, #ejectDot .pf { width: 60px; height: 60px; }
+@media (orientation: portrait) and (max-width: 640px) { #mChat { min-height: 150px; max-height: 34vh; } }
+#setupErr.info { color: var(--muted); }
+/* How to play: the close button stays in view on short screens. */
+#how .card { max-height: calc(100vh - 24px); overflow-y: auto; }
+#howClose { margin-top: 4px; }
+/* Killer moves on cooldown: readable, just clearly not ready. Phones: one scrolling row. */
+#killerBar button:disabled { opacity: 1; background: #1e0d10; border-color: #4a1a1e; color: #b8a0a4; }
+#killerBar button:disabled b { color: #8a5a5e; }
+#killerBar button:disabled i { opacity: 1; color: #ff8a80; }
+body.touch #killerBar { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; max-width: calc(100vw - 120px); pointer-events: auto; scrollbar-width: none; }
+body.touch #killerBar button { flex: 0 0 auto; font-size: 12px; padding: 6px 8px; }
+
+/* Big PC windows: the HUD, table bar and cards grow with the screen instead of staying laptop-sized. */
+@media (min-width: 1600px) and (min-height: 1000px) {
+  #bank, #topRight, #bottom, #toasts, #hint, #tableBar, #lockHint, #picker, #splashText, .card { zoom: 1.25; }
+}
+@media (min-width: 2400px) and (min-height: 1300px) {
+  #bank, #topRight, #bottom, #toasts, #hint, #tableBar, #lockHint, #picker, #splashText, .card { zoom: 1.6; }
+}

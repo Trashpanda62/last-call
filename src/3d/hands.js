@@ -1,6 +1,6 @@
 // First-person cartoon gloves, drawn in their own pass on top of the world so they never clip into walls.
 import * as THREE from 'three';
-import { makeGlass, setFill } from './items.js';
+import { makeGlass, setFill, freeGlass } from './items.js';
 import { makeGlove } from './chars.js';
 
 const toy = (color, extra = {}) => new THREE.MeshPhysicalMaterial({ color, roughness: 0.5, sheen: 0.4, sheenRoughness: 0.5, sheenColor: new THREE.Color(0xffffff), clearcoat: 0.3, clearcoatRoughness: 0.4, ...extra });
@@ -59,12 +59,13 @@ export class Hands {
     const dt = s.dt; this.t += dt;
     this.rig.visible = !s.hidden;
     if (s.hidden) return;
-    for (const m of [this.gloveMat, this.sleeveMat, this.cuffMat]) { m.opacity = s.ghost ? 0.35 : 1; m.transparent = !!s.ghost; }
+    // a ghost's mittens go see-through (switching transparency needs a new shader)
+    for (const m of [this.gloveMat, this.sleeveMat, this.cuffMat]) { m.opacity = s.ghost ? 0.35 : 1; if (m.transparent !== !!s.ghost) { m.transparent = !!s.ghost; m.depthWrite = !s.ghost; m.needsUpdate = true; } }
     this.hemi.intensity = 0.55 * s.light; this.key.intensity = 0.75 * s.light; this.rim.intensity = 0.4 * s.light;
     // the drink in the right hand
     const key = s.drink ? s.drink.kind + s.drink.color : '';
     if (key !== this.glassKey) {
-      if (this.glass) this.right.userData.hold.remove(this.glass);
+      if (this.glass) { this.right.userData.hold.remove(this.glass); freeGlass(this.glass); }
       this.glass = s.drink ? makeGlass(s.drink.kind, s.drink.color) : null;
       if (this.glass) { this.glass.scale.setScalar(0.85); this.glass.position.set(0, -0.03, 0); this.right.userData.hold.add(this.glass); }
       this.glassKey = key;
@@ -94,7 +95,9 @@ export class Hands {
         h.position.lerp(a.to, e);
         if (a.kind === 'pull') { h.position.y -= Math.max(0, Math.sin((p - 0.35) / 0.65 * Math.PI)) * 0.12 * (p > 0.35 ? 1 : 0); h.userData.glove.userData.curl(0.95); }
         else h.userData.glove.userData.curl(0.25 + 0.5 * e);
-      } else if (a.kind === 'sip') { this.right.position.x -= 0.22 * k; this.right.position.y += 0.18 * k; this.right.position.z += 0.12 * k; this.right.rotation.x = 1.0 * k; }
+      } else if (a.kind === 'sip') { // up to the mouth and tipped: you see the glass's side and base go by, not a disc of drink
+        this.right.position.x -= 0.2 * k; this.right.position.y += 0.27 * k; this.right.position.z += 0.2 * k; this.right.rotation.x = 1.3 * k; this.right.rotation.z += 0.25 * k;
+      }
       else if (a.kind === 'poison') { this.vial.visible = true; this.left.position.x += 0.16 * k; this.left.position.y += 0.08 * k; this.left.position.z -= 0.15 * k; this.left.rotation.z = -1.6 * Math.max(0, Math.sin(Math.min(1, p * 1.6) * Math.PI)); }
       else if (a.kind === 'stab') { this.knife.visible = true; this.right.position.z -= 0.3 * k; this.right.position.x -= 0.1 * k; this.right.userData.glove.userData.curl(1); }
       else if (a.kind === 'crunch') { this.left.position.x += 0.2 * k; this.left.position.y += 0.2 * k; this.left.position.z += 0.1 * k; }

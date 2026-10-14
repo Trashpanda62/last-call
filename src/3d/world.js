@@ -18,6 +18,15 @@ export const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
 // ---------- Materials ----------
 const std = (o) => new THREE.MeshStandardMaterial(o);
 const phys = (o) => new THREE.MeshPhysicalMaterial(o);
+// Restroom stall laminate: a sea-green panel with a faint grain and a bevelled edge every tile (one panel per 1.2 m).
+function stallTex() {
+  const [c, g] = T.canvas(256, 256);
+  g.fillStyle = '#7fa29d'; g.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 70; i++) { g.fillStyle = `rgba(${Math.random() < 0.5 ? '255,255,255' : '20,40,40'},${0.02 + Math.random() * 0.04})`; g.fillRect(Math.random() * 256, 0, 1 + Math.random() * 3, 256); }
+  g.strokeStyle = 'rgba(20,40,40,0.35)'; g.lineWidth = 3; g.strokeRect(10, 10, 236, 236);
+  g.strokeStyle = 'rgba(255,255,255,0.25)'; g.lineWidth = 2; g.strokeRect(13, 13, 230, 230);
+  return T.tex(c);
+}
 export const MAT = {
   gold: std({ color: 0xd9a94a, metalness: 0.9, roughness: 0.3, envMapIntensity: 0.8 }),
   brass: std({ color: 0xc8963a, metalness: 0.85, roughness: 0.35 }),
@@ -37,7 +46,7 @@ export const MAT = {
   leaf: phys({ color: 0x2f7a35, roughness: 0.6, sheen: 0.6, sheenColor: new THREE.Color(0x9fe08a) }),
   pot: std({ color: 0x1a1214, roughness: 0.3, metalness: 0.4 }),
   mirror: std({ color: 0x8a7a70, metalness: 0.9, roughness: 0.3, envMapIntensity: 0.25 }),
-  stall: std({ color: 0x6a8a88, roughness: 0.5 }),
+  stall: std({ map: stallTex(), roughness: 0.38 }),
   rope: phys({ color: 0xb01828, roughness: 0.7, sheen: 1, sheenColor: new THREE.Color(0xff8090) }),
   water: phys({ color: 0x1fa8c8, roughness: 0.05, metalness: 0, transmission: 0, transparent: true, opacity: 0.85, clearcoat: 1, clearcoatRoughness: 0.05 }),
   metalDark: std({ color: 0x2a2c34, metalness: 0.7, roughness: 0.45 }),
@@ -181,7 +190,7 @@ export function buildWorld(scene, opts = {}) {
   const colLists = [];
   for (const r of WALLS) {
     const stall = r.w <= 10 || r.h <= 10;
-    const h = stall ? 2.0 : WALL_H;
+    const h = stall ? 1.8 : WALL_H, y0 = stall ? 0.15 : 0; // stall panels stand on chrome feet, clear of the floor
     const x0 = r.x * M, x1 = (r.x + r.w) * M, z0 = r.y * M, z1 = (r.y + r.h) * M;
     const sides = [
       { n: [1, 0], at: (u) => [r.x + r.w + 8, u], c: x1, lo: r.y, hi: r.y + r.h },
@@ -203,7 +212,7 @@ export function buildWorld(scene, opts = {}) {
         const room = run.room, m = roomMats[room], L = ROOM_LOOK[room];
         const rotY = Math.atan2(sd.n[0], sd.n[1]);
         const wt = L.wallTile || 1.2;
-        S.add(uvScale(new THREE.PlaneGeometry(len, h), len / wt, h / wt), stall ? MAT.stall : m.wall, v3(p[0], h / 2, p[1]), rotY);
+        S.add(uvScale(new THREE.PlaneGeometry(len, h), stall ? len / 1.2 : len / wt, stall ? h / 1.8 : h / wt), stall ? MAT.stall : m.wall, v3(p[0], y0 + h / 2, p[1]), rotY);
         if (stall || len < 0.4) continue;
         const out = (d, y) => v3(p[0] + sd.n[0] * d, y, p[1] + sd.n[1] * d);
         if (L.trim === 'deco') {
@@ -308,11 +317,13 @@ function night(ctx, r) {
   const skyN = T.art2Tex('sky-north'), skyS = T.art2Tex('sky-south') || skyN, out = skyN ? 7 : 0, top = skyN ? WALL_H + 9 : WALL_H + 1.2;
   S.add(uvScale(new THREE.PlaneGeometry(w + out * 2, d + out * 2), 2, 1.4), sky, v3(cx, top, cz), 0, null, Math.PI / 2);
   if (skyN) { // a painted city all round, beyond the wall tops, under the starry ceiling
-    const hh = top - (WALL_H - 1);
+    // they start above every ceiling: 7 m out they stand over the neighbouring rooms, and the alley's walls run up past
+    // their foot, so from the alley only the city shows and from anywhere else nothing does
+    const foot = WALL_H + 0.05, hh = top - foot;
     for (const [x, z, len, rot, map] of [[cx, r.y * M - out, w + out * 2, 0, skyN], [cx, (r.y + r.h) * M + out, w + out * 2, Math.PI, skyS],
       [r.x * M - out, cz, d + out * 2, Math.PI / 2, skyS], [(r.x + r.w) * M + out, cz, d + out * 2, -Math.PI / 2, skyN]]) {
       const m = new THREE.Mesh(new THREE.PlaneGeometry(len, hh), new THREE.MeshBasicMaterial({ map }));
-      m.position.set(x, WALL_H - 1 + hh / 2, z); m.rotation.y = rot; group.add(m);
+      m.position.set(x, foot + hh / 2, z); m.rotation.y = rot; group.add(m);
     }
   }
   // the walls carry on up to the sky
@@ -429,7 +440,15 @@ function restrooms(ctx) {
     B.add(lathe([[0, 0], [0.16, 0], [0.18, 0.2], [0.22, 0.38], [0.2, 0.42], [0, 0.42]], 20), MAT.porcelain, v3(sx, 0, z), 0, v3(1, 1, 1.25));
     B.add(rbox(0.4, 0.4, 0.18, 0.04), MAT.porcelain, v3(sx, 0.6, z + 0.2));
   }
-  for (const x of [260, 380, 500]) B.add(box(0.04, 0.06, 2.0), MAT.chrome, v3((x + 5) * M, 2.0, 1120 * M)); // stall rails
+  for (const x of [260, 380, 500]) {
+    const sx = (x + 5) * M, w = 10 * M, z0 = 1060 * M, z1 = 1180 * M;
+    B.add(box(0.04, 0.06, 2.0), MAT.chrome, v3(sx, 2.0, 1120 * M)); // the head rail
+    B.add(box(w + 0.02, 0.03, z1 - z0), MAT.chrome, v3(sx, 1.965, (z0 + z1) / 2)); // a capped top edge
+    B.add(box(w + 0.04, 2.0, 0.06), MAT.stall, v3(sx, 1.0, z0 + 0.03)); // the front post, floor to rail
+    B.add(box(w + 0.06, 0.04, 0.08), MAT.chrome, v3(sx, 0.02, z0 + 0.03)); // its shoe
+    for (const z of [z0 + 0.35, z1 - 0.25]) B.add(cyl(0.025, 0.03, 0.15, 10), MAT.chrome, v3(sx, 0.075, z)); // feet
+    B.add(box(0.012, 0.05, 0.03), new THREE.MeshBasicMaterial({ color: 0x3fd07a }), v3(sx + w / 2 + 0.008, 1.15, z0 + 0.12)); // a VACANT dot by the latch
+  }
 }
 
 // ---------- VIP lounge ----------
@@ -686,6 +705,8 @@ function chandeliers(ctx) {
     const model = hasProp('chandelier');
     if (model) { // the model hangs from the ceiling rose; it glows a little so it reads as lit
       const sc = propScale('chandelier', { fit: [big ? 1.9 : 1.25, 0, big ? 1.9 : 1.25] }), o = propObject('chandelier', { cast: false });
+      const tall = propHeight('chandelier') * sc.y, room = WALL_H - 0.12 - 2.45; // its lowest crystal stays above 2.45 m, clear of eye level
+      if (tall > room) sc.multiplyScalar(room / tall);
       o.scale.copy(sc); o.position.y = WALL_H - 0.12 - propHeight('chandelier') * sc.y; g.add(o);
       o.traverse(m => { if (m.isMesh) { m.userData.prop = true; litChandelier(m.material); } });
     }

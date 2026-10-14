@@ -167,7 +167,7 @@ export function paintMines(g, w, h, t, st) {
     text(g, st.m + (st.m === 1 ? ' MINE' : ' MINES'), rx + w * 0.12, h * 0.18, h * 0.07, '#7fffb0');
     text(g, st.dead ? 'BOOM' : xfmt(st.mult || 1), rx + w * 0.12, h * 0.42, h * 0.14, st.dead ? '#ff4a5a' : '#ffd040');
     if (!st.over && st.next) text(g, 'next ' + xfmt(st.next), rx + w * 0.12, h * 0.6, h * 0.055, 'rgba(255,255,255,0.7)');
-    if (st.over && !st.dead) glowText(g, 'CASHED', rx + w * 0.12, h * 0.75, h * 0.07, '#3fff8a');
+    if (st.over && !st.dead) glowText(g, 'CASHED', rx + w * 0.12, h * 0.58, h * 0.07, '#3fff8a');
   } else { glowText(g, 'MINES', rx + w * 0.12, h * 0.4, h * 0.12, '#3fff8a'); text(g, 'find the gems', rx + w * 0.12, h * 0.58, h * 0.05, 'rgba(255,255,255,0.6)'); }
 }
 function gem(g, x, y, r) {
@@ -189,7 +189,7 @@ export function paintTower(g, w, h, t, st) {
     const y = y0 + (rows - 1 - r) * rh, active = st && !st.over && r === st.row;
     for (let e = 0; e < eggs; e++) {
       const x = x0 + e * cw, picked = st && st.picks[r] === e, dragon = st && st.over && st.rows && st.rows[r].has(e);
-      g.fillStyle = active ? '#6a3a14' : r < (st ? st.row : 0) ? '#3a2a10' : '#2a1a0c';
+      g.fillStyle = active ? '#9a5418' : r < (st ? st.row : 0) ? '#5a3e14' : '#3e2812'; // the floors read from across the room
       g.beginPath(); g.roundRect(x + cw * 0.06, y + rh * 0.08, cw * 0.88, rh * 0.84, rh * 0.2); g.fill();
       if (active) { g.strokeStyle = '#ffa040'; g.lineWidth = 2; g.stroke(); }
       const cx = x + cw / 2, cy = y + rh / 2;

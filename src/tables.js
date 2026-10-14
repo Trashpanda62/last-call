@@ -1,5 +1,6 @@
-// The table games, played with your hands. The 3D chip trays, keypads, buttons, felts and touch screens in
-// src/3d/rig.js send presses here (press(id, uv)); the machine screens and the chips on the felt read tableView().
+// The table games. You click the felt, the betting pads and the touch screens in 3D (src/3d/rig.js) and the buttons on
+// the table bar (main.js, from tableBar()); both send presses here (press(id, uv)). The machine screens and the chips
+// on the felt read tableView().
 // DOM-free. Every odd comes from games.js, the same maths the bots use; finished rounds go to the sim as
 // act('bank', { d, b }) and the shared rounds as act('crash' | 'cashout' | 'race').
 import * as Gm from './games.js';
@@ -12,10 +13,6 @@ const S = n => P.short(n);
 const cap = s => s[0].toUpperCase() + s.slice(1);
 export const CHIPS = Gm.BET.chips;
 export const chipLabel = c => c >= 1e6 ? c / 1e6 + 'M' : c >= 1e3 ? c / 1e3 + 'K' : String(c);
-export const RAIL = ['clear', 'half', 'dbl', 'max'];
-export const RAIL_LABEL = { clear: 'CLEAR', half: '½', dbl: '×2', max: 'MAX' };
-// keypad, row by row (4 columns; OK is tall, 000 is wide)
-export const KEYS = ['7', '8', '9', 'C', '4', '5', '6', 'OK', '1', '2', '3', '0', '000'];
 export const CRASH_AUTOS = [0, 1.5, 2, 3, 5, 10, 100];
 const LADDER = [10, 20, 50, 100, 200, 500, 1e3, 2e3, 5e3, 1e4, 2e4, 5e4, 1e5, 2e5, 5e5, 1e6, 2e6, 5e6, 1e7, 2e7, 5e7, 1e8];
 const RL_RED = Gm.RL_RED;
@@ -25,6 +22,7 @@ let tb = null;            // the table I'm at
 let chip = 1000;          // the chip in hand, remembered between tables
 let betAmt = 1000;        // the last stake on a one-spot game, remembered between tables
 let crashAuto = 2;        // auto cash-out, remembered
+const rlHist = [];        // the last roulette numbers you saw land, newest first
 let hand = () => {};      // first-person hand animation hook: hand(kind)
 export function setHandHook(fn) { hand = fn; }
 export const tableGame = () => tb && tb.game;
@@ -33,14 +31,23 @@ export const tableSeat = () => tb ? tb.seat : -1;
 // ---------- Open, close, tick ----------
 export function openTable(seat, act, v) {
   tb = { game: seat.game, seat: seat.id, tier: seat.tier || 'penny', act, me: v.priv.me, view: null, jobs: [], maxBet: v.pub.maxBet || Gm.maxBet(v.pub.bank),
-    bets: {}, adds: {}, last: null, typed: '', res: { text: '', cls: '' }, fx: null, pressed: null, flash: null };
+    bets: {}, adds: {}, undo: [], last: null, res: { text: '', cls: '' }, fx: null, pressed: null, flash: null, placed: null };
   tb.g = GAMES[tb.game] || GAMES.vip;
+  // a big chip from the last table steps down here, so a first click doesn't put most of the max down
+  if (chip > tb.maxBet / 4) chip = CHIPS.filter(v => v <= tb.maxBet / 4).pop() || CHIPS[0];
+  const kb = document.querySelector('#tableBar .tb-foot .kb'); // only layout games take a bet back with a right-click
+  if (kb) kb.textContent = '[E] or [Q] stand up · ' + (tb.g.noChips ? '' : 'wheel changes your chip · ') + (tb.g.main || tb.g.noChips ? '' : 'right-click takes chips back · ') + 'hold Space to look behind you';
   if (tb.g.init) tb.g.init();
   if (tb.g.main) { tb.bets.main = Math.max(minBet(), Math.min(tb.maxBet, betAmt)); tb.last = 'main'; }
   if (tb.g.live) tb.g.live(v);
 }
 export function closeTable() {
-  if (tb) for (const j of tb.jobs.splice(0)) j.fn(); // rounds already decided still pay out
+  if (tb) {
+    tb.closing = true; // nothing new starts now (an auto spin waiting in the queue stays put)
+    // rounds already decided still pay out, including a payment a flushed job queues on its way
+    for (let n = 0; n < 8 && tb.jobs.length; n++) for (const j of tb.jobs.splice(0)) j.fn();
+    if (tb.g.abandon) tb.g.abandon();          // and a round you walk away from is played out, not cancelled
+  }
   tb = null;
 }
 export function tableTick(v) {
@@ -48,7 +55,7 @@ export function tableTick(v) {
   const t = now();
   for (let i = 0; i < tb.jobs.length; i++) if (tb.jobs[i].at <= t) { const j = tb.jobs.splice(i--, 1)[0]; j.fn(); if (!tb) return; }
   const mb = v.pub.maxBet || Gm.maxBet(v.pub.bank);
-  if (mb !== tb.maxBet) { tb.maxBet = mb; fit(); }
+  if (mb !== tb.maxBet || stake() > mb) { tb.maxBet = mb; fit(); } // also trims bets that were locked when the max fell
   if (tb.g.live) tb.g.live(v);
   if (tb.fx && t - tb.fx.t0 > 2.6) tb.fx = null;
 }
@@ -58,6 +65,14 @@ const minBet = () => tb.game === 'slots' ? Math.max(Gm.BET.min, Gm.SLOT_TIERS[tb
 const stake = () => { let s = 0; for (const k in tb.bets) s += tb.bets[k]; return s; };
 const locked = spot => !!(tb.g.locked && tb.g.locked(spot));
 function remember() { if (tb.g.main && tb.bets.main) betAmt = tb.bets.main; }
+// UNDO steps back through the layouts you made (spots the dealer has locked can't come back).
+function save() { tb.undo.push({ ...tb.bets }); if (tb.undo.length > 40) tb.undo.shift(); }
+function undo() {
+  const prev = tb.undo[tb.undo.length - 1];
+  if (!prev) return flash('Nothing to undo');
+  for (const s of new Set([...Object.keys(prev), ...Object.keys(tb.bets)])) if (locked(s) && prev[s] !== tb.bets[s]) return flash('No more bets');
+  tb.undo.pop(); tb.bets = prev; fit(); sfx('chip'); hand('press'); remember();
+}
 // Keep the chips on the table under the max bet (the max moves with the crew bank).
 function fit() {
   const tot = stake();
@@ -83,50 +98,43 @@ function dropChip(spot) {
   if (locked(spot)) return flash('No more bets');
   if (g.excl) { // one spot at a time: tapping another spot moves the bet there
     const cur = Object.keys(tb.bets).find(k => tb.bets[k] > 0);
-    if (cur && cur !== spot) { tb.bets = { [spot]: tb.bets[cur] }; tb.last = spot; tb.adds[spot] = now(); sfx('chip'); hand('press'); return; }
+    if (cur && cur !== spot) { save(); tb.bets = { [spot]: tb.bets[cur] }; tb.last = spot; tb.adds[spot] = now(); sfx('chip'); hand('press'); return; }
   }
   let c = chip; if (c > tb.maxBet) c = CHIPS.filter(v => v <= tb.maxBet).pop() || Gm.BET.min;
   const room = tb.maxBet - stake();
   if (room < Gm.BET.min) return flash('Table max ' + S(tb.maxBet));
-  tb.bets[spot] = (tb.bets[spot] || 0) + Math.min(c, room); tb.last = spot; tb.adds[spot] = now();
+  save();
+  const add = Math.min(c, room);
+  tb.bets[spot] = (tb.bets[spot] || 0) + add; tb.last = spot; tb.adds[spot] = now(); tb.placed = { amt: add, t: now() };
   sfx('chip'); hand('press'); remember();
 }
 function takeBack(spot) {
   if (!tb.bets[spot]) return;
   if (locked(spot)) return flash('No more bets');
-  delete tb.bets[spot]; fit(); sfx('chip'); hand('press'); remember();
+  save(); delete tb.bets[spot]; fit(); sfx('chip'); hand('press'); remember();
 }
 function rail(k) {
+  if (k === 'undo') return undo();
   const free = Object.keys(tb.bets).filter(s => !locked(s));
   if (!free.length && k !== 'max') return flash(Object.keys(tb.bets).length ? 'No more bets' : 'No chips on the table');
+  const ms = k === 'max' ? (tb.last && tb.bets[tb.last] !== undefined ? tb.last : tb.g.main || free[0]) : null;
+  if (k === 'max' && !ms) return flash('Put a chip on a spot first');
+  if (k === 'max' && locked(ms)) return flash('No more bets');
+  save();
   if (k === 'clear') { for (const s of free) delete tb.bets[s]; fit(); }
   else if (k === 'half') for (const s of free) { const v = Math.floor(tb.bets[s] / 2 / 10) * 10; if (v >= Gm.BET.min) tb.bets[s] = v; else if (s !== 'main') delete tb.bets[s]; }
   else if (k === 'dbl') { for (const s of free) tb.bets[s] *= 2; fit(); }
   else if (k === 'max') {
-    const s = tb.last && tb.bets[tb.last] !== undefined ? tb.last : tb.g.main || free[0];
-    if (!s) return flash('Put a chip on a spot first');
-    if (locked(s)) return flash('No more bets');
+    const s = ms;
     tb.bets[s] = Math.max(Gm.BET.min, tb.maxBet - (stake() - (tb.bets[s] || 0))); tb.last = s; tb.adds[s] = now();
   }
   if (tb.bets.main !== undefined && tb.bets.main < minBet()) tb.bets.main = minBet();
   sfx('chip'); hand('press'); remember();
 }
-function key(k) {
-  hand('press'); sfx('click');
-  if (k === 'C') { tb.typed = ''; return; }
-  if (k !== 'OK') { tb.typed = (tb.typed + k).replace(/^0+/, '').slice(0, 12); return; }
-  const s = tb.last && (tb.bets[tb.last] !== undefined || tb.g.main) ? tb.last : tb.g.main;
-  if (!tb.typed) return flash('Type a bet first');
-  if (!s) return flash('Put a chip on a spot first, then type its bet');
-  if (locked(s)) return flash('No more bets');
-  const others = stake() - (tb.bets[s] || 0);
-  tb.bets[s] = Math.max(s === 'main' ? minBet() : Gm.BET.min, Math.min(tb.maxBet - others, +tb.typed));
-  tb.typed = ''; tb.adds[s] = now(); sfx('chip'); remember();
-}
 const need = () => flash(tb.g.needs || 'Put chips down first');
 
 // ---------- Presses from the 3D parts ----------
-// id: 'chip:1000' | 'spot:red' | 'rail:max' | 'key:7' | 'btn:deal' | 'btn:auto:2' | 'scr' (uv: the touch screen point)
+// id: 'chip:1000' | 'spot:red' | 'rail:undo' | 'btn:deal' | 'btn:auto:2' | 'scr' (uv: the touch screen point)
 // alt: right-click (take the chips on a spot back).
 export function press(id, uv, alt) {
   if (!tb || !id) return false;
@@ -135,7 +143,6 @@ export function press(id, uv, alt) {
   if (kind === 'chip') { const v = +arg; if (v > tb.maxBet) return flash('Over the max bet'), true; chip = v; sfx('chip'); hand('press'); }
   else if (kind === 'spot') { if (alt) takeBack(arg); else dropChip(arg); }
   else if (kind === 'rail') rail(arg);
-  else if (kind === 'key') key(arg);
   else if (kind === 'btn') { if (tb.g.press) tb.g.press(arg); }
   else if (kind === 'scr' && uv) screenTap(uv.x, 1 - uv.y);
   else return false;
@@ -156,10 +163,9 @@ export function partInfo(id, uv) {
   if (kind === 'chip') { const v = +arg; return { label: S(v) + ' CHIP' + (v === chip ? ' · IN HAND' : ''), on: v <= tb.maxBet }; }
   if (kind === 'spot') {
     const a = (g.show ? g.show() : tb.bets)[arg], lk = locked(arg);
-    return { label: (g.spotLabel ? g.spotLabel(arg) : 'BET') + (a ? ' · ' + S(a) + ' ON IT' : ' · DROP ' + S(Math.min(chip, tb.maxBet))) + (lk ? ' · NO MORE BETS' : ''), on: !lk };
+    return { label: (g.spotLabel ? g.spotLabel(arg) : 'BET') + (a ? ' · ' + S(a) + ' ON IT' : ' · DROP ' + S(chipNow())) + (lk ? ' · NO MORE BETS' : ''), on: !lk };
   }
-  if (kind === 'rail') return { label: { clear: 'CLEAR · TAKE YOUR CHIPS BACK', half: '½ · HALVE YOUR BETS', dbl: '×2 · DOUBLE YOUR BETS', max: 'MAX · ' + S(tb.maxBet) }[arg], on: true };
-  if (kind === 'key') return { label: arg === 'OK' ? (tb.typed ? 'OK · BET ' + money(+tb.typed) : 'OK · TYPE A BET FIRST') : arg === 'C' ? 'KEYPAD CLEAR' : 'KEYPAD ' + arg, on: true };
+  if (kind === 'rail') return { label: { undo: 'UNDO · YOUR LAST CHIP', clear: 'CLEAR · TAKE YOUR CHIPS BACK', half: '½ · HALVE YOUR BETS', dbl: '×2 · DOUBLE YOUR BETS', max: 'MAX · ' + S(tb.maxBet) }[arg], on: true };
   if (kind === 'btn') return { label: g.label ? g.label(arg) : arg.toUpperCase(), on: g.on ? !!g.on(arg) : true };
   if (kind === 'scr' && uv) {
     const x = uv.x, y = 1 - uv.y;
@@ -168,11 +174,38 @@ export function partInfo(id, uv) {
   }
   return null;
 }
-// The small HUD readout: chip in hand, chips on the table, last result, a short notice.
-export function tableHud() {
+// The chip in hand, never over the max bet.
+const chipNow = () => chip <= tb.maxBet ? chip : CHIPS.filter(v => v <= tb.maxBet).pop() || CHIPS[0];
+// The mouse wheel walks through the chips.
+export function cycleChip(dir) {
+  if (!tb || tb.g.noChips) return;
+  const ok = CHIPS.filter(v => v <= tb.maxBet), i = ok.indexOf(chipNow());
+  const v = ok[Math.max(0, Math.min(ok.length - 1, i + dir))];
+  if (v !== undefined && v !== chip) { chip = v; sfx('chip'); }
+}
+// The table bar's buttons: [label, tone]. Tones: go (green), red, blue, violet, gold, plain.
+const BTN = { deal: ['DEAL', 'go'], hit: ['HIT', 'go'], stand: ['STAND', 'red'], double: ['DOUBLE', 'blue'], split: ['SPLIT', 'violet'], spin: ['SPIN', 'go'],
+  roll: ['ROLL', 'go'], drop: ['DROP', 'go'], start: ['START', 'go'], cash: ['CASH OUT', 'gold'], bet: ['BET', 'go'], flip: ['FLIP', 'go'], take: ['TAKE', 'gold'],
+  lever: ['SPIN', 'go'], betdn: ['BET −', 'plain'], betup: ['BET +', 'plain'], maxbet: ['MAX BET', 'plain'], auto: ['AUTO', 'plain'], autonext: ['AUTO', 'plain'] };
+// Everything the table bar shows (main.js draws it): the chips, the tools, the game's buttons, a status line, the
+// last result, a short notice and the chip you just put down.
+export function tableBar() {
   if (!tb || tb.game === 'vip') return null;
-  const sh = tb.g.show ? tb.g.show() : tb.bets; let tot = 0; for (const k in sh) tot += sh[k];
-  return { chip: tb.game === 'slots' ? null : S(Math.min(chip, tb.maxBet)), total: S(tot), max: S(tb.maxBet), res: tb.res, flash: tb.flash && now() - tb.flash.t < 1.8 ? tb.flash.text : '' };
+  const g = tb.g, sh = g.show ? g.show() : tb.bets; let tot = 0; for (const k in sh) tot += sh[k];
+  const cn = chipNow(), t = now();
+  const acts = (g.bar || g.btns).map(id => {
+    const [label, tone] = BTN[id] || [id.toUpperCase(), 'plain'];
+    return { id: 'btn:' + id, label: g.short ? g.short(id) || label : label, tone, on: g.on ? !!g.on(id) : true, sel: !!(g.sel && g.sel(id)), tip: g.label ? g.label(id) : label };
+  });
+  const anyLocked = Object.keys(sh).some(k => locked(k)) || (g.locked && g.locked());
+  const go = acts.find(a => a.tone === 'go');
+  const status = (g.status && g.status()) || (anyLocked ? 'NO MORE BETS' : stake() >= minBet() ? 'BET READY · PRESS ' + (go ? go.label : 'PLAY') : g.main ? 'CLICK THE BET CIRCLE TO PUT CHIPS DOWN' : 'CLICK THE LAYOUT TO PLACE YOUR CHIPS');
+  return { game: tb.game, total: S(tot), max: S(tb.maxBet), status, acts, res: tb.res, flash: tb.flash && t - tb.flash.t < 1.8 ? tb.flash.text : '',
+    chips: g.noChips ? null : CHIPS.map((v, i) => ({ v, i, label: chipLabel(v), on: v <= tb.maxBet, sel: v === cn })),
+    tools: g.noChips ? null : [['rail:undo', 'UNDO', 'blue'], ['rail:clear', 'CLEAR', 'red'], ['rail:dbl', '×2', 'plain'], ['rail:max', 'MAX', 'plain']].map(([id, label, tone]) => ({ id, label, tone,
+      on: !anyLocked && (id === 'rail:undo' ? tb.undo.length > 0 : id === 'rail:max' || tot > 0), tip: partInfo(id).label })),
+    placed: tb.placed && t - tb.placed.t < 1.4 ? { amt: money(tb.placed.amt), k: tb.placed.t } : null,
+    hist: tb.game === 'roulette' ? rlHist.slice(0, 10) : null };
 }
 
 // What the 3D table shows: the screens' painter state (view), the chips on the felt, the buttons' lights.
@@ -180,9 +213,7 @@ export function tableView() {
   if (!tb) return null;
   const g = tb.g, on = {};
   for (const b of g.btns || []) on[b] = g.on ? !!g.on(b) : true;
-  const s = tb.last && tb.bets[tb.last] !== undefined ? tb.last : g.main;
-  return { game: tb.game, seat: tb.seat, tier: tb.tier, view: tb.view, chip: Math.min(chip, tb.maxBet), maxBet: tb.maxBet, on, stacks: stacks(),
-    display: tb.typed ? money(+tb.typed) : s && tb.bets[s] ? money(tb.bets[s]) : '$0', typing: !!tb.typed,
+  return { game: tb.game, seat: tb.seat, tier: tb.tier, view: tb.view, chip: chipNow(), maxBet: tb.maxBet, on, stacks: stacks(), hist: rlHist,
     ui: g.ui ? g.ui() : null, extra: g.extra ? g.extra() : null, pressed: tb.pressed };
 }
 const k01 = x => Math.max(0, Math.min(1, x));
@@ -242,8 +273,18 @@ const GAMES = {
       Gm.bjAct(s, id); hand('press'); sfx(id === 'double' || id === 'split' ? 'chips' : id === 'hit' ? 'card' : 'click'); if (id === 'double' || id === 'split') later(0.15, () => sfx('card')); this.sync(); if (s.over) this.finish();
     },
     sync() { const s = tb.s; tb.view = s ? { dealer: s.dealer, hide: !s.over, hands: s.hands.map((h, i) => ({ cards: h.cards, active: !s.over && i === s.i, bet: h.bet })) } : null; },
+    abandon() {
+      const s = tb.s; if (!s || s.over) return;
+      for (let i = 0; i < 40 && !s.over; i++) { const a = Gm.bjAdvice(s); Gm.bjAct(s, Gm.bjCan(s)[a] ? a : 'stand'); }
+      this.finish();
+    },
     finish() { const s = tb.s, b = tb.bet; this.sync(); pay(b * s.staked, b * s.mult, s.lines.join(' '), { main: { stake: b * s.staked, back: b * s.mult } }); },
-    show() { const s = tb.s; return s && !s.over ? { main: tb.bet * s.staked } : tb.bets; },
+    show() { const s = tb.s; return s && !s.over ? { main: tb.bet * s.hands.reduce((a, h) => a + h.bet, 0) } : tb.bets; }, // doubles and splits add units
+    status() {
+      const s = tb.s; if (!s || s.over) return null;
+      const h = Gm.bjTotal(s.hands[s.i].cards), up = s.dealer[0];
+      return `YOU HAVE ${h.soft && h.t < 21 ? 'SOFT ' : ''}${h.t}${s.hands.length > 1 ? ' (HAND ' + (s.i + 1) + ')' : ''} · DEALER SHOWS ${up.rank === 'A' ? 'AN ACE' : Gm.bjTotal([up]).t}`;
+    },
   },
 
   roulette: {
@@ -268,15 +309,20 @@ const GAMES = {
         tb.spinning = false;
         const per = {};
         for (const k in snap) per[k] = { stake: snap[k], back: snap[k] * Gm.rlMult(k[0] === 'n' ? +k.slice(1) : k, n, lucky) };
+        rlHist.unshift(n); rlHist.length = Math.min(rlHist.length, 12);
         const col = n === 0 ? 'green' : RL_RED.has(n) ? 'red' : 'black', L = lucky.find(l => l.n === n);
-        pay(st, Gm.rlSettle(bets, n, lucky), `${n} ${col}.${L ? ' LUCKY ' + L.x + 'x!' : ''}`, per);
+        const onIt = Object.keys(snap).some(k => { const b = k[0] === 'n' ? +k.slice(1) : k; return snap[k] > 0 && Gm.rlMult(b, n, lucky) > Gm.rlMult(b, n, []); }); // a bet that the lucky number paid extra
+        pay(st, Gm.rlSettle(bets, n, lucky), `${n} ${col}.${L ? (onIt ? ' LUCKY ' + L.x + 'x!' : ` It was lucky (${L.x}x), with no chip on it.`) : ''}`, per);
       });
     },
     extra() { const sp = tb.view && tb.view.spin; return sp ? { lucky: sp.lucky, n: now() - sp.t0 >= sp.dur ? sp.n : null } : null; },
+    status() { return tb.spinning ? 'NO MORE BETS · THE BALL IS ROLLING' : stake() < Gm.BET.min ? 'CLICK THE LAYOUT TO BET · LUCKY NUMBERS PAY UP TO 500x' : null; },
   },
 
   slots: {
-    main: 'main', btns: ['lever', 'betdn', 'betup', 'maxbet', 'auto'],
+    main: 'main', btns: ['lever', 'betdn', 'betup', 'maxbet', 'auto'], bar: ['betdn', 'betup', 'maxbet', 'auto', 'lever'], noChips: true,
+    short(id) { return id === 'auto' ? (tb.auto ? 'AUTO ON' : 'AUTO') : null; },
+    status() { return tb.busy ? 'GOOD LUCK' : `BET ${S(stake())} · PULL THE LEVER OR PRESS SPIN`; },
     init() { tb.auto = false; tb.busy = false; tb.view = { tier: tb.tier }; },
     locked() { return tb.busy; },
     on(id) { return id === 'auto' ? true : !tb.busy; },
@@ -295,7 +341,7 @@ const GAMES = {
       sfx('chip'); hand('press'); remember();
     },
     spin() {
-      if (!tb || tb.game !== 'slots' || tb.busy) return;
+      if (!tb || tb.game !== 'slots' || tb.busy || tb.closing) return;
       const bet = stake(); if (bet < minBet()) return need();
       const r = Gm.slotSpin(tb.tier);
       tb.view = { tier: tb.tier, reels: r.reels, spin: { t0: now() }, win: null, bet }; tb.busy = true; hand('pull'); sfx('lever'); sfx('reels');
@@ -310,29 +356,31 @@ const GAMES = {
   },
 
   plinko: {
-    main: 'main', btns: ['drop'],
+    main: 'main', btns: ['risk:low', 'risk:medium', 'risk:high', 'drop'],
     init() { tb.risk = 'medium'; tb.balls = []; tb.hist = []; tb.view = { risk: tb.risk, balls: tb.balls }; },
     spotLabel: () => 'BET',
-    on() { return stake() >= minBet(); },
-    label() { return 'DROP A BALL · ' + S(stake()); },
-    press() {
+    // balls still falling, and what is riding on them (all of it together stays under the table max)
+    busy: () => tb.balls.some(b => !b.done),
+    riding: () => tb.balls.reduce((a, b) => a + (b.done ? 0 : b.bet), 0),
+    on(id) { if (id.startsWith('risk:')) return !this.busy() || tb.risk === id.slice(5); return stake() >= minBet() && this.riding() + stake() <= tb.maxBet; },
+    sel(id) { return id === 'risk:' + tb.risk; },
+    short(id) { return id.startsWith('risk:') ? { low: 'LOW', medium: 'MED', high: 'HIGH' }[id.slice(5)] : null; },
+    label(id) { if (id.startsWith('risk:')) { const k = id.slice(5); return cap(k) + ' risk · edges pay ' + Gm.PLINKO[k][0] + 'x'; } return 'DROP A BALL · ' + S(stake()); },
+    press(id) {
+      if (id.startsWith('risk:')) { if (this.busy() && tb.risk !== id.slice(5)) return flash('Wait for the balls to land'); tb.risk = id.slice(5); tb.view.risk = tb.risk; sfx('click'); return; }
       const bet = stake(); if (bet < minBet()) return need();
-      const r = Gm.plinkoDrop(tb.risk), b = { path: r.path, t0: now() };
+      if (this.riding() + bet > tb.maxBet) return flash('Table max ' + S(tb.maxBet) + ': wait for a ball to land');
+      const r = Gm.plinkoDrop(tb.risk), b = { path: r.path, t0: now(), bet };
       tb.balls.push(b); hand('press'); sfx('click');
       for (let i = 1; i <= Gm.PLINKO_ROWS; i++) later(i * P.PLINKO_ROW_T, () => sfx('peg'));
       later(Gm.PLINKO_ROWS * P.PLINKO_ROW_T + 0.05, () => {
-        tb.hist.unshift(P.xfmt(r.mult)); tb.hist.length = Math.min(tb.hist.length, 6);
+        tb.hist.unshift(P.xfmt(r.mult)); tb.hist.length = Math.min(tb.hist.length, 6); b.done = true;
         pay(bet, bet * r.mult, P.xfmt(r.mult) + '.');
         later(0.6, () => { const i = tb.balls.indexOf(b); if (i >= 0) tb.balls.splice(i, 1); });
       });
     },
-    ui() {
-      const busy = tb.balls.length > 0;
-      return ['low', 'medium', 'high'].map((k, i) => ({ id: 'risk:' + k, x: 0.04 + i * 0.32, y: 0.3, w: 0.28, h: 0.4, label: k.toUpperCase(), sel: tb.risk === k, on: !busy || tb.risk === k,
-        off: 'Wait for the balls to land', tip: cap(k) + ' risk · edges pay ' + Gm.PLINKO[k][0] + 'x' }));
-    },
-    tapUI(id) { tb.risk = id.split(':')[1]; tb.view.risk = tb.risk; },
     extra() { return { risk: tb.risk, hist: tb.hist }; },
+    status() { return stake() >= minBet() ? `${tb.risk.toUpperCase()} RISK · EDGES PAY ${Gm.PLINKO[tb.risk][0]}x · DROP AS MANY BALLS AS YOU LIKE` : null; },
   },
 
   mines: {
@@ -374,12 +422,20 @@ const GAMES = {
     },
     ui() {
       if (tb.s && !tb.s.over) return [{ id: 'rand', x: 0.71, y: 0.79, w: 0.27, h: 0.17, label: 'RANDOM', tip: 'A RANDOM TILE' }];
-      return [1, 3, 5, 10, 20, 24].map((n, i) => ({ id: 'm:' + n, x: 0.04 + i * 0.105, y: 0.73, w: 0.095, h: 0.22, label: String(n), sel: tb.m === n,
+      // in the side panel, clear of the board so the last round's mines stay visible
+      return [1, 3, 5, 10, 20, 24].map((n, i) => ({ id: 'm:' + n, x: 0.7 + (i % 3) * 0.097, y: 0.66 + Math.floor(i / 3) * 0.165, w: 0.088, h: 0.145, label: String(n), sel: tb.m === n,
         tip: `${n} MINE${n > 1 ? 'S' : ''} · FIRST GEM ${P.xfmt(Gm.minesMult(n, 1))} · UP TO ${P.xfmt(Gm.minesMult(n, Math.min(25 - n, 24)))}` }));
     },
+    abandon() { // a board you walk away from: one random tile if none is open yet, then cash out what it found
+      const s = tb.s; if (!s || s.over) return;
+      if (!s.open.length) { const free = [...Array(25).keys()]; this.pick(free[Math.floor(Math.random() * free.length)]); }
+      if (!s.over && s.open.length) this.press('cash');
+    },
+    status() { const s = tb.s; return s && !s.over ? (s.open.length ? `NEXT GEM ${P.xfmt(Gm.minesMult(tb.m, s.open.length + 1))} · OR CASH OUT ${S(tb.bet * Gm.minesMult(tb.m, s.open.length))}` : 'PICK A TILE ON THE SCREEN') : null; },
     tapUI(id) {
       if (id === 'rand') { const free = [...Array(25).keys()].filter(i => !tb.s.open.includes(i)); return this.pick(free[Math.floor(Math.random() * free.length)]); }
       tb.m = +id.split(':')[1];
+      tb.view = { m: tb.m, open: [], mines: null, over: false, dead: false, mult: 1, next: Gm.minesMult(tb.m, 1) }; // a fresh board for the new count
     },
   },
 
@@ -413,18 +469,28 @@ const GAMES = {
     },
     tapLabel(x) { const e = this.egg(x); if (e < 0) return null; const live = tb.s && !tb.s.over; return { label: live ? `EGG ${e + 1} · FLOOR ${tb.s.row + 1} PAYS ${P.xfmt(Gm.towerMult(tb.mode, tb.s.row + 1))}` : 'PRESS CLIMB FIRST', on: !!live }; },
     sync() { const s = tb.s; tb.view = s ? { mode: tb.mode, eggs: s.eggs, row: s.row, picks: s.picks, rows: s.rows, over: s.over, dead: s.dead, mult: s.mult } : null; },
+    short(id) { return id === 'start' ? 'CLIMB' : null; },
+    abandon() { // a climb you walk away from: one random egg if you haven't climbed yet, then cash out
+      const s = tb.s; if (!s || s.over) return;
+      if (!s.row) this.tap(0.04 + (Math.floor(Math.random() * s.eggs) + 0.5) * 0.6 / s.eggs); // the middle of an egg's column (egg())
+      if (!s.over && s.row) this.press('cash');
+    },
+    status() { const s = tb.s; return s && !s.over ? `FLOOR ${s.row + 1} PAYS ${P.xfmt(Gm.towerMult(tb.mode, s.row + 1))} · PICK AN EGG` + (s.row ? ` OR CASH OUT ${S(tb.bet * Gm.towerMult(tb.mode, s.row))}` : '') : null; },
     ui() {
       if (tb.s && !tb.s.over) return [];
-      return Object.entries(Gm.TOWER.modes).map(([k, M], i) => ({ id: 'mode:' + k, x: 0.03 + i * 0.135, y: 0.7, w: 0.125, h: 0.25, label: M.label.toUpperCase(), sel: tb.mode === k,
+      return Object.entries(Gm.TOWER.modes).map(([k, M], i) => ({ id: 'mode:' + k, x: 0.775, y: 0.56 + i * 0.086, w: 0.21, h: 0.076, label: M.label.toUpperCase(), sel: tb.mode === k,
         tip: `${M.label.toUpperCase()} · ${M.eggs} EGGS, ${M.dragons} DRAGON${M.dragons > 1 ? 'S' : ''} · TOP PAYS ${P.xfmt(Gm.towerMult(k, Gm.TOWER.rows))}` }));
     },
-    tapUI(id) { tb.mode = id.split(':')[1]; },
+    tapUI(id) { // a fresh tower for the new mode, its multipliers up the side
+      tb.mode = id.split(':')[1];
+      tb.view = { mode: tb.mode, eggs: Gm.TOWER.modes[tb.mode].eggs, row: 0, picks: [], rows: null, over: true, dead: false, mult: 1 };
+    },
   },
 
   coin: {
     excl: true, btns: ['flip', 'take'], needs: 'Put chips on HEADS or TAILS first',
     init() { tb.pot = 0; tb.flying = false; tb.side = null; },
-    locked() { return tb.flying; },
+    locked() { return tb.flying || tb.pot > 0; }, // a ride in progress: the layout under the pot can't change
     spotLabel: id => id.toUpperCase() + ' · 2x · 51% LUCKY COIN',
     side() { return tb.pot ? tb.side : Object.keys(tb.bets).find(k => tb.bets[k] > 0); },
     // In a ride, tapping the other side just moves your call.
@@ -448,8 +514,10 @@ const GAMES = {
         else { tb.pot = (tb.pot || tb.bet) * 2; tb.ride = (tb.ride || 0) + 1; result(`${cap(r.side)}! Pot ${money(tb.pot)}. Flip again or TAKE it.`, 'win'); sfx('coin'); if (tb.ride >= Gm.COIN.maxRide) this.take(); }
       });
     },
+    abandon() { this.take(); },
     take() { if (!tb.pot || tb.flying) return; const p = tb.pot, side = tb.side; tb.pot = 0; tb.ride = 0; hand('press'); pay(tb.bet, p, 'Took it.', { [side]: { stake: tb.bet, back: p } }); },
     show() { return tb.pot ? { [tb.side]: tb.pot } : tb.bets; },
+    status() { return tb.flying ? 'IN THE AIR' : tb.pot ? `POT ${S(tb.pot)} ON ${tb.side.toUpperCase()} · FLIP TO DOUBLE IT OR TAKE IT` : null; },
   },
 
   wheel: {
@@ -494,10 +562,24 @@ const GAMES = {
     },
     show() { return tb.s && !tb.s.over ? { ...tb.bets, pass: tb.passBet } : tb.bets; },
     extra() { return { point: tb.s && !tb.s.over ? tb.s.point : 0 }; },
+    abandon() { // a pass-line point still open rolls out
+      const s = tb.s; if (!s || s.over) return;
+      for (let i = 0; i < 400 && !s.over; i++) Gm.passRoll(s);
+      pay(tb.passBet, tb.passBet * s.mult, s.line, { pass: { stake: tb.passBet, back: tb.passBet * s.mult } });
+    },
+    status() { return tb.rolling ? 'DICE ARE ROLLING' : tb.s && !tb.s.over ? `THE POINT IS ${tb.s.point} · ROLL IT AGAIN BEFORE A 7` : null; },
   },
 
   crash: {
-    main: 'main', btns: ['bet', 'cash', ...CRASH_AUTOS.map(a => 'auto:' + a)],
+    main: 'main', btns: ['bet', 'cash', ...CRASH_AUTOS.map(a => 'auto:' + a)], bar: ['autonext', 'bet', 'cash'],
+    short(id) { return id === 'autonext' ? 'AUTO ' + (crashAuto ? crashAuto + 'x' : 'OFF') : null; },
+    status() {
+      const C = tb.cr.C, m = tb.cr.mine; if (!C) return null;
+      if (C.phase === 'bet') return m ? `IN FOR ${S(m[1])} · LAUNCH IN ${Math.max(0, Math.ceil(Gm.CRASH.betTime - C.t))}s` : `BETS OPEN · ${Math.max(0, Math.ceil(Gm.CRASH.betTime - C.t))}s`;
+      const out = m && m[2] ? `YOU CASHED OUT AT ${P.xfmt(m[2])} (+${S(m[1] * (m[2] - 1))}) · ` : '';
+      if (C.phase === 'fly') return m && !m[2] ? `${P.xfmt(C.mult)} · CASH OUT ${S(m[1] * C.mult)}` : `${out}ROCKET AT ${P.xfmt(C.mult)}` + (out ? '' : ' · NEXT ONE SOON');
+      return `${out}CRASHED AT ${P.xfmt(C.point)} · NEXT ROCKET SOON`;
+    },
     init() { tb.cr = { key: '' }; },
     live(v) {
       const C = v.pub.crash, mine = C.bets.find(b => b[0] === tb.me) || null, cr = tb.cr;
@@ -514,10 +596,12 @@ const GAMES = {
       const C = tb.cr.C, m = tb.cr.mine; if (!C) return false;
       if (id === 'bet') return C.phase === 'bet' && !m && stake() >= minBet();
       if (id === 'cash') return C.phase === 'fly' && !!m && !m[2];
+      if (id === 'autonext') return !m;
       return !m || C.phase !== 'fly';
     },
     label(id) {
       const C = tb.cr.C, m = tb.cr.mine;
+      if (id === 'autonext') return crashAuto ? 'AUTO CASH-OUT AT ' + crashAuto + 'x · CLICK TO CHANGE' : 'AUTO CASH-OUT OFF · CLICK TO CHANGE';
       if (id.startsWith('auto:')) { const a = +id.slice(5); return (a ? 'AUTO CASH-OUT AT ' + a + 'x' : 'AUTO CASH-OUT OFF') + (crashAuto === a ? ' · SET' : ''); }
       if (id === 'cash') return m && !m[2] && C.phase === 'fly' ? 'CASH OUT ' + S(m[1] * C.mult) : 'CASH OUT · WHEN YOUR ROCKET FLIES';
       if (C.phase !== 'bet') return 'BET · NEXT ROCKET SOON';
@@ -525,6 +609,7 @@ const GAMES = {
     },
     press(id) {
       const C = tb.cr.C, m = tb.cr.mine;
+      if (id === 'autonext') { if (!this.on(id)) return flash('Auto is set for this rocket'); crashAuto = CRASH_AUTOS[(CRASH_AUTOS.indexOf(crashAuto) + 1) % CRASH_AUTOS.length]; sfx('click'); return; }
       if (id.startsWith('auto:')) { crashAuto = +id.slice(5); sfx('click'); hand('press'); return; }
       if (id === 'cash') { if (!this.on('cash')) return flash(m ? 'Already out' : 'You have no bet on this rocket'); tb.act('cashout'); hand('press'); sfx('cashout'); return; }
       if (!this.on('bet')) return flash(m ? "You're in" : C.phase !== 'bet' ? 'Bets open after this rocket' : 'Put chips down first');
@@ -567,5 +652,10 @@ const GAMES = {
     },
     show() { const m = tb.rc.mine; return m && tb.rc.R.phase !== 'show' ? { ['duck' + m[1]]: m[2] } : tb.bets; },
     extra() { const R = tb.rc.R; return R ? { pays: R.pays, phase: R.phase, round: R.round, mine: tb.rc.mine ? tb.rc.mine[1] : -1 } : null; },
+    status() {
+      const R = tb.rc.R, m = tb.rc.mine; if (!R) return null;
+      if (R.phase === 'bet') return m ? `IN ON ${Gm.DUCKS[m[1]].name.toUpperCase()} · GATES IN ${Math.max(0, Math.ceil(Gm.RACE.betTime - R.t))}s` : `BETS OPEN · ${Math.max(0, Math.ceil(Gm.RACE.betTime - R.t))}s · CLICK A DUCK LANE`;
+      return R.phase === 'run' ? "THEY'RE OFF!" : `${Gm.DUCKS[R.winner].name.toUpperCase()} WINS · NEXT RACE SOON`;
+    },
   },
 };

@@ -52,7 +52,7 @@
    "should_remesh": false
   },
   "receipt": "runs/sorceress/v4-props/rouletteTableMesh",
-  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk); 2026-10-14 colour rebaked from the full model onto fresh UVs by tools/prop_rebake.py (mesh unchanged)",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
@@ -89,7 +89,7 @@
    "should_remesh": false
   },
   "receipt": "runs/sorceress/v4-props/diceTable-r1Mesh",
-  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk); 2026-10-14 refitted with the welded seams (the first fit predated the weld and was torn) to the same size, colour rebaked from the full model onto fresh UVs by tools/prop_rebake.py",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {

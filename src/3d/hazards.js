@@ -52,14 +52,17 @@ export class Hazards {
     if (!sp) { sp = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true, depthWrite: false })); this.sprites.push(sp); this.group.add(sp); }
     const m = sp.material, add = !(k === 'smoke' || k === 'confetti');
     if (m.map !== map) { m.map = map; m.blending = add ? THREE.AdditiveBlending : THREE.NormalBlending; m.needsUpdate = true; }
-    m.opacity = Math.max(0, Math.min(1, opacity)); m.rotation = rot; sp.position.set(x, y, z); sp.scale.setScalar(size); sp.visible = true;
+    sp.position.set(x, y, z);
+    // an effect right in front of the camera (a win at your own table, seen from the table view) fades out instead of filling the screen
+    const near = this.cam ? Math.min(1, Math.max(0, (sp.position.distanceTo(this.cam.position) - size * 0.6 - 0.4) / 1.5)) : 1;
+    m.opacity = Math.max(0, Math.min(1, opacity)) * near; m.rotation = rot; sp.scale.setScalar(size); sp.visible = near > 0;
     return i + 1;
   }
   // a dark wood desk against the floor's west wall with three monitors; they wake up once the crew buys cameras
   desk() {
     const B = new Batch(true), x = (SECURITY.x + SECURITY.w / 2) * M, z = (SECURITY.y + SECURITY.h / 2) * M, d = SECURITY.w * M, w = SECURITY.h * M;
     B.add(rbox(d, 0.76, w, 0.03), MAT.darkWood, v3(x, 0.38, z));
-    B.add(box(d + 0.06, 0.04, w + 0.06), MAT.polished, v3(x, 0.78, z));
+    B.add(box(d + 0.06, 0.04, w + 0.06), MAT.darkWood, v3(x, 0.78, z)); // matte: a gloss top threw two white hotspots
     for (const dz of [-0.62, 0, 0.62]) {
       B.add(rbox(0.06, 0.38, 0.56, 0.02), MAT.black, v3(x - 0.12, 1.06, z + dz), 0, null, 0, 0);
       B.add(cyl(0.025, 0.025, 0.2, 8), MAT.metalDark, v3(x - 0.14, 0.88, z + dz));
@@ -67,7 +70,13 @@ export class Hazards {
     B.add(rbox(0.22, 0.03, 0.42, 0.01), MAT.black, v3(x + 0.1, 0.81, z)); // keyboard
     B.build(this.group);
     this.screens = [];
-    this.screenOff = new THREE.MeshBasicMaterial({ color: 0x0a1418 });
+    // before the crew pays for cameras the monitors say so, instead of sitting there black
+    const [oc, og] = T.canvas(256, 160);
+    og.fillStyle = '#0b1418'; og.fillRect(0, 0, 256, 160);
+    for (let y = 0; y < 160; y += 3) { og.fillStyle = 'rgba(150,220,255,0.04)'; og.fillRect(0, y, 256, 1); }
+    og.textAlign = 'center'; og.fillStyle = '#5f8a98'; og.font = 'bold 24px monospace'; og.fillText('NO SIGNAL', 128, 70);
+    og.font = '14px monospace'; og.fillStyle = '#4a6a76'; og.fillText('CAMERAS NOT BOUGHT', 128, 100);
+    this.screenOff = new THREE.MeshBasicMaterial({ map: T.tex(oc, false), color: 0x8a9aa0 });
     this.screenOn = glowMat(0x7fb8d0, 1.1);
     const [cv, ctx] = T.canvas(256, 160); this.feedCtx = ctx; this.feedTex = T.tex(cv, false);
     this.screenFeed = new THREE.MeshBasicMaterial({ map: this.feedTex, toneMapped: false });
@@ -85,7 +94,8 @@ export class Hazards {
     c.fillStyle = (t | 0) % 2 ? '#ff4040' : '#601010'; c.beginPath(); c.arc(W - 20, 22, 7, 0, 7); c.fill();
     this.feedTex.needsUpdate = true;
   }
-  update(pub, priv, beans, t, dt) {
+  update(pub, priv, beans, t, dt, cam = null) {
+    this.cam = cam;
     // the desk monitors
     const S = pub.security;
     if (S && S.cams) {
