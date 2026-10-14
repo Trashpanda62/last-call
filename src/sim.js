@@ -1,7 +1,7 @@
 // The authoritative game. No DOM: the host (or solo client) runs it; every human sees it through view(id).
 import { CFG, DIFF, CAST, DRINKS } from './config.js';
 import { rand, pick, clamp, dist, angDiff, money, shuffle } from './util.js';
-import { ROOMS, TAP, BELL, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, W, H, makeSeats, los, collide, roomOf, route } from './map.js';
+import { ROOMS, TAP, BELL, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, W, H, makeSeats, los, collide, roomOf, route, openSpot, clearSpot } from './map.js';
 import * as Gm from './games.js';
 import { makeTalk } from './talk.js';
 
@@ -272,16 +272,7 @@ function makeApi(G) {
 
   // ---------- Bots ----------
   function setGoal(c, p) { c.path = route(c, p); c.stuckT = 0; c.stalls = 0; }
-  const clear = p => !OBSTACLES.some(o => p.x > o.x - 30 && p.x < o.x + o.w + 30 && p.y > o.y - 30 && p.y < o.y + o.h + 30);
-  function openSpot(room) {
-    for (let i = 0; i < 20; i++) { const p = { x: rand(room.x + 60, room.x + room.w - 60), y: rand(room.y + 160, room.y + room.h - 60) }; if (clear(p)) return p; }
-    // no luck: the clear point nearest the middle (the middle itself can be the pond or a table)
-    const mid = { x: room.x + room.w / 2, y: room.y + room.h / 2 }; let best = null;
-    for (let x = room.x + 60; x <= room.x + room.w - 60; x += 40) for (let y = room.y + 60; y <= room.y + room.h - 60; y += 40) {
-      const p = { x, y }; if (clear(p) && (!best || dist(p, mid) < dist(best, mid))) best = p;
-    }
-    return best || mid;
-  }
+  const clear = clearSpot; // standable, with a little room round it (map.js); openSpot(room) comes from there too
   function followPath(c, dt, speed) {
     if (!c.path.length) return true;
     const p = c.path[0], dx = p.x - c.x, dy = p.y - c.y, d = Math.hypot(dx, dy);

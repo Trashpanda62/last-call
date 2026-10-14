@@ -36,7 +36,8 @@ Kept current with the code; each entry says when it was checked and how. Last ch
 
 ## Source inventory categories
 
-- Current assets: every file under `assets/`, each listed in its folder's `provenance.json`; vendored three.js r185
+- Current assets: every file under `assets/`, each listed in its folder's `provenance.json` (the hats in
+  `assets/art2/provenance.json`); vendored three.js r185
   (`vendor/three`, MIT).
 - Alternatives and rejected: the takes not picked stay in `runs/` (git-ignored receipts); the coin podium mesh was
   rejected and removed (45380c5); voices were shelved (no voice lines).

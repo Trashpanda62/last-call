@@ -65,7 +65,7 @@ mines 3, tower 3, coin 2, wheel 2, dice 4, VIP 4 (57).
 - Browser checks headless only, `__lastCall` hooks, never pointer lock under webdriver, never Steve's mouse.
 
 ## Notes
-- 2026-10-12: balance at the balanced killer count, 120 all-bot games each (one idle human seat): killers win 0.57 4p,
+- 2026-10-12: balance at the balanced killer count, 120 games each of bots plus one idle human seat: killers win 0.57 4p,
   0.57 5p, 0.48 6p, 0.39 7p, 0.53 8p, 0.53 9p, 0.42 10p, 0.38 11p, 0.37 12p, 0.47 13p, 0.63 14p, 0.46 15p, 0.47 16p;
   games last 2-4.5 minutes. At 10-11 players the crew votes both killers out often, so raising the target barely moves it.
   Fewer killers than the most is much easier for the crew (16p2k: 0.03), so the setup labels the most "balanced".
@@ -77,11 +77,15 @@ mines 3, tower 3, coin 2, wheel 2, dice 4, VIP 4 (57).
   (43/11, 2.0, 4.3), 14p4k 0.53 (37/19, 2.6, 5.6), 15p4k 0.47 (24/39, 2.9, 6.5), 16p4k 0.39 (18/55, 3.2, 7.2).
   Inside the 50-58% goal: 4, 8, 9, 11, 13, 14. Within one standard error (about 0.045 at 120 games): 5, 6, 7, 15.
   Clearly under it: 10, 12 and 16 players, where the crew votes the killers out (eject wins 55-57 of 120 at 10 and 16).
-  Rounds last 1.8-3.3 minutes of play (the game clock, which stops during meetings), inside the 2-5 minute session.
+  Rounds last 1.8-3.3 minutes of play (the game clock, which stops during meetings), so 7 players (1.8) falls just under the 2-5 minute goal and the rest are inside it.
 - 2026-10-14, after the pathing fixes (routes round the restroom stalls, no corners inside walls, hunts keep the stuck
   check, wander never targets the pond), same matrix: 4p1k 0.58, 5p1k 0.64, 6p1k 0.51, 7p2k 0.53, 8p2k 0.56, 9p2k 0.54,
   10p2k 0.41, 11p3k 0.55, 12p3k 0.49, 13p4k 0.61, 14p4k 0.65, 15p4k 0.51, 16p4k 0.38; 0 errors, 0 timeouts, 1.7-3.6
-  minutes. Killers that used to stand stuck now finish their hunts; 10 and 16 players stay under the goal.
+  minutes (the shortest counts under the 2-minute floor). Killers that used to stand stuck now finish their hunts; 10 and 16 players stay under the goal.
+- 2026-10-14, after the router rewrite (shortest way round the furniture over a corner graph, clearance measured round
+  corners), same matrix: 4p1k 0.57, 5p1k 0.64, 6p1k 0.44, 7p2k 0.56, 8p2k 0.58, 9p2k 0.53, 10p2k 0.39, 11p3k 0.68,
+  12p3k 0.43, 13p4k 0.58, 14p4k 0.57, 15p4k 0.52, 16p4k 0.47; 0 errors, 0 timeouts, 1.8-3.4 minutes. Within the noise
+  of the run before; balance is retuned separately (studio step balance).
 - RTP measured by tools/ev.mjs: blackjack 1.06, roulette 1.05, slots 1.05/1.06, plinko 1.04, mines 1.03, crash 1.04,
   dice 1.04/1.06, wheel 1.05, duck race 1.05.
 - Checks (headless Chrome on the GPU, through the scheduler): every console seats and settles; 16-player meeting fits;

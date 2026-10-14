@@ -193,34 +193,79 @@ export function route(from, to) {
   return detour(from, pts.map(p => ({ x: p.x, y: p.y })));
 }
 const inflate = (r, m) => ({ x: r.x - m, y: r.y - m, w: r.w + 2 * m, h: r.h + 2 * m });
-const IN_ROOM = [...OBSTACLES, ...STALLS]; // what detour() steers round
-// The solid (furniture or a stall partition) nearest `a` that the walk from a to b runs into.
-function blockedBy(a, b) {
-  let best = null, bd = Infinity;
-  for (const o of IN_ROOM) {
-    if (!segRect(a.x, a.y, b.x, b.y, inflate(o, CFG.radius - 1))) continue;
-    const d = dist(a, { x: o.x + o.w / 2, y: o.y + o.h / 2 });
-    if (d < bd) { bd = d; best = o; }
+const inside = (p, r) => p.x > r.x && p.x < r.x + r.w && p.y > r.y && p.y < r.y + r.h;
+const IN_ROOM = [...OBSTACLES, ...STALLS]; // what the detours steer round (the walls are handled by the doors)
+// A character (CFG.radius) fits through: no furniture, stall or wall on the way.
+const BLOCKS = [...IN_ROOM, ...WALLS].map(o => [o, inflate(o, CFG.radius)]);
+// How close the segment a-b comes to rectangle r (0 when it crosses it): the nearest of its ends to r, or of r's corners
+// to it, so a character cutting past a corner is measured round the corner, not against the inflated square.
+function segGap(a, b, r) {
+  if (segRect(a.x, a.y, b.x, b.y, r)) return 0;
+  const dx = b.x - a.x, dy = b.y - a.y, L = dx * dx + dy * dy;
+  const toSeg = (x, y) => { const t = L ? Math.max(0, Math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / L)) : 0; return Math.hypot(a.x + t * dx - x, a.y + t * dy - y); };
+  const toRect = p => Math.hypot(Math.max(r.x - p.x, 0, p.x - r.x - r.w), Math.max(r.y - p.y, 0, p.y - r.y - r.h));
+  return Math.min(toRect(a), toRect(b), toSeg(r.x, r.y), toSeg(r.x + r.w, r.y), toSeg(r.x + r.w, r.y + r.h), toSeg(r.x, r.y + r.h));
+}
+function free(a, b) { // a character's radius clear of everything, a pixel to spare over collide()
+  for (const [o, q] of BLOCKS) if (segRect(a.x, a.y, b.x, b.y, q) && segGap(a, b, o) < CFG.radius) return false;
+  return true;
+}
+// Where a character can stand: clear of furniture, stalls and walls by its radius.
+export const standable = p => !IN_ROOM.some(o => inside(p, inflate(o, CFG.radius))) && !WALLS.some(w => inside(p, inflate(w, CFG.radius)));
+// Somewhere to wander to: standable and a little room round it.
+export const clearSpot = p => standable(p) && !IN_ROOM.some(o => inside(p, inflate(o, 30)));
+export function openSpot(room, rnd = Math.random) {
+  const r = (a, b) => a + rnd() * (b - a);
+  for (let i = 0; i < 20; i++) { const p = { x: r(room.x + 60, room.x + room.w - 60), y: r(room.y + 160, room.y + room.h - 60) }; if (clearSpot(p)) return p; }
+  // no luck: the clear point nearest the middle (the middle itself can be the pond or a table)
+  const mid = { x: room.x + room.w / 2, y: room.y + room.h / 2 }; let best = null;
+  for (let x = room.x + 60; x <= room.x + room.w - 60; x += 40) for (let y = room.y + 60; y <= room.y + room.h - 60; y += 40) {
+    const p = { x, y }; if (clearSpot(p) && (!best || dist(p, mid) < dist(best, mid))) best = p;
   }
-  return best;
+  return best || mid;
+}
+// The corners round every piece of furniture that a character can stand on, and which of them see each other
+// (built once, on the first detour).
+let CORNERS = null;
+function corners() {
+  if (CORNERS) return CORNERS;
+  const pts = [];
+  const roomy = p => ![...IN_ROOM, ...WALLS].some(o => inside(p, inflate(o, CFG.radius + 1)));
+  for (const o of IN_ROOM) for (const [sx, sy] of [[0, 0], [1, 0], [1, 1], [0, 1]]) {
+    // 10 px clear of the furniture, or 3 px where that is too close to something else (a counter by a wall)
+    const p = [10, 3].map(m => { const q = inflate(o, CFG.radius + m); return { x: q.x + sx * q.w, y: q.y + sy * q.h }; }).find(roomy);
+    if (p) pts.push(p);
+  }
+  const adj = pts.map(() => []);
+  for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+    if (!free(pts[i], pts[j])) continue;
+    const d = dist(pts[i], pts[j]); adj[i].push([j, d]); adj[j].push([i, d]);
+  }
+  return (CORNERS = { pts, adj });
+}
+// The shortest way from a to b round the furniture (Dijkstra over the corners); [b] when nothing is in the way or
+// no way round exists.
+function around(a, b) {
+  if (free(a, b)) return [b];
+  const { pts, adj } = corners(), n = pts.length, A = n, B = n + 1;
+  const best = new Array(n + 2).fill(Infinity), prev = new Array(n + 2).fill(-1), done = new Array(n + 2).fill(false);
+  const toB = pts.map(p => free(p, b));
+  best[A] = 0;
+  for (;;) {
+    let u = -1; for (let i = 0; i < n + 2; i++) if (!done[i] && best[i] < Infinity && (u < 0 || best[i] < best[u])) u = i;
+    if (u < 0 || u === B) break; done[u] = true;
+    const relax = (v, c) => { if (!done[v] && c < best[v]) { best[v] = c; prev[v] = u; } };
+    if (u === A) { for (let v = 0; v < n; v++) if (free(a, pts[v])) relax(v, dist(a, pts[v])); continue; }
+    for (const [v, d] of adj[u]) relax(v, best[u] + d);
+    if (toB[u]) relax(B, best[u] + dist(pts[u], b));
+  }
+  if (best[B] === Infinity) return [b];
+  const out = [];
+  for (let u = B; u !== A; u = prev[u]) out.unshift(u === B ? b : { x: pts[u].x, y: pts[u].y });
+  return out;
 }
 function detour(from, pts) {
   const out = []; let cur = from;
-  for (const p of pts) {
-    for (let guard = 0; guard < 6; guard++) {
-      const o = blockedBy(cur, p); if (!o) break;
-      const r = inflate(o, CFG.radius + 10);
-      const corners = [{ x: r.x, y: r.y }, { x: r.x + r.w, y: r.y }, { x: r.x + r.w, y: r.y + r.h }, { x: r.x, y: r.y + r.h }];
-      let best = null, bl = Infinity;
-      for (const c of corners) {
-        if (dist(cur, c) < 1 || blockedBy(cur, c) === o || !los(cur, c)) continue; // never where we stand, never behind a wall
-        const l = dist(cur, c) + dist(c, p) + (blockedBy(c, p) === o || !los(c, p) ? 1e4 : 0);
-        if (l < bl) { bl = l; best = c; }
-      }
-      if (!best) break;
-      out.push(best); cur = best;
-    }
-    out.push(p); cur = p;
-  }
+  for (const p of pts) { out.push(...around(cur, p)); cur = p; }
   return out;
 }

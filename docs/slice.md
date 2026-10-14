@@ -29,7 +29,7 @@ budget.
 ## Exact assets and dependencies
 
 The build loads the whole casino at once, whatever room you stand in, so the slice depends on every file under
-`assets/` at the slice commit (`git ls-files assets`, each in its folder's `provenance.json`). The rows name what the
+`assets/` at the slice commit (`git ls-files assets`, each in its folder's `provenance.json`, the hats in `assets/art2/provenance.json`). The rows name what the
 slice's area and encounter put in front of the player.
 
 | Kind | Files |
@@ -54,7 +54,7 @@ acceptance. Status as of 2026-10-14, code commit dc972d8 (`src/` and `tools/` un
 | --- | --- | --- | --- |
 | 1 | The code parses | `git archive HEAD \| ssh ml350 ~/lc-runner/bin/lchead.sh` (`tools/head-check-ml350.sh`: `node --check` every src file, a batch, the route check, the odds table) | passed: studio runner job v-20261014-a68587 (step navigation) |
 | 2 | 8p/2k rounds end on their own: 0 errors, 0 timeouts, 2-5 minutes of play, killers win 50-58% | `node tools/batch.mjs 120 8 2 normal` | passed: 120 games, killers 0.53, 0 errors, 0 timeouts, 2.4 minutes of play, 3.1 meetings a game |
-| 3 | No bot route runs through a wall | `node tools/nav-check.mjs 20000` | passed: 20,110 routes, 0 through walls |
+| 3 | No bot route runs through a wall, a stall or furniture, and every route can be walked | `node tools/nav-check.mjs 60` (60 routes for every pair of rooms, every rest spot from every door, `openSpot()` in every room; a character's radius clear of every solid, each route walked with `collide()`) | passed: 20,110 routes, 0 through walls |
 | 4 | Every bet settles into the crew bank, including rounds you stand up from and bets decided as a meeting starts; nothing settles after the verdict | the settlement check of the systems fix (studio step systems) | open: the fix is not committed yet |
 | 5 | The poisoned order, sniff, pour and antidote, the knife, the report, the meeting and the vote all happen in one solo 8p/2k round with no page errors | headless Chrome on a P100 through `window.__lastCall`, serving the slice commit | open: to run once the table and settlement changes in progress are committed (2026-10-12 history: a 12-player killer game reached the results screen with no page errors) |
 | 6 | Online: a guest's bet reaches the host's bank | two headless tabs in one room, same commit | open (2026-10-12 history: passed) |
