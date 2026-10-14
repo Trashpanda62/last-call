@@ -69,15 +69,15 @@ mines 3, tower 3, coin 2, wheel 2, dice 4, VIP 4 (57).
   0.57 5p, 0.48 6p, 0.39 7p, 0.53 8p, 0.53 9p, 0.42 10p, 0.38 11p, 0.37 12p, 0.47 13p, 0.63 14p, 0.46 15p, 0.47 16p;
   games last 2-4.5 minutes. At 10-11 players the crew votes both killers out often, so raising the target barely moves it.
   Fewer killers than the most is much easier for the crew (16p2k: 0.03), so the setup labels the most "balanced".
-- 2026-10-14, after the retune (9a4efe7), measured at 45380c5 on the ml350: 120 all-bot games per player count at the
-  most killers it allows (`node tools/batch.mjs 120 <n> <k> normal`, one idle human seat), 0 errors, 0 timeouts.
+- 2026-10-14, after the retune (9a4efe7), measured at 45380c5 on the ml350: 120 games per player count (bots plus one idle
+  human gambler seat) at the most killers it allows (`node tools/batch.mjs 120 <n> <k> normal`, one idle human seat), 0 errors, 0 timeouts.
   Killer win rate (bank wins / eject wins, minutes, meetings a game): 4p1k 0.57 (48/3, 2.2, 1.3), 5p1k 0.61 (26/21,
   3.0, 2.2), 6p1k 0.48 (19/43, 3.3, 2.9), 7p2k 0.59 (48/1, 1.8, 2.1), 8p2k 0.55 (33/21, 2.5, 3.4), 9p2k 0.50 (26/34,
   2.9, 4.0), 10p2k 0.44 (10/57, 3.2, 4.4), 11p3k 0.53 (38/19, 2.4, 4.2), 12p3k 0.43 (34/34, 2.6, 5.0), 13p4k 0.55
   (43/11, 2.0, 4.3), 14p4k 0.53 (37/19, 2.6, 5.6), 15p4k 0.47 (24/39, 2.9, 6.5), 16p4k 0.39 (18/55, 3.2, 7.2).
   Inside the 50-58% goal: 4, 8, 9, 11, 13, 14. Within one standard error (about 0.045 at 120 games): 5, 6, 7, 15.
   Clearly under it: 10, 12 and 16 players, where the crew votes the killers out (eject wins 55-57 of 120 at 10 and 16).
-  Rounds last 1.8-3.3 minutes, inside the 2-5 minute session.
+  Rounds last 1.8-3.3 minutes of play (the game clock, which stops during meetings), inside the 2-5 minute session.
 - 2026-10-14, after the pathing fixes (routes round the restroom stalls, no corners inside walls, hunts keep the stuck
   check, wander never targets the pond), same matrix: 4p1k 0.58, 5p1k 0.64, 6p1k 0.51, 7p2k 0.53, 8p2k 0.56, 9p2k 0.54,
   10p2k 0.41, 11p3k 0.55, 12p3k 0.49, 13p4k 0.61, 14p4k 0.65, 15p4k 0.51, 16p4k 0.38; 0 errors, 0 timeouts, 1.7-3.6

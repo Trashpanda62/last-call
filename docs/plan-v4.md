@@ -143,16 +143,16 @@ shelved. Effects, ambience and music stay in the plan.
 
 | What | Amount | Est. credits |
 | --- | --- | --- |
-| Voice casting: 16 gamblers + croupier, dealer, duck-race announcer, PA announcer, bartender (Voice Design, 2 candidates each for Steve to pick) | 21 voices | 15,000 |
-| Meeting dialogue in v3 with emotion tags ([angry], [whispers], [crying], [laughs nervously]): about 150 lines per personality | 2,400 lines | 150,000 |
-| Names said by every voice in 3 tones (accusing, pleading, neutral) and places ("at the roulette table") | 960 clips | 20,000 |
-| In-world reactions: screams at a body, death cries, ejection last words, win cheers, loss groans | 320 clips | 15,000 |
-| Staff callouts: "place your bets", "no more bets", all 37 numbers, blackjack totals, Crash countdown, 8 full duck-race commentaries, PA lines, bartender | 300 clips | 25,000 |
+| Shelved: Voice casting: 16 gamblers + croupier, dealer, duck-race announcer, PA announcer, bartender (Voice Design, 2 candidates each for Steve to pick) | 21 voices | 15,000 |
+| Shelved: Meeting dialogue in v3 with emotion tags ([angry], [whispers], [crying], [laughs nervously]): about 150 lines per personality | 2,400 lines | 150,000 |
+| Shelved: Names said by every voice in 3 tones (accusing, pleading, neutral) and places ("at the roulette table") | 960 clips | 20,000 |
+| Shelved: In-world reactions: screams at a body, death cries, ejection last words, win cheers, loss groans | 320 clips | 15,000 |
+| Shelved: Staff callouts: "place your bets", "no more bets", all 37 numbers, blackjack totals, Crash countdown, 8 full duck-race commentaries, PA lines, bartender | 300 clips | 25,000 |
 | Effects: chips, cards, wheel and ball, reels, jackpot bells, pegs, dice, coin, ticker, rocket, splashes, 4 footstep surfaces, doors, glass, pour, sip, fizz, knife, body fall, lights, bell, vote stamp, ejection | 120 effects | 5,000 |
 | Ambience loops: casino floor, bar, VIP, arcade, alley, duck pond, crowd walla | 7 loops x 30 s | 2,500 |
 | Music: menu, casino lounge jazz, bar piano, VIP, arcade synthwave, alley blues, duck-race ragtime, meeting tension, ejection sting, win and lose stings (2 takes each) | 13 pieces | 45,000 |
-| **Total** | | **about 280,000** |
-| Without the five shelved voice rows (casting, dialogue, names, reactions, callouts: 225,000) | | about 52,500 |
+| **Total, current scope** (effects, ambience and music) | | **about 52,500** |
+| Shelved voice rows, not in the total (first planned total with them: about 280,000) | | 225,000 |
 
 **Built 2026-10-12 (20,060 ElevenLabs credits; no voices).** `tools/v4_audio.py`, `assets/audio` (21 MB): 93 effect
 takes of 53 sounds (chips, cards, the wheel and ball, reels and lever, jackpot, pegs, dice, coin, prize wheel, rocket

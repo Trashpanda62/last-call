@@ -4,8 +4,8 @@ Kept current with the code; each entry says when it was checked and how. Last ch
 
 ## Crashes
 
-- Unresolved crashes: none known. Checked 2026-10-14 headless on the ml350: 1,560 all-bot games (120 at each player
-  count, 4-16, at the most killers each allows) ran with 0 errors and 0 timeouts, before and after the pathing fixes
+- Unresolved crashes: none known. Checked 2026-10-14 headless on the ml350: 1,560 games of bots and one idle human seat
+  (120 at each player count, 4-16, at the most killers each allows) ran with 0 errors and 0 timeouts, before and after the pathing fixes
   (`docs/plan-v3.md` Notes); `tools/head-check-ml350.sh` (syntax of every src file, a batch, the odds table, the route
   check) passes on the committed tree. In the browser: the 2026-10-12 headless Chrome run played a full 12-player killer
   game to the results screen with no page errors (`docs/plan-v3.md`). No crash has been reported by a player.
