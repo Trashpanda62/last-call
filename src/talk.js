@@ -236,6 +236,8 @@ const tidy = t => t.replace(/([.?!]\s+)([a-z])/g, (_, p, c) => p + c.toUpperCase
 const ROOM_WORDS = { bar: /\bbar\b|drink/, rest: /rest ?room|bathroom|toilet|loo|sink/, floor: /floor|roulette|blackjack|\bbj\b|pit\b|bell/, arcade: /arcade|plinko|crash|mines|tower/,
   race: /pond|duck/, slots: /slot|jackpot/, alley: /alley|dice|wheel|coin/, vip: /\bvip\b|lounge/ };
 const SURVIVOR = ['Somebody poisoned my {kind}! I almost DIED!', 'My {kind} was poisoned. I made it to the antidote with seconds to spare.', 'Someone tried to kill me. With a {kind}. On the house, they said.'];
+// smelled it and never drank it: no antidote, no near death
+const SNIFFED = ['Somebody sent me a poisoned {kind}! I smelled it just in time.', 'Bitter almonds in my {kind}. Somebody wants me dead.', 'Someone tried to kill me. With a {kind}. On the house, they said.'];
 const SAME = ['Same. Nothing.', 'Nothing from me.', 'I got nothing.', 'Didn\'t see it. Sorry.'];
 function fill(t, v) {
   return t.replace(/\{(x|X|v|y|room|room2|phrase|place|kind)\}/g, (_, k) => k === 'X' ? cap(v.x || '') : (v[k] ?? ''));
@@ -304,7 +306,7 @@ export function makeTalk(G, h) {
       } else parts.push(voice(b, 'nothing', { place: placeOf(lieRoom(b, ctx)) }));
       return { who: b.id, text: parts.join(' '), acc, emo: emo(b) };
     }
-    if (b.id === ctx.survivor) { feel(b, 'fear', 0.6); feel(b, 'anger', 0.4); parts.push(fill(pick(SURVIVOR), { kind: ctx.kind || 'drink' })); }
+    if (b.id === ctx.survivor) { feel(b, 'fear', 0.6); feel(b, 'anger', 0.4); parts.push(fill(pick(ctx.sniffed ? SNIFFED : SURVIVOR), { kind: ctx.kind || 'drink' })); }
     if (victims.some(v => b.friend === v.id)) { feel(b, 'grief', 0.6); parts.push(voice(b, 'grief', { v: byId(b.friend).name })); }
     for (const w of b.witnessed.filter(w => !w.used && w.hard)) {
       w.used = true;
@@ -355,7 +357,7 @@ export function makeTalk(G, h) {
     const poisoned = victims.filter(v => v.cause === 'poison').map(v => v.id);
     if (spiked && spiked.owner !== undefined) poisoned.push(spiked.owner);
     const ctx = { victims, poisoned, rigged: victims.some(v => v.cause === 'trap') || !!(spiked && spiked.trap), T,
-      survivor: spiked && spiked.owner !== undefined && byId(spiked.owner).alive ? spiked.owner : null, kind: spiked && spiked.kind, caller: caller ? caller.id : null };
+      survivor: spiked && spiked.owner !== undefined && byId(spiked.owner).alive ? spiked.owner : null, kind: spiked && spiked.kind, sniffed: !!(spiked && spiked.sniffed), caller: caller ? caller.id : null };
     for (const c of G.chars) if (c.alive) { if (c.isKiller) feel(c, 'smug', 0.12); else feel(c, 'fear', 0.18 * victims.length + 0.08); }
     const order = shuffle(G.chars.filter(c => c.alive && !c.isHuman));
     if (caller && !caller.isHuman && order.includes(caller)) { order.splice(order.indexOf(caller), 1); order.unshift(caller); }

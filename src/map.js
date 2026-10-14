@@ -28,6 +28,8 @@ function vw(x, y0, y1, gaps = []) {
   if (y1 > y) out.push({ x, y, w: T, h: y1 - y });
   return out;
 }
+// The stall partitions stand inside a room, so the door routing never sees them; detour() steers round them.
+const STALLS = [260, 380, 500].map(x => ({ x, y: 1060, w: 10, h: 120 }));
 export const WALLS = [
   { x: 0, y: 0, w: W, h: T }, { x: 0, y: H - T, w: W, h: T }, { x: 0, y: 0, w: T, h: H }, { x: W - T, y: 0, w: T, h: H },
   ...vw(620, 20, 1180, [[300, 420], [900, 1020]]),     // bar | floor, restrooms | floor
@@ -37,7 +39,7 @@ export const WALLS = [
   ...hw(1180, 20, 2980, [[760, 880], [1240, 1400], [2440, 2560]]), // the long wall: floor to slots and alley, pond to VIP
   ...vw(1000, 1200, 1880, [[1480, 1600]]),              // slots | alley
   ...vw(2000, 1200, 1880, [[1480, 1600]]),              // alley | VIP
-  ...[260, 380, 500].map(x => ({ x, y: 1060, w: 10, h: 120 })), // restroom stalls
+  ...STALLS, // restroom stalls
 ];
 export const DOOR_GAPS = GAPS;
 export const DOORS = [
@@ -191,7 +193,17 @@ export function route(from, to) {
   return detour(from, pts.map(p => ({ x: p.x, y: p.y })));
 }
 const inflate = (r, m) => ({ x: r.x - m, y: r.y - m, w: r.w + 2 * m, h: r.h + 2 * m });
-function blockedBy(a, b) { return OBSTACLES.find(o => segRect(a.x, a.y, b.x, b.y, inflate(o, CFG.radius - 1))) || null; }
+const IN_ROOM = [...OBSTACLES, ...STALLS]; // what detour() steers round
+// The solid (furniture or a stall partition) nearest `a` that the walk from a to b runs into.
+function blockedBy(a, b) {
+  let best = null, bd = Infinity;
+  for (const o of IN_ROOM) {
+    if (!segRect(a.x, a.y, b.x, b.y, inflate(o, CFG.radius - 1))) continue;
+    const d = dist(a, { x: o.x + o.w / 2, y: o.y + o.h / 2 });
+    if (d < bd) { bd = d; best = o; }
+  }
+  return best;
+}
 function detour(from, pts) {
   const out = []; let cur = from;
   for (const p of pts) {
@@ -201,8 +213,8 @@ function detour(from, pts) {
       const corners = [{ x: r.x, y: r.y }, { x: r.x + r.w, y: r.y }, { x: r.x + r.w, y: r.y + r.h }, { x: r.x, y: r.y + r.h }];
       let best = null, bl = Infinity;
       for (const c of corners) {
-        if (blockedBy(cur, c) === o) continue;
-        const l = dist(cur, c) + dist(c, p) + (blockedBy(c, p) === o ? 1e4 : 0);
+        if (dist(cur, c) < 1 || blockedBy(cur, c) === o || !los(cur, c)) continue; // never where we stand, never behind a wall
+        const l = dist(cur, c) + dist(c, p) + (blockedBy(c, p) === o || !los(c, p) ? 1e4 : 0);
         if (l < bl) { bl = l; best = c; }
       }
       if (!best) break;

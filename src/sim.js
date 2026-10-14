@@ -273,7 +273,15 @@ function makeApi(G) {
   // ---------- Bots ----------
   function setGoal(c, p) { c.path = route(c, p); c.stuckT = 0; c.stalls = 0; }
   const clear = p => !OBSTACLES.some(o => p.x > o.x - 30 && p.x < o.x + o.w + 30 && p.y > o.y - 30 && p.y < o.y + o.h + 30);
-  function openSpot(room) { for (let i = 0; i < 20; i++) { const p = { x: rand(room.x + 60, room.x + room.w - 60), y: rand(room.y + 160, room.y + room.h - 60) }; if (clear(p)) return p; } return { x: room.x + room.w / 2, y: room.y + room.h / 2 }; }
+  function openSpot(room) {
+    for (let i = 0; i < 20; i++) { const p = { x: rand(room.x + 60, room.x + room.w - 60), y: rand(room.y + 160, room.y + room.h - 60) }; if (clear(p)) return p; }
+    // no luck: the clear point nearest the middle (the middle itself can be the pond or a table)
+    const mid = { x: room.x + room.w / 2, y: room.y + room.h / 2 }; let best = null;
+    for (let x = room.x + 60; x <= room.x + room.w - 60; x += 40) for (let y = room.y + 60; y <= room.y + room.h - 60; y += 40) {
+      const p = { x, y }; if (clear(p) && (!best || dist(p, mid) < dist(best, mid))) best = p;
+    }
+    return best || mid;
+  }
   function followPath(c, dt, speed) {
     if (!c.path.length) return true;
     const p = c.path[0], dx = p.x - c.x, dy = p.y - c.y, d = Math.hypot(dx, dy);
@@ -414,7 +422,7 @@ function makeApi(G) {
     // A free drink from nobody-knows-who gets a sniff more often than your own order.
     if (d.poisoned && !c.isKiller && Math.random() < D().sniff * (d.from !== null ? 2 : 1)) {
       removeDrink(d);
-      callMeeting(c, null, `${c.name} sniffed a free ${d.kind} and smelled bitter almonds. Somebody sent it to kill.`, { drinkId: d.id, owner: c.id, kind: d.kind });
+      callMeeting(c, null, `${c.name} sniffed a free ${d.kind} and smelled bitter almonds. Somebody sent it to kill.`, { drinkId: d.id, owner: c.id, kind: d.kind, sniffed: true });
       return;
     }
     sip(c, d);
@@ -517,8 +525,10 @@ function makeApi(G) {
         goal = h.spot; tgt = TAP; ready = dist(k, TAP) < 80;
       }
       if (!ready) {
-        if (h.repath <= 0 || !k.path.length) { h.repath = 0.8; setGoal(k, goal); }
+        // re-aim at a moving victim without resetting the stuck check, so a blocked killer still recovers
+        if (!k.path.length) { h.repath = 0.8; setGoal(k, goal); } else if (h.repath <= 0) { h.repath = 0.8; k.path = route(k, goal); }
         followPath(k, dt, CFG.botSpeed * (h.kind === 'blade' ? 1.15 : 1));
+        if (k.state !== 'hunting') return endHunt(k); // stalled out: give the hunt up rather than stand there
       } else {
         k.face = Math.atan2(tgt.y - k.y, tgt.x - k.x);
         const victim = h.kind === 'blade' || h.kind === 'push' ? byId(h.victim) : null;

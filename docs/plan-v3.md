@@ -78,6 +78,10 @@ mines 3, tower 3, coin 2, wheel 2, dice 4, VIP 4 (57).
   Inside the 50-58% goal: 4, 8, 9, 11, 13, 14. Within one standard error (about 0.045 at 120 games): 5, 6, 7, 15.
   Clearly under it: 10, 12 and 16 players, where the crew votes the killers out (eject wins 55-57 of 120 at 10 and 16).
   Rounds last 1.8-3.3 minutes, inside the 2-5 minute session.
+- 2026-10-14, after the pathing fixes (routes round the restroom stalls, no corners inside walls, hunts keep the stuck
+  check, wander never targets the pond), same matrix: 4p1k 0.58, 5p1k 0.64, 6p1k 0.51, 7p2k 0.53, 8p2k 0.56, 9p2k 0.54,
+  10p2k 0.41, 11p3k 0.55, 12p3k 0.49, 13p4k 0.61, 14p4k 0.65, 15p4k 0.51, 16p4k 0.38; 0 errors, 0 timeouts, 1.7-3.6
+  minutes. Killers that used to stand stuck now finish their hunts; 10 and 16 players stay under the goal.
 - RTP measured by tools/ev.mjs: blackjack 1.06, roulette 1.05, slots 1.05/1.06, plinko 1.04, mines 1.03, crash 1.04,
   dice 1.04/1.06, wheel 1.05, duck race 1.05.
 - Checks (headless Chrome on the GPU, through the scheduler): every console seats and settles; 16-player meeting fits;

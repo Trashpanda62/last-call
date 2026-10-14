@@ -63,4 +63,5 @@ argue like people; the killers win by matching the gamblers left or by lasting t
 - Session: a round lasts 2-5 minutes, never past closing time at 12; batches report 0 timeouts and 0 errors.
 - Odds: every game returns 102-110% to the player, the same maths for bots and players (`node tools/ev.mjs`).
 - Build: `node --check` passes on every source file; headless checks only, never on Steve's PC
-  (`tools/head-check-ml350.sh` runs syntax, a batch and the odds table against the committed tree on the ml350).
+  (`tools/head-check-ml350.sh` runs syntax, a batch, the route check and the odds table against the committed tree
+  on the ml350). Known issues and test limits: `docs/known-issues.md`.
