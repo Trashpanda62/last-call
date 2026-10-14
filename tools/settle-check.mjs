@@ -255,9 +255,13 @@ run('over:crashloop', () => {
   const [a, b] = g.G.chars.filter(o => !o.isHuman && o.alive); a.lucky = b.lucky = 0;
   g.G.bank = g.G.target - 100;
   g.G.crash = { ...g.G.crash, phase: 'fly', t: 30, point: 1e6, bets: new Map([[a.id, { bet: 1e7, auto: 1.01, out: 0 }], [b.id, { bet: 1e8, auto: 1.01, out: 0 }]]) };
+  const bank0 = g.G.bank;
   g.tick(1 / 60);
   if (!g.G.over) return 'the first cash-out did not end the game';
-  return g.G.bank < g.G.target + 5e6 ? null : `the second cash-out counted after the verdict (bank ${g.G.bank}, target ${g.G.target})`;
+  // what a bot's cash-out adds (sim.js settle: capped at bot.maxWin, plus bot.comp and the comp); b's is ten times a's
+  const botNet = (staked, back) => Math.round(Math.min(back, staked * (1 + CFG.bot.maxWin)) + staked * CFG.bot.comp - staked + staked * CFG.comp);
+  const netA = botNet(1e7, 1.01e7), netB = botNet(1e8, 1.01e8);
+  return g.G.bank < bank0 + netA + netB / 2 ? null : `the second cash-out counted after the verdict (bank ${bank0} -> ${g.G.bank}; a alone adds ${netA})`;
 });
 run('over:bank', () => {
   const { g, c, calls } = seated('roulette');
