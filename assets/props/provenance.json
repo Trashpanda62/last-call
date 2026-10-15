@@ -459,7 +459,7 @@
    "should_remesh": false
   },
   "receipt": "runs/sorceress/v4-props/stoolMesh",
-  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk); 2026-10-15 refitted from the same mesh at 10000 triangles, stretched to the shipped size (the 3000-triangle fit had a faceted, lumpy base and seat)",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
@@ -644,7 +644,7 @@
    "should_remesh": false
   },
   "receipt": "runs/sorceress/v4-props/chandelierMesh",
-  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk); 2026-10-15 refitted from the same mesh at 20000 triangles, stretched to the shipped size (the 9000-triangle fit had scrambled the crystal drops, the lower skirt most)",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
@@ -681,7 +681,7 @@
    "should_remesh": false
   },
   "receipt": "runs/sorceress/v4-props/pianoMesh",
-  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk); 2026-10-15 refitted from the same mesh at 20000 triangles, stretched to the shipped size (the 9000-triangle fit had shattered the keyboard and lid into white and black shards)",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
@@ -755,7 +755,7 @@
    "should_remesh": false
   },
   "receipt": "runs/sorceress/v4-props/jukebox-r1Mesh",
-  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk); 2026-10-15 refitted from the same mesh at 20000 triangles (the 7000-triangle fit had decimated it into pink and gold shards)",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
@@ -829,7 +829,7 @@
    "should_remesh": false
   },
   "receipt": "runs/sorceress/v4-props/snackBowlMesh",
-  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk); 2026-10-15 refitted from the same mesh at 10000 triangles, stretched to the shipped size (the 4000-triangle fit had mashed the pretzels and cut the bowl and base into octagons)",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
@@ -1088,7 +1088,7 @@
    "should_remesh": false
   },
   "receipt": "runs/sorceress/v4-props/sink-r1Mesh",
-  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk)",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk); 2026-10-15 refitted from the same mesh at 10000 triangles, stretched to the shipped size (the 4000-triangle fit had a warped, faceted marble top)",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
@@ -1254,6 +1254,43 @@
    "resolution": "1K"
   },
   "receipt": "runs/sorceress/v4-props/streetLamp-r1",
+  "note": null,
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/breaker.glb",
+  "step": "mesh",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "054c604c-3bf0-422b-8275-cab90773d962",
+  "credits": 50,
+  "date": "2026-10-15",
+  "time_ct": "14:44",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/88850787-c6dd-41e7-b3f6-fe84bc50aaf8/nano-banana-2-1.png",
+  "params": {
+   "should_texture": true,
+   "should_remesh": false
+  },
+  "receipt": "runs/sorceress/v4-props/breakerMesh",
+  "note": "fitted by tools/prop_fit.py (decimated, sized, textures shrunk) at 20000 triangles; the lever and the lamp are hand-built in src/3d/blackout.js so they can move and light",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/props/breaker.glb",
+  "step": "design",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-2",
+  "job_id": "4890f61a-401b-463c-b722-62006a47b671",
+  "credits": 9,
+  "date": "2026-10-15",
+  "time_ct": "14:44",
+  "prompt": "A wall-mounted industrial electrical breaker panel box seen from the front-left, taller than it is wide and only a hand deep: grey painted steel with rounded edges and rivets at the corners, a diagonal yellow and black hazard stripe band across the bottom, a yellow warning plate near the top with a single black lightning-bolt symbol, a small round indicator lamp at the top left, a row of small black switches on the left half, and on the right half a tall empty recessed vertical slot for a big throw lever (the slot is empty, no lever in it). Flat back for hanging on a wall. Handcrafted miniature prop for a stop-motion film set with chunky soft rounded proportions like a toy, made of exactly the materials described and nothing else. Only the object: no characters, no hats, nothing resting on it. Isolated product shot: three-quarter front view from slightly above, the whole object visible and centred on a plain light grey studio background with nothing else in the picture (no room, no floor, no furniture, no scenery), even soft studio lighting, no cast shadow, no text, no logos, no letters or numbers.",
+  "params": {
+   "resolution": "1K"
+  },
+  "receipt": "runs/sorceress/v4-props/breaker",
   "note": null,
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  }

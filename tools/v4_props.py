@@ -27,10 +27,10 @@ STYLE = ('Handcrafted miniature prop for a stop-motion film set, matching the ma
          'lacquered dark wood, polished brass and gold leaf, plush velvet and felt upholstery with visible stitched seams, chunky '
          'soft rounded proportions like a toy. Only the object: no characters, no people, no hands, no hats, nothing resting on it '
          'unless described. ' + VIEW)
-# Back-alley and restroom things: no casino velvet and gold, and no scene reference.
+# Back-room, restroom and utility things: no casino velvet and gold, and no scene reference.
 PLAIN = ('Handcrafted miniature prop for a stop-motion film set with chunky soft rounded proportions like a toy, made of exactly the '
          'materials described and nothing else. Only the object: no characters, no hats, nothing resting on it. ' + VIEW)
-GRITTY = {'dumpster', 'crates', 'streetLamp', 'toilet', 'sink'}
+GRITTY = {'dumpster', 'crates', 'streetLamp', 'toilet', 'sink', 'breaker'}
 
 PROPS = {  # name: design prompt (the object only; STYLE is appended). Proportions follow the game's footprints.
     'bjTable': 'A casino blackjack table shaped like a capital letter D lying flat, so seen from above it is exactly half a circle: one long straight edge at the back for the dealer and one semicircular curved edge facing the viewer, about twice as wide as it is deep and waist high: a plain dark green felt top with no markings, a thick padded oxblood leather rail along the curved edge only, a solid dark wood apron with gold trim on a pedestal base.',
@@ -68,6 +68,7 @@ PROPS = {  # name: design prompt (the object only; STYLE is appended). Proportio
     'ottoman': 'A big round tufted red velvet ottoman with gold buttons and a gold base band, three times as wide as it is tall.',
     'crates': 'A small stack of three rough weathered pine shipping crates of different sizes with nailed slats, no writing.',
     'streetLamp': 'A black cast-iron Victorian street lamp post with a fluted black pole and a glowing glass lantern on top.',
+    'breaker': 'A wall-mounted industrial electrical breaker panel box seen from the front-left, taller than it is wide and only a hand deep: grey painted steel with rounded edges and rivets at the corners, a diagonal yellow and black hazard stripe band across the bottom, a yellow warning plate near the top with a single black lightning-bolt symbol, a small round indicator lamp at the top left, a row of small black switches on the left half, and on the right half a tall empty recessed vertical slot for a big throw lever (the slot is empty, no lever in it). Flat back for hanging on a wall.',
 }
 
 # Blender fit: (nominal height in metres, triangle budget, largest texture side, yaw fix in degrees). The game re-fits each
@@ -76,13 +77,13 @@ FIT = {
     'bjTable': (0.95, 9000, 1024, 0), 'rouletteTable': (0.95, 8000, 1024, 0), 'diceTable': (1.0, 9000, 1024, 0),
     'slot': (2.4, 9000, 1024, 0), 'slotHigh': (2.5, 9000, 1024, 0), 'jackpot': (3.1, 9000, 1024, 0), 'plinko': (2.8, 8000, 1024, 0),
     'console': (1.5, 6000, 1024, 0), 'prizeWheel': (3.6, 9000, 1024, 0), 'duck': (0.4, 2500, 512, 0),
-    'barCounter': (1.1, 5000, 1024, 0), 'backBar': (2.6, 9000, 1024, 0), 'stool': (1.0, 3000, 512, 0), 'chair': (1.15, 3500, 512, 0),
-    'booth': (1.1, 5000, 1024, 0), 'couch': (0.9, 7000, 1024, 0), 'armchair': (0.95, 5000, 1024, 0), 'chandelier': (1.2, 9000, 1024, 0),
-    'piano': (1.5, 9000, 1024, 0), 'poolTable': (0.9, 8000, 1024, 0), 'jukebox': (1.6, 7000, 1024, 0), 'champagne': (1.6, 9000, 1024, 0),
-    'snackBowl': (1.0, 4000, 512, 0), 'palm': (2.1, 7000, 1024, 0), 'camera': (0.35, 2500, 512, 0), 'dumpster': (1.2, 6000, 1024, 0),
-    'pitBell': (1.3, 4000, 512, 0), 'hightop': (1.15, 3500, 512, 0), 'toilet': (0.8, 3500, 512, 0), 'sink': (0.95, 4000, 512, 0),
+    'barCounter': (1.1, 5000, 1024, 0), 'backBar': (2.6, 9000, 1024, 0), 'stool': (1.0, 10000, 512, 0), 'chair': (1.15, 3500, 512, 0),
+    'booth': (1.1, 5000, 1024, 0), 'couch': (0.9, 7000, 1024, 0), 'armchair': (0.95, 5000, 1024, 0), 'chandelier': (1.2, 20000, 1024, 0),
+    'piano': (1.5, 20000, 1024, 0), 'poolTable': (0.9, 8000, 1024, 0), 'jukebox': (1.6, 20000, 1024, 0), 'champagne': (1.6, 9000, 1024, 0),
+    'snackBowl': (1.0, 10000, 512, 0), 'palm': (2.1, 7000, 1024, 0), 'camera': (0.35, 2500, 512, 0), 'dumpster': (1.2, 6000, 1024, 0),
+    'pitBell': (1.3, 4000, 512, 0), 'hightop': (1.15, 3500, 512, 0), 'toilet': (0.8, 3500, 512, 0), 'sink': (0.95, 10000, 512, 0),
     'rocket': (2.5, 6000, 1024, 0), 'coinPodium': (1.05, 4000, 512, 0), 'ottoman': (0.5, 4000, 512, 0), 'crates': (1.1, 9000, 1024, 0),
-    'streetLamp': (3.4, 4000, 512, 0),
+    'streetLamp': (3.4, 4000, 512, 0), 'breaker': (0.7, 20000, 1024, 0),
 }
 
 
