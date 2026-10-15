@@ -25,7 +25,7 @@ const server = URL_ARG ? null : http.createServer((req, res) => {
 const url = URL_ARG || await new Promise(r => server.listen(0, '127.0.0.1', () => r(`http://127.0.0.1:${server.address().port}/`)));
 const browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--autoplay-policy=no-user-gesture-required'] });
 
-// A solo game seated at roulette with chips on red and the wheel spinning; sim.action logs each 'bank' with the bank
+// A solo game at roulette with chips on red and the wheel spinning; sim.action logs each 'bank' with the bank
 // either side of it.
 async function spinning(page) {
   await page.goto(url);
@@ -35,7 +35,7 @@ async function spinning(page) {
     const L = window.__lastCall; L.noLock(); L.start('gambler', { players: 6, killers: 1 }); L.step(1);
     const free = L.state.seats.filter(s => s.game === 'roulette' && !s.occ && !s.claim);
     for (const seat of free) {
-      L.place(seat.x - Math.cos(seat.face) * 30, seat.y - Math.sin(seat.face) * 30); L.step(0.2); L.act('use'); L.step(1.5);
+      L.look(seat.face, -0.3); L.place(seat.x - Math.cos(seat.face) * 30, seat.y - Math.sin(seat.face) * 30); L.step(1.7); // walking up takes it
       if (L.view.priv.seat && L.view.priv.seat.game === 'roulette') break;
     }
     if (!(L.view.priv.seat && L.view.priv.seat.game === 'roulette')) return 'could not sit';
@@ -50,7 +50,7 @@ async function spinning(page) {
   await page.waitForTimeout(1500);
   const ok = await page.evaluate(() => {
     const L = window.__lastCall; L.press('spot:red');
-    const b = document.querySelector('[data-p="btn:spin"]'); if (b) b.click();
+    L.press('btn:spin'); // the SPIN key on the station's betting console
     return !!(L.bar() && /NO MORE BETS/.test(L.bar().status || ''));
   });
   return ok ? 'ok' : 'the wheel did not spin';
@@ -77,17 +77,20 @@ const CASES = {
       Object.defineProperty(document, 'hidden', { get: () => true, configurable: true }); // ...that is hidden
       window.rafOrig = window.requestAnimationFrame;
       window.requestAnimationFrame = cb => { window.parked = cb; return 0; }; // its frame loop stops
+      // the crowd stands still in the VIP lounge: no bot finds the body or rings the bell (a meeting would pause the grace)
+      for (const c of lc.sim.G.chars) if (!c.isHuman) { c.state = 'rest'; c.path = []; c.wait = 1e5; c.x = 2600; c.y = 1700; c.posVer++; for (const k in c.cd) c.cd[k] = 1e5; }
       lc.me.poisonT = 0.001; lc.me.poisonBy = lc.sim.G.killerIds[0];        // and the player dies on the next tick
       // nobody reports the body, so play (and its clock) goes on: a meeting would pause the 8 s grace
       window.noReport = setInterval(() => { for (const b of lc.sim.G.bodies) b.reported = true; lc.sim.G.pending = null; }, 20);
     });
     await page.waitForTimeout(10000);                                        // longer than the 8 s grace
-    const dead = await page.evaluate(() => { clearInterval(window.noReport); return !window.lc.me.alive && window.lc.sim.G.mode === 'play'; });
+    const st = await page.evaluate(() => { clearInterval(window.noReport); return { alive: window.lc.me.alive, mode: window.lc.sim.G.mode }; }), dead = !st.alive && st.mode === 'play';
     await page.evaluate(() => { delete document.hidden; window.requestAnimationFrame = window.rafOrig; window.requestAnimationFrame(window.parked); });
     await page.waitForTimeout(1500);                                         // the tab shows again
-    if (!dead) return 'the player did not die while hidden, or a meeting started';
+    if (!dead) return `the player did not die while hidden, or a meeting started (alive ${st.alive}, ${st.mode})`;
     const log = await page.evaluate(() => window.bankLog);
-    return settled(log) || (log[0].t - (await page.evaluate(() => window.lc.me.leftSeatT)) > 1 ? 'settled late' : null);
+    // in the hidden tick the player died in: one tick carries up to 1.5 s of play (main.js simStep), far short of the 8 s grace
+    return settled(log) || (log[0].t - (await page.evaluate(() => window.lc.me.leftSeatT)) > 1.6 ? 'settled late' : null);
   },
 };
 

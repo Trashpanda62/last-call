@@ -1,5 +1,5 @@
 """Sorceress art for v4 phases 7, 8, 10 and 2 (plan-v4 section 4): slot symbols, neon signs and game-screen backdrops;
-paintings, posters, the alley skyline and key art; effect sprites; and the 16 hats (a design image, then a Hunyuan mesh).
+paintings, posters, the alley skyline and key art; effect sprites; and the 32 hats (a design image, then a Hunyuan mesh).
 One receipt folder per job under runs/sorceress/v4-more/<name> (a hat's mesh in <name>Mesh); a folder that already has
 a job is skipped, so reruns never pay twice. `redo` makes <name>-r1, then -r2; export takes the newest.
 
@@ -131,6 +131,23 @@ HATS = {  # cast name: (hat kind, description)
     'Sky': ('propeller', 'a sky blue felt propeller beanie cap with a red and yellow propeller on top'), 'Peach': ('chef', 'a tall white puffy chef toque'),
     'Ink': ('headphones', 'a pair of chunky dark grey over-ear headphones with a curved headband, standing upright'),
     'Lime': ('sombrero', 'a lime green felt sombrero with a wide brim and red stitched trim'),
+    # players 17-32 (2026-10-15)
+    'Navy': ('captain', "a white felt ship captain's peaked cap with a black band, a short black peak and a small gold anchor badge on the front"),
+    'Fudge': ('viking', 'a grey felt viking helmet dome with a brown leather rim and two big curved cream felt horns'),
+    'Plum': ('wizard', 'a tall pointed midnight blue felt wizard hat with a wide brim, the tip flopping back, small gold stars and a crescent moon'),
+    'Fern': ('mortarboard', 'a black felt graduation mortarboard cap with a flat square board on top and a gold tassel'),
+    'Diva': ('jester', 'a jester hat with three floppy felt points in yellow, teal and purple, each ending in a gold bell, on a purple band'),
+    'Goldie': ('bow', 'a giant hot pink satin hair bow on a thin pink headband'),
+    'Scoop': ('deerstalker', 'a brown and tan checked tweed deerstalker cap with a peak at the front and the back and the ear flaps tied on top'),
+    'Lilac': ('nightcap', 'a long floppy blue and white striped felt nightcap with a white pompom at the tip'),
+    'Dash': ('plume', 'a wide-brimmed purple felt cavalier hat with one side pinned up and a big white ostrich feather plume'),
+    'Clover': ('bunny', 'a thin brown headband with two tall brown felt bunny ears with pink insides, standing upright'),
+    'Rusty': ('ushanka', 'a grey fur trapper hat with a white fur trim and the ear flaps down'),
+    'Brick': ('hardhat', 'a bright yellow construction hard hat with a ridge over the top and a short brim'),
+    'Presto': ('fez', 'a red felt fez with a black tassel'),
+    'Drizzle': ('umbrella', 'a small open red umbrella hat on a black headband'),
+    'Mittens': ('catears', 'a thin black headband with two pointed black felt cat ears with pink insides'),
+    'Sunny': ('bucket', 'a floppy felt bucket hat in a bright orange and pink tropical flower print'),
 }
 for who, (kind, what) in HATS.items():
     art('hat', 'hat-' + kind, NB2, HAT.format(what), '1:1', '1K', [BEAN_A])
@@ -152,7 +169,12 @@ def url_of(name):
 def call(folder, tool, body):
     out = RUNS / folder
     if (out / 'job.json').is_file():
-        print('have', folder); return True
+        if json.loads((out / 'job.json').read_text(encoding='utf-8')).get('status') != 'rejected':
+            print('have', folder); return True
+        n = 1  # refused at submission (an outage), never charged: keep the refusal and try again
+        while (out / f'job-rejected-{n}.json').is_file():
+            n += 1
+        (out / 'job.json').rename(out / f'job-rejected-{n}.json')
     RUNS.mkdir(parents=True, exist_ok=True)
     inp = RUNS / f'{folder}.json'; inp.write_text(json.dumps(body, ensure_ascii=False), encoding='utf-8')
     r = subprocess.run(HELPER + ['call', tool, '--input', str(inp), '--out', str(out), '--approved'], capture_output=True, text=True)
@@ -296,10 +318,11 @@ def export():
             if f != folder_of(n) and (f / 'result.json').is_file():
                 prov.append(dict(row(n, f, None), note='superseded by ' + folder_of(n).name))
     hats = ROOT / 'assets' / 'hats'; hats.mkdir(parents=True, exist_ok=True)
-    UPRIGHT = {'beanie': 'upright', 'chef': 'tilt=60,0'}  # came out tipped on their sides (the chef's puff fools the search)
+    UPRIGHT = {'beanie': 'upright', 'chef': 'tilt=60,0', 'fez': 'upright'}  # came out tipped on their sides (the chef's puff fools the search)
+    REDONE = {'plume': 'hat-plume2'}  # (2026-10-15: the first plume's crown was open; its redo stands upright by itself)
     only = set(sys.argv[2].split(',')) if len(sys.argv) > 2 and sys.argv[1] == 'export' else None
     for who, (kind, _) in HATS.items():
-        n = 'hat-' + kind
+        n = REDONE.get(kind, 'hat-' + kind)
         if only and kind not in only:
             prov.append(row(n, folder_of(n), None)); prov.append(row(n + 'Mesh', RUNS / f'{n}Mesh', f'assets/hats/{kind}.glb')); continue
         g = sorted((RUNS / f'{n}Mesh' / 'assets').glob('*.glb'))

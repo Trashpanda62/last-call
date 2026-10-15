@@ -1,8 +1,7 @@
-// The parts of the station you sit at that you click: betting spots, the roulette and dice layouts on the felt, chips
-// stacked where you bet, the slot lever, the Crash plunger, the wheel handle and the touch screens (the chips, UNDO,
-// CLEAR and the game's buttons are on the table bar, main.js). Only your own station gets them; every part carries
-// userData.part (or a uv mapper) that main.js raycasts and src/tables.js understands. focus() tells the renderer what
-// the table camera has to frame.
+// The parts of the game you are playing that you click: betting spots, the roulette and dice layouts on the felt, chips
+// stacked where you bet, the slot lever, the Crash plunger, the wheel handle, the touch screens and the game's buttons
+// built into the table in front of you. Only the game you are at gets them; every part carries userData.part (or a uv
+// mapper) that main.js raycasts and src/tables.js understands. focus() tells the phone's table camera what to frame.
 import * as THREE from 'three';
 import * as T from './textures.js';
 import * as Gm from '../games.js';
@@ -138,13 +137,13 @@ function liveLabel(w, h, paint) { const lc = T.liveCanvas(w, h, paint); lc.key =
 
 // Where each game's parts sit, in the seat's frame: [ahead, right, height, tilt].
 const AT = {
-  plinko: { pad: [0.9, 0, 0.862] }, // on a betting stand (machines.js)
-  mines: { pad: [0.9, 0, 0.952] },
-  tower: { pad: [0.9, 0, 0.952] },
-  crash: { pad: [0.8, -0.17, 1.012], plunger: [0.8, 0.17, 1.012] },
-  race: { lanes: [0.82, 0, 0.893] },
-  coin: { heads: [0.88, -0.17, 0.925], tails: [0.88, 0.17, 0.925] },
-  wheel: { pad: [0.8, -0.14, 0.952], handle: [0.86, 0.17, 0.952] },
+  plinko: { pad: [0.58, 0, 0.662] }, // on a betting stand (machines.js), the keys behind it
+  mines: { pad: [0.88, -0.2, 0.968], padOnKeys: true }, // the BET pad rides on the keys' block (the deck is too low to see)
+  tower: { pad: [0.88, -0.2, 0.968], padOnKeys: true },
+  crash: { pad: [0.8, -0.17, 0.812], plunger: [0.8, 0.17, 0.812] }, // the keys behind them, at the desk's far edge
+  race: { lanes: [0.82, 0, 0.693] },
+  coin: { heads: [0.64, -0.17, 0.725], tails: [0.64, 0.17, 0.725] }, // the keys behind them
+  wheel: { pad: [0.8, -0.14, 0.752], handle: [0.86, 0.17, 0.752] },
 };
 // The table camera: how steeply it looks down (radians) and its narrowest field of view (degrees; it widens when the
 // ceiling is in the way).
@@ -152,7 +151,7 @@ const SHOT = { roulette: [-1.1, 44], bj: [-0.92, 46], dice: [-0.95, 46], slots: 
   crash: [-0.22, 50], race: [-0.62, 50], coin: [-0.55, 46], wheel: [-0.16, 50] };
 // Chips on the felt are drawn bigger than life so they read from the table camera.
 const CHIP_SCALE = { roulette: 2.1, dice: 1.9, bj: 1.6 };
-export const STANDS = { plinko: [0.68, 0.96, 0.62, 0.86] }; // betting stands in front of these seats: [ahead, width, depth, height]
+export const STANDS = { plinko: [0.68, 0.96, 0.62, 0.66] }; // betting stands in front of these seats: [ahead, width, depth, height]
 export const LANE = { w: 0.98, d: 0.36 }; // the duck-race desk card
 
 // ctx.seatScreens: seat id -> the console screen mesh (Mines, Dragon Tower); ctx.slotLevers: seat id -> lever pivot;
@@ -245,6 +244,98 @@ export function buildRig(ctx, seats, felts) {
   const puckOn = new THREE.MeshStandardMaterial({ map: puckTex(true), roughness: 0.3 }), puckOff = new THREE.MeshStandardMaterial({ map: puckTex(false), roughness: 0.3 });
   const puck = new THREE.Mesh(cyl(0.07, 0.07, 0.025, 28), [MAT.black, puckOn, MAT.black]); puck.castShadow = true; puck.visible = false; root.add(puck);
 
+  // ----- the game's buttons: big keys in a sloped block on the table in front of you (tables.js consoleLayout()) -----
+  const TONES = { go: ['#2fbf5a', '#0d4a1e'], red: ['#e0453a', '#5a1410'], blue: ['#3a7ae8', '#10285a'], violet: ['#8a4ae8', '#2c1458'], gold: ['#f0b840', '#5a3a08'], plain: ['#5a5068', '#221c2a'] };
+  const CON = { w: 0.36, h: 0.165 };
+  const con = liveLabel(1024, 466, (g, w, h, t, x) => {
+    const L = x.L; g.clearRect(0, 0, w, h);
+    g.fillStyle = '#16101c'; g.beginPath(); g.roundRect(4, 4, w - 8, h - 8, 34); g.fill();
+    g.strokeStyle = '#e8c46a'; g.lineWidth = 6; g.stroke();
+    // the sockets the keys stand in (the keys themselves are 3D, below)
+    g.fillStyle = '#07050a';
+    for (const b of L.btns) { g.beginPath(); g.roundRect(b.x * w - 5, b.y * h - 5, b.w * w + 10, b.h * h + 10, 22); g.fill(); }
+  });
+  const conMesh = new THREE.Mesh(new THREE.PlaneGeometry(CON.w, CON.h), new THREE.MeshBasicMaterial({ map: con.tex, transparent: true, toneMapped: false, color: new THREE.Color(0.92, 0.92, 0.92) }));
+  conMesh.userData.uvPart = () => 'con'; // tables.js finds the button under the point
+  // The keys sit in a sloped block built into the table's rail (or the machine's deck, or the desk) in front of you:
+  // brass cheeks, a black top, a brass lip. No stand (Steve, 2026-10-15: "just having it in a fixed spot on the tables").
+  // conHouse: origin at the middle of the block's front bottom edge, +z toward you.
+  const conHouse = new THREE.Group(); conHouse.visible = false; root.add(conHouse);
+  conMesh.visible = false; conHouse.add(conMesh);
+  const LIP = 0.025, RIM = 0.03; let houseKey = '', houseMeshes = [];
+  let plateTex = null;
+  const padPlateTex = () => plateTex || (plateTex = (() => { const [c, g] = T.canvas(256, 192); g.fillStyle = '#16101c'; g.fillRect(0, 0, 256, 192); g.strokeStyle = '#e8c46a'; g.lineWidth = 8; g.beginPath(); g.roundRect(6, 6, 244, 180, 22); g.stroke(); return T.tex(c, false); })());
+  // padW: extra width on the left carrying the BET pad (the arcade machines, whose deck sits too low to see a pad on it).
+  function house(slope, scale, padW = 0) {
+    const ls = (CON.h + RIM) * scale, w = (CON.w + RIM) * scale, d = ls * Math.cos(slope), up = ls * Math.sin(slope);
+    const padAt = v3(-w / 2 - padW / 2, LIP + up / 2 + Math.cos(slope) * 0.003, -d / 2 + Math.sin(slope) * 0.003);
+    const key = [slope, scale, padW].map(v => v.toFixed(3)).join('|'); if (key === houseKey) return padAt; houseKey = key;
+    for (const m of houseMeshes) { conHouse.remove(m); m.geometry.dispose(); }
+    const s = new THREE.Shape(); s.moveTo(0, 0); s.lineTo(0, LIP); s.lineTo(-d, LIP + up); s.lineTo(-d, 0); s.closePath(); // side profile: x toward you, y up
+    const g = new THREE.ExtrudeGeometry(s, { depth: w + padW, bevelEnabled: false }); g.translate(0, 0, -w / 2); g.rotateY(-Math.PI / 2); // profile x -> +z, extruded along x (-x: the pad's side)
+    const body = new THREE.Mesh(g, [MAT.brass, MAT.blackGloss]); body.castShadow = body.receiveShadow = true; // brass cheeks, black top and front
+    const lip = new THREE.Mesh(rbox(w + padW + 0.012, 0.014, 0.014, 0.005), MAT.brass); lip.position.set(-padW / 2, LIP, 0);
+    const back = new THREE.Mesh(rbox(w + padW + 0.012, 0.014, 0.014, 0.005), MAT.brass); back.position.set(-padW / 2, LIP + up, -d);
+    houseMeshes = [body, lip, back];
+    if (padW) { // the pad's panel: dark, a gold edge, like the keys'
+      const plate = new THREE.Mesh(new THREE.PlaneGeometry(padW - 0.012, ls - 0.02), new THREE.MeshBasicMaterial({ map: padPlateTex(), toneMapped: false, color: new THREE.Color(0.92, 0.92, 0.92) }));
+      plate.position.copy(padAt).addScaledVector(v3(0, Math.cos(slope), Math.sin(slope)), -0.001); plate.rotation.set(-(Math.PI / 2 - slope), 0, 0, 'YXZ'); houseMeshes.push(plate);
+    }
+    conHouse.add(...houseMeshes);
+    conMesh.scale.setScalar(scale); conMesh.rotation.set(-(Math.PI / 2 - slope), 0, 0, 'YXZ'); // lying on the slope, facing up it toward you
+    conMesh.position.set(0, LIP + up / 2 + Math.cos(slope) * 0.002, -d / 2 + Math.sin(slope) * 0.002);
+    return padAt;
+  }
+  // The keys: chunky rounded blocks standing proud of the panel, one per console button, rebuilt when the layout changes.
+  // Each one is a part of its own (its button id), so the crosshair presses the key it is on.
+  const keyG = new THREE.Group(); keyG.position.z = 0.003; conMesh.add(keyG);
+  const KEY_D = 0.034, keyTops = new Map(), keySides = {}, keys = []; let keySig = '';
+  const keySide = tone => keySides[tone] || (keySides[tone] = new THREE.MeshStandardMaterial({ color: new THREE.Color((TONES[tone] || TONES.plain)[1]), roughness: 0.5 }));
+  function keyTop(b) {
+    const k = [b.label, b.tone, b.on === false, !!b.sel, b.w.toFixed(3), b.h.toFixed(3)].join('|');
+    if (keyTops.has(k)) return keyTops.get(k);
+    const W = Math.min(512, Math.round(b.w * CON.w * 2600)), H = Math.min(512, Math.round(b.h * CON.h * 2600)), [c, g] = T.canvas(W, H);
+    const [top, low] = TONES[b.tone] || TONES.plain, gr = g.createLinearGradient(0, 0, 0, H);
+    gr.addColorStop(0, top); gr.addColorStop(1, new THREE.Color(top).lerp(new THREE.Color(low), 0.35).getStyle()); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    g.fillStyle = 'rgba(255,255,255,0.22)'; g.fillRect(0, 0, W, H * 0.12); // a glint along the top edge
+    if (b.sel) { g.strokeStyle = '#fff'; g.lineWidth = Math.max(6, W * 0.04); g.strokeRect(g.lineWidth / 2, g.lineWidth / 2, W - g.lineWidth, H - g.lineWidth); }
+    g.fillStyle = '#fff'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    let size = Math.round(H * 0.5); g.font = ARC(size);
+    while (size > 14 && g.measureText(b.label).width > W - 20) g.font = ARC(size -= 2);
+    g.fillStyle = 'rgba(0,0,0,0.3)'; g.fillText(b.label, W / 2 + 2, H / 2 + 4); g.fillStyle = '#fff'; g.fillText(b.label, W / 2, H / 2 + 2);
+    const map = T.tex(c, false);
+    const m = new THREE.MeshStandardMaterial({ map, roughness: 0.38, emissive: 0xffffff, emissiveMap: map, emissiveIntensity: b.on === false ? 0.02 : 0.14, color: b.on === false ? 0x6a6a6a : 0xffffff });
+    keyTops.set(k, m); return m;
+  }
+  function buildKeys(L) {
+    for (const k of keys) { keyG.remove(k.m); const i = hit.indexOf(k.m); if (i >= 0) hit.splice(i, 1); k.m.geometry.dispose(); }
+    keys.length = 0;
+    for (const b of L.btns) {
+      const kw = b.w * CON.w, kh = b.h * CON.h, m = new THREE.Mesh(rbox(kw, kh, KEY_D, Math.min(0.016, kw * 0.22, kh * 0.22)), [keySide(b.tone), keySide(b.tone), keySide(b.tone), keySide(b.tone), keyTop(b), keySide(b.tone)]);
+      m.position.set((b.x + b.w / 2 - 0.5) * CON.w, (0.5 - b.y - b.h / 2) * CON.h, KEY_D / 2); m.castShadow = true; m.userData.part = b.id;
+      keyG.add(m); hit.push(m); keys.push({ m, id: b.id, tone: b.tone });
+    }
+  }
+  // Where each game's keys are built in, in the game's frame: [ahead (the block's front edge), right, the surface it sits
+  // on, slope (radians up from flat), scale]: on the rail to your right, along the far edge of a desk or betting stand
+  // (behind its betting spots, so it hides none of them), on a machine's button deck. Blackjack's follow the curved rail (bjMount()). The prize wheel has none: the handle on
+  // its desk is its SPIN.
+  const MOUNT = { roulette: [0.58, 0.42, 0.75, 0.5, 1], dice: [0.6, 0.45, 0.86, 0.5, 1], slots: [0.82, 0, 0.89, 0.9, 0.9], crash: [0.93, 0, 0.81, 0.6, 1],
+    coin: [0.83, 0, 0.73, 0.55, 1], plinko: [0.78, 0, 0.66, 0.55, 1], mines: [0.68, 0.1, 0.965, 0.5, 0.85], tower: [0.68, 0.1, 0.965, 0.5, 0.85] };
+  const PAD_W = 0.21; // the BET pad's part of the block, on the left, where padOnKeys
+  const NO_KEYS = new Set(['wheel']);
+  // Blackjack: on the padded rail, a little to the right of your betting circle, square to the rail.
+  function bjMount(seat) {
+    const tb = BJ_TABLES[seat.table], a = Math.atan2((seat.y - tb.y) / 152, (seat.x - tb.x) / 168) - 0.17, A = 2.14, B = 1.83, sl = 0.5;
+    const n = v3(Math.cos(a) / A, 0, Math.sin(a) / B).normalize(), d = (CON.h + RIM) * Math.cos(sl);
+    const p = v3(tb.x * M + Math.cos(a) * A, 0.7, tb.y * M + Math.sin(a) * B).addScaledVector(n, d / 2);
+    return { p, yaw: Math.atan2(n.x, n.z), slope: sl, scale: 1 };
+  }
+  // side: -1 puts it on your left (street dice: the rail dips between the two seats on the south side, so the keys sit
+  // on the outer end of each seat's rail, where it is full height on both sides)
+  const mountOf = (F, m, side = 1) => ({ p: F.at(m[0], m[1] * side, m[2]), yaw: F.yaw, slope: m[3], scale: m[4] });
+  const diceSide = (seat, F) => Math.sign(F.r.x * (seat.x - (DICE_TABLE.x + DICE_TABLE.w / 2))) || 1;
+
   // ----- the station frame -----
   function frameOf(seat) {
     const f = v3(Math.cos(seat.face), 0, Math.sin(seat.face)), r = v3(-f.z, 0, f.x), o = v3(seat.x * M, 0, seat.y * M);
@@ -266,38 +357,49 @@ export function buildRig(ctx, seats, felts) {
   // Where a spot's chips sit (top of the surface).
   function spotPos(spot) {
     const g = cur.game, F = cur.F;
-    if (g === 'roulette') { const c = RL_CELLS.find(c => c.id === spot); return c ? feltWorld(rl, RL_FELT.w, RL_FELT.d, c.x + c.w / 2, c.y + c.h / 2, rlFlip).setY(0.887) : null; }
+    if (g === 'roulette') { const c = RL_CELLS.find(c => c.id === spot); return c ? feltWorld(rl, RL_FELT.w, RL_FELT.d, c.x + c.w / 2, c.y + c.h / 2, rlFlip).setY(0.687) : null; }
     if (g === 'dice') {
       const c = DICE_RECTS.find(c => c.id === spot && c.side === 1); if (!c) return null; // your own half (the felt turns for the north side)
-      const p = feltWorld(dc, DF.w, DF.d, c.x + c.w / 2, c.y + c.h / 2, dcFlip); p.x = Math.max(dc.position.x - DF.w / 2 + c.x + 0.25, Math.min(dc.position.x - DF.w / 2 + c.x + c.w - 0.25, F.o.x)); return p.setY(0.892);
+      const p = feltWorld(dc, DF.w, DF.d, c.x + c.w / 2, c.y + c.h / 2, dcFlip); p.x = Math.max(dc.position.x - DF.w / 2 + c.x + 0.25, Math.min(dc.position.x - DF.w / 2 + c.x + c.w - 0.25, F.o.x)); return p.setY(0.692);
     }
     if (g === 'race') { const i = +spot.slice(4); if (!(i >= 0)) return null; return cur.lanes.localToWorld(v3(((i + 0.5) / 6 - 0.5) * LANE.w, 0, 0.002)); }
     if (g === 'coin') return (spot === 'heads' ? pads.heads : pads.tails).position.clone();
-    const p = g === 'bj' ? pads.circle : pads.main; return p.visible ? p.position.clone() : null;
+    const p = g === 'bj' ? pads.circle : pads.main; return p.visible ? p.position.clone().setY(p.position.y + (p.userData.lift || 0)) : null;
   }
 
-  // Set up the parts for the seat I just sat at.
+  // Set up the parts of the game I just took.
   function setup(my) {
     const seat = seats[my.seat], F = frameOf(seat), A = AT[my.game] || {}, sc = document.body.classList.contains('touch') ? 1.25 : 1;
     cur = { seat: my.seat, game: my.game, F, A, lanes: null, scr: null, lever: null };
     root.visible = true;
-    for (const o of [plunger, handle, boardMesh, ...Object.values(pads)]) o.visible = false;
+    for (const o of [plunger, handle, boardMesh, conMesh, conHouse, ...Object.values(pads)]) o.visible = false;
     hit.length = 0;
     const addHits = (obj) => obj.traverse(m => { if (m.isMesh && (m.userData.part || m.userData.uvPart || m.userData.scr)) hit.push(m); });
     if (my.game === 'bj') { // the painted box in front of the seat is the betting circle
       const tb = BJ_TABLES[seat.table], a = Math.atan2((seat.y - tb.y) / 152, (seat.x - tb.x) / 168);
-      pads.circle.position.set(tb.x * M + Math.cos(a) * 1.68, 0.878, tb.y * M + Math.sin(a) * 1.305); pads.circle.rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads.circle.visible = true; addHits(pads.circle);
+      pads.circle.position.set(tb.x * M + Math.cos(a) * 1.68, 0.678, tb.y * M + Math.sin(a) * 1.305); pads.circle.rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads.circle.visible = true; addHits(pads.circle);
     }
-    if (A.pad) { place(pads.main, F, A.pad); pads.main.rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads.main.position.y += 0.002; addHits(pads.main); }
+    if (A.pad) { pads.main.userData.lift = 0; place(pads.main, F, A.pad); pads.main.rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads.main.position.y += 0.002; addHits(pads.main); }
     if (A.heads) for (const k of ['heads', 'tails']) { place(pads[k], F, A[k]); pads[k].rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads[k].position.y += 0.002; addHits(pads[k]); }
     if (A.plunger) { place(plunger, F, A.plunger, sc); addHits(plunger); }
     if (A.handle) { place(handle, F, A.handle, sc); addHits(handle); }
     if (my.game === 'roulette') {
       rlFlip = seat.face > 0; rouletteLayoutTex().rotation = rlFlip ? Math.PI : 0; hit.push(rl);
-      boardMesh.position.copy(feltWorld(rl, RL_FELT.w, RL_FELT.d, BOARD.x + BOARD.w / 2, BOARD.y + BOARD.h / 2, rlFlip)).setY(0.888);
+      boardMesh.position.copy(feltWorld(rl, RL_FELT.w, RL_FELT.d, BOARD.x + BOARD.w / 2, BOARD.y + BOARD.h / 2, rlFlip)).setY(0.688);
       boardMesh.rotation.set(-Math.PI / 2, rlFlip ? Math.PI : 0, 0, 'YXZ'); boardMesh.visible = true; board.key = '';
     }
     if (my.game === 'dice') { dcFlip = seat.face > 0; diceLayoutTex().rotation = dcFlip ? Math.PI : 0; hit.push(dc); }
+    if (my.con && !NO_KEYS.has(my.game)) { // the game's keys, built into the table in front of you
+      const m = my.game === 'bj' ? bjMount(seat) : mountOf(F, MOUNT[my.game] || [0.6, 0.4, 0.75, 0.5, 1], my.game === 'dice' ? diceSide(seat, F) : 1);
+      const padAt = house(m.slope, m.scale, A.padOnKeys ? PAD_W : 0); conHouse.position.copy(m.p); conHouse.rotation.set(0, m.yaw, 0);
+      if (A.padOnKeys && pads.main.visible) { // tilted up the slope toward you; the chips stand on it
+        conHouse.updateMatrixWorld(true); pads.main.position.copy(conHouse.localToWorld(padAt));
+        pads.main.quaternion.copy(conHouse.quaternion).multiply(new THREE.Quaternion().setFromAxisAngle(v3(1, 0, 0), -(Math.PI / 2 - m.slope)));
+        pads.main.userData.lift = Math.sin(m.slope) * 0.04;
+      }
+      conHouse.visible = conMesh.visible = true; hit.push(conMesh);
+      con.key = ''; keySig = '';
+    }
     const scr = ctx.seatScreens[my.seat]; if (scr) { scr.userData.scr = true; hit.push(scr); cur.scr = scr; }
     const lane = ctx.lanePlates[my.seat]; if (lane) { lane.userData.uvPart = uv => 'spot:duck' + Math.max(0, Math.min(5, Math.floor(uv.x * 6))); hit.push(lane); cur.lanes = lane; }
     const lever = ctx.slotLevers[my.seat]; if (lever) { lever.traverse(m => { if (m.isMesh) m.userData.part = 'btn:lever'; }); addHits(lever); cur.lever = lever; }
@@ -322,9 +424,9 @@ export function buildRig(ctx, seats, felts) {
     else if (g === 'dice') corners(dc, core);
     else if (g === 'bj') {
       const tb = BJ_TABLES[seat.table];
-      for (const dx of [-0.42, 0.42]) core.push(v3(tb.x * M + dx, 0.88, tb.y * M + 0.3), v3(tb.x * M + dx, 0.88, tb.y * M + 0.55));
+      for (const dx of [-0.42, 0.42]) core.push(v3(tb.x * M + dx, 0.68, tb.y * M + 0.3), v3(tb.x * M + dx, 0.68, tb.y * M + 0.55));
       for (const d of [-0.12, 0.42]) for (const l of [-0.3, 0.3]) core.push(pads.circle.position.clone().addScaledVector(F.f, d).addScaledVector(F.r, l));
-    } else if (g === 'coin') for (const dy of [0.95, 2.5]) for (const d of [-0.5, 0.5]) core.push(v3(COIN.x * M, dy, COIN.y * M).addScaledVector(F.r, d)); // up to the top of the toss
+    } else if (g === 'coin') for (const dy of [0.75, 2.3]) for (const d of [-0.5, 0.5]) core.push(v3(COIN.x * M, dy, COIN.y * M).addScaledVector(F.r, d)); // up to the top of the toss
     add(core, f.core); add(extra, f.extra);
     if (g === 'race') for (const dx of [-2.2, 2.2]) extra.push(v3(seat.x * M + dx, 0.45, POND.y * M + 0.4), v3(seat.x * M + dx, 0.45, (POND.y + POND.h) * M - 0.15)); // every lane, near to far, above the card
     // blackjack seats sit round an arc: look from yours toward the dealer's cards
@@ -366,6 +468,8 @@ export function buildRig(ctx, seats, felts) {
       if (cur.lanes) for (let i = 0; i < 6; i++) out.push({ part: 'spot:duck' + i, p: spotPos('duck' + i) });
       return out;
     },
+    // A point on the betting console in its 0..1 units, from the top left (tests).
+    consolePoint(x, y) { return conMesh.visible ? conMesh.localToWorld(v3((x - 0.5) * CON.w, (0.5 - y) * CON.h, 0.001)) : null; },
     // The screen point for a touch-screen button (tests).
     screenPoint(x, y) { const s = cur && cur.scr; if (!s) return null; const g = s.geometry.parameters; return s.localToWorld(v3((x - 0.5) * g.width, (0.5 - y) * g.height, 0.001)); },
     update(t, dt, my) {
@@ -375,7 +479,23 @@ export function buildRig(ctx, seats, felts) {
       if (plunger.visible) { const ok = !!on.cash, pu = plunger.userData; pu.capMat.emissiveIntensity = ok ? 0.9 + Math.sin(t * 10) * 0.4 + (hoverId === 'btn:cash' ? 0.5 : 0) : 0.08; pu.cap.position.y = pr === 'btn:cash' ? 0.03 : 0.05; }
       if (handle.visible) { const pull = my.extra ? t - my.extra.pull : 9, u = pull < 0.7 ? Math.sin(pull / 0.7 * Math.PI) : 0; handle.userData.arm.rotation.x = u * 1.0; handle.userData.knob.material.emissiveIntensity = on.spin ? 0.6 + (hoverId === 'btn:spin' ? 0.6 : 0) : 0.05; }
       if (cur.lever) { const pull = my.extra ? t - my.extra.pull : 9; cur.lever.rotation.x = pull < 0.6 ? Math.sin(pull / 0.6 * Math.PI) * 0.9 : 0; }
-      for (const k of ['main', 'circle', 'heads', 'tails']) { const m = pads[k]; if (m.visible) m.material.color.setScalar(hoverId === m.userData.part ? 1.6 : 1); }
+      // the betting spots pulse while nothing is down, so a first bet knows where to go (never past full brightness: no glare)
+      const pulse = my.idle ? 0.82 + Math.sin(t * 5) * 0.18 : 0.9;
+      for (const k of ['main', 'circle', 'heads', 'tails']) { const m = pads[k]; if (m.visible) m.material.color.setScalar(hoverId === m.userData.part ? 1 : pulse); }
+      if (conMesh.visible && my.con) {
+        const ch = hover && hover.part === 'con' && hover.uv ? my.con.btns.find(b => { const x = hover.uv.x, y = 1 - hover.uv.y; return x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h; }) : null;
+        const key = JSON.stringify([my.con, ch && ch.id]);
+        if (con.key !== key) { con.key = key; con.update(t, { L: my.con, hover: ch && ch.id }); }
+        const sig = my.con.btns.map(b => b.id + b.x.toFixed(3) + b.y.toFixed(3) + b.w.toFixed(3) + b.h.toFixed(3)).join('|');
+        if (sig !== keySig) { keySig = sig; buildKeys(my.con); }
+        my.con.btns.forEach((b, i) => {
+          const k = keys[i]; if (!k) return;
+          k.m.material[4] = keyTop(b);
+          const down = pr === b.id ? 0.022 : hoverId === b.id ? -0.006 : 0; // pressed in, or lifted a little under the crosshair
+          k.m.position.z += (KEY_D / 2 - down - k.m.position.z) * Math.min(1, dt * 30);
+          k.m.material[4].emissiveIntensity = b.on === false ? 0.02 : hoverId === b.id ? 0.4 : 0.14;
+        });
+      }
       if (boardMesh.visible) {
         const lk = my.extra && my.extra.n === null ? my.extra.lucky : null, key = JSON.stringify([my.hist, lk]);
         if (board.key !== key) { board.key = key; board.update(t, { hist: my.hist, lucky: lk }); }
@@ -397,15 +517,15 @@ export function buildRig(ctx, seats, felts) {
         m.visible = !!L; if (!L) return;
         const c = RL_CELLS.find(c => c.id === 'n' + L.n), R = rlRect(c);
         if (m.userData.key !== L.x) { m.userData.key = L.x; m.userData.lc.update(t, L.x); }
-        m.position.copy(R.p).setY(0.9 + Math.abs(Math.sin(t * 3 + i)) * 0.02); m.rotation.set(-Math.PI / 2 + 0.5, cur.F.yaw, 0, 'YXZ');
+        m.position.copy(R.p).setY(0.7 + Math.abs(Math.sin(t * 3 + i)) * 0.02); m.rotation.set(-Math.PI / 2 + 0.5, cur.F.yaw, 0, 'YXZ');
       });
       dolly.visible = cur.game === 'roulette' && x && x.n !== null && x.n !== undefined;
-      if (dolly.visible) { const c = RL_CELLS.find(c => c.id === 'n' + x.n); dolly.position.copy(rlRect(c).p).setY(0.925); }
+      if (dolly.visible) { const c = RL_CELLS.find(c => c.id === 'n' + x.n); dolly.position.copy(rlRect(c).p).setY(0.725); }
       puck.visible = cur.game === 'dice';
       if (puck.visible) {
         const pt = x && x.point, P = DICE_POINTS.find(p => p.n === pt);
         puck.material[1] = P ? puckOn : puckOff;
-        puck.position.copy(P ? feltWorld(dc, DF.w, DF.d, P.x + P.w / 2, P.y + 0.1, dcFlip) : feltWorld(dc, DF.w, DF.d, PX0 - 0.25, MID.y + MID.h / 2, dcFlip)).setY(0.905);
+        puck.position.copy(P ? feltWorld(dc, DF.w, DF.d, P.x + P.w / 2, P.y + 0.1, dcFlip) : feltWorld(dc, DF.w, DF.d, PX0 - 0.25, MID.y + MID.h / 2, dcFlip)).setY(0.705);
       }
       // the chips on the table
       let n = 0; const cs = CHIP_SCALE[cur.game] || 1.25;

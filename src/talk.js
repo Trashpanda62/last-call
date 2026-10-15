@@ -1,4 +1,4 @@
-// Meetings that sound like people: 16 personalities with their own voice, moods that build over the night, alibis
+// Meetings that sound like people: 32 personalities with their own voice, moods that build over the night, alibis
 // (true for the crew, made up by killers), questions, answers, contradictions, vouching, live votes that swing with
 // the room, last words and reactions. No DOM: the sim calls it and puts its lines in the meeting.
 import { ROOMS } from './map.js';
@@ -185,6 +185,184 @@ export const PERSONAS = [
       lastIn: ['Wow. Tough crowd. Tough, wrong crowd.'], lastOut: ['Thank you, thank you, I\'ll be here all... oh.'],
       cheer: ['And THAT\'S the punchline!'], sorry: ['Well, that joke didn\'t land.'],
     } },
+  // 17-32 (2026-10-15), in CAST order: Navy, Fudge, Plum, Fern, Diva, Goldie, Scoop, Lilac, Dash, Clover, Rusty, Brick,
+  // Presto, Drizzle, Mittens, Sunny
+  { key: 'captain', name: 'the old sea captain', temper: 0.4, nerve: 0.9, follow: 0.3, pre: ['Ahoy.', 'Mark me, sailors:', 'Batten down the hatches.'], post: ['Steady as she goes.', 'By the barnacles.'],
+    lines: {
+      saw: ['I spotted {x} off the starboard bow. {X} {phrase}. Clear as a lighthouse.', 'Forty years at sea and I know a mutiny when I see one. {x} {phrase}.'],
+      deny: ['Belay that! I was in {room}, minding the tide.'],
+      ask: ['{x}, where were you anchored when it happened?'],
+      skip: ['No sense firing blind into the fog. Skip.'],
+      nothing: ['I was at {place}. Calm waters. Saw nothing.'],
+      vote: ['{x} walks the plank.', 'Over the side with {x}.'],
+      lastIn: ['You\'re scuttling the wrong ship!'], lastOut: ['Even the best captain loses a ship now and then.'],
+      cheer: ['Mutiny crushed!'], sorry: ['We sank one of our own. That\'ll haunt me.'],
+    } },
+  { key: 'barbarian', name: 'the barbarian', temper: 0.9, nerve: 0.8, follow: 0.3, pre: ['HA!', 'By my beard,', 'Hear me!'], post: ['FOR GLORY!', 'Bring me more pretzels!'],
+    lines: {
+      saw: ['I SAW {x} {phrase}! In my village we settle this with axes!', 'With these eyes I saw {x} {phrase}!'],
+      deny: ['ME? I was in {room}, wrestling a slot machine. And winning!'],
+      ask: ['{x}! Where were you, little bean? Speak!'],
+      skip: ['No blood without proof. Skip. This time.'],
+      nothing: ['I was at {place}, feasting. I saw only pretzels.'],
+      vote: ['{X}! I have spoken!', 'Throw {x} to the wolves!'],
+      lastIn: ['I will return! With a bigger helmet!'], lastOut: ['HA! A fine hunt while it lasted!'],
+      cheer: ['VICTORY!'], sorry: ['We have shamed ourselves. Pass the mead.'],
+    } },
+  { key: 'mystic', name: 'the fortune teller', temper: 0.2, nerve: 0.7, follow: 0.3, pre: ['The cards say...', 'I foresaw this.', 'The spirits whisper:'], post: ['It is written.', 'The stars never lie.'],
+    lines: {
+      saw: ['The crystal ball showed me nothing. My own eyes showed me {x} {phrase}.'],
+      deny: ['I was in {room}, reading palms. Your fate was never in my hands.'],
+      ask: ['{x}, your aura is murky. Where were you?'],
+      skip: ['The cards are cloudy. We skip, for now.'],
+      nothing: ['I was at {place}. The spirits were quiet tonight.'],
+      vote: ['The tarot drew {x}. The Tower, upside down.', 'My visions point to {x}.'],
+      lastIn: ['I foresaw this injustice. You will all have bad luck for a week.'], lastOut: ['I saw this ending coming. I just hoped it would come later.'],
+      cheer: ['Just as the cards foretold.'], sorry: ['I sensed an innocent soul. Nobody listens to the psychic.'],
+    } },
+  { key: 'counter', name: 'the card counter', temper: 0.3, nerve: 0.8, follow: 0.2, pre: ['Statistically,', 'Run the numbers:', 'Let me do the math.'], post: ['The math doesn\'t lie.', 'That\'s basic probability.'],
+    lines: {
+      saw: ['I saw {x} {phrase}. Odds it was innocent: roughly zero.'],
+      deny: ['I was in {room}, counting cards. Allegedly. Not killing.'],
+      ask: ['{x}, where were you? Your story has a lot of variance.'],
+      skip: ['Not enough data points. Skip.'],
+      nothing: ['I was at {place}, keeping the count. Didn\'t look up.'],
+      vote: ['{x}. Highest expected value.', 'By my numbers, {x}.'],
+      lastIn: ['Your math is wrong! Check your work!'], lastOut: ['I played the odds. The odds finally caught up with me.'],
+      cheer: ['As calculated.'], sorry: ['That was a false positive. A very sad one.'],
+    } },
+  { key: 'diva', name: 'the drama queen', temper: 0.6, nerve: 0.4, follow: 0.5, pre: ['Darling!', 'Oh, the drama!', 'Picture this:'], post: ['Scene!', 'And... curtain.'],
+    lines: {
+      saw: ['I SAW {x} {phrase}! A villain! A real live villain!'],
+      deny: ['ME? I was in {room}, rehearsing my monologue! The audacity!'],
+      ask: ['{x}, darling, where were you? And don\'t ham it up.'],
+      skip: ['This scene needs a rewrite. Skip.'],
+      nothing: ['I was at {place}, being fabulous. I saw nothing but my own reflection.'],
+      vote: ['{x}. A tragic casting choice, but a necessary one.', 'And the role of the killer goes to... {x}!'],
+      lastIn: ['You\'ll regret this when I win my award!'], lastOut: ['Wasn\'t I MAGNIFICENT? Hold your applause.'],
+      cheer: ['Bravo! Bravo!'], sorry: ['A tragedy. In three acts.'],
+    } },
+  { key: 'heiress', name: 'the spoiled heiress', temper: 0.7, nerve: 0.5, follow: 0.4, pre: ['Ugh.', 'Excuse me?', 'Do you know who I am?'], post: ['Daddy will hear about this.', 'This place is so tacky.'],
+    lines: {
+      saw: ['I saw {x} {phrase}. Gross. Someone call my lawyer.'],
+      deny: ['Me? I was in {room}, thinking about buying it. The casino, I mean.'],
+      ask: ['{x}, where were you? And why are you dressed like that?'],
+      skip: ['I don\'t do votes. I have people for that. Skip.'],
+      nothing: ['I was at {place}, spending Daddy\'s money. Didn\'t see a thing.'],
+      vote: ['{x}. I never liked their shoes.', 'Get {x} out of my casino.'],
+      lastIn: ['My father OWNS lawyers! You\'ll hear from all of them!'], lastOut: ['Fine. I was bored. Do you know how boring money is?'],
+      cheer: ['Finally, some decent service.'], sorry: ['Oops. Can we buy them back?'],
+    } },
+  { key: 'podcaster', name: 'the true-crime podcaster', temper: 0.4, nerve: 0.6, follow: 0.4, pre: ['Okay, listeners,', 'On my podcast,', 'Breaking:'], post: ['Like and subscribe.', 'This is going in the next episode.'],
+    lines: {
+      saw: ['I saw {x} {phrase}. I have it on tape. Well, in my head.'],
+      deny: ['I was in {room}, recording. My mic heard nothing. Neither did I.'],
+      ask: ['{x}, for the episode: where were you at the time of the murder?'],
+      skip: ['Every good series needs a cliffhanger. Skip.'],
+      nothing: ['I was at {place}, taking notes. Nothing usable.'],
+      vote: ['My theory? {x}.', 'Everything points to {x}. That\'s the episode title.'],
+      lastIn: ['This will be a three-part special on how WRONG you all were!'], lastOut: ['Plot twist: the host did it.'],
+      cheer: ['Case solved, live on air!'], sorry: ['That\'s the episode where we got it wrong.'],
+    } },
+  { key: 'sleepy', name: 'the sleepyhead', temper: 0.1, nerve: 0.8, follow: 0.6, pre: ['*yawn*', 'Mmh.', 'Wha-? Oh.'], post: ['Can I go back to sleep?', 'Wake me when it\'s over.'],
+    lines: {
+      saw: ['I saw {x} {phrase}. I was half asleep, but I saw it.'],
+      deny: ['Me? I was in {room}, napping. You can\'t kill anyone in your sleep. Probably.'],
+      ask: ['{x}... where were you? Sorry, did I already ask?'],
+      skip: ['Too tired to vote. Skip.'],
+      nothing: ['I was at {place}. I think I dozed off.'],
+      vote: ['{x}. Now let me sleep.', 'Mmh... {x}.'],
+      lastIn: ['Fine. I needed a nap anyway.'], lastOut: ['I wasn\'t sleeping. I was waiting. Heh.'],
+      cheer: ['Great. Can we go to bed now?'], sorry: ['Oh no. And I voted half asleep.'],
+    } },
+  { key: 'charmer', name: 'the charmer', temper: 0.3, nerve: 0.8, follow: 0.5, pre: ['Well, well.', 'My friends,', 'Gorgeous people,'], post: ['You\'re welcome to join me later.', '*winks*'],
+    lines: {
+      saw: ['I hate to spoil a lovely evening, but I saw {x} {phrase}.'],
+      deny: ['Me? I was in {room}, charming the dealer. A lover, not a fighter.'],
+      ask: ['{x}, gorgeous, where were you? Do tell.'],
+      skip: ['Let\'s not be hasty. Skip, and the next round is on me.'],
+      nothing: ['I was at {place}, making friends. Lots of friends.'],
+      vote: ['Sorry, {x}. Nothing personal. You\'re lovely.', 'I\'ll vote {x}, with a heavy heart.'],
+      lastIn: ['You\'ll miss me. Everyone always does.'], lastOut: ['A wink, a smile, a knife. It worked on most of you.'],
+      cheer: ['Well done, beautiful people!'], sorry: ['Oh dear. That was a lovely one, too.'],
+    } },
+  { key: 'lucky', name: 'the superstitious one', temper: 0.4, nerve: 0.3, follow: 0.6, pre: ['Knock on wood.', 'Bad omen.', 'Touch wood,'], post: ['Don\'t walk under any ladders.', '*throws salt over a shoulder*'],
+    lines: {
+      saw: ['I saw {x} {phrase}. I knew it. I broke a mirror this morning.'],
+      deny: ['Me? I was in {room}, rubbing my lucky rabbit\'s foot!'],
+      ask: ['{x}, where were you? And don\'t say room thirteen.'],
+      skip: ['It\'s bad luck to vote on an empty stomach. Skip.'],
+      nothing: ['I was at {place}, with my lucky dice. Didn\'t see anything.'],
+      vote: ['{x}. My four-leaf clover says so.', 'The omens point at {x}.'],
+      lastIn: ['This is the unluckiest night of my life!'], lastOut: ['Guess my luck finally ran out.'],
+      cheer: ['Lucky us!'], sorry: ['Bad luck. Seven years of it.'],
+    } },
+  { key: 'woods', name: 'the outdoorsman', temper: 0.5, nerve: 0.9, follow: 0.3, pre: ['Out in the woods,', 'Listen here,', 'I\'ve tracked bears quieter than you.'], post: ['That\'s nature.', 'Survival of the fittest.'],
+    lines: {
+      saw: ['I\'ve got tracker\'s eyes. I saw {x} {phrase}.'],
+      deny: ['I was in {room}. Ask the moose. Er, the bartender.'],
+      ask: ['{x}, your tracks went cold. Where were you?'],
+      skip: ['A good hunter waits. Skip.'],
+      nothing: ['I was at {place}. Quiet as a frozen lake.'],
+      vote: ['{x}. I can smell it on them.', 'I\'m tracking {x}.'],
+      lastIn: ['Fine. I\'ll sleep in the woods. Better company.'], lastOut: ['Never turn your back on a hunter.'],
+      cheer: ['Bagged one!'], sorry: ['We shot the wrong deer.'],
+    } },
+  { key: 'builder', name: 'the builder', temper: 0.6, nerve: 0.7, follow: 0.4, pre: ['Look, pal,', 'I\'m a simple bean.', 'Here\'s the blueprint:'], post: ['Built to last.', 'Measure twice, vote once.'],
+    lines: {
+      saw: ['I saw {x} {phrase}. Plain as a two-by-four.'],
+      deny: ['Me? I was in {room} the whole shift. Clocked in and everything.'],
+      ask: ['{x}, where were you? Your story\'s got cracks in it.'],
+      skip: ['Wobbly foundation. I\'m not building on that. Skip.'],
+      nothing: ['I was at {place}, on my break. Didn\'t see a thing.'],
+      vote: ['{x}. Nail it down.', 'Knock down {x}.'],
+      lastIn: ['You\'re knocking down the wrong wall!'], lastOut: ['Heh. I built this whole plan from the ground up.'],
+      cheer: ['Job done!'], sorry: ['That\'s a load-bearing mistake.'],
+    } },
+  { key: 'magician', name: 'the magician', temper: 0.3, nerve: 0.8, follow: 0.3, pre: ['Abracadabra.', 'Behold!', 'Now you see it...'], post: ['Ta-da!', 'A magician never tells.'],
+    lines: {
+      saw: ['Pick a card. Any card. It\'s {x}, and I saw {x} {phrase}.'],
+      deny: ['I was in {room}, sawing a pretzel in half. A trick, not a murder.'],
+      ask: ['{x}, where were you? And what\'s up your sleeve?'],
+      skip: ['The trick isn\'t finished yet. Skip.'],
+      nothing: ['I was at {place}, practicing card tricks. Nothing up anyone\'s sleeve.'],
+      vote: ['I\'ll make {x} disappear.', '{x}. Poof.'],
+      lastIn: ['For my next trick, I vanish forever. Thanks a lot.'], lastOut: ['And for my final trick: it was me all along.'],
+      cheer: ['And the killer... vanishes!'], sorry: ['That trick went horribly wrong.'],
+    } },
+  { key: 'gloom', name: 'the pessimist', temper: 0.4, nerve: 0.4, follow: 0.5, pre: ['Figures.', 'Of course.', 'Typical.'], post: ['We\'re all doomed anyway.', 'It\'s going to rain, too.'],
+    lines: {
+      saw: ['Of course I saw {x} {phrase}. I always see the worst.'],
+      deny: ['Me? I was in {room}, expecting the worst. And here it is.'],
+      ask: ['{x}, where were you? Not that it matters.'],
+      skip: ['Whatever we vote, it\'ll be wrong. Skip.'],
+      nothing: ['I was at {place}, losing. As usual. Saw nothing.'],
+      vote: ['{x}, I suppose. We\'ll regret it either way.'],
+      lastIn: ['I knew this would happen. I always know.'], lastOut: ['See? Everything goes wrong. Especially for you.'],
+      cheer: ['Huh. Something went right for once.'], sorry: ['Told you we\'d get it wrong.'],
+    } },
+  { key: 'cats', name: 'the cat lady', temper: 0.3, nerve: 0.6, follow: 0.4, pre: ['Purr-haps.', 'My cats would never.', 'Hiss!'], post: ['Meow.', 'My cats are judging you.'],
+    lines: {
+      saw: ['I saw {x} {phrase}. Sneaky like a cat, but much ruder.'],
+      deny: ['Me? I was in {room}, showing everyone pictures of my cats. All forty-two.'],
+      ask: ['{x}, where were you? My cats want to know.'],
+      skip: ['A cat always lands on its feet. Let\'s wait. Skip.'],
+      nothing: ['I was at {place}, thinking about my cats. Didn\'t see a thing.'],
+      vote: ['{x}. My whiskers are tingling.', '{x}. Hiss.'],
+      lastIn: ['Who\'s going to feed my cats now?!'], lastOut: ['Curiosity killed the cat. I handled the rest.'],
+      cheer: ['Purr-fect.'], sorry: ['Oh no. That poor kitten.'],
+    } },
+  { key: 'tourist', name: 'the tourist', temper: 0.3, nerve: 0.4, follow: 0.7, pre: ['Back home,', 'Wow, okay,', 'Gosh!'], post: ['Wait till I tell the folks back home.', 'Can someone take my picture?'],
+    lines: {
+      saw: ['I took a photo and caught {x} {phrase}! That\'s going on the fridge.'],
+      deny: ['Me? I was in {room}, taking selfies! I\'m on vacation!'],
+      ask: ['{x}, where were you? Is that a local custom?'],
+      skip: ['I don\'t know the rules here. Skip?'],
+      nothing: ['I was at {place}, reading my map. Didn\'t see a thing.'],
+      vote: ['Everyone\'s saying {x}, so I\'ll go with {x}.', '{x}? Is that how you do it here?'],
+      lastIn: ['Worst vacation ever! One star!'], lastOut: ['Surprise! I\'m not really a tourist.'],
+      cheer: ['Gosh! We did it!'], sorry: ['Oh no. That wasn\'t in the brochure.'],
+    } },
 ];
 
 // Lines everyone can say (persona lines win when they have one).
@@ -196,6 +374,7 @@ const SHARED = {
   screamNear: ['{x} was in there just before.', 'And guess who was in {room} right then? {x}.'],
   lastNear: ['Last I saw {v}, {x} was right next to them in {room}.', '{x} was with {v} in {room}, right before.'],
   bowl: ['{x} was at that snack bowl.', '{x} was hanging around the pretzels.'],
+  staff: ['I saw {x} {phrase}. Since when does {x} work here?', 'Why did I see {x} {phrase}? That door says STAFF ONLY.'],
   distrust: ['I still don\'t trust {x}.', 'Something about {x} isn\'t right.', '{x} has been acting weird all night.'],
   nothing: ['I was at {place}. Didn\'t see anything.', 'I was busy losing money at {place}, sorry.', 'No idea. Somebody start talking.'],
   alibi: ['I was at {place}, in {room}.', '{room}. At {place}. The whole time.'],
@@ -232,9 +411,9 @@ const SHARED = {
 
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 // "in the casino floor" -> "on the casino floor", and so on
-const tidy = t => t.replace(/([.?!]\s+)([a-z])/g, (_, p, c) => p + c.toUpperCase()).replace(/\b(in|at) the casino floor\b/g, 'on the casino floor').replace(/\bin the duck pond\b/g, 'at the duck pond').replace(/\bat the back alley\b/g, 'in the back alley');
+const tidy = t => t.replace(/([.?!]\s+)([a-z])/g, (_, p, c) => p + c.toUpperCase()).replace(/\b(in|at) the casino floor\b/g, 'on the casino floor').replace(/\bin the duck pond\b/g, 'at the duck pond');
 const ROOM_WORDS = { bar: /\bbar\b|drink/, rest: /rest ?room|bathroom|toilet|loo|sink/, floor: /floor|roulette|blackjack|\bbj\b|pit\b|bell/, arcade: /arcade|plinko|crash|mines|tower/,
-  race: /pond|duck/, slots: /slot|jackpot/, alley: /alley|dice|wheel|coin/, vip: /\bvip\b|lounge/ };
+  race: /pond|duck/, slots: /slot|jackpot|dice/, vip: /\bvip\b|lounge|wheel|coin/ };
 const SURVIVOR = ['Somebody poisoned my {kind}! I almost DIED!', 'My {kind} was poisoned. I made it to the antidote with seconds to spare.', 'Someone tried to kill me. With a {kind}. On the house, they said.'];
 // smelled it and never drank it: no antidote, no near death
 const SNIFFED = ['Somebody sent me a poisoned {kind}! I smelled it just in time.', 'Bitter almonds in my {kind}. Somebody wants me dead.', 'Someone tried to kill me. With a {kind}. On the house, they said.'];
@@ -247,7 +426,7 @@ export function makeTalk(G, h) {
   const { byId, trust, humans, sfxTo, GAME_NAMES } = h;
   const P = c => PERSONAS[c.id % PERSONAS.length];
   const rn = r => (ROOMS[r] ? ROOMS[r].name : 'somewhere');
-  const placeOf = r => ({ bar: 'the bar', rest: 'the sinks', floor: pick(['the roulette table', 'blackjack', 'roulette']), arcade: pick(['Plinko', 'Crash', 'Mines']), race: 'the duck race', slots: 'the slots', alley: pick(['the dice game', 'the prize wheel']), vip: 'the VIP lounge' })[r] || 'the tables';
+  const placeOf = r => ({ bar: 'the bar', rest: 'the sinks', floor: pick(['the roulette table', 'blackjack', 'roulette']), arcade: pick(['Plinko', 'Crash', 'Mines']), race: 'the duck race', slots: pick(['the slots', 'the dice game']), vip: pick(['the VIP lounge', 'the prize wheel']) })[r] || 'the tables';
 
   // ---------- Moods ----------
   const mood = c => c.mood || (c.mood = { fear: 0.15, anger: 0.1, grief: 0, smug: c.isKiller ? 0.3 : 0 });
@@ -317,6 +496,10 @@ export function makeTalk(G, h) {
       w.used = true;
       if (!w.fake && byId(w.who).alive) { add(w.who, 60); parts.push(voice(b, 'sent', { x: byId(w.who).name, v: byId(w.victim).name })); }
     }
+    for (const w of b.witnessed.filter(w => !w.used && !w.hard && w.what === 'staff')) { // a killer's staff passage
+      w.used = true;
+      if (!w.fake && byId(w.who).alive) { add(w.who, 40); parts.push(voice(b, 'staff', { x: byId(w.who).name, phrase: w.phrase })); }
+    }
     for (const v of victims.filter(v => v.cause === 'poison' && String(v.drinkId).startsWith('bowl'))) {
       const sus = [...(b.touches[v.drinkId] || [])].filter(id => id !== b.id && id !== v.id && byId(id).alive);
       if (sus.length) { const x = byId(pick(sus)); add(x.id, 35); parts.push(voice(b, 'bowl', { x: x.name })); }
@@ -364,7 +547,7 @@ export function makeTalk(G, h) {
     const openers = [];
     for (const b of order) { const o = opener(b, ctx, openers); if (o) openers.push(o); }
     const alive = G.chars.filter(c => c.alive).length;
-    m.talk = { ctx, openers, replies: [], claims: {}, asked: new Set(), askedOf: new Set(), defended: {}, said: 0, budget: Math.min(26, openers.length + Math.ceil(alive * 0.7) + 2), lastLine: null };
+    m.talk = { ctx, openers, replies: [], claims: {}, asked: new Set(), askedOf: new Set(), defended: {}, said: 0, budget: Math.min(G.big ? CFG.bigTalk : 26, openers.length + Math.ceil(alive * 0.7) + 2), lastLine: null, heard: new Set() };
   }
   // the next line of the meeting, or null when everyone has had their say
   function next(m, repliesOnly) {
@@ -469,13 +652,17 @@ export function makeTalk(G, h) {
     if (claim && k.claims[c.id] === undefined && m.phase !== 'result') { k.claims[c.id] = claim[0]; queueChecks(c, claim[0]); }
     if (!named.length) return;
     const x = named[0];
-    if (/where (were|was)|alibi|where.*you/.test(low)) { if (!x.isHuman) k.replies.unshift({ who: x.id, build: () => answer(x) }); return; }
+    // a player asks, vouches for, accuses or names each player once a meeting: saying it again adds nothing
+    const first = kind => { const key = kind + c.id + ':' + x.id, s = k.heard || (k.heard = new Set()); return !s.has(key) && !!s.add(key); };
+    if (/where (were|was)|alibi|where.*you/.test(low)) { if (!x.isHuman && first('q')) k.replies.unshift({ who: x.id, build: () => answer(x) }); return; }
     if (/(not|isn'?t|wasn'?t|innocent|trust|with me|clear)/.test(low) && !/(don'?t trust|killer)/.test(low)) {
+      if (!first('v')) return;
       m.extra.push({ who: c.id, acc: { [x.id]: -25 } });
       if (!x.isHuman) k.replies.unshift({ who: x.id, build: () => ({ text: voice(x, 'thanks', { x: c.name }) }) });
       return;
     }
     if (/(saw|it'?s|it was|killer|did it|sus|vote|liar|lying|guilty|murder)/.test(low)) {
+      if (!first('a')) return;
       m.extra.push({ who: c.id, acc: { [x.id]: 35 } });
       if (!x.isHuman) k.replies.unshift({ who: x.id, build: () => defend(x, c) });
       // the room weighs in: someone who agrees, or someone who doubts the accuser
@@ -486,7 +673,7 @@ export function makeTalk(G, h) {
       }
       return;
     }
-    if (!x.isHuman) k.replies.unshift({ who: x.id, build: () => ({ text: voice(x, 'meQ', {}) }) });
+    if (!x.isHuman && first('m')) k.replies.unshift({ who: x.id, build: () => ({ text: voice(x, 'meQ', {}) }) });
   }
 
   // ---------- Votes: bots make up their minds one by one, and the room can swing them ----------

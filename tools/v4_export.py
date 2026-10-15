@@ -1,4 +1,5 @@
-"""Export the v4 character assets from their Sorceress receipts (runs/sorceress/v4-chars) and write provenance.
+"""Export the character assets from their Sorceress receipts and write provenance. Since 2026-10-15 the creepy potatoes
+(tools/v5_potato.py, take b: runs/sorceress/v5-potato/b-*); the plush beans' rows are kept in assets/chars/old-plush.
 
 - assets/portraits/<Name>-<emotion>.webp: 192 px meeting portraits. A redo (-r2, then -r1) wins over the first take.
 - assets/portraits/provenance.json and assets/chars/provenance.json: one row per file (provider, model, job id, credits,
@@ -12,13 +13,15 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-RUNS = ROOT / 'runs' / 'sorceress' / 'v4-chars'
-NAMES = ['Red', 'Mint', 'Biscuit', 'Lola', 'Duke', 'Pip', 'Coco', 'Ozzie', 'Teal', 'Snow', 'Moss', 'Ruby', 'Sky', 'Peach', 'Ink', 'Lime']
+RUNS = ROOT / 'runs' / 'sorceress' / 'v5-potato'
+P = 'b-'  # take b's receipts
+NAMES = ['Red', 'Mint', 'Biscuit', 'Lola', 'Duke', 'Pip', 'Coco', 'Ozzie', 'Teal', 'Snow', 'Moss', 'Ruby', 'Sky', 'Peach', 'Ink', 'Lime',
+         'Navy', 'Fudge', 'Plum', 'Fern', 'Diva', 'Goldie', 'Scoop', 'Lilac', 'Dash', 'Clover', 'Rusty', 'Brick', 'Presto', 'Drizzle', 'Mittens', 'Sunny']
 EMOS = ['calm', 'nervous', 'angry', 'smug', 'crying']
 CDT = timezone(timedelta(hours=-5))  # no tzdata on this PC; these jobs ran in October (daylight time)
 RIGHTS = 'Sorceress output is ours (Steve, 2026-09-25)'
-MESHES = {'bean': ('beanMesh', 'beanA (picks/v4/bean-a.jpg)'), 'round': ('beanRoundMesh', 'beanRound'), 'croupier': ('croupierMesh', 'croupier'),
-          'bartender': ('bartenderMesh', 'bartender'), 'guard': ('guardMesh', 'guard')}
+MESHES = {'bean': ('b-beanMesh', 'concept-b'), 'round': ('b-roundMesh', 'b-round-r3'), 'croupier': ('b-croupierMesh', 'b-croupier'),
+          'bartender': ('b-bartenderMesh', 'b-bartender'), 'guard': ('b-guardMesh', 'b-guard-r3')}
 
 
 def row(folder, file):
@@ -37,7 +40,7 @@ def main():
     prov = []
     for n in NAMES:
         for e in EMOS:
-            folder = next((RUNS / f'p-{n}-{e}{s}' for s in ('-r2', '-r1', '') if glob.glob(str(RUNS / f'p-{n}-{e}{s}' / 'assets' / '*.png'))), None)
+            folder = next((RUNS / f'{P}p-{n}-{e}{s}' for s in ('-r2', '-r1', '') if glob.glob(str(RUNS / f'{P}p-{n}-{e}{s}' / 'assets' / '*.png'))), None)
             if folder is None:
                 print('missing', n, e); continue
             src = glob.glob(str(folder / 'assets' / '*.png'))[0]
@@ -47,10 +50,11 @@ def main():
     (out / 'provenance.json').write_text(json.dumps(prov, indent=1, ensure_ascii=False) + '\n', encoding='utf-8')
     chars = []
     for k, (mesh, design) in MESHES.items():
-        r = row(RUNS / mesh, f'assets/chars/{k}.glb'); r['note'] = f'Meshy 7 mesh of the {design} design, rigged and retextured to 1024 px by tools/rig_bean.py'
+        r = row(RUNS / mesh, f'assets/chars/{k}.glb')
+        r['note'] = (f'Meshy 7 mesh of the {design} creepy potato design, rigged by tools/rig_bean.py with 2048 px maps'
+                     + (', widened 1.25 (the design came out as tall as the bean)' if k == 'round' else ''))
         chars.append(r)
-        if design != 'beanA (picks/v4/bean-a.jpg)':
-            chars.append(row(RUNS / design, f'runs/sorceress/v4-chars/{design} (design image)'))
+        chars.append(row(RUNS / design, f'runs/sorceress/v5-potato/{design} (design image)'))
     (ROOT / 'assets' / 'chars' / 'provenance.json').write_text(json.dumps(chars, indent=1, ensure_ascii=False) + '\n', encoding='utf-8')
     print(len(prov), 'portraits,', len(chars), 'character rows')
 

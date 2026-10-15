@@ -38,6 +38,9 @@ If context runs low, this file is the source of truth. Tick slices as they land.
 Rooms (20 px walls): bar 20-620 x 20-700, restrooms 20-620 x 720-1180, casino floor 640-2000 x 20-1180,
 arcade (Crash, Plinko, Mines, Tower) 2020-2980 x 20-700, duck race 2020-2980 x 720-1180, slot hall 20-1000 x
 1200-1880, street alley (dice, wheel, coin flip) 1020-2000 x 1200-1880, VIP 2020-2980 x 1200-1880.
+Since 2026-10-15 (Steve: the alley was "weird and mostly empty"): no alley. The slot hall is 20-1600 x 1200-1880 with
+the dice table in its east end, the VIP lounge 1620-2980 x 1200-1880 with the coin flip and the prize wheel in its west
+end; doors floor to slots, floor to VIP (1680-1800), pond to VIP and slots to VIP.
 Seats: blackjack 2 tables x 5, roulette 6, slots 10 (6 regular, 4 high limit), duck race 6, crash 4, plinko 3,
 mines 3, tower 3, coin 2, wheel 2, dice 4, VIP 4 (57).
 

@@ -34,6 +34,7 @@ export function hostRoom(h, tries = 0) {
   peer.on('error', err => {
     if (err.type === 'unavailable-id' && tries < 4) { clearInterval(beat); peer.destroy(); const r = hostRoom(h, tries + 1); Object.assign(room, r); return; }
     if (err.type === 'peer-unavailable') return;
+    if (err.type === 'webrtc') { console.warn('webrtc', err.message); return; } // one call's setup failed (a voice call or a guest's link); the guest side retries
     h.onError('Connection problem: ' + (err.type || err.message));
   });
   peer.on('disconnected', () => { try { peer.reconnect(); } catch (e) { /* ignore */ } });
@@ -63,7 +64,9 @@ export function joinRoom(code, h) {
   });
   peer.on('error', err => {
     clearTimeout(timeout);
+    if (opened && conn && conn.open && !dead(conn)) return; // the broker blinked (Wi-Fi change, its restart); the line to the host is still up
     h.onError(err.type === 'peer-unavailable' ? `No room called ${code.toUpperCase()}. Check the code.` : 'Connection problem: ' + (err.type || err.message));
   });
+  peer.on('disconnected', () => { if (!gone) try { peer.reconnect(); } catch (e) { /* the game link doesn't need the broker */ } });
   return room;
 }

@@ -40,12 +40,21 @@ export class Hands {
     blade.rotation.x = -Math.PI / 2; blade.position.z = -0.1; blade.scale.x = 0.4;
     const hilt = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.08, 8), new THREE.MeshStandardMaterial({ color: 0x3a2214 })); hilt.rotation.x = Math.PI / 2;
     this.knife.add(blade, hilt); this.knife.visible = false; this.right.userData.hold.add(this.knife);
+    // the shady guy's revolver, in the free left hand: up, BANG, a kick and a flash (Steve, 2026-10-15)
+    this.gun = new THREE.Group();
+    const steel = new THREE.MeshStandardMaterial({ color: 0x2a2c30, metalness: 0.85, roughness: 0.35 }), wood = new THREE.MeshStandardMaterial({ color: 0x5a3018, roughness: 0.6 });
+    const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.009, 0.009, 0.12, 10), steel); barrel.rotation.x = Math.PI / 2; barrel.position.set(0, 0.035, -0.1);
+    const drum = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.04, 12), steel); drum.rotation.x = Math.PI / 2; drum.position.set(0, 0.03, -0.025);
+    const frame = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.03, 0.08), steel); frame.position.set(0, 0.04, -0.03);
+    const grip = new THREE.Mesh(new THREE.BoxGeometry(0.022, 0.07, 0.03), wood); grip.position.set(0, -0.005, 0.02); grip.rotation.x = -0.35;
+    this.flash = new THREE.Mesh(new THREE.SphereGeometry(0.03, 8, 6), new THREE.MeshBasicMaterial({ color: 0xffd070, transparent: true, opacity: 0.9 })); this.flash.position.set(0, 0.035, -0.18);
+    this.gun.add(barrel, drum, frame, grip, this.flash); this.gun.scale.setScalar(1.8); this.gun.position.set(0.01, 0.05, -0.02); this.gun.visible = false; this.left.userData.hold.add(this.gun);
     this.anim = null; this.t = 0; this.bob = 0;
   }
   setSuit(color) { this.sleeveMat.color.set(color); }
   // at: a screen point (NDC) to reach for: the nearer hand pokes (or grabs, for a pull) toward it.
   play(kind, at) {
-    this.anim = { kind, t: 0, dur: { sip: 1.0, poison: 1.1, stab: 0.5, crunch: 0.8, coin: 0.45, click: 0.3, press: 0.38, pull: 0.65, throw: 0.6 }[kind] || 0.5 };
+    this.anim = { kind, t: 0, dur: { sip: 1.0, poison: 1.1, stab: 0.5, shoot: 0.7, crunch: 0.8, coin: 0.45, click: 0.3, press: 0.38, pull: 0.65, throw: 0.6 }[kind] || 0.5 };
     if (at && kind !== 'throw' && kind !== 'sip') {
       // on a tall screen the hand stops further out, or it fills the narrow view
       const d = new THREE.Vector3(at.x, at.y, 0.5).unproject(this.camera).normalize(), k = (this.camera.aspect < 1 ? 0.72 : 0.52) / Math.max(0.3, -d.z);
@@ -84,7 +93,7 @@ export class Hands {
       this.left.position.y -= 0.09; this.right.position.y -= 0.09; this.left.position.x -= 0.08; this.right.position.x += 0.08; this.left.position.z += 0.02; this.right.position.z += 0.02;
     }
     if (!this.glass && !s.seated) { this.right.position.y -= 0.05; }
-    this.vial.visible = false; this.knife.visible = false;
+    this.vial.visible = false; this.knife.visible = false; this.gun.visible = false;
     if (this.anim) {
       const a = this.anim; a.t += dt; const p = Math.min(1, a.t / a.dur), k = Math.sin(p * Math.PI);
       if (a.to) { // reach: out to the point and back, finger out; a pull drags down at the end
@@ -99,6 +108,11 @@ export class Hands {
         this.right.position.x -= 0.2 * k; this.right.position.y += 0.27 * k; this.right.position.z += 0.2 * k; this.right.rotation.x = 1.3 * k; this.right.rotation.z += 0.25 * k;
       }
       else if (a.kind === 'poison') { this.vial.visible = true; this.left.position.x += 0.16 * k; this.left.position.y += 0.08 * k; this.left.position.z -= 0.15 * k; this.left.rotation.z = -1.6 * Math.max(0, Math.sin(Math.min(1, p * 1.6) * Math.PI)); }
+      else if (a.kind === 'shoot') { // raised to the middle of the view, kicks up as it fires
+        const up = Math.min(1, p * 5), kick = p > 0.2 ? Math.max(0, 1 - (p - 0.2) * 4) : 0;
+        this.gun.visible = true; this.flash.visible = p > 0.2 && p < 0.3; this.flash.scale.setScalar(1 + Math.random());
+        this.left.position.x += 0.2 * up * (1 - p * 0.5); this.left.position.y += 0.1 * up; this.left.position.z -= 0.18 * up; this.left.rotation.x = 0.5 * kick; this.left.userData.glove.userData.curl(1);
+      }
       else if (a.kind === 'stab') { this.knife.visible = true; this.right.position.z -= 0.3 * k; this.right.position.x -= 0.1 * k; this.right.userData.glove.userData.curl(1); }
       else if (a.kind === 'crunch') { this.left.position.x += 0.2 * k; this.left.position.y += 0.2 * k; this.left.position.z += 0.1 * k; }
       else if (a.kind === 'pull') { this.right.position.y -= 0.12 * k; this.right.position.x += 0.06 * k; this.right.userData.glove.userData.curl(0.9); }

@@ -36,6 +36,11 @@ CLIPS = {  # name: (prompt, seconds)
     'lookaround': ('looks around suspiciously, turning the head and upper body left then right, standing in place', 3),
     'thinking': ('rests the chin on the right hand, thinking, standing in place', 2.5),
     'bow': ('a proud theatrical bow with one arm across the waist, then straightens up, standing in place', 2),
+    # placing chips at the tables (Steve 2026-10-15)
+    'chips': ('reaches forward and down with the right hand to set a small stack of chips on a table in front at waist height, then brings the hand back, standing in place', 2),
+    'push': ('pushes a stack of chips forward across a table in front at waist height with the right hand flat, then pulls the hand back, standing in place', 2),
+    # the blackout monster's victim (2026-10-15): played on the bean while the monster mauls it (src/3d/monster.js)
+    'snatched': ('a person is seized by a monster: flinches back in terror with both hands raised, then flails both arms and kicks the legs wildly as if lifted off the ground, then goes limp and collapses to the floor', 2.2),
 }
 
 

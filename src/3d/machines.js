@@ -30,6 +30,7 @@ function anchorAt(kind, sc) {
   return { x: A.x * sc.x, y: A.y * sc.y, z: A.z * sc.z, w: (A.w || 0) * sc.x, h: (A.h || 0) * sc.y / Math.cos(tilt), r: (A.r || 0) * sc.x, tilt };
 }
 
+export const BEAMS = []; // the light cones over the tables: { m, mat, x, z, r } (render3d fades them)
 export function buildMachines(ctx, seats) {
   const { group, B, lightSpots, bulbs } = ctx;
   const screens = [];  // live canvases: { live, center, every, acc, arg(state) -> painter state, seat? }
@@ -49,17 +50,21 @@ export function buildMachines(ctx, seats) {
   }
   const seatOf = (game, machine) => seats.find(s => s.game === game && s.machine === machine);
   const beamTex = (() => { const [c, g] = T.canvas(4, 256); const lg = g.createLinearGradient(0, 0, 0, 256); lg.addColorStop(0, 'rgba(255,255,255,0.9)'); lg.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = lg; g.fillRect(0, 0, 4, 256); return T.tex(c, false); })();
-  // A soft cone of light from the ceiling (fake volumetric spotlight).
-  function beam(x, z, color = 0xffe0b0, rb = 1.3, top = 3.5, bottom = 0.9) {
-    const mat = new THREE.MeshBasicMaterial({ map: beamTex, color: new THREE.Color(color).multiplyScalar(0.16), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, toneMapped: false });
-    GLOWS.push({ m: mat, k: 'color', v: 0.16, base: new THREE.Color(color) });
+  // A soft cone of light from the ceiling (fake volumetric spotlight). render3d thins it out as you walk into it, and
+  // the graphics settings can turn the cones off.
+  BEAMS.length = 0;
+  function beam(x, z, color = 0xffe0b0, rb = 1.3, top = 3.5, bottom = 0.7) {
+    const mat = new THREE.MeshBasicMaterial({ map: beamTex, color: new THREE.Color(color).multiplyScalar(0.1), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, toneMapped: false });
+    GLOWS.push({ m: mat, k: 'color', v: 0.1, base: new THREE.Color(color) });
     const m = new THREE.Mesh(new THREE.CylinderGeometry(0.16, rb, top - bottom, 28, 1, true), mat);
     m.position.set(x, (top + bottom) / 2, z); add(m);
-    const lamp = new THREE.Mesh(cyl(0.18, 0.14, 0.12, 16), glowMat(color, 3)); lamp.position.set(x, top + 0.04, z); add(lamp);
+    BEAMS.push({ m, mat, x, z, r: rb });
+    const lamp = new THREE.Mesh(cyl(0.18, 0.14, 0.12, 16), glowMat(color, 1.8)); lamp.position.set(x, top + 0.04, z); add(lamp);
     return [m, lamp];
   }
 
   // ---------- Blackjack ----------
+  // Tables and betting desks stand low (felts about 0.68 m): from the 1.42 m eye at a game you look down onto the layout.
   const bjCards = { mine: [], dealer: [] };
   const cardGeo = new THREE.PlaneGeometry(0.11, 0.155);
   const cardMats = {};
@@ -71,29 +76,29 @@ export function buildMachines(ctx, seats) {
     const cx = tb.x * M, z0 = tb.y * M, rx = 2.0, rz = 1.67;
     const half = (ax, az) => { const s = new THREE.Shape(); for (let i = 0; i <= 40; i++) { const t = Math.PI * i / 40; s.lineTo(Math.cos(t) * ax, -Math.sin(t) * az); } s.closePath(); return s; };
     const model = hasProp('bjTable');
-    if (model) { const ims = placeProps(group, 'bjTable', [{ x: cx, z: z0 + 0.84, fit: [rx * 2 + 0.55, 0, rz + 0.62], stretch: true, top: 0.872 }]); if (ti) ims.forEach(im => { im.material = dyeFelt(im.material, '#1a3a7a'); }); }
-    else B.add(new THREE.ExtrudeGeometry(half(rx + 0.2, rz + 0.2), { depth: 0.07, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.07, bevelSegments: 5, curveSegments: 40 }), MAT.leather, v3(cx, 0.74, z0), 0, null, -Math.PI / 2);
+    if (model) { const ims = placeProps(group, 'bjTable', [{ x: cx, z: z0 + 0.84, fit: [rx * 2 + 0.55, 0, rz + 0.62], stretch: true, top: 0.672 }]); if (ti) ims.forEach(im => { im.material = dyeFelt(im.material, '#1a3a7a'); }); }
+    else B.add(new THREE.ExtrudeGeometry(half(rx + 0.2, rz + 0.2), { depth: 0.07, bevelEnabled: true, bevelThickness: 0.06, bevelSize: 0.07, bevelSegments: 5, curveSegments: 40 }), MAT.leather, v3(cx, 0.54, z0), 0, null, -Math.PI / 2);
     const top = new THREE.ShapeGeometry(half(rx, rz), 48);
     const pos = top.attributes.position, uv = top.attributes.uv;
     for (let i = 0; i < pos.count; i++) uv.setXY(i, (pos.getX(i) + rx) / (2 * rx), 1 + pos.getY(i) / rz);
     const felt = new THREE.Mesh(top, new THREE.MeshStandardMaterial({ map: T.bjFelt(ti ? '#1a3a7a' : '#1b6a40'), roughness: 0.95 }));
-    felt.rotation.x = -Math.PI / 2; felt.position.set(cx, 0.875, z0); felt.receiveShadow = true; add(felt);
+    felt.rotation.x = -Math.PI / 2; felt.position.set(cx, 0.675, z0); felt.receiveShadow = true; add(felt);
     if (!model) {
-      B.add(cyl(0.45, 0.6, 0.74, 24), MAT.darkWood, v3(cx, 0.37, z0 + rz * 0.4));
-      B.add(rbox(rx * 2 + 0.4, 0.14, 0.32, 0.04), MAT.darkWood, v3(cx, 0.82, z0 - 0.1));
+      B.add(cyl(0.45, 0.6, 0.54, 24), MAT.darkWood, v3(cx, 0.27, z0 + rz * 0.4));
+      B.add(rbox(rx * 2 + 0.4, 0.14, 0.32, 0.04), MAT.darkWood, v3(cx, 0.62, z0 - 0.1));
     }
-    B.add(rbox(0.8, 0.05, 0.22, 0.02), MAT.black, v3(cx, 0.895, z0 + 0.15));
-    B.add(rbox(0.22, 0.13, 0.32, 0.02), MAT.blackGloss, v3(cx + 0.75, 0.94, z0 + 0.22), -0.4);
+    B.add(rbox(0.8, 0.05, 0.22, 0.02), MAT.black, v3(cx, 0.695, z0 + 0.15));
+    B.add(rbox(0.22, 0.13, 0.32, 0.02), MAT.blackGloss, v3(cx + 0.75, 0.74, z0 + 0.22), -0.4);
     chipRack(B, cx, z0 + 0.15);
     hideAt('bj', s => s.table === ti, ...beam(cx, z0 + 0.8, 0xffe0b0, 1.9)); // the light cone would fog the table camera
     lightSpots.push({ p: v3(cx, 2.6, z0 + 0.8), color: 0xffe2c0, power: 5, range: 6 });
     // table limit plaque
     const pl = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.12), basicGlow(T.plaque(ti ? 'HIGH ROLLERS' : 'BLACKJACK', { w: 512, h: 120, font: 'bold 54px Georgia' }), 1.1));
-    pl.position.set(cx, 1.15, z0 - 0.24); add(pl);
+    pl.position.set(cx, 0.95, z0 - 0.24); add(pl);
     for (const s of seats.filter(s => s.game === 'bj' && s.table === ti)) {
-      const f = v3(Math.cos(s.face), 0, Math.sin(s.face)), at = v3(s.x * M, 0.879, s.y * M).addScaledVector(f, 0.62);
+      const f = v3(Math.cos(s.face), 0, Math.sin(s.face)), at = v3(s.x * M, 0.679, s.y * M).addScaledVector(f, 0.62);
       const pair = [takeCard(), takeCard()];
-      pair.forEach((m, k) => { m.position.set(at.x + (k - 0.5) * 0.07, 0.879 + k * 0.001, at.z); m.rotation.z = yawOf(s.face) + (k - 0.5) * 0.3; m.material = cardMat(k ? Gm.card() : null); });
+      pair.forEach((m, k) => { m.position.set(at.x + (k - 0.5) * 0.07, 0.679 + k * 0.001, at.z); m.rotation.z = yawOf(s.face) + (k - 0.5) * 0.3; m.material = cardMat(k ? Gm.card() : null); });
       decoCards.push({ seat: s.id, pair, at, yaw: yawOf(s.face) });
     }
   });
@@ -108,15 +113,15 @@ export function buildMachines(ctx, seats) {
     if (my && my.view) {
       const s = seats[my.seat], tb = BJ_TABLES[s.table], f = v3(Math.cos(s.face), 0, Math.sin(s.face)), r = v3(-f.z, 0, f.x);
       const a = Math.atan2((s.y - tb.y) / 152, (s.x - tb.x) / 168);
-      const base = v3(tb.x * M + Math.cos(a) * 1.68, 0.88, tb.y * M + Math.sin(a) * 1.305).addScaledVector(f, 0.24); // just past the betting circle
+      const base = v3(tb.x * M + Math.cos(a) * 1.68, 0.68, tb.y * M + Math.sin(a) * 1.305).addScaledVector(f, 0.24); // just past the betting circle
       my.view.hands.forEach((hd, j) => hd.cards.forEach((c, i) => {
         const m = free[k++]; if (!m) return; m.visible = true; m.material = cardMat(c);
         const off = (my.view.hands.length > 1 ? (j ? 0.17 : -0.17) : 0) + (i - (hd.cards.length - 1) / 2) * 0.075;
-        m.position.copy(base).addScaledVector(r, off).addScaledVector(f, i * 0.02); m.position.y = 0.881 + i * 0.001; m.rotation.z = yawOf(s.face) + Math.PI;
+        m.position.copy(base).addScaledVector(r, off).addScaledVector(f, i * 0.02); m.position.y = 0.681 + i * 0.001; m.rotation.z = yawOf(s.face) + Math.PI;
       }));
       my.view.dealer.forEach((c, i) => {
         const m = free[k++]; if (!m) return; m.visible = true; m.material = cardMat(my.view.hide && i === 1 ? null : c);
-        m.position.set(tb.x * M + (i - (my.view.dealer.length - 1) / 2) * 0.12, 0.881 + i * 0.001, tb.y * M + 0.42); m.rotation.z = 0;
+        m.position.set(tb.x * M + (i - (my.view.dealer.length - 1) / 2) * 0.12, 0.681 + i * 0.001, tb.y * M + 0.42); m.rotation.z = 0;
       });
     }
     for (; k < free.length; k++) free[k].visible = false;
@@ -125,16 +130,16 @@ export function buildMachines(ctx, seats) {
   // ---------- Roulette ----------
   {
     const o = RL_TABLE, cx = (o.x + o.w / 2) * M, cz = (o.y + o.h / 2) * M, w = o.w * M, d = o.h * M;
-    if (hasProp('rouletteTable')) placeProps(group, 'rouletteTable', [{ x: cx, z: cz, fit: [w + 0.3, 0, d + 0.3], stretch: true, top: 0.88 }]);
+    if (hasProp('rouletteTable')) placeProps(group, 'rouletteTable', [{ x: cx, z: cz, fit: [w + 0.3, 0, d + 0.3], stretch: true, top: 0.68 }]);
     else {
-      B.add(rbox(w + 0.3, 0.14, d + 0.3, 0.07), MAT.leather, v3(cx, 0.81, cz));
-      B.add(rbox(w - 0.3, 0.74, d - 0.5, 0.05), MAT.darkWood, v3(cx, 0.37, cz));
+      B.add(rbox(w + 0.3, 0.14, d + 0.3, 0.07), MAT.leather, v3(cx, 0.61, cz));
+      B.add(rbox(w - 0.3, 0.54, d - 0.5, 0.05), MAT.darkWood, v3(cx, 0.27, cz));
     }
     const fw = (o.w - 110) * M;
     const felt = new THREE.Mesh(new THREE.PlaneGeometry(fw, d - 0.05), new THREE.MeshStandardMaterial({ map: rouletteLayoutTex(), roughness: 0.95, color: 0xc8c8c8 }));
-    felt.rotation.set(-Math.PI / 2, 0, 0); felt.position.set(o.x * M + fw / 2 + 0.05, 0.885, cz); felt.receiveShadow = true; add(felt); felts.roulette = felt;
-    const wx = (o.x + o.w - 55) * M, wz = cz, WY = 1.012; // WY: the top of the wheel's wooden base
-    B.add(cyl(0.78, 0.66, 0.16, 48), MAT.darkWood, v3(wx, 0.93, wz));
+    felt.rotation.set(-Math.PI / 2, 0, 0); felt.position.set(o.x * M + fw / 2 + 0.05, 0.685, cz); felt.receiveShadow = true; add(felt); felts.roulette = felt;
+    const wx = (o.x + o.w - 55) * M, wz = cz, WY = 0.812; // WY: the top of the wheel's wooden base
+    B.add(cyl(0.78, 0.66, 0.16, 48), MAT.darkWood, v3(wx, 0.73, wz));
     // the ball track: a polished bowl rising from the spinning rotor to a gold rim
     B.add(lathe([[0.6, 0.012], [0.66, 0.022], [0.72, 0.042], [0.77, 0.062], [0.79, 0.062], [0.79, 0]], 72), RL_TRACK, v3(wx, WY, wz));
     B.add(torus(0.785, 0.018, 8, 72), MAT.gold, v3(wx, WY + 0.064, wz), 0, null, Math.PI / 2);
@@ -144,8 +149,8 @@ export function buildMachines(ctx, seats) {
     const hub = new THREE.Mesh(lathe([[0, 0.13], [0.03, 0.13], [0.02, 0.06], [0.08, 0.02], [0.12, 0]], 16), MAT.gold); wheel.add(hub);
     for (let i = 0; i < 4; i++) { const arm = new THREE.Mesh(cyl(0.012, 0.012, 0.22, 6), MAT.gold); arm.rotation.z = Math.PI / 2; arm.rotation.y = i * Math.PI / 2; arm.position.y = 0.06; arm.position.x = Math.cos(i * Math.PI / 2) * 0.11; arm.position.z = -Math.sin(i * Math.PI / 2) * 0.11; wheel.add(arm); }
     const ball = add(new THREE.Mesh(sph(0.025, 12), MAT.porcelain));
-    hideAt('roulette', () => true, ...beam(cx, cz, 0xffe0b0, 2.2)); lightSpots.push({ p: v3(cx, 2.6, cz), color: 0xffe2c0, power: 5, range: 6 });
-    for (const s of seats) if (s.game === 'roulette') for (const [dx, dz] of [[-0.8, -0.8], [0.8, -0.8], [-0.8, 0.8], [0.8, 0.8]]) focusAt(s.id, 'extra', v3(wx + dx, 1.0, wz + dz));
+    lightSpots.push({ p: v3(cx, 2.6, cz), color: 0xffe2c0, power: 5, range: 6 }); // (no light cone: the chandelier over the table hangs in it)
+    for (const s of seats) if (s.game === 'roulette') for (const [dx, dz] of [[-0.8, -0.8], [0.8, -0.8], [-0.8, 0.8], [0.8, 0.8]]) focusAt(s.id, 'extra', v3(wx + dx, 0.8, wz + dz));
     let rot = 0;
     updaters.push((t, dt, st) => {
       const my = st.my && st.my.game === 'roulette' ? st.my : null, sp = my && my.view && my.view.spin;
@@ -238,11 +243,11 @@ export function buildMachines(ctx, seats) {
     for (const s of seats) if (s.game === 'crash') focusAt(s.id, 'extra', big);
     for (const o of OBSTACLES.filter(o => o.kind === 'crashDesk')) {
       const x = (o.x + o.w / 2) * M, dz = (o.y + o.h / 2) * M;
-      B.add(rbox(0.7, 0.95, 0.42, 0.05), MAT.candy(0x2a1a5a), v3(x, 0.475, dz)); B.add(rbox(0.72, 0.06, 0.48, 0.02), MAT.chrome, v3(x, 0.98, dz));
-      const btn = new THREE.Mesh(cyl(0.09, 0.09, 0.04, 20), glowMat(0x3fff8a, 2.2)); btn.position.set(x, 1.02, dz + 0.08); add(btn);
+      B.add(rbox(0.7, 0.75, 0.42, 0.05), MAT.candy(0x2a1a5a), v3(x, 0.375, dz)); B.add(rbox(0.72, 0.06, 0.48, 0.02), MAT.chrome, v3(x, 0.78, dz));
+      const btn = new THREE.Mesh(cyl(0.09, 0.09, 0.04, 20), glowMat(0x3fff8a, 2.2)); btn.position.set(x, 0.82, dz + 0.08); add(btn);
       const cs = seats.find(q => q.game === 'crash' && Math.abs(q.x * M - x) < 0.3); if (cs) hideAt('crash', q => q === cs, btn);
       const lbl = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.12), basicGlow(T.plaque('CASH OUT', { w: 512, h: 120, bg: '#0a2a14', ink: '#3fff8a', font: '900 64px Arial Black, sans-serif' }), 1.2));
-      lbl.position.set(x, 0.75, dz + 0.215); add(lbl);
+      lbl.position.set(x, 0.55, dz + 0.215); add(lbl);
     }
     lightSpots.push({ p: v3(cx, 2.4, z + 2.5), color: 0xff70d0, power: 6, range: 9 });
   }
@@ -346,16 +351,16 @@ export function buildMachines(ctx, seats) {
     const water = new THREE.Mesh(new THREE.PlaneGeometry(W - 0.1, D - 0.1), new THREE.MeshPhysicalMaterial({ map: waterTex, roughness: 0.38, clearcoat: 0.25, clearcoatRoughness: 0.35, specularIntensity: 0.35, color: 0xffffff, emissive: 0x0a4a6a, emissiveIntensity: 0.45 }));
     water.rotation.x = -Math.PI / 2; water.position.set((x0 + x1) / 2, 0.42, cz); water.receiveShadow = true; add(water);
     screens.push({ live: { update: t => paintWater(t) }, center: water.position.clone(), every: 0.1, acc: 0, arg: () => null, far: 25, r: Math.hypot(W, D) / 2 });
-    const lanes = Gm.DUCKS.length, lw = D / lanes;
+    const lanes = Gm.DUCKS.length, lw = (D - 0.2) / lanes, zl = z0 + 0.1; // the lanes run inside the 0.2 m rim
     // lane ropes: a thin line with a float every 0.6 m
-    const buoys = []; for (let k = 1; k < lanes; k++) { B.add(cyl(0.008, 0.008, W - 0.5, 6), MAT.rope, v3((x0 + x1) / 2, 0.435, z0 + k * lw), 0, null, 0, Math.PI / 2); for (let x = x0 + 0.4; x < x1 - 0.3; x += 0.6) buoys.push([x, z0 + k * lw]); }
+    const buoys = []; for (let k = 1; k < lanes; k++) { B.add(cyl(0.008, 0.008, W - 0.5, 6), MAT.rope, v3((x0 + x1) / 2, 0.435, zl + k * lw), 0, null, 0, Math.PI / 2); for (let x = x0 + 0.4; x < x1 - 0.3; x += 0.6) buoys.push([x, zl + k * lw]); }
     const bm = new THREE.InstancedMesh(sph(0.03, 10), new THREE.MeshStandardMaterial({ roughness: 0.35 }), buoys.length);
     buoys.forEach(([x, z], j) => { bm.setMatrixAt(j, new THREE.Matrix4().compose(v3(x, 0.435, z), new THREE.Quaternion(), v3(1.6, 0.8, 0.8))); bm.setColorAt(j, new THREE.Color(j % 2 ? 0xf4f0e8 : 0xd8382e)); }); add(bm);
     // start gate and finish arch
     for (const [x, col, txt] of [[x0 + 0.5, 0x3fe0ff, 'START'], [x1 - 0.6, 0xffd040, 'FINISH']]) {
-      for (const z of [z0 - 0.1, z1 + 0.1]) B.add(cyl(0.05, 0.05, 2.2, 10), MAT.chrome, v3(x, 1.1, z));
-      B.add(box(0.08, 0.3, D + 0.3), glowMat(col, 1.6), v3(x, 2.15, cz));
-      const lb = new THREE.Mesh(new THREE.PlaneGeometry(1.2, 0.26), basicGlow(T.plaque(txt, { w: 512, h: 110, bg: '#04121a', ink: '#' + new THREE.Color(col).getHexString(), font: '900 70px Arial Black, sans-serif' }), 1.2));
+      for (const z of [z0 - 0.16, z1 + 0.16]) B.add(cyl(0.05, 0.05, 2.2, 10), MAT.chrome, v3(x, 1.1, z));
+      B.add(box(0.08, 0.3, D + 0.3), glowMat(col, 0.8), v3(x, 2.15, cz));
+      const lb = new THREE.Mesh(new THREE.PlaneGeometry(1.2, 0.26), basicGlow(T.plaque(txt, { w: 512, h: 110, bg: '#04121a', ink: '#' + new THREE.Color(col).getHexString(), font: '900 70px Arial Black, sans-serif' }), 0.85));
       lb.position.set(x - 0.05, 2.15, cz); lb.rotation.y = -Math.PI / 2; add(lb);
     }
     // the ducks
@@ -365,7 +370,7 @@ export function buildMachines(ctx, seats) {
         o.traverse(m => { if (m.isMesh) m.material = duckMat(m.material, d.color); }); g.add(o);
         const tag = new THREE.Mesh(new THREE.PlaneGeometry(0.13, 0.13), basicGlow(T.plaque(String(i + 1), { w: 64, h: 64, bg: '#fff', ink: '#111', font: '900 44px Arial Black, sans-serif', border: false }), 1));
         tag.position.set(-0.04, 0.08, 0.15); g.add(tag);
-        g.position.set(x0 + 0.6, 0.45, z0 + (i + 0.5) * lw); add(g);
+        g.position.set(x0 + 0.6, 0.45, zl + (i + 0.5) * lw); add(g);
         return g;
       }
       const g = new THREE.Group(), body = MAT.candy(new THREE.Color(d.color).getHex());
@@ -376,7 +381,7 @@ export function buildMachines(ctx, seats) {
       for (const s of [-1, 1]) { const e = new THREE.Mesh(sph(0.02, 8), MAT.black); e.position.set(0.18, 0.21, s * 0.055); g.add(e); }
       const tag = new THREE.Mesh(new THREE.PlaneGeometry(0.16, 0.16), basicGlow(T.plaque(String(i + 1), { w: 64, h: 64, bg: '#fff', ink: '#111', font: '900 44px Arial Black, sans-serif', border: false }), 1));
       tag.position.set(-0.02, 0.05, 0.17); g.add(tag);
-      g.position.set(x0 + 0.6, 0.45, z0 + (i + 0.5) * lw); add(g);
+      g.position.set(x0 + 0.6, 0.45, zl + (i + 0.5) * lw); add(g);
       return g;
     });
     let rt = 0, lastT = -1;
@@ -412,55 +417,55 @@ export function buildMachines(ctx, seats) {
       });
     });
     let cardRound = -1;
-    screens.push({ live: { update: (t, R) => { if (R && R.round !== cardRound) { cardRound = R.round; card.update(t, R); } } }, center: v3(2500 * M, 0.9, 849 * M), every: 0.5, acc: 0, arg: st => st.pub && st.pub.race, far: 14, r: 1.5 });
+    screens.push({ live: { update: (t, R) => { if (R && R.round !== cardRound) { cardRound = R.round; card.update(t, R); } } }, center: v3(2500 * M, 0.7, 849 * M), every: 0.5, acc: 0, arg: st => st.pub && st.pub.race, far: 14, r: 1.5 });
     const cardMat = new THREE.MeshStandardMaterial({ map: card.tex, roughness: 0.5, emissive: 0xffffff, emissiveMap: card.tex, emissiveIntensity: 0.35 });
     for (const x of RACE_XS) {
       const dx = x * M, dz = (838 + 11) * M;
-      B.add(rbox(1.1, 0.1, 0.45, 0.03), MAT.polished, v3(dx, 0.84, dz)); B.add(rbox(1.0, 0.8, 0.1, 0.03), MAT.candy(0x1a6a8a), v3(dx, 0.4, dz + 0.12));
-      const m = new THREE.Mesh(new THREE.PlaneGeometry(LANE.w, LANE.d), cardMat); m.position.set(dx, 0.893, dz); m.rotation.set(-Math.PI / 2, Math.PI, 0, 'YXZ'); add(m);
+      B.add(rbox(1.1, 0.1, 0.45, 0.03), MAT.polished, v3(dx, 0.64, dz)); B.add(rbox(1.0, 0.6, 0.1, 0.03), MAT.candy(0x1a6a8a), v3(dx, 0.3, dz + 0.12));
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(LANE.w, LANE.d), cardMat); m.position.set(dx, 0.693, dz); m.rotation.set(-Math.PI / 2, Math.PI, 0, 'YXZ'); add(m);
       const rs = seats.find(q => q.game === 'race' && q.x === x); if (rs) RC.lanePlates[rs.id] = m;
     }
-    lightSpots.push({ p: v3((x0 + x1) / 2 - 3, 2.6, cz), color: 0x9fe8ff, power: 5, range: 8 }, { p: v3((x0 + x1) / 2 + 3, 2.6, cz), color: 0x9fe8ff, power: 5, range: 8 });
+    lightSpots.push({ p: v3((x0 + x1) / 2 - 3, 2.6, cz), color: 0x9fe8ff, power: 3.2, range: 8 }, { p: v3((x0 + x1) / 2 + 3, 2.6, cz), color: 0x9fe8ff, power: 3.2, range: 8 });
   }
 
   // ---------- Street dice ----------
   {
     const o = DICE_TABLE, cx = (o.x + o.w / 2) * M, cz = (o.y + o.h / 2) * M, w = o.w * M, d = o.h * M;
-    if (hasProp('diceTable')) placeProps(group, 'diceTable', [{ x: cx, z: cz, fit: [w + 0.2, 1.06, d + 0.2], stretch: true }]); // our felt floats in its tub at the hand-built height
+    if (hasProp('diceTable')) placeProps(group, 'diceTable', [{ x: cx, z: cz, fit: [w + 0.2, 0.86, d + 0.2], stretch: true }]); // our felt floats in its tub at the hand-built height
     else {
-      B.add(rbox(w, 0.88, d, 0.3), MAT.darkWood, v3(cx, 0.44, cz));
-      for (const [x, z, ww, dd] of [[cx, cz - d / 2 + 0.09, w - 0.1, 0.18], [cx, cz + d / 2 - 0.09, w - 0.1, 0.18], [cx - w / 2 + 0.09, cz, 0.18, d - 0.1], [cx + w / 2 - 0.09, cz, 0.18, d - 0.1]]) B.add(rbox(ww, 0.12, dd, 0.05), MAT.leather, v3(x, 0.92, z));
+      B.add(rbox(w, 0.68, d, 0.3), MAT.darkWood, v3(cx, 0.34, cz));
+      for (const [x, z, ww, dd] of [[cx, cz - d / 2 + 0.09, w - 0.1, 0.18], [cx, cz + d / 2 - 0.09, w - 0.1, 0.18], [cx - w / 2 + 0.09, cz, 0.18, d - 0.1], [cx + w / 2 - 0.09, cz, 0.18, d - 0.1]]) B.add(rbox(ww, 0.12, dd, 0.05), MAT.leather, v3(x, 0.72, z));
     }
     const felt = new THREE.Mesh(new THREE.PlaneGeometry(w - 0.36, d - 0.36), new THREE.MeshStandardMaterial({ map: diceLayoutTex(), roughness: 0.95 }));
-    felt.rotation.x = -Math.PI / 2; felt.position.set(cx, 0.89, cz); felt.receiveShadow = true; add(felt); felts.dice = felt;
+    felt.rotation.x = -Math.PI / 2; felt.position.set(cx, 0.69, cz); felt.receiveShadow = true; add(felt); felts.dice = felt;
     const pip = v => { const [c, g] = T.canvas(64, 64); g.fillStyle = '#f8f4ec'; g.fillRect(0, 0, 64, 64); g.fillStyle = '#c0302a'; const P2 = { 1: [[0, 0]], 2: [[-1, -1], [1, 1]], 3: [[-1, -1], [0, 0], [1, 1]], 4: [[-1, -1], [1, -1], [-1, 1], [1, 1]], 5: [[-1, -1], [1, -1], [0, 0], [-1, 1], [1, 1]], 6: [[-1, -1], [1, -1], [-1, 0], [1, 0], [-1, 1], [1, 1]] }[v]; for (const [a, b] of P2) { g.beginPath(); g.arc(32 + a * 17, 32 + b * 17, 6, 0, 7); g.fill(); } return new THREE.MeshStandardMaterial({ map: T.tex(c, false), roughness: 0.3 }); };
     const faceMats = [3, 4, 1, 6, 2, 5].map(pip); // +x -x +y -y +z -z
     const dice = [0, 1].map(() => { const m = new THREE.Mesh(rbox(0.07, 0.07, 0.07, 0.012), faceMats); m.rotation.order = 'YXZ'; m.castShadow = true; add(m); return m; });
     const upRot = { 1: [0, 0], 6: [Math.PI, 0], 2: [-Math.PI / 2, 0], 5: [Math.PI / 2, 0], 3: [0, Math.PI / 2], 4: [0, -Math.PI / 2] };
-    dice.forEach((m, i) => { m.position.set(cx + 0.9 + i * 0.12, 0.93, cz + 0.1); });
+    dice.forEach((m, i) => { m.position.set(cx + 0.9 + i * 0.12, 0.73, cz + 0.1); });
     updaters.push((t, dt, st) => {
       const my = st.my && st.my.game === 'dice' && st.my.view && st.my.view.roll ? st.my : null;
       if (!my) return;
       const r = my.view.roll, s = seats[my.seat], u = Math.min(1, (t - r.t0) / 0.9), e = 1 - Math.pow(1 - u, 2);
-      const from = v3(s.x * M, 1.15, s.y * M), to = v3(cx + (s.x * M < cx ? 1 : -1) * 0.2, 0.925, cz + (s.y * M < cz ? 0.5 : -0.5));
+      const from = v3(s.x * M, 1.15, s.y * M), to = v3(cx + (s.x * M < cx ? 1 : -1) * 0.2, 0.725, cz + (s.y * M < cz ? 0.5 : -0.5));
       dice.forEach((m, i) => {
-        const p = from.clone().lerp(to, e); p.x += (i - 0.5) * 0.14; p.y = 0.925 + Math.abs(Math.sin(u * Math.PI * 3)) * (1 - u) * 0.35 + (1 - e) * 0.2;
+        const p = from.clone().lerp(to, e); p.x += (i - 0.5) * 0.14; p.y = 0.725 + Math.abs(Math.sin(u * Math.PI * 3)) * (1 - u) * 0.35 + (1 - e) * 0.4; // (out of your hand, 1.1 m up)
         m.position.copy(p);
         const [rx, rz] = upRot[r.dice[i]];
         m.rotation.set(rx + (1 - e) * 14 * (i ? 1 : -1), (i ? 0.4 : -0.3) + (1 - e) * 9, rz + (1 - e) * 11);
       });
     });
-    hideAt('dice', () => true, ...beam(cx, cz, 0xffe0b0, 2.0, 3.6, 0.85));
+    hideAt('dice', () => true, ...beam(cx, cz, 0xffe0b0, 2.0, 3.6, 0.65));
     lightSpots.push({ p: v3(cx, 2.8, cz), color: 0xffd8a0, power: 5, range: 7 });
   }
 
   // ---------- Prize wheel ----------
   {
-    let cx = WHEEL_X * M, z = 1880 * M - 0.25, cy = 2.0, R = 1.5, face = z - 0.05;
+    let cx = WHEEL_X * M, z = 1880 * M - 0.25, cy = 1.85, R = 1.4, face = z - 0.05; // (under the VIP lounge's 3.6 m ceiling)
     const model = hasProp('prizeWheel');
-    if (model) { // the stand faces into the alley; our segmented disc spins on its plain gold face
-      const sc = propScale('prizeWheel', { fit: [0, 4.0, 0] }), A = anchorAt('prizeWheel', sc);
-      placeProps(group, 'prizeWheel', [{ x: cx, z: z + 0.05, yaw: Math.PI, scale: sc }]);
+    if (model) { // the stand faces into the VIP lounge; our segmented disc spins on its plain gold face
+      const sc = propScale('prizeWheel', { fit: [2.5, 3.35, 0.7], stretch: true }), A = anchorAt('prizeWheel', sc); // 0.7 m deep (the model is 1.5 m), clear of the wall
+      z = 1880 * M - 0.46; placeProps(group, 'prizeWheel', [{ x: cx, z: z + 0.05, yaw: Math.PI, scale: sc }]);
       cy = A.y; R = A.r * 0.98; face = z + 0.05 - A.z - 0.012;
     } else {
       B.add(cyl(R + 0.15, R + 0.15, 0.2, 64), MAT.candy(0x3a1a5a), v3(cx, cy, z + 0.08), 0, null, Math.PI / 2);
@@ -474,15 +479,15 @@ export function buildMachines(ctx, seats) {
     if (!model) for (let k = 0; k < 40; k++) { const a = k / 40 * Math.PI * 2; bulbs.push({ p: v3(cx + Math.cos(a) * (R + 0.12), cy + Math.sin(a) * (R + 0.12), z - 0.12), phase: k }); }
     for (const o of OBSTACLES.filter(o => o.kind === 'wheelDesk')) {
       const x = (o.x + o.w / 2) * M, dz = (o.y + o.h / 2) * M;
-      B.add(rbox(0.6, 0.95, 0.45, 0.05), MAT.candy(0x3a1a5a), v3(x, 0.475, dz));
-      const btn = new THREE.Mesh(cyl(0.1, 0.1, 0.04, 20), glowMat(0xffd040, 2.4)); btn.position.set(x, 0.98, dz); add(btn);
+      B.add(rbox(0.6, 0.75, 0.45, 0.05), MAT.candy(0x3a1a5a), v3(x, 0.375, dz));
+      const btn = new THREE.Mesh(cyl(0.1, 0.1, 0.04, 20), glowMat(0xffd040, 2.4)); btn.position.set(x, 0.78, dz); add(btn);
       const ws = seats.find(q => q.game === 'wheel' && Math.abs(q.x * M - x) < 0.3); if (ws) hideAt('wheel', q => q === ws, btn);
     }
     updaters.push((t, dt, st) => {
       const my = st.my && st.my.game === 'wheel' && st.my.view ? st.my.view : null;
       wheel.children[0].rotation.z = -P.wheelAngle(my, t); wheel.children[1].rotation.z = wheel.children[0].rotation.z;
     });
-    hideAt('wheel', () => true, ...beam(cx, z - 1.2, 0xffd040, 1.6, 3.9, 0.3));
+    hideAt('wheel', () => true, ...beam(cx, z - 1.2, 0xffd040, 1.6, 3.5, 0.3));
     for (const s of seats) if (s.game === 'wheel') focusAt(s.id, 'core', disc);
     lightSpots.push({ p: v3(cx, 2.8, z - 2), color: 0xffd080, power: 5, range: 7 });
   }
@@ -490,21 +495,21 @@ export function buildMachines(ctx, seats) {
   // ---------- Coin flip ----------
   {
     const x = COIN.x * M, z = COIN.y * M;
-    B.add(cyl(0.7, 0.8, 0.15, 8), MAT.gold, v3(x, 0.075, z)); B.add(cyl(0.55, 0.62, 0.85, 8), MAT.marble, v3(x, 0.55, z)); B.add(cyl(0.7, 0.6, 0.1, 8), MAT.gold, v3(x, 1.02, z));
+    B.add(cyl(0.7, 0.8, 0.15, 8), MAT.gold, v3(x, 0.075, z)); B.add(cyl(0.55, 0.62, 0.65, 8), MAT.marble, v3(x, 0.45, z)); B.add(cyl(0.7, 0.6, 0.1, 8), MAT.gold, v3(x, 0.82, z));
     const coin = new THREE.Mesh(cyl(0.42, 0.42, 0.05, 48), [MAT.gold, new THREE.MeshStandardMaterial({ map: T.coinFace(true), metalness: 0.7, roughness: 0.3 }), new THREE.MeshStandardMaterial({ map: T.coinFace(false), metalness: 0.7, roughness: 0.3 })]);
     coin.castShadow = true; add(coin);
     for (const s of seats.filter(q => q.game === 'coin')) { // a betting stand in front of each coin seat
       const f = v3(Math.cos(s.face), 0, Math.sin(s.face)), p = v3(s.x * M, 0, s.y * M).addScaledVector(f, 0.74), yw = yawOf(s.face);
-      B.add(rbox(0.92, 0.9, 0.56, 0.05), MAT.candy(0x3a1a5a), p.clone().setY(0.45), yw); B.add(rbox(0.96, 0.03, 0.6, 0.012), MAT.gold, p.clone().setY(0.91), yw);
+      B.add(rbox(0.92, 0.7, 0.56, 0.05), MAT.candy(0x3a1a5a), p.clone().setY(0.35), yw); B.add(rbox(0.96, 0.03, 0.6, 0.012), MAT.gold, p.clone().setY(0.71), yw);
     }
     updaters.push((t, dt, st) => {
       const my = st.my && st.my.game === 'coin' && st.my.view && st.my.view.flip ? st.my.view.flip : null;
       if (my) {
         const u = Math.min(1, (t - my.t0) / 1.2), e = 1 - Math.pow(1 - u, 3);
-        coin.position.set(x, 1.1 + Math.sin(u * Math.PI) * 1.3, z); coin.rotation.set(e * Math.PI * 14 + (my.side === 'tails' ? Math.PI : 0), 0.3, 0);
-      } else { coin.position.set(x, 1.6 + Math.sin(t * 1.5) * 0.08, z); coin.rotation.set(Math.PI / 2 - 0.2, t * 0.8, 0, 'YXZ'); }
+        coin.position.set(x, 0.9 + Math.sin(u * Math.PI) * 1.3, z); coin.rotation.set(e * Math.PI * 14 + (my.side === 'tails' ? Math.PI : 0), 0.3, 0);
+      } else { coin.position.set(x, 1.4 + Math.sin(t * 1.5) * 0.08, z); coin.rotation.set(Math.PI / 2 - 0.2, t * 0.8, 0, 'YXZ'); }
     });
-    hideAt('coin', () => true, ...beam(x, z, 0xffd040, 1.0, 3.6, 1.1));
+    hideAt('coin', () => true, ...beam(x, z, 0xffd040, 1.0, 3.6, 0.9));
     lightSpots.push({ p: v3(x, 2.8, z), color: 0xffd080, power: 4, range: 6 });
   }
 
@@ -573,6 +578,6 @@ function chipRack(B, x, z) {
   const cols = [0xe8443a, 0x2a2a2a, 0x3ddc97, 0x4a7dff, 0xe8c46a, 0xa066ff];
   cols.forEach((c, i) => {
     const mat = MAT['chip' + i] || (MAT['chip' + i] = new THREE.MeshStandardMaterial({ color: c, roughness: 0.4 }));
-    for (let k = 0; k < 6 + (i * 5) % 7; k++) B.add(chip, mat, v3(x - 0.22 + i * 0.075, 0.905 + k * 0.0125, z));
+    for (let k = 0; k < 6 + (i * 5) % 7; k++) B.add(chip, mat, v3(x - 0.22 + i * 0.075, 0.705 + k * 0.0125, z));
   });
 }

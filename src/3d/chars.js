@@ -161,6 +161,123 @@ export function makeHat(kind, color) {
       const r = add(new THREE.TorusGeometry(0.2, 0.025, 6, 24), toy(0xe0303a), 0, 0.05, 0); r.rotation.x = Math.PI / 2;
       break;
     }
+    // The hats of the second sixteen (players 17-32). Each is also the size and seat its generated model is fitted to.
+    case 'captain': { // a ship captain's cap: white top, black band and peak, gold badge
+      cyl(0.22, 0.21, 0.08, band, 0.03);
+      const top = add(new THREE.CylinderGeometry(0.27, 0.23, 0.07, 28), shared.white, 0, 0.1, 0); top.scale.z = 0.95;
+      const peak = add(new THREE.CylinderGeometry(0.18, 0.18, 0.015, 24, 1, false, -Math.PI / 2, Math.PI), band, 0, 0.0, 0.13); peak.scale.z = 0.75; peak.rotation.x = 0.25;
+      add(new THREE.SphereGeometry(0.035, 10, 8), shared.gold, 0, 0.07, 0.215).scale.z = 0.4;
+      break;
+    }
+    case 'viking': { // a horned helmet
+      const d = add(sphCap(0.28), toy(0x9aa0a8), 0, -0.06, 0); d.scale.y = 0.85;
+      const rim = add(new THREE.TorusGeometry(0.28, 0.025, 8, 28), toy(0x6a4a2a), 0, -0.05, 0); rim.rotation.x = Math.PI / 2;
+      for (const s of [-1, 1]) { const h = add(new THREE.ConeGeometry(0.055, 0.26, 12), toy(0xf3ead8), s * 0.33, 0.1, 0); h.rotation.z = -s * 0.9; }
+      break;
+    }
+    case 'wizard': { // a tall pointed hat with a brim and gold stars
+      const blue = toy(0x23285a);
+      cyl(0.33, 0.33, 0.02, blue, 0);
+      const c = add(new THREE.ConeGeometry(0.19, 0.5, 24), blue, 0, 0.26, -0.02); c.rotation.x = -0.15;
+      for (let i = 0; i < 4; i++) add(new THREE.SphereGeometry(0.022, 6, 4), shared.gold, Math.cos(i * 2.2) * (0.15 - i * 0.03), 0.08 + i * 0.09, Math.sin(i * 2.2) * (0.15 - i * 0.03) + 0.02);
+      break;
+    }
+    case 'mortarboard': { // a graduation cap: skull cap, square board, gold tassel
+      cyl(0.21, 0.23, 0.12, shared.black, 0.0);
+      add(new THREE.BoxGeometry(0.6, 0.025, 0.6), shared.black, 0, 0.075, 0);
+      add(new THREE.SphereGeometry(0.025, 8, 6), shared.gold, 0, 0.095, 0);
+      add(new THREE.CylinderGeometry(0.008, 0.008, 0.2, 6), shared.gold, 0.2, 0.0, 0.0);
+      add(new THREE.CylinderGeometry(0.02, 0.03, 0.07, 8), shared.gold, 0.2, -0.12, 0);
+      break;
+    }
+    case 'jester': { // three floppy points with bells
+      cyl(0.24, 0.25, 0.07, toy(0x7a2a9a), 0.0);
+      const cols = [0xf2c230, 0x1fb5b0, 0x7a2a9a];
+      [-1, 0, 1].forEach((s, i) => {
+        const c = add(new THREE.ConeGeometry(0.1, 0.32, 14), toy(cols[i]), s * 0.2, 0.17, s ? 0 : -0.05); c.rotation.z = -s * 1.05;
+        add(new THREE.SphereGeometry(0.04, 10, 8), shared.gold, s * 0.36, s ? 0.24 : 0.35, s ? 0 : -0.05);
+      });
+      break;
+    }
+    case 'bow': { // a big satin hair bow
+      const pink = toy(0xff4fa0);
+      for (const s of [-1, 1]) { const l = add(new THREE.SphereGeometry(0.13, 16, 12), pink, s * 0.15, 0.07, 0); l.scale.set(1.25, 0.8, 0.45); l.rotation.z = s * 0.25; }
+      add(new THREE.SphereGeometry(0.055, 12, 10), pink, 0, 0.06, 0.01);
+      break;
+    }
+    case 'deerstalker': { // a tweed cap with a peak at the front and the back
+      const tweed = toy(0x8a6a44);
+      const d = add(sphCap(0.27), tweed, 0, -0.07, 0); d.scale.y = 0.85;
+      for (const s of [-1, 1]) { const p = add(new THREE.CylinderGeometry(0.16, 0.16, 0.015, 20, 1, false, -Math.PI / 2, Math.PI), tweed, 0, -0.04, s * 0.2); p.scale.z = 0.6; if (s < 0) p.rotation.y = Math.PI; }
+      add(new THREE.SphereGeometry(0.035, 8, 6), tweed, 0, 0.17, 0);
+      break;
+    }
+    case 'nightcap': { // a long striped nightcap flopping to one side, with a pompom
+      const blue = toy(0x6a8ad8);
+      add(sphCap(0.29), blue, 0, -0.08, 0).scale.y = 0.55;
+      const c = add(new THREE.ConeGeometry(0.17, 0.42, 18), blue, 0.14, 0.15, 0); c.rotation.z = -1.1;
+      add(new THREE.SphereGeometry(0.06, 10, 8), shared.white, 0.35, 0.22, 0);
+      break;
+    }
+    case 'plume': { // a wide cavalier hat with a big feather
+      const purple = toy(0x4a2a6a);
+      const brim = add(new THREE.CylinderGeometry(0.36, 0.36, 0.02, 28), purple, 0, 0, 0); brim.rotation.z = 0.12;
+      cyl(0.18, 0.2, 0.15, purple, 0.08);
+      const f = add(new THREE.SphereGeometry(0.1, 12, 10), shared.white, -0.12, 0.2, -0.05); f.scale.set(0.55, 2.1, 0.4); f.rotation.z = 0.7;
+      break;
+    }
+    case 'bunny': { // a headband with two tall ears
+      const brown = toy(0x8a5a3a);
+      add(new THREE.TorusGeometry(0.29, 0.02, 6, 24, Math.PI), brown, 0, -0.24, 0);
+      for (const s of [-1, 1]) {
+        const e = add(new THREE.SphereGeometry(0.075, 14, 10), brown, s * 0.1, 0.25, 0); e.scale.set(0.8, 3, 0.35); e.rotation.z = -s * 0.15;
+        const i2 = add(new THREE.SphereGeometry(0.05, 12, 8), toy(0xff9ac0), s * 0.1, 0.25, 0.02); i2.scale.set(0.8, 3, 0.3); i2.rotation.z = -s * 0.15;
+      }
+      break;
+    }
+    case 'ushanka': { // a fur trapper hat, the ear flaps down
+      const fur = toy(0xe8e4dc);
+      const d = add(sphCap(0.3), toy(0x8a8f99), 0, -0.07, 0); d.scale.y = 0.75;
+      const roll = add(new THREE.TorusGeometry(0.3, 0.06, 10, 28), fur, 0, -0.05, 0); roll.rotation.x = Math.PI / 2;
+      for (const s of [-1, 1]) add(new THREE.BoxGeometry(0.07, 0.2, 0.18), fur, s * 0.31, -0.16, 0).rotation.z = s * 0.1;
+      break;
+    }
+    case 'hardhat': { // a yellow hard hat with a ridge
+      const yel = toy(0xf2c230);
+      const d = add(sphCap(0.27), yel, 0, -0.04, 0); d.scale.y = 0.95;
+      add(new THREE.CylinderGeometry(0.32, 0.33, 0.02, 28), yel, 0, -0.04, 0.02);
+      add(new THREE.TorusGeometry(0.26, 0.025, 6, 20, Math.PI), yel, 0, -0.04, 0).rotation.y = Math.PI / 2;
+      break;
+    }
+    case 'fez': { // a red fez with a black tassel
+      cyl(0.15, 0.19, 0.22, toy(0xc8202a), 0.09);
+      add(new THREE.CylinderGeometry(0.007, 0.007, 0.14, 6), shared.black, 0.1, 0.16, 0).rotation.z = -0.9;
+      add(new THREE.CylinderGeometry(0.018, 0.03, 0.08, 8), shared.black, 0.19, 0.07, 0);
+      break;
+    }
+    case 'umbrella': { // a little red umbrella on a headband
+      add(new THREE.TorusGeometry(0.29, 0.02, 6, 24, Math.PI), shared.black, 0, -0.24, 0);
+      cyl(0.012, 0.012, 0.24, shared.metal, 0.12);
+      add(new THREE.ConeGeometry(0.42, 0.14, 8), toy(0xe0303a), 0, 0.29, 0);
+      add(new THREE.SphereGeometry(0.02, 6, 4), shared.metal, 0, 0.37, 0);
+      break;
+    }
+    case 'catears': { // a headband with two pointed cat ears
+      const k = toy(0x2a2228);
+      add(new THREE.TorusGeometry(0.29, 0.02, 6, 24, Math.PI), k, 0, -0.24, 0);
+      for (const s of [-1, 1]) {
+        const e = add(new THREE.ConeGeometry(0.09, 0.17, 4), k, s * 0.15, 0.08, 0); e.rotation.z = -s * 0.25; e.scale.z = 0.45;
+        const i2 = add(new THREE.ConeGeometry(0.05, 0.1, 4), toy(0xff9ac0), s * 0.15, 0.07, 0.025); i2.rotation.z = -s * 0.25; i2.scale.z = 0.3;
+      }
+      break;
+    }
+    case 'bucket': { // a floppy bucket hat in a bright print
+      const c = toy(0xf08a3a);
+      cyl(0.2, 0.23, 0.15, c, 0.07);
+      add(new THREE.LatheGeometry([[0.2, 0.02], [0.36, -0.06], [0.37, -0.075], [0.35, -0.07], [0.2, 0.0]].map(p => new THREE.Vector2(...p)), 28), c);
+      add(sphCap(0.2), c, 0, 0.13, 0).scale.y = 0.25;
+      break;
+    }
     default: break;
   }
   g.traverse(o => { if (o.isMesh) o.castShadow = true; });

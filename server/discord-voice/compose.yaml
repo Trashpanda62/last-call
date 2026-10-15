@@ -1,0 +1,14 @@
+# Last Call Discord voice bot. On the NAS, from this folder:
+#   cp discord.env.example discord.env   (then put the bot token in it)
+#   docker compose up -d --build
+services:
+  discord-voice:
+    build: .
+    image: last-call-discord-voice:latest
+    container_name: last-call-discord-voice
+    restart: unless-stopped
+    env_file: discord.env
+    environment:
+      PORT: "3170"
+    ports:
+      - "3170:3170"

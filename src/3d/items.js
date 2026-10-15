@@ -4,6 +4,7 @@ import * as T from './textures.js';
 import { CFG } from '../config.js';
 import { makeSeats } from '../map.js';
 import { makeBean } from './plush.js';
+import { hasProp, snackTop } from './props.js';
 
 const M = 1 / 60;
 const SEATS = makeSeats();
@@ -26,6 +27,7 @@ const GEO = {
 GEO.cosmo = GEO.martini;
 
 // A cartoon cocktail, ~1.5x real size so it reads from across a table.
+const HQ = new THREE.Quaternion(), RQ = new THREE.Quaternion(), HS = new THREE.Vector3(), GRIP = new THREE.Vector3(0, -0.08, 0);
 export function makeGlass(kind, color) {
   const def = GEO[kind] || GEO.whiskey;
   const g = new THREE.Group();
@@ -93,16 +95,24 @@ export class Items {
     mk('crumbs', new THREE.BoxGeometry(0.025, 0.025, 0.025), new THREE.MeshStandardMaterial({ color: 0xb8803a }));
     this.tmp = new THREE.Object3D(); this.col = new THREE.Color();
   }
+  // The stand model carries its own bowl of pretzels; the hand-built bowl only goes on the hand-built stand (it used to
+  // float 0.4 m over the model). Rebuilt once the models arrive.
   ensureBowls(bowls) {
-    if (this.bowls.length) return;
+    const prop = hasProp('snackBowl');
+    if (this.bowls.length && this.bowlsProp === prop) return;
+    for (const g of this.bowls) this.group.remove(g);
+    this.bowls = []; this.bowlsProp = prop; this.bowlTop = snackTop();
     const bowlGeo = lathe([[0, 0], [0.08, 0], [0.15, 0.05], [0.17, 0.09], [0.16, 0.09], [0.14, 0.055], [0, 0.015]], 24);
     const pretzel = new THREE.TorusGeometry(0.03, 0.011, 6, 12);
     const pMat = new THREE.MeshStandardMaterial({ color: 0xb06a28, roughness: 0.6 });
     for (const b of bowls) {
-      const g = new THREE.Group(); g.position.set(b.x * M, BOWL_H, b.y * M);
-      g.add(new THREE.Mesh(bowlGeo, new THREE.MeshStandardMaterial({ color: 0xf3ead8, roughness: 0.2 })));
-      for (let i = 0; i < 9; i++) { const p = new THREE.Mesh(pretzel, pMat); const a = i * 2.4, r = (i % 3) * 0.035; p.position.set(Math.cos(a) * r, 0.06 + (i % 2) * 0.015, Math.sin(a) * r); p.rotation.set(1.2 + i, i, 0); g.add(p); }
-      const glow = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.6), spikeMat); glow.rotation.x = -Math.PI / 2; glow.position.y = 0.02; glow.visible = false; g.add(glow);
+      const g = new THREE.Group(); g.position.set(b.x * M, 0, b.y * M);
+      if (!prop) {
+        const dish = new THREE.Group(); dish.position.y = BOWL_H; g.add(dish);
+        dish.add(new THREE.Mesh(bowlGeo, new THREE.MeshStandardMaterial({ color: 0xf3ead8, roughness: 0.2 })));
+        for (let i = 0; i < 9; i++) { const p = new THREE.Mesh(pretzel, pMat); const a = i * 2.4, r = (i % 3) * 0.035; p.position.set(Math.cos(a) * r, 0.06 + (i % 2) * 0.015, Math.sin(a) * r); p.rotation.set(1.2 + i, i, 0); dish.add(p); }
+      }
+      const glow = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 0.8), spikeMat); glow.rotation.x = -Math.PI / 2; glow.position.y = 0.02; glow.visible = false; g.add(glow);
       g.userData.glow = glow;
       this.group.add(g); this.bowls.push(g);
     }
@@ -126,7 +136,10 @@ export class Items {
       if (mine) { if (g.parent) g.parent.remove(g); continue; } // the first-person hands show it
       if (holder && !holder.root.visible) { if (g.parent) g.parent.remove(g); continue; }
       if (holder) {
-        if (g.parent !== holder.rightHand) { holder.rightHand.add(g); g.position.set(0, 0.03, 0.06); g.rotation.set(0, 0, 0); }
+        if (g.parent !== holder.rightHand) holder.rightHand.add(g);
+        // upright in the world and turned with its holder, held round the middle, however the hand's bone is posed
+        holder.rightHand.getWorldQuaternion(HQ).invert(); holder.root.getWorldQuaternion(RQ); holder.rightHand.getWorldScale(HS);
+        g.quaternion.copy(HQ).multiply(RQ); g.position.copy(GRIP).applyQuaternion(HQ).divide(HS);
         holder.holding = true;
       } else {
         if (g.parent !== this.group) { this.group.add(g); g.rotation.set(0, 0, 0); }
@@ -175,7 +188,7 @@ export class Items {
       if (f.kind === 'chips') for (let i = 0; i < 8; i++) { const p = 1 - a, ang = i * 0.785; put('chips', x + Math.cos(ang) * p * 0.6, 1.3 + p * 1.2 - p * p * 1.6, z + Math.sin(ang) * p * 0.6, 1, [0xe8c46a, 0xe8443a, 0x3ddc97, 0x4a7dff][i % 4]); }
       else if (f.kind === 'bubbles') for (let i = 0; i < 8; i++) { const p = (1.5 - a) / 1.5; put('bubbles', x + Math.sin(i * 2.4) * 0.25, 0.2 + p * 1.4 + i * 0.05, z + Math.cos(i * 1.9) * 0.25, 1.2 - p * 0.8); }
       else if (f.kind === 'splat') for (let i = 0; i < 10; i++) { const p = (1.5 - a) / 1.5, ang = i * 0.63; put('splat', x + Math.cos(ang) * p * 0.6, 0.8 - p * 0.75, z + Math.sin(ang) * p * 0.6, 1); }
-      else if (f.kind === 'crumbs') for (let i = 0; i < 8; i++) { const p = 1 - a, ang = i * 0.8; put('crumbs', x + Math.cos(ang) * p * 0.3, BOWL_H + 0.1 + p * 0.3 - p * p * 0.6, z + Math.sin(ang) * p * 0.3, 1); }
+      else if (f.kind === 'crumbs') for (let i = 0; i < 8; i++) { const p = 1 - a, ang = i * 0.8; put('crumbs', x + Math.cos(ang) * p * 0.3, (this.bowlTop || BOWL_H) + 0.05 + p * 0.3 - p * p * 0.6, z + Math.sin(ang) * p * 0.3, 1); }
     }
     for (const k in this.fx) { const m = this.fx[k]; m.count = counts[k]; m.instanceMatrix.needsUpdate = true; if (m.instanceColor) m.instanceColor.needsUpdate = true; }
 

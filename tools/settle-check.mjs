@@ -1,8 +1,8 @@
 // Headless check that table rounds reach the crew bank: node tools/settle-check.mjs [trials]
 // Drives the real table code (src/tables.js) against the real sim, the way main.js wires them, in three cases:
-//   meeting  - a roulette spin or a slot pull is in the air when a meeting starts; the table closes and the round must settle;
-//              a crash cash-out as a meeting starts that breaks the bank must not crash the sim or end the game before the vote
-//   standup  - a round left open (blackjack, coin pot, dice point, mines, tower) when you stand up is played out and settled
+//   meeting  - a roulette spin or a slot pull is in the air when a meeting starts; the table stays open (the meeting is on the phone) and the round settles when you walk off;
+//              a Crash flight keeps flying through a meeting
+//   standup  - a round left open (blackjack, coin pot, dice point, mines, tower) when you walk off is played out and settled
 //   death    - a round decided before you die still settles
 //   autoslots- leaving during auto spin never starts a round that can't pay; a four-max-bet blackjack loss settles in full
 //   over     - once the verdict is in, no settlement (direct, flushed from a closing table, or later in a crash loop)
@@ -19,12 +19,12 @@ const Gm = await import('../src/games.js');
 
 const trials = +(process.argv[2] || 25);
 
-// A game with the one human seated at a free seat of `game`, sat down through the sim's own 'use' action.
+// A game with the one human at a free spot of `game`, joined the way a player does: walking up to it, facing it.
 function seated(game) {
   const g = createGame({ humans: [{ name: 'Me', key: 'me' }], players: 6, killers: 1, difficulty: 'normal', forceRole: 'gambler' });
   const c = g.G.chars.find(o => o.isHuman), seat = g.G.seats.find(s => s.game === game && !s.occ);
-  c.x = seat.x; c.y = seat.y; c.lucky = 0;
-  g.action(c.id, 'use');
+  c.lucky = 0;
+  g.setInput(c.id, { x: seat.x, y: seat.y, look: seat.face, posVer: c.posVer });
   if (c.seat !== seat) throw new Error('could not sit at ' + game);
   const calls = [];
   const act = (k, arg) => { if (k === 'bank') calls.push({ ...arg, mode: g.G.mode, over: !!g.G.over }); g.action(c.id, k, arg); };
@@ -38,7 +38,7 @@ function meeting(g, c) {
   const other = g.G.chars.find(o => !o.isHuman && o.alive);
   g.G.bodies.push({ x: c.x, y: c.y, id: other.id, cause: 'blade', by: null, reported: false, t: g.G.t, seenBy: new Set() });
   g.action(c.id, 'use');
-  if (g.G.mode !== 'meeting') throw new Error('meeting did not start');
+  if (!g.G.meeting || g.G.mode !== 'play') throw new Error('meeting did not start (or stopped the night)');
 }
 
 const out = {};
@@ -60,7 +60,8 @@ for (const [game, start] of [['roulette', () => { T.press('spot:red'); T.press('
     if (calls.length) return 'settled before the meeting';
     const bank0 = g.G.bank;
     meeting(g, c);
-    T.closeTable(); // main.js closes the table when the mode leaves 'play'
+    if (calls.length) return 'the meeting settled the round (it runs on the phone; the table stays open)';
+    T.closeTable(); // walking off afterwards settles it
     if (calls.length !== 1) return `expected 1 settlement, got ${calls.length}`;
     const want = bank0 + expectNet(calls[0]);
     return g.G.bank === want ? null : `bank ${g.G.bank}, want ${want} (d ${calls[0].d}, b ${calls[0].b}, in ${calls[0].mode})`;
@@ -74,9 +75,9 @@ run('standup:bj', () => {
   for (let i = 0; i < 20 && !live; i++) { T.press('btn:deal'); live = !!T.tableView().view?.hide; }
   if (!live) return 'no live hand in 20 deals';
   const n0 = calls.length, bank0 = g.G.bank;
-  g.action(c.id, 'use'); // stand up
-  if (c.seat) return 'did not stand up';
-  T.closeTable();        // main.js closes the table when the seat goes
+  g.action(c.id, 'leave'); // walk off (Q; walking away does the same)
+  if (c.seat) return 'did not leave the game';
+  T.closeTable();          // main.js closes the table when the seat goes
   if (calls.length !== n0 + 1) return `expected the hand to settle on leaving, got ${calls.length - n0} settlements`;
   const a = calls[n0], want = bank0 + expectNet(a);
   if (!(a.b > 0)) return 'settled with no stake';
@@ -85,12 +86,12 @@ run('standup:bj', () => {
 
 // 2b. The other games that keep a round open between presses: walk away mid-round and it must still settle.
 // live(): press until the round is open and undecided (status text says so); a round that ends on the way restarts.
-const wait = (g, c, s) => { clock += s; T.tableTick(g.view(c.id)); };
+const wait = (g, c, s) => { clock += s; g.G.rt = (g.G.rt || 0) + s; T.tableTick(g.view(c.id)); }; // the sim's own clock moves too (its pace meter)
 const OPEN = {
   coin: { live: /^POT /, step: (g, c) => { T.press('spot:heads'); T.press('btn:flip'); wait(g, c, 3); } },
   dice: { live: /THE POINT IS/, step: (g, c) => { T.press('spot:pass'); T.press('btn:roll'); wait(g, c, 2); } },
-  mines: { live: /NEXT GEM .* OR CASH OUT/, step: () => { if (!/NEXT GEM/.test(T.tableBar().status || '')) T.press('btn:start'); T.press('scr', { x: 0.8, y: 0.15 }); } },
-  tower: { live: /OR CASH OUT/, step: () => { if (!/FLOOR/.test(T.tableBar().status || '')) T.press('btn:start'); T.press('scr', { x: 0.1, y: 0.5 }); } },
+  mines: { live: /NEXT GEM .* OR CASH OUT/, step: g => { if (!/NEXT GEM/.test(T.tableBar().status || '')) T.press('btn:start'); T.press('scr', { x: 0.8, y: 0.15 }); g.G.rt = (g.G.rt || 0) + 0.5; } },
+  tower: { live: /OR CASH OUT/, step: g => { if (!/FLOOR/.test(T.tableBar().status || '')) T.press('btn:start'); T.press('scr', { x: 0.1, y: 0.5 }); g.G.rt = (g.G.rt || 0) + 0.5; } },
 };
 for (const game in OPEN) {
   run('standup:' + game, () => {
@@ -99,8 +100,8 @@ for (const game in OPEN) {
     for (let i = 0; i < 60 && !live; i++) { o.step(g, c); live = o.live.test(T.tableBar().status || ''); }
     if (!live) return 'no open round in 60 tries';
     const n0 = calls.length, bank0 = g.G.bank;
-    g.action(c.id, 'use');
-    if (c.seat) return 'did not stand up';
+    g.action(c.id, 'leave');
+    if (c.seat) return 'did not leave the game';
     T.closeTable();
     if (calls.length !== n0 + 1) return `expected the round to settle on leaving, got ${calls.length - n0} settlements`;
     const a = calls[n0], want = bank0 + expectNet(a);
@@ -134,7 +135,7 @@ for (const gap of [0.5, 1.8, 2.2]) {
     pulls = 0;
     T.press('btn:auto');
     wait(g, c, gap); // 0.5: reels turning; 1.8 and 2.2: paid, the next auto spin queued
-    g.action(c.id, 'use'); T.closeTable();
+    g.action(c.id, 'leave'); T.closeTable();
     return calls.length === pulls ? null : `${pulls} spins started, ${calls.length} settled`;
   });
 }
@@ -184,7 +185,7 @@ for (const game of ['mines', 'tower']) {
     T.press('btn:start');
     if (!/PICK|NEXT GEM|FLOOR/.test(T.tableBar().status || '')) return 'the round did not start';
     const bank0 = g.G.bank;
-    g.action(c.id, 'use'); T.closeTable();
+    g.action(c.id, 'leave'); T.closeTable();
     if (calls.length !== 1) return `expected 1 settlement, got ${calls.length}`;
     const want = bank0 + expectNet(calls[0]);
     return calls[0].b > 0 && g.G.bank === want ? null : `bank ${g.G.bank}, want ${want} (d ${calls[0].d}, b ${calls[0].b})`;
@@ -220,19 +221,20 @@ for (const [then, later] of [[10, 0], [0, 10]]) {
   });
 }
 
-// 2f. A crash cash-out as a meeting starts that breaks the bank: no crash, and the verdict waits for the vote.
-run('meeting:crashwin', () => {
+// 2f. A meeting during a Crash flight: the night goes on (Steve, 2026-10-15), so the rocket keeps flying and nobody is
+// cashed out for it.
+run('meeting:crashflies', () => {
   const { g, c } = seated('roulette');
   const bot = g.G.chars.find(o => !o.isHuman && o.alive); bot.lucky = 0;
-  g.G.bank = g.G.target - 100;
-  g.G.crash.phase = 'fly'; g.G.crash.mult = 2; g.G.crash.bets.set(bot.id, { bet: 1e7, auto: 0, out: 0 });
+  g.G.crash.phase = 'fly'; g.G.crash.mult = 2; g.G.crash.point = 1e6; g.G.crash.bets.set(bot.id, { bet: 1e5, auto: 0, out: 0 });
+  const bank0 = g.G.bank;
   meeting(g, c);
-  if (!(g.G.bank >= g.G.target)) return 'the cash-out did not reach the bank';
-  return g.G.over ? 'the verdict landed before the vote' : null;
+  g.tick(1 / 60);
+  return g.G.crash.phase === 'fly' && !g.G.crash.bets.get(bot.id).out && g.G.bank === bank0 ? null : `phase ${g.G.crash.phase}, out ${g.G.crash.bets.get(bot.id).out}, bank ${bank0} -> ${g.G.bank}`;
 });
 
 // 3. After the verdict nothing moves the bank.
-// 3b. The death that ends the game, then a bot at the security desk later in the same tick: no purchase.
+// 3b. The death that ends the game, then a bot at the security desk later in the same tick: no guard hired.
 run('over:security', () => {
   const g = createGame({ humans: [{ name: 'Me', key: 'me' }], players: 3, killers: 1, difficulty: 'normal', forceRole: 'gambler' });
   const me = g.G.chars.find(o => o.isHuman), i = g.G.chars.indexOf(me);
@@ -244,10 +246,10 @@ run('over:security', () => {
   desk.occ = bot; bot.seat = desk; bot.state = 'seated'; bot.sitT = 99; bot.gameT = 99; bot.secT = -1; bot.thirst = 100; bot.x = desk.x; bot.y = desk.y;
   g.G.deaths = 1; me.poisonT = 0.001; me.poisonBy = g.G.killerIds[0];
   const bank0 = g.G.bank, rnd = Math.random;
-  Math.random = () => 0.1;                       // the bot always decides to buy cameras
+  Math.random = () => 0.1;                       // the bot always decides to hire the guard (the cameras run by themselves)
   try { g.tick(1 / 60); } finally { Math.random = rnd; }
   if (!g.G.over) return 'the death did not end the game';
-  return g.G.bank === bank0 && !g.G.security.cams ? null : `bought after the verdict: bank ${bank0} -> ${g.G.bank}, cams ${g.G.security.cams}`;
+  return g.G.bank === bank0 && !g.G.guard ? null : `hired after the verdict: bank ${bank0} -> ${g.G.bank}, guard ${!!g.G.guard}`;
 });
 // 3a. Two crash cash-outs in one tick: the first breaks the bank, the second must not count.
 run('over:crashloop', () => {

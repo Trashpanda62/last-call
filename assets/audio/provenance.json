@@ -2131,7 +2131,7 @@
   "time_ct": "15:16",
   "prompt": "a big carnival prize wheel spinning, its leather flapper clicking over the pegs and slowing to a stop",
   "rights": "ElevenLabs terms; Steve's account"
- },
+ },
  {
   "file": "assets/audio/audio.json",
   "provider": "local",
@@ -2144,5 +2144,191 @@
   "prompt": null,
   "note": "Manifest of the sfx, ambience and music takes above, written by tools/v4_audio.py; no generated media of its own.",
   "rights": "Ours (generated index)"
+ },
+ {
+  "file": "assets/audio/death/scream.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "6409fc9f-054e-41c4-a687-98231ebbc627",
+  "prompt": "a cartoon scream of terror, about one second long, high pitched, no words",
+  "receipt": "runs/sorceress/v5-death/scream-3",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/wail.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "45cca811-618e-43b6-b931-69e9dcb8f91f",
+  "prompt": "a long falling cartoon wail fading away into the distance, like a character dropping off a cliff, no words",
+  "receipt": "runs/sorceress/v5-death/wail-3",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/gasp.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "a27b5770-f5df-4243-a61c-09833ee8ce84",
+  "prompt": "a sharp shocked gasp and then a soft heavy thud of a body on carpet, no words",
+  "receipt": "runs/sorceress/v5-death/gasp-1",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/squeak.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "9db958e7-21a1-4439-b2d4-78bc7ef6874b",
+  "prompt": "a plush toy's squeaker giving one long sad deflating squeak",
+  "receipt": "runs/sorceress/v5-death/squeak-1",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/duck.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "64ad68ac-446f-457c-b9c2-386bb0db9373",
+  "prompt": "a rubber duck squeak slowly wheezing out as the air leaves it",
+  "receipt": "runs/sorceress/v5-death/duck-2",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/trombone.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "c9c75b95-841c-496f-b665-60b9c32aceab",
+  "prompt": "a sad trombone playing wah wah wah waaah, comedic, the last note long and wobbly",
+  "receipt": "runs/sorceress/v5-death/trombone-3",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/whistle.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "9178f1e8-0bff-45ba-b305-3eeeaf5b9c7d",
+  "prompt": "a slide whistle falling from high to low, then a soft bonk",
+  "receipt": "runs/sorceress/v5-death/whistle-1",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/pop.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "15255a87-1ae7-4496-8838-7ca78edc41b9",
+  "prompt": "a balloon popping, then soft fluffy stuffing pattering down",
+  "receipt": "runs/sorceress/v5-death/pop-2",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/ghost.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "90038fc8-89ae-40fb-bc09-2f4ddd6d9dc6",
+  "prompt": "a spooky cartoon ghost wooo rising up and fading away",
+  "receipt": "runs/sorceress/v5-death/ghost-1",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/organ.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "26517b5d-7ed2-410a-ae93-b20c8f561f98",
+  "prompt": "a dramatic pipe organ chord, dun dun dunnn, short and ominous",
+  "receipt": "runs/sorceress/v5-death/organ-2",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/slots.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "701f5f77-d7d9-49bf-836e-715313f53ebd",
+  "prompt": "a slot machine powering down with a sad descending electronic bleep and a final click",
+  "receipt": "runs/sorceress/v5-death/slots-2",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/death/glass.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "8a18e19b-7adb-4393-99f3-a68455ec0760",
+  "prompt": "a cocktail glass dropping and shattering on a hard floor, ice cubes skittering away",
+  "receipt": "runs/sorceress/v5-death/glass-2",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/monster/roar.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "3257e777-3f3f-4ada-b2e8-6b8b23e8ffa9",
+  "credits": 3,
+  "prompt": "a monstrous deep guttural roar of a huge beast, terrifying, echoing in a dark empty room, rising then trailing off into a wet snarl",
+  "receipt": "runs/sorceress/v5-monster/sfx-roar-1",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/monster/growl.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "42e9d12c-174c-4caf-a3db-3ac5d2939bfe",
+  "credits": 4,
+  "prompt": "a continuous low rumbling growl and heavy wet breathing of a huge monster lurking in the dark, steady, menacing, no roar",
+  "receipt": "runs/sorceress/v5-monster/sfx-growl-1",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/monster/step.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "a5874818-b774-4070-b9e9-c4e6b14437bc",
+  "credits": 1,
+  "prompt": "one single heavy monstrous footstep thud on a carpeted floor, deep low impact, the floor shudders",
+  "receipt": "runs/sorceress/v5-monster/sfx-step-1",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/monster/maul.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "c2de617d-ef4d-4ff0-be5b-ff9e22081b4f",
+  "credits": 2,
+  "prompt": "a monster snarling and savagely mauling, ripping fabric, tearing felt and stuffing, a wet crunch, short and brutal",
+  "receipt": "runs/sorceress/v5-monster/sfx-maul-2",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/monster/breaker.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "24bdace8-1cb7-45ce-b433-8ebb77a81fb3",
+  "credits": 1,
+  "prompt": "a big old electrical breaker lever being thrown, a heavy metal clunk and a sharp electric snap",
+  "receipt": "runs/sorceress/v5-monster/sfx-breaker-2",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/audio/monster/powerup.mp3",
+  "provider": "sorceress",
+  "tool": "sfx_generate",
+  "model": "seed-audio",
+  "job_id": "d0ff8929-5b0e-4a19-aa52-ecad0f14b36b",
+  "credits": 3,
+  "prompt": "the power coming back on in a big room, a deep electrical hum rising and fluorescent lights buzzing and flickering on",
+  "receipt": "runs/sorceress/v5-monster/sfx-powerup-1",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  }
 ]

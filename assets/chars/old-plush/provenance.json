@@ -1,0 +1,188 @@
+[
+ {
+  "file": "assets/chars/old-plush/bean.glb",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "fb952067-3123-439a-b9cb-97f6241a50cc",
+  "credits": 65,
+  "date": "2026-10-12",
+  "time_ct": "10:52",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/3763125f-e33e-4057-bb44-697c89554aae/nano-banana-pro-1.png",
+  "params": {
+   "should_texture": true,
+   "texture_resolution": "2k",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 8000
+  },
+  "refImages": null,
+  "receipt": "runs/sorceress/v4-chars/beanMesh",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)",
+  "note": "Meshy 7 mesh of the beanA (picks/v4/bean-a.jpg) design, rigged and retextured to 1024 px by tools/rig_bean.py"
+ },
+ {
+  "file": "assets/chars/old-plush/round.glb",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "d25bbfa8-332e-4602-a4ed-c5d2a4395fea",
+  "credits": 65,
+  "date": "2026-10-12",
+  "time_ct": "11:00",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/1419fbb9-a5f5-42e1-b75b-7225c5368187/nano-banana-pro-1.png",
+  "params": {
+   "should_texture": true,
+   "texture_resolution": "2k",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 8000
+  },
+  "refImages": null,
+  "receipt": "runs/sorceress/v4-chars/beanRoundMesh",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)",
+  "note": "Meshy 7 mesh of the beanRound design, rigged and retextured to 1024 px by tools/rig_bean.py"
+ },
+ {
+  "file": "runs/sorceress/v4-chars/beanRound (design image)",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-pro",
+  "job_id": "0eee14e4-856a-4d4f-b70e-896a35482f92",
+  "credits": 18,
+  "date": "2026-10-12",
+  "time_ct": "10:53",
+  "prompt": "A plush-toy bean character sewn from soft felt with visible stitched seams, black button eyes and a stitched smile, matching the reference image exactly in material, eyes, gloves and proportions of the limbs: short felt arms ending in white four-finger cartoon gloves, short felt legs with black shoes. Same character as the reference but a second body shape: shorter, rounder and wider, an egg-shaped body about as wide as it is tall, red felt, a small gold waistcoat and a black bow tie. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, gloved hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
+  "params": {
+   "resolution": "2K"
+  },
+  "refImages": [
+   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/3763125f-e33e-4057-bb44-697c89554aae/nano-banana-pro-1.png"
+  ],
+  "receipt": "runs/sorceress/v4-chars/beanRound",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/chars/old-plush/croupier.glb",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "bfb60fcd-b023-4afb-a880-f214bcacc2c8",
+  "credits": 65,
+  "date": "2026-10-12",
+  "time_ct": "11:00",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/f326d940-ba08-40e4-98c6-e1b6b3b0e892/nano-banana-pro-1.png",
+  "params": {
+   "should_texture": true,
+   "texture_resolution": "2k",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 8000
+  },
+  "refImages": null,
+  "receipt": "runs/sorceress/v4-chars/croupierMesh",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)",
+  "note": "Meshy 7 mesh of the croupier design, rigged and retextured to 1024 px by tools/rig_bean.py"
+ },
+ {
+  "file": "runs/sorceress/v4-chars/croupier (design image)",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-pro",
+  "job_id": "5254f598-6b0e-4e90-9570-5957df86268f",
+  "credits": 18,
+  "date": "2026-10-12",
+  "time_ct": "10:53",
+  "prompt": "A plush-toy bean character sewn from soft felt with visible stitched seams, black button eyes and a stitched smile, matching the reference image exactly in material, eyes, gloves and proportions of the limbs: short felt arms ending in white four-finger cartoon gloves, short felt legs with black shoes. A casino croupier: cream felt body, a black waistcoat with gold buttons, a crisp white shirt collar, a red bow tie and black sleeve garters on the arms, neat and formal. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, gloved hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
+  "params": {
+   "resolution": "2K"
+  },
+  "refImages": [
+   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/3763125f-e33e-4057-bb44-697c89554aae/nano-banana-pro-1.png"
+  ],
+  "receipt": "runs/sorceress/v4-chars/croupier",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/chars/old-plush/bartender.glb",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "264f6266-4cb8-4683-9f51-ee5df69cc6f6",
+  "credits": 65,
+  "date": "2026-10-12",
+  "time_ct": "11:00",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/f03b3ff1-d507-473d-93f9-f15623b0275b/nano-banana-pro-1.png",
+  "params": {
+   "should_texture": true,
+   "texture_resolution": "2k",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 8000
+  },
+  "refImages": null,
+  "receipt": "runs/sorceress/v4-chars/bartenderMesh",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)",
+  "note": "Meshy 7 mesh of the bartender design, rigged and retextured to 1024 px by tools/rig_bean.py"
+ },
+ {
+  "file": "runs/sorceress/v4-chars/bartender (design image)",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-pro",
+  "job_id": "dfa33a31-deb9-4e14-b6c2-5449023601c7",
+  "credits": 18,
+  "date": "2026-10-12",
+  "time_ct": "10:53",
+  "prompt": "A plush-toy bean character sewn from soft felt with visible stitched seams, black button eyes and a stitched smile, matching the reference image exactly in material, eyes, gloves and proportions of the limbs: short felt arms ending in white four-finger cartoon gloves, short felt legs with black shoes. A casino bartender: warm brown felt body, a stitched handlebar moustache under the eyes, a white shirt collar, a dark green waistcoat and a short black waist apron that ends above the legs. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, gloved hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
+  "params": {
+   "resolution": "2K"
+  },
+  "refImages": [
+   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/3763125f-e33e-4057-bb44-697c89554aae/nano-banana-pro-1.png"
+  ],
+  "receipt": "runs/sorceress/v4-chars/bartender",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ },
+ {
+  "file": "assets/chars/old-plush/guard.glb",
+  "provider": "sorceress",
+  "tool": "model_generate",
+  "model": "meshy-7",
+  "job_id": "c3b6d05f-121d-4a22-9a71-0bdf3930f75d",
+  "credits": 65,
+  "date": "2026-10-12",
+  "time_ct": "11:01",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/255782b8-fe35-427f-b24e-0008a4f15d13/nano-banana-pro-1.png",
+  "params": {
+   "should_texture": true,
+   "texture_resolution": "2k",
+   "should_remesh": true,
+   "topology": "triangle",
+   "target_polycount": 8000
+  },
+  "refImages": null,
+  "receipt": "runs/sorceress/v4-chars/guardMesh",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)",
+  "note": "Meshy 7 mesh of the guard design, rigged and retextured to 1024 px by tools/rig_bean.py"
+ },
+ {
+  "file": "runs/sorceress/v4-chars/guard (design image)",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-pro",
+  "job_id": "34651e4a-1245-4906-beca-fe31d74db002",
+  "credits": 18,
+  "date": "2026-10-12",
+  "time_ct": "10:53",
+  "prompt": "A plush-toy bean character sewn from soft felt with visible stitched seams, black button eyes and a stitched smile, matching the reference image exactly in material, eyes, gloves and proportions of the limbs: short felt arms ending in white four-finger cartoon gloves, short felt legs with black shoes. A casino security guard: dark navy felt body, a black uniform jacket with a gold star badge on the chest, a black peaked security cap sewn on top of the body, a coiled earpiece wire, stern stitched eyebrows. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, gloved hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
+  "params": {
+   "resolution": "2K"
+  },
+  "refImages": [
+   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/3763125f-e33e-4057-bb44-697c89554aae/nano-banana-pro-1.png"
+  ],
+  "receipt": "runs/sorceress/v4-chars/guard",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
+ }
+]

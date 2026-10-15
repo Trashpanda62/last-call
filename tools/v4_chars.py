@@ -4,7 +4,9 @@ under runs/sorceress/v4-chars/<name>; a folder that already has a job is skipped
     python tools/v4_chars.py images            # body shape 2 and the three staff designs
     python tools/v4_chars.py portraits Red     # one character's five meeting portraits (pilot)
     python tools/v4_chars.py portraits all
+    python tools/v4_chars.py portraits Navy,Fudge calm   # some characters, some emotions
     python tools/v4_chars.py redo Ozzie-angry,Teal-angry[-r2]   # from that character's calm portrait
+    python tools/v4_chars.py retake Diva-calm                    # a fresh take from the first prompt
 """
 import json, subprocess, sys
 from pathlib import Path
@@ -49,6 +51,23 @@ CAST = [  # name, felt colour, hat, persona (src/config.js CAST and src/talk.js 
     ('Peach', 'peach', 'a white chef hat', 'a passionate chef'),
     ('Ink', 'charcoal black', 'big headphones', 'a laid-back DJ'),
     ('Lime', 'lime green', 'a sombrero', 'a stand-up comedian'),
+    # players 17-32 (2026-10-15)
+    ('Navy', 'navy blue', "a white ship captain's peaked cap with a black peak and a gold anchor badge", 'a weathered old sea captain'),
+    ('Fudge', 'chocolate brown', 'a grey viking helmet with two big cream horns', 'a loud, boastful barbarian'),
+    ('Plum', 'plum purple', 'a tall pointed midnight blue wizard hat with gold stars', 'a mysterious fortune teller with gold hoop earrings'),
+    ('Fern', 'forest green', 'a black graduation mortarboard cap with a gold tassel', 'a nerdy card-counting math whiz with round glasses'),
+    ('Diva', 'vivid hot magenta pink', 'a jester hat with three floppy yellow, teal and purple points ending in gold bells', 'a theatrical drama queen'),
+    ('Goldie', 'dark mustard gold', 'a giant hot pink satin hair bow', 'a spoiled rich heiress with a pearl necklace'),
+    ('Scoop', 'slate blue-grey', 'a brown checked tweed deerstalker cap', 'a true-crime podcaster with a small microphone clipped to the waistcoat'),
+    ('Lilac', 'pale lilac', 'a long floppy blue and white striped nightcap with a white pompom', 'a sleepy, droopy-eyed sleepyhead'),
+    ('Dash', 'bright aqua cyan', 'a wide purple cavalier hat with a big white feather plume', 'a suave, winking charmer'),
+    ('Clover', 'buttery cream', 'a headband with two tall brown felt bunny ears with pink insides', 'a superstitious gambler holding a four-leaf clover'),
+    ('Rusty', 'rust orange', 'a grey fur trapper hat with white fur trim and the ear flaps down', 'a rugged outdoorsman with stitched beard stubble'),
+    ('Brick', 'dark maroon', 'a bright yellow construction hard hat', 'a burly, plain-spoken builder'),
+    ('Presto', 'bright kelly green', 'a red fez with a black tassel', 'a showy stage magician holding a black wand with a white tip'),
+    ('Drizzle', 'deep petrol blue-green', 'a small open red umbrella hat on a headband', 'a gloomy pessimist'),
+    ('Mittens', 'dusty mauve', 'a black headband with pointed black cat ears', 'a cat-loving cat lady with stitched whiskers'),
+    ('Sunny', 'silver grey', 'a floppy bucket hat in a bright orange and pink tropical flower print', 'a cheerful tourist with a camera on a strap'),
 ]
 EMOTIONS = {
     'calm': 'a calm, neutral, slightly curious face',
@@ -70,7 +89,12 @@ def portrait(name, colour, hat, persona, emo):
 def call(name, body):
     out = RUNS / name
     if (out / 'job.json').is_file():
-        print('have', name); return
+        if json.loads((out / 'job.json').read_text(encoding='utf-8')).get('status') != 'rejected':
+            print('have', name); return
+        n = 1  # refused at submission (an outage), never charged: keep the refusal and try again
+        while (out / f'job-rejected-{n}.json').is_file():
+            n += 1
+        (out / 'job.json').rename(out / f'job-rejected-{n}.json')
     RUNS.mkdir(parents=True, exist_ok=True)
     inp = RUNS / f'{name}.json'
     inp.write_text(json.dumps(body, ensure_ascii=False), encoding='utf-8')
@@ -85,12 +109,20 @@ def main():
             call(k, {'model': 'nano-banana-pro', 'prompt': p, 'aspectRatio': '1:1', 'params': {'resolution': '2K'}, 'refImages': [BEAN_A]})
     elif what == 'portraits':
         who = sys.argv[2] if len(sys.argv) > 2 else 'Red'
+        emos = sys.argv[3].split(',') if len(sys.argv) > 3 else list(EMOTIONS)  # portraits Navy calm,smug
         for name, colour, hat, persona in CAST:
-            if who != 'all' and name != who:
+            if who != 'all' and name not in who.split(','):
                 continue
-            for emo in EMOTIONS:
+            for emo in emos:
                 call(f'p-{name}-{emo}', {'model': 'gpt-image-2.5-flare', 'prompt': portrait(name, colour, hat, persona, emo), 'aspectRatio': '1:1',
                                          'params': {'resolution': '1K'}, 'refImages': [BEAN_A]})
+    elif what == 'retake':  # a fresh take of a portrait (the first prompt, the colour words as they are now): retake Diva-calm
+        for item in sys.argv[2].split(','):
+            name, emo = item.split('-')
+            _, colour, hat, persona = next(c for c in CAST if c[0] == name)
+            tag = 'r1' if not (RUNS / f'p-{name}-{emo}-r1' / 'job.json').is_file() else 'r2'
+            call(f'p-{name}-{emo}-{tag}', {'model': 'gpt-image-2.5-flare', 'prompt': portrait(name, colour, hat, persona, emo), 'aspectRatio': '1:1',
+                                           'params': {'resolution': '1K'}, 'refImages': [BEAN_A]})
     elif what == 'redo':  # redo drifted portraits from the character's own calm portrait: redo Ozzie-angry,Teal-angry
         for item in sys.argv[2].split(','):
             name, emo, *tag = item.split('-')

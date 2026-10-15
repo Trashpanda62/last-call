@@ -33,12 +33,24 @@ kbd { font: 12px monospace; background: #2a1b22; border: 1px solid var(--line); 
 .col { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
 .field { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 8px 0; color: var(--muted); }
 .field input, .field select { width: 60%; }
+.deathPick { display: flex; gap: 6px; width: 60%; }
+.deathPick select { flex: 1; width: auto; min-width: 0; }
+.deathPick button { padding: 6px 10px; }
+#deathRec { color: #ff8a7a; white-space: nowrap; }
+#deathRec.on { background: #a3123a; color: #fff; }
+#deathNote { margin: -4px 0 8px; text-align: right; }
 
 /* HUD */
 #hud > div { position: fixed; }
-#bank { top: max(12px, env(safe-area-inset-top)); left: max(12px, env(safe-area-inset-left)); width: 250px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; }
-#bank .label, #thirst span:first-child { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
-#bankText { font-size: 18px; color: var(--gold); }
+#bank { top: max(12px, env(safe-area-inset-top)); left: max(12px, env(safe-area-inset-left)); width: 290px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; }
+#bank .label, #thirst .nk { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; }
+#bankText { display: flex; align-items: baseline; gap: 8px; margin: 2px 0 1px; }
+#bankAmt { font: 800 34px/1.05 system-ui, sans-serif; color: var(--gold); text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7); font-variant-numeric: tabular-nums; }
+#bankAmt.low { color: #ff6b5b; }
+#bankDelta { font: 700 15px/1 system-ui, sans-serif; opacity: 0; transition: opacity 0.4s; }
+#bankDelta.on { opacity: 1; transition: none; }
+#bankDelta.up { color: #6be38f; } #bankDelta.down { color: #ff6b5b; }
+#bankGoal { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
 .bar { height: 8px; background: #2a1b22; border-radius: 4px; overflow: hidden; margin-top: 5px; }
 #bankFill { height: 100%; width: 100%; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
 #topRight { top: max(12px, env(safe-area-inset-top)); right: max(12px, env(safe-area-inset-right)); display: flex; gap: 8px; align-items: flex-start; }
@@ -49,7 +61,84 @@ kbd { font: 12px monospace; background: #2a1b22; border: 1px solid var(--line); 
 #bottom { left: 50%; bottom: max(12px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px; }
 #thirst { display: flex; align-items: center; gap: 8px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; }
 #thirst .bar { width: 150px; margin: 0; }
-#thirstFill { height: 100%; width: 100%; background: #6ac0e8; transform-origin: left; }
+#thirst .bar { width: 110px; }
+#thirstFill, #hungerFill { height: 100%; width: 100%; background: #6ac0e8; transform-origin: left; }
+#hungerFill { background: #e0a95b; }
+/* Top winners under the bankroll */
+#lead:empty { display: none; }
+#lead { margin-top: 8px; border-top: 1px solid var(--line); padding-top: 6px; }
+#lead .lr { display: flex; align-items: center; gap: 6px; font-size: 13px; line-height: 1.55; }
+#lead .lr.me .ln { color: var(--gold); }
+#lead .lr.dead { opacity: 0.5; }
+#lead .li { width: 12px; color: var(--muted); font-size: 11px; }
+#lead .ld { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+#lead .ln { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#lead .lw { color: #7ee08a; font-variant-numeric: tabular-nums; }
+#lead .lw.neg { color: #ff7a6a; }
+body.tablecam #lead { display: none; }
+/* A killer's suggested target */
+/* the blackout: what's out, the breakers left, and what you can do (ui.js) */
+#blackoutHud { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); text-align: center; pointer-events: none; background: rgba(8, 4, 6, 0.78); border: 1px solid #7a1a1a; border-radius: 8px; padding: 8px 16px; min-width: 300px; }
+#blackoutHud .bt { color: #ff3b2e; font-weight: 800; letter-spacing: 0.14em; font-size: 18px; }
+#blackoutHud .bt span { color: #d9c9b0; font-weight: 600; letter-spacing: 0; font-size: 14px; margin-left: 8px; }
+#blackoutHud .br { display: flex; gap: 14px; justify-content: center; margin-top: 5px; font-size: 13px; color: #e8dcc8; }
+#blackoutHud .br i { display: inline-block; width: 70px; height: 7px; background: #3a2a2a; border-radius: 4px; margin-left: 6px; vertical-align: middle; overflow: hidden; }
+#blackoutHud .br i b { display: block; height: 100%; background: #ffcf40; }
+#blackoutHud .br .ok { color: #6fe08a; }
+#blackoutHud .me { margin-top: 6px; font-size: 14px; color: #f3ead8; }
+#blackoutHud .me.big { font-size: 20px; font-weight: 800; color: #ffcf40; }
+#blackoutHud .me.held { font-size: 22px; font-weight: 800; color: #ff3b2e; }
+#blackoutHud .me.mon { color: #ff7a5a; font-weight: 700; }
+body.blackout #toasts { top: 132px; }
+/* the meeting on your phone (Tab), over the game, which carries on behind it */
+#meeting.phone { inset: auto 22px 22px auto; width: min(460px, calc(100vw - 32px)); height: min(84vh, 820px); padding: 0; display: block; overflow: hidden;
+  background: #0e0a0d; border: 10px solid #18161a; border-radius: 38px; box-shadow: 0 18px 60px rgba(0, 0, 0, 0.7), inset 0 0 0 1px #3a3036; z-index: 6; }
+#meeting.phone.ejected { background: #0e0a0d; }
+#meeting.phone::before { content: ''; display: block; width: 90px; height: 18px; margin: 6px auto 2px; border-radius: 10px; background: #18161a; }
+#meeting.phone .card.wide { max-width: none; margin: 0; height: calc(100% - 26px); padding: 6px 14px 12px; overflow-y: auto; background: transparent; border: 0; box-shadow: none; }
+#meeting.phone h2 { font-size: 18px; margin: 2px 0; }
+#meeting.phone .mcols { flex-direction: column; gap: 8px; }
+#meeting.phone #mChat { min-height: 0; max-height: 34vh; font-size: 13px; }
+#meeting.phone #mSide, #meeting.phone #mSide.many, #meeting.phone #mSide.lots { flex: none; width: 100%; }
+#meeting.phone #mSide #mNotes { max-height: 12vh; overflow-y: auto; }
+#phoneNote { position: absolute; top: 74px; right: 16px; z-index: 5; max-width: 300px; background: #16121a; border: 1px solid #5a4a62; border-left: 4px solid #ff4a3a;
+  border-radius: 12px; padding: 9px 12px; display: flex; flex-direction: column; gap: 3px; cursor: pointer; animation: fade-in 0.3s; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); }
+#phoneNote b { color: #ff7a6a; letter-spacing: 0.06em; font-size: 13px; }
+#phoneNote span { color: #f3ead8; font-size: 14px; }
+#phoneNote i { color: #b8a8c0; font-size: 12px; font-style: normal; }
+#phoneNote.small { flex-direction: row; align-items: center; gap: 8px; padding: 6px 10px; }
+#phoneNote.small i { background: #3a2a42; border-radius: 5px; padding: 1px 6px; color: #f3ead8; }
+#prey { background: #3a1216; border: 1px solid #8a2a2a; border-radius: 6px; padding: 4px 10px; font-size: 13px; }
+#prey b { color: #ff5a4a; letter-spacing: 0.08em; margin-right: 4px; }
+/* The sprint bar under the crosshair */
+#stamina { left: 50%; top: calc(50% + 22px); width: 70px; height: 4px; margin-left: -35px; background: rgba(0, 0, 0, 0.45); border-radius: 2px; overflow: hidden; pointer-events: none; }
+#staminaFill { height: 100%; background: #f3ead8; transform-origin: left; }
+#stamina.low #staminaFill { background: #e8443a; }
+/* A killer's witness meter (the eyes edge) and the edge reminder over the killer bar */
+#eyes { position: fixed; left: 50%; top: calc(50% + 34px); transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 10px;
+  background: rgba(10, 34, 18, 0.62); color: #7ee08a; font-size: 12px; font-weight: bold; letter-spacing: 0.06em; pointer-events: none; }
+#eyes.seen { background: rgba(70, 10, 12, 0.72); color: #ff6a5a; }
+#edge { background: #2a1216; border: 1px solid #6a2a2a; border-radius: 6px; padding: 3px 10px; font-size: 12px; }
+#edge b { color: #ff8a80; letter-spacing: 0.08em; margin-right: 4px; }
+#killerBar button.edge { border-color: #c8402a; }
+/* The killers' pick screen */
+#pkList { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; margin: 12px 0 6px; }
+.pk-card { text-align: left; display: grid; grid-template-columns: auto 1fr auto; gap: 3px 8px; padding: 10px 12px; }
+.pk-card .pk-n { grid-row: span 2; color: #ff8a80; font-weight: bold; font-size: 18px; line-height: 1.1; }
+.pk-card b { color: var(--gold); }
+.pk-card .pk-key { font-size: 11px; border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; color: var(--muted); align-self: start; white-space: nowrap; }
+.pk-card .pk-t { grid-column: 2 / span 2; font-size: 13px; opacity: 0.85; }
+.pk-card.sel { border-color: var(--red); background: #3a1216; box-shadow: 0 0 0 1px var(--red); }
+.pk-card.ro { cursor: default; }
+.pk-card.ro:hover:not(:disabled) { background: #2a1b22; border-color: var(--line); }
+.pk-card.ro .pk-n { color: var(--muted); }
+#pick .row { align-items: center; }
+#pkTimer { color: var(--gold); flex: 1; }
+#pkCrew:empty { display: none; }
+/* Your marks in the meeting */
+.mk { font-size: 11px; border-radius: 4px; padding: 0 5px; margin-left: 4px; }
+.mk.sus { background: #5a3010; color: #ffb050; }
+.mk.ok { background: #143a1c; color: #7ee08a; }
 #lucky { color: var(--gold); font-size: 12px; }
 #drinkInfo, #hint { background: var(--panel); border-radius: 6px; padding: 4px 10px; font-size: 14px; }
 #drinkInfo:empty, #hint:empty, #lucky:empty { display: none; }
@@ -68,6 +157,8 @@ kbd { font: 12px monospace; background: #2a1b22; border: 1px solid var(--line); 
 #picker .pk-list button { text-align: left; display: flex; align-items: center; gap: 6px; }
 #picker .pk-dot { width: 12px; height: 12px; border-radius: 50%; flex: none; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5); }
 #picker .pk-x { margin-top: 10px; width: 100%; }
+#picker.many { width: min(94vw, 680px); } /* 13 names or more (up to 31): five columns instead of three */
+#picker.many .pk-list { max-height: 62vh; }
 #secCard { position: fixed; left: max(12px, env(safe-area-inset-left)); top: 50%; transform: translateY(-50%); background: var(--panel); border: 1px solid #3a6a8a;
   border-radius: 10px; padding: 10px 12px; width: 230px; pointer-events: auto; display: flex; flex-direction: column; gap: 6px; }
 #secCard b { color: #9fd8ff; }
@@ -81,6 +172,87 @@ kbd { font: 12px monospace; background: #2a1b22; border: 1px solid var(--line); 
 #ghostBar button { background: #22304a; border-color: #8ab0ff; }
 #sendBtn { position: fixed; left: 50%; top: 58%; transform: translateX(-50%); background: var(--panel); border: 1px solid var(--gold); border-radius: 8px;
   padding: 6px 12px; font-size: 14px; color: var(--gold); cursor: pointer; }
+/* The bar (bar.js): the bartender's mixer and the shady guy's wares */
+.barCard { position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 30; pointer-events: auto; background: var(--panel);
+  border: 1px solid var(--gold); border-radius: 12px; padding: 12px 14px; width: min(94vw, 760px); max-height: calc(100vh - 24px); overflow-y: auto;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); }
+#shop { width: min(94vw, 520px); border-color: #8a7a9a; }
+.bc-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; }
+.bc-head b { color: var(--gold); font-size: 18px; white-space: nowrap; }
+#shop .bc-head b { color: #c8b8e0; }
+.bc-head span { color: var(--muted); font-style: italic; font-size: 13px; flex: 1; }
+.bc-x { padding: 0 9px; font-size: 20px; line-height: 28px; }
+.mx-body { display: grid; grid-template-columns: 1fr 210px; gap: 12px; }
+.mx-ings { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px 8px; align-content: start; }
+.mx-ing { display: flex; align-items: center; gap: 6px; padding: 2px 4px; border-radius: 6px; border: 1px solid transparent; }
+.mx-ing.on { border-color: var(--line); background: rgba(232, 196, 106, 0.07); }
+.mx-ing i { width: 12px; height: 12px; border-radius: 50%; flex: none; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6); }
+.mx-ing span { flex: 1; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mx-ing button { width: 26px; height: 24px; padding: 0; line-height: 1; }
+.mx-ing b { width: 16px; text-align: center; color: var(--gold); }
+.mx-ing.poison { grid-column: 1 / -1; border-color: rgba(125, 255, 90, 0.35); background: rgba(40, 80, 20, 0.25); }
+.mx-ing.poison span { color: var(--green); }
+.mx-side { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.mx-glass { position: relative; width: 74px; height: 104px; border: 2px solid rgba(220, 235, 245, 0.55); border-top: none; border-radius: 0 0 16px 16px;
+  overflow: hidden; background: rgba(255, 255, 255, 0.04); }
+.mx-fill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; transition: height 0.2s, background 0.2s; }
+.mx-shine { position: absolute; left: 8px; top: 6px; bottom: 8px; width: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.18); }
+.mx-name { color: var(--gold); font-weight: bold; text-align: center; min-height: 1.4em; }
+.mx-stats { width: 100%; display: flex; flex-direction: column; gap: 3px; font-size: 12px; }
+.mx-stat { display: flex; align-items: center; gap: 6px; }
+.mx-stat span { width: 48px; color: var(--muted); }
+.mx-stat i, .mx-people i { flex: 1; height: 5px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; overflow: hidden; }
+.mx-stat b, .mx-people i b { display: block; height: 100%; }
+.mx-sip { color: var(--muted); font-size: 11px; text-align: center; margin-top: 2px; }
+.mx-pz { font-size: 12px; color: #b8e8a0; text-align: center; }
+.mx-pz.on { color: var(--green); font-weight: bold; }
+.mx-classics { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
+.mx-classics button { padding: 2px 7px; font-size: 11px; border-radius: 10px; }
+.mx-for { margin-top: 10px; }
+.mx-lab { font-size: 11px; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 4px; }
+.mx-lab span { color: var(--muted); letter-spacing: 0; margin-left: 6px; }
+.mx-people { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px; max-height: 26vh; overflow-y: auto; }
+.mx-people button { display: flex; align-items: center; gap: 5px; padding: 4px 6px; font-size: 12px; text-align: left; }
+.mx-people button.on { border-color: var(--gold); background: #3a2a18; }
+.mx-people .nm { width: 58px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mx-people i { height: 6px; }
+.mx-foot { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; }
+.mx-pour { background: var(--gold); color: #1a1014; font-weight: bold; flex: 1; max-width: 320px; }
+.mx-pour:hover:not(:disabled) { background: #ffd88a; color: #1a1014; }
+.mx-pour:disabled { opacity: 0.5; }
+.sh-wallet { margin-bottom: 8px; color: var(--muted); }
+.sh-wallet b { color: var(--gold); }
+.sh-list { display: flex; flex-direction: column; gap: 6px; }
+.sh-item { display: flex; align-items: center; gap: 10px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; }
+.sh-item div { flex: 1; display: flex; flex-direction: column; }
+.sh-item span { font-size: 12px; color: var(--muted); }
+.sh-item.gun { border-color: #e8443a; background: rgba(120, 20, 20, 0.25); }
+.sh-item.gun b { color: #ff8a80; }
+.sh-item button { min-width: 104px; font-weight: bold; color: var(--gold); }
+.sh-item button:disabled { opacity: 0.45; color: var(--muted); }
+#gunHud { color: #ff8a80; font-size: 12px; letter-spacing: 0.08em; text-align: center; }
+/* phones: three columns of ingredients, the classics in one sliding row, so the whole mixer fits a landscape screen */
+body.touch .barCard { zoom: 0.78; width: min(126vw, 980px); max-height: calc(126vh - 12px); padding: 6px 10px; }
+body.touch .bc-head { margin-bottom: 4px; }
+body.touch .mx-body { grid-template-columns: 1fr 150px; gap: 8px; }
+body.touch .mx-ings { grid-template-columns: repeat(3, 1fr); gap: 2px 6px; }
+body.touch .mx-ing.poison { grid-column: auto; }
+body.touch .mx-ing button { width: 30px; height: 26px; }
+body.touch .mx-glass { width: 40px; height: 56px; }
+body.touch .mx-classics { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; width: 100%; scrollbar-width: none; }
+body.touch .mx-classics button { flex: 0 0 auto; }
+body.touch .mx-for { margin-top: 4px; }
+body.touch .mx-people { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); max-height: 74px; }
+body.touch .mx-foot { margin-top: 6px; }
+@media (max-width: 560px) {
+  .mx-body, body.touch .mx-body { grid-template-columns: 1fr; }
+  body.touch .mx-ings { grid-template-columns: repeat(2, 1fr); }
+  .mx-side { order: -1; display: grid; grid-template-columns: 48px 1fr; gap: 2px 10px; align-items: center; }
+  .mx-glass { grid-row: span 3; }
+  .mx-name, .mx-pz { text-align: left; }
+  .mx-classics { grid-column: 1 / -1; }
+  body.touch .mx-people { max-height: 120px; }
+}
 #sickBar { position: fixed; left: 50%; top: max(70px, env(safe-area-inset-top)); transform: translateX(-50%); background: #2a5a12; color: #e6ffd0;
   border: 1px solid #9fe86a; border-radius: 8px; padding: 6px 14px; font-weight: bold; animation: sick 1s ease-in-out infinite; }
 @keyframes sick { 50% { background: #4a8a1e; } }
@@ -114,6 +286,19 @@ body.touch #secCard { top: auto; bottom: 60px; transform: none; width: min(60vw,
 @media (orientation: portrait) {
   #menu, #setup { background: radial-gradient(ellipse at 50% 40%, rgba(40, 10, 18, 0.35), rgba(8, 5, 7, 0.86)), url(assets/art2/key-menuPhone.webp) center / cover; }
 }
+/* the main menu's game modes */
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 6px 0 14px; }
+.modes .mode { display: flex; flex-direction: column; gap: 6px; text-align: left; padding: 12px 14px; border-radius: 12px; border: 2px solid #4a3a44; background: rgba(20, 12, 18, 0.7); color: #d8cfc0; cursor: pointer; }
+.modes .mode b { font-size: 18px; letter-spacing: 0.04em; color: #f3ead8; }
+.modes .mode span { font-size: 13px; line-height: 1.35; color: #b8a8b0; }
+.modes .mode:hover { border-color: #7a6070; }
+.modes .mode.on { border-color: var(--gold); background: rgba(60, 40, 16, 0.75); box-shadow: 0 0 0 1px var(--gold) inset; }
+.modes .mode.on b { color: var(--gold); }
+.modes .mode[data-mode="escape"].on { border-color: #ff5a3a; background: rgba(60, 14, 10, 0.75); box-shadow: 0 0 0 1px #ff5a3a inset; }
+.modes .mode[data-mode="escape"].on b { color: #ff7a5a; }
+#blackoutHud.exits { border-color: #3aff7a; }
+body.tallHud #toasts { top: 196px; }
+#blackoutHud.exits .bt { color: #6aff9a; }
 .joinRow { display: flex; gap: 8px; }
 .joinRow input { width: 100px; text-transform: uppercase; letter-spacing: 0.2em; text-align: center; }
 .joinRow button { flex: 1; }
@@ -121,6 +306,9 @@ body.touch #secCard { top: auto; bottom: 60px; transform: none; width: min(60vw,
 #roomCode { font: bold 44px monospace; letter-spacing: 0.3em; color: var(--gold); }
 #lobbyList { margin: 10px 0; display: flex; flex-wrap: wrap; gap: 6px; }
 #lobbyList span { background: #2a1b22; border: 1px solid var(--line); border-radius: 14px; padding: 3px 10px; font-size: 14px; }
+#lobbyList.big { gap: 4px; } /* over 16 in the room (up to 32): smaller name chips */
+#lobbyList.big span { padding: 2px 8px; font-size: 12px; }
+#lobbyList span.lcount { background: none; border-color: transparent; color: var(--muted); }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin: 10px 0; }
 .hcard { background: #120b0f; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
 .hcard b { color: var(--gold); }
@@ -151,6 +339,21 @@ body.touch #secCard { top: auto; bottom: 60px; transform: none; width: min(60vw,
 #mVotes.many .vrow button { padding: 4px 7px; font-size: 13px; }
 #mVotes.many .vrow button.acc { font-size: 11px; padding: 4px 5px; }
 #mVotes.many > button:last-child { grid-column: span 2; }
+/* 17-32 alive: a wider card, three columns of smaller vote rows and shorter notes, so 32 fit at 1280x720 */
+#meeting.lots .card.wide { max-width: 1240px; }
+#mSide.lots { flex: 0 1 620px; }
+#mSide.lots #mNotes { max-height: 15vh; }
+#mVotes.lots { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; }
+#mVotes.lots > button:last-child { grid-column: span 3; padding: 4px 10px; }
+#mVotes.lots .vrow { gap: 3px; min-width: 0; }
+#mVotes.lots .vrow button { padding: 3px 5px; font-size: 12px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#mVotes.lots .vrow button.acc { font-size: 10px; padding: 3px 4px; overflow: visible; }
+#mVotes.lots .vrow .pf { width: 18px; height: 18px; margin: -3px 4px -3px -2px; }
+#mVotes.lots .tally { min-width: 16px; font-size: 11px; white-space: nowrap; }
+#mVotes.lots .voted-tag, #mVotes.lots .mk { font-size: 10px; }
+/* on the phone (460 px) a big room's names in two columns; the card scrolls */
+#meeting.phone #mVotes.lots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#meeting.phone #mVotes.lots > button:last-child { grid-column: span 2; }
 #mNotes { font-size: 13px; color: var(--muted); margin-bottom: 10px; max-height: 22vh; overflow-y: auto; }
 #mNotes b { color: var(--ink); }
 #mNotes .hard { color: #ffb3ad; }
@@ -174,6 +377,8 @@ body.touch #secCard { top: auto; bottom: 60px; transform: none; width: min(60vw,
 body.touch #touchBtns { display: flex; position: fixed; right: max(10px, env(safe-area-inset-right)); bottom: max(10px, env(safe-area-inset-bottom)); flex-direction: column; gap: 7px; }
 body.touch #touchBtns button { width: 78px; height: 44px; padding: 0; font-size: 14px; background: rgba(42, 27, 34, 0.85); }
 body.touch #useBtn.ready { background: var(--gold); color: #1a1014; font-weight: bold; }
+body.touch #flashBtn.on { background: #fff3c0; color: #1a1014; font-weight: bold; }
+body.touch #shootBtn { background: #6a1414; border-color: #ff8a80; color: #ffd0cc; font-weight: bold; }
 body.touch #stick { display: block; position: fixed; width: 110px; height: 110px; margin: -55px 0 0 -55px; border-radius: 50%;
   border: 2px solid var(--line); background: rgba(232, 196, 106, 0.08); opacity: 0; pointer-events: none; }
 body.touch #stick.on { opacity: 1; }
@@ -189,11 +394,11 @@ body.touch #toasts { top: 70px; }
   .card h1 { font-size: 32px; }
   #mChat { min-height: 110px; max-height: 38vh; }
   #bank { padding: 5px 10px; width: 190px; }
-  #bankText { font-size: 15px; }
+  #bankAmt { font-size: 26px; }
 }
 @media (orientation: portrait) and (max-width: 640px) {
   #bank { width: 170px; }
-  #bankText { font-size: 14px; }
+  #bankAmt { font-size: 22px; }
   body.touch #bottom { bottom: max(10px, env(safe-area-inset-bottom)); }
   #toasts { top: 76px; }
 }
@@ -296,7 +501,7 @@ body.touch .tb-foot, body.touch #tbChips .tb-k { display: none; }
 /* The POISONED bar sits above the toasts instead of on the first one. */
 body.sick #toasts { top: 120px; }
 /* Ghosts: no thirst, and the world goes cold. */
-body.ghost #thirst { display: none; }
+body.ghost #thirst, body.ghost #stamina { display: none; }
 body.ghost #view { filter: saturate(0.35) brightness(0.92) hue-rotate(-12deg); }
 /* Phones: the role shows as a short chip next to the menu button; toasts start under the bankroll. */
 body.touch #role { display: block; font-size: 0; padding: 5px 9px; max-width: none; }
@@ -333,3 +538,164 @@ body.touch #killerBar button { flex: 0 0 auto; font-size: 12px; padding: 6px 8px
 @media (min-width: 2400px) and (min-height: 1300px) {
   #bank, #topRight, #bottom, #toasts, #hint, #tableBar, #lockHint, #picker, #splashText, .card { zoom: 1.6; }
 }
+/* the chip in hand at a game (scroll to change it) */
+#chipHud { display: flex; flex-direction: column; align-items: center; gap: 4px; pointer-events: none; }
+#chipHud.hidden { display: none; }
+#chipHud .chipRow { display: flex; align-items: center; gap: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 40px; padding: 5px 16px 5px 5px; }
+#chipHud .chipCoin { width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: var(--img) center / cover no-repeat, var(--c); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.55); }
+#chipHud .chipCoin span { color: #fff; font: 900 15px/1 "Arial Black", Impact, system-ui, sans-serif; text-shadow: 0 1px 0 #000, 0 0 4px #000, 0 0 8px rgba(0, 0, 0, 0.9); }
+#chipHud .chipSide { display: flex; flex-direction: column; gap: 1px; font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+#chipHud .chipSide b { color: var(--gold); font-size: 12px; }
+#chipHud #chipDown { color: #f3ead8; }
+#chipStatus { font: 900 12px/1.2 "Arial Black", Impact, system-ui, sans-serif; letter-spacing: 0.04em; color: var(--gold); background: rgba(10, 6, 8, 0.72); border-radius: 6px; padding: 3px 9px; max-width: min(90vw, 640px); text-align: center; }
+#chipStatus:empty, #chipNote:empty { display: none; }
+#chipNote { font: 900 14px/1.2 "Arial Black", Impact, system-ui, sans-serif; background: rgba(10, 6, 8, 0.8); border-radius: 6px; padding: 4px 10px; color: #efe6d6; }
+#chipNote.win { color: #4dff7a; } #chipNote.lose { color: #ff6a5a; } #chipNote.flash { color: #ffd040; }
+/* the settings screen */
+#settings { z-index: 6; }
+.set-card { max-height: calc(100vh - 32px); display: flex; flex-direction: column; padding: 16px 20px; }
+.set-top { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; flex-wrap: wrap; }
+.set-top h2 { margin: 0; }
+#setTabs { display: flex; gap: 6px; flex: 1; flex-wrap: wrap; }
+#setTabs button.on { background: var(--gold); color: #1a1014; border-color: var(--gold); }
+#setBody { overflow-y: auto; padding-right: 8px; min-height: 0; }
+.set-head { color: var(--gold); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin: 14px 0 2px; border-bottom: 1px solid var(--line); padding-bottom: 3px; }
+.set-row { display: grid; grid-template-columns: 200px 1fr; gap: 3px 14px; align-items: center; padding: 6px 0; }
+.set-row[hidden] { display: none; }
+.set-ctl { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.set-ctl select, .set-ctl input[type=text] { min-width: 240px; max-width: 100%; }
+.set-ctl input[type=range] { flex: 1; max-width: 320px; accent-color: var(--gold); }
+.set-val { min-width: 54px; color: var(--gold); font-variant-numeric: tabular-nums; }
+.set-tog { min-width: 64px; }
+.set-tog.on { background: var(--gold); color: #1a1014; border-color: var(--gold); }
+.set-note { grid-column: 2; color: var(--muted); font-size: 12px; line-height: 1.35; }
+.set-info { color: var(--muted); font-size: 13px; line-height: 1.4; }
+#fps { position: fixed; top: 4px; left: 50%; transform: translateX(-50%); z-index: 7; font: 12px/1.2 ui-monospace, Consolas, monospace; color: #c8f0a0; background: rgba(0, 0, 0, 0.6); padding: 3px 8px; border-radius: 4px; pointer-events: none; white-space: nowrap; }
+@media (max-width: 640px) { .set-row { grid-template-columns: 1fr; } .set-note { grid-column: 1; } .set-ctl select, .set-ctl input[type=text] { min-width: 0; width: 100%; } }
+/* voice chat: the mic badge in a game and the lobby's status line */
+#micHud { position: fixed; left: max(12px, env(safe-area-inset-left)); bottom: max(12px, env(safe-area-inset-bottom)); z-index: 3; font: 900 11px/1 "Arial Black", Impact, system-ui, sans-serif; letter-spacing: 0.06em; color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 6px 10px; pointer-events: none; }
+#micHud.talk { color: #4dff7a; border-color: #4dff7a; }
+#voiceLine { margin: 4px 0 8px; min-height: 1em; }
+/* Phones (Steve, 2026-10-15: "too many pop ups on mobile", "the hub covers too much of the screen, and simplify it"):
+   the HUD keeps to the corners and edges in small pieces, the middle of the view stays clear. The bankroll is one line,
+   the leaderboard, the goal line and the drink line go, thirst and hunger are two thin bars, the buttons sit in a small
+   block at the bottom right, and one short message shows at a time near the top. */
+.chipBtn { display: none; }
+body.touch #bank { display: flex; align-items: baseline; gap: 6px; width: auto; padding: 2px 8px; border-radius: 6px; }
+body.touch #bank .label { order: 2; font-size: 0; letter-spacing: 0; }
+body.touch #closeT { font-size: 10px; }
+body.touch #bankText { margin: 0; gap: 4px; }
+body.touch #bankAmt { font-size: 17px; }
+body.touch #bankDelta { font-size: 11px; }
+body.touch #bankGoal, body.touch #bank .bar, body.touch #lead, body.touch #drinkInfo, body.touch #edge { display: none; }
+body.touch #topRight { gap: 5px; }
+body.touch #role { padding: 3px 7px; border-radius: 6px; }
+body.touch #role b { font-size: 11px; }
+body.touch #menuBtn { width: 28px; height: 28px; font-size: 12px; }
+body.touch #bottom { gap: 4px; }
+body.touch #thirst { padding: 3px 6px; gap: 4px; border-radius: 5px; }
+body.touch #thirst .nk { display: none; }
+body.touch #thirst .bar { width: 34px; height: 4px; }
+body.touch #lucky { font-size: 10px; }
+body.touch #prey { font-size: 11px; padding: 2px 6px; }
+body.touch #killerBar button { font-size: 11px; padding: 4px 6px; }
+body.touch #touchBtns { display: grid; grid-template-columns: repeat(2, 52px); gap: 5px; }
+body.touch #touchBtns button { width: 52px; height: 32px; font-size: 12px; border-radius: 6px; }
+body.touch #toasts, body.touch.sick #toasts { top: calc(max(6px, env(safe-area-inset-top)) + 34px); width: min(50vw, 360px); gap: 0; }
+body.touch.blackout #toasts { top: 76px; }
+body.touch.tallHud #toasts { top: 112px; }
+body.touch .toast { font-size: 12px; line-height: 1.3; padding: 3px 10px; animation-duration: 2.8s; }
+body.touch #sickBar { top: calc(max(6px, env(safe-area-inset-top)) + 34px); font-size: 12px; padding: 3px 10px; }
+body.touch.sick #toasts { top: calc(max(6px, env(safe-area-inset-top)) + 64px); }
+body.touch #phoneNote { top: calc(max(6px, env(safe-area-inset-top)) + 34px); right: max(8px, env(safe-area-inset-right)); max-width: min(190px, 46vw); padding: 5px 8px; gap: 1px; border-radius: 8px; }
+body.touch #phoneNote b { font-size: 11px; }
+body.touch #phoneNote span { font-size: 12px; }
+body.touch #phoneNote i { font-size: 10px; }
+body.touch #blackoutHud { top: max(4px, env(safe-area-inset-top)); min-width: 0; max-width: 56vw; padding: 3px 10px; }
+body.touch #blackoutHud .bt { font-size: 12px; letter-spacing: 0.1em; }
+body.touch #blackoutHud .bt span { font-size: 11px; }
+body.touch #blackoutHud .br { gap: 8px; margin-top: 2px; font-size: 10px; flex-wrap: wrap; }
+body.touch #blackoutHud .br i { width: 28px; height: 5px; margin-left: 3px; }
+body.touch #blackoutHud .me { margin-top: 2px; font-size: 10px; }
+body.touch #blackoutHud .me.big { font-size: 12px; }
+body.touch #blackoutHud .me.held { font-size: 13px; }
+body.touch #blackoutHud .me:not(.big):not(.held):not(.mon) { display: none; } /* (the long flashlight how-to names keys) */
+body.touch #chipHud { gap: 2px; align-items: flex-start; }
+body.touch #chipHud .chipRow { gap: 5px; padding: 3px 8px 3px 3px; pointer-events: auto; }
+body.touch #chipHud .chipCoin { width: 36px; height: 36px; }
+body.touch #chipHud .chipCoin span { font-size: 11px; }
+body.touch #chipHud .chipSide { font-size: 9px; }
+body.touch #chipHud .chipSide b { font-size: 10px; }
+body.touch .chipBtn { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border-radius: 50%; font: 700 18px/1 system-ui, sans-serif; background: rgba(42, 27, 34, 0.9); }
+body.touch #chipStatus, body.touch #chipNote { font-size: 10px; padding: 2px 7px; max-width: calc(100vw - 140px); }
+/* what a tap at a game pressed: the bottom middle in landscape, under the message line in portrait */
+body.touch #aim, body.touch.seated #aim { top: auto; bottom: calc(max(10px, env(safe-area-inset-bottom)) + 4px); left: 50%; transform: translateX(-50%); max-width: 54vw;
+  font-size: 11px; padding: 2px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (orientation: portrait) and (max-width: 640px) {
+  body.touch #bank { width: auto; }
+  body.touch #bankAmt { font-size: 16px; }
+  body.touch #closeT:not(.late) { display: none; } /* (narrow: the closing time shows in its last two minutes) */
+  body.touch #phoneNote { top: calc(max(6px, env(safe-area-inset-top)) + 96px); } /* (under the POISONED bar and the message line) */
+  body.touch #aim, body.touch.seated #aim { top: calc(max(6px, env(safe-area-inset-top)) + 64px); bottom: auto; max-width: 70vw; }
+}
+/* HUD declutter (Steve, 2026-10-15: "too many pop ups to pay attention to, too many buttons at the bottom and more things
+   to keep track of"). One message line at the top. The bottom middle holds only the chip (small while walking) and, for
+   a killer, the target and the moves, folded to their key while they wait. Thirst, hunger, the drink in hand and the
+   revolver are a small cluster in the bottom-left corner that only speaks up when something is low. The top winners
+   show at a game; the role card says its piece for the first 15 seconds, then shrinks to one line. */
+#needs { left: max(12px, env(safe-area-inset-left)); bottom: max(12px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; align-items: flex-start; gap: 5px; pointer-events: none; }
+#micHud:not(.hidden) ~ #needs { bottom: calc(max(12px, env(safe-area-inset-bottom)) + 30px); }
+#needs #thirst { gap: 6px; padding: 4px 8px; background: rgba(18, 12, 16, 0.6); border-color: rgba(232, 196, 106, 0.18); }
+#needs #thirst .nk { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+#needs .nt { color: #6ac0e8; } #needs .nh { color: #e0a95b; }
+#needs .nk em { display: none; font-style: normal; font-weight: bold; }
+#needs #thirst .bar { width: 44px; height: 5px; margin: 0; transition: width 0.25s; }
+#needs #thirst.lowT .nt, #needs #thirst.lowH .nh { color: #ff6b5b; }
+#needs #thirst.lowT .nt em, #needs #thirst.lowH .nh em { display: inline; }
+#needs #thirst.lowT .bar:nth-of-type(1), #needs #thirst.lowH .bar:nth-of-type(2) { width: 90px; height: 7px; }
+#needs #thirst.lowT, #needs #thirst.lowH { background: var(--panel); border-color: rgba(232, 68, 58, 0.6); }
+#needs #drinkInfo { font-size: 13px; padding: 3px 9px; background: rgba(18, 12, 16, 0.75); }
+#needs #gunHud { background: rgba(58, 18, 22, 0.85); border: 1px solid #8a2a2a; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
+body:not(.seated) #lead { display: none; }
+#role.brief { padding: 5px 10px; }
+#role.brief .rl-more { display: none; }
+#role .rl-edge { display: block; margin-top: 3px; font-size: 12px; color: #ff8a80; }
+#role.brief .rl-edge { display: inline; margin: 0 0 0 4px; }
+#chipHud.walk { opacity: 0.8; }
+#chipHud.walk #chipNote, #chipHud.walk #chipStatus, #chipHud.walk .chipSide, #chipHud.walk .chipBtn { display: none; }
+#chipHud.walk .chipRow { padding: 0; background: none; border: 0; }
+#chipHud.walk .chipCoin { width: 40px; height: 40px; }
+#chipHud.walk .chipCoin span { font-size: 11px; }
+#killerBar { gap: 4px; }
+#killerBar button { padding: 5px 8px; font-size: 13px; }
+#killerBar button.cool { padding: 5px 6px; }
+#killerBar button.cool span { display: none; }
+#killerBar button.cool i { font-size: 11px; }
+/* Phones: the cluster sits under the bankroll (the bottom left is the walking thumb's); the buttons by the right thumb are
+   one column, bigger, and only the ones that can do something right now; the killer's moves fold into one Moves button. */
+body.touch #needs { top: calc(max(6px, env(safe-area-inset-top)) + 30px); bottom: auto; left: max(8px, env(safe-area-inset-left)); gap: 3px; }
+body.touch #needs #thirst { padding: 2px 5px; gap: 3px; }
+body.touch #needs #thirst .nk { display: inline-flex; font-size: 10px; }
+body.touch #needs #thirst .nk svg { width: 11px; height: 11px; }
+body.touch #needs #thirst .bar { width: 26px; height: 4px; }
+body.touch #needs #thirst.lowT .bar:nth-of-type(1), body.touch #needs #thirst.lowH .bar:nth-of-type(2) { width: 44px; height: 5px; }
+body.touch #needs #gunHud { font-size: 10px; padding: 1px 6px; }
+body.touch #touchBtns { display: flex; flex-direction: column-reverse; flex-wrap: wrap-reverse; align-items: flex-end; align-content: flex-start; gap: 6px; max-height: calc(100vh - 110px); }
+body.touch #touchBtns button { width: 62px; height: 42px; font-size: 13px; border-radius: 8px; }
+body.touch #touchBtns #useBtn { width: 70px; height: 54px; font-size: 15px; border-radius: 10px; }
+body.touch #movesBtn { background: #4a1418; border-color: #c8402a; color: #ffd0cc; font-weight: bold; font-size: 12px; }
+body.touch.movesOpen #movesBtn { background: #c8402a; color: #fff; }
+body.touch #leapBtn { background: #6a1414; border-color: #ff8a80; color: #ffd0cc; font-weight: bold; }
+body.touch:not(.movesOpen) #killerBar { display: none !important; }
+body.touch #killerBar { position: fixed; right: calc(max(10px, env(safe-area-inset-right)) + 76px); bottom: max(10px, env(safe-area-inset-bottom)); left: auto; max-width: none;
+  flex-direction: column-reverse; flex-wrap: nowrap; align-items: stretch; overflow: visible; gap: 5px; pointer-events: auto; }
+body.touch #killerBar button { width: 128px; height: 38px; text-align: left; padding: 0 10px; font-size: 13px; }
+body.touch #killerBar button.cool span { display: inline; }
+body.touch #killerBar button.cool { opacity: 0.7; }
+@media (max-height: 420px) { body.touch #killerBar { display: grid; grid-template-columns: repeat(2, 120px); grid-auto-flow: row; direction: rtl; } body.touch #killerBar button { direction: ltr; width: 120px; height: 36px; } }
+body:not(.touch) #killerBar button.cool { display: none; }
+#killerBar .kb-wait { align-self: center; padding: 4px 9px; border-radius: 6px; background: rgba(30, 13, 16, 0.85); border: 1px solid #5a2228; color: #d8c4c6; font-size: 12px; }
+#killerBar .kb-wait b { color: #ff8a80; letter-spacing: 0.12em; margin-right: 3px; }
+body.touch #role .rl-edge { display: none; } /* (phones: the role chip is one word; an edge you press is in the Moves fan) */
+body.touch #killerBar .kb-wait { display: none; }
+body.touch #touchBtns button { white-space: nowrap; overflow: hidden; }

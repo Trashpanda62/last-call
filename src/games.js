@@ -11,6 +11,8 @@ export const BET = { min: 10, frac: 0.25, floor: 1000, chips: [10, 100, 1000, 10
 export function maxBet(bank) { const m = Math.max(BET.floor, bank * BET.frac); return niceDown(m); }
 export function clampBet(b, bank) { return Math.max(BET.min, Math.min(maxBet(bank), Math.round(b) || BET.min)); }
 // Round down to 2 significant figures so limits read cleanly ($37,000 not $37,412).
+// A round goal: the nearest $100,000 under $2,000,000, $250,000 under $5,000,000, $500,000 above ($3,000,000, not $3,100,000).
+export function roundGoal(v) { const step = v < 2e5 ? 1e4 : v < 2e6 ? 1e5 : v < 5e6 ? 2.5e5 : 5e5; return Math.max(step, Math.round(v / step) * step); }
 export function niceDown(v) { if (v < 100) return Math.floor(v); const p = Math.pow(10, Math.floor(Math.log10(v)) - 1); return Math.floor(v / p) * p; }
 // The biggest single payout a game can make, as a multiple of the bet (used to sanity-check reported results).
 export const MAX_MULT = 120000;
@@ -140,7 +142,7 @@ export const rlBall = (r = rnd) => Math.floor(r() * 37);
 export function rlMult(bet, n, lucky) {
   const L = lucky.find(o => o.n === n);
   if (typeof bet === 'number') return bet === n ? (L ? L.x : 36) : 0;
-  const b = RL_BETS[bet] || RL_COLS[bet]; if (!b) return 0;
+  const b = Object.hasOwn(RL_BETS, bet) ? RL_BETS[bet] : Object.hasOwn(RL_COLS, bet) ? RL_COLS[bet] : null; if (!b) return 0;
   return b.win(n) ? b.pays * (L ? 2 : 1) : n === 0 ? 1 : 0;
 }
 export function rlSpin(bet, lucky, r = rnd) {
@@ -162,7 +164,7 @@ export const SLOT_TIERS = {
   high: { name: 'High limit', minBet: 1000, pays: { '💎': 1000, '7': 100, BAR: 30, '🔔': 15, '🍒': 8, '🍋': 5 }, two: 1.5, one: 0.5 },
 };
 export function slotSpin(tier, r = rnd) {
-  const T = SLOT_TIERS[tier] || SLOT_TIERS.penny;
+  const T = Object.hasOwn(SLOT_TIERS, tier) ? SLOT_TIERS[tier] : SLOT_TIERS.penny;
   const reels = [0, 1, 2].map(() => pickW(SLOT_SYMS, SLOT_W, r));
   return { reels, ...slotPay(T, reels) };
 }
@@ -193,7 +195,7 @@ export const PLINKO = {
 export function plinkoDrop(risk, r = rnd) {
   const path = []; let k = 0;
   for (let i = 0; i < PLINKO_ROWS; i++) { const right = r() < 0.5; path.push(right ? 1 : 0); k += right ? 1 : 0; }
-  return { path, bucket: k, mult: (PLINKO[risk] || PLINKO.low)[k] };
+  return { path, bucket: k, mult: (Object.hasOwn(PLINKO, risk) ? PLINKO[risk] : PLINKO.low)[k] };
 }
 export function plinkoRTP(risk) {
   let ev = 0, c = 1; const n = PLINKO_ROWS;
@@ -229,13 +231,14 @@ export const TOWER = {
   modes: { easy: { eggs: 4, dragons: 1, label: 'Easy' }, medium: { eggs: 3, dragons: 1, label: 'Medium' }, hard: { eggs: 2, dragons: 1, label: 'Hard' }, expert: { eggs: 3, dragons: 2, label: 'Expert' }, master: { eggs: 4, dragons: 3, label: 'Master' } },
 };
 export function towerNew(mode, r = rnd) {
-  const M = TOWER.modes[mode] || TOWER.modes.medium;
+  if (!Object.hasOwn(TOWER.modes, mode)) mode = 'medium';
+  const M = TOWER.modes[mode];
   const rows = [];
   for (let i = 0; i < TOWER.rows; i++) { const idx = [...Array(M.eggs).keys()]; for (let j = idx.length - 1; j > 0; j--) { const k = Math.floor(r() * (j + 1)); [idx[j], idx[k]] = [idx[k], idx[j]]; } rows.push(new Set(idx.slice(0, M.dragons))); }
-  return { mode: mode in TOWER.modes ? mode : 'medium', eggs: M.eggs, rows, row: 0, picks: [], dead: false, over: false };
+  return { mode, eggs: M.eggs, rows, row: 0, picks: [], dead: false, over: false };
 }
 export function towerMult(mode, rows) {
-  const M = TOWER.modes[mode]; if (rows <= 0) return 1;
+  const M = Object.hasOwn(TOWER.modes, mode) ? TOWER.modes[mode] : TOWER.modes.medium; if (rows <= 0) return 1;
   return Math.min(TOWER.cap, Math.floor(TOWER.rtp * Math.pow(M.eggs / (M.eggs - M.dragons), rows) * 100) / 100);
 }
 export function towerPick(s, egg) {
@@ -264,6 +267,10 @@ export const WHEEL = (() => {
 // are settled by the host itself).
 export const GAME_MAX = { bj: BJ.bjPays, roulette: 500, slots: Math.max(...Object.values(SLOT_TIERS).map(T => T.pays['💎'])), plinko: 1000,
   mines: MINES.cap, tower: TOWER.cap, coin: 2 ** COIN.maxRide, wheel: Math.max(...WHEEL.segs), dice: 5 };
+// The shortest honest round at each table (tables.js): its animation (roulette 4 s, slots 1.75, a Plinko ball's 16-row
+// fall 1.97, a coin flip 1.25, the wheel 5, dice 0.95), or two presses where nothing animates (blackjack, Mines, Dragon
+// Tower). The host paces reported rounds by it.
+export const ROUND_MIN = { bj: 0.15, roulette: 4, slots: 1.75, plinko: 1.97, mines: 0.15, tower: 0.15, coin: 1.25, wheel: 5, dice: 0.95 };
 export function wheelSpin(r = rnd) { const i = Math.floor(r() * WHEEL.segs.length); return { i, mult: WHEEL.segs[i] }; }
 export const wheelRTP = () => WHEEL.segs.reduce((a, b) => a + b, 0) / WHEEL.segs.length;
 

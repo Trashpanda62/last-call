@@ -15,29 +15,43 @@
 <!-- In-game HUD -->
 <div id="hud" class="hidden">
   <div id="cross"></div>
+  <div id="stamina" class="hidden"><div id="staminaFill"></div></div>
+  <div id="eyes" class="hidden"><svg viewBox="0 0 24 14" width="20" height="12" aria-hidden="true"><path d="M1 7C4 2 8 0.8 12 0.8S20 2 23 7C20 12 16 13.2 12 13.2S4 12 1 7Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="7" r="3.2" fill="currentColor"/></svg><span id="eyesN"></span></div>
   <div id="aim"></div>
   <div id="hint"></div>
+  <div id="blackoutHud" class="hidden"></div>
+  <div id="phoneNote" class="hidden"></div>
   <div id="tableBar" class="hidden">
     <div id="tbNote"></div>
     <div id="tbPlaced"></div>
     <div class="tb-top"><span><span class="tb-k">ON TABLE</span> <b id="tbTotal"></b></span><span id="tbStatus"></span><span id="tbMax"></span></div>
     <div class="tb-row"><div id="tbChips"></div><div id="tbTools"></div><div id="tbActs"></div></div>
-    <div class="tb-foot"><span class="kb">[E] or [Q] stand up · wheel changes your chip · right-click takes chips back · hold Space to look behind you</span><span class="tb">Tap the felt to bet · Use stands you up</span></div>
+    <div class="tb-foot"><span class="kb">walk away to leave · wheel changes your chip · right-click takes chips back · hold Space to look behind you</span><span class="tb">Tap the felt to bet · Use stands you up</span></div>
   </div>
   <div id="lockHint" class="hidden">Click to look around</div>
+  <div id="micHud" class="hidden"></div>
   <div id="bank">
     <div class="label">Bankroll <span id="closeT"></span></div>
-    <div id="bankText">$3,000 / $9,000</div>
+    <div id="bankText"><span id="bankAmt">$3,000</span><span id="bankDelta"></span></div>
+    <div id="bankGoal">break the bank at $9,000</div>
     <div class="bar"><div id="bankFill"></div></div>
+    <div id="lead"></div>
   </div>
   <div id="topRight">
     <div id="role"></div>
     <button id="menuBtn" aria-label="Menu">II</button>
   </div>
   <div id="bottom">
-    <div id="thirst"><span>Thirst</span><div class="bar"><div id="thirstFill"></div></div><span id="lucky"></span></div>
-    <div id="drinkInfo"></div>
+    <div id="chipHud" class="hidden"><div id="chipNote"></div><div id="chipStatus"></div><div class="chipRow"><button id="chipDn" class="chipBtn" aria-label="Smaller chip">&minus;</button><div class="chipCoin"><span id="chipVal"></span></div><button id="chipUp" class="chipBtn" aria-label="Bigger chip">+</button><div class="chipSide"><b>YOUR CHIP</b><span class="kb">SCROLL TO CHANGE</span><span id="chipDown"></span></div></div></div>
+    <div id="prey" class="hidden"></div>
+    <div id="edge" class="hidden"></div>
     <div id="killerBar" class="hidden"></div>
+  </div>
+  <!-- thirst, hunger, the drink in hand and the revolver: a small cluster in the bottom-left corner (phones: under the bankroll) -->
+  <div id="needs">
+    <div id="thirst"><span class="nk nt" title="Thirst"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.5C6 5 3.5 7.6 3.5 10.4a4.5 4.5 0 0 0 9 0C12.5 7.6 10 5 8 1.5Z" fill="currentColor"/></svg><em>Thirsty</em></span><div class="bar"><div id="thirstFill"></div></div><span class="nk nh" title="Hunger"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 14.5C4 12.5 1.5 10 1.5 6.8 1.5 4.6 3 3 5 3c1.6 0 2.6 1 3 2.2C8.4 4 9.4 3 11 3c2 0 3.5 1.6 3.5 3.8 0 3.2-2.5 5.7-6.5 7.7Z" fill="none" stroke="currentColor" stroke-width="2"/></svg><em>Hungry</em></span><div class="bar"><div id="hungerFill"></div></div><span id="lucky"></span></div>
+    <div id="drinkInfo"></div>
+    <div id="gunHud" class="hidden"></div>
   </div>
   <div id="toasts"></div>
   <div id="stick"><div id="knob"></div></div>
@@ -46,7 +60,10 @@
     <button data-act="sip">Sip</button>
     <button data-act="inspect">Check</button>
     <button data-act="pour">Pour</button>
-    <button data-act="back">Look back</button>
+    <button data-act="flash" id="flashBtn" class="hidden">Light</button>
+    <button data-act="shoot" id="shootBtn" class="hidden">Shoot</button>
+    <button id="movesBtn" class="hidden" aria-expanded="false">Moves</button>
+    <button data-act="leap" id="leapBtn" class="hidden">Pounce</button>
   </div>
 </div>
 
@@ -57,7 +74,13 @@
   <div class="card">
     <h1>Last Call</h1>
     <p class="tag">A casino full of gamblers. Some of them are killers. Watch your drink.</p>
+    <div id="modePick" class="modes" role="radiogroup" aria-label="Game mode">
+      <button type="button" class="mode" data-mode="classic" role="radio"><b>Murder Mystery</b><span>Find the killers among the gamblers. Report the bodies, talk it out on your phone, vote them out, or break the bank first.</span></button>
+      <button type="button" class="mode" data-mode="escape" role="radio"><b>Escape</b><span>No meetings, no votes. The power goes out and the killers turn into monsters. Get the lights back on and get out the doors before they get you all.</span></button>
+    </div>
     <label class="field">Your name <input id="nameIn" maxlength="12" autocomplete="off" spellcheck="false"></label>
+    <div class="field">Your death sound <span class="deathPick"><button id="deathRec" type="button" title="Record your own: 2.5 seconds from your microphone">&#9679; Record</button><select id="deathIn" aria-label="Your death sound"></select><button id="deathPlay" type="button" title="Hear it" aria-label="Hear it">&#9654;</button></span></div>
+    <p id="deathNote" class="muted small">Record your own scream: everyone hears it when you die.</p>
     <div class="col">
       <button class="big" id="soloBtn">Play solo with bots</button>
       <button class="big alt" id="hostBtn">Host an online room</button>
@@ -65,6 +88,7 @@
     </div>
     <div class="row small-row">
       <button id="howBtn">How to play</button>
+      <button id="setBtn">Settings</button>
       <button id="musicBtn"></button>
       <button id="sfxBtn"></button>
     </div>
@@ -82,6 +106,7 @@
       <div id="roomCode">----</div>
       <div class="row"><button id="shareBtn">Share invite link</button></div>
       <div id="lobbyList"></div>
+      <div id="voiceLine" class="muted small"></div>
     </div>
     <div id="opts">
       <label class="field">Players <select id="optPlayers"></select></label>
@@ -103,21 +128,24 @@
   <div class="card wide">
     <h2>How to play</h2>
     <div class="cards">
-      <div class="hcard"><b>The setup</b><p>Up to sixteen gamblers walk into a casino. One to four of them are killers. Nobody knows who.</p></div>
+      <div class="hcard"><b>The setup</b><p>Up to thirty-two gamblers walk into a casino. One to eight of them are killers. Nobody knows who.</p></div>
       <div class="hcard"><b>Gamblers</b><p>Twelve games, one crew bank. Blackjack, roulette, slots, Crash, Plinko, Mines, Dragon Tower, the duck race, street dice, the prize wheel and the coin flip. Pick your bet; the max grows with the bank. Hit the target and the house is broken. Or vote every killer out.</p></div>
-      <div class="hcard"><b>The killer</b><p>Order a poisoned drink "on the house" at the bar, rig an empty machine or the snack bowl, knife someone from behind, shove them into the duck pond or drop a chandelier on a table. Then wear your victim's face for a while. Do it when nobody is looking.</p></div>
-      <div class="hcard"><b>Stay alive</b><p>You only see what you are looking at, and knives come from behind. Free drinks might be poisoned: sniff before you sip. Check a machine before you sit. Poisoned? You have a few seconds to reach the antidote at the bar. Screams carry through walls.</p></div>
-      <div class="hcard"><b>Thirst and snacks</b><p>Get thirsty and you slow down, so you have to drink. Pretzels make your wins pay more for a while, if they're clean.</p></div>
-      <div class="hcard"><b>Security and ghosts</b><p>At the security desk the crew can buy cameras (watch any room) or a guard who reports what they see. The dead can haunt one person a round; the bots near them get a bad feeling.</p></div>
+      <div class="hcard"><b>The killer</b><p>Mix a poisoned drink at the bar and send it to anyone, rig an empty machine or the snack bowl, knife someone from behind, shove them into the duck pond or drop a chandelier on a table. Then wear your victim's face for a while. Do it when nobody is looking.</p></div>
+      <div class="hcard"><b>The blackout</b><p>A killer can cut the power (6), then press T to turn into a giant mutated potato monster. It kills everyone it catches, as many as it can catch, until the crew resets the breakers by flashlight: 3 grabs whoever is in reach, E pounces a few metres at whoever is ahead (a miss leaves it winded). Sprint, hide, keep your flashlight off.</p></div>
+      <div class="hcard"><b>Stay alive</b><p>You only see what you are looking at, and knives come from behind. Free drinks might be poisoned, and anyone can poison one: sniff before you sip. The shady guy in the bar's corner sells for your winnings, up to a revolver. Check a game before you play it. Poisoned? You have a few seconds to reach the antidote at the bar. A killing is heard all over its room, and only faintly by someone right against its walls.</p></div>
+      <div class="hcard"><b>Thirst and hunger</b><p>Get thirsty or hungry and you slow down, so drink at the bar and eat at the SNACKS stands (six around the casino). Pretzels also make your wins pay more for a while, if they're clean.</p></div>
+      <div class="hcard"><b>Security and ghosts</b><p>Sit at the security desk and the cameras come on: watch any room from there. The crew can also hire a guard who reports what they see. The dead can haunt one person a round; the bots near them get a bad feeling.</p></div>
+      <div class="hcard"><b>Killer edges</b><p>Before the night starts each killer picks one edge: a witness meter, a camera over the shoulder, a sense that shows gamblers through walls, the STAFF ONLY doors, light feet, night eyes or a jackpot siren that pulls the crowd. Gamblers see the list too.</p></div>
       <div class="hcard"><b>Meetings</b><p>Find a body or ring the pit bell. Everyone says what they saw (the killers lie), then votes. Your notes remember what you saw.</p></div>
     </div>
-    <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, E or click to use, F sip, R check (a drink, machine or snack bowl), X pour, G send a drink (at the bar), hold Space to look behind you, 1-6 killer moves, H haunt (as a ghost), Esc menu.
-      <b>At a table</b> the camera looks down on the game and the mouse is free: pick a chip on the bar (or turn the wheel), click the felt to bet, right-click a bet to take it back, then press the game's big button. UNDO, CLEAR, x2 and MAX sit by the chips. Q, E or a walk key stands you up.</p>
+    <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, E or click to use, F sip, R check (a drink, machine or snack bowl), X pour, G the mixer (at the bar), Q fire the revolver, Shift sprint (5 seconds), Space marks whoever you aim at as a suspect (again: trusted), 1-6 killer moves, T turn into the monster in a blackout (then 3 grab, E pounce), 7 and hold V for some killer edges, H haunt (as a ghost), Esc menu.
+      <b>At a game</b> you just walk up and stand there, free to look round and move: scroll the mouse wheel to pick your chip (it shows at the bottom), click a glowing spot on the felt to put chips there, right-click to take them back. Roulette, blackjack, dice, the coin flip and the wheel then start by themselves after a short countdown (the game's big button starts one at once), and your chips ride each round until you take them back; at the duck race and Crash your chips are your bet for the next race or rocket. Walk away to leave; a round you leave is played out for you.
+      <b>The screen</b> stays quiet: one message at a time at the top, thirst and hunger in the bottom-left corner (they turn red and grow when low), and a killer's moves at the bottom, folded to their key while they wait. <b>On a phone</b> the left thumb walks, the right drags to look, and the buttons by the right thumb are the ones you can use right now: Use always, Sip, Check and Pour with a drink in hand (Check at a game too), Light in a blackout, Shoot with a loaded revolver, Moves for a killer's moves and Pounce for the monster.</p>
     <button class="big" id="howClose">Got it</button>
   </div>
 </div>
 
-<div id="meeting" class="overlay hidden">
+<div id="meeting" class="overlay phone hidden">
   <div class="card wide">
     <h2 id="mTitle">Emergency meeting</h2>
     <div id="mReason" class="muted"></div>
@@ -136,6 +164,17 @@
   </div>
 </div>
 
+<!-- Before the night starts: the killers pick their edge, the gamblers see what they might be -->
+<div id="pick" class="overlay hidden">
+  <div class="card wide">
+    <h2 id="pkTitle"></h2>
+    <p id="pkSub" class="muted"></p>
+    <div id="pkList"></div>
+    <p id="pkCrew" class="muted"></p>
+    <div class="row"><span id="pkTimer"></span><button class="big hidden" id="pkGo">Start the night</button><button id="pkLeave">Leave game</button></div>
+  </div>
+</div>
+
 <div id="pause" class="overlay hidden">
   <div class="card">
     <h2>Paused</h2>
@@ -144,6 +183,7 @@
       <button id="pMusic"></button>
       <button id="pSfx"></button>
       <button id="pHow">How to play</button>
+      <button id="pSet">Settings</button>
       <button id="quitBtn">Leave game</button>
     </div>
   </div>
@@ -161,6 +201,15 @@
     <p id="overWait" class="muted hidden">Waiting for the host...</p>
   </div>
 </div>
+
+<!-- Settings: graphics, sound, voice, controls (built by settings-ui.js) -->
+<div id="settings" class="overlay hidden">
+  <div class="card wide set-card">
+    <div class="set-top"><h2>Settings</h2><div id="setTabs"></div><button class="big" id="setClose">Done</button></div>
+    <div id="setBody"></div>
+  </div>
+</div>
+<div id="fps" class="hidden"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js" defer></script>
 <script type="importmap">{ "imports": { "three": "./vendor/three/build/three.module.js", "three/addons/": "./vendor/three/addons/" } }</script>

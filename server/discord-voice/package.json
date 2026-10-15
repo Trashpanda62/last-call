@@ -1,0 +1,19 @@
+{
+  "name": "last-call-discord-voice",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Room-based Discord voice for Last Call: moves linked players into the voice channel of the in-game room they stand in.",
+  "type": "module",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "discord.js": "^14.27.0",
+    "ws": "^8.22.0"
+  }
+}

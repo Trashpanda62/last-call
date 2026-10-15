@@ -3,7 +3,7 @@ skeleton (Hips, Spine, Spine1, Head, Left/RightArm, ForeArm, Hand, Left/RightUpL
 region weights, and exports a skinned GLB (+Y up, facing +Z, feet on y=0, height in metres). Optionally renders a check
 sheet with a few test poses.
 
-  blender -b --factory-startup --python tools/rig_bean.py -- in.glb out.glb [height_m] [check.png]
+  blender -b --factory-startup --python tools/rig_bean.py -- in.glb out.glb [height_m] [check.png|-] [texture_px] [widen]
 """
 import bpy, sys, math, json
 from mathutils import Vector, Matrix
@@ -11,7 +11,9 @@ from mathutils import Vector, Matrix
 args = sys.argv[sys.argv.index('--') + 1:]
 src, dst = args[0], args[1]
 HEIGHT = float(args[2]) if len(args) > 2 else 1.2
-CHECK = args[3] if len(args) > 3 else None
+CHECK = args[3] if len(args) > 3 and args[3] != '-' else None
+TEX = int(args[4]) if len(args) > 4 else 1024  # the potatoes keep 2048 px maps: their skin is seen nose to nose
+WIDEN = float(args[5]) if len(args) > 5 else 1.0  # the round potato: its design came out as tall as the other, so it is made wider here
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=src)
@@ -31,7 +33,7 @@ zmin = min(v.z for v in vs); zmax = max(v.z for v in vs)
 s = HEIGHT / (zmax - zmin)
 cx = (min(v.x for v in vs) + max(v.x for v in vs)) / 2
 for v in me.vertices:
-    v.co = Vector(((v.co.x - cx) * s, v.co.y * s, (v.co.z - zmin) * s))
+    v.co = Vector(((v.co.x - cx) * s * WIDEN, v.co.y * s * WIDEN, (v.co.z - zmin) * s))
 vs = [v.co.copy() for v in me.vertices]
 H = HEIGHT
 
@@ -65,12 +67,45 @@ for z, w, *_ in sorted(prof):
 leg_top = leg_top or 0.25 * H
 body_bot = leg_top
 print('trunk', round(trunk, 3), 'arms', round(arm_lo, 3), round(arm_hi, 3), 'legs top', round(leg_top, 3))
+# the legs and feet reach this far out; the potatoes' long arms hang their hands beside the legs' tops, further out
+LEG_W = max(abs(v.x) for v in vs if v.z < 0.5 * leg_top)
+
+
+# The potatoes are eggs: wider at the belly than the upper body's median, so a single trunk width gave the belly's sides
+# to the arms. The body's own half-width at each height: the widest point on its front and back faces (well off the
+# mid-plane, where the A-pose arms hang thin, and short of any gap: a hand past it), a little wider for the curve round its side.
+BODY = []
+for a, b, sl in slices(lambda v: v.z > leg_top, lambda v: v.z, 40, 0, H):
+    y0 = min(v.y for v in sl); y1 = max(v.y for v in sl); yc = (y0 + y1) / 2; half = (y1 - y0) / 2
+    face = sorted(abs(v.x) for v in sl if abs(v.y - yc) > 0.3 * half)
+    if face:
+        w = face[0]
+        for x in face:  # out from the middle until a gap: past it, a hand (a glove is deep too)
+            if x - w > 0.03 * H:
+                break
+            w = x
+        BODY.append(((a + b) / 2, w * 1.06))
+BODY = [(z, max(w for _, w in BODY[max(0, i - 1):i + 2])) for i, (z, _) in enumerate(BODY)]  # smoothed: the widest of each three
+
+
+def body_w(z):  # the body's half-width at height z (the trunk median outside the measured range)
+    if not BODY or z < BODY[0][0] or z > BODY[-1][0]:
+        return trunk
+    for (z0, w0), (z1, w1) in zip(BODY, BODY[1:]):
+        if z0 <= z <= z1:
+            return w0 + (w1 - w0) * (z - z0) / max(z1 - z0, 1e-6)
+    return trunk
+
+
+print('body', [(round(z, 2), round(w, 3)) for z, w in BODY[::4]])
 
 
 def centreline(side):
     """Arm centre points from the shoulder out to the hand tip, for side +1 (character's left, +X) or -1."""
     pts = []
-    for a, b, sl in slices(lambda v: v.x * side > trunk * 1.02 and v.z > body_bot, lambda v: v.x * side, 14, trunk * 1.02, max(v.x * side for v in vs) + 1e-4):
+    for a, b, sl in slices(lambda v: v.x * side > body_w(v.z) * 1.02 and v.z > body_bot, lambda v: v.x * side, 14, trunk * 1.02, max(v.x * side for v in vs) + 1e-4):
+        zm = sorted(v.z for v in sl)[len(sl) // 2]  # only the arm round its median height: not a stray wire (the guard's earpiece)
+        sl = [v for v in sl if abs(v.z - zm) < 0.08 * H]
         c = sum((v for v in sl), Vector()) / len(sl)
         pts.append(c)
     return pts
@@ -78,7 +113,7 @@ def centreline(side):
 
 def leg_line(side):
     pts = []
-    for a, b, sl in slices(lambda v: v.x * side > 0 and v.z < leg_top + 0.02 * H, lambda v: v.z, 10, 0, leg_top + 0.02 * H):
+    for a, b, sl in slices(lambda v: 0 < v.x * side < LEG_W + 0.02 * H and v.z < leg_top + 0.02 * H, lambda v: v.z, 10, 0, leg_top + 0.02 * H):
         pts.append(sum((v for v in sl), Vector()) / len(sl))
     return pts
 
@@ -150,9 +185,9 @@ for v in me.vertices:
     w = {}
     sd = 1 if p.x >= 0 else -1; side = 'Left' if sd > 0 else 'Right'
     # arm share: how far out of the trunk this vertex sits, only at arm height
-    out = abs(p.x) - trunk
+    out = abs(p.x) - body_w(p.z)
     armness = smooth(out, -0.02 * H, 0.05 * H) * (1 - smooth(arm_lo - p.z, 0.0, 0.05 * H)) * (1 - smooth(p.z - arm_hi, 0.0, 0.04 * H))
-    legness = smooth(leg_top + 0.03 * H - p.z, 0.0, 0.06 * H)
+    legness = smooth(leg_top + 0.03 * H - p.z, 0.0, 0.06 * H) * (1 - smooth(abs(p.x) - LEG_W, 0.0, 0.04 * H))  # (not the hands hanging beside them)
     trunkw = max(0.0, 1 - armness - legness)
     if armness > 0:
         a0, a1 = B[f'{side}Arm']; f0, f1 = B[f'{side}ForeArm']; h0, h1 = B[f'{side}Hand']
@@ -220,10 +255,10 @@ if CHECK:
 
 for b in rig.pose.bones:
     b.rotation_euler = (0, 0, 0)
-# Phones: a 1024 px base colour as JPEG. The hat sits on the crown: record its height and width for the game (glTF extras).
+# Phones: a 1024 px base colour as JPEG (TEX px when given). The hat sits on the crown: record its height and width for the game (glTF extras).
 for im in bpy.data.images:
-    if im.size[0] > 1024:
-        im.scale(1024, 1024)
+    if im.size[0] > TEX:
+        im.scale(TEX, TEX)
 crown = [v for v in vs if v.z > H * 0.9]
 rig['bean'] = json.dumps({'height': round(H, 4), 'crownR': round(max(math.hypot(v.x, v.y) for v in crown), 4),
                           'trunkR': round(trunk, 4), 'legTop': round(leg_top, 4)})

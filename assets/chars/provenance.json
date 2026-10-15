@@ -4,62 +4,81 @@
   "provider": "sorceress",
   "tool": "model_generate",
   "model": "meshy-7",
-  "job_id": "fb952067-3123-439a-b9cb-97f6241a50cc",
+  "job_id": "36c5e7f1-f8b1-45bf-b2f1-e5415ad3c617",
   "credits": 65,
-  "date": "2026-10-12",
-  "time_ct": "10:52",
-  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/3763125f-e33e-4057-bb44-697c89554aae/nano-banana-pro-1.png",
+  "date": "2026-10-15",
+  "time_ct": "12:12",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/7ac796ae-c6d7-4ecf-9831-448bf5b063a3/nano-banana-pro-1.png",
   "params": {
    "should_texture": true,
-   "texture_resolution": "2k",
+   "texture_resolution": "4k",
    "should_remesh": true,
    "topology": "triangle",
-   "target_polycount": 8000
+   "target_polycount": 16000,
+   "enable_pbr": true
   },
   "refImages": null,
-  "receipt": "runs/sorceress/v4-chars/beanMesh",
+  "receipt": "runs/sorceress/v5-potato/b-beanMesh",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)",
-  "note": "Meshy 7 mesh of the beanA (picks/v4/bean-a.jpg) design, rigged and retextured to 1024 px by tools/rig_bean.py"
+  "note": "Meshy 7 mesh of the concept-b creepy potato design, rigged by tools/rig_bean.py with 2048 px maps"
+ },
+ {
+  "file": "runs/sorceress/v5-potato/concept-b (design image)",
+  "provider": "sorceress",
+  "tool": "image_generate",
+  "model": "nano-banana-pro",
+  "job_id": "11c91b7d-532d-45f3-8868-31897c0332f2",
+  "credits": 18,
+  "date": "2026-10-15",
+  "time_ct": "11:56",
+  "prompt": "Full-body character design of a creepy potato creature for a party game. The whole head and body is one big lumpy, irregular potato about the size of a small child, with real potato skin: fine brown russet netting, patches of dry dirt, small dark blemishes, a few sunken potato eyes with short pale sprouts. Its face is set into the potato flesh: two glossy too-human eyes with heavy lids and a crooked knife-cut mouth, slightly open, showing small uneven human teeth. Thin, slightly too long arms and legs of pale potato flesh, white four-finger cartoon gloves and black shoes. It wears a plain bright red fitted waistcoat with small brass buttons and a black bow tie. Realistic and slightly wrong, unsettling but fun, like a stop-motion horror film puppet; no blood, no gore. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
+  "params": {
+   "resolution": "2K"
+  },
+  "refImages": null,
+  "receipt": "runs/sorceress/v5-potato/concept-b",
+  "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
   "file": "assets/chars/round.glb",
   "provider": "sorceress",
   "tool": "model_generate",
   "model": "meshy-7",
-  "job_id": "d25bbfa8-332e-4602-a4ed-c5d2a4395fea",
+  "job_id": "9beba839-a230-4a7b-806d-617a3e4d4e93",
   "credits": 65,
-  "date": "2026-10-12",
-  "time_ct": "11:00",
-  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/1419fbb9-a5f5-42e1-b75b-7225c5368187/nano-banana-pro-1.png",
+  "date": "2026-10-15",
+  "time_ct": "12:12",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/d044e4e7-d6b8-4280-8b9b-59f40bd69e88/nano-banana-pro-1.png",
   "params": {
    "should_texture": true,
-   "texture_resolution": "2k",
+   "texture_resolution": "4k",
    "should_remesh": true,
    "topology": "triangle",
-   "target_polycount": 8000
+   "target_polycount": 16000,
+   "enable_pbr": true
   },
   "refImages": null,
-  "receipt": "runs/sorceress/v4-chars/beanRoundMesh",
+  "receipt": "runs/sorceress/v5-potato/b-roundMesh",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)",
-  "note": "Meshy 7 mesh of the beanRound design, rigged and retextured to 1024 px by tools/rig_bean.py"
+  "note": "Meshy 7 mesh of the b-round-r3 creepy potato design, rigged by tools/rig_bean.py with 2048 px maps, widened 1.25 (the design came out as tall as the bean)"
  },
  {
-  "file": "runs/sorceress/v4-chars/beanRound (design image)",
+  "file": "runs/sorceress/v5-potato/b-round-r3 (design image)",
   "provider": "sorceress",
   "tool": "image_generate",
   "model": "nano-banana-pro",
-  "job_id": "0eee14e4-856a-4d4f-b70e-896a35482f92",
+  "job_id": "1ef7ee9b-7e18-4645-bcf9-c38c2a091e85",
   "credits": 18,
-  "date": "2026-10-12",
-  "time_ct": "10:53",
-  "prompt": "A plush-toy bean character sewn from soft felt with visible stitched seams, black button eyes and a stitched smile, matching the reference image exactly in material, eyes, gloves and proportions of the limbs: short felt arms ending in white four-finger cartoon gloves, short felt legs with black shoes. Same character as the reference but a second body shape: shorter, rounder and wider, an egg-shaped body about as wide as it is tall, red felt, a small gold waistcoat and a black bow tie. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, gloved hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
+  "date": "2026-10-15",
+  "time_ct": "12:08",
+  "prompt": "Redraw the creepy potato character from the reference image with very different body proportions: the same face, the same realistic russet potato skin, dirt, blemishes and sprouts, thin slightly too long arms and legs of pale potato flesh, white four-finger cartoon gloves, black shoes, glossy too-human eyes and a crooked knife-cut mouth with small uneven teeth, but the potato body is squashed into a fat, squat ball, about one and a half times as wide as it is tall, as round as a big round new potato; the whole character is only about three quarters as tall as the reference, with short legs. The same plain bright red fitted waistcoat stretched round its fat middle. One single character alone in the frame. Realistic and slightly wrong, unsettling but fun, like a stop-motion horror film puppet; no blood, no gore. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
   "params": {
    "resolution": "2K"
   },
   "refImages": [
-   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/3763125f-e33e-4057-bb44-697c89554aae/nano-banana-pro-1.png"
+   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/7ac796ae-c6d7-4ecf-9831-448bf5b063a3/nano-banana-pro-1.png"
   ],
-  "receipt": "runs/sorceress/v4-chars/beanRound",
+  "receipt": "runs/sorceress/v5-potato/b-round-r3",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
@@ -67,40 +86,41 @@
   "provider": "sorceress",
   "tool": "model_generate",
   "model": "meshy-7",
-  "job_id": "bfb60fcd-b023-4afb-a880-f214bcacc2c8",
+  "job_id": "0db07eda-0838-4353-b3fd-a736aaa446c8",
   "credits": 65,
-  "date": "2026-10-12",
-  "time_ct": "11:00",
-  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/f326d940-ba08-40e4-98c6-e1b6b3b0e892/nano-banana-pro-1.png",
+  "date": "2026-10-15",
+  "time_ct": "12:12",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/f9db43bd-6b3c-4274-ad38-2bba34d91d79/nano-banana-pro-1.png",
   "params": {
    "should_texture": true,
-   "texture_resolution": "2k",
+   "texture_resolution": "4k",
    "should_remesh": true,
    "topology": "triangle",
-   "target_polycount": 8000
+   "target_polycount": 16000,
+   "enable_pbr": true
   },
   "refImages": null,
-  "receipt": "runs/sorceress/v4-chars/croupierMesh",
+  "receipt": "runs/sorceress/v5-potato/b-croupierMesh",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)",
-  "note": "Meshy 7 mesh of the croupier design, rigged and retextured to 1024 px by tools/rig_bean.py"
+  "note": "Meshy 7 mesh of the b-croupier creepy potato design, rigged by tools/rig_bean.py with 2048 px maps"
  },
  {
-  "file": "runs/sorceress/v4-chars/croupier (design image)",
+  "file": "runs/sorceress/v5-potato/b-croupier (design image)",
   "provider": "sorceress",
   "tool": "image_generate",
   "model": "nano-banana-pro",
-  "job_id": "5254f598-6b0e-4e90-9570-5957df86268f",
+  "job_id": "72c8dee8-74cb-4e4e-8877-2ee13aed67b8",
   "credits": 18,
-  "date": "2026-10-12",
-  "time_ct": "10:53",
-  "prompt": "A plush-toy bean character sewn from soft felt with visible stitched seams, black button eyes and a stitched smile, matching the reference image exactly in material, eyes, gloves and proportions of the limbs: short felt arms ending in white four-finger cartoon gloves, short felt legs with black shoes. A casino croupier: cream felt body, a black waistcoat with gold buttons, a crisp white shirt collar, a red bow tie and black sleeve garters on the arms, neat and formal. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, gloved hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
+  "date": "2026-10-15",
+  "time_ct": "12:06",
+  "prompt": "The same creepy potato character as the reference image, with the same realistic russet potato skin, dirt, blemishes and sprouts, thin slightly too long arms and legs of pale potato flesh, white four-finger cartoon gloves, black shoes, glossy too-human eyes and a crooked knife-cut mouth with small uneven teeth. A casino croupier: a pale yellow-gold potato, a black waistcoat with gold buttons, a crisp white shirt collar, a red bow tie and black sleeve garters on the arms, neat and formal. Realistic and slightly wrong, unsettling but fun, like a stop-motion horror film puppet; no blood, no gore. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
   "params": {
    "resolution": "2K"
   },
   "refImages": [
-   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/3763125f-e33e-4057-bb44-697c89554aae/nano-banana-pro-1.png"
+   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/7ac796ae-c6d7-4ecf-9831-448bf5b063a3/nano-banana-pro-1.png"
   ],
-  "receipt": "runs/sorceress/v4-chars/croupier",
+  "receipt": "runs/sorceress/v5-potato/b-croupier",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
@@ -108,40 +128,41 @@
   "provider": "sorceress",
   "tool": "model_generate",
   "model": "meshy-7",
-  "job_id": "264f6266-4cb8-4683-9f51-ee5df69cc6f6",
+  "job_id": "8a4cfa60-5654-4ec5-93ad-654605ffa8f1",
   "credits": 65,
-  "date": "2026-10-12",
-  "time_ct": "11:00",
-  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/f03b3ff1-d507-473d-93f9-f15623b0275b/nano-banana-pro-1.png",
+  "date": "2026-10-15",
+  "time_ct": "12:12",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/8ac4790a-a6db-4b41-a19a-769abb4a6363/nano-banana-pro-1.png",
   "params": {
    "should_texture": true,
-   "texture_resolution": "2k",
+   "texture_resolution": "4k",
    "should_remesh": true,
    "topology": "triangle",
-   "target_polycount": 8000
+   "target_polycount": 16000,
+   "enable_pbr": true
   },
   "refImages": null,
-  "receipt": "runs/sorceress/v4-chars/bartenderMesh",
+  "receipt": "runs/sorceress/v5-potato/b-bartenderMesh",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)",
-  "note": "Meshy 7 mesh of the bartender design, rigged and retextured to 1024 px by tools/rig_bean.py"
+  "note": "Meshy 7 mesh of the b-bartender creepy potato design, rigged by tools/rig_bean.py with 2048 px maps"
  },
  {
-  "file": "runs/sorceress/v4-chars/bartender (design image)",
+  "file": "runs/sorceress/v5-potato/b-bartender (design image)",
   "provider": "sorceress",
   "tool": "image_generate",
   "model": "nano-banana-pro",
-  "job_id": "dfa33a31-deb9-4e14-b6c2-5449023601c7",
+  "job_id": "95f9ba0a-f1bf-4863-b550-72b7070b0404",
   "credits": 18,
-  "date": "2026-10-12",
-  "time_ct": "10:53",
-  "prompt": "A plush-toy bean character sewn from soft felt with visible stitched seams, black button eyes and a stitched smile, matching the reference image exactly in material, eyes, gloves and proportions of the limbs: short felt arms ending in white four-finger cartoon gloves, short felt legs with black shoes. A casino bartender: warm brown felt body, a stitched handlebar moustache under the eyes, a white shirt collar, a dark green waistcoat and a short black waist apron that ends above the legs. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, gloved hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
+  "date": "2026-10-15",
+  "time_ct": "12:06",
+  "prompt": "The same creepy potato character as the reference image, with the same realistic russet potato skin, dirt, blemishes and sprouts, thin slightly too long arms and legs of pale potato flesh, white four-finger cartoon gloves, black shoes, glossy too-human eyes and a crooked knife-cut mouth with small uneven teeth. A casino bartender: a dark brown russet potato with a big bushy black handlebar moustache under the eyes, a white shirt collar, a dark green waistcoat and a short black waist apron that ends above the legs. Realistic and slightly wrong, unsettling but fun, like a stop-motion horror film puppet; no blood, no gore. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
   "params": {
    "resolution": "2K"
   },
   "refImages": [
-   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/3763125f-e33e-4057-bb44-697c89554aae/nano-banana-pro-1.png"
+   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/7ac796ae-c6d7-4ecf-9831-448bf5b063a3/nano-banana-pro-1.png"
   ],
-  "receipt": "runs/sorceress/v4-chars/bartender",
+  "receipt": "runs/sorceress/v5-potato/b-bartender",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  },
  {
@@ -149,40 +170,41 @@
   "provider": "sorceress",
   "tool": "model_generate",
   "model": "meshy-7",
-  "job_id": "c3b6d05f-121d-4a22-9a71-0bdf3930f75d",
+  "job_id": "e36c1194-252d-4749-8718-24145009282e",
   "credits": 65,
-  "date": "2026-10-12",
-  "time_ct": "11:01",
-  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/255782b8-fe35-427f-b24e-0008a4f15d13/nano-banana-pro-1.png",
+  "date": "2026-10-15",
+  "time_ct": "12:12",
+  "prompt": "image-to-3D from https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/0a89629b-622c-46e0-8cc8-5b37867ff96b/nano-banana-pro-1.png",
   "params": {
    "should_texture": true,
-   "texture_resolution": "2k",
+   "texture_resolution": "4k",
    "should_remesh": true,
    "topology": "triangle",
-   "target_polycount": 8000
+   "target_polycount": 16000,
+   "enable_pbr": true
   },
   "refImages": null,
-  "receipt": "runs/sorceress/v4-chars/guardMesh",
+  "receipt": "runs/sorceress/v5-potato/b-guardMesh",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)",
-  "note": "Meshy 7 mesh of the guard design, rigged and retextured to 1024 px by tools/rig_bean.py"
+  "note": "Meshy 7 mesh of the b-guard-r3 creepy potato design, rigged by tools/rig_bean.py with 2048 px maps"
  },
  {
-  "file": "runs/sorceress/v4-chars/guard (design image)",
+  "file": "runs/sorceress/v5-potato/b-guard-r3 (design image)",
   "provider": "sorceress",
   "tool": "image_generate",
   "model": "nano-banana-pro",
-  "job_id": "34651e4a-1245-4906-beca-fe31d74db002",
+  "job_id": "32da5ad8-d7b3-4006-b03e-4f7a25f57fed",
   "credits": 18,
-  "date": "2026-10-12",
-  "time_ct": "10:53",
-  "prompt": "A plush-toy bean character sewn from soft felt with visible stitched seams, black button eyes and a stitched smile, matching the reference image exactly in material, eyes, gloves and proportions of the limbs: short felt arms ending in white four-finger cartoon gloves, short felt legs with black shoes. A casino security guard: dark navy felt body, a black uniform jacket with a gold star badge on the chest, a black peaked security cap sewn on top of the body, a coiled earpiece wire, stern stitched eyebrows. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, gloved hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
+  "date": "2026-10-15",
+  "time_ct": "12:08",
+  "prompt": "One single character alone in the frame. The same creepy potato character as the reference image, with the same realistic russet potato skin, dirt, blemishes and sprouts, thin slightly too long arms and legs of pale potato flesh, white four-finger cartoon gloves, black shoes, glossy too-human eyes and a crooked knife-cut mouth with small uneven teeth. A casino security guard: a big lumpy purple-skinned potato, a black uniform jacket with a gold star badge on the chest, a black peaked security cap on top of the potato, a coiled earpiece wire, a heavy stern brow. Realistic and slightly wrong, unsettling but fun, like a stop-motion horror film puppet; no blood, no gore. Open A-pose: arms lowered about 40 degrees out from the body with a clear gap at each armpit, legs straight and hips-width apart, hands open with the fingers together, nothing in the hands, no base or stand under the feet. Straight-on front view, plain light grey background, even diffuse studio lighting, no cast shadow, centered, full body head to toe visible, no text.",
   "params": {
    "resolution": "2K"
   },
   "refImages": [
-   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/3763125f-e33e-4057-bb44-697c89554aae/nano-banana-pro-1.png"
+   "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/7ac796ae-c6d7-4ecf-9831-448bf5b063a3/nano-banana-pro-1.png"
   ],
-  "receipt": "runs/sorceress/v4-chars/guard",
+  "receipt": "runs/sorceress/v5-potato/b-guard-r3",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
  }
 ]

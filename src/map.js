@@ -1,4 +1,4 @@
-// The casino: one big floor in eight rooms. Sim px, 60 px = 1 m; x runs east, y runs south.
+// The casino: one big floor in seven rooms. Sim px, 60 px = 1 m; x runs east, y runs south.
 import { CFG } from './config.js';
 import { clamp, dist } from './util.js';
 
@@ -9,9 +9,8 @@ export const ROOMS = {
   floor: { x: 640, y: 20, w: 1360, h: 1160, name: 'the casino floor' },
   arcade: { x: 2020, y: 20, w: 960, h: 680, name: 'the arcade' },
   race: { x: 2020, y: 720, w: 960, h: 460, name: 'the duck pond' },
-  slots: { x: 20, y: 1200, w: 980, h: 680, name: 'the slot hall' },
-  alley: { x: 1020, y: 1200, w: 980, h: 680, name: 'the back alley' },
-  vip: { x: 2020, y: 1200, w: 960, h: 680, name: 'the VIP lounge' },
+  slots: { x: 20, y: 1200, w: 1580, h: 680, name: 'the slot hall' },
+  vip: { x: 1620, y: 1200, w: 1360, h: 680, name: 'the VIP lounge' },
 };
 
 // Walls with door gaps. hw: a horizontal wall at y from x0 to x1; vw: a vertical wall at x from y0 to y1.
@@ -36,17 +35,16 @@ export const WALLS = [
   ...vw(2000, 20, 1180, [[300, 420], [900, 1020]]),    // floor | arcade, floor | duck pond
   ...hw(700, 20, 620, [[260, 380]]),                    // bar / restrooms
   ...hw(700, 2020, 2980, [[2440, 2560]]),               // arcade / duck pond
-  ...hw(1180, 20, 2980, [[760, 880], [1240, 1400], [2440, 2560]]), // the long wall: floor to slots and alley, pond to VIP
-  ...vw(1000, 1200, 1880, [[1480, 1600]]),              // slots | alley
-  ...vw(2000, 1200, 1880, [[1480, 1600]]),              // alley | VIP
+  ...hw(1180, 20, 2980, [[760, 880], [1680, 1800], [2440, 2560]]), // the long wall: floor to slots and VIP, pond to VIP
+  ...vw(1600, 1200, 1880, [[1480, 1600]]),              // slots | VIP
   ...STALLS, // restroom stalls
 ];
 export const DOOR_GAPS = GAPS;
 export const DOORS = [
   ['bar', 'floor', 590, 360, 670, 360], ['rest', 'floor', 590, 960, 670, 960], ['bar', 'rest', 320, 670, 320, 750],
   ['floor', 'arcade', 1970, 360, 2050, 360], ['floor', 'race', 1970, 960, 2050, 960], ['arcade', 'race', 2500, 670, 2500, 750],
-  ['floor', 'slots', 820, 1150, 820, 1230], ['floor', 'alley', 1320, 1150, 1320, 1230], ['race', 'vip', 2500, 1150, 2500, 1230],
-  ['slots', 'alley', 970, 1540, 1050, 1540], ['alley', 'vip', 1970, 1540, 2050, 1540],
+  ['floor', 'slots', 820, 1150, 820, 1230], ['floor', 'vip', 1740, 1150, 1740, 1230], ['race', 'vip', 2500, 1150, 2500, 1230],
+  ['slots', 'vip', 1570, 1540, 1650, 1540],
 ].map(([a, b, ax, ay, bx, by]) => ({ a, b, pa: { x: ax, y: ay }, pb: { x: bx, y: by } }));
 
 // ---------- Furniture ----------
@@ -60,11 +58,13 @@ export const RACE_XS = [2180, 2290, 2400, 2600, 2710, 2820];                // b
 export const SLOT_WEST_YS = [1300, 1410, 1520, 1630, 1740];                  // penny machines on the slot hall's west wall
 export const SLOT_SOUTH_XS = [380, 500, 620, 740, 860];                      // south wall: one penny, four high limit
 export const JACKPOT = { x: 520, y: 1460 };                                  // the progressive jackpot tower
-export const DICE_TABLE = { x: 1120, y: 1440, w: 320, h: 150 };
-export const WHEEL_X = 1700;                                                 // the prize wheel on the alley's south wall
-export const COIN = { x: 1855, y: 1335 };
+export const DICE_TABLE = { x: 1120, y: 1440, w: 320, h: 150 };                 // in the slot hall's east end
+export const WHEEL_X = 1740;                                                 // the prize wheel on the VIP lounge's south wall, facing the door from the floor
+export const COIN = { x: 1855, y: 1335 };                                   // in the VIP lounge
 export const COFFEE = { x: 2400, y: 1505, w: 160, h: 70 };
 export const SECURITY = { x: 650, y: 560, w: 50, h: 130 };                  // the security desk: camera monitors on the floor's west wall
+// The shady guy: the bar's south-east corner, by his crates of stock, facing into the room; you talk to him from `stand`.
+export const SHADY = { x: 592, y: 600, face: Math.PI, stand: { x: 535, y: 600 } };
 
 export const OBSTACLES = [
   { x: 60, y: 60, w: 400, h: 50, kind: 'counter' },
@@ -89,7 +89,9 @@ export const OBSTACLES = [
   { ...SECURITY, kind: 'security' },
   { x: 2090, y: 1830, w: 220, h: 40, kind: 'couch' }, { x: 2690, y: 1830, w: 220, h: 40, kind: 'couch' },
   // dressing that you walk around: bar booths and a jukebox, a slot-hall ottoman, a VIP pool table, champagne and piano
-  { x: 30, y: 230, w: 80, h: 110, kind: 'booth' }, { x: 30, y: 470, w: 80, h: 110, kind: 'booth' }, { x: 540, y: 655, w: 50, h: 40, kind: 'jukebox' },
+  { x: 30, y: 230, w: 80, h: 110, kind: 'booth' }, { x: 30, y: 470, w: 80, h: 110, kind: 'booth' }, { x: 420, y: 655, w: 50, h: 40, kind: 'jukebox' },
+  { x: SHADY.x - 18, y: SHADY.y - 18, w: 36, h: 36, kind: 'shady' }, // the shady guy, leaning in the corner
+  { x: 556, y: 648, w: 50, h: 46, kind: 'crates' }, // his stock: a couple of crates in the corner beside him
   { x: 710, y: 1540, w: 100, h: 100, kind: 'ottoman' },
   { x: 2110, y: 1290, w: 150, h: 80, kind: 'pool' }, { x: 2745, y: 1270, w: 56, h: 56, kind: 'champagne' }, { x: 2785, y: 1748, w: 90, h: 64, kind: 'piano' },
 ];
@@ -97,12 +99,18 @@ export const OBSTACLES = [
 export const CHANDELIERS = [
   [960, 330], [1680, 330], [1320, 600], [1320, 920], [860, 780], [1780, 780],
   [320, 330], [320, 950], [2300, 380], [2700, 380], [2500, 1060], [300, 1450], [700, 1650], [2500, 1540],
+  [1300, 1330], [1760, 1560], // the slot hall's east end (by the dice), the VIP lounge's west end (the coin flip and the wheel)
 ];
-export const PLANTS = [[760, 1590], [660, 40], [1980, 40], [660, 1160], [1980, 1160], [600, 40], [2040, 680], [2960, 680], [2040, 1860], [2960, 1220], [980, 1220], [40, 1860], [1980, 1860], [1040, 1860], [2960, 1860]];
+export const PLANTS = [[760, 1590], [695, 70], [1940, 80], [690, 1125], [1950, 1130], [560, 75], [2905, 440], [2915, 165], [2080, 1795], [2925, 1250], [950, 1255], [80, 1820], [1945, 1830], [1072, 1770], [2925, 1800]];
+// STAFF ONLY doors, one per room but the duck pond: [room, x, y] on a wall's inner face and the way the door faces into
+// the room. A killer with the staff-passage edge steps in one and out of another (at the stand spot, 38 px out).
+export const STAFF_DOORS = [['bar', 20, 640, 0], ['rest', 110, 1180, -Math.PI / 2], ['floor', 780, 20, Math.PI / 2], ['arcade', 2880, 20, Math.PI / 2],
+  ['vip', 2980, 1370, Math.PI], ['slots', 160, 1200, Math.PI / 2]]
+  .map(([room, x, y, face], id) => ({ id, room, x, y, face, sx: Math.round(x + Math.cos(face) * 38), sy: Math.round(y + Math.sin(face) * 38) }));
 export const TAP = { x: 260, y: 145 };
 export const BELL = { x: 1320, y: 600 };
 export const REST_SPOTS = [{ x: 110, y: 820 }, { x: 110, y: 980 }, { x: 320, y: 1120 }, { x: 440, y: 1120 }, { x: 560, y: 1120 }];
-export const BOWL_SPOTS = [{ x: 530, y: 160 }, { x: 2900, y: 1300 }, { x: 2120, y: 140 }, { x: 1560, y: 1260 }];
+export const BOWL_SPOTS = [{ x: 530, y: 160 }, { x: 2900, y: 1300 }, { x: 2120, y: 140 }, { x: 1520, y: 1280 }, { x: 1900, y: 1100 }, { x: 880, y: 1260 }]; // bar, VIP, arcade, slot hall (east, by the dice), casino floor, slot hall
 export const GAME_NAMES = {
   bj: 'blackjack', roulette: 'roulette', race: 'the duck race', vip: 'the VIP lounge', slots: 'the slots', crash: 'Crash',
   plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice', cams: 'the security desk',
@@ -269,3 +277,16 @@ function detour(from, pts) {
   for (const p of pts) { out.push(...around(cur, p)); cur = p; }
   return out;
 }
+
+// Breaker panels on the walls (the blackout, sim.js): where you stand to reset one, facing it (face, radians); the panel
+// hangs on the wall 31 px ahead, at chest height, on plain wall: clear of doorways, pilasters, pictures and furniture.
+// Each blackout lights up CFG.breakers of them, in different rooms from each other and from the monster.
+export const BREAKERS = [
+  { x: 52, y: 405, face: Math.PI },          // the bar, west wall, between the booths
+  { x: 588, y: 800, face: 0 },               // the restrooms, east wall, north of the door to the floor
+  { x: 1550, y: 1148, face: Math.PI / 2 },   // the casino floor, south wall, west of the door to the VIP lounge
+  { x: 2948, y: 640, face: 0 },              // the arcade, east wall, past the Plinko cabinets
+  { x: 1652, y: 1400, face: Math.PI },       // the VIP lounge, west wall, north of the door to the slot hall
+  { x: 400, y: 1232, face: -Math.PI / 2 },   // the slot hall, north wall
+  { x: 2680, y: 1148, face: Math.PI / 2 },   // the duck pond, south wall, east of the door to the VIP lounge
+];

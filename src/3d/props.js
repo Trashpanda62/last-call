@@ -8,7 +8,7 @@ import { roomOf } from '../map.js';
 
 export const PROP_NAMES = ['bjTable', 'rouletteTable', 'diceTable', 'slot', 'slotHigh', 'jackpot', 'plinko', 'console', 'prizeWheel', 'duck',
   'barCounter', 'backBar', 'stool', 'chair', 'booth', 'couch', 'armchair', 'chandelier', 'piano', 'poolTable', 'jukebox', 'champagne',
-  'snackBowl', 'palm', 'camera', 'dumpster', 'pitBell', 'toilet', 'sink', 'rocket', 'ottoman', 'crates', 'streetLamp']; // coinPodium: its fluting decimated into red streaks; hightop: its column decimated away. The hand-built ones stay
+  'snackBowl', 'palm', 'camera', 'pitBell', 'toilet', 'sink', 'rocket', 'ottoman', 'breaker']; // coinPodium: its fluting decimated into red streaks; hightop: its column decimated away; crates: decimated into shards. The hand-built ones stay (the dumpster and street lamp went with the back alley)
 const SRC = {};
 let ready = false;
 const waiters = [];
@@ -93,7 +93,12 @@ export function placeProps(group, name, list, { cast = true } = {}) {
   for (const [room, some] of rooms) for (const p of SRC[name].parts) {
     const im = new THREE.InstancedMesh(p.geometry, p.material, some.length);
     some.forEach((o, i) => im.setMatrixAt(i, matOf(name, o).multiply(p.matrix)));
-    im.castShadow = cast; im.receiveShadow = true; im.userData.prop = true; im.userData.room = room; im.computeBoundingSphere(); group.add(im); out.push(im);
+    im.castShadow = cast; im.receiveShadow = true; im.userData.prop = true; im.userData.propName = name; im.userData.room = room; im.computeBoundingSphere(); group.add(im); out.push(im);
   }
   return out;
 }
+
+// The snack stand: a pedestal bowl of pretzels about waist high. Its top is where the crumbs fly from (the hand-built
+// stand's dish sits at 0.95 m).
+export const SNACK_FIT = [0.7, 0, 0.7];
+export const snackTop = () => hasProp('snackBowl') ? propScale('snackBowl', { fit: SNACK_FIT }).y * (SRC.snackBowl.info.top || SRC.snackBowl.info.size[1]) : 0.95;

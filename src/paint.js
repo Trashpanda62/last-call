@@ -63,9 +63,9 @@ export function paintCrash(g, w, h, t, C, me) {
     glowText(g, xfmt(C.mult), w / 2, h * 0.36, h * 0.2, boom ? '#ff4a5a' : '#3fe0ff');
     if (boom) glowText(g, 'CRASHED', w / 2, h * 0.55, h * 0.08, '#ff4a5a');
   } else {
-    const left = Math.max(0, Gm.CRASH.betTime - C.t);
+    const left = Math.max(0, Gm.CRASH.betTime - C.t), any = (C.bets || []).length > 0; // (the countdown waits for the first bet)
     glowText(g, 'NEXT ROCKET', w / 2, h * 0.3, h * 0.09, '#ff3fa4');
-    glowText(g, left.toFixed(1) + 's', w / 2, h * 0.48, h * 0.16, '#ffd040');
+    glowText(g, any ? left.toFixed(1) + 's' : 'BET TO LAUNCH', w / 2, h * 0.48, any ? h * 0.16 : h * 0.1, '#ffd040');
     rocket(g, w / 2, h * 0.72, h * 0.09, -Math.PI / 2, t);
   }
   // bettors down the right side
@@ -89,7 +89,7 @@ function rocket(g, x, y, s, ang, t) {
 export function paintTote(g, w, h, t, R, me) {
   bg(g, w, h, '#06263a', '#020c14');
   if (!R) return;
-  const head = R.phase === 'bet' ? `BETS CLOSE IN ${Math.ceil(Gm.RACE.betTime - R.t)}` : R.phase === 'run' ? "THEY'RE OFF!" : `WINNER: ${Gm.DUCKS[R.winner].name.toUpperCase()}`;
+  const head = R.phase === 'bet' ? ((R.bets || []).length ? `BETS CLOSE IN ${Math.ceil(Gm.RACE.betTime - R.t)}` : 'BET TO START THE RACE') : R.phase === 'run' ? "THEY'RE OFF!" : `WINNER: ${Gm.DUCKS[R.winner].name.toUpperCase()}`;
   glowText(g, head, w / 2, h * 0.11, h * 0.09, R.phase === 'show' ? '#ffd040' : '#7fe8ff');
   const lanes = R.phase === 'bet' ? null : Gm.raceLanes(R.phase === 'run' ? R.t : Gm.RACE.runTime, R.winner, R.seed);
   Gm.DUCKS.forEach((d, i) => {

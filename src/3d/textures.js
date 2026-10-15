@@ -4,6 +4,7 @@ import { ART as ART2 } from '../paint.js';
 
 let maxAniso = 4;
 export function setAniso(n) { maxAniso = n; }
+export const aniso = () => maxAniso;
 
 export function canvas(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return [c, c.getContext('2d')]; }
 export function tex(c, repeat = true) {
@@ -100,16 +101,6 @@ export const tiles = (a = '#cfe0de', b = '#9fc1c0') => once('tiles' + a, () => {
   noiseFill(g, 256, 256, 0.05, 800, r);
   return tex(c);
 });
-// Wet asphalt for the back alley, with a painted line and a few cracks.
-export const asphalt = () => once('asphalt', () => {
-  const [c, g] = canvas(512, 512), r = srand(13);
-  g.fillStyle = '#2a2a30'; g.fillRect(0, 0, 512, 512);
-  noiseFill(g, 512, 512, 0.16, 26000, r);
-  g.strokeStyle = 'rgba(0,0,0,0.45)'; g.lineWidth = 2;
-  for (let i = 0; i < 6; i++) { let x = r() * 512, y = r() * 512; g.beginPath(); g.moveTo(x, y); for (let j = 0; j < 8; j++) { x += (r() - 0.5) * 50; y += (r() - 0.5) * 50; g.lineTo(x, y); } g.stroke(); }
-  for (let i = 0; i < 3; i++) { const rg = g.createRadialGradient(0, 0, 4, 0, 0, 70); rg.addColorStop(0, 'rgba(20,24,40,0.6)'); rg.addColorStop(1, 'rgba(20,24,40,0)'); g.save(); g.translate(r() * 512, r() * 512); g.scale(1.6, 1); g.fillStyle = rg; g.beginPath(); g.arc(0, 0, 70, 0, 7); g.fill(); g.restore(); }
-  return tex(c);
-});
 export const marbleFloor = (a = '#e8e0d4', b = '#20181a') => once('marble' + a, () => {
   const [c, g] = canvas(512, 512), r = srand(17);
   for (let x = 0; x < 2; x++) for (let y = 0; y < 2; y++) {
@@ -156,24 +147,6 @@ export const wallpaper = (base = '#6a1a2a', ink = '#e8c46a') => once('wp' + base
   for (let rr = 18; rr <= 54; rr += 12) { g.beginPath(); g.arc(128, 150, rr, Math.PI * 1.15, Math.PI * 1.85); g.stroke(); }
   g.globalAlpha = 1;
   noiseFill(g, 256, 256, 0.05, 900, r);
-  return tex(c);
-});
-export const brick = (base = '#7a3a2a') => once('brick' + base, () => {
-  const [c, g] = canvas(512, 512), r = srand(23);
-  g.fillStyle = '#3a2a24'; g.fillRect(0, 0, 512, 512);
-  const bw = 64, bh = 32;
-  for (let y = 0; y < 512; y += bh) for (let x = -bw; x < 512; x += bw) {
-    const ox = (y / bh) % 2 ? bw / 2 : 0, v = 0.75 + r() * 0.4;
-    const col = new THREE.Color(base).multiplyScalar(v);
-    g.fillStyle = '#' + col.getHexString(); g.fillRect(x + ox + 3, y + 3, bw - 6, bh - 6);
-    g.fillStyle = `rgba(0,0,0,${r() * 0.2})`; g.fillRect(x + ox + 3, y + bh - 9, bw - 6, 6);
-  }
-  noiseFill(g, 512, 512, 0.12, 9000, r);
-  // a bit of graffiti
-  g.save(); g.translate(170, 300); g.rotate(-0.12);
-  g.font = `bold 70px ${FONT}`; g.lineWidth = 10; g.strokeStyle = 'rgba(20,20,30,0.6)'; g.strokeText('LUCKY', 0, 0);
-  g.fillStyle = 'rgba(80,220,255,0.55)'; g.fillText('LUCKY', 0, 0);
-  g.restore();
   return tex(c);
 });
 // Ceiling: coffers with gold edges and a soft centre. One tile = 2 m.
@@ -446,13 +419,13 @@ export function crestImage() {
 }
 
 // Sorceress art for phases 7, 8 and 10 (assets/art2): slot symbols and game-screen backdrops (paint.js draws them),
-// neon signs, paintings, posters, the alley skyline, key art and effect sprites. World pieces are rebuilt once it is in.
+// neon signs, paintings, posters, key art and effect sprites. World pieces are rebuilt once it is in.
 export const ART2_NAMES = ['sym-diamond', 'sym-seven', 'sym-bar', 'sym-bell', 'sym-cherry', 'sym-lemon',
   ...['mines', 'tower', 'crash', 'plinko', 'wheel', 'coin'].map(k => 'screen-' + k),
   ...['lastcall', 'bar', 'vip', 'restrooms', 'duckrace', 'slots', 'highlimit', 'dice', 'spintowin', 'flip', 'crash', 'plinko', 'mines', 'dragontower'].map(k => 'sign-' + k),
   ...Array.from({ length: 12 }, (_, i) => 'paint-' + String(i).padStart(2, '0')),
   ...['derby', 'jackpot', 'cocktails', 'rocket', 'roulette', 'missing', 'wash', 'lounge'].map(k => 'poster-' + k),
-  'sky-north', 'sky-south', ...['smoke', 'sparks', 'confetti', 'fizz', 'boom', 'stars', 'ghost'].map(k => 'fx-' + k)];
+  ...['smoke', 'sparks', 'confetti', 'fizz', 'boom', 'stars', 'ghost'].map(k => 'fx-' + k)];
 const art2Waiters = [];
 let art2Done = false;
 export function loadArt2() {
