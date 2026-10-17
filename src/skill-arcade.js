@@ -1,7 +1,7 @@
 // Original arcade rules. Coordinates are normalized screen space; the host owns time, hits and payouts.
 export const SKILL_GAMES = ['stack','vault','train','pinball','pop'];
 export const SKILL_NAMES = {stack:'Potato Stack',vault:'Vault Breaker',train:'Last Train',pinball:'Midnight Pinball',pop:'Potato Pop'};
-export const SKILL_HINTS = {stack:'LEFT CLICK · DROP BLOCK',vault:'LEFT CLICK · LOCK TUMBLER',train:'LEFT CLICK · JUMP / RIGHT CLICK · SLIDE',pinball:'LEFT / RIGHT CLICK · FLIPPERS',pop:'CLICK THE FRIENDLY POTATOES · AVOID RED EYES'};
+export const SKILL_HINTS = {stack:'SPACE / CLICK · DROP BLOCK',vault:'SPACE / CLICK · LOCK TUMBLER',train:'SPACE / CLICK · JUMP · RIGHT CLICK · SLIDE',pinball:'A / D · FLIPPERS   SPACE · LAUNCH   U · LEAVE',pop:'CLICK THE POTATOES · AVOID RED EYES · U TO LEAVE'};
 export const SKILL_TIERS = {stack:[4,7,10,14],vault:[1,2,3,5],train:[5,10,16,24],pinball:[500,950,1500,2200],pop:[6,12,20,28]};
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 export function skillMultiplier(r){const a=SKILL_TIERS[r.game];return r.score>=a[3]?3:r.score>=a[2]?2:r.score>=a[1]?1.5:r.score>=a[0]?1:0;}
@@ -16,11 +16,13 @@ export function skillNew(game,id,seat,player,bet){
  return r;
 }
 export function skillAction(r,seq,a={}){
- if(!r||r.phase==='done'||r.abandoned||seq!==r.seq+1||r.elapsed-r.lastAction<.065)return false;
+ if(!r||r.phase==='done'||r.abandoned||seq!==r.seq+1||(r.game!=='pinball'&&r.elapsed-r.lastAction<.065))return false;
+ if(r.game==='pinball'&&a.flippers!==undefined&&(!Number.isInteger(a.flippers)||a.flippers<0||a.flippers>3))return false;
  if(r.game==='stack'&&r.fall>0)return false;
  if(!Number.isFinite(a.button??0)||![0,2].includes(a.button??0))return false;
  if(r.game==='pop'&&r.phase!=='aim'&&(!Number.isFinite(a.x)||!Number.isFinite(a.y)||a.x<0||a.x>1||a.y<0||a.y>1))return false;
  r.seq=seq;r.lastAction=r.elapsed;
+ if(r.game==='pinball'&&a.flippers!==undefined){r.left=a.flippers&1?.24:0;r.right=a.flippers&2?.24:0;return true;}
  if(r.phase==='aim'){r.phase='play';if(r.game==='pinball')serve(r);return true;}
  if(r.game==='stack'){
   const prev=r.blocks.at(-1),lo=Math.max(r.x-r.w/2,prev.x-prev.w/2),hi=Math.min(r.x+r.w/2,prev.x+prev.w/2);
@@ -71,5 +73,5 @@ function step(r,h){
   r.next-=h;if(r.next<=0){const n=r.n++,free=r.holes.filter(p=>!p.on);if(free.length){const p=free[(n*7+Math.floor(n/3))%free.length];p.on=true;p.bad=n%5===3;p.up=r.elapsed;p.until=r.elapsed+Math.max(.43,1.05-r.score*.016);}r.next=Math.max(.24,.65-r.score*.009);}
  }
 }
-export function skillTick(r,dt){if(!r||r.phase==='done'||!(dt>0)||!Number.isFinite(dt))return;r.time=Math.max(0,r.time-dt);if(!r.time||r.abandoned){r.phase='done';return;}r.acc+=Math.min(dt,1);const h=1/240;for(let n=0;r.acc>=h&&n<240&&r.phase!=='done';n++,r.acc-=h)step(r,h);}
+export function skillTick(r,dt){if(!r||r.phase==='done'||!(dt>0)||!Number.isFinite(dt))return;if(r.phase!=='aim')r.time=Math.max(0,r.time-dt);if(!r.time||r.abandoned){r.phase='done';return;}r.acc+=Math.min(dt,1);const h=1/240;for(let n=0;r.acc>=h&&n<240&&r.phase!=='done';n++,r.acc-=h)step(r,h);}
 export function skillView(r){const{policy,paid,abandoned,acc,lastAction,...out}=r;return{...out,mult:skillMultiplier(r)};}

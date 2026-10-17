@@ -1,7 +1,41 @@
 import * as audio from "../audio.js";
-// Low-cost animated silhouettes, each with a distinct readable Backrooms behavior and body.
+// Generated textured creatures with bounded meshes and shared source animations.
 import * as THREE from "three";
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {clone as cloneSkeleton} from 'three/addons/utils/SkeletonUtils.js';
 import { M } from "./world.js";
+const SOURCES=new Map();
+export async function preloadBackroomsEntities(){
+ const loader=new GLTFLoader();
+ await Promise.all(['bacteria','skinstealer','hound','smiler'].map(async kind=>{
+  const file=kind==='bacteria'?'stalker':kind,g=await loader.loadAsync(new URL('../../assets/backrooms/entities/'+file+'.glb',import.meta.url).href);
+  g.scene.updateMatrixWorld(true);
+  g.scene.traverse(o=>{if(o.isMesh){o.castShadow=true;o.frustumCulled=false;if(o.isSkinnedMesh&&!o.boundingSphere)o.computeBoundingSphere();
+   if(kind==='smiler'){const mat=new THREE.MeshBasicMaterial({map:o.material.map,transparent:true,depthWrite:false,toneMapped:false,side:THREE.DoubleSide});mat.onBeforeCompile=shader=>{shader.fragmentShader=shader.fragmentShader.replace('#include <alphatest_fragment>','#include <alphatest_fragment>\nif(dot(diffuseColor.rgb,vec3(.2126,.7152,.0722))<.09)discard;');};o.material=mat;o.castShadow=false;}
+  }});
+  SOURCES.set(kind,g);
+ }));
+}
+function generatedEntity(kind){
+ const src=SOURCES.get(kind==='mimic'?'smiler':kind);if(!src)return null;
+ const g=new THREE.Group();g.name='backrooms-'+kind;g.userData.entityKind=kind;g.userData.generated=true;
+ const model=cloneSkeleton(src.scene);g.add(model);
+ const humanoid=['bacteria','skinstealer'].includes(kind);
+ if(humanoid)model.scale.setScalar((kind==='bacteria'?2.55:2.15)/1.7);
+ else {const box=new THREE.Box3().setFromObject(model),size=box.getSize(new THREE.Vector3()),k=kind==='hound'?1.12/size.y:.72/Math.max(size.x,size.y);model.scale.setScalar(k);model.position.set(-(box.min.x+box.max.x)*k/2,-box.min.y*k,-(box.min.z+box.max.z)*k/2);if(kind!=='hound')model.position.y+=1.35;}
+ const mixer=new THREE.AnimationMixer(model),actions={},bones=[];
+ for(const clip of src.animations){if(['walk','run'].includes(clip.name)){actions[clip.name]=mixer.clipAction(clip);actions[clip.name].play();actions[clip.name].setEffectiveWeight(0);}}
+ model.traverse(o=>{if(o.isBone&&/spine|head|arm|foreleg|hindleg/i.test(o.name))bones.push({bone:o,rest:o.quaternion.clone()});});
+ let clock=0;
+ function update(dt,s={}){
+  clock+=Math.min(.1,dt||0);const moving=!!s.moving,attack=s.killT>=0;
+  if(actions.walk){const run=moving&&s.alert;actions.walk.setEffectiveWeight(run?0:1);actions.run?.setEffectiveWeight(run?1:0);if(!moving)actions.walk.time=.08;mixer.update(moving?Math.min(.1,dt||0):0);}
+  else for(const b of bones){b.bone.quaternion.copy(b.rest);const limb=/leg/i.test(b.bone.name),phase=(/right/i.test(b.bone.name)?Math.PI:0)+(/hind/i.test(b.bone.name)?Math.PI:0);b.bone.rotateX(limb&&moving?Math.sin(clock*11+phase)*.5:Math.sin(clock*1.6)*.018);}
+  if(!moving||attack){model.rotation.x=attack?Math.sin(Math.min(1,s.killT/.5)*Math.PI)*.25:Math.sin(clock*1.2)*.012;}
+  else model.rotation.x=0;
+ }
+ return {g,limbs:[],updateGenerated:update,model};
+}
 export class BackroomsEntities {
   constructor(scene) {
     this.scene = scene;
@@ -9,6 +43,7 @@ export class BackroomsEntities {
     this.mimics = new Map();
   }
   make(kind) {
+    const generated=generatedEntity(kind);if(generated)return generated;
     const g = new THREE.Group();
     g.name = "backrooms-" + kind;
     g.userData.entityKind = kind;
@@ -257,6 +292,7 @@ export class BackroomsEntities {
           b.y * M,
         );
         b.g.rotation.y = Math.PI / 2 - b.face;
+        b.updateGenerated?.(dt,e);
         b.limbs.forEach(
           (l, i) =>
             (l.rotation.x = e.moving
@@ -320,22 +356,25 @@ export class BackroomsEntities {
           this.stepAt = t;
           audio.sfx("mstep", v * 0.7);
         }
+        if(t-(this.voiceAt||0)>7&&v>.08){this.voiceAt=t;const nearest=S.entities.reduce((a,e)=>!a||Math.hypot(e.x-c.x,e.y-c.y)<Math.hypot(a.x-c.x,a.y-c.y)?e:a,null);audio.sfx(nearest?.kind==='hound'?'entityHound':'entityStalker',v*.55);}
       }
     }
   }
 }
 
 export function makeBackroomsMonster(kind) {
-  const { g, limbs } = BackroomsEntities.prototype.make(kind);
+  const { g, limbs,updateGenerated,model } = BackroomsEntities.prototype.make(kind);
   return {
     obj: g,
     update(dt, s) {
+      updateGenerated?.(dt,s);
       limbs.forEach(
         (l, i) => (l.rotation.x = Math.sin((s.killT || 0) * 8 + i) * 0.24),
       );
     },
     head() {
       g.updateMatrixWorld(true);
+      const head=model?.getObjectByName('Head');if(head)return head.getWorldPosition(new THREE.Vector3());
       return g.localToWorld(
         new THREE.Vector3(
           0,
@@ -349,6 +388,7 @@ export function makeBackroomsMonster(kind) {
       );
     },
     dispose() {
+      if(g.userData.generated){g.traverse(o=>o.skeleton?.dispose());g.removeFromParent();return;}
       const materials = new Set();
       g.traverse((o) => {
         o.geometry?.dispose();

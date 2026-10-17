@@ -15,7 +15,8 @@ import * as audio from './audio.js';
 import { $, show, toast, clearToasts, lastToastAt, whisper, quietNote, splash, updateHud, renderMeeting, resetMeeting, renderOver, renderPick, marks } from './ui.js';
 import { initMoves, updateMoves, keyMove, mouseMove, pickerOpen, resetMoves, cameraMouse, cameraView } from './moves.js';
 import { openMixer, openShop } from './bar.js';
-import { resetTableLuck, openTable, closeTable, closeAllTables, tablesBusy, tableViews, tableGame, tableSeat, tableView, tableTick, tableBar, cycleChip, chipHud, setHandHook, press as pressPart, partInfo, tableStart, tableMouse, spaceTable, releaseTable, tableLook } from './tables.js';
+import { resetTableLuck, openTable, closeTable, closeAllTables, tablesBusy, tableViews, tableGame, tablePinned, tableKey, tableSeat, tableView, tableTick, tableBar, cycleChip, chipHud, setHandHook, press as pressPart, partInfo, tableStart, tableMouse, spaceTable, releaseTable, tableLook } from './tables.js';
+import {SKILL_NAMES,SKILL_HINTS,SKILL_TIERS} from './skill-arcade.js';
 import { CHIP_COL } from './3d/rig.js';
 import { hostRoom, joinRoom } from './net.js';
 import { packPub, packFor, unpackSnap, resetWire } from './wire.js';
@@ -423,6 +424,7 @@ const inputPayload = () => ({ x: S.me.x, y: S.me.y, look: effLook(), moving: S.m
 
 const SENS = 0.0024;
 function lookBy(dx, dy) {
+  if(tableMode())return;
   const c = settings().controls, k = SENS * (c.sens || 1);
   S.me.look += dx * k;
   S.me.pitch = clamp(S.me.pitch - dy * k * (c.invertY ? -1 : 1), -1.25, 1.25);
@@ -446,6 +448,7 @@ function moveMe(dt) {
   const peek = !!((keys.e || S.peekButton) && p.perk === 'peek' && p.alive && !p.monster && !p.seat && v.pub.mode === 'play' && !v.pub.over && !S.paused && !pickerOpen());
   S.peekT = clamp(S.peekT + (peek ? dt : -dt) * 4, 0, 1);
   if (v.pub.mode !== 'play' || v.pub.over || S.paused || pickerOpen() || p.cameraFeed || deathPlaying()) return;
+  if(tableMode())return;
   if (padInput.lookX || padInput.lookY) { me.look += padInput.lookX * dt * 2.1; me.pitch = clamp(me.pitch - padInput.lookY * dt * 1.7, -1.25, 1.25); }
   let f = (keys.w || keys.arrowup ? 1 : 0) - (keys.s || keys.arrowdown ? 1 : 0);
   let r = (keys.d || keys.arrowright ? 1 : 0) - (keys.a || keys.arrowleft ? 1 : 0);
@@ -497,10 +500,8 @@ const SIT = { cams: -0.25, vip: -0.2 };
 const seatedPlay = () => S.screen === 'game' && !S.paused && S.view && S.view.priv.seat && S.view.pub.mode === 'play' && !S.view.pub.over;
 const deathPlaying = () => performance.now() < (S.deathUntil || 0) || sceneDeathPlaying();
 const playing = () => S.screen === 'game' && !deathPlaying() && !S.paused && S.view && S.view.pub.mode === 'play' && !S.view.pub.over; // (ghosts play the games too)
-// At a game you stand where you like and play it with the crosshair, free to look round and walk off. Phones play it
-// the same way (Steve, 2026-10-15): no table camera or table bar, a tap on the felt is a click at that point, and the
-// chip buttons by the chip stand in for the scroll wheel. (The table camera mode is off everywhere.)
-const tableMode = () => false;
+// Most games retain free movement. Pinball and Potato Pop capture the camera and movement after chips are staged.
+const tableMode = () => seatedPlay() && tablePinned();
 // Press the part of your table under a screen point (NDC). alt: take chips back. near: phones snap to the
 // nearest part within that many px. Returns true if something was there.
 let aim = null, tapShow = null;
@@ -522,7 +523,7 @@ const lockOK = () => !navigator.webdriver && !S.noLock && !touchMode;
 const locked = () => document.pointerLockElement === view;
 function wantLock() {
   const v = S.view;
-  return S.screen === 'game' && !S.paused && !S.phone && !!v && v.pub.mode === 'play' && !v.pub.over && !deathPlaying() && !pickerOpen() && !v.priv.cameraFeed && !(v.priv.seat && v.priv.seat.game === 'cams');
+  return S.screen === 'game' && !S.paused && !S.phone && !tableMode() && !!v && v.pub.mode === 'play' && !v.pub.over && !deathPlaying() && !pickerOpen() && !v.priv.cameraFeed && !(v.priv.seat && v.priv.seat.game === 'cams');
 }
 function requestLock(force) {
   if (!lockOK() || locked() || !(force ? S.screen === 'game' && !S.paused : wantLock())) return;
@@ -551,7 +552,7 @@ view.addEventListener('mousedown', e => {
   if (!S.paused && cameraMouse(e.button)) { e.preventDefault(); return; }
   if (touchMode) return;
   mouse.x = e.clientX; mouse.y = e.clientY;
-  if (tableMode() && !locked()) { if (e.button === 0 || e.button === 2) pressAtNdc(...ndcOf(e.clientX, e.clientY), e.button === 2); return; } // click the felt
+  if (tableMode() && !locked()) { if(e.button===2&&directMouse(2))return;if(e.button===0||e.button===2){if(!pressAtNdc(...ndcOf(e.clientX,e.clientY),e.button===2))directMouse(e.button);} return; }
   if (locked()) {
     if(e.button===2&&directMouse(2))return;
     if (seatedPlay() && (e.button === 0 || e.button === 2) && pressAtNdc(0, 0, e.button === 2)) return; // at a game: click presses what the crosshair is on
@@ -597,6 +598,8 @@ addEventListener('keydown', e => {
   if (e.target && e.target.tagName === 'INPUT' && k !== 'tab') { if (k === 'escape') e.target.blur(); return; }
   if (deathPlaying() && k !== 'escape') return;
   if (settingsOpen()) { if (k === 'escape') closeSettings(); return; } // (Esc there goes back to the menu or the pause screen)
+  if(playing()&&!S.phone&&!pickerOpen()&&tableKey(k,true)){e.preventDefault();keys[k]=true;return;}
+  if(playing()&&tableMode()&&k==='u'){e.preventDefault();act('leave');closeTable();return;}
   if (k === 'tab' && S.screen === 'game') { e.preventDefault(); if (!e.repeat) setPhone(!S.phone); return; } // the phone (the meeting)
   if (k === 'escape' && S.phone) { setPhone(false); return; }
   if (k === settings().voice.pttKey && V.voice) { setTalk(true); if (!keys[k]) keys[k] = true; return; } // push to talk
@@ -617,8 +620,8 @@ addEventListener('keydown', e => {
   }
   keys[k] = true;
 });
-addEventListener('keyup', e => { const k = e.key.toLowerCase(); keys[k] = false; if (k === ' ') releaseTable(!playing()); if (k === settings().voice.pttKey) setTalk(false); });
-addEventListener('blur', () => { releaseTable(true); for (const k in keys) keys[k] = false; S.peekButton = false; drag = null; setTalk(false); });
+addEventListener('keyup', e => { const k = e.key.toLowerCase(); tableKey(k,false);keys[k] = false; if (k === ' ') releaseTable(!playing()); if (k === settings().voice.pttKey) setTalk(false); });
+addEventListener('blur', () => { tableKey('a',false);tableKey('d',false);releaseTable(true); for (const k in keys) keys[k] = false; S.peekButton = false; drag = null; setTalk(false); });
 // The side mouse buttons: push to talk if picked, and never the browser's Back in a game (it would leave the room).
 const SIDE = { 3: 'mouse4', 4: 'mouse5' };
 addEventListener('mousedown', e => { if (SIDE[e.button] && S.screen === 'game') { e.preventDefault(); if (settings().voice.pttKey === SIDE[e.button]) setTalk(true); } });
@@ -797,12 +800,12 @@ function frameGame(dt) {
   }
   // a tip waits for a quiet screen: no message for 10 s (they used to stack four deep over the top of the screen)
   // (phones get none: they name keys, and phones had too many pop-ups, Steve 2026-10-15)
-  if (!pub.escape && !touchMode && S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0] && !$('toasts').children.length && performance.now() - lastToastAt > 10000) {
+  if (!pub.escape && !priv.seat && !touchMode && S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0] && !$('toasts').children.length && performance.now() - lastToastAt > 10000) {
     const tip = TIPS[S.tips++]; if (store.get('lc.stats', { games: 0 }).games < 3 && (!tip[2] || priv.isKiller === (tip[2] === 'k'))) toast(tip[1], false, true);
   }
   updateHud(v); updateMoves(v); tableTick(v); tableLook(effLook());
   const fp = pub.mode === 'play' && !pub.over;
-  show('cross', fp && !deathActive && !touchMode && !cameraView());
+  show('cross', fp && !deathActive && !touchMode && !cameraView() && !tableMode());
   if (cameraView() && locked()) releaseLock();
   show('lockHint', fp && !touchMode && lockOK() && !locked() && wantLock());
   const tm = tableMode();
@@ -849,12 +852,16 @@ function hudSafe() {
     const r = $(id).getBoundingClientRect(); if (!r.height) continue;
     if (id !== 'tableBar' && r.top < H / 2) top = Math.max(top, r.bottom + 6); else low = Math.min(low, r.top - 6);
   }
-  return { top: Math.min(top, H * 0.2), bottom: Math.min(H - low, H * 0.42) };
+  return { top: Math.min(top, H * 0.2), bottom: Math.max(Math.min(H - low, H * 0.42),innerWidth<=1050?190:100), right:innerWidth>1050?296:0 };
 }
 // Seated: name what the cursor (or crosshair) is on (phones: what you just tapped), and the table bar.
 function seatedHud() {
   const seated = seatedPlay() && tableGame(), tm = tableMode();
   document.body.classList.toggle('seated', !!seated);
+  document.body.classList.toggle('machineFocused', !!tm);
+  const skill=seated&&SKILL_NAMES[tableGame()], r=skill&&S.view.pub.arcade?.[tableGame()];
+  machineHelp.classList.toggle('hidden',!skill);
+  if(skill)updateMachineHelp(tableGame(),r,tm);
   drawGameControls(seated && !S.paused && !pickerOpen() && !S.view.priv.cameraFeed ? tableBar() : null);
   const overBar = tm && !touchMode && document.elementFromPoint(mouse.x, mouse.y) !== view;
   aim = seated && !touchMode && !overBar ? (tm ? pick(...ndcOf(mouse.x, mouse.y)) : pick(0, 0)) : null;
@@ -862,9 +869,9 @@ function seatedHud() {
   const h = aim || tap; setHover(seated ? h : null);
   const info = seated && h && !(tableGame() === 'bj' && h.part.startsWith('btn:')) ? partInfo(h.part, h.uv) : null;
   const al = $('aim'), qn = seated ? quietNote() : '', aimText = qn ? qn : !info ? '' : touchMode ? info.label.replace('RIGHT-CLICK', 'HOLD').replace(/\bCLICK/g, 'TAP') : info.label;
-  const aimClass = (info && !info.on ? 'off' : '') + (tm && !touchMode ? ' follow' : '');
+  const aimClass = info && !info.on ? 'off' : '';
   if (al.textContent !== aimText) al.textContent = aimText; if (al.className !== aimClass) al.className = aimClass;
-  if (tm && !touchMode) { al.style.left = Math.min(mouse.x + 18, innerWidth - al.offsetWidth - 8) + 'px'; al.style.top = mouse.y + 20 + 'px'; } else al.style.left = al.style.top = '';
+  al.style.left = al.style.top = '';
   view.style.cursor = tm && !touchMode ? (h ? 'pointer' : 'default') : '';
   // Betting and round actions already have their own contextual prompts.
   // Walking up to a machine must not advertise another game's controls.
@@ -874,6 +881,21 @@ function seatedHud() {
   $('chipHud').classList.toggle('walk', !seated); // (walking: just the coin, small)
 }
 const gameControls = document.createElement('div'); gameControls.id = 'gameControls'; gameControls.className = 'hidden'; $('bottom').prepend(gameControls);
+const machineHelp=document.createElement('aside');machineHelp.id='machineHelp';machineHelp.className='hidden';machineHelp.setAttribute('aria-label','Machine controls and scoring');
+const machineTitle=document.createElement('strong'),machineKeys=document.createElement('p'),machineLive=document.createElement('p'),machineRules=document.createElement('p'),machinePayout=document.createElement('p'),machineLeave=document.createElement('button');
+machineLeave.textContent='U · Leave machine';machineLeave.onclick=()=>{act('leave');closeTable();};
+machineHelp.append(machineTitle,machineKeys,machineLive,machineRules,machinePayout,machineLeave);$('hud').append(machineHelp);
+function updateMachineHelp(game,r,focused){
+ const tiers=SKILL_TIERS[game];
+ if(machineHelp.dataset.game!==game){
+  machineHelp.dataset.game=game;machineTitle.textContent=SKILL_NAMES[game];machineKeys.textContent=SKILL_HINTS[game];
+  machineRules.textContent=({pinball:'3 balls · Bumpers +50 · Keep the ball above the drain.',pop:'30 seconds · Potato +1 · Red eyes −3 · Misses earn nothing.',stack:'Align each block · Only the overlap survives.',vault:'Stop the needle inside the green arc · 3 mistakes end the round.',train:'Jump luggage · Slide under overhead bars.'})[game];
+  machinePayout.textContent=tiers.map((n,i)=>n+' pts → '+[1,1.5,2,3][i]+'×').join('  ·  ')+' stake returned';
+ }
+ const next=r&&tiers.find(n=>n>r.score),line=!r?'Place chips, then start a round.':r.phase==='done'?'FINAL '+r.score+' · PAID $'+Math.round(r.bet*r.mult):r.phase==='aim'?'READY · SPACE TO BEGIN':r.score+' POINTS · '+Math.ceil(r.time)+'s'+(next?' · NEXT '+next+' pts':' · TOP RETURN');
+ if(machineLive.textContent!==line)machineLive.textContent=line;
+ machineLeave.classList.toggle('hidden',!focused);
+}
 for (const panel of [gameControls]) panel.addEventListener('click', e => {
   const button = e.target.closest('button[data-play]'); if (!button || button.disabled || !seatedPlay() || S.paused || pickerOpen()) return;
   if (performance.now() < (panel.skeeClickUntil || 0)) return;

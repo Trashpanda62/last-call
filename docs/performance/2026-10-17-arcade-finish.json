@@ -1,0 +1,40 @@
+{
+  "captureOnChips": true,
+  "heldIndependentFlippers": true,
+  "disconnectRelease": true,
+  "timerStartsOnLaunch": true,
+  "physicalPopHit": true,
+  "unaffectedWalkingGames": true,
+  "assets": [
+    {
+      "kind": "stalker",
+      "bytes": 1201716,
+      "triangles": 17999,
+      "clips": [
+        "run",
+        "walk"
+      ]
+    },
+    {
+      "kind": "skinstealer",
+      "bytes": 1323964,
+      "triangles": 17998,
+      "clips": [
+        "run",
+        "walk"
+      ]
+    },
+    {
+      "kind": "hound",
+      "bytes": 1331732,
+      "triangles": 18000,
+      "clips": []
+    },
+    {
+      "kind": "smiler",
+      "bytes": 733404,
+      "triangles": 17999,
+      "clips": []
+    }
+  ]
+}

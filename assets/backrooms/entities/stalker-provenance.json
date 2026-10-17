@@ -1,0 +1,77 @@
+{
+  "provider": "Sorceress",
+  "prompt": "Backrooms bacteria creature, extremely tall emaciated asymmetrical black fungal humanoid, long cable-like sinewy limbs, tangled branching organic growths from head and shoulders, sunken featureless face, tar-black wet skin with filthy ochre scars. Full body isolated game character, feet on floor, facing forward +Z, no base. Open A pose, arms 40 degrees away from torso, legs apart. Realistic horror film practical creature, detailed PBR skin, no cartoon, no primitive shapes.",
+  "modelResult": {
+    "ok": true,
+    "jobId": "c55d5fce-41e0-41d4-9260-41f3430812b6",
+    "tool": "model_generate",
+    "status": "succeeded",
+    "mesh": {
+      "url": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/a20774a3-fdb8-499a-b39b-5b120a5f964a/meshy-7.glb",
+      "storageKey": "generations/14b713ad-480d-44e5-a794-18be8c0a897d/a20774a3-fdb8-499a-b39b-5b120a5f964a/meshy-7.glb",
+      "format": "glb",
+      "thumbnailUrl": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/a20774a3-fdb8-499a-b39b-5b120a5f964a/meshy-7-thumb.png",
+      "modelUrls": {
+        "glb": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/a20774a3-fdb8-499a-b39b-5b120a5f964a/meshy-7.glb"
+      }
+    },
+    "modelUrl": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/a20774a3-fdb8-499a-b39b-5b120a5f964a/meshy-7.glb",
+    "model": "meshy-7",
+    "provider": "meshy",
+    "creditsCharged": 50,
+    "balance": 2159
+  },
+  "rigResult": {
+    "ok": true,
+    "jobId": "17744f50-2127-426d-b708-b67ae4255ff0",
+    "tool": "model_rig",
+    "status": "succeeded",
+    "rig": {
+      "url": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/6484f144-790f-4e1c-a141-a4cd23e37f88/rigged.glb",
+      "storageKey": "tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/6484f144-790f-4e1c-a141-a4cd23e37f88/rigged.glb",
+      "format": "glb",
+      "skeleton": "mixamo",
+      "heightMeters": 1.7,
+      "basicAnimations": {
+        "walking": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/6484f144-790f-4e1c-a141-a4cd23e37f88/walking.glb",
+        "walking_armature": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/6484f144-790f-4e1c-a141-a4cd23e37f88/walking_armature.glb",
+        "running": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/6484f144-790f-4e1c-a141-a4cd23e37f88/running.glb",
+        "running_armature": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/6484f144-790f-4e1c-a141-a4cd23e37f88/running_armature.glb"
+      },
+      "transform": {
+        "heightMeters": 1.7,
+        "widthMeters": 0.857,
+        "depthMeters": 0.643,
+        "groundOffsetMeters": 0,
+        "up": "+Y",
+        "forward": "+Z",
+        "applyScale": 1,
+        "rootNodeScale": 0.01,
+        "boneUnitsPerMeter": 100,
+        "boneSpanMeters": 1.527,
+        "boneCount": 24,
+        "rootBone": "Hips"
+      },
+      "clips": [
+        {
+          "name": "Armature|clip0|baselayer",
+          "durationSeconds": 0.033,
+          "keyframes": 1,
+          "staticPose": true
+        }
+      ]
+    },
+    "riggedModelUrl": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/6484f144-790f-4e1c-a141-a4cd23e37f88/rigged.glb",
+    "url": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/6484f144-790f-4e1c-a141-a4cd23e37f88/rigged.glb",
+    "integration": [
+      "SCALE: load this GLB as-is and apply NO scale factor (scale = 1). It already renders 1.7 m tall and 0.857 m wide, feet on y=0, facing +Z, up +Y.",
+      "DO NOT INFER UNITS FROM BONE VALUES: the raw bone translations stored in this file read ~100x larger than metres (the 1.527 m skeleton spans ~153 units in the file), because a scale of 0.01 sits on the skeleton's root node and cancels them out. Nothing needs converting: the mesh is authored in metres and bone WORLD positions already resolve to metres. Applying 0.01 yourself renders the character ~1.7 cm tall \u00e2\u20ac\u201d an invisible speck at the origin, and the most common integration bug with this file.",
+      "MEASURING/GROUNDING: this is a SkinnedMesh, so THREE.Box3.setFromObject (and equivalents) reports a wrong or zero-size box \u00e2\u20ac\u201d never size or place the character from it. Read bone world positions instead: lowest bone y = feet, highest = head. For this character that span is \u00e2\u2030\u02c6 1.527 m \u00e2\u20ac\u201d a runtime readout far from that means the scale is wrong.",
+      "IDLE: the clip(s) embedded in this GLB (Armature|clip0|baselayer) are single-keyframe rest poses, not animation \u00e2\u20ac\u201d playing one looks frozen. For motion use basicAnimations (walking, walking_armature, running, running_armature) \u00e2\u20ac\u201d real clips already baked on this exact skeleton \u00e2\u20ac\u201d or retarget model_animate output.",
+      "ROOT MOTION: basicAnimations clips are authored in place \u00e2\u20ac\u201d the hips bob and sway but do not travel \u00e2\u20ac\u201d so drive locomotion from code and let the clip play on the spot. If a character does slide, strip the hips' horizontal translation track rather than compensating in movement code."
+    ],
+    "creditsCharged": 20,
+    "balance": 2069,
+    "next": "The rigged GLB is a standard skinned glTF (Mixamo-style bone names) \u00e2\u20ac\u201d load it in any engine, but read integration[] first: the file is already real-world scale, and applying a scale factor of your own is what makes the character disappear. To animate it, use rig.basicAnimations (real clips already baked on this skeleton) or call model_animate with a text prompt and retarget the motion onto this rig."
+  }
+}

@@ -458,7 +458,7 @@ export function* buildMachinesSteps(ctx, seats) {
   }
 
   yield 'Building the coin-pusher and prize claw';
-  buildArcade(ctx,seats,screen,updaters,betSocket,actionButton,focusAt,(id,mesh)=>RC.seatScreens[id]=mesh);
+  buildArcade(ctx,seats,screen,updaters,betSocket,actionButton,focusAt,(id,mesh)=>RC.seatScreens[id]=mesh,RC.starters);
 
   // ---------- Mines and Dragon Tower consoles ----------
   yield 'Preparing arcade games';

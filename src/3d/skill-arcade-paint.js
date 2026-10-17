@@ -9,7 +9,7 @@ export function paintSkill(game,g,w,h,t,r){
  g.fillStyle='#100a0c';g.fillRect(0,0,W,H);pic(g,image(game,0),8,108,584,568);g.fillStyle='#09060a66';g.fillRect(8,108,584,568);
  if(game==='stack'){
   const blocks=r?.blocks||[{x:.5,w:.76}],score=r?.score||0,base=620,dy=Math.min(32,430/Math.max(12,blocks.length)),first=Math.max(0,blocks.length-14);
-  blocks.slice(first).forEach((b,i)=>{pic(g,image(game,1),(b.x-b.w/2)*W,base-i*dy,b.w*W,dy+4);});
+  blocks.slice(first).forEach((b,i)=>{const x=(b.x-b.w/2)*W,y=base-i*dy;g.fillStyle='#0008';g.fillRect(x+4,y+5,b.w*W,dy+4);pic(g,image(game,1),x,y,b.w*W,dy+4);line(g,x+2,y+2,x+b.w*W-2,y+2,2,'#ffe2aa99');});
   const x=r?.x??.45,bw=r?.w??.76,y=base-(blocks.length-first)*dy-15;
   pic(g,image(game,1),(x-bw/2)*W,y,bw*W,dy+4);
   line(g,x*W,y-5,x*W,y-25,2,'#f5d68a');pic(g,image(game,2),22,520,78,134);if(score>=10)pic(g,image(game,3),485,125,85,90);
@@ -23,6 +23,7 @@ export function paintSkill(game,g,w,h,t,r){
   for(let i=0;i<48;i++){const a=i*Math.PI/24;line(g,300+Math.sin(a)*99,398-Math.cos(a)*99,300+Math.sin(a)*107,398-Math.cos(a)*107,2,'#c29b5d');}
   line(g,300,398,300+Math.sin(a)*112,398-Math.cos(a)*112,8,'#f6d58b');disk(g,300,398,18,'#bb8847');
   for(let i=0;i<5;i++)disk(g,204+i*48,628,12,i<(r?.locks||0)?'#75d3a3':'#594134');
+  if(r?.flash>0){g.strokeStyle=r.locks>0&&Math.abs(Math.atan2(Math.sin(a-target),Math.cos(a-target)))<win?'#82e0af':'#d77966';g.lineWidth=6;g.beginPath();g.arc(300,398,150,0,Math.PI*2);g.stroke();}
   g.fillStyle='#edba8b';g.textAlign='center';g.font='bold 20px Arial';g.fillText((3-(r?.strikes||0))+' ATTEMPTS · MATCH THE GREEN ARC',300,155);
  }else if(game==='train'){
   const off=(t*30)%584;pic(g,image(game,0),8-off,108,584,568);pic(g,image(game,0),592-off,108,584,568);
@@ -30,7 +31,7 @@ export function paintSkill(game,g,w,h,t,r){
   const y=610-(r?.y||0)*300,slide=(r?.slide||0)>0;
   g.save();g.translate(132,y);if(slide){g.rotate(-Math.PI/2);pic(g,image(game,1),0,-48,46,96);}else{g.rotate(Math.sin(t*18)*.035);pic(g,image(game,1),-38,-104,82,104);}g.restore();
   for(const o of r?.obstacles||[{x:.8,kind:'case'}]){if(o.kind==='case')pic(g,image(game,2),o.x*W-24,550,48,60);else pic(g,image(game,3),o.x*W-27,365,54,195);}
-  g.textAlign='center';g.font='bold 22px Arial';g.fillStyle='#ffe2a2';g.fillText('JUMP THE LUGGAGE · SLIDE UNDER BARS',300,650);
+  g.textAlign='center';g.font='bold 22px Arial';g.fillStyle='#ffe2a2';g.fillText('PLATFORM 13 · LAST DEPARTURE',300,650);
  }else if(game==='pop'){
   for(let i=0;i<9;i++){const x=(.22+i%3*.28)*W,y=(.34+Math.floor(i/3)*.24)*H,p=r?.holes?.[i],demo=!r&&i===4;
    g.save();g.beginPath();g.ellipse(x,y,72,80,0,0,Math.PI*2);g.fillStyle='#100a0c';g.fill();g.strokeStyle='#bb9150';g.lineWidth=5;g.stroke();g.clip();
@@ -46,14 +47,14 @@ export function paintSkill(game,g,w,h,t,r){
   for(const p of bumps){if(p.cool>0){disk(g,p.x,p.y,p.r+.025,'#ffe7a877');}pic(g,image(game,1),p.x-p.r,p.y-p.r,p.r*2,p.r*2);}
   pic(g,image(game,2),.40,.57,.20,.14);pic(g,image(game,3),.42,.08,.16,.12);
   for(const side of[0,1]){const f=pinballFlipper(side,side?r?.ra??.22:r?.la??.22);line(g,f.x,f.y,f.ex,f.ey,.043,'#f5d28d');line(g,f.x,f.y,f.ex,f.ey,.022,'#912f3d');disk(g,f.x,f.y,.025,'#f5d28d');}
-  const b=r?.ball||(!r?{x:.55,y:.70}:null);if(b){disk(g,b.x+.005,b.y+.008,.019,'#00000088');const grad=g.createRadialGradient(b.x-.005,b.y-.006,.001,b.x,b.y,.018);grad.addColorStop(0,'#fff');grad.addColorStop(.3,'#f9f1d8');grad.addColorStop(1,'#8c795a');disk(g,b.x,b.y,.016,grad);}g.restore();
-  g.textAlign='center';g.font='bold 20px Arial';g.fillStyle='#f5d28d';g.fillText(r&&!r.ball&&r.phase==='play'?'CLICK TO LAUNCH NEXT BALL':(r?.balls??3)+' BALLS · BUMPERS 50 POINTS',300,675);
+  g.restore();
+  g.textAlign='center';g.font='bold 20px Arial';g.fillStyle='#f5d28d';g.fillText(r&&!r.ball&&r.phase==='play'?'SPACE · LAUNCH NEXT BALL':(r?.balls??3)+' IN RESERVE · BUMPERS +50',300,675);
  }
  // Fixed header/footer preserve readable play area and the real hit coordinates.
  g.fillStyle='#100a0cf2';g.fillRect(0,0,600,108);g.fillRect(0,701,600,59);g.strokeStyle='#bd9553';g.lineWidth=4;g.strokeRect(3,3,594,754);
  g.textAlign='center';g.textBaseline='middle';g.fillStyle='#edcc88';g.font='bold '+(game==='pinball'?31:38)+'px Georgia';g.fillText(SKILL_NAMES[game].toUpperCase(),300,35);
  g.font='bold 20px Arial';g.fillStyle='#fff0cc';g.fillText(r?.phase==='done'?'PAID $'+Math.round(r.bet*r.mult)+' · '+r.mult+'× RETURN':r?r.score+' POINTS · '+Math.ceil(r.time)+'s':'PLACE BET · PRESS START',300,76);
  g.font='bold 15px Arial';g.fillText(SKILL_HINTS[game],300,721);g.font='13px Arial';g.fillStyle='#c8b58e';g.fillText(SKILL_TIERS[game].map((n,i)=>n+' = '+[1,1.5,2,3][i]+'×').join('     '),300,746);
- if(r?.phase==='aim'||r?.phase==='done'){g.fillStyle='#10090bdd';g.fillRect(70,302,460,100);g.fillStyle='#f7d48c';g.font='bold 28px Georgia';g.fillText(r.phase==='done'?'ROUND COMPLETE':'CLICK TO BEGIN',300,338);g.font='17px Arial';g.fillText(r.phase==='done'?'PLACE BET · START FOR ANOTHER ROUND':'Your round starts on your first click',300,375);}
+ if(r?.phase==='aim'){g.fillStyle='#f7d48c';g.font='bold 20px Arial';g.fillText(game==='pinball'?'SPACE TO LAUNCH':'SPACE / CLICK TO BEGIN',300,675);}
  g.restore();
 }

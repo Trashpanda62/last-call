@@ -52,11 +52,22 @@ function sendHolds() { // the host keeps these games for you while they run (no 
   if (key !== holdKey && holdAct) { holdKey = key; holdAct('tableHold', { seats: [...bg.keys()] }); }
 }
 export const tableGame = () => tb && tb.game;
+// Only the dedicated physical playfields capture walking and looking once chips are staged.
+export const tablePinned = () => !!(tb && ['pinball','pop'].includes(tb.game) && (stake()>0 || tb.round && tb.round.phase!=='done'));
+let flipperKeys=0, flipperSent=0;
+export function tableKey(key,down){
+ if(!tablePinned()||tb.game!=='pinball'||!['a','d'].includes(key))return false;
+ const bit=key==='a'?1:2,was=!!(flipperKeys&bit);flipperKeys=down?flipperKeys|bit:flipperKeys&~bit;
+ if(down&&!was)sfx('pinFlipper');
+ sendFlippers();return true;
+}
+function sendFlippers(){if(tb?.game==='pinball'&&tb.round&&tb.round.phase!=='done'){const r=tb.round;tb.act('arcade',{kind:'drop',round:r.id,sequence:r.seq+1,flippers:flipperKeys});flipperSent=now();}}
 export function tableMouse(button){if(!tb||!SKILL_GAMES.includes(tb.game)||!tb.round||tb.round.phase==='done')return false;if(button===2&&!['train','pinball'].includes(tb.game))return false;if(tb.game==='pop'&&button===0)return false;tb.g.input(button);return true;}
 export const tableSeat = () => tb ? tb.seat : -1;
 
 // ---------- Open, close, tick ----------
 export function openTable(seat, act, v) {
+  flipperKeys=0;flipperSent=0;
   holdAct = act;
   const kept = bg.get(seat.id);
   if (kept) { bg.delete(seat.id); tb = kept; tb.act = act; tb.liveView = v; tb.idleT = null; if (tb.g.live) tb.g.live(v); sendHolds(); return; } // back at a game still going
@@ -107,6 +118,7 @@ export function tableTick(v) {
   if (mb !== tb.maxBet || stake() > mb) { tb.maxBet = mb; fit(); } // also trims bets that were locked when the max fell
   tb.liveView = v; if (tb.g.live) tb.g.live(v);
   if (tb && tb.fx && t - tb.fx.t0 > 2.6) tb.fx = null;
+  if(tb?.game==='pinball' && (flipperKeys || tb.round?.left || tb.round?.right) && t-flipperSent>.10)sendFlippers();
 }
 // The same action drives the keyboard and the accessible HUD prompt.
 export function tableStart() {
@@ -114,6 +126,11 @@ export function tableStart() {
   const g = tb.g, game = tb.game;
   // Slots share SPIN with Space. Other physical starters keep their own controls;
   // Crash, skee and Flappy also expose their contextual keyboard action.
+  if(SKILL_GAMES.includes(game)){
+    const r=tb.round,id=!r||r.phase==='done'?'start':'drop';
+    if(game==='pop'&&r?.phase==='play')return null;
+    return {id:'btn:'+id,label:id==='start'?'Start round':game==='pinball'?'Launch ball':game==='pop'?'Begin round':game==='vault'?'Lock':game==='train'?'Jump':'Drop block',on:tb.g.on(id)&&!(game==='pinball'&&r?.phase==='play'&&r.ball)};
+  }
   if (!['crash', 'skee', 'flappy', 'slots'].includes(game)) return null;
   if (game === 'crash') {
     const round = tb.cr.C, mine = tb.cr.mine;
@@ -374,20 +391,28 @@ export function chipHud(maxBet) {
 // units, tapUI(id); tap(x, y) for the rest of the screen. show(): the chips to draw when they differ from the bets.
 function arcadeController(game) {
   return {
-    main:'main',btns:SKILL_GAMES.includes(game)?['start','drop',...(['train','pinball'].includes(game)?['alt']:[])]:game==='flappy'?['start','drop']:['start','left','right',...(game==='claw'?['back','forward']:[]),'drop'],bar:[],
+    main:'main',btns:SKILL_GAMES.includes(game)?['start','drop',...(['train','pinball'].includes(game)?['alt']:[]),...(game==='pinball'?['launch']:[])]:game==='flappy'?['start','drop']:['start','left','right',...(game==='claw'?['back','forward']:[]),'drop'],bar:[],
     init(){tb.round=null;tb.laneRound=null;tb.pending=false;tb.resultRound=null;},
     live(v){const r=v.pub.arcade?.[game];tb.laneRound=r||null;
+      const prev=tb.round;
+      if(r?.player===tb.me&&prev?.id===r.id){
+       if(game==='pinball'){if(r.score>prev.score)sfx('pinBumper');if(prev.ball&&!r.ball)sfx('pinDrain');if(!prev.ball&&r.ball)sfx('pinLaunch');}
+       if(game==='pop'){if(r.score>prev.score)sfx('popHit');if(r.misses>prev.misses&&r.score<prev.score)sfx('lose');if(r.n>prev.n)sfx('popUp');}
+       if(game==='stack'&&r.score>prev.score)sfx('clink');
+       if(game==='vault'&&r.score>prev.score)sfx('coin');
+       if(game==='train'&&r.score>prev.score)sfx('click');
+      }
       if(tb.pending && (now()>tb.pendingUntil || r?.seq!==tb.pendingSeq || r?.id!==tb.pendingRound))tb.pending=false;
       tb.round=r?.player===tb.me?r:null;
-      if(tb.round?.phase==='done'&&tb.resultRound!==r.id){tb.resultRound=r.id;const back=r.bet*r.mult,net=r.net||0;result('PAID '+money(back)+' / BANK '+(net>0?'+':'')+money(net),net>0?'win':net<0?'lose':'');}
+      if(tb.round?.phase==='done'&&tb.resultRound!==r.id){tb.resultRound=r.id;const back=r.bet*r.mult,net=r.net||0;result('PAID '+money(back)+' / BANK '+(net>0?'+':'')+money(net),net>0?'win':net<0?'lose':'');sfx(net>0?'win':'lose');}
     },
     locked(){return !!(tb.pending||tb.laneRound&&tb.laneRound.phase!=='done');},
-    on(id){return id==='start'?!this.locked()&&stake()>=minBet():!!((tb.round?.phase==='aim'||game==='flappy'&&tb.round?.phase==='fly'||SKILL_GAMES.includes(game)&&tb.round?.phase==='play')&&!tb.pending);},
-    label(id){if(SKILL_GAMES.includes(game))return id==='start'?'START ROUND':id==='alt'?(game==='train'?'SLIDE':'RIGHT FLIPPER'):({stack:'DROP BLOCK',vault:'LOCK',train:'JUMP',pinball:'LEFT FLIPPER',pop:'HIT'})[game];return ({start:'START ROUND',left:'MOVE LEFT',right:'MOVE RIGHT',back:'MOVE BACK',forward:'MOVE FORWARD',drop:game==='flappy'?'FLAP':game==='claw'?'LOWER CLAW':'DROP TOKEN'})[id];},
+    on(id){if(id==='launch')return game==='pinball'&&!tb.round?.ball&&!!tb.round&&tb.round.phase!=='done'&&!tb.pending;return id==='start'?!this.locked()&&stake()>=minBet():!!((tb.round?.phase==='aim'||game==='flappy'&&tb.round?.phase==='fly'||SKILL_GAMES.includes(game)&&tb.round?.phase==='play')&&!tb.pending);},
+    label(id){if(id==='launch')return 'LAUNCH BALL · SPACE';if(SKILL_GAMES.includes(game))return id==='start'?'START ROUND':id==='alt'?(game==='train'?'SLIDE':'RIGHT FLIPPER'):({stack:'DROP BLOCK',vault:'LOCK',train:'JUMP',pinball:'LEFT FLIPPER',pop:'HIT'})[game];return ({start:'START ROUND',left:'MOVE LEFT',right:'MOVE RIGHT',back:'MOVE BACK',forward:'MOVE FORWARD',drop:game==='flappy'?'FLAP':game==='claw'?'LOWER CLAW':'DROP TOKEN'})[id];},
     tapLabel(){return SKILL_GAMES.includes(game)?{label:SKILL_HINTS[game],on:this.on('drop')}:null;},
     tap(x,y){if(SKILL_GAMES.includes(game))this.input(0,x,y);},
-    input(button,x,y){if(!SKILL_GAMES.includes(game)||!this.on('drop'))return;const r=tb.round;tb.act('arcade',{kind:'drop',round:r.id,sequence:r.seq+1,button,x,y});},
-    press(id){if(SKILL_GAMES.includes(game)&&id!=='start'){this.input(id==='alt'?2:0,game==='pop'?.5:undefined,game==='pop'?.58:undefined);return;}if(!this.on(id))return;const r=tb.round;tb.pending=true;tb.pendingUntil=now()+2.5;tb.pendingRound=r?.id;tb.pendingSeq=r?.seq;
+    input(button,x,y){if(!SKILL_GAMES.includes(game)||!this.on('drop'))return;const r=tb.round;if(game==='pinball')sfx(r.ball?'pinFlipper':'pinLaunch');else if(game==='train')sfx('click');tb.act('arcade',{kind:'drop',round:r.id,sequence:r.seq+1,button,x,y});},
+    press(id){if(id==='launch'&&!this.on(id))return;if(SKILL_GAMES.includes(game)&&id!=='start'){if(game==='pop'&&/^hole[0-8]$/.test(id)){const i=+id.slice(4);this.input(0,.22+i%3*.28,.34+Math.floor(i/3)*.24);}else this.input(id==='alt'?2:0,game==='pop'?.5:undefined,game==='pop'?.58:undefined);return;}if(!this.on(id))return;const r=tb.round;tb.pending=true;tb.pendingUntil=now()+2.5;tb.pendingRound=r?.id;tb.pendingSeq=r?.seq;
       const msg=id==='start'?{kind:'start',after:tb.laneRound?.id||0,bet:stake()}:{kind:id==='drop'?'drop':'move',round:r.id,sequence:r.seq+1,dx:id==='left'?-1:id==='right'?1:0,dz:id==='back'?-1:id==='forward'?1:0};
       tb.act('arcade',msg);hand('press');sfx('click');
     },

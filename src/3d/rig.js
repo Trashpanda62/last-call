@@ -147,7 +147,7 @@ const AT = {
 // The table camera: how steeply it looks down (radians) and its narrowest field of view (degrees; it widens when the
 // ceiling is in the way).
 const SHOT = { roulette: [-1.1, 44], bj: [-0.92, 46], dice: [-0.95, 46], slots: [-0.12, 44], plinko: [-0.22, 46], mines: [-0.3, 40], tower: [-0.3, 40],
-  flappy: [0.08, 48], crash: [-0.22, 50], race: [-0.62, 50], coin: [-0.55, 46], wheel: [-0.16, 50] };
+  pinball:[-1.05,46],pop:[-1.12,48],flappy: [0.08, 48], crash: [-0.22, 50], race: [-0.62, 50], coin: [-0.55, 46], wheel: [-0.16, 50] };
 // Chips on the felt are drawn bigger than life so they read from the table camera.
 const CHIP_SCALE = { roulette: 2.5, dice: 2.2, bj: 2.3 };
 export const STANDS = { plinko: [0.68, 0.96, 0.62, 0.66] }; // betting stands in front of these seats: [ahead, width, depth, height]

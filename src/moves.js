@@ -189,7 +189,7 @@ export function updateMoves(v) {
   const play = pub.mode === 'play' && !pub.over;
   $('mouseActionsHint').classList.toggle('hidden', !(play && priv.alive && !priv.cameraFeed));
   const mr=pub.arcade?.[priv.seat?.game];
-  text($('mouseActionsHint'), ['train','pinball'].includes(priv.seat?.game)&&mr?.player===priv.me&&mr.phase!=='done' ? priv.seat.game==='train'?'LMB: jump · RMB: slide':'LMB: left flipper · RMB: right flipper' : actionCursor?'Left click: choose action · Right click: return':pub.escape?'LMB: use / hide / sip · RMB: sniff':'LMB: use / sip · RMB: check traps / sniff');
+  text($('mouseActionsHint'), ['train','pinball'].includes(priv.seat?.game)&&mr?.player===priv.me&&mr.phase!=='done' ? priv.seat.game==='train'?'LMB: jump · RMB: slide':'A / D: flippers · Space: launch · U: leave' : actionCursor?'Left click: choose action · Right click: return':pub.escape?'LMB: use / hide / sip · RMB: sniff':'LMB: use / sip · RMB: check traps / sniff');
   if ((!play || !priv.alive || priv.cameraFeed) && actionCursor) {actionCursor=false;document.body.classList.remove('actionCursor');}
   if (!play && picker) closePicker();
   // killer bar

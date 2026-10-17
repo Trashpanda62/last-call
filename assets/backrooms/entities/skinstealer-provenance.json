@@ -1,0 +1,95 @@
+{
+  "provider": "Sorceress",
+  "prompt": "Full-length front view of a terrifying Backrooms skin-stealer creature. Entire body from crown to both soles in the picture, with visible long skinny bare lower legs, bony knees, ankles, toes and both bare feet planted on the floor. Standing upright with separated legs and arms spread outward in a relaxed open A pose for 3D rigging. Emaciated adult humanoid wearing a loose torn dirty grey office shirt and short ragged trousers ending above the knees. Pale waxy wrinkled skin, sunken eyes, a strained uncanny toothy human smile, elongated claw-like human hands. Realistic horror movie practical creature, not cartoon. Both long bare shins and feet fully visible. Isolated on a plain neutral grey studio background, even lighting. One character, no text, no base, no cropped limbs.",
+  "conceptResult": {
+    "ok": true,
+    "jobId": "fce5492d-6a12-4ea0-93fe-db5986f8dd39",
+    "tool": "image_generate",
+    "status": "succeeded",
+    "images": [
+      {
+        "url": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/dd83b82f-14d3-47e2-9e52-acce3fc35ae4/gpt-image-2-1.png",
+        "storageKey": "generations/14b713ad-480d-44e5-a794-18be8c0a897d/dd83b82f-14d3-47e2-9e52-acce3fc35ae4/gpt-image-2-1.png"
+      }
+    ],
+    "imageUrl": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/dd83b82f-14d3-47e2-9e52-acce3fc35ae4/gpt-image-2-1.png",
+    "model": "gpt-image-2",
+    "provider": "kie",
+    "creditsCharged": 5,
+    "balance": 2064
+  },
+  "modelResult": {
+    "ok": true,
+    "jobId": "8ca09efd-24be-49bc-8f16-3fafefb727c3",
+    "tool": "model_generate",
+    "status": "succeeded",
+    "mesh": {
+      "url": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/8ddfb76c-4118-4160-bbd5-c1b71c4066d6/meshy-7.glb",
+      "storageKey": "generations/14b713ad-480d-44e5-a794-18be8c0a897d/8ddfb76c-4118-4160-bbd5-c1b71c4066d6/meshy-7.glb",
+      "format": "glb",
+      "thumbnailUrl": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/8ddfb76c-4118-4160-bbd5-c1b71c4066d6/meshy-7-thumb.png",
+      "modelUrls": {
+        "glb": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/8ddfb76c-4118-4160-bbd5-c1b71c4066d6/meshy-7.glb"
+      }
+    },
+    "modelUrl": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/8ddfb76c-4118-4160-bbd5-c1b71c4066d6/meshy-7.glb",
+    "model": "meshy-7",
+    "provider": "meshy",
+    "creditsCharged": 50,
+    "balance": 2014
+  },
+  "rigResult": {
+    "ok": true,
+    "jobId": "e6760e18-b707-486a-9f3e-b81de0512af4",
+    "tool": "model_rig",
+    "status": "succeeded",
+    "rig": {
+      "url": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/abe60c55-10ec-4309-9b41-8191be96db8f/rigged.glb",
+      "storageKey": "tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/abe60c55-10ec-4309-9b41-8191be96db8f/rigged.glb",
+      "format": "glb",
+      "skeleton": "mixamo",
+      "heightMeters": 1.7,
+      "basicAnimations": {
+        "walking": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/abe60c55-10ec-4309-9b41-8191be96db8f/walking.glb",
+        "walking_armature": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/abe60c55-10ec-4309-9b41-8191be96db8f/walking_armature.glb",
+        "running": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/abe60c55-10ec-4309-9b41-8191be96db8f/running.glb",
+        "running_armature": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/abe60c55-10ec-4309-9b41-8191be96db8f/running_armature.glb"
+      },
+      "transform": {
+        "heightMeters": 1.7,
+        "widthMeters": 0.997,
+        "depthMeters": 0.294,
+        "groundOffsetMeters": 0,
+        "up": "+Y",
+        "forward": "+Z",
+        "applyScale": 1,
+        "rootNodeScale": 0.01,
+        "boneUnitsPerMeter": 100,
+        "boneSpanMeters": 1.645,
+        "boneCount": 24,
+        "rootBone": "Hips"
+      },
+      "clips": [
+        {
+          "name": "Armature|clip0|baselayer",
+          "durationSeconds": 0.033,
+          "keyframes": 1,
+          "staticPose": true
+        }
+      ]
+    },
+    "riggedModelUrl": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/abe60c55-10ec-4309-9b41-8191be96db8f/rigged.glb",
+    "url": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-autorig/14b713ad-480d-44e5-a794-18be8c0a897d/abe60c55-10ec-4309-9b41-8191be96db8f/rigged.glb",
+    "integration": [
+      "SCALE: load this GLB as-is and apply NO scale factor (scale = 1). It already renders 1.7 m tall and 0.997 m wide, feet on y=0, facing +Z, up +Y.",
+      "DO NOT INFER UNITS FROM BONE VALUES: the raw bone translations stored in this file read ~100x larger than metres (the 1.645 m skeleton spans ~165 units in the file), because a scale of 0.01 sits on the skeleton's root node and cancels them out. Nothing needs converting: the mesh is authored in metres and bone WORLD positions already resolve to metres. Applying 0.01 yourself renders the character ~1.7 cm tall \u00e2\u20ac\u201d an invisible speck at the origin, and the most common integration bug with this file.",
+      "MEASURING/GROUNDING: this is a SkinnedMesh, so THREE.Box3.setFromObject (and equivalents) reports a wrong or zero-size box \u00e2\u20ac\u201d never size or place the character from it. Read bone world positions instead: lowest bone y = feet, highest = head. For this character that span is \u00e2\u2030\u02c6 1.645 m \u00e2\u20ac\u201d a runtime readout far from that means the scale is wrong.",
+      "IDLE: the clip(s) embedded in this GLB (Armature|clip0|baselayer) are single-keyframe rest poses, not animation \u00e2\u20ac\u201d playing one looks frozen. For motion use basicAnimations (walking, walking_armature, running, running_armature) \u00e2\u20ac\u201d real clips already baked on this exact skeleton \u00e2\u20ac\u201d or retarget model_animate output.",
+      "ROOT MOTION: basicAnimations clips are authored in place \u00e2\u20ac\u201d the hips bob and sway but do not travel \u00e2\u20ac\u201d so drive locomotion from code and let the clip play on the spot. If a character does slide, strip the hips' horizontal translation track rather than compensating in movement code."
+    ],
+    "creditsCharged": 20,
+    "balance": 1994,
+    "next": "The rigged GLB is a standard skinned glTF (Mixamo-style bone names) \u00e2\u20ac\u201d load it in any engine, but read integration[] first: the file is already real-world scale, and applying a scale factor of your own is what makes the character disappear. To animate it, use rig.basicAnimations (real clips already baked on this skeleton) or call model_animate with a text prompt and retarget the motion onto this rig."
+  },
+  "rejected": "v1 text-only result omitted lower legs; retained in runs/sorceress/arcade-finish/skinstealer"
+}

@@ -1,4 +1,4 @@
-import {BackroomsEntities} from './backrooms-entities.js';
+import {BackroomsEntities,preloadBackroomsEntities} from './backrooms-entities.js';
 // The 3D view: first-person camera for the player, a camera tour for the menu, an orbit for meetings.
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -483,7 +483,7 @@ function fitShot(pts, look, pitch, fov, aspect, safe) {
   return { pos: r.pos, quat: shotCam.quaternion.clone(), fov };
 }
 function tableShot(F, aspect, safe) {
-  const key = [F.key, aspect.toFixed(3), safe.y0.toFixed(3), safe.y1.toFixed(3)].join();
+  const key = [F.key, aspect.toFixed(3), safe.x0.toFixed(3), safe.x1.toFixed(3), safe.y0.toFixed(3), safe.y1.toFixed(3)].join();
   if (R.shotKey === key) return R.shot;
   if (F.fixed) { shotCam.position.copy(F.fixed.pos); shotCam.lookAt(F.fixed.at); R.shotKey = key; return (R.shot = { pos: F.fixed.pos.clone(), quat: shotCam.quaternion.clone(), fov: F.fixed.fov }); }
   // the camera has to stay under the ceiling and inside your room (a seat with its back to a wall looks down steeper)
@@ -900,7 +900,7 @@ export function draw(frame, { prepareOnly = false } = {}) {
   R.tk = (R.tk || 0) + (wantT - (R.tk || 0)) * Math.min(1, dt * 5);
   if (R.tk < 0.002 && !wantT) R.tk = 0;
   const e = R.tk * R.tk * (3 - 2 * R.tk);
-  if (F) { const H = innerHeight, sf = frame.safe || {}; R.lastShot = tableShot(F, cam.aspect, { x0: -0.95, x1: 0.95, y0: -1 + 2 * (sf.bottom || 0) / H, y1: 1 - 2 * (sf.top || 0) / H }); }
+  if (F) { const H = innerHeight, sf = frame.safe || {}; R.lastShot = tableShot(F, cam.aspect, { x0: -0.95, x1: .95-2*(sf.right||0)/innerWidth, y0: -1 + 2 * (sf.bottom || 0) / H, y1: 1 - 2 * (sf.top || 0) / H }); }
   const shot = R.tk > 0 && !orbit ? R.lastShot : null;
   const baseFov = R.baseFov * (R.zoom || 1);
   let fov = baseFov;
@@ -1064,7 +1064,7 @@ export function preloadAssets(lowPower, progress = () => {}) {
   const jobs = [
     ['Characters and animation', () => loadPlush().then(() => loadClips([...GESTURES, 'snatched'])).then(() => Promise.all([loadHats(), prepareGesturesInSteps()]))],
     ['Casino models', () => loadProps()], ['First-person hands', () => loadHandAssets()], ['Cards and table art', () => Promise.all([loadFelts(), loadArt(), loadArt2().then(prepareEffectTexturesInSteps)])],
-    ['Room materials', () => loadRoomMats(lowPower)], ['Backrooms materials', () => preloadBackrooms(lowPower)], ['Monster', () => preloadMonster()],
+    ['Room materials', () => loadRoomMats(lowPower)], ['Backrooms materials', () => preloadBackrooms(lowPower)], ['Backrooms creatures',()=>preloadBackroomsEntities()], ['Monster', () => preloadMonster()],
     ['Casino paths', () => prepareNavigationInSteps()],
   ];
   let done = 0; const failed = [], manager = THREE.DefaultLoadingManager, previousError = manager.onError;
