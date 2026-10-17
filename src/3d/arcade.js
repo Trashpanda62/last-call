@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { ARCADE } from '../arcade.js';
 import { ARCADE_CABS } from '../map.js';
 import { MAT, v3, box, rbox, cyl, sph, basicGlow } from './world.js';
 import * as T from './textures.js';
@@ -42,8 +43,8 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
       key:(_t,r)=>r?[r.id,r.used,r.score,r.phase,r.assist].join(':'):'idle',
       paint:(g,w,h,_t,r)=>{g.fillStyle='#102c27';g.fillRect(0,0,w,h);g.strokeStyle='#c59d55';g.lineWidth=7;g.strokeRect(4,4,w-8,h-8);
         g.textAlign='center';g.textBaseline='middle';g.fillStyle='#edcc84';g.font='bold 58px Georgia';g.fillText(title,w/2,54);
-        g.fillStyle='#fff1d8';g.font='bold 37px Arial';g.fillText(r?(r.phase==='done'?r.mult.toFixed(2)+'x RETURN':r.score+' POINTS / '+((c.game==='claw'?3:5)-r.used)+' LEFT'+(r.assist?' / GOLD ASSIST':'')):(c.game==='claw'?'3 GRABS / PRIZE POINTS DIVIDED BY 3':'5 TOKENS / TIME THE PUSHING SHELF'),w/2,137);
-        if(c.game==='pusher'){g.font='bold 24px Arial';g.fillStyle='#edcc84';g.fillText('COINS: 2 = .5x / 4 = 1x / 6 = 1.5x / 9 = 2x / 12 = 3x',w/2,175);}
+        g.fillStyle='#fff1d8';g.font='bold 37px Arial';g.fillText(r?(r.phase==='done'?'PAID $'+Math.round(r.bet*r.mult).toLocaleString('en-US')+' / '+r.mult.toFixed(2)+'x':r.score+' POINTS / '+((c.game==='claw'?ARCADE.clawTries:ARCADE.pusherTokens)-r.used)+' LEFT'+(r.assist?' / GOLD ASSIST':'')):(c.game==='claw'?'ONE GRAB / TAGS PAY 1x, 2x OR 3x':'ONE TOKEN / TIME THE PUSHING SHELF'),w/2,137);
+        if(c.game==='pusher'){g.font='bold 24px Arial';g.fillStyle='#edcc84';g.fillText('FALLEN COINS: 1 = 1x / 2 = 2x / 3+ = 3x',w/2,175);}
       },arg:st=>st.pub?.arcade?.[c.game]||null});
     sign.name='arcade-score-'+c.game;focusAt(seat.id,'core',sign);
     if (c.game === 'pusher') {
@@ -57,7 +58,7 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
         shelf.position.z=r?.shelf??-.42+(1-Math.cos(t*Math.PI))*.115;aim.position.x=r?.x||0;
       });
     } else {
-      const tags=[1,2,3].map(n=>basicGlow(T.plaque(String(n),{w:64,h:64,bg:'#19362c',ink:'#fff2d1',font:'bold 48px Arial',border:false}),1));
+      const tags=[1,2,3].map(n=>basicGlow(T.plaque(String(n)+'x',{w:64,h:64,bg:'#19362c',ink:'#fff2d1',font:'bold 36px Arial',border:false}),1));
       const prizes=Array.from({length:9},(_,i)=>{const g=new THREE.Group();g.name='claw-prize-'+i;
         const mat=new THREE.MeshStandardMaterial({color:[0x7bbca2,0xdf9c56,0x9e81bb][i%3],roughness:.8});
         const body=new THREE.Mesh(prizeGeo,mat);body.scale.set(1,1.2,1);g.add(body);

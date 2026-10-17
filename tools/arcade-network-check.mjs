@@ -18,12 +18,12 @@ try{
  report.started=await Promise.all(pages.map(read));const original=report.started[2];
  await w.evaluate(r=>{for(const v of Object.values(r))__lastCall.act('arcade',{kind:'drop',round:v.id,sequence:1});__lastCall.act('bank',{d:999999,b:100});},original);
  await h.waitForTimeout(250);for(const r of Object.values(await read(h)))assert.equal(r.used,0);
- for(let n=1;n<=5;n++){
-  for(const [i,p]of[h,g].entries())if(n<=(i===0?5:3)){
+ for(let n=1;n<=1;n++){
+  for(const [i,p]of[h,g].entries())if(n<=(1)){
    const game=games[i];await p.waitForFunction(game=>__lastCall.view.pub.arcade[game].phase==='aim',game);
    await p.evaluate(game=>{const r=__lastCall.view.pub.arcade[game],a={kind:'drop',round:r.id,sequence:r.seq+1};__lastCall.act('arcade',a);__lastCall.act('arcade',a);},game);
   }
-  await h.waitForFunction(n=>__lastCall.state.arcade.pusher.used===n&&(n>3||__lastCall.state.arcade.claw.used===n),n);
+  await h.waitForFunction(n=>__lastCall.state.arcade.pusher.used===n&&(n>1||__lastCall.state.arcade.claw.used===n),n);
   await h.evaluate(()=>{for(let i=0;i<540;i++)__lastCall.step(1/120);});
   for(const p of[g,w])await p.waitForFunction(n=>__lastCall.view.pub.arcade.pusher.used===n&&['aim','done'].includes(__lastCall.view.pub.arcade.pusher.phase)&&['aim','done'].includes(__lastCall.view.pub.arcade.claw.phase),n);
  }

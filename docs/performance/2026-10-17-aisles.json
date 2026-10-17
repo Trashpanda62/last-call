@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-17T04:21:14.888Z",
+  "at": "2026-10-17T04:40:35.771Z",
   "units": "simulation pixels; 60 = 1 metre",
   "scope": "Clear rectangular principal aisles, including occupied player bodies, solids and plants. Connecting doors retain the existing two metre gaps; this is not a claim that every machine approach is 1.5 metres wide.",
   "aisles": [
@@ -11,18 +11,18 @@
       "h": 90
     },
     {
-      "name": "floor loop east of roulette",
-      "x": 1470,
+      "name": "clear approach to VIP",
+      "x": 1695,
       "y": 540,
       "w": 90,
-      "h": 520
+      "h": 638
     },
     {
-      "name": "floor south connection",
-      "x": 1470,
-      "y": 1088,
-      "w": 330,
-      "h": 90
+      "name": "table pit central aisle",
+      "x": 1225,
+      "y": 710,
+      "w": 90,
+      "h": 468
     },
     {
       "name": "slot hall north aisle",
@@ -32,11 +32,11 @@
       "h": 90
     },
     {
-      "name": "slot bank central aisle",
-      "x": 620,
-      "y": 1300,
+      "name": "slot entrance to jackpot",
+      "x": 775,
+      "y": 1207,
       "w": 90,
-      "h": 460
+      "h": 280
     },
     {
       "name": "arcade promenade",

@@ -551,11 +551,12 @@ export function* buildMachinesSteps(ctx, seats) {
         if (R.phase === 'show' && i === R.winner) g.position.y += Math.abs(Math.sin(t * 6)) * 0.15;
       });
     });
-    // tote board on the east wall
-    const bw = 3.6, bh = 1.55, bz = 720 * M + 0.1, boardX = 2600 * M;
+    // Shared tote board on the solid north wall, entirely east of the doorway.
+    const bw = 3.6, bh = 1.55, bz = 720 * M + 0.1, boardX = 2810 * M;
     B.add(rbox(bw + 0.2, bh + 0.2, 0.1, 0.04), MAT.blackGloss, v3(boardX, 2.2, bz - 0.05));
-    screen({ w: bw, h: bh, cw: 1536, ch: 864, paint: (g, w, h, t, a) => P.paintTote(g, w, h, t, a && a.R, a && a.me), key: (t, a) => P.toteFrameKey(t, a && a.R, a && a.me), pos: v3(boardX, 2.2, bz + 0.01), yaw: 0, every: 1 / 10, far: 30, arg: st => st.pub && { R: st.pub.race, me: st.priv ? st.priv.me : -1 } });
-    // Six numbered sockets in two rows: large enough for actual chips and readable names/odds above them.
+    const tote=screen({ w: bw, h: bh, cw: 1536, ch: 864, paint: (g, w, h, t, a) => P.paintTote(g, w, h, t, a && a.R, a && a.me), key: (t, a) => P.toteFrameKey(t, a && a.R, a && a.me), pos: v3(boardX, 2.2, bz + 0.01), yaw: 0, every: 1 / 10, far: 30, arg: st => st.pub && { R: st.pub.race, me: st.priv ? st.priv.me : -1 } });
+    tote.name='race-tote-board';
+    // Six numbered sockets on the single pedestal in two rows: large enough for actual chips and readable names/odds above them.
     const card = T.liveCanvas(1024, 400, (g, w, h, t, R) => {
       g.fillStyle = '#102c27'; g.fillRect(0, 0, w, h);
       g.strokeStyle = '#b69252'; g.lineWidth = 7; g.strokeRect(4, 4, w-8, h-8);

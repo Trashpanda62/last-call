@@ -38,7 +38,8 @@ try{
   const samples=[];let last=0;for(const at of[.35,1.0,2.05]){await page.waitForTimeout((at-last)*1000);last=at;const state=await ballState();samples.push(state);if(!state.visible||!state.ball||Math.abs(state.screen[0])>=1||Math.abs(state.screen[1])>=1)errors.push('Plinko '+machine+'/'+risk+': ball hidden at '+at+' by '+state.blocker);await page.screenshot({path:path.join(OUT,'plinko-'+machine+'-'+risk+'-'+at+'.jpg'),type:'jpeg',quality:86});}
   const landed=samples.at(-1);if(!landed.mark)errors.push('Plinko '+machine+'/'+risk+': no landed channel');if(landed.risk!==risk)errors.push('Plinko risk button failed');rows.push({game:'plinko',machine,risk,started,samples});await page.waitForTimeout(1600);
  }
- for(let seat=0;seat<6;seat++){
+ const stations=await page.evaluate(()=>__lastCall.state.seats.filter(s=>s.game==='race').length);if(stations!==1)errors.push('expected exactly one derby pedestal');
+ for(let seat=0;seat<stations;seat++){
   await go('race',seat);await page.evaluate(()=>{const R=__lastCall.state.race;R.phase='bet';R.t=0;R.bets.clear();});await page.waitForTimeout(100);
   await click('spot:duck2');const pending=await page.evaluate(()=>__lastCall.state.race.bets.has(__lastCall.S.myId));if(pending)errors.push('race committed before START');
   await click('btn:bet');await page.waitForFunction(()=>__lastCall.state.race.bets.has(__lastCall.S.myId));

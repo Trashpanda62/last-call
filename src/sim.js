@@ -897,15 +897,16 @@ function makeApi(G) {
         arcadeMove(r,rand(-1,1),rand(-1,1),r.seq+1);arcadeDrop(r,r.seq+1);
       }
       arcadeTick(r,dt);
-      if (r.phase === 'done' && !r.paid) { r.paid = true;const back=r.bet*arcadeMultiplier(r);settle(c,r.bet,back,r.policy);
-        if(c?.isHuman){luckFor(c).settle(r.bet,back);tell(c,`${r.score} points / ${arcadeMultiplier(r).toFixed(2)}x return`,back<r.bet,back>r.bet?'coin':'click');}
+      if (r.phase === 'done' && !r.paid) { r.paid = true;const back=r.bet*arcadeMultiplier(r);r.net=settle(c,r.bet,back,r.policy);
+        if(c?.isHuman){luckFor(c).settle(r.bet,back);tell(c,`Paid ${money(back)} / net ${r.net>0?'+':''}${money(r.net||0)}`,back<r.bet,back>r.bet?'coin':'click');}
       }
     }
   }
   function settle(c, staked, back, policy = null) {
     if (c && !c.isHuman) back = Math.min(back, staked * (1 + CFG.bot.maxWin)) + staked * CFG.bot.comp;
-    const net = addBank(back - staked, c, staked);
+    const before = G.bank, net = addBank(back - staked, c, staked);
     if (c && policy) policyFor(c).settle(policy, staked, net);
+    return G.bank - before;
   }
   function addBank(delta, c, staked = 0, lucky = !!(c && c.lucky > 0)) {
     if (G.over) return; // the verdict is final: a payout later in the same crash or race loop can't move the bank

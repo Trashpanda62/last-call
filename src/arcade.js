@@ -1,5 +1,5 @@
 // Bounded, deterministic host simulations. Cabinet-local metres, +z toward the player.
-export const ARCADE = Object.freeze({ step: 1 / 120, pusherTokens: 5, clawTries: 3, seconds: 60 });
+export const ARCADE = Object.freeze({ step: 1 / 120, pusherTokens: 1, clawTries: 1, seconds: 60 });
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 export function arcadeNew(game, id, seat, player, bet, hot = false) {
   const r = { game, id, seat, player, bet, hot, phase: 'aim', used: 0, score: 0, time: ARCADE.seconds,
@@ -10,7 +10,7 @@ export function arcadeNew(game, id, seat, player, bet, hot = false) {
   else for (let i = 0; i < 9; i++) r.prizes.push({ id: i, x: (i % 3 - 1) * .29, z: (Math.floor(i / 3) - 1) * .26, value: i % 3 + 1, taken: false });
   return r;
 }
-export const arcadeMultiplier = r => r.game === 'claw' ? r.score / 3 : r.score < 2 ? 0 : r.score < 4 ? .5 : r.score < 6 ? 1 : r.score < 9 ? 1.5 : r.score < 12 ? 2 : 3;
+export const arcadeMultiplier = r => r.game === 'claw' ? r.score : Math.min(3, r.score);
 export function arcadeMove(r, dx, dz, seq) {
   if (!r || r.phase !== 'aim' || r.abandoned || seq !== r.seq + 1 || !Number.isFinite(dx) || !Number.isFinite(dz)) return false;
   // A message moves one detent; sending a large value cannot teleport the carriage.

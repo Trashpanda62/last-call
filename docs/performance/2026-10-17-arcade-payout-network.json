@@ -1,0 +1,2474 @@
+{
+  "at": "2026-10-17T04:50:18.157Z",
+  "started": [
+    {
+      "pusher": {
+        "game": "pusher",
+        "id": 1,
+        "seat": 56,
+        "player": 0,
+        "bet": 1000,
+        "phase": "aim",
+        "used": 0,
+        "score": 0,
+        "time": 59.88333333333334,
+        "elapsed": 0.11666666666666665,
+        "seq": 0,
+        "x": 0,
+        "z": 0,
+        "timer": 0.11666666666666665,
+        "shelf": -0.4123617490471782,
+        "grabbed": -1,
+        "coins": [
+          {
+            "id": 0,
+            "x": -0.34500000000000003,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 1,
+            "x": -0.23,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 2,
+            "x": -0.115,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 3,
+            "x": 0,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 4,
+            "x": 0.115,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 5,
+            "x": 0.23,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 6,
+            "x": 0.34500000000000003,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 7,
+            "x": -0.32,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 8,
+            "x": -0.20500000000000002,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 9,
+            "x": -0.09,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 10,
+            "x": 0.025,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 11,
+            "x": 0.14,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 12,
+            "x": 0.255,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 13,
+            "x": 0.37000000000000005,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 14,
+            "x": -0.34500000000000003,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 15,
+            "x": -0.23,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 16,
+            "x": -0.115,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 17,
+            "x": 0,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 18,
+            "x": 0.115,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 19,
+            "x": 0.23,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 20,
+            "x": 0.34500000000000003,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 21,
+            "x": -0.32,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 22,
+            "x": -0.20500000000000002,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 23,
+            "x": -0.09,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 24,
+            "x": 0.025,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 25,
+            "x": 0.14,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 26,
+            "x": 0.255,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 27,
+            "x": 0.37000000000000005,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 28,
+            "x": -0.34500000000000003,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 29,
+            "x": -0.23,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 30,
+            "x": -0.115,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 31,
+            "x": 0,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 32,
+            "x": 0.115,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 33,
+            "x": 0.23,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 34,
+            "x": 0.34500000000000003,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          }
+        ],
+        "prizes": [],
+        "assist": false,
+        "mult": 0
+      },
+      "claw": {
+        "game": "claw",
+        "id": 2,
+        "seat": 57,
+        "player": 1,
+        "bet": 1000,
+        "phase": "aim",
+        "used": 0,
+        "score": 0,
+        "time": 59.91666666666667,
+        "elapsed": 0.08333333333333333,
+        "seq": 0,
+        "x": 0,
+        "z": 0,
+        "timer": 0.08333333333333333,
+        "shelf": -0.42,
+        "grabbed": -1,
+        "coins": [],
+        "prizes": [
+          {
+            "id": 0,
+            "x": -0.29,
+            "z": -0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 1,
+            "x": 0,
+            "z": -0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 2,
+            "x": 0.29,
+            "z": -0.26,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 3,
+            "x": -0.29,
+            "z": 0,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 4,
+            "x": 0,
+            "z": 0,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 5,
+            "x": 0.29,
+            "z": 0,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 6,
+            "x": -0.29,
+            "z": 0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 7,
+            "x": 0,
+            "z": 0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 8,
+            "x": 0.29,
+            "z": 0.26,
+            "value": 3,
+            "taken": false
+          }
+        ],
+        "assist": false,
+        "mult": 0
+      }
+    },
+    {
+      "pusher": {
+        "game": "pusher",
+        "id": 1,
+        "seat": 56,
+        "player": 0,
+        "bet": 1000,
+        "phase": "aim",
+        "used": 0,
+        "score": 0,
+        "time": 59.900000000000006,
+        "elapsed": 0.09999999999999999,
+        "seq": 0,
+        "x": 0,
+        "z": 0,
+        "timer": 0.09999999999999999,
+        "shelf": -0.41437149937394263,
+        "grabbed": -1,
+        "coins": [
+          {
+            "id": 0,
+            "x": -0.34500000000000003,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 1,
+            "x": -0.23,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 2,
+            "x": -0.115,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 3,
+            "x": 0,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 4,
+            "x": 0.115,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 5,
+            "x": 0.23,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 6,
+            "x": 0.34500000000000003,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 7,
+            "x": -0.32,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 8,
+            "x": -0.20500000000000002,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 9,
+            "x": -0.09,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 10,
+            "x": 0.025,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 11,
+            "x": 0.14,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 12,
+            "x": 0.255,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 13,
+            "x": 0.37000000000000005,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 14,
+            "x": -0.34500000000000003,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 15,
+            "x": -0.23,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 16,
+            "x": -0.115,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 17,
+            "x": 0,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 18,
+            "x": 0.115,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 19,
+            "x": 0.23,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 20,
+            "x": 0.34500000000000003,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 21,
+            "x": -0.32,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 22,
+            "x": -0.20500000000000002,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 23,
+            "x": -0.09,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 24,
+            "x": 0.025,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 25,
+            "x": 0.14,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 26,
+            "x": 0.255,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 27,
+            "x": 0.37000000000000005,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 28,
+            "x": -0.34500000000000003,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 29,
+            "x": -0.23,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 30,
+            "x": -0.115,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 31,
+            "x": 0,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 32,
+            "x": 0.115,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 33,
+            "x": 0.23,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 34,
+            "x": 0.34500000000000003,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          }
+        ],
+        "prizes": [],
+        "assist": false,
+        "mult": 0
+      },
+      "claw": {
+        "game": "claw",
+        "id": 2,
+        "seat": 57,
+        "player": 1,
+        "bet": 1000,
+        "phase": "aim",
+        "used": 0,
+        "score": 0,
+        "time": 59.93333333333334,
+        "elapsed": 0.06666666666666667,
+        "seq": 0,
+        "x": 0,
+        "z": 0,
+        "timer": 0.06666666666666667,
+        "shelf": -0.42,
+        "grabbed": -1,
+        "coins": [],
+        "prizes": [
+          {
+            "id": 0,
+            "x": -0.29,
+            "z": -0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 1,
+            "x": 0,
+            "z": -0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 2,
+            "x": 0.29,
+            "z": -0.26,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 3,
+            "x": -0.29,
+            "z": 0,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 4,
+            "x": 0,
+            "z": 0,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 5,
+            "x": 0.29,
+            "z": 0,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 6,
+            "x": -0.29,
+            "z": 0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 7,
+            "x": 0,
+            "z": 0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 8,
+            "x": 0.29,
+            "z": 0.26,
+            "value": 3,
+            "taken": false
+          }
+        ],
+        "assist": false,
+        "mult": 0
+      }
+    },
+    {
+      "pusher": {
+        "game": "pusher",
+        "id": 1,
+        "seat": 56,
+        "player": 0,
+        "bet": 1000,
+        "phase": "aim",
+        "used": 0,
+        "score": 0,
+        "time": 59.900000000000006,
+        "elapsed": 0.09999999999999999,
+        "seq": 0,
+        "x": 0,
+        "z": 0,
+        "timer": 0.09999999999999999,
+        "shelf": -0.41437149937394263,
+        "grabbed": -1,
+        "coins": [
+          {
+            "id": 0,
+            "x": -0.34500000000000003,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 1,
+            "x": -0.23,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 2,
+            "x": -0.115,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 3,
+            "x": 0,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 4,
+            "x": 0.115,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 5,
+            "x": 0.23,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 6,
+            "x": 0.34500000000000003,
+            "z": -0.14,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 7,
+            "x": -0.32,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 8,
+            "x": -0.20500000000000002,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 9,
+            "x": -0.09,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 10,
+            "x": 0.025,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 11,
+            "x": 0.14,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 12,
+            "x": 0.255,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 13,
+            "x": 0.37000000000000005,
+            "z": -0.02500000000000001,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 14,
+            "x": -0.34500000000000003,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 15,
+            "x": -0.23,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 16,
+            "x": -0.115,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 17,
+            "x": 0,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 18,
+            "x": 0.115,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 19,
+            "x": 0.23,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 20,
+            "x": 0.34500000000000003,
+            "z": 0.09,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 21,
+            "x": -0.32,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 22,
+            "x": -0.20500000000000002,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 23,
+            "x": -0.09,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 24,
+            "x": 0.025,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 25,
+            "x": 0.14,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 26,
+            "x": 0.255,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 27,
+            "x": 0.37000000000000005,
+            "z": 0.20500000000000002,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 28,
+            "x": -0.34500000000000003,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 29,
+            "x": -0.23,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 30,
+            "x": -0.115,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 31,
+            "x": 0,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 32,
+            "x": 0.115,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 33,
+            "x": 0.23,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 34,
+            "x": 0.34500000000000003,
+            "z": 0.32,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          }
+        ],
+        "prizes": [],
+        "assist": false,
+        "mult": 0
+      },
+      "claw": {
+        "game": "claw",
+        "id": 2,
+        "seat": 57,
+        "player": 1,
+        "bet": 1000,
+        "phase": "aim",
+        "used": 0,
+        "score": 0,
+        "time": 59.93333333333334,
+        "elapsed": 0.06666666666666667,
+        "seq": 0,
+        "x": 0,
+        "z": 0,
+        "timer": 0.06666666666666667,
+        "shelf": -0.42,
+        "grabbed": -1,
+        "coins": [],
+        "prizes": [
+          {
+            "id": 0,
+            "x": -0.29,
+            "z": -0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 1,
+            "x": 0,
+            "z": -0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 2,
+            "x": 0.29,
+            "z": -0.26,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 3,
+            "x": -0.29,
+            "z": 0,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 4,
+            "x": 0,
+            "z": 0,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 5,
+            "x": 0.29,
+            "z": 0,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 6,
+            "x": -0.29,
+            "z": 0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 7,
+            "x": 0,
+            "z": 0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 8,
+            "x": 0.29,
+            "z": 0.26,
+            "value": 3,
+            "taken": false
+          }
+        ],
+        "assist": false,
+        "mult": 0
+      }
+    }
+  ],
+  "finished": [
+    {
+      "pusher": {
+        "game": "pusher",
+        "id": 1,
+        "seat": 56,
+        "player": 0,
+        "bet": 1000,
+        "phase": "done",
+        "used": 1,
+        "score": 0,
+        "time": 55.3333333333336,
+        "elapsed": 4.6583333333333545,
+        "seq": 1,
+        "x": 0,
+        "z": 0,
+        "timer": 4.208333333333332,
+        "shelf": -0.25012674257013834,
+        "grabbed": -1,
+        "coins": [
+          {
+            "id": 0,
+            "x": -0.34500000000000003,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 1,
+            "x": -0.23,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 2,
+            "x": -0.115,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 3,
+            "x": 0,
+            "z": 0.03459622852439963,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 4,
+            "x": 0.115,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 5,
+            "x": 0.23,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 6,
+            "x": 0.34500000000000003,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 7,
+            "x": -0.32,
+            "z": 0.07507126534656344,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 8,
+            "x": -0.20500000000000002,
+            "z": 0.07507126534656346,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 9,
+            "x": -0.09,
+            "z": 0.09429547475079682,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 10,
+            "x": 0.025,
+            "z": 0.13966287404047195,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 11,
+            "x": 0.14,
+            "z": 0.07507126534656344,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 12,
+            "x": 0.255,
+            "z": 0.07507126534656346,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 13,
+            "x": 0.37000000000000005,
+            "z": 0.07507126534656344,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 14,
+            "x": -0.34500000000000003,
+            "z": 0.18013791086263575,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 15,
+            "x": -0.23,
+            "z": 0.18013791086263578,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 16,
+            "x": -0.115,
+            "z": 0.19936212026686911,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 17,
+            "x": 0,
+            "z": 0.24472951955654426,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 18,
+            "x": 0.115,
+            "z": 0.19936212026686914,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 19,
+            "x": 0.23,
+            "z": 0.18013791086263578,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 20,
+            "x": 0.34500000000000003,
+            "z": 0.18013791086263575,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 21,
+            "x": -0.32,
+            "z": 0.28520455637870806,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 22,
+            "x": -0.20500000000000002,
+            "z": 0.2852045563787081,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 23,
+            "x": -0.09,
+            "z": 0.3044287657829414,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 24,
+            "x": 0.025,
+            "z": 0.34979616507261657,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 25,
+            "x": 0.14,
+            "z": 0.3044287657829414,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 26,
+            "x": 0.255,
+            "z": 0.2852045563787081,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 27,
+            "x": 0.37000000000000005,
+            "z": 0.28520455637870806,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 28,
+            "x": -0.34500000000000003,
+            "z": 0.3902712018947804,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 29,
+            "x": -0.23,
+            "z": 0.39027120189478043,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 30,
+            "x": -0.115,
+            "z": 0.40949541129901373,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 31,
+            "x": 0,
+            "z": 0.4548628105886889,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 32,
+            "x": 0.115,
+            "z": 0.4094954112990138,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 33,
+            "x": 0.23,
+            "z": 0.39027120189478043,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 34,
+            "x": 0.34500000000000003,
+            "z": 0.3902712018947804,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 35,
+            "x": 0,
+            "z": -0.07340377147560037,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          }
+        ],
+        "prizes": [],
+        "net": -900,
+        "assist": false,
+        "mult": 0
+      },
+      "claw": {
+        "game": "claw",
+        "id": 2,
+        "seat": 57,
+        "player": 1,
+        "bet": 1000,
+        "phase": "done",
+        "used": 1,
+        "score": 2,
+        "time": 56.35000000000021,
+        "elapsed": 3.6416666666666564,
+        "seq": 1,
+        "x": 0,
+        "z": 0,
+        "timer": 0,
+        "shelf": -0.42,
+        "grabbed": -1,
+        "coins": [],
+        "prizes": [
+          {
+            "id": 0,
+            "x": -0.29,
+            "z": -0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 1,
+            "x": 0,
+            "z": -0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 2,
+            "x": 0.29,
+            "z": -0.26,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 3,
+            "x": -0.29,
+            "z": 0,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 4,
+            "x": 0,
+            "z": 0,
+            "value": 2,
+            "taken": true
+          },
+          {
+            "id": 5,
+            "x": 0.29,
+            "z": 0,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 6,
+            "x": -0.29,
+            "z": 0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 7,
+            "x": 0,
+            "z": 0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 8,
+            "x": 0.29,
+            "z": 0.26,
+            "value": 3,
+            "taken": false
+          }
+        ],
+        "net": 1100,
+        "assist": false,
+        "mult": 2
+      }
+    },
+    {
+      "pusher": {
+        "game": "pusher",
+        "id": 1,
+        "seat": 56,
+        "player": 0,
+        "bet": 1000,
+        "phase": "done",
+        "used": 1,
+        "score": 0,
+        "time": 55.3333333333336,
+        "elapsed": 4.6583333333333545,
+        "seq": 1,
+        "x": 0,
+        "z": 0,
+        "timer": 4.208333333333332,
+        "shelf": -0.25012674257013834,
+        "grabbed": -1,
+        "coins": [
+          {
+            "id": 0,
+            "x": -0.34500000000000003,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 1,
+            "x": -0.23,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 2,
+            "x": -0.115,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 3,
+            "x": 0,
+            "z": 0.03459622852439963,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 4,
+            "x": 0.115,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 5,
+            "x": 0.23,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 6,
+            "x": 0.34500000000000003,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 7,
+            "x": -0.32,
+            "z": 0.07507126534656344,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 8,
+            "x": -0.20500000000000002,
+            "z": 0.07507126534656346,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 9,
+            "x": -0.09,
+            "z": 0.09429547475079682,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 10,
+            "x": 0.025,
+            "z": 0.13966287404047195,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 11,
+            "x": 0.14,
+            "z": 0.07507126534656344,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 12,
+            "x": 0.255,
+            "z": 0.07507126534656346,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 13,
+            "x": 0.37000000000000005,
+            "z": 0.07507126534656344,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 14,
+            "x": -0.34500000000000003,
+            "z": 0.18013791086263575,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 15,
+            "x": -0.23,
+            "z": 0.18013791086263578,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 16,
+            "x": -0.115,
+            "z": 0.19936212026686911,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 17,
+            "x": 0,
+            "z": 0.24472951955654426,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 18,
+            "x": 0.115,
+            "z": 0.19936212026686914,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 19,
+            "x": 0.23,
+            "z": 0.18013791086263578,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 20,
+            "x": 0.34500000000000003,
+            "z": 0.18013791086263575,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 21,
+            "x": -0.32,
+            "z": 0.28520455637870806,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 22,
+            "x": -0.20500000000000002,
+            "z": 0.2852045563787081,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 23,
+            "x": -0.09,
+            "z": 0.3044287657829414,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 24,
+            "x": 0.025,
+            "z": 0.34979616507261657,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 25,
+            "x": 0.14,
+            "z": 0.3044287657829414,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 26,
+            "x": 0.255,
+            "z": 0.2852045563787081,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 27,
+            "x": 0.37000000000000005,
+            "z": 0.28520455637870806,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 28,
+            "x": -0.34500000000000003,
+            "z": 0.3902712018947804,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 29,
+            "x": -0.23,
+            "z": 0.39027120189478043,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 30,
+            "x": -0.115,
+            "z": 0.40949541129901373,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 31,
+            "x": 0,
+            "z": 0.4548628105886889,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 32,
+            "x": 0.115,
+            "z": 0.4094954112990138,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 33,
+            "x": 0.23,
+            "z": 0.39027120189478043,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 34,
+            "x": 0.34500000000000003,
+            "z": 0.3902712018947804,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 35,
+            "x": 0,
+            "z": -0.07340377147560037,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          }
+        ],
+        "prizes": [],
+        "net": -900,
+        "assist": false,
+        "mult": 0
+      },
+      "claw": {
+        "game": "claw",
+        "id": 2,
+        "seat": 57,
+        "player": 1,
+        "bet": 1000,
+        "phase": "done",
+        "used": 1,
+        "score": 2,
+        "time": 56.35000000000021,
+        "elapsed": 3.6416666666666564,
+        "seq": 1,
+        "x": 0,
+        "z": 0,
+        "timer": 0,
+        "shelf": -0.42,
+        "grabbed": -1,
+        "coins": [],
+        "prizes": [
+          {
+            "id": 0,
+            "x": -0.29,
+            "z": -0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 1,
+            "x": 0,
+            "z": -0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 2,
+            "x": 0.29,
+            "z": -0.26,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 3,
+            "x": -0.29,
+            "z": 0,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 4,
+            "x": 0,
+            "z": 0,
+            "value": 2,
+            "taken": true
+          },
+          {
+            "id": 5,
+            "x": 0.29,
+            "z": 0,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 6,
+            "x": -0.29,
+            "z": 0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 7,
+            "x": 0,
+            "z": 0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 8,
+            "x": 0.29,
+            "z": 0.26,
+            "value": 3,
+            "taken": false
+          }
+        ],
+        "net": 1100,
+        "assist": false,
+        "mult": 2
+      }
+    },
+    {
+      "pusher": {
+        "game": "pusher",
+        "id": 1,
+        "seat": 56,
+        "player": 0,
+        "bet": 1000,
+        "phase": "done",
+        "used": 1,
+        "score": 0,
+        "time": 55.3333333333336,
+        "elapsed": 4.6583333333333545,
+        "seq": 1,
+        "x": 0,
+        "z": 0,
+        "timer": 4.208333333333332,
+        "shelf": -0.25012674257013834,
+        "grabbed": -1,
+        "coins": [
+          {
+            "id": 0,
+            "x": -0.34500000000000003,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 1,
+            "x": -0.23,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 2,
+            "x": -0.115,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 3,
+            "x": 0,
+            "z": 0.03459622852439963,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 4,
+            "x": 0.115,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 5,
+            "x": 0.23,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 6,
+            "x": 0.34500000000000003,
+            "z": -0.029995380169508867,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 7,
+            "x": -0.32,
+            "z": 0.07507126534656344,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 8,
+            "x": -0.20500000000000002,
+            "z": 0.07507126534656346,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 9,
+            "x": -0.09,
+            "z": 0.09429547475079682,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 10,
+            "x": 0.025,
+            "z": 0.13966287404047195,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 11,
+            "x": 0.14,
+            "z": 0.07507126534656344,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 12,
+            "x": 0.255,
+            "z": 0.07507126534656346,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 13,
+            "x": 0.37000000000000005,
+            "z": 0.07507126534656344,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 14,
+            "x": -0.34500000000000003,
+            "z": 0.18013791086263575,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 15,
+            "x": -0.23,
+            "z": 0.18013791086263578,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 16,
+            "x": -0.115,
+            "z": 0.19936212026686911,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 17,
+            "x": 0,
+            "z": 0.24472951955654426,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 18,
+            "x": 0.115,
+            "z": 0.19936212026686914,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 19,
+            "x": 0.23,
+            "z": 0.18013791086263578,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 20,
+            "x": 0.34500000000000003,
+            "z": 0.18013791086263575,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 21,
+            "x": -0.32,
+            "z": 0.28520455637870806,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 22,
+            "x": -0.20500000000000002,
+            "z": 0.2852045563787081,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 23,
+            "x": -0.09,
+            "z": 0.3044287657829414,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 24,
+            "x": 0.025,
+            "z": 0.34979616507261657,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 25,
+            "x": 0.14,
+            "z": 0.3044287657829414,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 26,
+            "x": 0.255,
+            "z": 0.2852045563787081,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 27,
+            "x": 0.37000000000000005,
+            "z": 0.28520455637870806,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 28,
+            "x": -0.34500000000000003,
+            "z": 0.3902712018947804,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 29,
+            "x": -0.23,
+            "z": 0.39027120189478043,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 30,
+            "x": -0.115,
+            "z": 0.40949541129901373,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 31,
+            "x": 0,
+            "z": 0.4548628105886889,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 32,
+            "x": 0.115,
+            "z": 0.4094954112990138,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 33,
+            "x": 0.23,
+            "z": 0.39027120189478043,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 34,
+            "x": 0.34500000000000003,
+            "z": 0.3902712018947804,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          },
+          {
+            "id": 35,
+            "x": 0,
+            "z": -0.07340377147560037,
+            "y": 0.86,
+            "paid": false,
+            "falling": false
+          }
+        ],
+        "prizes": [],
+        "net": -900,
+        "assist": false,
+        "mult": 0
+      },
+      "claw": {
+        "game": "claw",
+        "id": 2,
+        "seat": 57,
+        "player": 1,
+        "bet": 1000,
+        "phase": "done",
+        "used": 1,
+        "score": 2,
+        "time": 56.35000000000021,
+        "elapsed": 3.6416666666666564,
+        "seq": 1,
+        "x": 0,
+        "z": 0,
+        "timer": 0,
+        "shelf": -0.42,
+        "grabbed": -1,
+        "coins": [],
+        "prizes": [
+          {
+            "id": 0,
+            "x": -0.29,
+            "z": -0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 1,
+            "x": 0,
+            "z": -0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 2,
+            "x": 0.29,
+            "z": -0.26,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 3,
+            "x": -0.29,
+            "z": 0,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 4,
+            "x": 0,
+            "z": 0,
+            "value": 2,
+            "taken": true
+          },
+          {
+            "id": 5,
+            "x": 0.29,
+            "z": 0,
+            "value": 3,
+            "taken": false
+          },
+          {
+            "id": 6,
+            "x": -0.29,
+            "z": 0.26,
+            "value": 1,
+            "taken": false
+          },
+          {
+            "id": 7,
+            "x": 0,
+            "z": 0.26,
+            "value": 2,
+            "taken": false
+          },
+          {
+            "id": 8,
+            "x": 0.29,
+            "z": 0.26,
+            "value": 3,
+            "taken": false
+          }
+        ],
+        "net": 1100,
+        "assist": false,
+        "mult": 2
+      }
+    }
+  ],
+  "disconnect": {
+    "bot": true,
+    "round": {
+      "game": "claw",
+      "id": 3,
+      "seat": 57,
+      "player": 1,
+      "bet": 100,
+      "phase": "done",
+      "used": 1,
+      "score": 2,
+      "time": 46.5333333333341,
+      "elapsed": 13.45833333333321,
+      "seq": 2,
+      "x": -0.0021354223130591876,
+      "z": 0.06408274729772216,
+      "timer": 0,
+      "shelf": -0.42,
+      "grabbed": -1,
+      "coins": [],
+      "prizes": [
+        {
+          "id": 0,
+          "x": -0.29,
+          "z": -0.26,
+          "value": 1,
+          "taken": false
+        },
+        {
+          "id": 1,
+          "x": 0,
+          "z": -0.26,
+          "value": 2,
+          "taken": false
+        },
+        {
+          "id": 2,
+          "x": 0.29,
+          "z": -0.26,
+          "value": 3,
+          "taken": false
+        },
+        {
+          "id": 3,
+          "x": -0.29,
+          "z": 0,
+          "value": 1,
+          "taken": false
+        },
+        {
+          "id": 4,
+          "x": 0,
+          "z": 0,
+          "value": 2,
+          "taken": true
+        },
+        {
+          "id": 5,
+          "x": 0.29,
+          "z": 0,
+          "value": 3,
+          "taken": false
+        },
+        {
+          "id": 6,
+          "x": -0.29,
+          "z": 0.26,
+          "value": 1,
+          "taken": false
+        },
+        {
+          "id": 7,
+          "x": 0,
+          "z": 0.26,
+          "value": 2,
+          "taken": false
+        },
+        {
+          "id": 8,
+          "x": 0.29,
+          "z": 0.26,
+          "value": 3,
+          "taken": false
+        }
+      ],
+      "net": 150,
+      "assist": false,
+      "mult": 2
+    }
+  },
+  "errors": []
+}

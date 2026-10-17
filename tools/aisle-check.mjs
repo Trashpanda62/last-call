@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';import fs from 'node:fs';import * as M from '../src/map.js';import {CFG} from '../src/config.js';
 const aisles=[
  {name:'floor cross aisle',x:760,y:465,w:1180,h:90},
- {name:'floor loop east of roulette',x:1470,y:540,w:90,h:520},
- {name:'floor south connection',x:1470,y:1088,w:330,h:90},
+ {name:'clear approach to VIP',x:1695,y:540,w:90,h:638},
+ {name:'table pit central aisle',x:1225,y:710,w:90,h:468},
  {name:'slot hall north aisle',x:180,y:1207,w:1280,h:90},
- {name:'slot bank central aisle',x:620,y:1300,w:90,h:460},
+ {name:'slot entrance to jackpot',x:775,y:1207,w:90,h:280},
  {name:'arcade promenade',x:2510,y:280,w:150,h:370},
  {name:'duck entry',x:2455,y:730,w:90,h:150},
  {name:'pond spectator strip',x:2080,y:1080,w:840,h:90},

@@ -33,7 +33,9 @@ try {
   await click('btn:left');await page.waitForFunction(game=>__lastCall.view.pub.arcade[game].x<0,game);
   await click('btn:right');
   if(game==='claw'){await click('btn:back');await page.waitForFunction(()=>__lastCall.view.pub.arcade.claw.z<0);await click('btn:forward');}
-  const count=game==='pusher'?5:3;
+  // Arrange a protected pusher cycle so the physical test verifies a positive payout; native rules also cover an unassisted one-coin return.
+  if(game==='pusher')await page.evaluate(()=>{__lastCall.state.arcade.pusher.hot=true;});
+  const count=1;const bankBefore=await page.evaluate(()=>__lastCall.state.bank);
   for(let n=1;n<=count;n++){
    await click('btn:drop');await page.waitForFunction(({game,n})=>__lastCall.view.pub.arcade[game].used===n,{game,n});
    await page.evaluate(()=>{const L=__lastCall;L.look(L.view.priv.seat.face,-.12);L.render();});
@@ -41,8 +43,8 @@ try {
    if(n===1){await page.screenshot({path:path.join(OUT,game+'-live.jpg'),type:'jpeg',quality:90});if(game==='claw'){await page.waitForTimeout(1900);await page.screenshot({path:path.join(OUT,'claw-release.jpg'),type:'jpeg',quality:90});}}
    await page.waitForFunction(game=>['aim','done'].includes(__lastCall.view.pub.arcade[game].phase),game,{timeout:10000});
   }
-  const row=await page.evaluate(game=>{const L=__lastCall,r=L.view.pub.arcade[game];return {game,phase:r.phase,used:r.used,score:r.score,mult:r.mult,paid:L.state.arcade[game].paid,round:r.id};},game);
-  if(row.phase!=='done'||!row.paid)errors.push(game+': not settled');rows.push(row);
+  const row=await page.evaluate(game=>{const L=__lastCall,r=L.view.pub.arcade[game];return {game,phase:r.phase,used:r.used,score:r.score,mult:r.mult,paid:L.state.arcade[game].paid,round:r.id,assist:r.assist,bet:r.bet,net:r.net,bank:L.state.bank,status:L.bar()?.status};},game);
+  row.bankBefore=bankBefore;if(Math.abs(row.bank-bankBefore-row.net)>.01)errors.push(game+': posted payout differs from real bank delta');if(row.net<=0)errors.push(game+': arranged winning cycle did not credit the bank');if(row.phase!=='done'||!row.paid)errors.push(game+': not settled');rows.push(row);await page.screenshot({path:path.join(OUT,game+'-paid.jpg'),type:'jpeg',quality:90});
   await page.setViewportSize({width:740,height:420});await page.evaluate(()=>__lastCall.render());await page.screenshot({path:path.join(OUT,game+'-compact.jpg'),type:'jpeg',quality:88});await page.setViewportSize({width:1280,height:720});
  }
 }catch(e){errors.push(String(e.stack||e));}

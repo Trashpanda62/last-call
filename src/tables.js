@@ -5,6 +5,7 @@
 import { createLuck } from './luck.js';
 import * as Gm from './games.js';
 import * as P from './paint.js';
+import { ARCADE } from './arcade.js';
 import { money } from './util.js';
 import { sfx as sfxNow } from './audio.js';
 
@@ -371,11 +372,11 @@ export function chipHud(maxBet) {
 function arcadeController(game) {
   return {
     main:'main',btns:['start','left','right',...(game==='claw'?['back','forward']:[]),'drop'],bar:[],
-    init(){tb.round=null;tb.laneRound=null;tb.pending=false;},
+    init(){tb.round=null;tb.laneRound=null;tb.pending=false;tb.resultRound=null;},
     live(v){const r=v.pub.arcade?.[game];tb.laneRound=r||null;
       if(tb.pending && (now()>tb.pendingUntil || r?.seq!==tb.pendingSeq || r?.id!==tb.pendingRound))tb.pending=false;
       tb.round=r?.player===tb.me?r:null;
-      if(tb.round?.phase==='done')result(r.score+' points / '+r.mult.toFixed(2)+'x return',r.mult>1?'win':r.mult<1?'lose':'');
+      if(tb.round?.phase==='done'&&tb.resultRound!==r.id){tb.resultRound=r.id;const back=r.bet*r.mult,net=r.net||0;result('PAID '+money(back)+' / BANK '+(net>0?'+':'')+money(net),net>0?'win':net<0?'lose':'');}
     },
     locked(){return !!(tb.pending||tb.laneRound&&tb.laneRound.phase!=='done');},
     on(id){return id==='start'?!this.locked()&&stake()>=minBet():!!(tb.round?.phase==='aim'&&!tb.pending);},
@@ -385,7 +386,7 @@ function arcadeController(game) {
       tb.act('arcade',msg);hand('press');sfx('click');
     },
     show(){return this.locked()&&tb.round?{main:tb.round.bet}:tb.bets;},
-    status(){const r=tb.round;return r&&r.phase!=='done'?(game==='claw'?3-r.used+' GRABS LEFT':5-r.used+' TOKENS LEFT')+' / '+r.score+' POINTS'+(r.assist?' / GOLD ASSIST':''):null;},
+    status(){const r=tb.round;if(!r)return null;if(r.phase==='done'){const back=r.bet*r.mult,net=r.net||0;return 'PAID '+money(back)+' / BANK '+(net>0?'+':'')+money(net);}return (game==='claw'?(r.phase==='drop'?'DELIVERING PRIZE':ARCADE.clawTries-r.used+' GRAB LEFT'):(r.phase==='settle'?'COUNTING FALLEN COINS':r.phase==='drop'?'PUSHING COINS':ARCADE.pusherTokens-r.used+' TOKEN LEFT'))+' / '+r.score+' POINTS'+(r.assist?' / GOLD ASSIST':'');},
   };
 }
 const GAMES = {

@@ -12,7 +12,7 @@ try {
    const THREE=await import('three'),map=await import('./src/map.js'),L=__lastCall;L.noLock();L.start('gambler',{players:6});L.step(.1);L.S.paused=true;
    for(const c of L.state.chars){c.isHuman=true;if(c.id!==L.view.priv.me){c.x=1320;c.y=600+c.id*60;c.seat=null;}}
    const clock=performance.now.bind(performance);let now=clock();performance.now=()=>now;
-   const scene=L.scene().scene, signs=[];scene.traverse(o=>{if(o.isMesh&&(/^(casino-(guide|painting|room-sign)-|race-odds-\d+$|arcade-score-)/.test(o.name)||o.name==='shady-shop-sign'))signs.push(o);});
+   const scene=L.scene().scene, signs=[];scene.traverse(o=>{if(o.isMesh&&(/^(casino-(guide|painting|room-sign)-|race-odds-\d+$|arcade-score-)/.test(o.name)||o.name==='shady-shop-sign'||o.name==='race-tote-board'))signs.push(o);});
    const rows=[];
    for(const sign of signs){
     const center=sign.getWorldPosition(new THREE.Vector3()),normal=new THREE.Vector3(0,0,1).applyQuaternion(sign.getWorldQuaternion(new THREE.Quaternion()));

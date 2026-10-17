@@ -292,7 +292,7 @@ export function* buildWorldSteps(scene, opts = {}) {
         // Full guide width plus half a pilaster, measured on this wall face.
         return Math.abs(dx * nx + dy * ny) < 2 && Math.abs(dx * ny - dy * nx) < 57;
       });
-      if (nearGap(sx, sy, 50) || behindGuide || NO_PIL.some(([x, y]) => Math.abs(sx - x) < 15 && Math.abs(sy - y) < 15)) continue;
+      if ((Math.abs(sy-720)<2 && sx>=2690 && sx<=2930) || nearGap(sx, sy, 50) || behindGuide || NO_PIL.some(([x, y]) => Math.abs(sx - x) < 15 && Math.abs(sy - y) < 15)) continue;
       const pos = (d, y) => v3(sx * M + w.n[0] * d, y, sy * M + w.n[1] * d);
       B.add(pil.shaft, MAT.marble, pos(0.07, 0.3 + (WALL_H - 0.75) / 2), w.rotY);
       B.add(pil.cap, MAT.gold, pos(0.1, WALL_H - 0.4), w.rotY);
@@ -328,8 +328,8 @@ export function* buildWorldSteps(scene, opts = {}) {
   sign('RESTROOMS', 0x80fff0, beside(380, 1, 1.7, 0.45), 2.3, 700 * M - 0.24, Math.PI, 1.7, 0.26);
   sign('DUCK RACE', 0x7fe8ff, beside(2560, 1, 2.0, 0.65), 2.25, 700 * M - 0.24, Math.PI, 2.0, 0.3);
   sign('SLOTS', 0xffd040, 510 * M, 2.35, 1200 * M + 0.24, 0, 1.8, 0.45);
-  sign('HIGH LIMIT', 0xffd040, 680 * M, 2.6, 1880 * M - 1, Math.PI, 2.2, 0.36, true, true);
-  sign('DICE', 0x3fe0ff, 2000 * M - .24, 2.35, 800 * M, -Math.PI/2, 1.3, 0.4); // over the dice table, between the pilasters
+  sign('HIGH LIMIT', 0xffd040, 1620 * M + .24, 2.5, 1270 * M, Math.PI/2, 1.8, 0.30, true, true);
+  sign('DICE', 0x3fe0ff, 2000 * M - .24, 2.35, 975 * M, -Math.PI/2, 1.3, 0.4); // aligned with the southern table pit
   // The coin game has its own HEADS OR TAILS title; a second wall label hid behind the coin.
   bulbsMesh(ctx);
 
@@ -700,7 +700,7 @@ function casinoGuide(name) {
 const PAINTINGS = Array.from({ length: 11 }, (_, i) => ['portrait-gambler', 'portrait-queen', 'portrait-bartender'][i % 3]);
 const POSTERS = [[2020, 775, Math.PI / 2, 'derby', true], [1770, 1880, Math.PI, 'lounge', true], [1600, 1410, -Math.PI / 2, 'missing', false],
   [2020, 560, Math.PI / 2, 'rocket', true], [620, 250, -Math.PI / 2, 'cocktails', true], [500, 720, 0, 'wash', false],
-  [620, 1200, 0, 'jackpot', true], [1040, 1180, Math.PI, 'roulette', true]];
+  [620, 1200, 0, 'jackpot', true], [1260, 1180, Math.PI, 'roulette', true]];
 
 // ---------- Pit bell ----------
 function pitBell(ctx) {

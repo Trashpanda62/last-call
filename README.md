@@ -21,7 +21,7 @@ Standard gamepads support both sticks, RT murder/table click, LT disguise/remove
 Gamblers win by breaking the bank or by voting the killers out. Killers win when they match the gamblers left, or
 when the casino closes before the bank breaks.
 
-Every betting game has a physical circle on its own machine or felt. Plinko uses a green DROP button and LOW/MED/HIGH risk keys. Duck derby has six numbered circles and a green START at every desk; its odds boards fold down to clear the race view. Midnight Mint gives five coin-pusher tokens; Night Shift Claw gives three grabs with physical movement and DROP controls. Both run on the host and share visible results with spectators. The constructed floor now has slot banks, central roulette/dice and a VIP game/shop/social cluster.
+Every betting game has a physical circle on its own machine or felt. Plinko uses a green DROP button and LOW/MED/HIGH risk keys. Duck derby has one shared pedestal with six numbered circles and a green START; its odds board folds down to clear the race view, and its wall tote stays clear of the doorway. Midnight Mint settles one bet per coin-pusher token; Night Shift Claw uses one bet per grab; prize tags pay 1×/2×/3× and settlement displays the paid amount and actual bank change immediately after delivery. Both run on the host and share visible results with spectators. The floor groups roulette/dice in the southern table pit, penny banks around the jackpot, high-limit slots in VIP, and arcade cabinets along the wall. The interactive top-down plan is in design/casino-layout.html, with an exported PNG/SVG and a Before comparison.
 
 LAN playtest: https://10.42.0.37:3161/
 
