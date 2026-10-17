@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import * as T from './textures.js';
-import { ROOMS, WALLS, OBSTACLES, DOOR_GAPS, CHANDELIERS, PLANTS, TAP, BELL, DICE_TABLE, SHADY, BOWL_SPOTS, STAFF_DOORS, makeSeats } from '../map.js';
+import { ROOMS, WALLS, OBSTACLES, DOOR_GAPS, CHANDELIERS, PLANTS, TAP, BELL, DICE_TABLE, SHADY, PIANO, BOWL_SPOTS, STAFF_DOORS, makeSeats } from '../map.js';
 import { buildMachinesSteps } from './machines.js';
 import { makeMirror, mirrorFrame } from './mirror.js';
 import { hasProp, placeProps, propObject, propScale, propInfo } from './props.js';
@@ -512,8 +512,8 @@ function vip(ctx) {
   // a big TV on the east wall
   B.add(rbox(0.08, 1.3, 2.3, 0.02), MAT.blackGloss, v3(2980 * M - 0.05, 1.9, 1540 * M));
   ctx.vipTv = { x: 2980 * M - 0.1, y: 1.9, z: 1540 * M, w: 2.15, h: 1.2 };
-  // a piano for no reason
-  const px = 2830 * M, pz = 1780 * M;
+  // Piano and bench share the same reference as their full collision footprint.
+  const px = PIANO.x * M, pz = PIANO.y * M;
   if (hasProp('piano')) { placeProps(group, 'piano', [{ x: px, z: pz - 0.15, yaw: PROP_YAW.piano, fit: [1.7, 0, 1.75] }]); return; }
   B.add(rbox(1.5, 0.35, 1.0, 0.1), MAT.blackGloss, v3(px, 0.9, pz)); B.add(box(1.4, 0.06, 0.3), MAT.porcelain, v3(px, 0.92, pz - 0.6));
   for (const [dx, dz] of [[-0.6, -0.35], [0.6, -0.35], [0, 0.35]]) B.add(cyl(0.05, 0.04, 0.75, 10), MAT.blackGloss, v3(px + dx, 0.38, pz + dz));
@@ -637,7 +637,7 @@ function decor(ctx) {
     spots.forEach(([dx, y, dz], i) => im.setMatrixAt(i, new THREE.Matrix4().makeTranslation(o.x + dx, y, o.z + dz))); group.add(im);
     B.add(cyl(0.035, 0.04, 0.25, 12), std({ color: 0x1a4a2a, roughness: 0.1, metalness: 0.2 }), v3(o.x, 1.45, o.z));
   }
-  if (!hasProp('piano')) for (const o of ob('piano')) B.add(rbox(0.7, 0.08, 0.32, 0.03), MAT.blackGloss, v3(o.x, 0.48, o.z - o.d / 2 - 0.35)); // the piano's bench
+  if (!hasProp('piano')) B.add(rbox(0.7, 0.08, 0.32, 0.03), MAT.blackGloss, v3(PIANO.x*M, 0.48, (PIANO.y-60)*M)); // the piano's bench
   // a rug in the bar
   const [rc, rg] = T.canvas(256, 256);
   rg.fillStyle = '#4a1418'; rg.fillRect(0, 0, 256, 256); rg.strokeStyle = '#d9a94a'; rg.lineWidth = 6; rg.strokeRect(12, 12, 232, 232); rg.lineWidth = 2; rg.strokeRect(24, 24, 208, 208);

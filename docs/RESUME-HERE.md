@@ -21,6 +21,10 @@ The [top-down PNG](../design/casino-layout-top-down.png) and [SVG](../design/cas
 - Claw: place a bet, START, aim and DROP once. After delivery (about 3.2 seconds), the grabbed 1×/2×/3× tag determines the return. A missed prize returns zero.
 - Both cabinets show PAID and BANK separately. BANK is the actual shared-bank change, including the existing comp/luck rules. A $1,000 protected pusher test paid $3,000 / bank +$2,100; a $1,000 2× claw test paid $2,000 / bank +$1,100. Screenshots: design/previews/pusher-paid.jpg and claw-paid.jpg.
 
+## VIP follow-up
+
+The previous route/sign audit missed the crowded shop/piano corner and full palm spread. Removed the floating vendor name that overprinted the shop sign from across the room. Removed all four VIP palms, moved the shop against the east wall and stock clear of the piano/bench, and corrected the piano collision footprint to contain its full model and bench. The main approach runs in front of the shop/TV. Reviewed six first-person views per graphics variant; actual shop use/inventory and stock-to-piano bounds pass. Evidence: performance/2026-10-17-vip-clearance.json; previews: design/previews/vip-shop-clear.jpg and vip-wheel-clear.jpg. The top-down map now shows the measured conservative 71-pixel maximum palm spread instead of only planting centers.
+
 ## Manual acceptance and holds
 
 1. Steve's visual/play review: Plinko, derby, new cabinets, hands and sound keep/mute choices. Technical checks do not constitute player acceptance.
@@ -34,7 +38,7 @@ Latest layout/payout evidence uses the layout-review and arcade-payout report na
 
 LAN playtest: https://10.42.0.37:3161/ (existing self-signed LAN HTTPS).
 
-Delivery identity: [complete source/asset/vendor receipt](playtest-build-layout-review-2026-10-17.json), generated after sync. All 847 Git-tracked files in src/, assets/, vendor/ and the three entry files match served SHA-256 bytes, including the mirror and new arcade modules.
+Delivery identity: [complete source/asset/vendor receipt](playtest-build-vip-review-2026-10-17.json), generated after sync. All 847 Git-tracked files in src/, assets/, vendor/ and the three entry files match served SHA-256 bytes, including the mirror and new arcade modules.
 
 The sync tool now copies Git-tracked files only. Stage new deliverables before syncing; preserve local untracked .claude/, .dev/ and shots/. Existing voice-server configuration is retained. No new generation or balance sweep is needed.
 

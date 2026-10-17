@@ -8,7 +8,7 @@ const aisles=[
  {name:'arcade promenade',x:2510,y:280,w:150,h:370},
  {name:'duck entry',x:2455,y:730,w:90,h:150},
  {name:'pond spectator strip',x:2080,y:1080,w:840,h:90},
- {name:'VIP east loop',x:2887,y:1390,w:90,h:430},
+ {name:'VIP shop and TV approach',x:2705,y:1390,w:90,h:295},
 ];
 const overlap=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
 const gap=(p,b)=>Math.hypot(Math.max(b.x-p.x,0,p.x-b.x-b.w),Math.max(b.y-p.y,0,p.y-b.y-b.h));

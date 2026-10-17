@@ -16,8 +16,10 @@ try {
    const rows=[];
    for(const sign of signs){
     const center=sign.getWorldPosition(new THREE.Vector3()),normal=new THREE.Vector3(0,0,1).applyQuaternion(sign.getWorldQuaternion(new THREE.Quaternion()));
-    const w=sign.geometry.parameters.width,h=sign.geometry.parameters.height,distance=Math.max(2.4,w*.65),eye=center.clone().addScaledVector(normal,distance);eye.y=1.12;
+    const w=sign.geometry.parameters.width,h=sign.geometry.parameters.height;let distance=Math.max(2.4,w*.65),eye=center.clone().addScaledVector(normal,distance);eye.y=1.12;
     const seat=sign.name.startsWith('race-odds-')?L.state.seats.find(s=>s.id===+sign.name.slice(10)):sign.name.startsWith('arcade-score-')?L.state.seats.find(s=>s.game===sign.name.slice(13)):null;if(seat){eye.set(seat.x/60,1.12,seat.y/60);}
+    // A painting above furniture needs a real floor viewing bay, not a point inside that furniture.
+    if(!seat)while(distance<4.4&&!map.standable({x:eye.x*60,y:eye.z*60})){distance+=.5;eye.copy(center).addScaledVector(normal,distance);eye.y=1.12;}
     const stand=map.standable({x:eye.x*60,y:eye.z*60});
     L.place(eye.x*60,eye.z*60);L.look(Math.atan2(center.z-eye.z,center.x-eye.x),Math.atan2(center.y-eye.y,Math.hypot(center.x-eye.x,center.z-eye.z)));now+=1000;L.render();
     const objects=[];scene.traverseVisible(o=>{if(o.isMesh&&!o.isSprite)objects.push(o);});

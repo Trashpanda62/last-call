@@ -18,7 +18,7 @@ export function renderPlan(m,{before=false}={}){
   rect(o.x,o.y,o.w,o.h,fill,`rx="${o.kind==='bj'?30:5}" fill-opacity="${game?.85:.6}" stroke="${game?'#e0c584':'#91a99a'}" stroke-width="3"`);put('</g>');
   if(['bj','roulette','dice','pond','pool','coffee','security','coin'].includes(o.kind))text(o.x+o.w/2,o.y+o.h/2+8,({bj:'BLACKJACK',roulette:'ROULETTE',dice:'DICE',pond:'SIX-LANE DUCK POND',pool:'POOL',coffee:'LOUNGE',security:'CCTV',coin:'COIN'})[o.kind],o.kind==='security'?17:25,'#101918','text-anchor="middle" font-weight="700"');
  }
- for(const [x,y]of m.plants)put(`<circle cx="${x}" cy="${y}" r="14.4" fill="#548568" stroke="#8db094" stroke-width="2"/>`);
+ for(const [x,y]of m.plants){put(`<circle cx="${x}" cy="${y}" r="${m.plantCanopyRadius||71}" fill="#548568" fill-opacity=".10" stroke="#8db094" stroke-opacity=".55" stroke-width="2"/>`);put(`<circle cx="${x}" cy="${y}" r="14.4" fill="#548568" stroke="#8db094" stroke-width="2"/>`);}
  for(const s of m.seats)put(`<circle cx="${s.x}" cy="${s.y}" r="12" fill="#f5e8c1" opacity=".85"/><path d="M${s.x},${s.y} l${Math.cos(s.face)*23},${Math.sin(s.face)*23}" stroke="#f5e8c1" stroke-width="4"/>`);
  for(const s of m.snacks)put(`<circle cx="${s.x}" cy="${s.y}" r="11" fill="#d08b69"><title>Snacks</title></circle>`);
  for(const d of m.staffDoors)rect(d.x-9,d.y-9,18,18,'#b8a6e4');
@@ -29,7 +29,7 @@ export function renderPlan(m,{before=false}={}){
   text(2615,520,'COIN-PUSHER',23,'#e4daf9');text(2615,646,'PRIZE CLAW',23,'#e4daf9');text(2120,580,'MINES / TOWER',23,'#e4daf9');text(2110,240,'PLINKO',23,'#e4daf9');text(2430,180,'CRASH',24,'#e4daf9');text(2720,190,'SKEE-BALL',23,'#e4daf9');
   rect(2696,724,228,12,'#d6ad62');text(2810,770,'TOTE BOARD',22,'#eacb8c','text-anchor="middle"');
   text(2690,785,'ONE BETTING PEDESTAL',23,'#eacb8c','text-anchor="middle"');
-  text(2830,1630,'SHOP',24,'#e8b6d4','text-anchor="middle"');text(2180,1840,'WHEEL',22,'#e8b6d4','text-anchor="middle"');
+  text(m.shop.x-35,m.shop.y-70,'SHOP',24,'#e8b6d4','text-anchor="end"');text(2180,1840,'WHEEL',22,'#e8b6d4','text-anchor="middle"');
   for(const [n,x,y]of[[1,2605,849],[2,2660,735],[3,1840,1500],[4,1280,1010],[5,2740,585]]){put(`<circle cx="${x}" cy="${y}" r="25" fill="#f0d498" stroke="#101918" stroke-width="4"/>`);text(x,y+11,n,31,'#101918','text-anchor="middle" font-weight="700"');}
  }
  put('</g>');
@@ -37,7 +37,7 @@ export function renderPlan(m,{before=false}={}){
  text(100,2090,before?'PREVIOUS PLACEMENT · FOR COMPARISON':'THE FLOOR HAS A CLEAR ORDER',32,'#f0d498','font-weight="700"');
  const notes=before?['Six betting pedestals crowded the north side of the pond.','The tote board crossed the arcade-to-pond door opening.','High-limit slots were mixed into the public slot hall.','Table games were split across the main-floor approaches.','New arcade cabinets stood in the middle of the room.']:['1  One derby pedestal; doorway and spectator side stay open.','2  Race board sits on solid wall, clear of the arcade doorway.','3  Penny slots in matching banks; high-limit slots inside VIP.','4  Roulette and dice share the southern table pit; VIP entry is clear.','5  Arcade cabinets line the wall; the center stays a walking route.'];
  notes.forEach((s,i)=>text(i<3?100:1680,2150+(i<3?i:i-3)*53,s,25,'#d5dfd7'));
- text(100,2360,'Cream dots: player positions   ·   Mint gaps: doors   ·   Green strips: measured principal aisles   ·   Purple: staff passages',24,'#a8bcb0');
+ text(100,2360,'Cream dots: player positions   ·   Mint gaps: doors   ·   Green strips: measured aisles   ·   Palm rings: full spread   ·   Purple: staff passages',24,'#a8bcb0');
  text(100,2415,'Actual game coordinates · furniture footprints · north up · 60 simulation pixels = 1 metre',23,'#a8bcb0');
  put('</svg>');return out.join('');
 }

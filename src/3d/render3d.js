@@ -102,7 +102,7 @@ export async function init(canvas, { lowPower = false, progress = () => {} } = {
   R = { death: new DeathScene(scene), renderer, scene, camera, composer, bloom, passes, hemi, fill, key, torch, pool, world, glowRange, items, hazards, hands, beans: new Map(), dealers, dealerSpots, lowPower,
     dark: 0, orbitA: 0, tourT: 0, last: performance.now(), size: '', fp: { bob: 0 }, me: -1, dyn: 1, dynT: 0, frameMs: 16.7, lightN: 8, bloomK: 0.15 };
   R.bartender = makeBean({ kind: 'bartender' }); scene.add(R.bartender.root);
-  R.shady = makeBean({ color: '#34343c', hat: 'fedora', name: 'Shady' }); scene.add(R.shady.root);
+  R.shady = makeBean({ color: '#34343c', hat: 'fedora' }); scene.add(R.shady.root);
   R.blk = new Blackout(scene);
   R.br = new Backrooms(R); // the backrooms casino (pub.backrooms)
   applyGfx({ ...PRESETS[lowPower ? 'low' : 'high'], tone: 'agx', exposure: 1, fov: 72, sharpness: 0.25, dynres: 0 });

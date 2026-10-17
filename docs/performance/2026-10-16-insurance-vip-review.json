@@ -1,0 +1,779 @@
+{
+  "at": "2026-10-17T04:57:12.373Z",
+  "cases": [
+    "real shop price / personal winnings / duplicate ownership",
+    "late activation rejected, win/tie retain policy, exact loss refund once",
+    "split/double four units aggregate and only net stake is returned",
+    "unknown/duplicate/mismatched/oversized receipts rejected",
+    "uninsured queued loss cannot acquire later activation",
+    "mixed Plinko partial results await the final outstanding ball",
+    "death and leaving finish an already covered accepted round",
+    "final verdict blocks subsequent refund or payment",
+    "crash: accepted shared bet / edits / withdrawal / loss / replay",
+    "race: accepted shared bet / edits / withdrawal / loss / replay",
+    "shared round already placed blocks late arming",
+    "skee-ball loss after leaving / one host payout / policy consumed",
+    "queued covered result retains its owner after bot takeover",
+    "killer pit-boss loss cap cannot multiply reimbursement",
+    "shared winning cashout retains armed policy and applies luck only to the win",
+    "policy private to owner and survives actual wire deltas"
+  ],
+  "tables": [
+    {
+      "game": "bj:0",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "roulette:0",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:0",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "plinko:0",
+      "parts": 3,
+      "delta": 1000,
+      "refund": 0,
+      "bankDelta": 1300
+    },
+    {
+      "game": "mines:0",
+      "parts": 1,
+      "delta": 170,
+      "refund": 0,
+      "bankDelta": 270
+    },
+    {
+      "game": "tower:0",
+      "parts": 1,
+      "delta": 540,
+      "refund": 0,
+      "bankDelta": 640
+    },
+    {
+      "game": "coin:0",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "wheel:0",
+      "parts": 1,
+      "delta": 500,
+      "refund": 0,
+      "bankDelta": 600
+    },
+    {
+      "game": "dice:0",
+      "parts": 2,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "bj:1",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "roulette:1",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:1",
+      "parts": 1,
+      "delta": 1000,
+      "refund": 0,
+      "bankDelta": 1100
+    },
+    {
+      "game": "plinko:1",
+      "parts": 3,
+      "delta": -800,
+      "refund": 800,
+      "bankDelta": 300
+    },
+    {
+      "game": "mines:1",
+      "parts": 1,
+      "delta": 170,
+      "refund": 0,
+      "bankDelta": 270
+    },
+    {
+      "game": "tower:1",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "coin:1",
+      "parts": 1,
+      "delta": 1000,
+      "refund": 0,
+      "bankDelta": 1100
+    },
+    {
+      "game": "wheel:1",
+      "parts": 1,
+      "delta": 500,
+      "refund": 0,
+      "bankDelta": 600
+    },
+    {
+      "game": "dice:1",
+      "parts": 2,
+      "delta": 2000,
+      "refund": 0,
+      "bankDelta": 2200
+    },
+    {
+      "game": "bj:2",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "roulette:2",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:2",
+      "parts": 1,
+      "delta": 1000,
+      "refund": 0,
+      "bankDelta": 1100
+    },
+    {
+      "game": "plinko:2",
+      "parts": 3,
+      "delta": 8500,
+      "refund": 0,
+      "bankDelta": 8800
+    },
+    {
+      "game": "mines:2",
+      "parts": 1,
+      "delta": 170,
+      "refund": 0,
+      "bankDelta": 270
+    },
+    {
+      "game": "tower:2",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "coin:2",
+      "parts": 1,
+      "delta": 1000,
+      "refund": 0,
+      "bankDelta": 1100
+    },
+    {
+      "game": "wheel:2",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "dice:2",
+      "parts": 2,
+      "delta": 2000,
+      "refund": 0,
+      "bankDelta": 2200
+    },
+    {
+      "game": "bj:3",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "roulette:3",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:3",
+      "parts": 1,
+      "delta": -500,
+      "refund": 500,
+      "bankDelta": 100
+    },
+    {
+      "game": "plinko:3",
+      "parts": 3,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 300
+    },
+    {
+      "game": "mines:3",
+      "parts": 1,
+      "delta": 170,
+      "refund": 0,
+      "bankDelta": 270
+    },
+    {
+      "game": "tower:3",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "coin:3",
+      "parts": 1,
+      "delta": 1000,
+      "refund": 0,
+      "bankDelta": 1100
+    },
+    {
+      "game": "wheel:3",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "dice:3",
+      "parts": 2,
+      "delta": 2000,
+      "refund": 0,
+      "bankDelta": 2200
+    },
+    {
+      "game": "bj:4",
+      "parts": 1,
+      "delta": 2000,
+      "refund": 0,
+      "bankDelta": 2200
+    },
+    {
+      "game": "roulette:4",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:4",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "plinko:4",
+      "parts": 3,
+      "delta": 6150,
+      "refund": 0,
+      "bankDelta": 6450
+    },
+    {
+      "game": "mines:4",
+      "parts": 1,
+      "delta": 170,
+      "refund": 0,
+      "bankDelta": 270
+    },
+    {
+      "game": "tower:4",
+      "parts": 1,
+      "delta": 540,
+      "refund": 0,
+      "bankDelta": 640
+    },
+    {
+      "game": "coin:4",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "wheel:4",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "dice:4",
+      "parts": 2,
+      "delta": -2000,
+      "refund": 2000,
+      "bankDelta": 200
+    },
+    {
+      "game": "bj:5",
+      "parts": 1,
+      "delta": 2000,
+      "refund": 0,
+      "bankDelta": 2100
+    },
+    {
+      "game": "roulette:5",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:5",
+      "parts": 1,
+      "delta": -500,
+      "refund": 500,
+      "bankDelta": 100
+    },
+    {
+      "game": "plinko:5",
+      "parts": 3,
+      "delta": 2000,
+      "refund": 0,
+      "bankDelta": 2300
+    },
+    {
+      "game": "mines:5",
+      "parts": 1,
+      "delta": 170,
+      "refund": 0,
+      "bankDelta": 270
+    },
+    {
+      "game": "tower:5",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "coin:5",
+      "parts": 1,
+      "delta": 1000,
+      "refund": 0,
+      "bankDelta": 1100
+    },
+    {
+      "game": "wheel:5",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "dice:5",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "bj:6",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "roulette:6",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:6",
+      "parts": 1,
+      "delta": -500,
+      "refund": 500,
+      "bankDelta": 100
+    },
+    {
+      "game": "plinko:6",
+      "parts": 3,
+      "delta": 3900,
+      "refund": 0,
+      "bankDelta": 4200
+    },
+    {
+      "game": "mines:6",
+      "parts": 1,
+      "delta": 170,
+      "refund": 0,
+      "bankDelta": 270
+    },
+    {
+      "game": "tower:6",
+      "parts": 1,
+      "delta": 540,
+      "refund": 0,
+      "bankDelta": 640
+    },
+    {
+      "game": "coin:6",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "wheel:6",
+      "parts": 1,
+      "delta": 1000,
+      "refund": 0,
+      "bankDelta": 1100
+    },
+    {
+      "game": "dice:6",
+      "parts": 2,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "bj:7",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "roulette:7",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:7",
+      "parts": 1,
+      "delta": -500,
+      "refund": 500,
+      "bankDelta": 100
+    },
+    {
+      "game": "plinko:7",
+      "parts": 3,
+      "delta": -1350,
+      "refund": 1350,
+      "bankDelta": 300
+    },
+    {
+      "game": "mines:7",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "tower:7",
+      "parts": 1,
+      "delta": 540,
+      "refund": 0,
+      "bankDelta": 640
+    },
+    {
+      "game": "coin:7",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "wheel:7",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "dice:7",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "bj:8",
+      "parts": 1,
+      "delta": -2000,
+      "refund": 2000,
+      "bankDelta": 200
+    },
+    {
+      "game": "roulette:8",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:8",
+      "parts": 1,
+      "delta": 14000,
+      "refund": 0,
+      "bankDelta": 14100
+    },
+    {
+      "game": "plinko:8",
+      "parts": 3,
+      "delta": -700,
+      "refund": 700,
+      "bankDelta": 300
+    },
+    {
+      "game": "mines:8",
+      "parts": 1,
+      "delta": 170,
+      "refund": 0,
+      "bankDelta": 270
+    },
+    {
+      "game": "tower:8",
+      "parts": 1,
+      "delta": 540,
+      "refund": 0,
+      "bankDelta": 640
+    },
+    {
+      "game": "coin:8",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "wheel:8",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "dice:8",
+      "parts": 2,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "bj:9",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "roulette:9",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:9",
+      "parts": 1,
+      "delta": -500,
+      "refund": 500,
+      "bankDelta": 100
+    },
+    {
+      "game": "plinko:9",
+      "parts": 3,
+      "delta": 300,
+      "refund": 0,
+      "bankDelta": 600
+    },
+    {
+      "game": "mines:9",
+      "parts": 1,
+      "delta": 170,
+      "refund": 0,
+      "bankDelta": 270
+    },
+    {
+      "game": "tower:9",
+      "parts": 1,
+      "delta": 540,
+      "refund": 0,
+      "bankDelta": 640
+    },
+    {
+      "game": "coin:9",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "wheel:9",
+      "parts": 1,
+      "delta": 2000,
+      "refund": 0,
+      "bankDelta": 2100
+    },
+    {
+      "game": "dice:9",
+      "parts": 1,
+      "delta": 2000,
+      "refund": 0,
+      "bankDelta": 2200
+    },
+    {
+      "game": "bj:10",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "roulette:10",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:10",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "plinko:10",
+      "parts": 3,
+      "delta": 2200,
+      "refund": 0,
+      "bankDelta": 2500
+    },
+    {
+      "game": "mines:10",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "tower:10",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "coin:10",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "wheel:10",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "dice:10",
+      "parts": 1,
+      "delta": 2000,
+      "refund": 0,
+      "bankDelta": 2200
+    },
+    {
+      "game": "bj:11",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "roulette:11",
+      "parts": 1,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    },
+    {
+      "game": "slots:11",
+      "parts": 1,
+      "delta": -500,
+      "refund": 500,
+      "bankDelta": 100
+    },
+    {
+      "game": "plinko:11",
+      "parts": 3,
+      "delta": 8700,
+      "refund": 0,
+      "bankDelta": 9000
+    },
+    {
+      "game": "mines:11",
+      "parts": 1,
+      "delta": -1000,
+      "refund": 1000,
+      "bankDelta": 100
+    },
+    {
+      "game": "tower:11",
+      "parts": 1,
+      "delta": 540,
+      "refund": 0,
+      "bankDelta": 640
+    },
+    {
+      "game": "coin:11",
+      "parts": 1,
+      "delta": 1000,
+      "refund": 0,
+      "bankDelta": 1100
+    },
+    {
+      "game": "wheel:11",
+      "parts": 1,
+      "delta": 1000,
+      "refund": 0,
+      "bankDelta": 1100
+    },
+    {
+      "game": "dice:11",
+      "parts": 2,
+      "delta": 0,
+      "refund": 0,
+      "bankDelta": 200
+    }
+  ]
+}

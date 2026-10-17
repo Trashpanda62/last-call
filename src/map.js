@@ -73,9 +73,10 @@ export const DICE_TABLE = { x: 1340, y: 900, w: 320, h: 150 };                 /
 export const WHEEL_X = 2180;                                                 // the prize wheel on the VIP lounge's south wall, facing the door from the floor
 export const COIN = { x: 2640, y: 1720 };                                   // in the VIP lounge
 export const COFFEE = { x: 2400, y: 1505, w: 160, h: 70 };
+export const PIANO = { x: 2830, y: 1780 }; // shared model, bench and collision reference
 export const SECURITY = { x: 650, y: 560, w: 50, h: 130 };                  // the security desk: camera monitors on the floor's west wall
-// House Insurance alcove in the VIP lounge; approach from the west.
-export const SHADY = { x: 2838, y: 1675, face: Math.PI, stand: { x: 2781, y: 1675 } };
+// House Insurance against the VIP east wall, with its own approach clear of the TV and piano.
+export const SHADY = { x: 2910, y: 1675, face: Math.PI, stand: { x: 2853, y: 1675 } };
 
 export const BELL = { x: 1320, y: 600 };
 export const OBSTACLES = [
@@ -106,9 +107,9 @@ export const OBSTACLES = [
   { x: 30, y: 230, w: 80, h: 110, kind: 'booth' }, { x: 30, y: 470, w: 80, h: 110, kind: 'booth' }, { x: 420, y: 655, w: 50, h: 40, kind: 'jukebox' },
   { x: SHADY.x - 18, y: SHADY.y - 18, w: 36, h: 36, kind: 'shady' },
   { x: SHADY.x + 22, y: SHADY.y - 51, w: 6, h: 102, kind: 'shop-wall' }, // solid back of the insurance alcove
-  { x: 2828, y: 1710, w: 40, h: 24, kind: 'crates' }, // his stock: a couple of crates in the corner beside him
+  { x: 2915, y: 1765, w: 40, h: 24, kind: 'crates' }, // his stock: a couple of crates in the corner beside him
   { x: 80, y: 1550, w: 100, h: 100, kind: 'ottoman' },
-  { x: 2110, y: 1290, w: 150, h: 80, kind: 'pool' }, { x: 2745, y: 1270, w: 56, h: 56, kind: 'champagne' }, { x: 2785, y: 1748, w: 90, h: 64, kind: 'piano' },
+  { x: 2110, y: 1290, w: 150, h: 80, kind: 'pool' }, { x: 2745, y: 1270, w: 56, h: 56, kind: 'champagne' }, { x: PIANO.x - 51, y: PIANO.y - 72, w: 102, h: 120, kind: 'piano' },
 ];
 
 export const CHANDELIERS = [
@@ -116,7 +117,7 @@ export const CHANDELIERS = [
   [320, 330], [320, 950], [2300, 380], [2700, 380], [2500, 1060], [300, 1450], [700, 1650], [2500, 1540],
   [1300, 1330], [1760, 1560], // the slot hall's east end (by the dice), the VIP lounge's west end (the coin flip and the wheel)
 ];
-export const PLANTS = [[980, 1800], [695, 70], [1940, 80], [690, 1125], [1950, 1130], [560, 75], [2935, 80], [2050, 660], [2080, 1795], [2925, 1250], [70, 1740], [80, 1820], [1945, 1830], [1072, 1770], [1970, 1760]];
+export const PLANTS = [[980, 1800], [695, 70], [1940, 80], [690, 1125], [1950, 1130], [560, 75], [2935, 80], [2050, 660], [70, 1740], [80, 1820], [1072, 1770]];
 // STAFF ONLY doors, one per room but the duck pond: [room, x, y] on a wall's inner face and the way the door faces into
 // the room. A killer with the staff-passage edge steps in one and out of another (at the stand spot, 38 px out).
 export const STAFF_DOORS = [['bar', 20, 640, 0], ['rest', 110, 1180, -Math.PI / 2], ['floor', 780, 20, Math.PI / 2], ['arcade', 2880, 20, Math.PI / 2],
