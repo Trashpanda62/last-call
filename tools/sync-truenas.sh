@@ -7,7 +7,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 SITE=/mnt/apps/last-call-dev/site
 mkdir -p .dev/truenas
-git ls-files -co --exclude-standard | grep -v '^\.dev/' | grep -v '^server/' | LC_ALL=C sort > .dev/truenas/files # (server/: the Discord bot runs in its own container)
+git ls-files | grep -v '^\.dev/' | grep -v '^server/' | LC_ALL=C sort > .dev/truenas/files # (server/: the Discord bot runs in its own container)
 STAMP=.dev/truenas/synced
 if [ -f "$STAMP" ]; then
   while IFS= read -r f; do [ -f "$f" ] && [ "$f" -nt "$STAMP" ] && echo "$f"; done < .dev/truenas/files > .dev/truenas/changed || true

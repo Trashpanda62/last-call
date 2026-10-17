@@ -11,7 +11,7 @@ import { DRINKS } from './config.js';
 const KINDS = DRINKS.map(d => d.kind); // the glasses (a drink's colour is its mix's: mix.js)
 const FLAGS = ['alive', 'ejected', 'moving', 'pale', 'human', 'lucky', 'inspecting', 'bet', 'monster', 'flash', 'held', 'maul', 'escaped', 'leap']; // bet: chips just went on the felt (a gesture); the rest: the blackout (leap: the monster mid-pounce)
 const CH_STATE = ['up', 'falling', 'down'];
-const STICKY = ['bowls', 'chandeliers', 'seatsOcc', 'lead', 'security', 'haunts', 'bodies', 'crash', 'race', 'skee', 'guard', 'lure']; // sent when changed
+const STICKY = ['bowls', 'chandeliers', 'seatsOcc', 'lead', 'security', 'haunts', 'bodies', 'crash', 'race', 'skee', 'arcade', 'guard', 'lure']; // sent when changed
 const PSTICKY = ['notes', 'cd', 'crew', 'seat', 'prey', 'spiked', 'rigged', 'killers', 'disguise', 'shop', 'items', 'insurance'];
 
 // The host, once a tick: the parts every guest shares.

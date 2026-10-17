@@ -1,0 +1,725 @@
+{
+  "at": "2026-10-17T04:16:29.607Z",
+  "fallback": false,
+  "rows": [
+    {
+      "game": "crash",
+      "seat": 38,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-38-main",
+      "error": null,
+      "centerError": 2.040704629465049e-7,
+      "bottomGap": 0.001312499046325688,
+      "clear": 4,
+      "blockers": []
+    },
+    {
+      "game": "plinko",
+      "seat": 42,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-42-main",
+      "error": null,
+      "centerError": 1.1444091807533141e-7,
+      "bottomGap": 0.001312518119812145,
+      "clear": 4,
+      "blockers": []
+    },
+    {
+      "game": "race",
+      "seat": 32,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-32-duck2",
+      "error": null,
+      "centerError": 9.671425837946084e-7,
+      "bottomGap": 0.0013124871253966663,
+      "clear": 4,
+      "blockers": []
+    },
+    {
+      "game": "slots",
+      "seat": 16,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-16-main",
+      "error": null,
+      "centerError": 6.087090075898039e-7,
+      "bottomGap": 0.0013124977747597244,
+      "clear": 4,
+      "blockers": []
+    },
+    {
+      "game": "mines",
+      "seat": 44,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-44-main",
+      "error": null,
+      "centerError": 8.897326468385644e-7,
+      "bottomGap": 0.0013125162124634215,
+      "clear": 4,
+      "blockers": []
+    },
+    {
+      "game": "tower",
+      "seat": 45,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-45-main",
+      "error": null,
+      "centerError": 8.897326468385644e-7,
+      "bottomGap": 0.0013125162124634215,
+      "clear": 4,
+      "blockers": []
+    },
+    {
+      "game": "wheel",
+      "seat": 46,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-46-main",
+      "error": null,
+      "centerError": 0.0000012715657575768091,
+      "bottomGap": 0.0013125095367431117,
+      "clear": 4,
+      "blockers": []
+    },
+    {
+      "game": "coin",
+      "seat": 52,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-52-heads",
+      "error": null,
+      "centerError": 0.0000012017327806480524,
+      "bottomGap": 0.0013124737739562686,
+      "clear": 4,
+      "blockers": []
+    },
+    {
+      "game": "skee",
+      "seat": 59,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-59-main",
+      "error": null,
+      "centerError": 0.000001525998112310049,
+      "bottomGap": 0.0013125133514403364,
+      "clear": 4,
+      "blockers": []
+    },
+    {
+      "game": "bj",
+      "seat": 0,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "felt",
+      "error": null
+    },
+    {
+      "game": "roulette",
+      "seat": 10,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "felt",
+      "error": null
+    },
+    {
+      "game": "dice",
+      "seat": 48,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "felt",
+      "error": null
+    },
+    {
+      "game": "pusher",
+      "seat": 61,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-61-main",
+      "error": null,
+      "centerError": 3.501426650308198e-7,
+      "bottomGap": 0.001312501907348551,
+      "clear": 4,
+      "blockers": []
+    },
+    {
+      "game": "claw",
+      "seat": 62,
+      "stacks": 1,
+      "instances": 1,
+      "socket": "bet-circle-62-main",
+      "error": null,
+      "centerError": 4.315837291534986e-7,
+      "bottomGap": 0.001312501907348551,
+      "clear": 4,
+      "blockers": []
+    }
+  ],
+  "supports": [
+    {
+      "name": "bet-circle-16-main",
+      "seat": 16,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-17-main",
+      "seat": 17,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-18-main",
+      "seat": 18,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-19-main",
+      "seat": 19,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-20-main",
+      "seat": 20,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-21-main",
+      "seat": 21,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-22-main",
+      "seat": 22,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-23-main",
+      "seat": 23,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-24-main",
+      "seat": 24,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-25-main",
+      "seat": 25,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-26-main",
+      "seat": 26,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-27-main",
+      "seat": 27,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8825833333333335,
+      "support": -0.007499988396962698
+    },
+    {
+      "name": "bet-circle-28-main",
+      "seat": 28,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8626000000000001,
+      "support": -0.007500006294250572
+    },
+    {
+      "name": "bet-circle-29-main",
+      "seat": 29,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8626000000000001,
+      "support": -0.007500006294250572
+    },
+    {
+      "name": "bet-circle-30-main",
+      "seat": 30,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8626000000000001,
+      "support": -0.007500006294250572
+    },
+    {
+      "name": "bet-circle-31-main",
+      "seat": 31,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.8626000000000001,
+      "support": -0.007500006294250572
+    },
+    {
+      "name": "bet-circle-38-main",
+      "seat": 38,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.825,
+      "support": -0.008999997615814215
+    },
+    {
+      "name": "bet-circle-39-main",
+      "seat": 39,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.825,
+      "support": -0.008999997615814215
+    },
+    {
+      "name": "bet-circle-40-main",
+      "seat": 40,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.825,
+      "support": -0.008999997615814215
+    },
+    {
+      "name": "bet-circle-41-main",
+      "seat": 41,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.825,
+      "support": -0.008999997615814215
+    },
+    {
+      "name": "bet-circle-42-main",
+      "seat": 42,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 1.055,
+      "support": -0.009000038146972644
+    },
+    {
+      "name": "bet-circle-43-main",
+      "seat": 43,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 1.055,
+      "support": -0.009000038146972644
+    },
+    {
+      "name": "bet-circle-59-main",
+      "seat": 59,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.81,
+      "support": -0.006499985694885357
+    },
+    {
+      "name": "bet-circle-60-main",
+      "seat": 60,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.81,
+      "support": -0.006499985694885357
+    },
+    {
+      "name": "bet-circle-61-main",
+      "seat": 61,
+      "spot": "main",
+      "radius": 0.105,
+      "top": 0.922,
+      "support": -0.01600002384185789
+    },
+    {
+      "name": "bet-circle-62-main",
+      "seat": 62,
+      "spot": "main",
+      "radius": 0.105,
+      "top": 0.922,
+      "support": -0.01600002384185789
+    },
+    {
+      "name": "bet-circle-44-main",
+      "seat": 44,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 1.032,
+      "support": -0.006000019073486407
+    },
+    {
+      "name": "bet-circle-45-main",
+      "seat": 45,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 1.032,
+      "support": -0.006000019073486407
+    },
+    {
+      "name": "bet-circle-32-duck0",
+      "seat": 32,
+      "spot": "duck0",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-32-duck1",
+      "seat": 32,
+      "spot": "duck1",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-32-duck2",
+      "seat": 32,
+      "spot": "duck2",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-32-duck3",
+      "seat": 32,
+      "spot": "duck3",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-32-duck4",
+      "seat": 32,
+      "spot": "duck4",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-32-duck5",
+      "seat": 32,
+      "spot": "duck5",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-33-duck0",
+      "seat": 33,
+      "spot": "duck0",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-33-duck1",
+      "seat": 33,
+      "spot": "duck1",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-33-duck2",
+      "seat": 33,
+      "spot": "duck2",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-33-duck3",
+      "seat": 33,
+      "spot": "duck3",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-33-duck4",
+      "seat": 33,
+      "spot": "duck4",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-33-duck5",
+      "seat": 33,
+      "spot": "duck5",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-34-duck0",
+      "seat": 34,
+      "spot": "duck0",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-34-duck1",
+      "seat": 34,
+      "spot": "duck1",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-34-duck2",
+      "seat": 34,
+      "spot": "duck2",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-34-duck3",
+      "seat": 34,
+      "spot": "duck3",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-34-duck4",
+      "seat": 34,
+      "spot": "duck4",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-34-duck5",
+      "seat": 34,
+      "spot": "duck5",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-35-duck0",
+      "seat": 35,
+      "spot": "duck0",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-35-duck1",
+      "seat": 35,
+      "spot": "duck1",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-35-duck2",
+      "seat": 35,
+      "spot": "duck2",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-35-duck3",
+      "seat": 35,
+      "spot": "duck3",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-35-duck4",
+      "seat": 35,
+      "spot": "duck4",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-35-duck5",
+      "seat": 35,
+      "spot": "duck5",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-36-duck0",
+      "seat": 36,
+      "spot": "duck0",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-36-duck1",
+      "seat": 36,
+      "spot": "duck1",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-36-duck2",
+      "seat": 36,
+      "spot": "duck2",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-36-duck3",
+      "seat": 36,
+      "spot": "duck3",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-36-duck4",
+      "seat": 36,
+      "spot": "duck4",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-36-duck5",
+      "seat": 36,
+      "spot": "duck5",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-37-duck0",
+      "seat": 37,
+      "spot": "duck0",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-37-duck1",
+      "seat": 37,
+      "spot": "duck1",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-37-duck2",
+      "seat": 37,
+      "spot": "duck2",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-37-duck3",
+      "seat": 37,
+      "spot": "duck3",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-37-duck4",
+      "seat": 37,
+      "spot": "duck4",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-37-duck5",
+      "seat": 37,
+      "spot": "duck5",
+      "radius": 0.09,
+      "top": 0.775,
+      "support": -0.009000009536743125
+    },
+    {
+      "name": "bet-circle-46-main",
+      "seat": 46,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.764,
+      "support": -0.008000000000000063
+    },
+    {
+      "name": "bet-circle-47-main",
+      "seat": 47,
+      "spot": "main",
+      "radius": 0.12,
+      "top": 0.764,
+      "support": -0.008000000000000063
+    },
+    {
+      "name": "bet-circle-52-heads",
+      "seat": 52,
+      "spot": "heads",
+      "radius": 0.12,
+      "top": 0.739,
+      "support": -0.00799997615814202
+    },
+    {
+      "name": "bet-circle-52-tails",
+      "seat": 52,
+      "spot": "tails",
+      "radius": 0.12,
+      "top": 0.739,
+      "support": -0.00799997615814202
+    },
+    {
+      "name": "bet-circle-53-heads",
+      "seat": 53,
+      "spot": "heads",
+      "radius": 0.12,
+      "top": 0.739,
+      "support": -0.00799997615814202
+    },
+    {
+      "name": "bet-circle-53-tails",
+      "seat": 53,
+      "spot": "tails",
+      "radius": 0.12,
+      "top": 0.739,
+      "support": -0.00799997615814202
+    }
+  ],
+  "errors": []
+}

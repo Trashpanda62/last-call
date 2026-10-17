@@ -92,7 +92,7 @@ try {
     for (let i = 0; i < 80 && L.state.race.phase !== 'bet'; i++) { L.step(0.5); await new Promise(r => setTimeout(r, 20)); }
     L.render(); const btn = L.parts().find(p => p.part === 'spot:duck2');
     const r = L.press('spot:duck2'); await new Promise(r => setTimeout(r, 400)); L.step(0.1);
-    const me = L.S.myId, mine = L.state.race.bets.get ? L.state.race.bets.get(me) : null;
+    const me = L.S.myId;if(L.state.race.bets.has(me))throw Error('race committed before START');L.press('btn:bet');await new Promise(r=>setTimeout(r,100));const mine = L.state.race.bets.get ? L.state.race.bets.get(me) : null;
     return { phase: L.state.race.phase, button: !!btn, press: r, bet: mine ? { duck: mine.duck ?? mine[1], bet: mine.bet ?? mine[2] } : null, start: [...document.querySelectorAll('#gameControls button')].map(b => b.textContent), status: L.bar()?.status };
   });
   rows.race = race; console.log(JSON.stringify(race));

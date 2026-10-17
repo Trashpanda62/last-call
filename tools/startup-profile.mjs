@@ -26,12 +26,12 @@ try {
   new MutationObserver(()=>{const text=document.querySelector('#bootStatus')?.textContent;if(text&&startupStages.at(-1)?.text!==text)startupStages.push({at:performance.now(),text});}).observe(document,{subtree:true,childList:true,characterData:true});
  });
  const cdp=await p.context().newCDPSession(p); await cdp.send('Profiler.enable');await cdp.send('Profiler.setSamplingInterval',{interval:1000});await cdp.send('Profiler.start');
- await p.goto('https://10.42.0.37:3161/');await p.waitForFunction(()=>window.__lastCall?.S.ready,null,{timeout:120000});
+ await p.goto((process.env.LC_URL||'https://10.42.0.37:3161/'));await p.waitForFunction(()=>window.__lastCall?.S.ready,null,{timeout:120000});
  const {profile}=await cdp.send('Profiler.stop');
  const nodes=new Map(profile.nodes.map(n=>[n.id,n])),parents=new Map();for(const n of profile.nodes)for(const child of n.children||[])parents.set(child,n.id);
  const sums=new Map(),self=new Map();
  for(let i=0;i<profile.samples.length;i++){let id=profile.samples[i],us=profile.timeDeltas[i];self.set(id,(self.get(id)||0)+us);while(id){sums.set(id,(sums.get(id)||0)+us);id=parents.get(id);}}
- const rank=m=>[...m].map(([id,us])=>{const n=nodes.get(id);return {ms:Math.round(us/1000),fn:n.callFrame.functionName,url:n.callFrame.url.replace('https://10.42.0.37:3161/',''),line:n.callFrame.lineNumber+1};}).filter(x=>x.fn!=='(idle)'&&x.fn!=='(root)').sort((a,b)=>b.ms-a.ms).slice(0,35);
+ const rank=m=>[...m].map(([id,us])=>{const n=nodes.get(id);return {ms:Math.round(us/1000),fn:n.callFrame.functionName,url:n.callFrame.url.replace((process.env.LC_URL||'https://10.42.0.37:3161/'),''),line:n.callFrame.lineNumber+1};}).filter(x=>x.fn!=='(idle)'&&x.fn!=='(root)').sort((a,b)=>b.ms-a.ms).slice(0,35);
  const data={at:new Date().toISOString(),...(await p.evaluate(()=>({readyMs:__lastCall.S.boot.ms,longTasks:startupLong,stages:startupStages,uploads:startupUploads,programs:startupPrograms,gpuCalls:startupGPUCalls}))),self:rank(self),inclusive:rank(sums)};
  const out=process.argv[2]||'shots/startup-profile.json';fs.mkdirSync(out.split('/').slice(0,-1).join('/')||'.',{recursive:true});fs.writeFileSync(out,JSON.stringify(data,null,2));console.log(JSON.stringify(data));
 }finally{await browser.close();}

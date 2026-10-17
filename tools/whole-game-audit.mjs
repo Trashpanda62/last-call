@@ -31,7 +31,7 @@ try {
     ['rest', 330, 1000, Math.PI], ['arcade', 2530, 430, -Math.PI / 2],
     ['race', 2520, 1000, -Math.PI / 2], ['slots', 1300, 1480, Math.PI / 2],
     ['vip', 2500, 1500, Math.PI / 2], ['floor-north', 1110, 303, Math.PI / 2],
-    ['blackjack', 1110, 303, Math.PI / 2], ['skee', 2754, 396, -Math.PI / 2], ['plinko', 2115, 213, -Math.PI / 2], ['meeting-phone', 1300, 600, Math.PI / 2],
+    ['blackjack', 1110, 303, Math.PI / 2], ['skee', 2754, 396, -Math.PI / 2], ['plinko', 2115, 213, -Math.PI / 2], ['pusher',2338,405,0], ['claw',2335,540,0], ['meeting-phone', 1300, 600, Math.PI / 2],
     ['blackout', 1300, 600, Math.PI / 2], ['monster', 1300, 600, Math.PI / 2], ['backrooms', 1300, 600, Math.PI / 2],
     ['ghost-camera', 1300, 600, Math.PI / 2], ['crowd-running', 1300, 600, Math.PI / 2],
     ['escape-night', 1300, 600, Math.PI / 2], ['escape-exits', 1300, 600, Math.PI / 2],
@@ -42,8 +42,9 @@ try {
       const L = __lastCall; L.noLock(); L.start('killer', { players: 32, mode: name.startsWith('escape-') ? 'escape' : 'classic' }); L.step(.1); L.S.paused = true;
       L.place(x, y); L.look(look, -.05);
       if (name === 'blackjack') { const s = L.state.seats.find(s => s.game === 'bj'); if (s.occ) s.occ.seat = null; s.occ = s.claim = null; L.look(s.face, -.66); L.place(s.x, s.y); L.render(); if (L.view.priv.seat?.game !== 'bj') throw new Error('Blackjack setup failed'); }
+      if(['pusher','claw'].includes(name)){const s=L.state.seats.find(s=>s.game===name);if(s.occ)s.occ.seat=null;s.occ=s.claim=null;L.look(s.face,-.15);L.place(s.x,s.y);L.render();L.press('spot:main');L.press('btn:start');L.step(.1);const r=L.state.arcade[name];if(!r)throw Error(name+' start failed');L.act('arcade',{kind:'drop',round:r.id,sequence:1});L.step(.5);}
       if (name === 'skee' || name === 'plinko') { const s=L.state.seats.find(s=>s.game===name); if(s.occ)s.occ.seat=null; s.occ=s.claim=null; L.look(s.face,-.15);L.place(s.x,s.y);L.render();if(L.view.priv.seat?.game!==name)throw Error(name+' setup failed');L.press('spot:main');if(name==='skee'){L.act('skee',{kind:'start',after:0,bet:100});L.step(.1);const r=L.state.skee[0];L.act('skee',{kind:'roll',round:r.id,sequence:1,aim:0,power:.41});L.step(.1);}}
-      if (name === 'meeting-phone') { L.place(1320, 600); L.act('use'); L.render(); if (!L.state.meeting) throw new Error('Meeting setup failed'); }
+      if (name === 'meeting-phone') { L.act('leave'); L.place(1268, 600); L.act('use'); L.render(); if (!L.state.meeting) throw new Error('Meeting setup failed'); }
       if (name === 'blackout' || name === 'monster') { L.state.chars[0].cd.lights = 0; L.act('lights'); L.step(.1); if (!L.state.blackout) throw new Error('Blackout setup failed'); if (name === 'monster') { L.act('transform'); L.step(.1); if (!L.view.priv.monster) throw new Error('Monster setup failed'); } }
       if (name === 'backrooms') L.state.backrooms = true;
       if (name.startsWith('escape-')) {

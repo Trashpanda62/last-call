@@ -1,5 +1,16 @@
 # Casino games and asset production
 
+## Constructed checkpoint — 2026-10-17
+
+The built coordinates are in [casino-layout-built.json](../design/casino-layout-built.json), with the interactive page defaulting to Built. The original proposal below is retained as design history. The casino now has central roulette and dice, back-to-back penny slot banks, a high-limit row, a VIP coin/wheel/shop/social cluster, the skee/Plinko pair and both new cabinets. All 63 game/social/security positions, six snacks, doors and staff approaches pass the production navigation checks; nine principal circulation strips clear occupied bodies at widths of at least 1.5 m. All 528 gathering poses (1–32 players) clear the built map, and meetings use those same positions.
+
+Plinko has a continuous walnut/green base replacing the exposed lump and detached stand, a supported BET circle, green DROP and three physical risk keys. Duck derby is a brass-trimmed wooden flume with numbered lanes, moving gates and finish lamps. Each desk has numbered circles, live odds and START; the odds fold flat for the run. Chips stage until START; editing and withdrawal remain available before the gates close.
+
+Midnight Mint has five tokens and at most forty simulated coins. Move the chute and time DROP against the moving shelf. At 2/4/6/9/12 coins the total return is .5/1/1.5/2/3× the stake; fewer than two returns zero. The thresholds are printed on its score panel. Night Shift Claw has three attempts, four movement keys and DROP. Prizes show their point values; total return is points divided by three. The host validates carriage steps, reach and pickup, and settles each round once. Visible gold assistance preserves the existing protected-streak behavior; the claw's point tags update with assisted value changes. Owner/guest/spectator, abuse, disconnect, insurance, death/leave, compact screens and fallback graphics have automated coverage. Neither game required paid assets.
+
+Player acceptance remains open; rocket/coin/wheel art expansion still follows review of the Plinko pilot. Steve's C02 balance hold is preserved.
+
+
 Status: ACTIVE planning, 2026-10-16. Layout first: [interactive measured draft](../design/casino-layout.html), [placement data](../design/casino-layout-v1.json). This specifies work; it does not claim these games or generated assets are already playable.
 
 ## Layout and game mix

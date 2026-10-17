@@ -13,19 +13,20 @@ try{
    gl.deleteProgram=function(program){tableProgramEvents.push({kind:'delete',id:ids.get(program),at:performance.now()});return remove.call(this,program);};
   }return gl;};
  });
- await page.goto('https://10.42.0.37:3161/'+(process.argv.includes('--fallback')?'?noprops':''));await page.waitForFunction(()=>window.__lastCall?.S.ready,null,{timeout:120000});
+ await page.goto((process.env.LC_URL||'https://10.42.0.37:3161/')+(process.argv.includes('--fallback')?'?noprops':''));await page.waitForFunction(()=>window.__lastCall?.S.ready,null,{timeout:120000});
  const data=await page.evaluate(async repeated=>{
   const L=__lastCall;L.noLock();L.start('gambler',{players:32});L.step(.1);L.S.paused=true;L.place(1300,600);L.look(Math.PI/2);L.render();
   const THREE=await import('three'),nativeKey=THREE.Material.prototype.customProgramCacheKey;let depthSelections=0,measuring=false;
   THREE.Material.prototype.customProgramCacheKey=function(){if(measuring&&this.isMeshDepthMaterial)depthSelections++;return nativeKey.call(this);};
   const ready=performance.now(),rows=[];
-  for(const game of ['slots','bj','roulette','dice','plinko','mines','tower','crash','race','coin','wheel']){
+  for(const game of ['slots','bj','roulette','dice','plinko','mines','tower','crash','race','coin','wheel','skee','pusher','claw']){
    if(L.view.priv.seat)L.act('leave');
    const seat=L.state.seats.find(s=>s.game===game);if(!seat)throw Error('Missing game '+game);
    if(seat.occ)seat.occ.seat=null;seat.occ=seat.claim=null;
    const before=tableProgramEvents.length;L.place(seat.x,seat.y);L.look(seat.face,-.35);L.render();
    const active=L.table()?.game,part=L.parts().find(p=>p.part.startsWith('spot:'))?.part;
    const placed=part?L.press(part):false;L.render();L.render();
+   if(['pusher','claw'].includes(game)){L.press('btn:start');L.step(.1);L.press('btn:drop');L.step(1.1);L.render();}
    const selectionFrames=[];for(let i=0;i<3;i++){depthSelections=0;measuring=true;L.render();measuring=false;selectionFrames.push(depthSelections);}
    rows.push({game,active,part,placed,selectionFrames,events:tableProgramEvents.slice(before),gfx:L.gfx()});
   }
@@ -46,8 +47,8 @@ try{
   return{rows,ready,warmups,recompiled,guards,events:tableProgramEvents,retained:__tableDepthMaterials().size};
  },process.argv.includes('--warmup'));
  const out=process.argv.find(a=>a.endsWith('.json'))||'shots/table-loading.json';fs.writeFileSync(out,JSON.stringify({at:new Date().toISOString(),...data,errors},null,2));
- assert.deepEqual(errors,[]);assert.equal(data.rows.length,11);for(const row of data.rows){assert.equal(row.active,row.game);assert.ok(row.part&&row.placed,row.game+': exercise an actual chip placement');if(!process.argv.includes('--baseline')){assert.equal(row.events.filter(e=>e.kind==='link').length,0,row.game+': no late table shaders');assert.deepEqual(row.selectionFrames,[0,0,0],row.game+': no repeated shadow selections');}}
+ assert.deepEqual(errors,[]);assert.equal(data.rows.length,14);for(const row of data.rows){assert.equal(row.active,row.game);assert.ok(row.part&&row.placed,row.game+': exercise an actual chip placement');if(!process.argv.includes('--baseline')){assert.equal(row.events.filter(e=>e.kind==='link').length,0,row.game+': no late table shaders');assert.deepEqual(row.selectionFrames,[0,0,0],row.game+': no repeated shadow selections');}}
  if(!process.argv.includes('--baseline'))for(const row of data.guards){if('expected'in row)assert.equal(row.assigned,row.expected,row.name);if(row.name==='became special')assert.equal(row.initiallyAssigned,true);if(row.name==='authored')assert.equal(row.retained,true);}
  for(const row of data.warmups){assert.equal(row.disposed,row.retired,'every previous preparation material retires');assert.ok(row.retained>0&&row.retained<40,'retained shadow preparation remains bounded');assert.equal(row.retained,data.warmups[0].retained);assert.ok(!row.stages.includes('Preparing the backrooms'),'unchanged graphics and world reuse Backrooms preparation');}
- console.log(process.argv.includes('--baseline')?'PASS: first table-entry baseline recorded.':'PASS: all 11 first table entries and chip placements reuse retained shaders; repeated shadow selections are zero and specialized arrays retain native handling.',JSON.stringify({games:data.rows.map(r=>({game:r.game,links:r.events.filter(e=>e.kind==='link').length,selections:r.selectionFrames})),recompiled:data.recompiled,warmups:data.warmups.map(({gfx,...r})=>r)}));
+ console.log(process.argv.includes('--baseline')?'PASS: first table-entry baseline recorded.':'PASS: all 14 first table entries and chip placements reuse retained shaders; repeated shadow selections are zero and specialized arrays retain native handling.',JSON.stringify({games:data.rows.map(r=>({game:r.game,links:r.events.filter(e=>e.kind==='link').length,selections:r.selectionFrames})),recompiled:data.recompiled,warmups:data.warmups.map(({gfx,...r})=>r)}));
 }finally{await browser.close();}

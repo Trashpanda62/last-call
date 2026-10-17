@@ -9,7 +9,7 @@ try {
  const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, ignoreHTTPSErrors: true });
  const errors = [], snacks = []; page.on('pageerror', e => errors.push(e.message));
  await page.addInitScript(() => { localStorage.setItem('lc.settings', JSON.stringify({ v: 2, gfx: { preset: 'low' }, voice: { mode: 'off' } })); });
- await page.goto('https://10.42.0.37:3161/'); await page.waitForFunction(() => window.__lastCall?.S.ready, null, { timeout: 90000 });
+ await page.goto((process.env.LC_URL||'https://10.42.0.37:3161/')); await page.waitForFunction(() => window.__lastCall?.S.ready, null, { timeout: 90000 });
  const shot = async name => { await page.screenshot({ path: `${out}/${name}.png` }); console.log('shot', name); };
  await shot('menu-mystery');
  await page.locator('#modePick [data-mode="escape"]').click(); await page.waitForTimeout(950); await shot('menu-escape');

@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import * as T from './textures.js';
-import { ROOMS, WALLS, OBSTACLES, DOOR_GAPS, CHANDELIERS, PLANTS, TAP, BELL, BOWL_SPOTS, STAFF_DOORS, makeSeats } from '../map.js';
+import { ROOMS, WALLS, OBSTACLES, DOOR_GAPS, CHANDELIERS, PLANTS, TAP, BELL, DICE_TABLE, SHADY, BOWL_SPOTS, STAFF_DOORS, makeSeats } from '../map.js';
 import { buildMachinesSteps } from './machines.js';
 import { makeMirror, mirrorFrame } from './mirror.js';
 import { hasProp, placeProps, propObject, propScale, propInfo } from './props.js';
@@ -326,11 +326,10 @@ export function* buildWorldSteps(scene, opts = {}) {
   // you come from; VIP stays on the lounge side, the pond leaves no room to stand in front of it on the other)
   sign('VIP', 0xd070ff, beside(2440, -1, 1.4), 2.25, 1200 * M + 0.24, 0, 1.4, 0.36);
   sign('RESTROOMS', 0x80fff0, beside(380, 1, 1.7, 0.45), 2.3, 700 * M - 0.24, Math.PI, 1.7, 0.26);
-  sign('DUCK RACE', 0x7fe8ff, beside(2440, -1, 2.0, 0.25), 2.25, 700 * M - 0.24, Math.PI, 2.0, 0.3);
+  sign('DUCK RACE', 0x7fe8ff, beside(2560, 1, 2.0, 0.65), 2.25, 700 * M - 0.24, Math.PI, 2.0, 0.3);
   sign('SLOTS', 0xffd040, 510 * M, 2.35, 1200 * M + 0.24, 0, 1.8, 0.45);
   sign('HIGH LIMIT', 0xffd040, 680 * M, 2.6, 1880 * M - 1, Math.PI, 2.2, 0.36, true, true);
-  sign('DICE', 0x3fe0ff, 1240 * M, 2.35, 1200 * M + 0.24, 0, 1.3, 0.4); // over the dice table, between the pilasters
-  sign('SPIN TO WIN', 0xffd040, beside(1680, -1, 2.0, 1.3), 2.25, 1200 * M + 0.24, 0, 2.0, 0.3, false); // beside the door from the floor, facing the wheel (past the pilaster; the coin game stands on the other side)
+  sign('DICE', 0x3fe0ff, 2000 * M - .24, 2.35, 800 * M, -Math.PI/2, 1.3, 0.4); // over the dice table, between the pilasters
   // The coin game has its own HEADS OR TAILS title; a second wall label hid behind the coin.
   bulbsMesh(ctx);
 
@@ -590,6 +589,9 @@ function decor(ctx) {
     B.add(box(w - 0.16, 0.05, o.d + 0.02), MAT.brass, v3(o.x, 0.08, o.z));
   }
 
+  B.add(rbox(.10,2.0,1.7,.025),MAT.darkWood,v3((SHADY.x+25)*M,1,SHADY.y*M));
+  const shopSign=new THREE.Mesh(new THREE.PlaneGeometry(1.5,.30),basicGlow(T.plaque('HOUSE INSURANCE',{w:1024,h:200,bg:'#142b25',ink:'#edcc84',font:'bold 78px Georgia'}),1));
+  shopSign.name='shady-shop-sign';shopSign.rotation.y=-Math.PI/2;shopSign.position.set((SHADY.x+20)*M,1.9,SHADY.y*M);group.add(shopSign);
   // the shady guy's stock in the corner beside him: a big pine crate with a smaller one on top, dark wood frames
   for (const o of ob('crates')) {
     const crate = (w, h, d, x, y, z, yaw) => {
@@ -644,7 +646,7 @@ function decor(ctx) {
   const barRug = new THREE.Mesh(new THREE.PlaneGeometry(5.5, 5.5), std({ map: T.tex(rc, false), roughness: 0.95 })); barRug.rotation.x = -Math.PI / 2; barRug.receiveShadow = true; add(barRug, v3(300 * M, 0.006, 470 * M));
   // paintings: [x, y (sim px, a wall's inner face), yaw (the way the picture faces), kind]
   const ART = [[20, 291, Math.PI / 2, 0], [20, 525, Math.PI / 2, 3], [640, 480, Math.PI / 2, 1], [2000, 615, -Math.PI / 2, 1], [640, 205, Math.PI / 2, 0], [2000, 205, -Math.PI / 2, 2],
-    [2275, 1200, 0, 0], [2725, 1200, 0, 2], [2200, 1880, Math.PI, 3], [2800, 1880, Math.PI, 0], [620, 515, -Math.PI / 2, 2]];
+    [2275, 1200, 0, 0], [2725, 1200, 0, 2], [2460, 1880, Math.PI, 3], [2800, 1880, Math.PI, 0], [620, 515, -Math.PI / 2, 2]];
   ART.forEach(([px, py, yaw, kind], i) => {
     const nx = Math.sin(yaw), nz = Math.cos(yaw), x = px * M, z = py * M;
     B.add(rbox(1.0, 1.24, 0.06, 0.02), MAT.gold, v3(x + nx * 0.03, 1.75, z + nz * 0.03), yaw);
@@ -666,14 +668,14 @@ function decor(ctx) {
 // Wall instructions are actual typography, rendered at native texture resolution.
 function casinoGuide(name) {
   const guides = {
-    derby: ['DUCK DERBY', 'PICK A LANE. BACK YOUR BIRD.', ['Choose a numbered duck lane.', 'Click its lane to place your chips.', 'Press SPACE to enter the race.', 'Watch the finish. First duck pays.']],
+    derby: ['DUCK DERBY', 'PICK A LANE. BACK YOUR BIRD.', ['Choose a numbered duck lane.', 'Click its numbered circle to place chips.', 'Press the green START button to enter.', 'Watch the finish. First duck pays.']],
     rocket: ['ROCKET RUN', 'HOW HIGH WILL YOU GO?', ['Place chips on the betting circle.', 'Press SPACE while bets are open.', 'Watch your multiplier climb.', 'Press SPACE to cash out in flight.']],
-    roulette: ['ROULETTE', 'A LITTLE LUCK GOES A LONG WAY.', ['Place chips on numbers or colours.', 'Scroll to change your chip value.', 'Press SPACE to spin the wheel.', 'Wait for the ball to settle.']],
-    jackpot: ['LUCKY SLOTS', 'THREE OF A KIND. ONE BIG NIGHT.', ['Place chips on the betting circle.', 'Press SPACE to spin the reels.', 'Matching symbols pay the prize.', 'Change your chip before the next spin.']],
-    lounge: ['HEADS OR TAILS', 'CALL IT. FLIP IT. RIDE YOUR LUCK.', ['Choose HEADS or TAILS with your chips.', 'Press SPACE to flip the giant coin.', 'A correct call doubles your stake.', 'TAKE your winnings or flip again.']],
-    cocktails: ['HOUSE COCKTAILS', 'EVERY GOOD ALIBI STARTS AT THE BAR.', ['Walk up to the bartender.', 'Press U to choose your drink.', 'Press F to take a sip.', 'Check suspicious drinks with R.']],
-    missing: ['STAY SHARP', 'SOMEONE HERE IS NOT A GAMBLER.', ['Watch who leaves the table.', 'Space marks someone you suspect.', 'Report a body with U.', 'Ghosts can watch the cameras with C.']],
-    wash: ['A CLEAN GETAWAY', 'SOME DRINKS LEAVE A BITTER TASTE.', ['Feeling ill? Find the restroom sink.', 'Walk close and press U.', 'Check snacks and drinks with R.', 'Keep your eyes on your glass.']]
+    roulette: ['ROULETTE', 'A LITTLE LUCK GOES A LONG WAY.', ['Place chips on numbers or colours.', 'Scroll to change your chip value.', 'Click the wheel to spin.', 'Wait for the ball to settle.']],
+    jackpot: ['LUCKY SLOTS', 'THREE OF A KIND. ONE BIG NIGHT.', ['Place chips on the betting circle.', 'Pull the machine lever to spin.', 'Matching symbols pay the prize.', 'Change your chip before the next spin.']],
+    lounge: ['HEADS OR TAILS', 'CALL IT. FLIP IT. RIDE YOUR LUCK.', ['Choose HEADS or TAILS with your chips.', 'Click the giant coin to flip.', 'A correct call doubles your stake.', 'TAKE your winnings or flip again.']],
+    cocktails: ['HOUSE COCKTAILS', 'EVERY GOOD ALIBI STARTS AT THE BAR.', ['Walk up to the bartender.', 'Left-click to choose your drink.', 'Press F to take a sip.', 'Check suspicious drinks with R.']],
+    missing: ['STAY SHARP', 'SOMEONE HERE IS NOT A GAMBLER.', ['Watch who leaves the table.', 'Space marks someone you suspect.', 'Left-click a body to report it.', 'Ghosts can watch the cameras with C.']],
+    wash: ['A CLEAN GETAWAY', 'SOME DRINKS LEAVE A BITTER TASTE.', ['Feeling ill? Find the restroom sink.', 'Walk close and left-click the sink.', 'Check snacks and drinks with R.', 'Keep your eyes on your glass.']]
   };
   const [title, strap, steps] = guides[name] || guides.roulette;
   const [c, g] = T.canvas(1200, 1600); g.fillStyle = '#101d1d'; g.fillRect(0, 0, 1200, 1600);
@@ -691,14 +693,14 @@ function casinoGuide(name) {
     lines.forEach((text, j) => g.fillText(text, 245, y - (lines.length - 1) * 34 + j * 72 + 18)); g.textAlign = 'center';
     if (i < 3) { g.strokeStyle = '#37514c'; g.beginPath(); g.moveTo(245, y + 105); g.lineTo(1080, y + 105); g.stroke(); }
   }
-  g.fillStyle = '#c5aa72'; g.font = '28px Arial'; g.fillText('PLACE CHIPS  ·  PRESS SPACE  ·  GOOD LUCK', 600, 1495);
+  g.fillStyle = '#c5aa72'; g.font = '28px Arial'; g.fillText('PLACE CHIPS  /  USE THE GAME CONTROL', 600, 1495);
   return T.tex(c, false);
 }
 // the generated paintings by frame (paint-09 to 11 are in reserve), and the posters
 const PAINTINGS = Array.from({ length: 11 }, (_, i) => ['portrait-gambler', 'portrait-queen', 'portrait-bartender'][i % 3]);
-const POSTERS = [[2020, 775, Math.PI / 2, 'derby', true], [2980, 1700, -Math.PI / 2, 'lounge', true], [1600, 1410, -Math.PI / 2, 'missing', false],
+const POSTERS = [[2020, 775, Math.PI / 2, 'derby', true], [1770, 1880, Math.PI, 'lounge', true], [1600, 1410, -Math.PI / 2, 'missing', false],
   [2020, 560, Math.PI / 2, 'rocket', true], [620, 250, -Math.PI / 2, 'cocktails', true], [500, 720, 0, 'wash', false],
-  [302, 1200, 0, 'jackpot', true], [1320, 1180, Math.PI, 'roulette', true]];
+  [620, 1200, 0, 'jackpot', true], [1040, 1180, Math.PI, 'roulette', true]];
 
 // ---------- Pit bell ----------
 function pitBell(ctx) {
@@ -746,7 +748,7 @@ function seatsAndRails(ctx, seats) {
     if (s.game !== 'vip' && s.game !== 'cams') continue;
     const x = s.x * M, z = s.y * M, yaw = yawOf(s.face);
     const back = v3(-Math.sin(yaw) * 0.26, 0, -Math.cos(yaw) * 0.26);
-    const stool = ['slots', 'crash', 'plinko', 'mines', 'tower', 'wheel', 'coin', 'race'].includes(s.game);
+    const stool = ['pusher', 'claw', 'slots', 'crash', 'plinko', 'mines', 'tower', 'wheel', 'coin', 'race'].includes(s.game);
     const kind = stool ? 'stool' : s.game === 'vip' ? 'armchair' : 'chair';
     if (hasProp(kind)) { lists[kind].push({ x, z, yaw, ...fits[kind] }); continue; } // seat tops match the hand-built ones: sitters land the same
     if (stool) {

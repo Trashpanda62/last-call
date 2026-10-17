@@ -9,18 +9,19 @@ import { makeTalk } from './talk.js';
 import { createLuck } from './luck.js';
 import { createInsuranceBook } from './insurance.js';
 import { createFootsteps } from './character-foley.js';
+import { arcadeNew, arcadeMove, arcadeDrop, arcadeTick, arcadeView, arcadeMultiplier } from './arcade.js';
 import { SKEE, skeeNew, skeeLaunch, skeeTick, skeeView, skeeMultiplier } from './skee.js';
 
 // "Red", "Red and Mint", "Red, Mint and Pip"
 export const nameList = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
-export const ringRadius = n => n > 13 ? 215 : n > 10 ? 190 : n > 7 ? 150 : 130; // about 1.4 m between neighbours at 16, so nobody stands in your eye line
+export const ringRadius = _n => 270; // clears the central game cluster while keeping the gathering in the main room
 // Where the i-th of n stands round the pit bell (the start, and after every meeting), facing it. Up to 16 the circle
 // above; past 16 an oval with the same spacing (about 1.4 m at 32), equal steps along it, as wide as the casino floor
-// allows between the blackjack tables to the north and the roulette table to the south.
-const RING_RY = 230, ovals = {};
+// allows between the blackjack tables and the central game cluster.
+const RING_RY = 270, ovals = {};
 function oval(n) {
   if (ovals[n]) return ovals[n];
-  const rx = RING_RY + (n - 16) * 22, K = 720, len = [0];
+  const rx = Math.min(600, RING_RY + (n - 16) * 22), K = 720, len = [0];
   const P = k => { const a = k / K * Math.PI * 2; return { x: Math.cos(a) * rx, y: Math.sin(a) * RING_RY }; };
   for (let k = 1; k <= K; k++) { const p = P(k - 1), q = P(k); len.push(len[k - 1] + Math.hypot(q.x - p.x, q.y - p.y)); }
   const out = [];
@@ -64,7 +65,7 @@ export function createGame(opts) {
     t: 0, mode: 'play', pickT: 0, pickEarly: false, pickReady: false, lure: null, bank: CFG.startBank, target: Gm.roundGoal(CFG.startBank * CFG.targets[n] * CFG.killerBank[nk]),
     diff: Object.hasOwn(DIFF, opts.difficulty) ? DIFF[opts.difficulty] : DIFF.normal, bankLog: [{ t: 0, bank: CFG.startBank }],
     chars: [], drinks: [], bodies: [], floats: [], fx: [], lightsT: 0, blackout: null, afterDark: null, backrooms: !!opts.backrooms, backroomsChance: opts.backroomsChance ?? CFG.backroomsChance, escape: opts.mode === 'escape', exits: null, nextId: 1, obsT: 0, pending: null, meetEnd: 0, big: n > CFG.bigRoom, meeting: null, over: null,
-    skee: [null, null], skeeSeq: 0, seats: makeSeats(), held: new Map(), bowls: BOWL_SPOTS.map((p, i) => ({ id: i, x: p.x, y: p.y })), deaths: 0, traps: [],
+    arcade: {pusher:null,claw:null}, arcadeSeq: 0, skee: [null, null], skeeSeq: 0, seats: makeSeats(), held: new Map(), bowls: BOWL_SPOTS.map((p, i) => ({ id: i, x: p.x, y: p.y })), deaths: 0, traps: [],
     chandeliers: CHANDELIERS.map(([x, y], i) => ({ id: i, x, y, state: 'up', t: 0, by: null })).filter(ch => !['race', 'arcade'].includes(roomOf(ch))), guard: null, guardSaw: null, haunts: [],
     // (the pond and arcade have plain lamps, nothing to drop)
     antidotes: CFG.antidotes, security: { cams: false, feed: 'floor', feedT: 0 },
@@ -243,7 +244,7 @@ function makeApi(G) {
     return true;
   }
 
-  // ---------- The shady guy in the bar's corner (Steve, 2026-10-15): your own winnings buy what the house doesn't sell ----------
+  // ---------- The shady guy in the VIP alcove (Steve, 2026-10-15): your own winnings buy what the house doesn't sell ----------
   const atShady = c => dist(c, SHADY) < CFG.shadyReach;
   const shopPrice = id => CFG.gear[id] ? CFG.gear[id].price : Gm.niceDown(G.target * CFG.shop[id].frac);
   const shopIds = () => Object.keys(CFG.shop).concat(G.escape ? Object.keys(CFG.gear) : []); // (escape mode's gear too)
@@ -253,7 +254,7 @@ function makeApi(G) {
   }
   function shopBuy(c, id) {
     if (!shopIds().includes(id) || !c.alive || G.over || G.mode !== 'play' || c.monster) return false;
-    if (!atShady(c)) return tell(c, 'The shady guy is in the south-east corner of the bar, by his crates.'), false;
+    if (!atShady(c)) return tell(c, 'The shady guy is in the VIP lounge alcove, by his crates.'), false;
     if (CFG.gear[id]) return buyGear(c, id);
     const it = CFG.shop[id], p = shopPrice(id);
     if (c.items.has(id)) return tell(c, `You already have the ${it.name.toLowerCase()}.`), false;
@@ -274,7 +275,7 @@ function makeApi(G) {
   // The revolver: whoever is nearest in your sights (CFG.gunWidth either side, a little more far off), within
   // CFG.gunRange and in plain view. Everyone in earshot hears it. The monster only staggers.
   function shoot(c) {
-    if (!c.items.has('gun') || c.bullets <= 0) return tell(c, 'You have no gun. The shady guy in the bar sells one.'), false;
+    if (!c.items.has('gun') || c.bullets <= 0) return tell(c, 'You have no gun. The shady guy in the VIP alcove sells one.'), false;
     if (--c.bullets <= 0) c.items.delete('gun');
     const rx = Math.cos(c.look), ry = Math.sin(c.look);
     let hit = null, best = 1e9;
@@ -825,6 +826,7 @@ function makeApi(G) {
     c.gameT = every * rand(0.7, 1.3); c.betAt = G.t; // chips on the felt (the 'bet' flag in the view: everyone sees the gesture)
     let b = botBet(), m = 0, units = 1;
     switch (s.game) {
+      case 'pusher': case 'claw': { startArcade(c, b); return; }
       case 'skee': { startSkee(c, b); return; }
       case 'bj': { const r = Gm.bjAuto(); m = r.mult; units = r.staked; break; }
       case 'roulette': { const bet = Math.random() < 0.25 ? Math.floor(Math.random() * 37) : pick(Object.keys(Gm.RL_BETS)); m = Gm.rlSpin(bet, Gm.rlLucky()).mult; break; }
@@ -877,6 +879,26 @@ function makeApi(G) {
         const back = r.bet * skeeMultiplier(r.score);
         settle(c, r.bet, back, r.policy);
         if (c?.isHuman) { luckFor(c).settle(r.bet, back); tell(c, `${r.score} points · ${skeeMultiplier(r.score)}x return`, back < r.bet, back > r.bet ? 'coin' : back < r.bet ? 'lose' : 'click'); }
+      }
+    }
+  }
+  function startArcade(c, bet, after = null) {
+    const game = c.seat?.game; if (!['pusher','claw'].includes(game) || !Number.isFinite(bet) || bet < Gm.BET.min) return false;
+    const prior = G.arcade[game]; if ((after !== null && after !== (prior?.id || 0)) || prior && prior.phase !== 'done') return false;
+    springTrap(c,c.seat); if (!c.seat) return false;
+    const r = arcadeNew(game,++G.arcadeSeq,c.seat.id,c.id,Gm.clampBet(bet,G.bank),c.isHuman && luckFor(c).next());
+    r.policy = policyFor(c).native('arcade:'+r.id);G.arcade[game]=r;c.betAt=G.t;return true;
+  }
+  function arcadeGamesTick(dt) {
+    for (const r of Object.values(G.arcade)) {
+      if (!r || r.paid) continue; const c = byId(r.player);
+      if (!c?.seat || c.seat.id !== r.seat || (!c.alive && !c.isHuman)) r.abandoned = true;
+      if (r.phase === 'aim' && c && !c.isHuman && !r.abandoned && r.timer > .8) {
+        arcadeMove(r,rand(-1,1),rand(-1,1),r.seq+1);arcadeDrop(r,r.seq+1);
+      }
+      arcadeTick(r,dt);
+      if (r.phase === 'done' && !r.paid) { r.paid = true;const back=r.bet*arcadeMultiplier(r);settle(c,r.bet,back,r.policy);
+        if(c?.isHuman){luckFor(c).settle(r.bet,back);tell(c,`${r.score} points / ${arcadeMultiplier(r).toFixed(2)}x return`,back<r.bet,back>r.bet?'coin':'click');}
       }
     }
   }
@@ -1553,7 +1575,7 @@ function makeApi(G) {
     }
     return false;
   }
-  const GHOST_PLAYS = new Set(['crash', 'cashout', 'race', 'play', 'cameras', 'feed', 'skee']);
+  const GHOST_PLAYS = new Set(['crash', 'cashout', 'race', 'play', 'cameras', 'feed', 'skee', 'arcade']);
   function action(id, k, arg) {
     const c = byId(id); if (!c || !c.isHuman || G.over) return;
     if (G.mode === 'pick') {
@@ -1579,7 +1601,7 @@ function makeApi(G) {
       return;
     }
     if (G.mode === 'play' && k === 'insurance') {
-      const busy = G.crash.bets.has(c.id) && !G.crash.bets.get(c.id).out && G.crash.phase !== 'boom' || G.race.bets.has(c.id) && G.race.phase !== 'show' || G.skee.some(r => r && r.player === c.id && r.phase !== 'done');
+      const busy = G.crash.bets.has(c.id) && !G.crash.bets.get(c.id).out && G.crash.phase !== 'boom' || G.race.bets.has(c.id) && G.race.phase !== 'show' || G.skee.some(r => r && r.player === c.id && r.phase !== 'done') || Object.values(G.arcade).some(r => r && r.player === c.id && r.phase !== 'done');
       if (c.alive && !c.monster && c.items.has('insurance')) {
         if (policyFor(c).view().state === 'armed') return;
         if (policyFor(c).activate(busy)) tell(c, 'Insurance armed for your next round.', false, 'chip');
@@ -1631,6 +1653,14 @@ function makeApi(G) {
       } else if (k === 'leap') {
         if (!doLeap(c) && !c.leap) tell(c, c.grab ? 'Busy.' : c.leapCd > 0 ? `Pounce ready in ${Math.ceil(c.leapCd)}s.` : 'Not yet.');
       } else tell(c, "You're the monster. Left-click to grab whoever you catch, Shift to leap.");
+      return;
+    }
+    if (k === 'arcade' && arg && ['pusher','claw'].includes(c.seat?.game)) {
+      if (arg.kind === 'start' && Number.isSafeInteger(arg.after) && arg.after >= 0) startArcade(c,arg.bet,arg.after);
+      else { const r=G.arcade[c.seat.game];if(r && r.player===c.id && r.seat===c.seat.id && r.id===arg.round) {
+        const ok=arg.kind==='move'?arcadeMove(r,arg.dx,arg.dz,arg.sequence):arg.kind==='drop'?arcadeDrop(r,arg.sequence):false;
+        if(ok)c.betAt=G.t;
+      }}
       return;
     }
     if (k === 'skee' && arg && c.seat?.game === 'skee') {
@@ -1799,7 +1829,7 @@ function makeApi(G) {
     if (G.lure && (G.lure.t -= dt) <= 0) G.lure = null;
     for (const h of G.haunts) h.t -= dt;
     G.haunts = G.haunts.filter(h => h.t > 0);
-    crashTick(dt); raceTick(dt); skeeGamesTick(dt);
+    crashTick(dt); raceTick(dt); skeeGamesTick(dt); arcadeGamesTick(dt);
     if (G.over) return;
     G.obsT -= dt; if (G.obsT <= 0) { G.obsT = 0.25; observe(); }
     if (G.pending && !G.blackout) { // (held through a blackout)
@@ -1840,6 +1870,7 @@ function makeApi(G) {
       lead: G.chars.filter(c => Math.round(c.won)).sort((a, b) => b.won - a.won).slice(0, 5).map(c => ({ id: c.id, name: c.name, color: c.color, won: Math.round(c.won), alive: c.alive })),
       crash: { phase: G.crash.phase, t: +G.crash.t.toFixed(2), mult: G.crash.mult, point: G.crash.phase === 'boom' ? G.crash.point : null, round: G.crash.round,
         bets: [...G.crash.bets].map(([id, b]) => [id, b.bet, b.out]) },
+      arcade: Object.fromEntries(Object.entries(G.arcade).map(([k,r])=>[k,arcadeView(r)])),
       skee: G.skee.map(skeeView),
       race: { phase: G.race.phase, t: +G.race.t.toFixed(2), pays: G.race.form.pays, winner: G.race.phase === 'bet' ? null : G.race.winner, seed: G.race.seed, round: G.race.round,
         bets: [...G.race.bets].map(([id, b]) => [id, b.duck, b.bet, G.race.phase === 'show' ? b.back : null]) },

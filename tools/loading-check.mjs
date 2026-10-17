@@ -11,7 +11,7 @@ try {
  page.on('pageerror', e => errors.push(e.message));
  page.on('response', r => { if (r.url().includes('/assets/') && !r.ok()) failed.push(r.url()); });
  page.on('request', r => { if (ready && /\/assets\/.*\.(webp|jpg|png|glb|mp3|json|ttf)/.test(r.url())) lateAssets.push(r.url()); });
- await page.goto('https://10.42.0.37:3161/');
+ await page.goto((process.env.LC_URL||'https://10.42.0.37:3161/'));
  assert.equal(await page.locator('#menu').isVisible(), false);
  await page.screenshot({ path: `${out}/arrival.png` });
  await page.waitForFunction(() => window.__lastCall?.S.ready, null, { timeout: 120000 }); ready = true;
@@ -87,7 +87,7 @@ try {
  // A failed required animation must leave startup gated with a retry, never open a partially loaded menu.
  const fault = await browser.newPage({ ignoreHTTPSErrors: true });
  await fault.route('**/assets/anim/snatched.json', route => route.abort());
- await fault.goto('https://10.42.0.37:3161/'); await fault.locator('#bootRetry').waitFor({ state: 'visible', timeout: 90000 });
+ await fault.goto((process.env.LC_URL||'https://10.42.0.37:3161/')); await fault.locator('#bootRetry').waitFor({ state: 'visible', timeout: 90000 });
  assert.equal(await fault.locator('#menu').isVisible(), false); assert.equal(await fault.evaluate(() => __lastCall.S.ready), false); await fault.close();
  console.log('PASS: startup barrier, no hidden menu renders, frozen briefing, bottom-right Continue, visual WASD keyboard/mouse and labelled controller, desktop/mobile layout, gamepad guide disclosure, generated icons, RT/LT/Y/RB commands, controller HUD selection/blackout, right-stick camera/revolver, ghost haunt, no late asset downloads, required-asset failure stays gated with Retry.');
 } finally { await browser.close(); }

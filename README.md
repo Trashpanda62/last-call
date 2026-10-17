@@ -1,6 +1,6 @@
 # Last Call
 
-A first-person 3D casino social-deduction game for the browser (PC first, phones work too). Four to thirty-two gamblers, one to eight of them killers, twelve casino games and one crew bank.
+A first-person 3D casino social-deduction game for the browser (PC first, phones work too). Four to thirty-two gamblers, one to eight of them killers, fourteen casino games and one crew bank.
 The killers send poisoned drinks "on the house", rig empty machines and snack bowls, knife people from behind, shove
 them into the duck pond or drop chandeliers on them, then wear their victim's face for a while. The crew sniffs drinks,
 checks machines before playing, runs to the antidote at the bar, watches the cameras, hires a guard with crew money, and haunts
@@ -12,14 +12,16 @@ Ghosts keep playing the casino games, and their winnings still count for the cre
 Ghosts can also press C (or Cameras) to watch private room feeds from anywhere; C or Escape returns to roaming.
 At a staff passage, choose a room to preview its live camera, then click that room again to enter. Cancel leaves you in place.
 Casino games periodically give players protected winning streaks, with three losses bringing the next streak forward.
-Blackjack keeps completed hands visible until the next deal starts, and reports both totals in the result. Small green Hit, red Stand and blue Double buttons sit in 3D just below your chip circle; purple Split appears only when allowed. Hit/Stand/Double have no screen action panel. Place chips and press Space to deal; H/J/K and controller X/Y/B still work.
+Blackjack keeps completed hands visible until the next deal starts, and reports both totals in the result. Small green Hit, red Stand and blue Double buttons sit in 3D just below your chip circle; purple Split appears only when allowed. Hit/Stand/Double have no screen action panel. Place chips and press the physical Hit button to deal; H/J/K and controller X/Y/B still work.
 Audio uses three selectable ElevenLabs casino scores, room-specific card and roulette ambience, scattered machine sounds and distant coughs. The bar jukebox quietly plays the original menu music. Music and effects have independent controls in Settings.
 Deaths cut to a private third-person jumpscare and collapse before returning control to the ghost.
 The main menu uses new Murder Mystery and Escape artwork, local Cinzel/Manrope type, and separate join/profile panels.
 Startup loads the static art, models, animations and audio before opening the menu, then prepares textures and shaders. Each level shows generated loading artwork, a visual WASD keyboard/mouse and a labelled controller until the player clicks Continue at the bottom right. The full control list expands beneath the diagrams and can also be opened with a controller. Solo time stays frozen during this briefing. The bottom ability HUD and edge choices use a generated icon atlas.
 Standard gamepads support both sticks, RT murder/table click, LT disguise/remove chips, Y transform, RB selected ability, LB/left-stick click sprint or leap, A interact/start, X/Y/B blackjack hit/stand/double, D-pad up inspect, down ghost cameras, left/right chip size (outside a table, killers select a HUD ability with left/right and activate it with down), View phone, right-stick click arms owned House Insurance at a table or fires an owned revolver away from tables, ghost X haunts, and Menu pauses. D-pad/stick navigates menus, A selects, B goes back, and left/right changes a focused option.
 Gamblers win by breaking the bank or by voting the killers out. Killers win when they match the gamblers left, or
-when the casino closes (20 minutes; a night runs about 15 with its meetings) before the bank breaks.
+when the casino closes before the bank breaks.
+
+Every betting game has a physical circle on its own machine or felt. Plinko uses a green DROP button and LOW/MED/HIGH risk keys. Duck derby has six numbered circles and a green START at every desk; its odds boards fold down to clear the race view. Midnight Mint gives five coin-pusher tokens; Night Shift Claw gives three grabs with physical movement and DROP controls. Both run on the host and share visible results with spectators. The constructed floor now has slot banks, central roulette/dice and a VIP game/shop/social cluster.
 
 LAN playtest: https://10.42.0.37:3161/
 

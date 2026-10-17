@@ -1,4 +1,4 @@
-// Table rules and bets. Click the 3D felt to place chips; Space starts the round.
+// Table rules and bets. Place chips on the physical circle and use the game control.
 // Main.js presents the contextual start HUD; rig.js mounts physical blackjack hand actions below the chip circle.
 // DOM-free. Every odd comes from games.js, the same maths the bots use; local rounds go to the sim as
 // act('bank', { d, b }); shared crash/race and skee-ball use host-owned rounds.
@@ -16,9 +16,9 @@ export const chipLabel = c => c >= 1e6 ? c / 1e6 + 'M' : c >= 1e3 ? c / 1e3 + 'K
 export const CRASH_AUTOS = [0, 1.5, 2, 3, 5, 10, 100];
 const RL_RED = Gm.RL_RED;
 export const RL_SPOTS = new Set([...Array(37).keys()].map(n => 'n' + n).concat(Object.keys(Gm.RL_BETS), Object.keys(Gm.RL_COLS)));
-// Chips stay on the felt until you press Space to start a round.
+// Chips stay staged until the game control starts the round.
 const START_LABEL = { roulette: 'Spin', bj: 'Deal', dice: 'Roll', coin: 'Flip', wheel: 'Spin', slots: 'Spin', plinko: 'Drop', mines: 'Start', tower: 'Climb', skee: 'Start round' };
-const START_HINT = { bj: 'PRESS HIT TO DEAL', roulette: 'CLICK THE WHEEL TO SPIN', dice: 'CLICK THE DICE TO ROLL', coin: 'CLICK THE COIN TO FLIP', wheel: 'CLICK THE WHEEL TO SPIN', slots: 'PULL THE LEVER', plinko: 'CLICK THE CHUTE TO DROP', mines: 'PICK A TILE TO START', tower: 'PICK AN EGG TO START' };
+const START_HINT = { bj: 'PRESS HIT TO DEAL', roulette: 'CLICK THE WHEEL TO SPIN', dice: 'CLICK THE DICE TO ROLL', coin: 'CLICK THE COIN TO FLIP', wheel: 'CLICK THE WHEEL TO SPIN', slots: 'PULL THE LEVER', plinko: 'PRESS THE GREEN DROP BUTTON', mines: 'PICK A TILE TO START', tower: 'PICK AN EGG TO START', pusher: 'PRESS START / TIME YOUR DROP', claw: 'PRESS START / POSITION THE CLAW' };
 const START = { roulette: 'spin', bj: 'deal', dice: 'roll', coin: 'flip', wheel: 'spin', slots: 'lever', plinko: 'drop', mines: 'start', tower: 'start', skee: 'start' };
 
 const runs = new Map();
@@ -110,7 +110,7 @@ export function tableStart() {
   if (!tb || tb.game === 'vip') return null;
   const g = tb.g, game = tb.game;
   // Games with a physical starter (Hit, the lever, the wheel, the dice, the coin, the chute, the first tile or egg)
-  // have no SPACE prompt; the duck race takes the chips on a duck as the bet (Steve, 2026-10-16: redo it like the rest);
+  // have no SPACE prompt; the duck race uses its physical START button;
   // only Crash's shared rocket and the skee roll keep one.
   if (!['crash', 'skee'].includes(game)) return null;
   if (game === 'crash') {
@@ -232,7 +232,7 @@ export function press(id, uv, alt) {
   else if (kind === 'con' && uv) { const b = consoleHit(uv.x, 1 - uv.y); if (b) { if (b.on === false) flash(b.off || 'Not now'); else press(b.id); } }
   else if (kind === 'spot') { if (alt) takeBack(arg); else dropChip(arg); }
   else if (kind === 'rail') rail(arg);
-  else if (kind === 'btn') { if (arg === 'bet' && (tb.game === 'crash' || tb.game === 'race')) { const start = tableStart(); if (start && start.on) { tb.commitRound = (tb.game === 'crash' ? tb.cr.C : tb.rc.R).round; tb.g.live(tb.liveView); hand('press'); } } else if (tb.g.press) tb.g.press(arg); }
+  else if (kind === 'btn') { if (arg === 'bet' && (tb.game === 'crash' || tb.game === 'race')) { const on = tb.game === 'race' ? tb.g.on('bet') : tableStart()?.on; if (on) { tb.commitRound = (tb.game === 'crash' ? tb.cr.C : tb.rc.R).round; tb.g.live(tb.liveView); hand('press'); } } else if (tb.g.press) tb.g.press(arg); }
   else if (kind === 'scr' && uv) screenTap(uv.x, 1 - uv.y);
   else return false;
   return true;
@@ -254,7 +254,7 @@ export function partInfo(id, uv) {
   if (kind === 'spot') {
     const a = (g.show ? g.show() : tb.bets)[arg], lk = locked(arg);
     if (tb.game === 'bj') return { label: lk ? '' : a ? 'BET · ' + S(a) : 'CLICK TO BET ' + S(chipNow()), on: !lk };
-    return { label: (g.spotLabel ? g.spotLabel(arg) : 'BET') + (a ? ' · ' + S(a) + ' ON IT · CLICK ADDS ' + S(chipNow()) + ' · RIGHT-CLICK TAKES IT BACK' : ' · CLICK TO BET ' + S(chipNow())) + (lk ? ' · NO MORE BETS' : ''), on: !lk };
+    return { label: (g.spotLabel ? g.spotLabel(arg) : 'BET') + (a ? ' · ' + S(a) : ' · BET ' + S(chipNow())) + (lk ? ' · NO MORE BETS' : ''), on: !lk };
   }
   if (kind === 'rail') return { label: { undo: 'UNDO · YOUR LAST CHIP', clear: 'CLEAR · TAKE YOUR CHIPS BACK', half: '½ · HALVE YOUR BETS', dbl: '×2 · DOUBLE YOUR BETS', max: 'MAX · ' + S(tb.maxBet) }[arg], on: true };
   if (kind === 'btn') return { label: g.label ? g.label(arg) : arg.toUpperCase(), on: g.on ? !!g.on(arg) : true };
@@ -368,7 +368,28 @@ export function chipHud(maxBet) {
 // main: the one betting spot (machines, blackjack); spots in RL_SPOTS etc. come as 'spot:<id>'.
 // btns: physical buttons ('btn:<id>'); on(id), label(id), press(id). ui(): touch-screen buttons in 0..1 screen
 // units, tapUI(id); tap(x, y) for the rest of the screen. show(): the chips to draw when they differ from the bets.
+function arcadeController(game) {
+  return {
+    main:'main',btns:['start','left','right',...(game==='claw'?['back','forward']:[]),'drop'],bar:[],
+    init(){tb.round=null;tb.laneRound=null;tb.pending=false;},
+    live(v){const r=v.pub.arcade?.[game];tb.laneRound=r||null;
+      if(tb.pending && (now()>tb.pendingUntil || r?.seq!==tb.pendingSeq || r?.id!==tb.pendingRound))tb.pending=false;
+      tb.round=r?.player===tb.me?r:null;
+      if(tb.round?.phase==='done')result(r.score+' points / '+r.mult.toFixed(2)+'x return',r.mult>1?'win':r.mult<1?'lose':'');
+    },
+    locked(){return !!(tb.pending||tb.laneRound&&tb.laneRound.phase!=='done');},
+    on(id){return id==='start'?!this.locked()&&stake()>=minBet():!!(tb.round?.phase==='aim'&&!tb.pending);},
+    label(id){return ({start:'START ROUND',left:'MOVE LEFT',right:'MOVE RIGHT',back:'MOVE BACK',forward:'MOVE FORWARD',drop:game==='claw'?'LOWER CLAW':'DROP TOKEN'})[id];},
+    press(id){if(!this.on(id))return;const r=tb.round;tb.pending=true;tb.pendingUntil=now()+2.5;tb.pendingRound=r?.id;tb.pendingSeq=r?.seq;
+      const msg=id==='start'?{kind:'start',after:tb.laneRound?.id||0,bet:stake()}:{kind:id==='drop'?'drop':'move',round:r.id,sequence:r.seq+1,dx:id==='left'?-1:id==='right'?1:0,dz:id==='back'?-1:id==='forward'?1:0};
+      tb.act('arcade',msg);hand('press');sfx('click');
+    },
+    show(){return this.locked()&&tb.round?{main:tb.round.bet}:tb.bets;},
+    status(){const r=tb.round;return r&&r.phase!=='done'?(game==='claw'?3-r.used+' GRABS LEFT':5-r.used+' TOKENS LEFT')+' / '+r.score+' POINTS'+(r.assist?' / GOLD ASSIST':''):null;},
+  };
+}
 const GAMES = {
+  pusher: arcadeController('pusher'), claw: arcadeController('claw'),
   vip: { btns: [] },
 
   skee: {
@@ -517,13 +538,13 @@ const GAMES = {
   },
 
   plinko: {
-    main: 'main', btns: ['risk:low', 'risk:medium', 'risk:high', 'drop'],
+    main: 'main', btns: ['risk:low', 'risk:medium', 'risk:high', 'drop'], bar: [],
     init() { tb.risk = 'medium'; tb.balls = []; tb.hist = []; tb.view = { risk: tb.risk, balls: tb.balls }; },
     spotLabel: () => 'BET',
     // balls still falling, and what is riding on them (all of it together stays under the table max)
     busy: () => tb.balls.some(b => !b.done),
     riding: () => tb.balls.reduce((a, b) => a + (b.done ? 0 : b.bet), 0),
-    on(id) { if (id.startsWith('risk:')) return !this.busy() || tb.risk === id.slice(5); return stake() >= minBet() && this.riding() + stake() <= tb.maxBet; },
+    on(id) { if (id.startsWith('risk:')) return !this.busy() || tb.risk === id.slice(5); return (!stake() && !this.riding()) || stake() >= minBet() && this.riding() + stake() <= tb.maxBet; },
     sel(id) { return id === 'risk:' + tb.risk; },
     short(id) { return id.startsWith('risk:') ? { low: 'LOW', medium: 'MED', high: 'HIGH' }[id.slice(5)] : null; },
     label(id) { if (id.startsWith('risk:')) { const k = id.slice(5); return cap(k) + ' risk · ' + (Gm.PLINKO_GATE[k] * 2 + 1) + ' channels · top pays ' + Math.max(...Gm.PLINKO[k]) + 'x'; } return 'DROP A BALL · ' + S(stake()); },
@@ -543,7 +564,7 @@ const GAMES = {
       });
     },
     extra() { return { risk: tb.risk, hist: tb.hist }; },
-    status() { return stake() >= minBet() ? `CLICK THE CHUTE · ${tb.risk.toUpperCase()} RISK · TOP ${Math.max(...Gm.PLINKO[tb.risk])}×` : null; },
+    status() { return stake() >= minBet() ? `PRESS DROP · ${tb.risk.toUpperCase()} RISK · TOP ${Math.max(...Gm.PLINKO[tb.risk])}×` : null; },
   },
 
   mines: {
@@ -796,18 +817,20 @@ const GAMES = {
   },
 
   race: {
-    excl: true, btns: [], needs: 'Put chips on a duck lane first',
+    excl: true, btns: ['bet'], bar: [], needs: 'Put chips on a numbered duck circle first',
+    on(id) { return id === 'bet' && tb.rc.R?.phase === 'bet' && !tb.rc.mine && stake() >= minBet(); },
+    label() { return tb.rc.mine ? 'BET PLACED' : 'START · ENTER THIS RACE'; },
     init() { tb.rc = { key: '', sent: '' }; },
     live(v) {
       const R = v.pub.race, mine = R.bets.find(b => b[0] === tb.me) || null, rc = tb.rc;
       rc.R = R; rc.mine = mine;
-      // the chips on a duck are your bet: they go in while betting is open (no button), and ride each race after it
+      // START commits this round; accepted bets can still be edited or withdrawn while its gates are open.
       if (R.phase === 'bet' && !tb.closing) {
-        const lane = Object.keys(tb.bets).find(k => tb.bets[k] > 0), want = lane ? lane.slice(4) + ':' + stake() : '', have = mine ? mine[1] + ':' + mine[2] : '';
+        const lane = Object.keys(tb.bets).find(k => tb.bets[k] > 0), committed = tb.commitRound === R.round || !!mine, want = lane && committed ? lane.slice(4) + ':' + stake() : '', have = mine ? mine[1] + ':' + mine[2] : '';
         if (want !== have && want + '@' + R.round !== rc.sent) {
           rc.sent = want + '@' + R.round;
-          tb.act('race', lane ? { duck: +lane.slice(4), bet: stake() } : { duck: mine ? mine[1] : 0, bet: 0 });
-          if (lane && !mine) result(`${money(stake())} on ${Gm.DUCKS[+lane.slice(4)].name}.`);
+          tb.act('race', lane && committed ? { duck: +lane.slice(4), bet: stake() } : { duck: mine ? mine[1] : 0, bet: 0 });
+          if (lane && committed && !mine) result(`${money(stake())} on ${Gm.DUCKS[+lane.slice(4)].name}.`);
         }
       }
       const key = R.round + ':' + R.phase + ':' + (mine ? 1 : 0);
@@ -825,7 +848,7 @@ const GAMES = {
     status() {
       const R = tb.rc.R, m = tb.rc.mine; if (!R) return null;
       const gates = Math.max(0, Math.ceil(Gm.RACE.betTime - R.t));
-      if (R.phase === 'bet') return m ? `IN ON ${Gm.DUCKS[m[1]].name.toUpperCase()} · GATES IN ${gates}s` : R.bets.length ? `PICK A DUCK · GATES IN ${gates}s` : 'PICK A DUCK: YOUR CHIPS ON IT ARE THE BET';
+      if (R.phase === 'bet') return m ? `IN ON ${Gm.DUCKS[m[1]].name.toUpperCase()} · GATES IN ${gates}s` : stake() ? `PRESS START · GATES IN ${gates}s` : 'CHOOSE A NUMBERED DUCK CIRCLE';
       return R.phase === 'run' ? "THEY'RE OFF!" : m && m[1] !== R.winner && m[3] > m[2] ? `HOT-STREAK BONUS · +${money(m[3] - m[2])}` : `${Gm.DUCKS[R.winner].name.toUpperCase()} WINS`;
     },
   },

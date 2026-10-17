@@ -1,0 +1,1099 @@
+{
+  "at": "2026-10-17T04:12:56.450Z",
+  "fallback": true,
+  "rows": [
+    {
+      "game": "plinko",
+      "machine": 0,
+      "risk": "low",
+      "started": 1,
+      "samples": [
+        {
+          "risk": "low",
+          "ball": true,
+          "screen": [
+            -0.021434078984118282,
+            0.32714163874243085,
+            0.9393861183109982
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-0-0",
+          "position": [
+            35.205123467889045,
+            1.9335841435391488,
+            2.085
+          ],
+          "path": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": true
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "risk": "low",
+          "ball": true,
+          "screen": [
+            -0.03347327546955388,
+            0.03617692443851444,
+            0.9383196693357138
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-0-0",
+          "position": [
+            35.1811072786411,
+            1.5890877641390073,
+            2.085
+          ],
+          "path": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": true
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "risk": "low",
+          "ball": true,
+          "screen": [
+            -0.02342516498274914,
+            -0.17129422316076245,
+            0.9375592424458496
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-0-0",
+          "position": [
+            35.202364583333335,
+            1.3505072916666663,
+            2.085
+          ],
+          "path": [
+            0,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "mark": true,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": true
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "game": "plinko",
+      "machine": 0,
+      "risk": "medium",
+      "started": 1,
+      "samples": [
+        {
+          "risk": "medium",
+          "ball": true,
+          "screen": [
+            0.04455287893176316,
+            0.32457966974558095,
+            0.939376728137286
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-0-0",
+          "position": [
+            35.34326617621055,
+            1.9304988856084042,
+            2.085
+          ],
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": true
+            }
+          ]
+        },
+        {
+          "risk": "medium",
+          "ball": true,
+          "screen": [
+            0.03779455125221299,
+            0.05759948451353688,
+            0.9383981876787185
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-0-0",
+          "position": [
+            35.3278839062571,
+            1.6140520861963639,
+            2.085
+          ],
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": true
+            }
+          ]
+        },
+        {
+          "risk": "medium",
+          "ball": true,
+          "screen": [
+            0.09370065993101753,
+            -0.17129422316076245,
+            0.9375592424458496
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-0-0",
+          "position": [
+            35.44054166666667,
+            1.3505072916666663,
+            2.085
+          ],
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": true,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "game": "plinko",
+      "machine": 0,
+      "risk": "high",
+      "started": 1,
+      "samples": [
+        {
+          "risk": "high",
+          "ball": true,
+          "screen": [
+            0.021443644013043224,
+            0.327074796824932,
+            0.9393858733208296
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-0-0",
+          "position": [
+            35.2948963802178,
+            1.9335036370575498,
+            2.085
+          ],
+          "path": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "risk": "high",
+          "ball": true,
+          "screen": [
+            0.05417859927032138,
+            0.06044182071448432,
+            0.9384086054592254
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-0-0",
+          "position": [
+            35.36166535590751,
+            1.617369039876149,
+            2.085
+          ],
+          "path": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "risk": "high",
+          "ball": true,
+          "screen": [
+            0.11712582491377016,
+            -0.17129422316076245,
+            0.9375592424458496
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-0-0",
+          "position": [
+            35.48817708333333,
+            1.3505072916666663,
+            2.085
+          ],
+          "path": [
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": true,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "game": "plinko",
+      "machine": 1,
+      "risk": "low",
+      "started": 1,
+      "samples": [
+        {
+          "risk": "low",
+          "ball": true,
+          "screen": [
+            0.044359686173889586,
+            0.32593346271235013,
+            0.9393816900830175
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-1-0",
+          "position": [
+            37.042869214404995,
+            1.9321290774132471,
+            2.085
+          ],
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": true
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "risk": "low",
+          "ball": true,
+          "screen": [
+            0.014975635876453444,
+            0.0593847590903279,
+            0.9384047310984167
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-1-0",
+          "position": [
+            36.980863780381945,
+            1.6161353398253762,
+            2.085
+          ],
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": true
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "risk": "low",
+          "ball": true,
+          "screen": [
+            0.07027549494826141,
+            -0.17129422316076245,
+            0.9375592424458496
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-1-0",
+          "position": [
+            37.092906250000006,
+            1.3505072916666663,
+            2.085
+          ],
+          "path": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": true,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": true
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "game": "plinko",
+      "machine": 1,
+      "risk": "medium",
+      "started": 1,
+      "samples": [
+        {
+          "risk": "medium",
+          "ball": true,
+          "screen": [
+            0.000957616675125957,
+            0.3245796697050726,
+            0.9393767281371376
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-1-0",
+          "position": [
+            36.95200465711096,
+            1.930498885559629,
+            2.085
+          ],
+          "path": [
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": true
+            }
+          ]
+        },
+        {
+          "risk": "medium",
+          "ball": true,
+          "screen": [
+            0.029832556343224775,
+            0.0667099273199357,
+            0.9384315794335176
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-1-0",
+          "position": [
+            37.011509231777936,
+            1.6246877009535028,
+            2.085
+          ],
+          "path": [
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": true
+            }
+          ]
+        },
+        {
+          "risk": "medium",
+          "ball": true,
+          "screen": [
+            0.09370065993101404,
+            -0.17129422316076245,
+            0.9375592424458496
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-1-0",
+          "position": [
+            37.14054166666667,
+            1.3505072916666663,
+            2.085
+          ],
+          "path": [
+            0,
+            1,
+            1,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "mark": true,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "game": "plinko",
+      "machine": 1,
+      "risk": "high",
+      "started": 1,
+      "samples": [
+        {
+          "risk": "high",
+          "ball": true,
+          "screen": [
+            -0.02150103661849606,
+            0.32667303838746714,
+            0.9393844007887565
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-1-0",
+          "position": [
+            36.904984531247635,
+            1.9330197601804604,
+            2.085
+          ],
+          "path": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "risk": "high",
+          "ball": true,
+          "screen": [
+            -0.07573560729761449,
+            0.06801453690593665,
+            0.9384363611114592
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-1-0",
+          "position": [
+            36.79383522569208,
+            1.626211641803392,
+            2.085
+          ],
+          "path": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mark": false,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        },
+        {
+          "risk": "high",
+          "ball": true,
+          "screen": [
+            -0.11712582491376668,
+            -0.17129422316076245,
+            0.9375592424458496
+          ],
+          "visible": true,
+          "blocker": "plinko-live-ball-1-0",
+          "position": [
+            36.71182291666667,
+            1.3505072916666663,
+            2.085
+          ],
+          "path": [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mark": true,
+          "gates": [
+            {
+              "risk": "low",
+              "visible": false
+            },
+            {
+              "risk": "medium",
+              "visible": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "game": "race",
+      "seat": 32,
+      "bet": {
+        "duck": 5,
+        "bet": 1000,
+        "policy": null
+      },
+      "gates": 0,
+      "pond": {
+        "fold": 1.5707963267948966,
+        "rows": [
+          {
+            "duck": 0,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 1,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 2,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 3,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 4,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 5,
+            "oddsBlockers": []
+          }
+        ]
+      }
+    },
+    {
+      "game": "race",
+      "seat": 33,
+      "bet": {
+        "duck": 5,
+        "bet": 1000,
+        "policy": null
+      },
+      "gates": 0,
+      "pond": {
+        "fold": 1.5707963267948966,
+        "rows": [
+          {
+            "duck": 0,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 1,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 2,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 3,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 4,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 5,
+            "oddsBlockers": []
+          }
+        ]
+      }
+    },
+    {
+      "game": "race",
+      "seat": 34,
+      "bet": {
+        "duck": 5,
+        "bet": 1000,
+        "policy": null
+      },
+      "gates": 0,
+      "pond": {
+        "fold": 1.5707963267948966,
+        "rows": [
+          {
+            "duck": 0,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 1,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 2,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 3,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 4,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 5,
+            "oddsBlockers": []
+          }
+        ]
+      }
+    },
+    {
+      "game": "race",
+      "seat": 35,
+      "bet": {
+        "duck": 5,
+        "bet": 1000,
+        "policy": null
+      },
+      "gates": 0,
+      "pond": {
+        "fold": 1.5707963267948966,
+        "rows": [
+          {
+            "duck": 0,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 1,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 2,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 3,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 4,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 5,
+            "oddsBlockers": []
+          }
+        ]
+      }
+    },
+    {
+      "game": "race",
+      "seat": 36,
+      "bet": {
+        "duck": 5,
+        "bet": 1000,
+        "policy": null
+      },
+      "gates": 0,
+      "pond": {
+        "fold": 1.5707963267948966,
+        "rows": [
+          {
+            "duck": 0,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 1,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 2,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 3,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 4,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 5,
+            "oddsBlockers": []
+          }
+        ]
+      }
+    },
+    {
+      "game": "race",
+      "seat": 37,
+      "bet": {
+        "duck": 5,
+        "bet": 1000,
+        "policy": null
+      },
+      "gates": 0,
+      "pond": {
+        "fold": 1.5707963267948966,
+        "rows": [
+          {
+            "duck": 0,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 1,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 2,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 3,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 4,
+            "oddsBlockers": []
+          },
+          {
+            "duck": 5,
+            "oddsBlockers": []
+          }
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

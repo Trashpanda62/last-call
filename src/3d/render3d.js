@@ -27,7 +27,7 @@ import { Backrooms, preloadBackrooms } from './backrooms.js';
 import { setAniso, loadFelts, loadArt, loadArt2, prepareCardTextures, preparePlinkoTextures } from './textures.js';
 import { PRESETS } from '../settings.js';
 import { BELL, ROOMS, roomOf, DOORS, DOOR_GAPS, los, SHADY, prepareNavigation } from '../map.js';
-import { ringRadius } from '../sim.js';
+import { ringSpot } from '../sim.js';
 
 export const EYE = { stand: 1.12, seat: 1.42, ghost: 1.6 };
 const POOL = 12; // the most pooled point lights the graphics settings can ask for
@@ -40,7 +40,7 @@ const TOUR = [
   { a: [1000, 800, 2.5], b: [1640, 800, 2.5], look: [1320, 260, 1.1] },
   { a: [2230, 560, 1.8], b: [2770, 560, 1.8], look: [2500, 20, 1.9] },
   { a: [2160, 1140, 2.0], b: [2780, 1140, 2.0], look: [2560, 960, 0.5] },
-  { a: [1100, 1300, 1.9], b: [1480, 1300, 1.9], look: [1280, 1515, 0.8] }, // the dice table in the slot hall's east end
+  { a: [1480, 1080, 1.9], b: [1900, 1080, 1.9], look: [1732, 955, 0.8] }, // main-floor dice cluster
   { a: [320, 1260, 2.1], b: [820, 1290, 2.1], look: [560, 1760, 1.2] },
   { a: [2200, 1300, 1.8], b: [2780, 1320, 1.8], look: [2480, 1540, 0.6] },
   { a: [700, 640, 1.7], b: [1900, 640, 1.7], look: [1320, 940, 0.9] },
@@ -822,7 +822,7 @@ export function draw(frame, { prepareOnly = false } = {}) {
   const seen = new Set();
   const meIdx = priv ? priv.me : -1;
   if (pub) {
-    const alive = pub.chars.filter(c => c.alive), rr = ringRadius(alive.length) * 0.85;
+    const alive = pub.chars.filter(c => c.alive);
     for (const c of pub.chars) {
       // Corpses and the private death cinematic own their separate actors.
       if (!c.alive) continue;
@@ -836,8 +836,8 @@ export function draw(frame, { prepareOnly = false } = {}) {
       const st = seated && R.world.seats[c.seat];
       if (st && !SITS.has(st.game)) seated = false; // everyone stands at the games (a bot on the game's own spot)
       if (meeting) { // everyone gathers around the pit bell
-        const i = alive.indexOf(c), a = i / alive.length * Math.PI * 2;
-        x = BELL.x + Math.cos(a) * rr; y = BELL.y + Math.sin(a) * rr; face = look = a + Math.PI; moving = false; seated = false;
+        const p = ringSpot(alive.indexOf(c), alive.length);
+        x = p.x; y = p.y; face = look = p.face; moving = false; seated = false;
       }
       if (isMe && (orbit || peekMe) && me) { x = me.x; y = me.y; look = me.look; if (peekMe) face = me.look; }
       pose(b, { x: x * M, z: y * M, face: yawOf(face), look: yawOf(look), moving, seated, seatHeight: st?.game === 'vip' ? 0.52 : 0.58, eating: c.eating, pale: c.pale, lucky: c.lucky, t, dt });

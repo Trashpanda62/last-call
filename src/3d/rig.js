@@ -175,6 +175,8 @@ export function buildRig(ctx, seats, felts) {
     m.rotation.x = -Math.PI / 2; m.userData.part = 'spot:' + id; m.userData.r = r; root.add(m); m.visible = false;
     return m;
   }
+  const feltRings = new THREE.InstancedMesh(new THREE.TorusGeometry(.086, .004, 6, 28), new THREE.MeshBasicMaterial({ color: 0xbfa567 }), 64);
+  feltRings.name = 'felt-bet-circles'; feltRings.count = 0; feltRings.frustumCulled = false; root.add(feltRings);
   const pads = { main: pad('main', 'BET', 0.12), circle: pad('main', '', 0.13), heads: pad('heads', 'HEADS', 0.12, '#ffd040'), tails: pad('tails', 'TAILS', 0.12, '#ffd040') };
   pads.circle.material.color.setRGB(1, 1, 1);
 
@@ -273,6 +275,8 @@ export function buildRig(ctx, seats, felts) {
   // Where a spot's chips sit (top of the surface).
   function spotPos(spot) {
     const g = cur.game, F = cur.F;
+    const socket = ctx.betSockets?.[cur.seat]?.[spot];
+    if (socket) return socket.getWorldPosition(v3(0, 0, 0)).setY(socket.userData.betSocket.top + .001);
     if (g === 'roulette') { const c = RL_CELLS.find(c => c.id === spot); return c ? feltWorld(rl, RL_FELT.w, RL_FELT.d, c.x + c.w / 2, c.y + c.h / 2, rlFlip).setY(0.687) : null; }
     if (g === 'dice') {
       const c = DICE_RECTS.find(c => c.id === spot && c.side === 1); if (!c) return null; // your own half (the felt turns for the north side)
@@ -303,8 +307,10 @@ export function buildRig(ctx, seats, felts) {
       for (const b of bjButtons) { b.button.position.x = b.offset; b.button.visible = b.id !== 'split' || !!my.on.split; }
       addHits(bjKeys);
     }
-    if (A.pad) { pads.main.userData.lift = 0; place(pads.main, F, A.pad); pads.main.rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads.main.position.y += 0.002; addHits(pads.main); }
-    if (A.heads) for (const k of ['heads', 'tails']) { place(pads[k], F, A[k]); pads[k].rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads[k].position.y += 0.002; addHits(pads[k]); }
+    const sockets = ctx.betSockets?.[my.seat];
+    if (sockets) for (const m of Object.values(sockets)) addHits(m);
+    if (A.pad && !sockets) { pads.main.userData.lift = 0; place(pads.main, F, A.pad); pads.main.rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads.main.position.y += 0.002; addHits(pads.main); }
+    if (A.heads && !sockets) for (const k of ['heads', 'tails']) { place(pads[k], F, A[k]); pads[k].rotation.set(-Math.PI / 2, F.yaw, 0, 'YXZ'); pads[k].position.y += 0.002; addHits(pads[k]); }
     if (my.game === 'roulette') {
       rlFlip = seat.face > 0; rouletteLayoutTex().rotation = rlFlip ? Math.PI : 0; hit.push(rl);
       boardMesh.position.copy(feltWorld(rl, RL_FELT.w, RL_FELT.d, BOARD.x + BOARD.w / 2, BOARD.y + BOARD.h / 2, rlFlip)).setY(0.688);
@@ -318,6 +324,11 @@ export function buildRig(ctx, seats, felts) {
     // slot machine's chip slot. Clicking it is the start (there is no SPACE prompt).
     for (const [obj, part] of ctx.starters[my.seat] || []) { obj.traverse(m => { if (m.isMesh) m.userData.part = part; }); addHits(obj); }
     cur.hidden = ctx.deco[my.seat] || []; for (const m of cur.hidden) m.visible = false;
+    feltRings.count = 0;
+    const ringSpots = my.game === 'roulette' ? RL_CELLS.map(c => c.id) : my.game === 'dice' ? ['pass', 'field'] : [];
+    const rotation = new THREE.Quaternion().setFromAxisAngle(v3(1, 0, 0), -Math.PI / 2);
+    for (const spot of ringSpots) { const pos = spotPos(spot); if (!pos) continue; pos.y += .002; feltRings.setMatrixAt(feltRings.count++, new THREE.Matrix4().compose(pos, rotation, v3(1, 1, 1))); }
+    if (feltRings.count) feltRings.instanceMatrix.needsUpdate = true;
     cur.focus = focusOf(my, seat, F);
     if (my.game === 'race') { // while they run: down the pond from the start toward the finish and the tote board
       const z = (POND.y + POND.h / 2) * M;

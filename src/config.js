@@ -62,7 +62,7 @@ export const CFG = {
   // The mixer (mix.js): a sip fills hunger by mixFood times the mix's food value and makes you lucky for boozeLuck times
   // its alcohol. Poison is anyone's to add; a gambler waits mixPoisonCd between poisoned pours (a killer: orderCd).
   mixFood: 25, boozeLuck: 25, mixPoisonCd: 300,
-  // The shady guy in the bar's corner (Steve, 2026-10-15): he sells for your own winnings, priced as a share of the
+  // The shady guy in the VIP alcove (Steve, 2026-10-15): he sells for your own winnings, priced as a share of the
   // crew's target (frac) so a revolver takes about a jackpot. What you spend leaves the crew bank too.
   shop: {
     dice: { name: 'Loaded dice', frac: 0.01, tip: 'You are lucky at the tables for 90 seconds: wins pay 50% more.' },
@@ -87,7 +87,7 @@ export const CFG = {
   // Bots bet frac of the bank (counted up to ceil starting banks), every so many seconds per game, on the same game math as
   // players. One bot result pays back at most maxWin times the stake, plus a comp of comp: the bank climbs steadily instead
   // of a lucky straight up ending the night in a minute.
-  bot: { frac: 0.02, ceil: 1, maxWin: 1, comp: 0.4, every: { bj: 5, roulette: 7, slots: 2.5, skee: 18, plinko: 2.5, mines: 5, tower: 5, coin: 4, wheel: 5, dice: 6 } },
+  bot: { frac: 0.02, ceil: 1, maxWin: 1, comp: 0.4, every: { bj: 5, roulette: 7, slots: 2.5, skee: 18, pusher: 18, claw: 18, plinko: 2.5, mines: 5, tower: 5, coin: 4, wheel: 5, dice: 6 } },
   talkGap: 0.9, voteTime: 30, resultTime: 4, voteThreshold: 38, voteThresholdPer: 4,
   chatMax: 25, linesMax: 200, // meeting chat lines one player may send, and the lines a snapshot carries
   // Pacing for rooms of more than bigRoom players (17-32), off: a bot that finds a body or foils a plot would wait until

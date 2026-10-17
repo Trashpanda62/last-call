@@ -103,7 +103,7 @@ export function toteFrameKey(t, R, me) {
 export function paintTote(g, w, h, t, R, me) {
   bg(g, w, h, '#06263a', '#020c14');
   if (!R) return;
-  const head = R.phase === 'bet' ? ((R.bets || []).length ? `BETS CLOSE IN ${Math.ceil(Gm.RACE.betTime - R.t)}` : 'PICK A DUCK TO START THE RACE') : R.phase === 'run' ? "THEY'RE OFF!" : `WINNER: ${Gm.DUCKS[R.winner].name.toUpperCase()}`;
+  const head = R.phase === 'bet' ? ((R.bets || []).length ? `BETS CLOSE IN ${Math.ceil(Gm.RACE.betTime - R.t)}` : 'DUCK DERBY / PICK A DUCK, PRESS START') : R.phase === 'run' ? "THEY'RE OFF!" : `WINNER: ${Gm.DUCKS[R.winner].name.toUpperCase()}`;
   glowText(g, head, w / 2, h * 0.11, h * 0.09, R.phase === 'show' ? '#ffd040' : '#7fe8ff');
   const lanes = R.phase === 'bet' ? null : Gm.raceLanes(R.phase === 'run' ? R.t : Gm.RACE.runTime, R.winner, R.seed);
   Gm.DUCKS.forEach((d, i) => {

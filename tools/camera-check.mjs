@@ -96,16 +96,16 @@ try {
     L.press('spot:main');
     const saved = Math.random, deck = [3.1 / 13, 0, 2.1 / 13, 0, 9.1 / 13, 0, 6.1 / 13, 0];
     Math.random = () => deck.length ? deck.shift() : 0.7;
-    try { window.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true })); window.dispatchEvent(new KeyboardEvent('keyup', { key: ' ', bubbles: true })); } finally { Math.random = saved; }
+    try { window.dispatchEvent(new KeyboardEvent('keydown', { key: 'h', bubbles: true })); window.dispatchEvent(new KeyboardEvent('keyup', { key: 'h', bubbles: true })); } finally { Math.random = saved; }
     L.render(); const before = L.table().view.hands[0].cards.map(c => c.rank);
-    const aimed = document.querySelector('#bjActions [data-play="btn:hit"]') !== null;
+    const aimed = L.parts().some(p=>p.part==='btn:hit');
     Math.random = () => 0.7;
     let clicked;
-    try { document.querySelector('#bjActions [data-play="btn:hit"]').click(); clicked = true; } finally { Math.random = saved; }
+    try { clicked = L.press('btn:hit'); } finally { Math.random = saved; }
     const after = L.table();
     return { aimed, clicked, before, cards: after.view.hands[0].cards.map(c => c.rank), live: after.view.hide, action: after.pressed.id, status: L.bar().status };
   });
-  console.log('HUD HIT regression', JSON.stringify(hit));
+  console.log('Physical HIT regression', JSON.stringify(hit));
   assert.deepEqual(hit.before, ['4', '3']); assert.equal(hit.action, 'btn:hit'); assert.ok(hit.live && hit.cards.length === 3);
   assert.match(hit.status, /YOU 4♠ 3♠ 10♦ = 17/);
   assert.match(hit.status, /DEALER 10♠ \+ \?/);
@@ -133,8 +133,8 @@ try {
     L.place(seat.x, seat.y); L.look(seat.face, -0.3); L.step(0.1); L.render(); L.press('spot:red');
   });
   await page.waitForTimeout(6500);
-  assert.equal(await page.evaluate(() => window.__lastCall.table().view), null, 'placing chips must wait for Space');
-  await page.keyboard.press('Space');
+  assert.equal(await page.evaluate(() => window.__lastCall.table().view), null, 'placing chips waits for physical spin');
+  await page.evaluate(()=>__lastCall.press('btn:spin'));
   await page.waitForTimeout(4300);
   const stopped = await page.evaluate(() => {
     const L = window.__lastCall; L.render(); L.press('rail:clear');
