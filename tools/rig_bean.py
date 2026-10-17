@@ -3,7 +3,7 @@ skeleton (Hips, Spine, Spine1, Head, Left/RightArm, ForeArm, Hand, Left/RightUpL
 region weights, and exports a skinned GLB (+Y up, facing +Z, feet on y=0, height in metres). Optionally renders a check
 sheet with a few test poses.
 
-  blender -b --factory-startup --python tools/rig_bean.py -- in.glb out.glb [height_m] [check.png|-] [texture_px] [widen]
+  blender -b --factory-startup --python tools/rig_bean.py -- in.glb out.glb [height_m] [check.png|-] [texture_px] [widen] [realism-pilot]
 """
 import bpy, sys, math, json
 from mathutils import Vector, Matrix
@@ -14,6 +14,7 @@ HEIGHT = float(args[2]) if len(args) > 2 else 1.2
 CHECK = args[3] if len(args) > 3 and args[3] != '-' else None
 TEX = int(args[4]) if len(args) > 4 else 1024  # the potatoes keep 2048 px maps: their skin is seen nose to nose
 WIDEN = float(args[5]) if len(args) > 5 else 1.0  # the round potato: its design came out as tall as the other, so it is made wider here
+REALISM = len(args) > 6 and args[6] == 'realism-pilot'
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=src)
@@ -56,6 +57,10 @@ for a, b, sl in slices(lambda v: True, lambda v: v.z, 40, 0, H):
 trunk = sorted(w for z, w, *_ in prof if z > 0.6 * H)[len([1 for z, *_ in prof if z > 0.6 * H]) // 2]  # median half-width of the upper body
 arm_z = [z for z, w, *_ in prof if w > trunk * 1.35]
 arm_lo, arm_hi = min(arm_z), max(arm_z)
+if REALISM:
+    # This pilot has hanging A-pose arms. Width alone mistakes the vest/face
+    # for a shoulder, and the wide gloves for the top of the arm.
+    arm_lo, arm_hi = .22 * H, .64 * H
 # legs: below the body, where the slice splits into two (a gap at x=0)
 leg_top = None
 for z, w, *_ in sorted(prof):
@@ -138,9 +143,11 @@ def bone(name, head, tail, parent=None, roll=0):
 top = H
 hip_z = leg_top + 0.06 * H
 bone('Hips', (0, 0, hip_z), (0, 0, hip_z + 0.12 * H))
-bone('Spine', (0, 0, hip_z + 0.12 * H), (0, 0, arm_hi - 0.08 * H), 'Hips')
-bone('Spine1', (0, 0, arm_hi - 0.08 * H), (0, 0, arm_hi + 0.06 * H), 'Spine')
-bone('Head', (0, 0, arm_hi + 0.06 * H), (0, 0, top), 'Spine1')
+chest_z = .56 * H if REALISM else arm_hi - .08 * H
+head_z = .72 * H if REALISM else arm_hi + .06 * H
+bone('Spine', (0, 0, hip_z + 0.12 * H), (0, 0, chest_z), 'Hips')
+bone('Spine1', (0, 0, chest_z), (0, 0, head_z), 'Spine')
+bone('Head', (0, 0, head_z), (0, 0, top), 'Spine1')
 for sd, side in ((1, 'Left'), (-1, 'Right')):
     p = arm[sd]
     tip = p[-1]
@@ -149,6 +156,11 @@ for sd, side in ((1, 'Left'), (-1, 'Right')):
     elbow = p[int(n * 0.45)]
     wrist = p[int(n * 0.72)]
     tipx = Vector((sd * max(v.x * sd for v in vs), wrist.y, tip.z - (wrist.z - tip.z) * 0.3))
+    if REALISM:
+        root = Vector((sd * .18 * H, 0, .60 * H))
+        elbow = Vector((sd * .245 * H, -.025 * H, .465 * H))
+        wrist = Vector((sd * .315 * H, -.025 * H, .375 * H))
+        tipx = Vector((sd * .35 * H, -.025 * H, .315 * H))
     bone(f'{side}Arm', root, elbow, 'Spine1')
     bone(f'{side}ForeArm', elbow, wrist, f'{side}Arm')
     bone(f'{side}Hand', wrist, tipx, f'{side}ForeArm')
@@ -189,6 +201,8 @@ for v in me.vertices:
     armness = smooth(out, -0.02 * H, 0.05 * H) * (1 - smooth(arm_lo - p.z, 0.0, 0.05 * H)) * (1 - smooth(p.z - arm_hi, 0.0, 0.04 * H))
     legness = smooth(leg_top + 0.03 * H - p.z, 0.0, 0.06 * H) * (1 - smooth(abs(p.x) - LEG_W, 0.0, 0.04 * H))  # (not the hands hanging beside them)
     trunkw = max(0.0, 1 - armness - legness)
+    if REALISM and abs(p.x) > .31 * H and .24 * H < p.z < .375 * H:
+        assert armness > .999 and legness == 0, 'Glove fingers must stay with the arm, not the trunk/legs'
     if armness > 0:
         a0, a1 = B[f'{side}Arm']; f0, f1 = B[f'{side}ForeArm']; h0, h1 = B[f'{side}Hand']
         d_arm = (p - (a0 + (a1 - a0) * seg_t(p, a0, a1))).length

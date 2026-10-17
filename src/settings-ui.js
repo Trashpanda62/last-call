@@ -19,6 +19,8 @@ const TABS = {
     { k: 'dynres', label: 'Dynamic resolution', type: 'select', opts: OPT([0, 'Off'], [45, 'Hold 45 FPS'], [60, 'Hold 60 FPS'], [90, 'Hold 90 FPS'], [120, 'Hold 120 FPS'], [144, 'Hold 144 FPS']), num: true,
       note: 'Lowers the render resolution (down to 50%) while the frame rate is under the target, and raises it again when there is room.' },
     { head: 'Image' },
+    { k: 'characterDetail', label: 'Potato detail', type: 'select', opts: OPT(['standard', 'Standard'], ['high', 'High (original mesh)']),
+      note: 'Original 1.5-million-triangle model for the closest potato up close. Downloads extra detail when enabled; uses more memory and GPU time. Included in Ultra.' },
     { k: 'aa', label: 'Anti-aliasing', type: 'select', opts: OPT(['off', 'Off'], ['fxaa', 'FXAA (fast)'], ['smaa', 'SMAA'], ['msaa', 'MSAA 4x'], ['msaa8', 'MSAA 8x']) },
     { k: 'shadows', label: 'Shadows', type: 'select', opts: OPT(['off', 'Off'], ['low', 'Low (1024)'], ['high', 'High (2048, soft)'], ['ultra', 'Ultra (4096, softer)']) },
     { k: 'ao', label: 'Ambient occlusion', type: 'select', opts: OPT(['off', 'Off'], ['half', 'GTAO, half resolution'], ['full', 'GTAO, full resolution']),

@@ -1,0 +1,1142 @@
+{
+  "at": "2026-10-17T05:34:47.996Z",
+  "before": false,
+  "variants": [
+    {
+      "fallback": false,
+      "joints": {
+        "Hips": [
+          0,
+          0.4899750053882599,
+          0
+        ],
+        "LeftUpLeg": [
+          0.0910433679819107,
+          0,
+          -0.012865769676864147
+        ],
+        "LeftLeg": [
+          -9.778887033462524e-9,
+          0.2526910603046417,
+          3.725290298461914e-9
+        ],
+        "LeftFoot": [
+          1.9060431455386606e-8,
+          0.1633894443511963,
+          5.880784303968767e-9
+        ],
+        "RightUpLeg": [
+          -0.08027464151382446,
+          0,
+          -0.011133328080177307
+        ],
+        "RightLeg": [
+          -1.0710209608078003e-8,
+          0.26006338000297546,
+          -3.725290298461914e-9
+        ],
+        "RightFoot": [
+          -3.725290298461914e-9,
+          0.15872427821159363,
+          -2.3283064365386963e-9
+        ],
+        "Spine": [
+          0,
+          0.16919997334480286,
+          0
+        ],
+        "Spine1": [
+          0,
+          0.13042503595352173,
+          0
+        ],
+        "Head": [
+          0,
+          0.22560006380081177,
+          0
+        ],
+        "LeftArm": [
+          0.25380000472068787,
+          0.05640006065368652,
+          0
+        ],
+        "LeftForeArm": [
+          8.381903171539307e-9,
+          0.214185431599617,
+          3.725290298461914e-9
+        ],
+        "LeftHand": [
+          9.313225746154785e-9,
+          0.1607648730278015,
+          1.4901161193847656e-8
+        ],
+        "RightArm": [
+          -0.25380000472068787,
+          0.05640006065368652,
+          0
+        ],
+        "RightForeArm": [
+          -8.381903171539307e-9,
+          0.214185431599617,
+          3.725290298461914e-9
+        ],
+        "RightHand": [
+          -9.313225746154785e-9,
+          0.1607648730278015,
+          1.4901161193847656e-8
+        ]
+      },
+      "info": {
+        "height": 1.41,
+        "crownR": 0.2883,
+        "trunkR": 0.2628,
+        "legTop": 0.4054
+      },
+      "bones": [
+        "Hips",
+        "LeftUpLeg",
+        "LeftLeg",
+        "LeftFoot",
+        "RightUpLeg",
+        "RightLeg",
+        "RightFoot",
+        "Spine",
+        "Spine1",
+        "Head",
+        "LeftArm",
+        "LeftForeArm",
+        "LeftHand",
+        "RightArm",
+        "RightForeArm",
+        "RightHand"
+      ],
+      "vertices": 22887,
+      "triangles": 24000,
+      "texture": [
+        2048,
+        2048
+      ],
+      "normalMap": true,
+      "roughnessMap": true,
+      "poses": {
+        "full": {
+          "bounds": {
+            "min": [
+              -0.3585980675432445,
+              1.1893107773205027e-7,
+              -0.3510567247867584
+            ],
+            "max": [
+              0.35884973555814526,
+              1.4135057665389879,
+              0.22656691630607995
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "face": {
+          "bounds": {
+            "min": [
+              -0.3582164257028495,
+              1.1893107773205027e-7,
+              -0.3510567247867584
+            ],
+            "max": [
+              0.3584678259795382,
+              1.4128768640729814,
+              0.2263356467585922
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "side": {
+          "bounds": {
+            "min": [
+              -0.3568260383352282,
+              1.1893107773205027e-7,
+              -0.3510567247867584
+            ],
+            "max": [
+              0.3570764886884312,
+              1.41056958474116,
+              0.2256042384859498
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "other-side": {
+          "bounds": {
+            "min": [
+              -0.3552359976225219,
+              1.1893107773205027e-7,
+              -0.3510567247867584
+            ],
+            "max": [
+              0.35548502567650075,
+              1.4079022832500776,
+              0.2249355375566111
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "side-walk": {
+          "bounds": {
+            "min": [
+              -0.34632686231486076,
+              -0.023053485649320492,
+              -0.3498320089233893
+            ],
+            "max": [
+              0.35952557601748225,
+              1.4124656658460084,
+              0.2563642178831671
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "other-side-walk": {
+          "bounds": {
+            "min": [
+              -0.3349404860050491,
+              -0.013153997377854287,
+              -0.3834828214628594
+            ],
+            "max": [
+              0.36573282741642643,
+              1.4158796495147978,
+              0.37262892260008584
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "walk": {
+          "bounds": {
+            "min": [
+              -0.35582608412887495,
+              -0.0057068629231416534,
+              -0.3498382838632992
+            ],
+            "max": [
+              0.35840899225772205,
+              1.4142012076160526,
+              0.23488455029963617
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "seated": {
+          "bounds": {
+            "min": [
+              -0.4168544028487702,
+              0.20330480913361398,
+              -0.3501352655264576
+            ],
+            "max": [
+              0.4165638489367183,
+              1.414726814275649,
+              0.4561620011710552
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "holding": {
+          "bounds": {
+            "min": [
+              -0.380123164342681,
+              1.1890207045047803e-7,
+              -0.35105672477815375
+            ],
+            "max": [
+              0.3571509715971928,
+              1.41069389225238,
+              0.47842930979966525
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "dead": {
+          "bounds": {
+            "min": [
+              -0.7610512184727423,
+              0.03844959212896981,
+              -0.3510567247867583
+            ],
+            "max": [
+              0.7604818834011144,
+              1.4107230995402453,
+              0.2256350324427115
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        }
+      },
+      "gestures": [
+        {
+          "name": "wave",
+          "accepted": true,
+          "finite": true
+        },
+        {
+          "name": "cheer",
+          "accepted": true,
+          "finite": true
+        },
+        {
+          "name": "chips",
+          "accepted": true,
+          "finite": true
+        }
+      ],
+      "highReady": {
+        "requested": "high",
+        "loaded": true,
+        "active": false,
+        "triangles": 1500000
+      },
+      "highPoses": [
+        {
+          "pose": "idle",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "walk",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "seated",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "holding",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "side",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "other-side",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "side-walk",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "other-side-walk",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        }
+      ],
+      "hats": [
+        {
+          "name": "Red",
+          "hat": "fedora",
+          "scale": [
+            0.8477419354838709,
+            0.8477419860132308,
+            0.8477419354838709
+          ],
+          "detail": {
+            "requested": "high",
+            "loaded": true,
+            "active": true,
+            "triangles": 1500000
+          }
+        },
+        {
+          "name": "Mint",
+          "hat": "tophat",
+          "scale": [
+            0.8477419354838709,
+            0.8477419860132308,
+            0.8477419354838709
+          ],
+          "detail": {
+            "requested": "high",
+            "loaded": true,
+            "active": true,
+            "triangles": 1500000
+          }
+        },
+        {
+          "name": "Lola",
+          "hat": "beret",
+          "scale": [
+            0.8477419354838709,
+            0.8477419860132308,
+            0.8477419354838709
+          ],
+          "detail": {
+            "requested": "high",
+            "loaded": true,
+            "active": true,
+            "triangles": 1500000
+          }
+        }
+      ],
+      "lod": {
+        "far": {
+          "requested": "high",
+          "loaded": true,
+          "active": false,
+          "triangles": 1500000,
+          "lowVisible": true
+        },
+        "standard": {
+          "requested": "standard",
+          "loaded": true,
+          "active": false,
+          "triangles": 1500000
+        },
+        "ultra": "high",
+        "saved": "standard"
+      },
+      "crowd": {
+        "actors": 32,
+        "sharedGeometries": 1,
+        "rows": [
+          {
+            "detail": "standard",
+            "dense": 0,
+            "lowVisible": 32,
+            "cpuMedianMs": 12.100000023841858,
+            "gfx": {
+              "frames": 2967,
+              "calls": 1310,
+              "tris": 3588129,
+              "geos": 694,
+              "tex": 447,
+              "cam": [
+                18.78,
+                1.12,
+                17.23,
+                -0.1,
+                -1.57
+              ],
+              "gestures": {
+                "wave": 1,
+                "cheer": 1,
+                "chips": 1,
+                "thinking": 1,
+                "laugh": 1
+              },
+              "props": 32,
+              "rebuildPending": false,
+              "rooms": [
+                "floor",
+                "arcade",
+                "race",
+                "vip"
+              ],
+              "actorWork": {
+                "posed": 4,
+                "total": 11,
+                "offscreen": 2
+              },
+              "ao": true,
+              "passes": [
+                "RenderPass",
+                "GTAOPass",
+                "RenderPass",
+                "OutputPass"
+              ],
+              "internal": [
+                1440,
+                1000
+              ],
+              "out": [
+                1440,
+                1000
+              ],
+              "pr": 1
+            }
+          },
+          {
+            "detail": "high",
+            "dense": 1,
+            "lowVisible": 31,
+            "cpuMedianMs": 10.400000035762787,
+            "gfx": {
+              "frames": 3191,
+              "calls": 1310,
+              "tris": 8016129,
+              "geos": 694,
+              "tex": 447,
+              "cam": [
+                18.78,
+                1.12,
+                17.23,
+                -0.1,
+                -1.57
+              ],
+              "gestures": {
+                "wave": 1,
+                "cheer": 1,
+                "chips": 1,
+                "thinking": 1,
+                "laugh": 1
+              },
+              "props": 32,
+              "rebuildPending": false,
+              "rooms": [
+                "floor",
+                "arcade",
+                "race",
+                "vip"
+              ],
+              "actorWork": {
+                "posed": 4,
+                "total": 11,
+                "offscreen": 2
+              },
+              "ao": true,
+              "passes": [
+                "RenderPass",
+                "GTAOPass",
+                "RenderPass",
+                "OutputPass"
+              ],
+              "internal": [
+                1440,
+                1000
+              ],
+              "out": [
+                1440,
+                1000
+              ],
+              "pr": 1
+            }
+          }
+        ],
+        "afterDispose": {
+          "requested": "standard",
+          "loaded": true,
+          "active": false,
+          "triangles": 1500000
+        }
+      },
+      "detailRequests": 1
+    },
+    {
+      "fallback": true,
+      "joints": {
+        "Hips": [
+          0,
+          0.4899750053882599,
+          0
+        ],
+        "LeftUpLeg": [
+          0.0910433679819107,
+          0,
+          -0.012865769676864147
+        ],
+        "LeftLeg": [
+          -9.778887033462524e-9,
+          0.2526910603046417,
+          3.725290298461914e-9
+        ],
+        "LeftFoot": [
+          1.9060431455386606e-8,
+          0.1633894443511963,
+          5.880784303968767e-9
+        ],
+        "RightUpLeg": [
+          -0.08027464151382446,
+          0,
+          -0.011133328080177307
+        ],
+        "RightLeg": [
+          -1.0710209608078003e-8,
+          0.26006338000297546,
+          -3.725290298461914e-9
+        ],
+        "RightFoot": [
+          -3.725290298461914e-9,
+          0.15872427821159363,
+          -2.3283064365386963e-9
+        ],
+        "Spine": [
+          0,
+          0.16919997334480286,
+          0
+        ],
+        "Spine1": [
+          0,
+          0.13042503595352173,
+          0
+        ],
+        "Head": [
+          0,
+          0.22560006380081177,
+          0
+        ],
+        "LeftArm": [
+          0.25380000472068787,
+          0.05640006065368652,
+          0
+        ],
+        "LeftForeArm": [
+          8.381903171539307e-9,
+          0.214185431599617,
+          3.725290298461914e-9
+        ],
+        "LeftHand": [
+          9.313225746154785e-9,
+          0.1607648730278015,
+          1.4901161193847656e-8
+        ],
+        "RightArm": [
+          -0.25380000472068787,
+          0.05640006065368652,
+          0
+        ],
+        "RightForeArm": [
+          -8.381903171539307e-9,
+          0.214185431599617,
+          3.725290298461914e-9
+        ],
+        "RightHand": [
+          -9.313225746154785e-9,
+          0.1607648730278015,
+          1.4901161193847656e-8
+        ]
+      },
+      "info": {
+        "height": 1.41,
+        "crownR": 0.2883,
+        "trunkR": 0.2628,
+        "legTop": 0.4054
+      },
+      "bones": [
+        "Hips",
+        "LeftUpLeg",
+        "LeftLeg",
+        "LeftFoot",
+        "RightUpLeg",
+        "RightLeg",
+        "RightFoot",
+        "Spine",
+        "Spine1",
+        "Head",
+        "LeftArm",
+        "LeftForeArm",
+        "LeftHand",
+        "RightArm",
+        "RightForeArm",
+        "RightHand"
+      ],
+      "vertices": 22887,
+      "triangles": 24000,
+      "texture": [
+        2048,
+        2048
+      ],
+      "normalMap": true,
+      "roughnessMap": true,
+      "poses": {
+        "full": {
+          "bounds": {
+            "min": [
+              -0.35525324334568964,
+              1.1893107773205027e-7,
+              -0.3510567247867584
+            ],
+            "max": [
+              0.3555025651217889,
+              1.4079299726888896,
+              0.22494231892009608
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "face": {
+          "bounds": {
+            "min": [
+              -0.3543783786809982,
+              1.1893107773205027e-7,
+              -0.3510567247867584
+            ],
+            "max": [
+              0.3546270867463548,
+              1.4064480202164675,
+              0.22457478149183174
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "side": {
+          "bounds": {
+            "min": [
+              -0.3547310466995839,
+              1.1893107773205027e-7,
+              -0.3510567247867584
+            ],
+            "max": [
+              0.3549800275138679,
+              1.4070464458839058,
+              0.22472402211119658
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "other-side": {
+          "bounds": {
+            "min": [
+              -0.3561047301454039,
+              1.1893107773205027e-7,
+              -0.3510567247867584
+            ],
+            "max": [
+              0.35635436757497274,
+              1.4093644266530958,
+              0.22530053786026372
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "side-walk": {
+          "bounds": {
+            "min": [
+              -0.3505350850598141,
+              -0.019231847604769668,
+              -0.3498339145795093
+            ],
+            "max": [
+              0.36042342636046953,
+              1.4150423360454374,
+              0.23511662291821622
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "other-side-walk": {
+          "bounds": {
+            "min": [
+              -0.3610380792832366,
+              -0.021248539978771488,
+              -0.3498542975927563
+            ],
+            "max": [
+              0.3366012676844612,
+              1.4098139055028462,
+              0.33806827391020633
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "walk": {
+          "bounds": {
+            "min": [
+              -0.3595502256688228,
+              -0.02273602294989128,
+              -0.3498534674660583
+            ],
+            "max": [
+              0.33666794703758285,
+              1.408010061545639,
+              0.3276830047863939
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "seated": {
+          "bounds": {
+            "min": [
+              -0.4123549563800495,
+              0.20330469875273366,
+              -0.35013526553868246
+            ],
+            "max": [
+              0.4120675058498655,
+              1.4084865050845248,
+              0.4512946444868824
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "holding": {
+          "bounds": {
+            "min": [
+              -0.37776749576437396,
+              1.1890206769514533e-7,
+              -0.35105672477815375
+            ],
+            "max": [
+              0.3549376674326119,
+              1.406974856428677,
+              0.4754644263631356
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        },
+        "dead": {
+          "bounds": {
+            "min": [
+              -0.7563348931195986,
+              0.03844959212896981,
+              -0.3510567247867583
+            ],
+            "max": [
+              0.7557690859260777,
+              1.4068739253907587,
+              0.2247057585877144
+            ]
+          },
+          "finite": true,
+          "gesture": false
+        }
+      },
+      "gestures": [
+        {
+          "name": "wave",
+          "accepted": true,
+          "finite": true
+        },
+        {
+          "name": "cheer",
+          "accepted": true,
+          "finite": true
+        },
+        {
+          "name": "chips",
+          "accepted": true,
+          "finite": true
+        }
+      ],
+      "highReady": {
+        "requested": "high",
+        "loaded": true,
+        "active": false,
+        "triangles": 1500000
+      },
+      "highPoses": [
+        {
+          "pose": "idle",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "walk",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "seated",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "holding",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "side",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "other-side",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "side-walk",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        },
+        {
+          "pose": "other-side-walk",
+          "requested": "high",
+          "loaded": true,
+          "active": true,
+          "triangles": 1500000,
+          "meshes": 1,
+          "lowVisible": false
+        }
+      ],
+      "hats": [
+        {
+          "name": "Red",
+          "hat": "fedora",
+          "scale": [
+            0.8477419354838709,
+            0.8477419860132308,
+            0.8477419354838709
+          ],
+          "detail": {
+            "requested": "high",
+            "loaded": true,
+            "active": true,
+            "triangles": 1500000
+          }
+        },
+        {
+          "name": "Mint",
+          "hat": "tophat",
+          "scale": [
+            0.8477419354838709,
+            0.8477419860132308,
+            0.8477419354838709
+          ],
+          "detail": {
+            "requested": "high",
+            "loaded": true,
+            "active": true,
+            "triangles": 1500000
+          }
+        },
+        {
+          "name": "Lola",
+          "hat": "beret",
+          "scale": [
+            0.8477419354838709,
+            0.8477419860132308,
+            0.8477419354838709
+          ],
+          "detail": {
+            "requested": "high",
+            "loaded": true,
+            "active": true,
+            "triangles": 1500000
+          }
+        }
+      ],
+      "lod": {
+        "far": {
+          "requested": "high",
+          "loaded": true,
+          "active": false,
+          "triangles": 1500000,
+          "lowVisible": true
+        },
+        "standard": {
+          "requested": "standard",
+          "loaded": true,
+          "active": false,
+          "triangles": 1500000
+        },
+        "ultra": "high",
+        "saved": "standard"
+      },
+      "crowd": {
+        "actors": 32,
+        "sharedGeometries": 1,
+        "rows": [
+          {
+            "detail": "standard",
+            "dense": 0,
+            "lowVisible": 32,
+            "cpuMedianMs": 11.900000035762787,
+            "gfx": {
+              "frames": 3079,
+              "calls": 1619,
+              "tris": 3190459,
+              "geos": 982,
+              "tex": 394,
+              "cam": [
+                18.78,
+                1.12,
+                17.23,
+                -0.1,
+                -1.57
+              ],
+              "gestures": {
+                "lookaround": 1,
+                "wave": 3,
+                "cheer": 1,
+                "chips": 1
+              },
+              "props": 0,
+              "rebuildPending": false,
+              "rooms": [
+                "floor",
+                "arcade",
+                "race",
+                "vip"
+              ],
+              "actorWork": {
+                "posed": 4,
+                "total": 11,
+                "offscreen": 2
+              },
+              "ao": true,
+              "passes": [
+                "RenderPass",
+                "GTAOPass",
+                "RenderPass",
+                "OutputPass"
+              ],
+              "internal": [
+                1440,
+                1000
+              ],
+              "out": [
+                1440,
+                1000
+              ],
+              "pr": 1
+            }
+          },
+          {
+            "detail": "high",
+            "dense": 1,
+            "lowVisible": 31,
+            "cpuMedianMs": 12.599999964237213,
+            "gfx": {
+              "frames": 3303,
+              "calls": 1619,
+              "tris": 7618459,
+              "geos": 982,
+              "tex": 394,
+              "cam": [
+                18.78,
+                1.12,
+                17.23,
+                -0.1,
+                -1.57
+              ],
+              "gestures": {
+                "lookaround": 1,
+                "wave": 3,
+                "cheer": 1,
+                "chips": 1
+              },
+              "props": 0,
+              "rebuildPending": false,
+              "rooms": [
+                "floor",
+                "arcade",
+                "race",
+                "vip"
+              ],
+              "actorWork": {
+                "posed": 4,
+                "total": 11,
+                "offscreen": 2
+              },
+              "ao": true,
+              "passes": [
+                "RenderPass",
+                "GTAOPass",
+                "RenderPass",
+                "OutputPass"
+              ],
+              "internal": [
+                1440,
+                1000
+              ],
+              "out": [
+                1440,
+                1000
+              ],
+              "pr": 1
+            }
+          }
+        ],
+        "afterDispose": {
+          "requested": "standard",
+          "loaded": true,
+          "active": false,
+          "triangles": 1500000
+        }
+      },
+      "detailRequests": 1
+    }
+  ],
+  "errors": [],
+  "optionalFailure": {
+    "ready": true,
+    "requested": "high",
+    "loaded": false,
+    "active": false,
+    "triangles": 0
+  }
+}

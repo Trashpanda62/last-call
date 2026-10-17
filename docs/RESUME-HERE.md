@@ -27,6 +27,8 @@ The previous route/sign audit missed the crowded shop/piano corner and full palm
 
 ## Manual acceptance and holds
 
+The more realistic standard potato pilot is integrated at the shipped 1.41 m height, with natural skin, inset eyes, waistcoat/gloves and the existing local rig/animations. Steve approved the single 30-credit ($0.30) Hunyuan generation; no further paid variants were generated. Standard uses 24K triangles and baked 2K PBR maps. Graphics > Potato detail > High (original mesh), also included in Ultra, retains the full 1.5M-triangle model and 4K maps for the nearest potato up close. The optional download does not block startup. Corrected Steve's reported side-view arm: symmetric fitted shoulder/elbow/wrist joints, continuous upper-arm weights and ascending chest joints on both meshes. Both sides were visually checked idle and walking. Round/staff bodies and meeting portraits retain their previous designs pending pilot review. [Pilot details and evidence](../design/characters/potato-realism/README.md).
+
 1. Steve's visual/play review: Plinko, derby, new cabinets, hands and sound keep/mute choices. Technical checks do not constitute player acceptance.
 2. Physical controller and real 32-person voice session: simulated standard-controller and actual three-browser checks pass; full hardware/human sessions need devices and participants.
 3. C02 balance remains on HOLD: Steve requested no further night-length or killer-win tuning before his playtest. Existing cooldown/speed settings remain.
@@ -38,7 +40,7 @@ Latest layout/payout evidence uses the layout-review and arcade-payout report na
 
 LAN playtest: https://10.42.0.37:3161/ (existing self-signed LAN HTTPS).
 
-Delivery identity: [complete source/asset/vendor receipt](playtest-build-vip-review-2026-10-17.json), generated after sync. All 847 Git-tracked files in src/, assets/, vendor/ and the three entry files match served SHA-256 bytes, including the mirror and new arcade modules.
+Delivery identity: [complete source/asset/vendor receipt](playtest-build-potato-realism-2026-10-17.json), generated after sync. All 849 Git-tracked files in src/, assets/, vendor/ and the three entry files match served SHA-256 bytes, including the mirror and new arcade modules.
 
 The sync tool now copies Git-tracked files only. Stage new deliverables before syncing; preserve local untracked .claude/, .dev/ and shots/. Existing voice-server configuration is retained. No new generation or balance sweep is needed.
 

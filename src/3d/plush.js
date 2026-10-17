@@ -4,6 +4,8 @@
 // Since 2026-10-15 the bodies are creepy potatoes (Steve: "i want creepy looking potatoes basically"; tools/v5_potato.py,
 // take b): the same rig and clips, the player colour on the red waistcoat, the potato skin a variety per player, and no
 // fuzz (POTATO below; the felt and fur code stays for the plush models in assets/chars/old-plush).
+// 2026-10-17: the standard body is the Hunyuan realism pilot, with an optional
+// original 1.5M-triangle near mesh; round bodies and staff retain their v5 models.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone as skClone } from 'three/addons/utils/SkeletonUtils.js';
@@ -16,14 +18,16 @@ const ROUND = new Set(['Biscuit', 'Duke', 'Coco', 'Ozzie', 'Snow', 'Peach', 'Nav
 const SRC = {};
 let ready = false;
 const waiters = [];
+let plushBase = 'assets/chars/';
 export const plushReady = () => ready;
 export function onPlushReady(f) { if (ready) f(); else waiters.push(f); }
 
 export function loadPlush(base = 'assets/chars/') {
   if (/[?&]toy\b/.test(location.search)) return Promise.resolve(); // ?toy keeps the toy beans (comparisons)
   const loader = new GLTFLoader();
+  plushBase = base;
   return Promise.all(KINDS.map(k => loader.loadAsync(base + k + '.glb').then(g => { SRC[k] = prep(g.scene); })))
-    .then(() => { ready = true; waiters.splice(0).forEach(f => f()); })
+    .then(() => { ready = true; waiters.splice(0).forEach(f => f()); if (settings().gfx.characterDetail === 'high') loadPotatoDetail(); })
     .catch(e => console.warn('Plush beans did not load; keeping the toy beans.', e));
 }
 
@@ -194,11 +198,13 @@ function potatoMat(S, tint, skin) {
     sh.vertexShader = 'varying vec3 vFurP;\n' + sh.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\n  vFurP = position;');
     sh.fragmentShader = FUR_GLSL + POTATO_GLSL + sh.fragmentShader.replace('#include <map_fragment>', `
   // the red waistcoat in the player's colour (bright red only: the skin's dark red-brown blemishes stay as they are)
-  vec4 potTex = texture2D( map, vMapUv ), sampledDiffuseColor = mix( potTex, feltColour( potTex ), smoothstep( 0.05, 0.1, potTex.r ) );
+  float potFaceMask = ( 1.0 - smoothstep( 0.85, 1.0, length( ( vFurP.xy - vec2( 0.0, uEyeY + 0.11 ) ) / vec2( 0.19, 0.21 ) ) ) ) * smoothstep( 0.02, 0.1, vFurP.z );
+  vec4 potTex = texture2D( map, vMapUv ), sampledDiffuseColor = mix( potTex, feltColour( potTex ), smoothstep( 0.05, 0.1, potTex.r ) * ( 1.0 - potFaceMask ) );
   float potMx = max( potTex.r, max( potTex.g, potTex.b ) ), potSat = potMx > 0.0 ? ( potMx - min( potTex.r, min( potTex.g, potTex.b ) ) ) / potMx : 0.0;
-  float potVest = smoothstep( 0.55, 0.8, ( potTex.r - max( potTex.g, potTex.b ) ) / max( potTex.r, 1e-3 ) ) * smoothstep( 0.05, 0.1, potTex.r );
+  float potRed = smoothstep( 0.55, 0.8, ( potTex.r - max( potTex.g, potTex.b ) ) / max( potTex.r, 1e-3 ) ) * smoothstep( 0.05, 0.1, potTex.r );
+  float potVest = potRed * ( 1.0 - potFaceMask );
   // the potato itself: brownish, not the waistcoat, the white gloves, the black shoes, the eyes or the teeth
-  float potSkinM = ( 1.0 - potVest ) * smoothstep( 0.22, 0.36, potSat ) * smoothstep( 0.015, 0.05, potMx );
+  float potSkinM = ( 1.0 - potVest ) * ( 1.0 - potRed * potFaceMask ) * smoothstep( 0.22, 0.36, potSat ) * smoothstep( 0.015, 0.05, potMx );
   // the eyes: what is not skin on the front of the head, wet and glossy (too human). Gloves never get up there in the rest pose
   float potEye = ( 1.0 - potSkinM ) * ( 1.0 - potVest ) * smoothstep( uEyeY - 0.02, uEyeY + 0.02, vFurP.y ) * step( 0.0, vFurP.z );
   sampledDiffuseColor.rgb *= mix( vec3( 1.0 ), uSkin, potSkinM * uSkinOn );
@@ -549,6 +555,74 @@ function bake(kind, name) {
   while (!(step = steps.next()).done) { /* synchronous fallback for new clips */ }
   return step.value;
 }
+
+// One shared dense draw, attached to the nearest visible pilot only. Other
+// potatoes keep their crowd mesh; the optional download never blocks startup.
+const detailActors = new Set();
+let detailTask = null, detailSource = null, detailMesh = null, detailOwner = null;
+const detailPosition = new THREE.Vector3(), detailForward = new THREE.Vector3(), detailDelta = new THREE.Vector3();
+export function loadPotatoDetail() {
+  if (detailSource) return Promise.resolve(true);
+  if (detailTask) return detailTask;
+  if (!SRC.bean) return Promise.resolve(false);
+  // Optional detail must not enter the required-assets boot error ledger.
+  detailTask = new GLTFLoader(new THREE.LoadingManager()).loadAsync(plushBase + 'bean-high.glb').then(g => {
+    let high, low; g.scene.traverse(o => { if (o.isSkinnedMesh) high = o; });
+    SRC.bean.scene.traverse(o => { if (o.isSkinnedMesh) low = o; });
+    if (!high || !low) throw Error('Potato detail requires the playable skeleton');
+    const order = high.skeleton.bones.map(b => low.skeleton.bones.findIndex(l => l.name === b.name));
+    if (order.some(i => i < 0)) throw Error('Potato detail bones do not match');
+    const indices = high.geometry.attributes.skinIndex;
+    for (let i = 0; i < indices.array.length; i++) indices.array[i] = order[indices.array[i]];
+    indices.needsUpdate = true;
+    const map = high.material.map;
+    detailSource = { geometry: high.geometry, src: high.material, map, info: SRC.bean.info,
+      ref: map?.image ? feltLum(map.image) : SRC.bean.ref, skin: map?.image ? skinMean(map.image) : SRC.bean.skin };
+    high.skeleton.dispose();
+    return true;
+  }).catch(e => { console.warn('High-detail potato unavailable; keeping the crowd mesh.', e); detailTask = null; return false; });
+  return detailTask;
+}
+onSettings((s, part) => { if (part === 'gfx' && ready && s.gfx.characterDetail === 'high') loadPotatoDetail(); });
+function releasePotatoDetail() {
+  if (detailOwner) detailOwner.bodyMesh.visible = true;
+  detailMesh?.removeFromParent(); detailOwner = null;
+}
+export function updatePotatoDetail(camera) {
+  let closest = null, distance = detailOwner ? 1.8 : 1.55;
+  if (settings().gfx.characterDetail === 'high' && detailSource) {
+    camera.getWorldDirection(detailForward);
+    for (const ref of detailActors) {
+      const b = ref.deref(); if (!b) { detailActors.delete(ref); continue; }
+      if (!b.root.visible || !b.model.visible) continue;
+      let ancestor = b.root;
+      while (ancestor && ancestor.visible && !ancestor.isScene) ancestor = ancestor.parent;
+      if (!ancestor?.isScene) continue;
+      b.root.getWorldPosition(detailPosition); detailPosition.y += .8;
+      detailDelta.subVectors(detailPosition, camera.position);
+      if (detailDelta.dot(detailForward) <= 0) continue;
+      const d = detailDelta.length();
+      if (d < distance) { distance = d; closest = b; }
+    }
+  }
+  if (closest !== detailOwner) {
+    releasePotatoDetail();
+    if (closest) {
+      const body = closest.bodyMesh;
+      closest.detailMat ||= potatoMat(detailSource, closest.color ? '#' + closest.color.getHexString() : null, closest.skinName);
+      detailMesh ||= new THREE.SkinnedMesh(detailSource.geometry, closest.detailMat);
+      detailMesh.material = closest.detailMat;
+      detailMesh.position.copy(body.position); detailMesh.quaternion.copy(body.quaternion); detailMesh.scale.copy(body.scale);
+      detailMesh.bindMode = body.bindMode; detailMesh.bind(body.skeleton, body.bindMatrix);
+      detailMesh.boundingSphere = body.boundingSphere.clone(); detailMesh.castShadow = true;
+      detailMesh.userData.potatoDetail = true;
+      body.parent.add(detailMesh); body.visible = false; detailOwner = closest;
+    }
+  }
+  if (detailOwner) detailOwner.detailMat.userData.u.uTint.value.copy(detailOwner.mat.userData.u.uTint.value);
+}
+export const potatoDetailInfo = () => ({ requested: settings().gfx.characterDetail, loaded: !!detailSource,
+  active: !!detailOwner, triangles: detailSource ? detailSource.geometry.index.count / 3 : 0 });
 // The exact same retargeting can run a frame at a time during loading. Keep the
 // ordinary cached gesture path above free of generator allocation.
 export function* prepareClips(names, kinds = KINDS) {
@@ -609,8 +683,11 @@ export class PlushBean {
     this.color = color ? new THREE.Color(color) : null;
     const player = kind === 'bean' || kind === 'round';
     this.mat = POTATO ? potatoMat(S, player ? color : null, player ? SKIN[name] : null) : feltMat(S, player ? color : null);
+    this.skinName = player ? SKIN[name] : null;
     // culled with a roomy bounds (poses, hats and lying down stay inside it): off-camera plush cost nothing
     this.model.traverse(o => { if (o.isSkinnedMesh) { o.material = this.mat; o.castShadow = true; if (!o.boundingSphere) o.computeBoundingSphere(); o.boundingSphere.radius *= 1.6; } });
+    this.bodyMesh = this.model.getObjectByProperty('isSkinnedMesh', true);
+    if (kind === 'bean') { this.detailRef = new WeakRef(this); detailActors.add(this.detailRef); }
     // the fuzz: the shells ride the same skeleton, as a child with no offset of its own (plush only: potatoes have none)
     if (FUZZ) this.model.traverse(o => {
       if (!o.isSkinnedMesh || o.userData.fur) return;
@@ -672,6 +749,8 @@ export class PlushBean {
   // skin/hat maps, hats and effect materials are shared with the asset library.
   dispose() {
     if (this.disposed) return; this.disposed = true;
+    if (detailOwner === this) releasePotatoDetail();
+    detailActors.delete(this.detailRef); this.detailMat?.dispose();
     this.root.removeFromParent(); this.mat.dispose();
     const skeletons = new Set(), materials = new Set();
     this.model.traverse(o => {

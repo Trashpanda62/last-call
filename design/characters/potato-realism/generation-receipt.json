@@ -1,0 +1,55 @@
+{
+  "request": {
+    "provider": "sorceress",
+    "tool": "model_generate",
+    "input": {
+      "model": "hunyuan3d-3.1",
+      "imageUrl": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/tool-uploads/14b713ad-480d-44e5-a794-18be8c0a897d/f77eb7bf-a7d9-4eb6-aaa9-ab76484be650/pilot-front.png"
+    },
+    "created_at": "2026-10-17T05:06:34+00:00",
+    "status": "done",
+    "response": {
+      "jobId": "52d31aa5-a2f5-42d1-9c28-353b49843873",
+      "status": "processing",
+      "tool": "model_generate",
+      "model": "hunyuan3d-3.1",
+      "modelName": "Hunyuan 3D 3.1",
+      "mode": "image-to-3d",
+      "provider": "hunyuan3d",
+      "estimatedCredits": 30,
+      "poll": "/api/v1/jobs/52d31aa5-a2f5-42d1-9c28-353b49843873"
+    },
+    "jobs": [
+      {
+        "jobId": "52d31aa5-a2f5-42d1-9c28-353b49843873",
+        "status": "succeeded",
+        "checked_at": "2026-10-17T05:12:19+00:00",
+        "outputs": [
+          {
+            "key": "url",
+            "path": "runs\\sorceress\\v6-potato-realism\\mesh\\assets\\01-url-d84f5ef3.glb",
+            "bytes": 92081528
+          }
+        ],
+        "sheets": []
+      }
+    ]
+  },
+  "result": {
+    "ok": true,
+    "jobId": "52d31aa5-a2f5-42d1-9c28-353b49843873",
+    "tool": "model_generate",
+    "status": "succeeded",
+    "mesh": {
+      "url": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/b4cc7503-5123-4d7f-a6e0-834a1fa31314/hunyuan3d-3.1.glb",
+      "format": "glb",
+      "modelUrls": {
+        "glb": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/b4cc7503-5123-4d7f-a6e0-834a1fa31314/hunyuan3d-3.1.glb"
+      },
+      "storageKey": "generations/14b713ad-480d-44e5-a794-18be8c0a897d/b4cc7503-5123-4d7f-a6e0-834a1fa31314/hunyuan3d-3.1.glb"
+    },
+    "modelUrl": "https://wizardgenie-media.s3.us-west-004.backblazeb2.com/generations/14b713ad-480d-44e5-a794-18be8c0a897d/b4cc7503-5123-4d7f-a6e0-834a1fa31314/hunyuan3d-3.1.glb",
+    "model": "hunyuan3d-3.1",
+    "provider": "hunyuan3d"
+  }
+}

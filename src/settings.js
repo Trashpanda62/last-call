@@ -7,10 +7,10 @@ const KEY = 'lc.settings';
 // subtle | strong. lights: the point lights that follow you round the casino. beams: the soft light cones over tables
 // (off everywhere by default: from below they read as grey haze, Steve's glare).
 export const PRESETS = {
-  low: { scale: 0.59, upscaler: 'fsr', aa: 'fxaa', shadows: 'off', ao: 'off', ssr: false, bloom: 'off', aniso: 2, lights: 4, beams: false },
-  medium: { scale: 0.77, upscaler: 'fsr', aa: 'smaa', shadows: 'low', ao: 'off', ssr: false, bloom: 'off', aniso: 4, lights: 6, beams: false },
-  high: { scale: 1, upscaler: 'fsr', aa: 'msaa', shadows: 'high', ao: 'half', ssr: false, bloom: 'off', aniso: 8, lights: 8, beams: false },
-  ultra: { scale: 1, upscaler: 'fsr', aa: 'smaa', shadows: 'ultra', ao: 'full', ssr: true, bloom: 'off', aniso: 16, lights: 12, beams: false },
+  low: { scale: 0.59, upscaler: 'fsr', aa: 'fxaa', shadows: 'off', ao: 'off', ssr: false, bloom: 'off', aniso: 2, lights: 4, beams: false, characterDetail: 'standard' },
+  medium: { scale: 0.77, upscaler: 'fsr', aa: 'smaa', shadows: 'low', ao: 'off', ssr: false, bloom: 'off', aniso: 4, lights: 6, beams: false, characterDetail: 'standard' },
+  high: { scale: 1, upscaler: 'fsr', aa: 'msaa', shadows: 'high', ao: 'half', ssr: false, bloom: 'off', aniso: 8, lights: 8, beams: false, characterDetail: 'standard' },
+  ultra: { scale: 1, upscaler: 'fsr', aa: 'smaa', shadows: 'ultra', ao: 'full', ssr: true, bloom: 'off', aniso: 16, lights: 12, beams: false, characterDetail: 'high' },
 };
 export const PRESET_KEYS = Object.keys(PRESETS.high);
 

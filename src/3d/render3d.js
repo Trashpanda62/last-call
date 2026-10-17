@@ -13,7 +13,7 @@ import { CopyShader } from 'three/addons/shaders/CopyShader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { buildWorld, buildWorldSteps, loadRoomMats, GLOWS, REFLECTS, M, WALL_H, yawOf } from './world.js';
 import { BEAMS } from './machines.js';
-import { makeBean, loadPlush, plushReady, loadClips, loadHats, PLAYED } from './plush.js';
+import { makeBean, loadPlush, plushReady, loadClips, loadHats, PLAYED, updatePotatoDetail } from './plush.js';
 import { loadProps, propsLoaded } from './props.js';
 import { GESTURES, Gestures, prepareGestures } from './gestures.js';
 import { Items, bodyPoseVersion } from './items.js';
@@ -960,6 +960,7 @@ export function draw(frame, { prepareOnly = false } = {}) {
   }
   if (!legacyLabelMatrices) for (const b of R.beans.values()) if (b.root.visible && b.label) b.label.visible = true;
   R.actorWork.offscreen = !orbit && !prepareOnly ? cullOffscreenActors(cam, poses) : 0;
+  updatePotatoDetail(cam);
   updateVisibleMatrices(R.scene);
   if (!R.hands.scene.matrixWorldAutoUpdate) updateVisibleMatrices(R.hands.scene);
   if (!legacyLabelMatrices) declutterLabels(cam);
