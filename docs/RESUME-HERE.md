@@ -45,13 +45,13 @@ Flappy is now against the south arcade wall at (2660, 650), facing north beside 
 
 ## Flying Pigs / safety / phone / room audio follow-up
 
-Renamed the cabinet and current floor plan to **Flying Pigs**; the interim canvas mascot is now a winged pig. New Sorceress art is **pending costed approval**, with exact prompts and live catalog prices in [the generation plan](../design/flying-pigs/README.md): two 2K Sunburst images, 20 Sorceress credits ($0.20). Three 20-second ElevenLabs crowd loops have verified dry-run estimates of 240 credits each, 720 total. No paid jobs submitted in this follow-up.
+**Flying Pigs generation is complete and approved.** Both Sorceress images are integrated: four keyed wing poses and a cropped red/gold casino skyline. Sorceress actual cost: 20 credits ($0.20). All three 20-second ElevenLabs sparse/medium/busy crowd loops are integrated, normalized and exposed in Settings > Sound. Estimate 720 credits; provider actual 726 credits. No extra paid takes or pending jobs. See [asset details and receipts](../design/flying-pigs/README.md).
 
-Moved the VIP breaker to clear north wall space at (1960, 1232), facing north. All machine use keeps the living player's 1.12 m eye height; seated body animations no longer lift the character. Visible safety controls expose **Sniff (N), Sip (F), Throw away (X)** and contextual **Check for traps (R)**. Sniff explicitly inspects the held drink even when next to a machine; the existing timed host checks/disarming are retained.
+Moved the VIP breaker to clear north wall space at (1960, 1232), facing north. All machine use keeps the living player's 1.12 m eye height; seated body animations no longer lift the character. Safety controls are now labeled **Sniff, Sip, Discard and Check traps** icons beside the killer controls in a shared bottom-center dock. Right click frees the cursor; left click selects an icon and returns to play. Betting-spot chip removal and camera right-click exit retain their contextual behavior. Existing keys are optional shortcuts. Sniff explicitly inspects the held drink even when next to a machine; the existing timed host checks/disarming are retained.
 
 The phone opens at any time with Tab or its persistent button, including while dead. Ghosts can read meetings but cannot chat, accuse or vote. Its top bar shows alive players and confirmed ejected killers; a killer who merely dies is not counted as caught. The count survives packed guest snapshots. The top-middle HUD shows personal spendable winnings (the existing wallet), alongside the crew bank on the left.
 
-The jukebox now plays quietly throughout all seven rooms. A separate crowd layer scales with living room occupants, excluding the listener, hidden staff and escaped players; zero other occupants gives no added crowd. This currently reuses an existing ElevenLabs bar recording. Dedicated sparse/medium/busy takes are part of the pending generation plan. Machine/water room ambience remains separate.
+The jukebox now plays quietly throughout all seven rooms. A separate crowd layer scales with living room occupants, excluding the listener, hidden staff and escaped players; zero other occupants gives no added crowd. Dedicated ElevenLabs layers blend continuously at 1/6/12 guests, with gradual four-second transitions even when the population reverses rapidly. Silent layers retain playback phase; empty rooms fade and pause after eight seconds. Machine/water room ambience remains separate.
 
 ## Manual acceptance and holds
 
@@ -73,3 +73,5 @@ Delivery identity: [complete source/asset/vendor receipt](playtest-build-safety-
 The sync tool now copies Git-tracked files only. Stage new deliverables before syncing; preserve local untracked .claude/, .dev/ and shots/. Existing voice-server configuration is retained. No new generation or balance sweep is needed.
 
 GPU checks run sequentially on ml350 using its existing Playwright/Vulkan setup. Validate the current checkout rather than an older served build. Compare performance on the same machine/settings; the larger constructed scene is not an FPS optimization claim.
+
+- 2026-10-17 approved media/mouse follow-up: generated assets, shared icon dock and three continuous crowd layers verified on ml350 in normal/no-props. Evidence: performance/2026-10-17-flying-pigs-controls.json; current build receipt: playtest-build-flying-pigs-2026-10-17.json.

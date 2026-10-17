@@ -1,0 +1,59 @@
+[
+ {
+  "file": "crowd-sparse.mp3",
+  "provider": "ElevenLabs",
+  "tool": "sound-generation",
+  "model": "eleven_text_to_sound_v2",
+  "params": {
+   "seconds": 20.0,
+   "influence": 0.5,
+   "loop": true
+  },
+  "jobId": null,
+  "credits": 242,
+  "date": "2026-10-17",
+  "time_ct": "02:18",
+  "prompt": "An elegant enclosed casino room with a few scattered guests, hushed occasional conversation. Warm natural room acoustics. Continuous diffuse indistinct crowd murmur. No intelligible words, no music, no machinery, no footsteps, no sharp clinks, no cheers or sudden loud sounds. Seamless ambience loop.",
+  "rights": "ElevenLabs terms; Steve's account",
+  "processing": "ffmpeg loudnorm I=-28 TP=-3 LRA=11; stereo 44100 Hz 112 kbps MP3",
+  "sha256": "d00091579e635f0718fbf19491b4c23d009fac92d410ac1cbc8330c2882aa1a0"
+ },
+ {
+  "file": "crowd-medium.mp3",
+  "provider": "ElevenLabs",
+  "tool": "sound-generation",
+  "model": "eleven_text_to_sound_v2",
+  "params": {
+   "seconds": 20.0,
+   "influence": 0.5,
+   "loop": true
+  },
+  "jobId": null,
+  "credits": 242,
+  "date": "2026-10-17",
+  "time_ct": "02:18",
+  "prompt": "An elegant enclosed casino room with a small group of guests, overlapping relaxed conversation and occasional quiet laughter. Warm natural room acoustics. Continuous diffuse indistinct crowd murmur. No intelligible words, no music, no machinery, no footsteps, no sharp clinks, no cheers or sudden loud sounds. Seamless ambience loop.",
+  "rights": "ElevenLabs terms; Steve's account",
+  "processing": "ffmpeg loudnorm I=-28 TP=-3 LRA=11; stereo 44100 Hz 112 kbps MP3",
+  "sha256": "c652c8edc9c1fae4917994d107ec501ca5c72e7a44129f7448118ae11af16f59"
+ },
+ {
+  "file": "crowd-busy.mp3",
+  "provider": "ElevenLabs",
+  "tool": "sound-generation",
+  "model": "eleven_text_to_sound_v2",
+  "params": {
+   "seconds": 20.0,
+   "influence": 0.5,
+   "loop": true
+  },
+  "jobId": null,
+  "credits": 242,
+  "date": "2026-10-17",
+  "time_ct": "02:18",
+  "prompt": "An elegant enclosed casino room with a busy room of guests, many layers of soft conversation and occasional restrained laughter. Warm natural room acoustics. Continuous diffuse indistinct crowd murmur. No intelligible words, no music, no machinery, no footsteps, no sharp clinks, no cheers or sudden loud sounds. Seamless ambience loop.",
+  "rights": "ElevenLabs terms; Steve's account",
+  "processing": "ffmpeg loudnorm I=-28 TP=-3 LRA=11; stereo 44100 Hz 112 kbps MP3",
+  "sha256": "71e272b98437034532dce8292974a0fd35df4d2dee236ce9b0a93b5531e3e4d5"
+ }
+]

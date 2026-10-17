@@ -11,7 +11,7 @@ const KILL_KEYS = ['order', 'rig', 'blade', 'accident', 'disguise', 'lights'];
 const LABELS = { order: 'Poison', rig: 'Rig', blade: 'Murder', accident: 'Accident', disguise: 'Disguise', lights: 'Blackout' };
 const ICONS = { order: 0, rig: 1, blade: 2, accident: 3, disguise: 4, lights: 5, transform: 6, leap: 7, eyes: 8, peek: 9, sense: 10, staff: 11, legs: 12, night: 13, lure: 14, haunt: 15 };
 const icon = k => `<em class="ability-icon" data-icon="${ICONS[k] ?? 10}" aria-hidden="true"></em>`;
-const KILL_HINTS = ['1', '2', 'LMB', '4', 'RMB', '6'];
+const KILL_HINTS = ['', '', 'LMB', '', '', ''];
 const TIPS = {
   order: 'At the bar: mix a poisoned drink and send it to anyone.',
   rig: 'Next to a game nobody is playing, or a snack bowl: the next gambler to use it dies.',
@@ -22,6 +22,7 @@ const TIPS = {
 };
 const FEEDS = [['floor', 'Floor'], ['bar', 'Bar'], ['arcade', 'Arcade'], ['race', 'Pond'], ['slots', 'Slots'], ['vip', 'VIP']];
 
+let actionCursor = false;
 let act = () => {}, unlock = () => {}, relock = () => {}, picker = null, last = null;
 const controls = new Map();
 const control = selector => {
@@ -35,14 +36,17 @@ export const cameraView = () => last?.pub.mode === 'play' && !last.pub.over ? la
 
 export function initMoves(opts) {
   ({ act, unlock, relock } = opts);
+  const safety = {sniff:['Sniff','M3 15c2-4 5-4 7-2l2 2c2 2 6 0 6-3V6M5 6v3m4-5v4'],sip:['Sip','M5 3h14l-2 10H7L5 3Zm7 10v7m-4 1h8'],pour:['Discard','M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7'],inspect:['Check traps','M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 6 6M7 10l2 2 4-4']};
+  $('safetyActions').innerHTML = Object.entries(safety).map(([k,[label,path]])=>`<button data-safety="${k}" title="${label}" aria-label="${label}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${path}"/></svg><span>${label}</span></button>`).join('');
+  $('safetyActions').querySelectorAll('button').forEach(b=>b.onclick=()=>{act(b.dataset.safety);closeActionCursor();});
   const bar = $('killerBar');
   bar.innerHTML = KILL_KEYS.map((k, i) => `<button data-move="${k}" title="${esc(TIPS[k])}">${icon(k)}<b>${KILL_HINTS[i]}</b><span> ${LABELS[k]}</span><i></i></button>`).join('') +
     '<button data-move="perk" class="edge hidden"><em class="ability-icon" data-icon="10" aria-hidden="true"></em><b>E</b> <span></span><i></i></button>' +
     '<button data-move="transform" class="hidden"><em class="ability-icon" data-icon="6" aria-hidden="true"></em><b>Q</b> <span>Transform</span><i></i></button>' +
     '<button data-move="leap" class="hidden"><em class="ability-icon" data-icon="7" aria-hidden="true"></em><b>Shift</b> <span>Leap</span><i></i></button><span class="kb-wait hidden"></span>';
-  bar.querySelectorAll('[data-move]').forEach(b => { b.onclick = () => { move(b.dataset.move); if (document.body.classList.contains('touch')) movesFan(false); }; });
+  bar.querySelectorAll('[data-move]').forEach(b => { b.onclick = () => { move(b.dataset.move); closeActionCursor(); if (document.body.classList.contains('touch')) movesFan(false); }; });
   const edge = bar.querySelector('[data-move=perk]');
-  edge.addEventListener('pointerdown', () => { if (last && last.priv.perk === 'peek') opts.peek(true); });
+  edge.addEventListener('pointerdown', () => { if (last && last.priv.perk === 'peek') {closeActionCursor();opts.peek(true);} });
   addEventListener('pointerup', () => opts.peek(false));
   addEventListener('pointercancel', () => opts.peek(false));
   // phones: the killer bar folds into one Moves button by the thumb; a tap fans the moves out above it
@@ -64,7 +68,13 @@ export function initMoves(opts) {
 }
 
 // Mouse actions are kept off menus, camera previews and the table's controls.
-export function mouseMove(button) {
+function closeActionCursor() { if (!actionCursor) return; actionCursor=false; document.body.classList.remove('actionCursor'); relock(); }
+export function mouseMove(button, viaPad = false) {
+  if (!viaPad && last && !picker && !barOpen() && !cameraView() && last.priv.alive && last.pub.mode === 'play' && !last.pub.over && button === 2) {
+    actionCursor = !actionCursor; document.body.classList.toggle('actionCursor', actionCursor);
+    if (actionCursor) unlock(); else relock(); return true;
+  }
+  if (actionCursor && button === 0) {closeActionCursor();return true;}
   if (!last || pickerOpen() || cameraView() || last.priv.seat || !last.priv.alive || !last.priv.isKiller || last.pub.mode !== 'play' || last.pub.over) return false;
   if (button !== 0 && button !== 2) return false;
   // Left click is also the interact button: with something to use in reach (the bartender, a snack, a body...), it
@@ -83,6 +93,7 @@ function bladeAimed() {
 
 // Returns true when the key was ours. Number keys remain alternate bindings.
 export function keyMove(k) {
+  if (k === 'escape' && actionCursor) {closeActionCursor();return true;}
   if (barKey(k)) return true;
   if (k === 'escape' && last?.priv.staffInside) { act('staffexit'); return true; }
   if (last && !last.priv.alive && (k === 'c' || (k === 'escape' && last.priv.cameraFeed))) { act('cameras'); return true; }
@@ -162,15 +173,17 @@ function openPicker(title, chars, pick) {
   p.classList.remove('hidden'); picker = { pick }; unlock();
 }
 function closePicker() { if (!picker) return; picker = null; $('picker').classList.add('hidden'); relock(); }
-export const pickerOpen = () => !!picker || barOpen();
+export const pickerOpen = () => actionCursor || !!picker || barOpen();
 function movesFan(on) { document.body.classList.toggle('movesOpen', !!on); $('movesBtn').setAttribute('aria-expanded', on ? 'true' : 'false'); }
 // Leaving a game: nothing it opened stays on screen.
-export function resetMoves() { resetBar(); picker = null; last = null; $('picker').classList.add('hidden'); document.body.classList.remove('sick', 'ghost', 'cctv'); movesFan(false); }
+export function resetMoves() { actionCursor=false;document.body.classList.remove('actionCursor'); resetBar(); picker = null; last = null; $('picker').classList.add('hidden'); document.body.classList.remove('sick', 'ghost', 'cctv'); movesFan(false); }
 
 export function updateMoves(v) {
   last = v;
   const { pub, priv } = v;
   const play = pub.mode === 'play' && !pub.over;
+  $('mouseActionsHint').classList.toggle('hidden', !(play && priv.alive && !priv.cameraFeed));
+  if ((!play || !priv.alive || priv.cameraFeed) && actionCursor) {actionCursor=false;document.body.classList.remove('actionCursor');}
   if (!play && picker) closePicker();
   // killer bar
   $('killerBar').classList.toggle('hidden', !(play && priv.isKiller && priv.alive && !priv.seat && !priv.cameraFeed));

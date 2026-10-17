@@ -1,5 +1,5 @@
 {
-  "status": "awaiting costed approval; no paid submissions made",
+  "status": "approved and generated 2026-10-17; integrated",
   "sorceress": {
     "model": "gpt-image-2.5-sunburst",
     "resolution": "2K",
@@ -9,7 +9,8 @@
     "files": [
       "pig-atlas",
       "sky-backdrop"
-    ]
+    ],
+    "actualCredits": 20
   },
   "elevenlabs": {
     "model": "eleven_text_to_sound_v2",
@@ -37,7 +38,9 @@
         "file": "assets/audio/amb/crowd-busy.mp3",
         "prompt": "An elegant enclosed casino room with a busy room of guests, many layers of soft conversation and occasional restrained laughter. Warm natural room acoustics. Continuous diffuse indistinct crowd murmur. No intelligible words, no music, no machinery, no footsteps, no sharp clinks, no cheers or sudden loud sounds. Seamless ambience loop."
       }
-    ]
+    ],
+    "actualCredits": 726
   },
-  "style": "Premium illustrated casino arcade art, polished 3D animated-film rendering, oxblood red, cracked obsidian black and antique gold, warm theatrical lighting, playful flying pig mascot with expressive eyes, crisp readable silhouettes."
+  "style": "Premium illustrated casino arcade art, polished 3D animated-film rendering, oxblood red, cracked obsidian black and antique gold, warm theatrical lighting, playful flying pig mascot with expressive eyes, crisp readable silhouettes.",
+  "review": "Four sprite poses keyed locally; backdrop cropped to remove unwanted decorative pig; all crowd loops loudness normalized to -28 LUFS."
 }

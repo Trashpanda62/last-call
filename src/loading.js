@@ -7,11 +7,11 @@ const ROWS = [
   ['Skee-ball: aim / power', 'Mouse aim / hold, release Space', 'Right stick / hold, release A'],
   ['Arm House Insurance', 'I before starting a round', 'Right stick click at a table'],
   ['Blackjack: hit / stand / double', 'H / J / K', 'X / Y / B'],
-  ['Murder / disguise', 'Left click / Right click', 'RT / LT'],
-  ['Other killer moves', '1 / 2 / 4 / 6', 'D-pad ← / → choose, ↓ use'],
-  ['Transform / selected ability', 'Q / E (hold for peek)', 'Y / RB (hold for peek)'],
+  ['Murder / disguise', 'Left click / Disguise icon', 'RT / LT'],
+  ['Other killer moves', 'Right click, choose an icon', 'D-pad ← / → choose, ↓ use'],
+  ['Transform / selected ability', 'Click icon (hold Peek)', 'Y / RB (hold for peek)'],
   ['Sprint / monster leap', 'Shift', 'Left stick click / LB'],
-  ['Sip / check / phone', 'F / R / Tab', 'X / D-pad up / View'],
+  ['Actions / phone', 'Right click icons / Tab', 'X / D-pad up / View'],
   ['Ghost cameras / haunt / pause', 'C / H / Escape', 'D-pad down / X / Menu'],
 ];
 // Vector diagrams keep every key label sharp at any resolution and add no asset downloads.
@@ -26,7 +26,7 @@ function keyboardDiagram() {
   keys += key('Shift', 18, 153, 76, 'action-key');
   ['Z', 'X', 'C', 'V', 'B', 'N'].forEach((k, i) => keys += key(k, 100 + i * 40, 153));
   keys += key('Ctrl', 18, 192, 46) + key('Alt', 70, 192, 46) + key('Space', 122, 192, 212, 'action-key');
-  return `<svg class="control-diagram keyboard-diagram" viewBox="0 0 540 244" role="img" aria-labelledby="keyboardDiagramTitle keyboardDiagramDesc"><title id="keyboardDiagramTitle">Left side of a keyboard and mouse</title><desc id="keyboardDiagramDesc">W above A, S and D are highlighted for movement. Q transforms, E interacts or uses your selected ability, Shift sprints or leaps, and Space starts the table game. Left mouse button murders or places chips; right mouse button disguises or takes chips back.</desc>
+  return `<svg class="control-diagram keyboard-diagram" viewBox="0 0 540 244" role="img" aria-labelledby="keyboardDiagramTitle keyboardDiagramDesc"><title id="keyboardDiagramTitle">Left side of a keyboard and mouse</title><desc id="keyboardDiagramDesc">W above A, S and D are highlighted for movement. Q transforms, E interacts or uses your selected ability, Shift sprints or leaps, and Space starts the table game. Left mouse button murders or places chips; right mouse button opens action icons or takes chips back from a betting spot.</desc>
     <text x="18" y="14" class="diagram-caption">WASD MOVEMENT</text><rect x="8" y="26" width="340" height="207" rx="10" class="device-shell"/>${keys}
     <text x="452" y="30" class="diagram-caption" text-anchor="middle">MOUSE</text><path d="M452 49 C422 49 409 69 409 97 V146 C409 176 425 191 452 191 C479 191 495 176 495 146 V97 C495 69 482 49 452 49Z" class="device-shell"/>
     <path d="M452 50 V112 M410 112 H494" class="device-line"/><rect x="446" y="91" width="12" height="28" rx="6" class="mouse-wheel"/>

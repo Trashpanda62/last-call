@@ -36,6 +36,7 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
           g.fillStyle='#130b12';g.fillRect(0,0,w,h);g.strokeStyle='#ba9454';g.lineWidth=6;g.strokeRect(3,3,w-6,h-6);
           const top=100,bottom=h-92,ph=bottom-top;
           g.fillStyle='#221522';g.fillRect(9,top,w-18,ph);
+          const sky=T.art2('flying-pigs-sky');if(sky){g.drawImage(sky,9,top,w-18,ph);g.fillStyle='#10081344';g.fillRect(9,top,w-18,ph);}
           for(let i=0;i<25;i++){g.fillStyle='#a88d64';g.fillRect((i*137)%w,top+(i*83)%ph,2,2);}
           const pipes=r?.pipes||[{x:.8,y:.5}];
           for(const p of pipes){const x=p.x*w,bw=FLAPPY.width*w,y=bottom-p.y*ph,gap=(p.gap??FLAPPY.gap)*ph;
@@ -44,13 +45,10 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
           }
           const x=FLAPPY.x*w,y=bottom-(r?.y??.5)*ph;
           g.save();g.translate(x,y);g.rotate(-Math.max(-.6,Math.min(.8,(r?.vy||0)*-.8)));
-          // Interim pig silhouette; the costed Sorceress atlas replaces this once approved.
-          g.fillStyle='#e7a5a4';g.beginPath();g.ellipse(0,0,19,14,0,0,7);g.fill();
-          g.fillStyle='#f5c2bc';g.beginPath();g.moveTo(4,-10);g.lineTo(7,-22);g.lineTo(14,-10);g.fill();
-          g.fillStyle='#e9dcc0';g.beginPath();g.ellipse(-8,Math.sin(t*18)*4,16,7,-.55,0,7);g.fill();
-          g.fillStyle='#c87e86';g.beginPath();g.ellipse(18,3,8,7,0,0,7);g.fill();
-          g.fillStyle='#6f3545';g.fillRect(17,1,2,3);g.fillRect(21,1,2,3);
-          g.fillStyle='#170d10';g.beginPath();g.arc(9,-5,3,0,7);g.fill();g.restore();
+          const pig=T.art2('flying-pigs-atlas'),frame=r?.phase==='fly'?Math.floor(t*10)%4:1;
+          if(pig)g.drawImage(pig,(frame%2)*512,Math.floor(frame/2)*512,512,512,-32,-(frame<2?43:40),64,64);
+          else {g.fillStyle='#e7a5a4';g.beginPath();g.ellipse(0,0,19,14,0,0,7);g.fill();}
+          g.restore();
           g.textAlign='center';g.textBaseline='middle';g.font='bold 45px Georgia';g.fillStyle='#e5c27e';g.fillText('FLYING PIGS',w/2,43);
           g.font='bold 24px Arial';g.fillText(r?.phase==='done'?'PAID '+(r.bet*r.mult).toFixed(0)+' / '+r.score+' PIPES':r?.phase==='fly'?r.score+' PIPES':r?'SPACE OR FLAP TO FLY':'PLACE CHIPS / START',w/2,81);
           g.font='bold 19px Arial';g.fillText('3 PIPES 1x / 6 1.5x / 10 2x / 15 3x',w/2,h-62);g.fillText('SPACE / CLICK FLAP',w/2,h-28);

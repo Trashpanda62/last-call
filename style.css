@@ -1012,3 +1012,27 @@ body.blackout #toasts { top:252px; }
   #bankGoal,#bank .bar,#lead,#role,body.touch #role { display:none; }
   #bank .label { font-size:9px; }
 }
+
+/* One action dock for crew and killers. Right click releases the cursor. */
+#actionDock {display:flex;gap:8px;align-items:flex-end;justify-content:center;max-width:96vw;flex-wrap:wrap;pointer-events:auto;}
+#actionDock #safetyActions {position:static;display:flex;gap:4px;max-width:none;flex-wrap:nowrap;}
+#actionDock #safetyActions button {display:grid;justify-items:center;align-content:center;width:66px;min-height:85px;padding:4px;border:1px solid #8b6d3f88;border-radius:4px;background:#100b0ce8;color:#dfcba5;}
+#safetyActions svg {width:40px;height:40px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+#safetyActions span {font:600 10px Manrope,Arial,sans-serif;margin-top:4px;white-space:nowrap;}
+#actionDock button:hover,#actionDock button:focus-visible {background:#453023;outline:2px solid #e0bd76;outline-offset:2px;}
+#actionDock button:active {transform:translateY(2px);}
+#mouseActionsHint {font:11px Manrope,Arial,sans-serif;color:#d7bf97;background:#100b0ce8;padding:4px 8px;border-radius:4px;}
+body.actionCursor #actionDock {filter:drop-shadow(0 0 8px #bb904944);}
+@media(max-width:800px) {#actionDock #safetyActions button {width:54px;min-height:76px;} #safetyActions svg {width:36px;height:36px;}}
+body.touch #mouseActionsHint {display:none;}
+
+#killerBar button b {display:none;}
+#killerBar button[data-move="blade"] b {display:block;}
+
+body.touch #actionDock #killerBar {position:static;flex-wrap:wrap;max-width:100%;}
+
+#bottom {width:max-content;max-width:96vw;}
+#actionDock {width:max-content;}
+@media(max-width:1100px) {body:not(.touch) #needs {bottom:148px;}}
+#bottom,#actionDock,#actionDock #safetyActions,#actionDock #killerBar {pointer-events:none;}
+#bottom button {pointer-events:auto;}

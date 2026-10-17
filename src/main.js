@@ -121,7 +121,7 @@ function setPhone(on) {
 }
 $('phoneOpen').onclick = () => setPhone(!S.phone);
 $('phoneClose').onclick = () => setPhone(false);
-document.querySelectorAll('[data-safety]').forEach(b => b.onclick = () => { audio.unlock(); act(b.dataset.safety); });
+
 function toMenu(err) {
   closeAllTables(); // first, while the game and the line to the host are still there: an open round is settled, not dropped
   voiceOff();
@@ -507,7 +507,7 @@ function pressAtNdc(nx, ny, alt, near) {
   if (!seatedPlay() || !tableGame()) return false;
   if (!alt && pressHudAt((nx + 1) * innerWidth / 2, (1 - ny) * innerHeight / 2)) return true;
   const h = pick(nx, ny) || (near ? pickNear(nx, ny, near) : null);
-  if (!h) return false;
+  if (!h || (alt && !h.part.startsWith('spot:'))) return false;
   audio.unlock(); pressAt = { x: nx, y: ny };
   pressPart(h.part, h.uv, alt); pressAt = null;
   if (touchMode) tapShow = { h, t: performance.now() };
@@ -551,8 +551,9 @@ view.addEventListener('mousedown', e => {
 });
 addEventListener('mouseup', e => {
   if (drag && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 6) {
-    if (seatedPlay()) pressAtNdc(...ndcOf(e.clientX, e.clientY), drag.b === 2);
-    else if (!S.paused && !mouseMove(drag.b) && drag.b === 0 && S.view && S.view.priv.ctx) act('use'); // (left click interacts here too)
+    if (!S.paused && pickerOpen() && mouseMove(drag.b)) { drag = null; return; }
+    if (seatedPlay() && pressAtNdc(...ndcOf(e.clientX, e.clientY), drag.b === 2)) { drag = null; return; }
+    if (!S.paused && !mouseMove(drag.b) && drag.b === 0 && S.view && S.view.priv.ctx) act('use'); // (left click interacts here too)
   }
   drag = null;
 });
@@ -736,8 +737,8 @@ function simStep(dt) {
 }
 const TIPS = [
   // two per role, merged from eight (Steve, 2026-10-15: "too many pop ups")
-  [6, 'Tip: walk up to a game to play it, scroll for your chip. R checks a game or a drink first: killers rig and poison them.', 'g'],
-  [6, 'Tip: left-click murders from behind, right-click disguises. Q transforms during a blackout, Shift leaps as the monster. E uses your selected ability.', 'k'],
+  [6, 'Tip: walk up to a game to play it, scroll for your chip. Right click and choose Check traps or Sniff first: killers rig games and poison drinks.', 'g'],
+  [6, 'Tip: left-click murders from behind. Right click for your action icons, including Disguise, abilities and Transform during a blackout.', 'k'],
   [40, 'Tip: Space marks whoever you aim at as a suspect. Found a body? Left click reports it.', 'g'],
   [40, 'Tip: your suggested target is just above your moves.', 'k'],
 ];
@@ -951,7 +952,7 @@ const gamepad = createGamepad({
   key: (key, down) => { padDispatch = true; try { window.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { key })); } finally { padDispatch = false; } },
   onUse: () => { inputMode = 'gamepad'; },
   onDisconnect: () => { if (inputMode === 'gamepad') inputMode = touchMode ? 'touch' : 'keyboard'; },
-  click: alt => { if (!playing()) return; audio.unlock(); if (seatedPlay() && pressAtNdc(0, 0, alt)) return; mouseMove(alt ? 2 : 0); },
+  click: alt => { if (!playing()) return; audio.unlock(); if (seatedPlay() && pressAtNdc(0, 0, alt)) return; mouseMove(alt ? 2 : 0, true); },
   chip: dir => { if (playing()) cycleChip(dir, S.view.pub.maxBet); },
   context: () => ({ menu: S.screen !== 'game' || S.paused || pickerOpen() || !!S.view?.priv?.cameraFeed || S.view?.priv?.seat?.game === 'cams' || S.view?.pub.mode !== 'play', killer: !!(S.view?.priv?.isKiller && S.view?.priv?.alive), dead: !!S.view && !S.view.priv.alive, table: !!tableGame(), skee: tableGame() === 'skee', blackjack: tableGame() === 'bj', start: !!tableStart() }),
 });

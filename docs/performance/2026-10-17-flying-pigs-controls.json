@@ -1,0 +1,239 @@
+{
+  "at": "2026-10-17T07:28:25.675Z",
+  "variants": [
+    {
+      "variant": "normal",
+      "mouseSniffDiscardAndDisarm": true,
+      "paused": false,
+      "dock": {
+        "x": 104,
+        "y": 281,
+        "width": 532,
+        "height": 98
+      }
+    },
+    {
+      "variant": "noprops",
+      "mouseSniffDiscardAndDisarm": true,
+      "paused": false,
+      "dock": {
+        "x": 104,
+        "y": 281,
+        "width": 532,
+        "height": 98
+      }
+    }
+  ],
+  "errors": [],
+  "audio": {
+    "rows": [
+      {
+        "step": "sparse",
+        "src": "assets/audio/amb/crowd-sparse.mp3",
+        "gain": 0.04463482275605202,
+        "layers": [
+          {
+            "src": "assets/audio/amb/crowd-sparse.mp3",
+            "gain": 0.04463482275605202,
+            "target": 0.045,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-medium.mp3",
+            "gain": 0,
+            "target": 0,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-busy.mp3",
+            "gain": 0,
+            "target": 0,
+            "playing": true
+          }
+        ]
+      },
+      {
+        "step": "transition-start",
+        "src": "assets/audio/amb/crowd-busy.mp3",
+        "gain": 0.04463482275605202,
+        "layers": [
+          {
+            "src": "assets/audio/amb/crowd-sparse.mp3",
+            "gain": 0.04463482275605202,
+            "target": 0,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-medium.mp3",
+            "gain": 0,
+            "target": 0,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-busy.mp3",
+            "gain": 0,
+            "target": 0.15588457268119893,
+            "playing": true
+          }
+        ]
+      },
+      {
+        "step": "overlap",
+        "src": "assets/audio/amb/crowd-busy.mp3",
+        "gain": 0.10289763659238815,
+        "layers": [
+          {
+            "src": "assets/audio/amb/crowd-sparse.mp3",
+            "gain": 0.021259061992168427,
+            "target": 0,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-medium.mp3",
+            "gain": 0,
+            "target": 0,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-busy.mp3",
+            "gain": 0.08163857460021973,
+            "target": 0.15588457268119893,
+            "playing": true
+          }
+        ]
+      },
+      {
+        "step": "rapid-reverse",
+        "src": "assets/audio/amb/crowd-medium.mp3",
+        "gain": 0.09530781209468842,
+        "layers": [
+          {
+            "src": "assets/audio/amb/crowd-sparse.mp3",
+            "gain": 0.029933873564004898,
+            "target": 0.036,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-medium.mp3",
+            "gain": 0.031778644770383835,
+            "target": 0.054,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-busy.mp3",
+            "gain": 0.03359529376029968,
+            "target": 0,
+            "playing": true
+          }
+        ]
+      },
+      {
+        "step": "medium-mix",
+        "src": "assets/audio/amb/crowd-medium.mp3",
+        "gain": 0.09003819452482276,
+        "layers": [
+          {
+            "src": "assets/audio/amb/crowd-sparse.mp3",
+            "gain": 0.03594699501991272,
+            "target": 0.036,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-medium.mp3",
+            "gain": 0.05381910502910614,
+            "target": 0.054,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-busy.mp3",
+            "gain": 0.0002720944758038968,
+            "target": 0,
+            "playing": true
+          }
+        ]
+      },
+      {
+        "step": "muted",
+        "src": "assets/audio/amb/crowd-medium.mp3",
+        "gain": 0.036409111839020625,
+        "layers": [
+          {
+            "src": "assets/audio/amb/crowd-sparse.mp3",
+            "gain": 0.03597227483987808,
+            "target": 0.036,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-medium.mp3",
+            "gain": 0.0004368369991425425,
+            "target": 0,
+            "playing": true
+          },
+          {
+            "src": "assets/audio/amb/crowd-busy.mp3",
+            "gain": 0,
+            "target": 0,
+            "playing": true
+          }
+        ]
+      },
+      {
+        "step": "empty",
+        "src": "",
+        "gain": 0.00006637591286562383,
+        "layers": [
+          {
+            "src": "assets/audio/amb/crowd-sparse.mp3",
+            "gain": 0.00006637591286562383,
+            "target": 0,
+            "playing": false
+          },
+          {
+            "src": "assets/audio/amb/crowd-medium.mp3",
+            "gain": 0,
+            "target": 0,
+            "playing": false
+          },
+          {
+            "src": "assets/audio/amb/crowd-busy.mp3",
+            "gain": 0,
+            "target": 0,
+            "playing": false
+          }
+        ]
+      }
+    ],
+    "list": [
+      {
+        "file": "amb/crowd-sparse.mp3",
+        "category": "amb",
+        "kind": "crowd",
+        "title": "Crowd sparse",
+        "uses": [
+          "Crowd"
+        ],
+        "kept": true
+      },
+      {
+        "file": "amb/crowd-medium.mp3",
+        "category": "amb",
+        "kind": "crowd",
+        "title": "Crowd medium",
+        "uses": [
+          "Crowd"
+        ],
+        "kept": false
+      },
+      {
+        "file": "amb/crowd-busy.mp3",
+        "category": "amb",
+        "kind": "crowd",
+        "title": "Crowd busy",
+        "uses": [
+          "Crowd"
+        ],
+        "kept": true
+      }
+    ]
+  }
+}

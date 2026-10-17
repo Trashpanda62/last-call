@@ -514,7 +514,7 @@ export function crestImage() {
 
 // Sorceress art for phases 7, 8 and 10 (assets/art2): slot symbols and game-screen backdrops (paint.js draws them),
 // neon signs, paintings, posters, key art and effect sprites. World pieces are rebuilt once it is in.
-export const ART2_NAMES = ['jukebox-marquee-v2', 'portrait-gambler', 'portrait-queen', 'portrait-bartender', 'sym-diamond', 'sym-seven', 'sym-bar', 'sym-bell', 'sym-cherry', 'sym-lemon',
+export const ART2_NAMES = ['flying-pigs-atlas', 'flying-pigs-sky', 'jukebox-marquee-v2', 'portrait-gambler', 'portrait-queen', 'portrait-bartender', 'sym-diamond', 'sym-seven', 'sym-bar', 'sym-bell', 'sym-cherry', 'sym-lemon',
   ...['mines', 'tower'].map(k => 'screen-' + k),
   ...['lastcall', 'bar', 'vip', 'restrooms', 'duckrace', 'slots', 'highlimit', 'dice', 'spintowin', 'plinko', 'mines', 'dragontower'].map(k => 'sign-' + k),
   ...['smoke', 'sparks', 'confetti', 'fizz', 'stars', 'ghost'].map(k => 'fx-' + k)];

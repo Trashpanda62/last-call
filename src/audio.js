@@ -278,11 +278,23 @@ export function setPopulation(n) {
   if (next === population) return;
   population = next; updateCrowd();
 }
+// Three persistent layers avoid restarting a fade when occupancy changes again.
+// Four seconds to reach 95% of the new mix, with no discontinuous gain changes.
 function updateCrowd() {
-  const tier = population < 4 ? 0 : population < 9 ? 1 : 2;
-  // Existing ElevenLabs room recording until the dedicated crowd takes are approved.
-  const file = LIB?.crowd?.[tier] || LIB?.amb?.bar?.[0];
-  stream('crowd', mood === 'lounge' && room && population ? file : null, Math.min(.34, .045 * Math.sqrt(population)));
+  if (!ac || !LIB || preloading) return;
+  const S = streams.crowd || (streams.crowd = {decks: LIB.crowd.map(() => deck(ambBus)), cur: 0, revision: 0});
+  const active = mood === 'lounge' && room && population > 0;
+  const mix = Math.max(0, Math.min(2, population < 6 ? (population - 1) / 5 : 1 + (population - 6) / 6));
+  const volume = active ? Math.min(.34, .045 * Math.sqrt(population)) : 0;
+  S.cur = Math.round(mix); const revision = ++S.revision;
+  S.decks.forEach((d, i) => {
+    const file = LIB.crowd[i], url = 'assets/audio/' + file;
+    if (!d.src) { d.src = url; d.el.dataset.asset = url; d.el.src = mediaURL(url); }
+    d.target = kept(file) ? volume * Math.max(0, 1 - Math.abs(mix - i)) : 0;
+    d.g.gain.setTargetAtTime(d.target, ac.currentTime, 1.35);
+    if (active) d.el.play().catch(() => {});
+  });
+  if (!active) setTimeout(() => { if (revision === S.revision) for (const d of S.decks) d.el.pause(); }, 8000);
 }
 // Legacy event hooks now play physical casino sounds.
 export function sting(name, vol = 0.9) {
@@ -471,7 +483,7 @@ export function hum(v) {
 }
 // for checks: what has loaded and what is playing
 export const audioInfo = () => ({ ctx: ac ? ac.state : null, lib: !!LIB, sfx: Object.values(BUF).reduce((n, b) => n + b.length, 0), mood, room, deaths: deathLog.slice(), mutedSounds: [...mutedFiles], activeEffects: [...oneShots].map(s => s.file), preview: soundPreviewState(),
-  music: streams.music ? streams.music.decks[streams.music.cur].src : '', amb: streams.amb ? streams.amb.decks[streams.amb.cur].src : '', hum: !!humSrc, tableBed: nearTables, scoreChoice, population, crowd: streams.crowd ? {src: streams.crowd.decks[streams.crowd.cur].src, gain: streams.crowd.decks[streams.crowd.cur].g.gain.value} : null, jukebox: jukebox ? { active: jukebox.active, playing: !jukebox.el.paused, time: jukebox.el.currentTime, distance: Math.hypot(listener.x - 445, listener.y - 675) / 60 } : null });
+  music: streams.music ? streams.music.decks[streams.music.cur].src : '', amb: streams.amb ? streams.amb.decks[streams.amb.cur].src : '', hum: !!humSrc, tableBed: nearTables, scoreChoice, population, crowd: streams.crowd ? {src: population && mood === 'lounge' ? streams.crowd.decks[streams.crowd.cur].src : '', gain: streams.crowd.decks.reduce((v,d)=>v+d.g.gain.value,0), layers: streams.crowd.decks.map(d=>({src:d.src,gain:d.g.gain.value,target:d.target,playing:!d.el.paused}))} : null, jukebox: jukebox ? { active: jukebox.active, playing: !jukebox.el.paused, time: jukebox.el.currentTime, distance: Math.hypot(listener.x - 445, listener.y - 675) / 60 } : null });
 
 // Keep stream bytes in memory: changing rooms and score choices never starts a network download mid-game.
 const MEDIA = new Map();

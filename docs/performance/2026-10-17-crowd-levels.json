@@ -1,0 +1,47 @@
+[
+  {
+    "file": "assets/audio/amb/crowd-sparse.mp3",
+    "metrics": {
+      "input_i": "-28.60",
+      "input_tp": "-15.09",
+      "input_lra": "2.80",
+      "input_thresh": "-38.60",
+      "output_i": "-28.49",
+      "output_tp": "-15.42",
+      "output_lra": "2.30",
+      "output_thresh": "-38.49",
+      "normalization_type": "dynamic",
+      "target_offset": "0.49"
+    }
+  },
+  {
+    "file": "assets/audio/amb/crowd-medium.mp3",
+    "metrics": {
+      "input_i": "-28.00",
+      "input_tp": "-13.63",
+      "input_lra": "2.40",
+      "input_thresh": "-38.00",
+      "output_i": "-27.83",
+      "output_tp": "-13.69",
+      "output_lra": "2.20",
+      "output_thresh": "-37.83",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.17"
+    }
+  },
+  {
+    "file": "assets/audio/amb/crowd-busy.mp3",
+    "metrics": {
+      "input_i": "-27.98",
+      "input_tp": "-13.58",
+      "input_lra": "2.00",
+      "input_thresh": "-37.98",
+      "output_i": "-27.95",
+      "output_tp": "-13.86",
+      "output_lra": "1.40",
+      "output_thresh": "-37.95",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.05"
+    }
+  }
+]
