@@ -1,0 +1,43 @@
+{
+  "status": "awaiting costed approval; no paid submissions made",
+  "sorceress": {
+    "model": "gpt-image-2.5-sunburst",
+    "resolution": "2K",
+    "creditsPerFile": 10,
+    "totalCredits": 20,
+    "usd": 0.2,
+    "files": [
+      "pig-atlas",
+      "sky-backdrop"
+    ]
+  },
+  "elevenlabs": {
+    "model": "eleven_text_to_sound_v2",
+    "creditsPerSecond": 12,
+    "totalEstimatedCredits": 720,
+    "files": [
+      {
+        "name": "crowd-sparse",
+        "seconds": 20,
+        "estimate": 240,
+        "file": "assets/audio/amb/crowd-sparse.mp3",
+        "prompt": "An elegant enclosed casino room with a few scattered guests, hushed occasional conversation. Warm natural room acoustics. Continuous diffuse indistinct crowd murmur. No intelligible words, no music, no machinery, no footsteps, no sharp clinks, no cheers or sudden loud sounds. Seamless ambience loop."
+      },
+      {
+        "name": "crowd-medium",
+        "seconds": 20,
+        "estimate": 240,
+        "file": "assets/audio/amb/crowd-medium.mp3",
+        "prompt": "An elegant enclosed casino room with a small group of guests, overlapping relaxed conversation and occasional quiet laughter. Warm natural room acoustics. Continuous diffuse indistinct crowd murmur. No intelligible words, no music, no machinery, no footsteps, no sharp clinks, no cheers or sudden loud sounds. Seamless ambience loop."
+      },
+      {
+        "name": "crowd-busy",
+        "seconds": 20,
+        "estimate": 240,
+        "file": "assets/audio/amb/crowd-busy.mp3",
+        "prompt": "An elegant enclosed casino room with a busy room of guests, many layers of soft conversation and occasional restrained laughter. Warm natural room acoustics. Continuous diffuse indistinct crowd murmur. No intelligible words, no music, no machinery, no footsteps, no sharp clinks, no cheers or sudden loud sounds. Seamless ambience loop."
+      }
+    ]
+  },
+  "style": "Premium illustrated casino arcade art, polished 3D animated-film rendering, oxblood red, cracked obsidian black and antique gold, warm theatrical lighting, playful flying pig mascot with expressive eyes, crisp readable silhouettes."
+}

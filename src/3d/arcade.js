@@ -44,11 +44,14 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
           }
           const x=FLAPPY.x*w,y=bottom-(r?.y??.5)*ph;
           g.save();g.translate(x,y);g.rotate(-Math.max(-.6,Math.min(.8,(r?.vy||0)*-.8)));
-          g.fillStyle='#e4b14d';g.beginPath();g.ellipse(0,0,18,14,0,0,7);g.fill();
-          g.fillStyle='#f7dd8e';g.beginPath();g.ellipse(-8,4+Math.sin(t*18)*4,10,6,-.4,0,7);g.fill();
-          g.fillStyle='#eee4ca';g.beginPath();g.arc(8,-5,7,0,7);g.fill();g.fillStyle='#170d10';g.fillRect(10,-7,4,5);
-          g.fillStyle='#c86134';g.beginPath();g.moveTo(16,0);g.lineTo(28,4);g.lineTo(16,8);g.fill();g.restore();
-          g.textAlign='center';g.textBaseline='middle';g.font='bold 45px Georgia';g.fillStyle='#e5c27e';g.fillText('FLAPPY BIRD',w/2,43);
+          // Interim pig silhouette; the costed Sorceress atlas replaces this once approved.
+          g.fillStyle='#e7a5a4';g.beginPath();g.ellipse(0,0,19,14,0,0,7);g.fill();
+          g.fillStyle='#f5c2bc';g.beginPath();g.moveTo(4,-10);g.lineTo(7,-22);g.lineTo(14,-10);g.fill();
+          g.fillStyle='#e9dcc0';g.beginPath();g.ellipse(-8,Math.sin(t*18)*4,16,7,-.55,0,7);g.fill();
+          g.fillStyle='#c87e86';g.beginPath();g.ellipse(18,3,8,7,0,0,7);g.fill();
+          g.fillStyle='#6f3545';g.fillRect(17,1,2,3);g.fillRect(21,1,2,3);
+          g.fillStyle='#170d10';g.beginPath();g.arc(9,-5,3,0,7);g.fill();g.restore();
+          g.textAlign='center';g.textBaseline='middle';g.font='bold 45px Georgia';g.fillStyle='#e5c27e';g.fillText('FLYING PIGS',w/2,43);
           g.font='bold 24px Arial';g.fillText(r?.phase==='done'?'PAID '+(r.bet*r.mult).toFixed(0)+' / '+r.score+' PIPES':r?.phase==='fly'?r.score+' PIPES':r?'SPACE OR FLAP TO FLY':'PLACE CHIPS / START',w/2,81);
           g.font='bold 19px Arial';g.fillText('3 PIPES 1x / 6 1.5x / 10 2x / 15 3x',w/2,h-62);g.fillText('SPACE / CLICK FLAP',w/2,h-28);
         },arg:st=>st.pub?.arcade?.flappy||null});

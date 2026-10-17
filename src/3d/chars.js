@@ -390,7 +390,7 @@ export class Bean {
     this.phase += dt * 11 * (0.3 + this.walk);
     const sw = Math.sin(this.phase) * this.walk;
     const sb = this.seatBlend;
-    this.body.position.set(0, Math.abs(Math.cos(this.phase)) * 0.05 * this.walk + sb * 0.3 + Math.sin(s.t * 2 + this.phase) * 0.006, 0);
+    this.body.position.set(0, Math.abs(Math.cos(this.phase)) * 0.05 * this.walk + Math.sin(s.t * 2 + this.phase) * 0.006, 0);
     this.body.rotation.set(0, 0, sw * 0.07);
     this.legs.forEach((l, i) => { l.rotation.x = (i ? sw : -sw) * 0.7 - sb * 1.45; l.rotation.z = 0; });
     this.arms.forEach((a, i) => {

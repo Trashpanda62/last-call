@@ -984,3 +984,31 @@ body.touch #killerBar button,body.touch #killerBar button.cool { width:66px; hei
 #insuranceBtn { display:flex; align-items:center; gap:7px; min-height:40px; padding:5px 9px; pointer-events:auto; color:var(--gold); background:var(--panel); font-size:11px; }
 #insuranceBtn.armed { color:#a8d9b4; border-color:#699775; opacity:1; }
 #insuranceBtn svg { flex:none; }
+
+/* Persistent personal account, accessible safety actions and spectator phone. */
+#personalBalance { position:absolute;top:12px;left:50%;transform:translateX(-50%);min-width:148px;text-align:center;padding:8px 20px;background:rgba(18,10,12,.94);border:1px solid #9b7842;border-radius:8px;pointer-events:none; }
+#personalBalance span { display:block;font-size:10px;letter-spacing:.12em;color:#c4ad85; }
+#personalAmt { display:block;font-size:26px;line-height:1.2;color:#f0d28f;font-variant-numeric:tabular-nums; }
+#phoneOpen { position:absolute;right:16px;top:116px;pointer-events:auto;padding:8px 12px;min-height:44px; }
+#safetyActions { position:absolute;bottom:132px;left:16px;display:flex;gap:8px;flex-wrap:wrap;max-width:460px;pointer-events:auto; }
+#safetyActions button { min-height:44px;padding:8px 12px;background:#24171b;border:1px solid #977447;font-size:12px; }
+#safetyActions button:hover,#phoneOpen:hover { background:#453023; }
+#safetyActions button:disabled { opacity:.5; }
+#phoneTop { display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 0 12px;border-bottom:1px solid #725a3a;color:#e5c27e;font-size:12px; }
+#phoneClose { min-height:44px;padding:8px 12px; }
+@media(max-width:800px) { #personalBalance { top:8px;min-width:100px;padding:4px 8px; } #personalAmt { font-size:20px; } #safetyActions { bottom:148px;max-width:240px;gap:4px; } #phoneOpen { top:100px; } }
+
+body.touch #touchBtns [data-act="sip"],body.touch #touchBtns [data-act="pour"],body.touch #touchBtns [data-act="inspect"] { display:none; }
+#blackoutHud { top:88px; }
+body.blackout #toasts { top:252px; }
+/* Reserve separate columns for the two balances and compact role controls. */
+@media(max-width:800px) {
+  #role { max-width:calc(50vw - 144px);font-size:12px; }
+  #role .rl-more,#role .rl-edge { display:none; }
+}
+@media(max-width:600px) {
+  #bank,body.touch #bank { width:calc(50vw - 80px);max-width:170px;padding:4px 8px;display:block; }
+  #bankAmt,body.touch #bankAmt { font-size:20px; }
+  #bankGoal,#bank .bar,#lead,#role,body.touch #role { display:none; }
+  #bank .label { font-size:9px; }
+}

@@ -54,8 +54,8 @@ export class Blackout {
     const box = hasProp('breaker') ? null : new THREE.MeshStandardMaterial({ color: 0x6d7076, metalness: 0.6, roughness: 0.5 });
     const dark = new THREE.MeshStandardMaterial({ color: 0x24262a, metalness: 0.5, roughness: 0.6 });
     const knobM = new THREE.MeshStandardMaterial({ color: 0xd02018, roughness: 0.4, emissive: 0x400000 }); // (a little glow: it reads by flashlight)
-    this.panels = BREAKERS.map(b => {
-      const g = new THREE.Group();
+    this.panels = BREAKERS.map((b, i) => {
+      const g = new THREE.Group(); g.name = 'breaker-panel-' + i;
       const wx = (b.x + Math.cos(b.face) * 31) * M, wz = (b.y + Math.sin(b.face) * 31) * M;
       g.position.set(wx, 1.35, wz); g.rotation.y = yawOf(b.face + Math.PI); // local +Z faces the room
       const hand = [];

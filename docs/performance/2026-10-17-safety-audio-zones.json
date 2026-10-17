@@ -1,0 +1,303 @@
+{
+  "at": "2026-10-17T07:10:25.695Z",
+  "rows": [
+    {
+      "label": "blackjack",
+      "room": "floor",
+      "x": 960,
+      "y": 358,
+      "expected": "floor-card-room",
+      "meanRms": 0.00286141208387052,
+      "peakRms": 0.004062236039702444,
+      "ctx": "running",
+      "lib": true,
+      "sfx": 117,
+      "mood": "lounge",
+      "deaths": [],
+      "mutedSounds": [],
+      "activeEffects": [],
+      "preview": {
+        "file": null,
+        "loading": false,
+        "error": ""
+      },
+      "music": "assets/audio/music/house-after-hours.mp3",
+      "amb": "assets/audio/amb/floor-card-room.mp3",
+      "hum": false,
+      "tableBed": "blackjack",
+      "scoreChoice": 0,
+      "population": 0,
+      "crowd": {
+        "src": "",
+        "gain": 0
+      },
+      "jukebox": {
+        "active": true,
+        "playing": true,
+        "time": 3.59829,
+        "distance": 10.079048676448698
+      }
+    },
+    {
+      "label": "roulette",
+      "room": "floor",
+      "x": 950,
+      "y": 860,
+      "expected": "floor-roulette-room",
+      "meanRms": 0.002003187561036883,
+      "peakRms": 0.002892911123799182,
+      "ctx": "running",
+      "lib": true,
+      "sfx": 117,
+      "mood": "lounge",
+      "deaths": [],
+      "mutedSounds": [],
+      "activeEffects": [],
+      "preview": {
+        "file": null,
+        "loading": false,
+        "error": ""
+      },
+      "music": "assets/audio/music/house-after-hours.mp3",
+      "amb": "assets/audio/amb/floor-roulette-room.mp3",
+      "hum": false,
+      "tableBed": "roulette",
+      "scoreChoice": 0,
+      "population": 0,
+      "crowd": {
+        "src": "",
+        "gain": 0
+      },
+      "jukebox": {
+        "active": true,
+        "playing": true,
+        "time": 7.198186,
+        "distance": 8.963661206349904
+      }
+    },
+    {
+      "label": "mixed",
+      "room": "floor",
+      "x": 1900,
+      "y": 680,
+      "expected": "floor-mixed-tables",
+      "meanRms": 0.007006468365463413,
+      "peakRms": 0.009005674631124613,
+      "ctx": "running",
+      "lib": true,
+      "sfx": 117,
+      "mood": "lounge",
+      "deaths": [],
+      "mutedSounds": [],
+      "activeEffects": [],
+      "preview": {
+        "file": null,
+        "loading": false,
+        "error": ""
+      },
+      "music": "assets/audio/music/house-after-hours.mp3",
+      "amb": "assets/audio/amb/floor-mixed-tables.mp3",
+      "hum": false,
+      "tableBed": "tables",
+      "scoreChoice": 0,
+      "population": 0,
+      "crowd": {
+        "src": "",
+        "gain": 0
+      },
+      "jukebox": {
+        "active": true,
+        "playing": true,
+        "time": 10.808889,
+        "distance": 24.25014318399882
+      }
+    },
+    {
+      "label": "slots",
+      "room": "slots",
+      "x": 300,
+      "y": 1500,
+      "expected": "slots-1",
+      "meanRms": 0.013840560544469239,
+      "peakRms": 0.016750909342178405,
+      "ctx": "running",
+      "lib": true,
+      "sfx": 117,
+      "mood": "lounge",
+      "deaths": [],
+      "mutedSounds": [],
+      "activeEffects": [],
+      "preview": {
+        "file": null,
+        "loading": false,
+        "error": ""
+      },
+      "music": "assets/audio/music/house-after-hours.mp3",
+      "amb": "assets/audio/amb/slots-1.mp3",
+      "hum": false,
+      "tableBed": "tables",
+      "scoreChoice": 0,
+      "population": 0,
+      "crowd": {
+        "src": "",
+        "gain": 0
+      },
+      "jukebox": {
+        "active": true,
+        "playing": true,
+        "time": 14.418239,
+        "distance": 13.960758495790182
+      }
+    },
+    {
+      "label": "skee-ball",
+      "room": "arcade",
+      "x": 2754,
+      "y": 396,
+      "expected": "casino-eerie",
+      "meanRms": 0.014527825475632885,
+      "peakRms": 0.01849773272912548,
+      "ctx": "running",
+      "lib": true,
+      "sfx": 117,
+      "mood": "lounge",
+      "deaths": [],
+      "mutedSounds": [],
+      "activeEffects": [],
+      "preview": {
+        "file": null,
+        "loading": false,
+        "error": ""
+      },
+      "music": "assets/audio/music/house-after-hours.mp3",
+      "amb": "assets/audio/amb/casino-eerie.mp3",
+      "hum": false,
+      "tableBed": "tables",
+      "scoreChoice": 0,
+      "population": 0,
+      "crowd": {
+        "src": "",
+        "gain": 0
+      },
+      "jukebox": {
+        "active": true,
+        "playing": true,
+        "time": 18.018685,
+        "distance": 38.763248631202785
+      }
+    },
+    {
+      "label": "jukebox-near",
+      "room": "bar",
+      "x": 445,
+      "y": 600,
+      "expected": "bar-1",
+      "meanRms": 0.012138849444947346,
+      "peakRms": 0.01787088550943006,
+      "ctx": "running",
+      "lib": true,
+      "sfx": 117,
+      "mood": "lounge",
+      "deaths": [],
+      "mutedSounds": [],
+      "activeEffects": [],
+      "preview": {
+        "file": null,
+        "loading": false,
+        "error": ""
+      },
+      "music": "assets/audio/music/house-after-hours.mp3",
+      "amb": "assets/audio/amb/bar-1.mp3",
+      "hum": false,
+      "tableBed": "tables",
+      "scoreChoice": 0,
+      "population": 0,
+      "crowd": {
+        "src": "",
+        "gain": 0
+      },
+      "jukebox": {
+        "active": true,
+        "playing": true,
+        "time": 21.627397,
+        "distance": 1.25
+      }
+    },
+    {
+      "label": "jukebox-far",
+      "room": "bar",
+      "x": 150,
+      "y": 200,
+      "expected": "bar-1",
+      "meanRms": 0.005771193316131321,
+      "peakRms": 0.00950489288534849,
+      "ctx": "running",
+      "lib": true,
+      "sfx": 117,
+      "mood": "lounge",
+      "deaths": [],
+      "mutedSounds": [],
+      "activeEffects": [],
+      "preview": {
+        "file": null,
+        "loading": false,
+        "error": ""
+      },
+      "music": "assets/audio/music/house-after-hours.mp3",
+      "amb": "assets/audio/amb/bar-1.mp3",
+      "hum": false,
+      "tableBed": "tables",
+      "scoreChoice": 0,
+      "population": 0,
+      "crowd": {
+        "src": "",
+        "gain": 0
+      },
+      "jukebox": {
+        "active": true,
+        "playing": true,
+        "time": 25.228481,
+        "distance": 9.319185705962845
+      }
+    },
+    {
+      "label": "leave-jukebox",
+      "room": "floor",
+      "x": 1900,
+      "y": 680,
+      "expected": "floor-mixed-tables",
+      "meanRms": 0.004920408643967986,
+      "peakRms": 0.007220947972763989,
+      "ctx": "running",
+      "lib": true,
+      "sfx": 117,
+      "mood": "lounge",
+      "deaths": [],
+      "mutedSounds": [],
+      "activeEffects": [],
+      "preview": {
+        "file": null,
+        "loading": false,
+        "error": ""
+      },
+      "music": "assets/audio/music/house-after-hours.mp3",
+      "amb": "assets/audio/amb/floor-mixed-tables.mp3",
+      "hum": false,
+      "tableBed": "tables",
+      "scoreChoice": 0,
+      "population": 0,
+      "crowd": {
+        "src": "",
+        "gain": 0
+      },
+      "jukebox": {
+        "active": true,
+        "playing": true,
+        "time": 28.836318,
+        "distance": 24.25014318399882
+      }
+    }
+  ],
+  "errors": [],
+  "scope": "Actual master-output signal, automatic table bed selection and positional jukebox playback; subjective mix acceptance remains Steve's"
+}

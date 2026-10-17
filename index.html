@@ -47,6 +47,9 @@
 
 <!-- In-game HUD -->
 <div id="hud" class="hidden">
+  <div id="personalBalance"><span>YOUR BALANCE</span><b id="personalAmt">$0</b></div>
+  <button id="phoneOpen" aria-label="Open phone">Phone · Tab</button>
+  <div id="safetyActions" class="hidden"><button data-safety="sniff">Sniff · N</button><button data-safety="sip">Sip · F</button><button data-safety="pour">Throw away · X</button><button data-safety="inspect">Check for traps · R</button></div>
   <div id="cross"></div>
   <div id="stamina" class="hidden"><div id="staminaFill"></div></div>
   <div id="eyes" class="hidden"><svg viewBox="0 0 24 14" width="20" height="12" aria-hidden="true"><path d="M1 7C4 2 8 0.8 12 0.8S20 2 23 7C20 12 16 13.2 12 13.2S4 12 1 7Z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="7" r="3.2" fill="currentColor"/></svg><span id="eyesN"></span></div>
@@ -184,15 +187,16 @@
       <div class="hcard"><b>Killer edges</b><p>Before the night starts each killer picks one edge: a witness meter, a camera over the shoulder, a sense that shows gamblers through walls, the STAFF ONLY doors, light feet, night eyes or a jackpot siren that pulls the crowd. Gamblers see the list too.</p></div>
       <div class="hcard"><b>Meetings</b><p>Find a body or ring the pit bell. Everyone says what they saw (the killers lie), then votes. Your notes remember what you saw.</p></div>
     </div>
-    <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, left click to use, F sip, R check (a drink, machine or snack bowl), X pour, G the mixer (at the bar), Q fire the revolver (J for killers), Shift sprint (5 seconds), Space marks whoever you aim at as a suspect (again: trusted), killer left-click murder, right-click disguise, Q transform in a blackout, Shift leap as the monster, E selected ability (hold to peek, or at a STAFF ONLY door for vents), U interact, 1-6 alternate killer moves, H haunt and C cameras (as a ghost), Esc menu.
+    <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, left click to use, F sip, N sniff your drink, R check (a machine or snack bowl), X throw away your drink, G the mixer (at the bar), Q fire the revolver (J for killers), Shift sprint (5 seconds), Space marks whoever you aim at as a suspect (again: trusted), killer left-click murder, right-click disguise, Q transform in a blackout, Shift leap as the monster, E selected ability (hold to peek, or at a STAFF ONLY door for vents), U interact, 1-6 alternate killer moves, H haunt and C cameras (as a ghost), Esc menu.
       <b>At a game</b> you just walk up and stand there, free to look round and move: scroll the mouse wheel to pick your chip (it shows at the bottom), click a glowing spot on the felt to put chips there, right-click to take them back. Then click the game's own control to play: Hit deals at blackjack, pull a slot's lever, click the roulette or prize wheel, the dice, the coin, Plinko's green DROP button, or the first tile or egg. Blackjack’s Hit, Stand and Double controls sit directly below your betting circle (or press H, J and K). At the duck race place chips on a numbered duck circle and press START; at the coin-pusher or claw press START, position the chute or claw and press DROP; at Crash press Space to commit them for each rocket. Walk away to leave: a spin, a drop or a slot on AUTO keeps going without you, so you can set a row of slots spinning; a hand of blackjack, a Mines board, a Tower climb, a coin pot or a dice point settles once you are 10 ft away.
-      <b>The screen</b> stays quiet: one message at a time at the top, thirst and hunger in the bottom-left corner (they turn red and grow when low), and a killer's moves at the bottom, folded to their key while they wait. <b>On a phone</b> the left thumb walks, the right drags to look, and the buttons by the right thumb are the ones you can use right now: Use always, Sip, Check and Pour with a drink in hand (Check at a game too), Light in a blackout, Shoot with a loaded revolver, Moves for a killer's moves and Pounce for the monster.</p>
+      <b>The screen</b> stays quiet: one message at a time at the top, thirst and hunger in the bottom-left corner (they turn red and grow when low), and a killer's moves at the bottom, folded to their key while they wait. <b>On a phone</b> the left thumb walks, the right drags to look, and the buttons by the right thumb are the ones you can use right now: Use always; Sniff, Sip and Throw away beside your drink indicator, Check for traps near a game or snack bowl, Light in a blackout, Shoot with a loaded revolver, Moves for a killer's moves and Pounce for the monster.</p>
     <button class="big" id="howClose">Got it</button>
   </div>
 </div>
 
 <div id="meeting" class="overlay phone hidden">
   <div class="card wide">
+    <div id="phoneTop"><span id="phoneStatus"></span><button id="phoneClose" aria-label="Close phone">Close</button></div>
     <h2 id="mTitle">Emergency meeting</h2>
     <div id="mReason" class="muted"></div>
     <div class="mcols">

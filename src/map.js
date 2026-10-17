@@ -136,7 +136,7 @@ export const REST_SPOTS = [{ x: 110, y: 820 }, { x: 110, y: 980 }, { x: 320, y: 
 export const BOWL_SPOTS = [{ x: 530, y: 160 }, { x: 2900, y: 1300 }, { x: 2070, y: 480 }, { x: 1520, y: 1280 }, { x: 1900, y: 1100 }, { x: 980, y: 1250 }]; // bar, VIP, arcade, slot hall (east, by the dice), casino floor, slot hall
 export const GAME_NAMES = {
   bj: 'blackjack', roulette: 'roulette', race: 'the duck race', vip: 'the VIP lounge', slots: 'the slots', crash: 'Crash',
-  flappy: 'Flappy Bird', pusher: 'the coin-pusher', claw: 'the prize claw', skee: 'skee-ball', plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice', cams: 'the security desk',
+  flappy: 'Flying Pigs', pusher: 'the coin-pusher', claw: 'the prize claw', skee: 'skee-ball', plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice', cams: 'the security desk',
 };
 
 export function makeSeats() {
@@ -332,7 +332,7 @@ export const BREAKERS = [
   { x: 588, y: 800, face: 0 },               // the restrooms, east wall, north of the door to the floor
   { x: 1550, y: 1148, face: Math.PI / 2 },   // the casino floor, south wall, west of the door to the VIP lounge
   { x: 2948, y: 640, face: 0 },              // the arcade, east wall, past the Plinko cabinets
-  { x: 1652, y: 1400, face: Math.PI },       // the VIP lounge, west wall, north of the door to the slot hall
+  { x: 1960, y: 1232, face: -Math.PI / 2 },       // VIP north wall, clear of the high-limit banks and the floor doorway
   { x: 400, y: 1232, face: -Math.PI / 2 },   // the slot hall, north wall
   { x: 2680, y: 1148, face: Math.PI / 2 },   // the duck pond, south wall, east of the door to the VIP lounge
 ];

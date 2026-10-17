@@ -867,8 +867,8 @@ export function draw(frame, { prepareOnly = false } = {}) {
   } else {
     const ghost = !priv.alive, seated = !!priv.seat, sits = seated && SITS.has(priv.seat.game);
     R.fp.bob += dt * (me.moving ? 10 : 0);
-    // at a game the eye rises to table-playing height (eased, so stepping up to one is a lean, not a jump)
-    const eyeTo = ghost ? EYE.ghost : priv.monster ? 2.45 : seated ? EYE.seat : EYE.stand; // the monster looks down on everyone
+    // Machine use never changes the player's physical eye height.
+    const eyeTo = ghost ? EYE.ghost : priv.monster ? 2.45 : EYE.stand; // the monster looks down on everyone
     R.eyeY = R.eyeY === undefined || ghost ? eyeTo : R.eyeY + (eyeTo - R.eyeY) * Math.min(1, dt * 6);
     // standing, the eye sits a little behind the body's centre, so someone at arm's length (a knife's reach) is a face, not a wall of plush
     const back = sits || ghost ? 0 : 0.12; // (the body keeps 0.25 m off walls, so this never pokes through one)

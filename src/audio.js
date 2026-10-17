@@ -204,7 +204,7 @@ function deck(bus) {
   const g = ac.createGain(); g.gain.value = 0; ac.createMediaElementSource(el).connect(g).connect(bus);
   return { el, g, src: '' };
 }
-const streams = { music: null, amb: null };
+const streams = { music: null, amb: null, crowd: null };
 function stream(kind, file, vol = 1) {
   if (!ac || !LIB) return;
   if (file && !kept(file)) file = null;
@@ -227,7 +227,7 @@ function playMood() {
   const key = mood === 'lounge' && room ? room : 'floor';
   const f = key === 'floor' && LIB.amb[nearTables] ? LIB.amb[nearTables] : LIB.amb[key] || LIB.amb.floor;
   stream('amb', inCasino && f ? f[0] : null, mood === 'lounge' ? 0.72 : 0.38);
-  updateJukebox();
+  updateJukebox(); updateCrowd();
 }
 export function setMood(m) { if (m === mood) return; mood = m; if (m !== 'lounge') resetSceneCues(); playMood(); }
 // Room ambience follows the player during play.
@@ -257,19 +257,32 @@ export function setListener(x, y, look = 0) {
 }
 function updateJukebox() {
   if (!ac || !LIB) return;
-  const active = mood === 'lounge' && room === 'bar' && kept('music/menu-1.mp3');
+  const active = mood === 'lounge' && !!room && kept('music/menu-1.mp3');
   if (!jukebox && active) {
     const el = new Audio(mediaURL('assets/audio/music/menu-1.mp3')); el.loop = true; el.preload = 'auto';
     const g = ac.createGain(), p = ac.createPanner(), filter = ac.createBiquadFilter();
-    g.gain.value = 0; p.panningModel = 'HRTF'; p.distanceModel = 'inverse'; p.refDistance = 1.3; p.maxDistance = 10; p.rolloffFactor = 1.6;
+    g.gain.value = 0; p.panningModel = 'HRTF'; p.distanceModel = 'inverse'; p.refDistance = 1.3; p.maxDistance = 10; p.rolloffFactor = 0;
     p.setPosition(445 / 60, 0.95, 675 / 60); filter.type = 'lowpass'; filter.frequency.value = 3500;
     ac.createMediaElementSource(el).connect(filter).connect(g).connect(p).connect(musicBus);
     jukebox = { el, g, p, active: false };
   }
   if (!jukebox || jukebox.active === active) return;
-  jukebox.active = active; jukebox.g.gain.setTargetAtTime(active ? 0.32 : 0, ac.currentTime, 0.35);
+  jukebox.active = active; jukebox.g.gain.setTargetAtTime(active ? 0.09 : 0, ac.currentTime, 0.35);
   if (active) jukebox.el.play().catch(() => {});
   else setTimeout(() => { if (!jukebox.active) jukebox.el.pause(); }, 2500);
+}
+// Count living guests in the listener's room, excluding the listener. Quiet rooms stay quiet.
+let population = 0;
+export function setPopulation(n) {
+  const next = Math.max(0, Math.min(31, Math.floor(Number(n) || 0)));
+  if (next === population) return;
+  population = next; updateCrowd();
+}
+function updateCrowd() {
+  const tier = population < 4 ? 0 : population < 9 ? 1 : 2;
+  // Existing ElevenLabs room recording until the dedicated crowd takes are approved.
+  const file = LIB?.crowd?.[tier] || LIB?.amb?.bar?.[0];
+  stream('crowd', mood === 'lounge' && room && population ? file : null, Math.min(.34, .045 * Math.sqrt(population)));
 }
 // Legacy event hooks now play physical casino sounds.
 export function sting(name, vol = 0.9) {
@@ -458,7 +471,7 @@ export function hum(v) {
 }
 // for checks: what has loaded and what is playing
 export const audioInfo = () => ({ ctx: ac ? ac.state : null, lib: !!LIB, sfx: Object.values(BUF).reduce((n, b) => n + b.length, 0), mood, room, deaths: deathLog.slice(), mutedSounds: [...mutedFiles], activeEffects: [...oneShots].map(s => s.file), preview: soundPreviewState(),
-  music: streams.music ? streams.music.decks[streams.music.cur].src : '', amb: streams.amb ? streams.amb.decks[streams.amb.cur].src : '', hum: !!humSrc, tableBed: nearTables, scoreChoice, jukebox: jukebox ? { active: jukebox.active, playing: !jukebox.el.paused, time: jukebox.el.currentTime, distance: Math.hypot(listener.x - 445, listener.y - 675) / 60 } : null });
+  music: streams.music ? streams.music.decks[streams.music.cur].src : '', amb: streams.amb ? streams.amb.decks[streams.amb.cur].src : '', hum: !!humSrc, tableBed: nearTables, scoreChoice, population, crowd: streams.crowd ? {src: streams.crowd.decks[streams.crowd.cur].src, gain: streams.crowd.decks[streams.crowd.cur].g.gain.value} : null, jukebox: jukebox ? { active: jukebox.active, playing: !jukebox.el.paused, time: jukebox.el.currentTime, distance: Math.hypot(listener.x - 445, listener.y - 675) / 60 } : null });
 
 // Keep stream bytes in memory: changing rooms and score choices never starts a network download mid-game.
 const MEDIA = new Map();

@@ -1699,7 +1699,7 @@ function makeApi(G) {
     } else if (k === 'sip') {
       if (c.drink) sip(c, c.drink); else tell(c, 'You have nothing to drink. The bar is in the north-west corner.');
     } else if (k === 'sniff' || k === 'inspect') {
-      const x = inspectTarget(c);
+      const x = k === 'sniff' ? (c.drink ? { kind: 'drink', d: c.drink } : null) : inspectTarget(c);
       if (x) { c.inspect = Object.assign(x, { t: CFG.inspectTime }); tell(c, x.kind === 'drink' ? 'Sniffing... hold still.' : 'Checking it over... hold still.'); } else tell(c, 'Nothing within reach to check.');
     } else if (k === 'pour') {
       if (c.drink) { const d = c.drink; removeDrink(d); tell(c, `You poured out your ${d.kind}.`, false, 'pour'); }
@@ -1871,7 +1871,7 @@ function makeApi(G) {
   function pubView() {
     const m = G.meeting;
     return {
-      t: G.t, mode: G.mode, pickT: G.mode === 'pick' ? Math.ceil(G.pickT) : null, bank: G.bank, target: G.target, closeT: Math.max(0, Math.ceil(CFG.closingTime - G.t)), lightsT: G.blackout ? 1 : G.lightsT, nk: G.killerIds.length, backrooms: G.backrooms, escape: G.escape,
+      t: G.t, mode: G.mode, pickT: G.mode === 'pick' ? Math.ceil(G.pickT) : null, bank: G.bank, target: G.target, closeT: Math.max(0, Math.ceil(CFG.closingTime - G.t)), lightsT: G.blackout ? 1 : G.lightsT, nk: G.killerIds.length, killersCaught: G.chars.filter(c => c.isKiller && c.ejected).length, killersCaught: G.chars.filter(c => c.isKiller && c.ejected).length, backrooms: G.backrooms, escape: G.escape,
       exits: G.exits && { ids: G.exits.ids, t: Math.max(0, Math.ceil(G.exits.t)), closed: G.exits.closed },
       darkT: G.escape && !G.blackout && !G.exits ? Math.max(0, Math.ceil(CFG.escapeDarkAt - G.t)) : null,
       blackout: G.blackout && { t: +G.blackout.t.toFixed(1), br: G.blackout.br.map(b => [b.i, +Math.min(1, b.work / CFG.breakerWork).toFixed(2), b.done ? 1 : 0]) },
@@ -1918,7 +1918,7 @@ function makeApi(G) {
       notes: c.notes.slice(-12).map(n => ({ text: n.text, hard: !!n.hard })), inbox: c.inbox.splice(0),
       ctx: ctx ? ctx.label : null, posVer: c.posVer, x: c.x, y: c.y, seat: c.seat ? { id: c.seat.id, x: c.seat.x, y: c.seat.y, face: c.seat.face, game: c.seat.game, tier: c.seat.tier || null } : null,
       drink: myDrink ? { kind: myDrink.kind, glass: myDrink.glass, sips: myDrink.sips, held: true } : null,
-      sniffT: c.inspect ? c.inspect.t : 0, inspectT: c.inspect ? c.inspect.t : 0, bellUsed: c.bellUsed, voted: c.voted, accused: c.accused, lucky: Math.ceil(c.lucky),
+      canInspect: c.alive && ['seat', 'bowl'].includes(inspectTarget(c)?.kind), sniffT: c.inspect ? c.inspect.t : 0, inspectT: c.inspect ? c.inspect.t : 0, bellUsed: c.bellUsed, voted: c.voted, accused: c.accused, lucky: Math.ceil(c.lucky),
       sick: sick(c), poisonT: sick(c) ? Math.ceil(c.poisonT) : 0, hauntUsed: !!c.hauntUsed, atBar: atBar(c),
       disguise: c.disguise && c.disguise.t > 0 ? { as: c.disguise.as, t: Math.ceil(c.disguise.t) } : null, canDisguise: c.lastVictim !== undefined,
       spiked: c.isKiller ? G.drinks.filter(d => d.poisoned).map(d => d.id).concat(G.traps.filter(t => t.kind === 'bowl').map(t => 'bowl' + t.id)) : G.drinks.filter(d => d.poisoned && d.poisonBy === c.id).map(d => d.id), // (anyone's own poisoned pours)

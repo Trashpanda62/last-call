@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-17T07:09:26.523Z",
+  "variants": [
+    {
+      "variant": "normal",
+      "heights": [
+        {
+          "game": "slots",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "slots"
+        },
+        {
+          "game": "bj",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "bj"
+        },
+        {
+          "game": "roulette",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "roulette"
+        },
+        {
+          "game": "flappy",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "flappy"
+        },
+        {
+          "game": "skee",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "skee"
+        },
+        {
+          "game": "plinko",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "plinko"
+        }
+      ],
+      "breaker": {
+        "position": {
+          "x": 1960,
+          "y": 1232,
+          "face": -1.5707963267948966
+        },
+        "blockers": []
+      },
+      "physicalActions": true,
+      "ghostPhone": true
+    },
+    {
+      "variant": "noprops",
+      "heights": [
+        {
+          "game": "slots",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "slots"
+        },
+        {
+          "game": "bj",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "bj"
+        },
+        {
+          "game": "roulette",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "roulette"
+        },
+        {
+          "game": "flappy",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "flappy"
+        },
+        {
+          "game": "skee",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "skee"
+        },
+        {
+          "game": "plinko",
+          "before": 1.12,
+          "after": 1.12,
+          "seat": "plinko"
+        }
+      ],
+      "breaker": {
+        "position": {
+          "x": 1960,
+          "y": 1232,
+          "face": -1.5707963267948966
+        },
+        "blockers": []
+      },
+      "physicalActions": true,
+      "ghostPhone": true
+    }
+  ],
+  "errors": []
+}

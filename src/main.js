@@ -113,12 +113,15 @@ function only(...ids) { if (!ids.includes('settings') && settingsOpen()) closeSe
 // The meeting is on your phone (Steve, 2026-10-15): a notification when a murder is found, Tab (or the phone badge)
 // brings it up and puts it away, and the night goes on behind it, so you can ignore it and keep playing.
 function setPhone(on) {
-  on = !!(on && S.view && S.view.pub.meeting && !S.view.pub.over);
+  on = !!(on && S.view && !S.view.pub.over);
   if (on === !!S.phone) return;
   S.phone = on; show('meeting', on);
   if (on) { releaseLock(); renderMeeting(S.view, act, S.view.pub.chars.filter(c => c.human).length > 1); }
   else { if (document.activeElement && document.activeElement.id === 'chatIn') document.activeElement.blur(); if (S.screen === 'game' && !S.paused) requestLock(); }
 }
+$('phoneOpen').onclick = () => setPhone(!S.phone);
+$('phoneClose').onclick = () => setPhone(false);
+document.querySelectorAll('[data-safety]').forEach(b => b.onclick = () => { audio.unlock(); act(b.dataset.safety); });
 function toMenu(err) {
   closeAllTables(); // first, while the game and the line to the host are still there: an open round is settled, not dropped
   voiceOff();
@@ -518,7 +521,7 @@ const lockOK = () => !navigator.webdriver && !S.noLock && !touchMode;
 const locked = () => document.pointerLockElement === view;
 function wantLock() {
   const v = S.view;
-  return S.screen === 'game' && !S.paused && !!v && v.pub.mode === 'play' && !v.pub.over && !deathPlaying() && !pickerOpen() && !v.priv.cameraFeed && !(v.priv.seat && v.priv.seat.game === 'cams');
+  return S.screen === 'game' && !S.paused && !S.phone && !!v && v.pub.mode === 'play' && !v.pub.over && !deathPlaying() && !pickerOpen() && !v.priv.cameraFeed && !(v.priv.seat && v.priv.seat.game === 'cams');
 }
 function requestLock(force) {
   if (!lockOK() || locked() || !(force ? S.screen === 'game' && !S.paused : wantLock())) return;
@@ -568,7 +571,7 @@ addEventListener('mousemove', e => {
   if (drag && S.screen === 'game') { lookBy(e.clientX - drag.x, e.clientY - drag.y); drag.x = e.clientX; drag.y = e.clientY; }
 });
 
-const KEYMAP = { u: 'use', f: 'sip', r: 'inspect', x: 'pour' }; // (left click interacts; E is the killer's ability)
+const KEYMAP = { u: 'use', f: 'sip', n: 'sniff', r: 'inspect', x: 'pour' }; // (left click interacts; E is the killer's ability)
 const MOVE_KEYS = new Set(['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright']);
 addEventListener('keydown', e => {
   if (!padDispatch) inputMode = 'keyboard';
@@ -759,7 +762,7 @@ function frameGame(dt) {
   // the meeting on the phone: a new one starts with the phone away (the notification says so); one that ends puts it away
   const mt = pub.meeting && !pub.over ? pub.meeting : null, mk = mt ? mt.title + mt.reason : '';
   if (mk !== (S.meetKey || '')) { S.meetKey = mk; setPhone(false); resetMeeting(); }
-  if (mt && S.phone) renderMeeting(v, act, pub.chars.filter(c => c.human).length > 1);
+  if (S.phone) renderMeeting(v, act, pub.chars.filter(c => c.human).length > 1);
   phoneBadge(mt);
   if (pub.mode === 'pick') renderPick(v, act, S.role === 'solo');
   worldSounds(v);
@@ -809,6 +812,7 @@ function updateNeeds(v) {
 function worldSounds(v) {
   const { pub, priv } = v, room = pub.mode === 'play' && !pub.over ? roomOf(S.me) : null, was = S.heard || (S.heard = {});
   audio.setRoom(room); audio.setListener(S.me.x, S.me.y, S.me.look);
+  audio.setPopulation(pub.chars.filter(c => c.alive && !c.staffInside && !c.escaped && roomOf(c) === room && c.id !== priv.me).length);
   audio.sceneCues(v, !!room && !S.paused && !deathPlaying() && !cameraView() && !pub.meeting && !document.hidden);
   const C = pub.crash, R = pub.race;
   if (C && C.phase !== was.crash) { if (room === 'arcade' && was.crash) audio.sfx(C.phase === 'fly' ? 'rocket' : C.phase === 'boom' ? 'boom' : null); was.crash = C.phase; }

@@ -808,7 +808,7 @@ export class PlushBean {
     this.phase += dt * 11 * (0.3 + this.walk);
     const sw = Math.sin(this.phase) * this.walk, sb = this.seatBlend, w = this.walk;
     const breathe = Math.sin(s.t * 2.2 + this.phase);
-    this.model.position.set(0, Math.abs(Math.cos(this.phase)) * 0.045 * w + sb * Math.max(0, (s.seatHeight || 0.58) + 0.08 - this.info.legTop), sb * 0.22);
+    this.model.position.set(0, Math.abs(Math.cos(this.phase)) * 0.045 * w, sb * 0.22);
     this.rot('Hips', 0, 0, sw * 0.06);
     this.rot('Spine', 0.05 * w + 0.04 * sb, 0, -sw * 0.03);
     this.rot('Spine1', 0, this.eyeYaw * 0.15, 0);

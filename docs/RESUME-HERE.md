@@ -43,6 +43,16 @@ Corrected the skee collision test to check the ballistic path at the actual hole
 
 Flappy is now against the south arcade wall at (2660, 650), facing north beside the duck doorway; its playing/approach positions and the promenade stay clear. Moved the obsolete MINES / DRAGON TOWER wall labels over their actual machines. Flappy starts 36% faster, speeds up with score and narrows later gaps from .28 to .21; each pipe retains its own visible/collision gap while on screen. A precise scripted run can still clear 15 pipes; idle and repeated flap spam lose. The top-down plan is updated. [Previews and proposed next games](../design/arcade-entry/README.md). Current reports: performance/2026-10-17-skee-entry-rules.json, arcade-entry-{rules,views}.json, flappy-difficulty.json and the current entry network reports. No additional games were added in this follow-up.
 
+## Flying Pigs / safety / phone / room audio follow-up
+
+Renamed the cabinet and current floor plan to **Flying Pigs**; the interim canvas mascot is now a winged pig. New Sorceress art is **pending costed approval**, with exact prompts and live catalog prices in [the generation plan](../design/flying-pigs/README.md): two 2K Sunburst images, 20 Sorceress credits ($0.20). Three 20-second ElevenLabs crowd loops have verified dry-run estimates of 240 credits each, 720 total. No paid jobs submitted in this follow-up.
+
+Moved the VIP breaker to clear north wall space at (1960, 1232), facing north. All machine use keeps the living player's 1.12 m eye height; seated body animations no longer lift the character. Visible safety controls expose **Sniff (N), Sip (F), Throw away (X)** and contextual **Check for traps (R)**. Sniff explicitly inspects the held drink even when next to a machine; the existing timed host checks/disarming are retained.
+
+The phone opens at any time with Tab or its persistent button, including while dead. Ghosts can read meetings but cannot chat, accuse or vote. Its top bar shows alive players and confirmed ejected killers; a killer who merely dies is not counted as caught. The count survives packed guest snapshots. The top-middle HUD shows personal spendable winnings (the existing wallet), alongside the crew bank on the left.
+
+The jukebox now plays quietly throughout all seven rooms. A separate crowd layer scales with living room occupants, excluding the listener, hidden staff and escaped players; zero other occupants gives no added crowd. This currently reuses an existing ElevenLabs bar recording. Dedicated sparse/medium/busy takes are part of the pending generation plan. Machine/water room ambience remains separate.
+
 ## Manual acceptance and holds
 
 The more realistic standard potato pilot is integrated at the shipped 1.41 m height, with natural skin, inset eyes, waistcoat/gloves and the existing local rig/animations. Steve approved the single 30-credit ($0.30) Hunyuan generation; no further paid variants were generated. Standard uses 24K triangles and baked 2K PBR maps. Graphics > Potato detail > High (original mesh), also included in Ultra, retains the full 1.5M-triangle model and 4K maps for the nearest potato up close. The optional download does not block startup. Corrected Steve's reported side-view arm: symmetric fitted shoulder/elbow/wrist joints, continuous upper-arm weights and ascending chest joints on both meshes. Both sides were visually checked idle and walking. Round/staff bodies and meeting portraits retain their previous designs pending pilot review. [Pilot details and evidence](../design/characters/potato-realism/README.md).
@@ -58,7 +68,7 @@ Latest layout/payout evidence uses the layout-review and arcade-payout report na
 
 LAN playtest: https://10.42.0.37:3161/ (existing self-signed LAN HTTPS).
 
-Delivery identity: [complete source/asset/vendor receipt](playtest-build-arcade-entry-2026-10-17.json), generated after sync. All 855 Git-tracked files in src/, assets/, vendor/ and the three entry files match served SHA-256 bytes, including the mirror and new arcade modules.
+Delivery identity: [complete source/asset/vendor receipt](playtest-build-safety-phone-2026-10-17.json), generated after sync. All 855 Git-tracked files in src/, assets/, vendor/ and the three entry files match served SHA-256 bytes, including the mirror and new arcade modules.
 
 The sync tool now copies Git-tracked files only. Stage new deliverables before syncing; preserve local untracked .claude/, .dev/ and shots/. Existing voice-server configuration is retained. No new generation or balance sweep is needed.
 

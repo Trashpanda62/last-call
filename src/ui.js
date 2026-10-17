@@ -76,6 +76,14 @@ const sty = (id, p, v) => put(id, ':' + p, v, (e, x) => { e.style[p] = x; });
 const cls = (id, c, on) => put(id, '.' + c, on, (e, x) => e.classList.toggle(c, x));
 export function updateHud(v) {
   const { pub, priv } = v;
+  txt('personalAmt', money(priv.wallet || 0));
+  txt('phoneStatus', `${pub.chars.filter(c => c.alive).length} alive · ${pub.killersCaught || 0}/${pub.nk} killers caught`);
+  const safety = priv.alive && pub.mode === 'play' && !pub.over && !priv.cameraFeed && !priv.monster;
+  show('safetyActions', safety && (!!priv.drink || priv.canInspect));
+  for (const b of $('safetyActions').querySelectorAll('[data-safety]')) {
+    b.classList.toggle('hidden', b.dataset.safety === 'inspect' ? !priv.canInspect : !priv.drink);
+    b.disabled = priv.inspectT > 0;
+  }
   // the crew's money, big (Steve: the amount left should be very obvious); each change flashes as + or -
   const dk = pub.darkT;
   const gearLine = pub.escape && !priv.isKiller && priv.alive ? ` · your winnings ${money(priv.wallet || 0)} · B: gear${priv.gear && priv.gear.length ? ' (' + priv.gear.length + ')' : ''}` : '';
@@ -192,8 +200,19 @@ let mKey = '', mLines = 0, mVoteKey = '', mMood = {};
 export function resetMeeting() { mKey = ''; mLines = 0; mVoteKey = ''; mMood = {}; $('mChat').innerHTML = ''; show('ejectStrip', false); $('meeting').classList.remove('ejected'); }
 export function renderMeeting(v, act, multi) {
   const { pub, priv } = v; const m = pub.meeting;
+  if (!m) {
+    const idleKey = 'idle:' + priv.me + ':' + priv.alive + ':' + JSON.stringify(priv.notes);
+    if (mKey === idleKey) return;
+    resetMeeting(); mKey = idleKey;
+    $('meeting').classList.remove('ejected');
+    $('mTitle').textContent = priv.alive ? 'Your phone' : 'Spectator phone';
+    $('mReason').textContent = 'No meeting in progress.';
+    $('mNotes').textContent = priv.alive ? 'Your notes: ' + (priv.notes.map(n => n.text).join(' · ') || 'Nothing recorded yet.') : 'You can watch meetings. Ghosts cannot chat, accuse or vote.';
+    $('mChat').replaceChildren(); $('mVotes').replaceChildren(); $('mTimer').textContent = '';
+    show('chatForm', false); show('ejectStrip', false); return;
+  }
   $('meeting').classList.toggle('ejected', m.phase === 'result' && m.ejected !== null && m.ejected !== undefined);
-  const key = m.title + m.reason;
+  const key = m.title + m.reason + priv.alive;
   if (key !== mKey) {
     resetMeeting(); mKey = key;
     $('mTitle').textContent = m.title; $('mReason').textContent = m.reason;
@@ -214,7 +233,7 @@ export function renderMeeting(v, act, multi) {
     $('mChat').appendChild(p); $('mChat').scrollTop = 1e6;
   }
   show('chatForm', priv.alive && m.phase !== 'result'); // the bots read the chat too; the thrown-out player loses it at once
-  const vk = [m.phase, priv.voted, priv.accused, m.voted.join(','), JSON.stringify(m.tally), JSON.stringify(mMood), [...marks].join()].join('|');
+  const vk = [priv.alive, m.phase, priv.voted, priv.accused, m.voted.join(','), JSON.stringify(m.tally), JSON.stringify(mMood), [...marks].join()].join('|');
   if (vk !== mVoteKey) {
     mVoteKey = vk;
     const box = $('mVotes'); box.innerHTML = '';
