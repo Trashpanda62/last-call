@@ -7,6 +7,7 @@ const browser=await chromium.launch({headless:true});
 try{
  const page=await browser.newPage({viewport:{width:1800,height:1550},ignoreHTTPSErrors:true}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(root+'design/casino-layout.html');await page.locator('#plan svg').waitFor();
+ assert.equal(await page.locator('[data-name="Trashcan"]').count(),10);
  assert.equal(await page.locator('[data-name="Derby betting pedestal"]').count(),1);
  await page.locator('[data-name="Derby betting pedestal"]').click();assert.equal(await page.locator('#selection').textContent(),'Derby betting pedestal');
  await page.getByRole('button',{name:'Before',exact:true}).click();assert.equal(await page.locator('[data-name="Derby betting pedestal"]').count(),6);

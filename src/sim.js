@@ -2,7 +2,7 @@
 import { CFG, DIFF, CAST, DRINKS, DEATH_SOUNDS } from './config.js';
 import { rand, pick, clamp, dist, angDiff, money, shuffle, secs } from './util.js';
 import { mixInfo, BOT_RECIPES } from './mix.js';
-import { ROOMS, TAP, BELL, SHADY, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, STAFF_DOORS, JACKPOT, BREAKERS, W, H, makeSeats, los, collide, roomOf, route, openSpot, clearSpot } from './map.js';
+import { ROOMS, TAP, BELL, TRASH_CANS, SHADY, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, STAFF_DOORS, JACKPOT, BREAKERS, W, H, makeSeats, los, collide, roomOf, route, openSpot, clearSpot } from './map.js';
 import { PERKS, PERK } from './perks.js';
 import * as Gm from './games.js';
 import { makeTalk } from './talk.js';
@@ -1483,6 +1483,13 @@ function makeApi(G) {
       c.state = 'wander'; c.wait = -6; c.target = null; setGoal(c, spot || openSpot(r)); // (and they hang about a while)
     }
   }
+  const trashAt = c => nearest(TRASH_CANS.filter(b=>los(c,b)), c, CFG.reach + 5);
+  function discardDrink(c) {
+    if (!c.drink) return;
+    if (!trashAt(c)) { tell(c, 'Take your drink to a trashcan to throw it away.'); return; }
+    const d=c.drink; removeDrink(d); c.inspect=null;
+    tell(c, `You threw away your ${d.kind}.`, false, 'pour');
+  }
   function contextFor(c) {
     if (G.mode !== 'play' || G.over) return null;
     if (!c.alive) {
@@ -1493,6 +1500,7 @@ function makeApi(G) {
     const body = G.bodies.find(b => !b.reported && dist(b, c) < 90 && canSee(c, b));
     if (body && !G.escape) return { label: 'Report body', act: () => callMeeting(c, body, `${c.name} found ${byId(body.id).name}'s body.`) };
     if (c.seat && sitsDown(c, c.seat)) return { label: 'Stand up', act: () => standUp(c) }; // (at a game E presses what you aim at)
+    if (c.drink && trashAt(c)) return {label:'Throw drink in trashcan', act:()=>discardDrink(c)};
     const door = c.isKiller && c.perk === 'staff' ? staffDoorAt(c) : null;
     if (door) return { label: 'Take the staff passage', act: () => usePerk(c, 'staff') }; // enters the private camera passage
     if (atBar(c)) {
@@ -1702,7 +1710,7 @@ function makeApi(G) {
       const x = k === 'sniff' ? (c.drink ? { kind: 'drink', d: c.drink } : null) : inspectTarget(c);
       if (x) { c.inspect = Object.assign(x, { t: CFG.inspectTime }); tell(c, x.kind === 'drink' ? 'Sniffing... hold still.' : 'Checking it over... hold still.'); } else tell(c, 'Nothing within reach to check.');
     } else if (k === 'pour') {
-      if (c.drink) { const d = c.drink; removeDrink(d); tell(c, `You poured out your ${d.kind}.`, false, 'pour'); }
+      discardDrink(c);
     } else if (k === 'antidote') {
       if (!atBar(c)) tell(c, 'The antidote is behind the bar.'); else if (!takeAntidote(c)) tell(c, sick(c) ? 'The antidote is gone.' : "You don't need it. Yet.");
     } else if (k === 'send') {

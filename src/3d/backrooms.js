@@ -221,6 +221,7 @@ export class Backrooms {
     const m = o.material;
     if (Array.isArray(m) || o.isLine || o.isSprite || o.isPoints) return HIDE;
     if (rooms.has(m)) return rooms.get(m);
+    if (o.userData.trash) return this.dull(m); // usable bins stay visible in the backrooms too
     if (o.userData.prop) return KEEP_PROPS.has(o.userData.propName) ? this.dull(m) : HIDE;
     const merged = !o.isInstancedMesh && o.matrixAutoUpdate === false;
     if (merged && !o.castShadow) return m === MAT.black || m === MAT.metalDark ? this.W.base : m === MAT.stall ? null : HIDE; // the shell's trim: a baseboard is all

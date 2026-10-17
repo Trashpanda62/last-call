@@ -29,7 +29,7 @@ import { PRESETS } from '../settings.js';
 import { BELL, ROOMS, roomOf, DOORS, DOOR_GAPS, los, SHADY, prepareNavigation } from '../map.js';
 import { ringSpot } from '../sim.js';
 
-export const EYE = { stand: 1.12, seat: 1.42, ghost: 1.6 };
+export const EYE = { stand: 1.55, seat: 1.55, ghost: 1.65 };
 const POOL = 12; // the most pooled point lights the graphics settings can ask for
 let R = null;
 const splitPassMaterials = !/[?&]legacyPassMaterials\b/.test(location.search); // diagnostic comparison

@@ -1036,3 +1036,11 @@ body.touch #actionDock #killerBar {position:static;flex-wrap:wrap;max-width:100%
 @media(max-width:1100px) {body:not(.touch) #needs {bottom:148px;}}
 #bottom,#actionDock,#actionDock #safetyActions,#actionDock #killerBar {pointer-events:none;}
 #bottom button {pointer-events:auto;}
+
+/* Engraved safety medallions share the casino ability palette and retain readable labels. */
+#actionDock #safetyActions button {background:linear-gradient(155deg,#32251fee,#120c10f5 65%);border-color:#ac844e99;border-radius:8px;box-shadow:inset 0 1px #f3d59b33;}
+#safetyActions svg {width:42px;height:42px;padding:4px;box-sizing:content-box;border-radius:50%;background:radial-gradient(circle at 35% 25%,#653226,#180e12 75%);stroke:#eac98a;stroke-width:1.25;filter:drop-shadow(0 2px 2px #0008);}
+#safetyActions .icon-fill {fill:#a47c3e;stroke:#f0d29a;}
+#safetyActions .icon-light {fill:#33131a;stroke:#eac98a;}
+#actionDock #safetyActions button:disabled svg {filter:grayscale(.8);opacity:.55;}
+@media(max-width:800px){#safetyActions svg{width:32px;height:32px;}}

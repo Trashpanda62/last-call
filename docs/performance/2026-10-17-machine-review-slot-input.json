@@ -1,0 +1,100 @@
+{
+  "at": "2026-10-17T07:55:14.153Z",
+  "variants": [
+    {
+      "variant": "normal",
+      "slots": [
+        {
+          "tier": "penny",
+          "initial": 10,
+          "parts": [
+            "btn:lever",
+            "btn:betdown",
+            "btn:betup",
+            "btn:betmax",
+            "btn:auto"
+          ],
+          "stacks": [],
+          "chipHidden": true,
+          "hud": ""
+        },
+        {
+          "tier": "high",
+          "initial": 1000,
+          "parts": [
+            "btn:lever",
+            "btn:betdown",
+            "btn:betup",
+            "btn:betmax",
+            "btn:auto"
+          ],
+          "stacks": [],
+          "chipHidden": true,
+          "hud": ""
+        }
+      ],
+      "staff": {
+        "feed": "rest",
+        "actor": {
+          "id": 0,
+          "visible": false
+        },
+        "card": "Staff passage\n        Live: the restrooms · Left click: next camera · Right click: exit\n        Next cameraExit into this room\n        "
+      },
+      "cameras": {
+        "deskClickCycle": true,
+        "deskRightExit": true,
+        "ghostClickCycle": true,
+        "ghostRightExit": true
+      }
+    },
+    {
+      "variant": "noprops",
+      "slots": [
+        {
+          "tier": "penny",
+          "initial": 10,
+          "parts": [
+            "btn:lever",
+            "btn:betdown",
+            "btn:betup",
+            "btn:betmax",
+            "btn:auto"
+          ],
+          "stacks": [],
+          "chipHidden": true,
+          "hud": ""
+        },
+        {
+          "tier": "high",
+          "initial": 1000,
+          "parts": [
+            "btn:lever",
+            "btn:betdown",
+            "btn:betup",
+            "btn:betmax",
+            "btn:auto"
+          ],
+          "stacks": [],
+          "chipHidden": true,
+          "hud": ""
+        }
+      ],
+      "staff": {
+        "feed": "rest",
+        "actor": {
+          "id": 0,
+          "visible": false
+        },
+        "card": "Staff passage\n        Live: the restrooms · Left click: next camera · Right click: exit\n        Next cameraExit into this room\n        "
+      },
+      "cameras": {
+        "deskClickCycle": true,
+        "deskRightExit": true,
+        "ghostClickCycle": true,
+        "ghostRightExit": true
+      }
+    }
+  ],
+  "errors": []
+}

@@ -36,8 +36,12 @@ export const cameraView = () => last?.pub.mode === 'play' && !last.pub.over ? la
 
 export function initMoves(opts) {
   ({ act, unlock, relock } = opts);
-  const safety = {sniff:['Sniff','M3 15c2-4 5-4 7-2l2 2c2 2 6 0 6-3V6M5 6v3m4-5v4'],sip:['Sip','M5 3h14l-2 10H7L5 3Zm7 10v7m-4 1h8'],pour:['Discard','M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7'],inspect:['Check traps','M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14Zm5 12 6 6M7 10l2 2 4-4']};
-  $('safetyActions').innerHTML = Object.entries(safety).map(([k,[label,path]])=>`<button data-safety="${k}" title="${label}" aria-label="${label}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${path}"/></svg><span>${label}</span></button>`).join('');
+  const safety = {
+    sniff:['Sniff', '<path class="icon-fill" d="M8 3h5c0 5 1 7 4 10 2 3-1 5-4 4l-2-1c-1 2-4 2-5 0l2-3z"/><path d="M11 15c1-1 3-1 4 0M19 4c-2 1 2 2 0 4M22 8c-2 1 2 2 0 4"/>'],
+    sip:['Sip', '<path class="icon-fill" d="M5 5h14l-2 9c-1 3-9 3-10 0z"/><path class="icon-light" d="M7 9h10l-1 5c-2 1-6 1-8 0z"/><path d="M5 5h14M12 17v4m-5 0h10M15 5l3-3h3"/>'],
+    inspect:['Check traps', '<path class="icon-fill" d="M14 15l7 6-2 2-7-7z"/><circle class="icon-fill" cx="10" cy="10" r="7"/><circle class="icon-light" cx="10" cy="10" r="5"/><path d="m7 10 2 2 4-4"/>']
+  };
+  $('safetyActions').innerHTML = Object.entries(safety).map(([k,[label,art]])=>`<button data-safety="${k}" title="${label}" aria-label="${label}"><svg viewBox="0 0 24 24" aria-hidden="true">${art}</svg><span>${label}</span></button>`).join('');
   $('safetyActions').querySelectorAll('button').forEach(b=>b.onclick=()=>{act(b.dataset.safety);closeActionCursor();});
   const bar = $('killerBar');
   bar.innerHTML = KILL_KEYS.map((k, i) => `<button data-move="${k}" title="${esc(TIPS[k])}">${icon(k)}<b>${KILL_HINTS[i]}</b><span> ${LABELS[k]}</span><i></i></button>`).join('') +
@@ -234,10 +238,10 @@ export function updateMoves(v) {
   $('gunHud').classList.toggle('hidden', !gun); $('shootBtn').classList.toggle('hidden', !gun);
   if (gun) { const t = `REVOLVER ×${priv.bullets} · ${document.body.classList.contains('touch') ? 'SHOOT' : priv.isKiller ? 'J' : 'Q'}`; if ($('gunHud').textContent !== t) $('gunHud').textContent = t; }
   // phones: the buttons by the right thumb only when they can do something (Steve, 2026-10-15: "too many buttons at the
-  // bottom"): Use always; Sip and Pour with a drink in hand; Check with a drink, at a game or by a snack bowl; Light in a
+  // bottom"): Use always; Sip with a drink in hand; Check with a drink, at a game or by a snack bowl; Light in a
   // blackout, Shoot with a bullet, Moves for a killer, Pounce for the monster
   const alive = play && priv.alive && !priv.monster, held = alive && !!priv.drink; // (the monster's hands are full)
-  for (const [a, on] of [['sip', held], ['pour', held], ['inspect', alive && (held || (!!priv.seat && priv.seat.game !== 'cams' && priv.seat.game !== 'vip') || /^Eat/.test(priv.ctx || ''))]]) {
+  for (const [a, on] of [['sip', held], ['inspect', alive && (held || (!!priv.seat && priv.seat.game !== 'cams' && priv.seat.game !== 'vip') || /^Eat/.test(priv.ctx || ''))]]) {
     const b = control(`#touchBtns [data-act=${a}]`); if (b && b.classList.contains('hidden') === on) b.classList.toggle('hidden', !on);
   }
   const ck = control('#touchBtns [data-act=inspect]'), ckt = priv.inspectT > 0 ? 'Checking' : quietNote() ? 'Fine' : 'Check'; if (ck) text(ck, ckt); // (the check in progress)

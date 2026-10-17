@@ -34,6 +34,15 @@ export function buildSkee(ctx, seats, screen, updaters) {
       B.add(rbox(1.22, 1.4, .24, .05), MAT.darkWood, at(0, 1.28, -2.18));
       for (const side of [-1, 1]) B.add(rbox(.08, 1.4, 1.3, .025), MAT.gold, at(side * .57, 1.25, -1.65));
     }
+    // Opaque authored casing closes gaps in the cut-down generated shell, including below the lane
+    // and behind the target face. Actual pocket openings remain open into a dark return box.
+    B.add(rbox(1.18,.57,4.50,.035), MAT.darkWood, at(0,.285,0));
+    for(const side of [-1,1]) {
+      B.add(box(.055,.12,4.50), MAT.darkWood, at(side*.565,.59,0));
+      B.add(box(.055,1.42,1.34), MAT.darkWood, at(side*.565,1.30,-1.57));
+    }
+    B.add(box(1.18,1.48,.065), MAT.darkWood, at(0,1.29,-2.20));
+    B.add(box(1.18,.055,1.34), MAT.darkWood, at(0,2.045,-1.57));
     // A clean continuous lane covers the generated top; authored rails have consistent thickness.
     B.add(laneGeo, laneMat, at(0, .638, .90), 0, null, -Math.PI / 2);
     B.add(ramp, laneMat, at(0, 0, 0));

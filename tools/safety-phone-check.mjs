@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createGame} from '../src/sim.js';
 import {CFG} from '../src/config.js';
-import {BREAKERS,collide,GAME_NAMES} from '../src/map.js';
+import {BREAKERS,TRASH_CANS,collide,GAME_NAMES} from '../src/map.js';
 import {packPub,packFor,unpackSnap,wireCache} from '../src/wire.js';
 const g=createGame({humans:[{name:'Tester',key:'me'}],players:16,killers:2,forceRole:'gambler'}),c=g.G.chars[0];
 g.G.target=1e12;for(const o of g.G.chars)o.isHuman=true;
@@ -10,7 +10,7 @@ const seat=g.G.seats.find(s=>s.game==='slots');Object.assign(c,{x:seat.x,y:seat.
 const d={id:999,kind:'whiskey',sips:3,poisoned:true,from:null,holder:c.id,owner:c.id,x:c.x,y:c.y};c.drink=d;g.G.drinks.push(d);
 g.action(0,'sniff');assert.equal(c.inspect?.kind,'drink','sniff specifically checks held drink even beside a game');
 for(let i=0;i<CFG.inspectTime*60+2;i++)g.tick(1/60);
-assert.ok(c.notes.some(n=>n.text.includes('poisoned')));g.action(0,'pour');assert.equal(c.drink,null);assert.ok(!g.G.drinks.includes(d));
+assert.ok(c.notes.some(n=>n.text.includes('poisoned')));g.action(0,'pour');assert.equal(c.drink,d,'cannot discard away from a bin');const old={x:c.x,y:c.y};c.x=TRASH_CANS[0].x-40;c.y=TRASH_CANS[0].y;g.action(0,'use');Object.assign(c,old);assert.equal(c.drink,null);assert.ok(!g.G.drinks.includes(d));
 g.G.traps.push({kind:'seat',id:seat.id,by:1,label:'the slot machine',t:g.G.t});g.action(0,'inspect');assert.equal(c.inspect?.kind,'seat');for(let i=0;i<CFG.inspectTime*60+2;i++)g.tick(1/60);assert.equal(g.G.traps.length,0);
 const killers=g.G.chars.filter(c=>c.isKiller);killers[0].ejected=true;killers[0].alive=false;killers[1].alive=false;
 const v=g.view(0);assert.equal(v.pub.killersCaught,1,'a dead killer is only caught when ejected');

@@ -1,0 +1,20 @@
+{
+  "status": "awaiting-cost-approval",
+  "provider": "Sorceress",
+  "tool": "image_generate",
+  "model": "gpt-image-2.5-sunburst",
+  "resolution": "2K",
+  "deliverables": [
+    "Flying Pigs obstacle shaft and cap atlas",
+    "Coin flip heads and tails face atlas mapped onto existing physical 3D coin"
+  ],
+  "creditsEach": 10,
+  "creditsTotal": 20,
+  "usdTotal": 0.2,
+  "processing": "Free local chroma keying, crop, texture preparation; no extra takes, paid keying, 3D generation or animation",
+  "acceptance": [
+    "Straight obstacle silhouettes precisely match existing host collision boundaries and preserve gap size",
+    "Crisp raised coin portrait and distinct crest, circular and legible on actual spinning coin",
+    "Review source and actual game views before shipping"
+  ]
+}

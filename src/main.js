@@ -572,7 +572,7 @@ addEventListener('mousemove', e => {
   if (drag && S.screen === 'game') { lookBy(e.clientX - drag.x, e.clientY - drag.y); drag.x = e.clientX; drag.y = e.clientY; }
 });
 
-const KEYMAP = { u: 'use', f: 'sip', n: 'sniff', r: 'inspect', x: 'pour' }; // (left click interacts; E is the killer's ability)
+const KEYMAP = { u: 'use', f: 'sip', n: 'sniff', r: 'inspect' }; // (left click interacts; E is the killer's ability)
 const MOVE_KEYS = new Set(['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright']);
 addEventListener('keydown', e => {
   if (!padDispatch) inputMode = 'keyboard';

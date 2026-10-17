@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import * as T from './textures.js';
-import { ROOMS, WALLS, OBSTACLES, DOOR_GAPS, CHANDELIERS, PLANTS, TAP, BELL, DICE_TABLE, SHADY, PIANO, BOWL_SPOTS, STAFF_DOORS, makeSeats } from '../map.js';
+import { ROOMS, WALLS, OBSTACLES, DOOR_GAPS, CHANDELIERS, PLANTS, TAP, BELL, DICE_TABLE, SHADY, PIANO, TRASH_CANS, BOWL_SPOTS, STAFF_DOORS, makeSeats } from '../map.js';
 import { buildMachinesSteps } from './machines.js';
 import { makeMirror, mirrorFrame } from './mirror.js';
 import { hasProp, placeProps, propObject, propScale, propInfo } from './props.js';
@@ -12,7 +12,7 @@ const propHeight = n => propInfo(n).size[1];
 
 export const M = 1 / 60, WALL_H = 3.6;
 // turns for models whose front isn't the side the game wants (set from the fitted check renders)
-export const PROP_YAW = { piano: Math.PI, poolTable: 0 }; // the piano's keyboard faces the bench side (-z)
+export const PROP_YAW = { poolTable: 0 };
 export const yawOf = a => Math.PI / 2 - a; // object facing +Z local -> facing sim angle a
 export const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
 
@@ -314,7 +314,7 @@ export function* buildWorldSteps(scene, opts = {}) {
   }
 
   const seats = makeSeats();
-  for (const [label, build] of [['bar', bar], ['restrooms', restrooms], ['VIP lounge', vip], ['wall art', decor], ['pit bell', pitBell], ['seats', c => seatsAndRails(c, seats)], ['plants', plants], ['chandeliers', chandeliers], ['arcade', arcadeDressing], ['staff doors', staffDoors]]) {
+  for (const [label, build] of [['bar', bar], ['restrooms', restrooms], ['VIP lounge', vip], ['wall art', decor], ['pit bell', pitBell], ['seats', c => seatsAndRails(c, seats)], ['trashcans', trashCans], ['plants', plants], ['chandeliers', chandeliers], ['arcade', arcadeDressing], ['staff doors', staffDoors]]) {
     yield 'Building ' + label; build(ctx);
   }
   // what the machines add (backrooms.js keeps the games and hides the rest): their own children, glows and static batch
@@ -521,9 +521,33 @@ function vip(ctx) {
   ctx.vipTv = { x: 2980 * M - 0.1, y: 1.9, z: 1540 * M, w: 2.15, h: 1.2 };
   // Piano and bench share the same reference as their full collision footprint.
   const px = PIANO.x * M, pz = PIANO.y * M;
-  if (hasProp('piano')) { placeProps(group, 'piano', [{ x: px, z: pz - 0.15, yaw: PROP_YAW.piano, fit: [1.7, 0, 1.75] }]); return; }
-  B.add(rbox(1.5, 0.35, 1.0, 0.1), MAT.blackGloss, v3(px, 0.9, pz)); B.add(box(1.4, 0.06, 0.3), MAT.porcelain, v3(px, 0.92, pz - 0.6));
-  for (const [dx, dz] of [[-0.6, -0.35], [0.6, -0.35], [0, 0.35]]) B.add(cyl(0.05, 0.04, 0.75, 10), MAT.blackGloss, v3(px + dx, 0.38, pz + dz));
+  const piano = new THREE.Group(); piano.name='vip-piano'; piano.position.set(px,0,pz); group.add(piano);
+  const part=(geo,mat,x,y,z,name)=>{const m=new THREE.Mesh(geo,mat);m.position.set(x,y,z);m.name=name||'piano-case';m.castShadow=true;m.receiveShadow=true;piano.add(m);return m;};
+  part(rbox(1.64,1.22,.48,.035),MAT.blackGloss,0,.67,.32);
+  part(rbox(1.70,.07,.58,.025),MAT.darkWood,0,1.31,.32);
+  part(box(1.52,.012,.025),MAT.gold,0,1.12,.069);
+  part(rbox(1.64,.10,.44,.02),MAT.blackGloss,0,.78,-.13);
+  for(const x of[-.79,.79])part(rbox(.08,.83,.50,.02),MAT.blackGloss,x,.415,-.10);
+  for(let i=0;i<35;i++)part(box(.040,.025,.31),MAT.porcelain,-.714+i*.042,.844,-.14,'piano-white-key');
+  for(let i=0;i<34;i++)if([0,1,3,4,5].includes(i%7))part(box(.025,.035,.18),MAT.black,-.693+i*.042,.874,-.075,'piano-black-key');
+  for(const x of[-.10,0,.10])part(rbox(.045,.025,.15,.008),MAT.brass,x,.10,-.17,'piano-pedal');
+  part(rbox(.72,.10,.32,.035),MAT.velvet,0,.48,-.94,'piano-bench');
+  for(const x of[-.29,.29])for(const z of[-1.05,-.83])part(box(.045,.43,.045),MAT.blackGloss,x,.215,z);
+
+}
+
+function trashCans({group}) {
+  const shellGeo = new THREE.CylinderGeometry(.24,.22,.70,24,1,true);
+  const rimGeo = new THREE.TorusGeometry(.235,.025,8,32);
+  const linerGeo = new THREE.CylinderGeometry(.218,.20,.67,24,1,true), linerMat = std({color:0x110d0e,roughness:.95,side:THREE.BackSide});
+  const labelMat=basicGlow(T.plaque('TRASH',{w:256,h:96,bg:'#140c0e',ink:'#dfbd7b',font:'bold 48px Arial',border:false}),1);
+  for(const b of TRASH_CANS) {
+    const root=new THREE.Group();root.name='trashcan-'+b.id;root.position.set(b.x*M,0,b.y*M);root.userData.room=Object.keys(ROOMS).find(k=>{const r=ROOMS[k];return b.x>=r.x&&b.x<=r.x+r.w&&b.y>=r.y&&b.y<=r.y+r.h;});group.add(root);
+    const add=(geo,mat,y)=>{const m=new THREE.Mesh(geo,mat);m.position.y=y;m.userData.trash=true;m.castShadow=true;m.receiveShadow=true;root.add(m);return m;};
+    add(shellGeo,MAT.blackGloss,.39);add(linerGeo,linerMat,.39);const rim=add(rimGeo,MAT.gold,.75);rim.rotation.x=Math.PI/2;
+    add(cyl(.22,.22,.04,24),MAT.black,.42);add(cyl(.235,.235,.06,24),MAT.gold,.06);
+    for(const yaw of[0,Math.PI/2,Math.PI,Math.PI*1.5]){const sign=add(new THREE.PlaneGeometry(.30,.11),labelMat,.46);sign.position.x=Math.sin(yaw)*.242;sign.position.z=Math.cos(yaw)*.242;sign.rotation.y=yaw;}
+  }
 }
 
 // ---------- Dressing: booths, jukebox, ottoman, pool table, champagne tower, rugs and paintings ----------
@@ -644,7 +668,6 @@ function decor(ctx) {
     spots.forEach(([dx, y, dz], i) => im.setMatrixAt(i, new THREE.Matrix4().makeTranslation(o.x + dx, y, o.z + dz))); group.add(im);
     B.add(cyl(0.035, 0.04, 0.25, 12), std({ color: 0x1a4a2a, roughness: 0.1, metalness: 0.2 }), v3(o.x, 1.45, o.z));
   }
-  if (!hasProp('piano')) B.add(rbox(0.7, 0.08, 0.32, 0.03), MAT.blackGloss, v3(PIANO.x*M, 0.48, (PIANO.y-60)*M)); // the piano's bench
   // a rug in the bar
   const [rc, rg] = T.canvas(256, 256);
   rg.fillStyle = '#4a1418'; rg.fillRect(0, 0, 256, 256); rg.strokeStyle = '#d9a94a'; rg.lineWidth = 6; rg.strokeRect(12, 12, 232, 232); rg.lineWidth = 2; rg.strokeRect(24, 24, 208, 208);

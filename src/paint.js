@@ -50,7 +50,7 @@ export function paintCrash(g, w, h, t, C, me, spatial = false) {
   const tNow = C.phase === 'fly' ? C.t : C.phase === 'boom' ? Gm.crashTime(Math.max(1.0001, C.point || C.mult)) : 0;
   const tMax = Math.max(8, tNow * 1.15), mMax = Math.max(2, Gm.crashAt(tMax));
   const X = tt => gx0 + gw * tt / tMax, Y = m => gy0 - gh * (m - 1) / (mMax - 1);
-  for (let i = 1; i <= 4; i++) { const m = 1 + (mMax - 1) * i / 4; text(g, xfmt(m), gx0 - pad * 0.2, Y(m), h * 0.035, 'rgba(200,190,255,0.6)', ARC, 'right'); }
+  if (!spatial) for (let i = 1; i <= 4; i++) { const m = 1 + (mMax - 1) * i / 4; text(g, xfmt(m), gx0 - pad * 0.2, Y(m), h * 0.035, 'rgba(200,190,255,0.6)', ARC, 'right'); }
   if (fly) {
     const boom = C.phase === 'boom';
     if (!spatial) {
