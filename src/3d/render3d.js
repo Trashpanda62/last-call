@@ -829,7 +829,7 @@ export function draw(frame, { prepareOnly = false } = {}) {
       const b = beanFor(c); seen.add(c.id);
       const isMe = c.id === meIdx;
       const peekMe = isMe && !orbit && (frame.peek || 0) > 0.05 && !R.peekNear; // over the shoulder you see yourself (not with a wall right behind you)
-      b.root.visible = c.alive && !c.monster && !(isMe && !orbit && !peekMe); // (the monster is drawn by blackout.js instead)
+      b.root.visible = c.alive && !c.staffInside && !c.monster && !(isMe && !orbit && !peekMe); // (the monster is drawn by blackout.js instead)
       if (!c.held && b.root.rotation.z) b.root.rotation.z = 0; // (kicking in the monster's hands)
       if (!b.root.visible) continue;
       let x = c.x, y = c.y, face = c.face, look = c.look, moving = c.moving, seated = c.seat !== null;

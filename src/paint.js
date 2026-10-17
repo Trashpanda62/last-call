@@ -166,7 +166,7 @@ export function paintSlots(g, w, h, t, st) {
   }
   g.fillStyle = 'rgba(255,40,60,0.7)'; g.fillRect(w * 0.03, y0 + rh / 2 - h * 0.006, w * 0.94, h * 0.012);
   if (st && st.win && !(st.spin && t - st.spin.t0 < 1.7)) glowText(g, st.win, w / 2, h * 0.9, h * 0.08, '#ffd040');
-  else text(g, st && st.bet ? 'BET ' + short(st.bet) + ' · PULL THE LEVER' : st && st.reels ? 'PULL TO SPIN' : 'INSERT CHIPS', w / 2, h * 0.9, h * 0.06, 'rgba(255,255,255,0.6)');
+  else text(g, st && st.bet ? 'BET ' + short(st.bet) + ' · SPIN / SPACE' : 'SELECT BET · SPIN', w / 2, h * 0.9, h * 0.06, 'rgba(255,255,255,0.6)');
 }
 
 // ---------- Mines ----------

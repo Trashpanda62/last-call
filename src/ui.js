@@ -137,7 +137,7 @@ export function updateHud(v) {
   }
   if (bh !== hudLast.get('blk')) { hudLast.set('blk', bh); $('blackoutHud').innerHTML = bh; show('blackoutHud', !!bh); $('blackoutHud').classList.toggle('exits', !!X); document.body.classList.toggle('blackout', !!bh); document.body.classList.toggle('tallHud', !!(B && X)); }
   // a killer's suggested target
-  const pr = priv.prey && !priv.seat && pub.mode === 'play' && !pub.over ? `<b>TARGET</b> ${esc(priv.prey.name)} · ${esc(priv.prey.room)} · ${esc(priv.prey.why)}` : '';
+  const pr = priv.prey && !priv.seat && !priv.cameraFeed && pub.mode === 'play' && !pub.over ? `<b>TARGET</b> ${esc(priv.prey.name)} · ${esc(priv.prey.room)} · ${esc(priv.prey.why)}` : '';
   if (pr !== hudLast.get('prey')) { hudLast.set('prey', pr); $('prey').innerHTML = pr; show('prey', !!pr); }
   // a killer's edge: the witness meter by the crosshair, and a reminder of the edge over the killer bar
   const play = pub.mode === 'play' && !pub.over, w = play && priv.alive ? priv.watchers : null, seen = w === null || w === undefined ? null : w > 0;

@@ -226,24 +226,29 @@ export function* buildMachinesSteps(ctx, seats) {
   const slotModels = {};
   // Levers keep independent pivots; their fixed shaft and knob shapes are equal.
   const slotStickGeometry = cyl(0.02, 0.02, 0.5, 8), slotKnobGeometry = sph(0.055, 12);
-  // The bet goes in a chip slot on a plain deck panel (it covers the model's three decorative buttons); the lever spins.
+  // A fitted physical button deck covers the model’s decorative controls.
   // DECK: where the sloped button deck is in the model's own metres (centre height y, surface depth z there, and k: how
   // far it runs back per metre up); the panel's width and length along the slope are in world metres.
   const DECK = { slot: { y: 0.905, z: 0.405, k: 1.2, w: 0.5, h: 0.22 }, slotHigh: { y: 0.92, z: 0.365, k: 1.2, w: 0.52, h: 0.22 }, built: { y: 1.21, z: 0.3, k: 2.7, w: 0.66, h: 0.2 } };
-  const slitMat = new THREE.MeshStandardMaterial({ color: 0x050405, roughness: 0.6 });
-  const insertMat = basicGlow(T.plaque('INSERT CHIPS', { w: 512, h: 96, bg: '#1a0a10', ink: '#f8edc9', font: 'bold 56px Arial, sans-serif' }), 1);
-  function chipSlot(s, at, deck, body, sx = 1, sy = 1, sz = 1) {
+  const slotLabels = new Map();
+  function slotButtons(s, at, deck, body, sx = 1, sy = 1, sz = 1) {
     const g = new THREE.Group(), yaw = Math.atan2(at(1, 0, 0).x - at(0, 0, 0).x, at(1, 0, 0).z - at(0, 0, 0).z);
-    const lean = Math.atan(deck.k * sz / sy); // the slope's angle back from upright, in the scaled model
-    g.position.copy(at(deck.z * sz + 0.014 * Math.cos(lean), 0, deck.y * sy + 0.014 * Math.sin(lean))); g.rotation.set(-lean, yaw, 0, 'YXZ'); add(g);
-    const panel = new THREE.Mesh(rbox(deck.w, deck.h, 0.024, 0.008), body); g.add(panel);
-    const bezel = new THREE.Mesh(rbox(0.19, 0.06, 0.012, 0.006), MAT.brass); bezel.position.set(0, -deck.h * 0.12, 0.016); g.add(bezel);
-    const slit = new THREE.Mesh(box(0.15, 0.014, 0.006), slitMat); slit.position.set(0, -deck.h * 0.12, 0.023); g.add(slit);
-    const label = new THREE.Mesh(new THREE.PlaneGeometry(0.24, 0.045), insertMat); label.position.set(0, deck.h * 0.25, 0.0125); g.add(label);
-    starter('slots', q => q === s, g, 'spot:main');
-    const tray = at(deck.z * sz + .15, 0, deck.y * sy + .04);
-    B.add(rbox(.34, .035, .34, .012), MAT.darkWood, tray.clone().setY(tray.y - .018), yaw);
-    betSocket(s, 'main', tray.clone().setY(tray.y + .007), 'BET');
+    const lean = Math.atan(deck.k * sz / sy);
+    g.name = 'slot-button-deck';
+    g.position.copy(at(deck.z * sz + .014 * Math.cos(lean), 0, deck.y * sy + .014 * Math.sin(lean))); g.rotation.set(-lean, yaw, 0, 'YXZ'); add(g);
+    const panel = new THREE.Mesh(rbox(deck.w, deck.h, .024, .008), body); g.add(panel);
+    const controls = [['betdown','BET −',-.34,-.22,'#30231c'],['betup','BET +',0,-.22,'#30231c'],['betmax','MAX BET',.34,-.22,'#76551e'],['auto','AUTO SPIN',-.23,.23,'#583128'],['lever','SPIN',.23,.23,'#24714c']];
+    for (const [id,label,x,y,color] of controls) {
+      const b = new THREE.Group(); b.position.set(x*deck.w,y*deck.h,.023); g.add(b);
+      const width = deck.w * (id === 'auto' || id === 'lever' ? .40 : .29), height = deck.h * .36;
+      const rim = new THREE.Mesh(rbox(width+.008,height+.008,.012,.006),MAT.brass); b.add(rim);
+      const face = new THREE.Mesh(rbox(width,height,.016,.005), new THREE.MeshStandardMaterial({color,roughness:.28,metalness:.15})); face.position.z=.01; b.add(face);
+      if (!slotLabels.has(id)) slotLabels.set(id,basicGlow(T.plaque(label,{w:512,h:160,bg:color,ink:'#ffedbf',font:'bold 65px Arial',border:false}),1));
+      const labelFace = new THREE.Mesh(new THREE.PlaneGeometry(width*.94,height*.88),slotLabels.get(id)); labelFace.position.z=.0085; face.add(labelFace);
+      face.name = `physical-${s.id}-btn:${id}`;
+      starter('slots',q=>q===s,face,'btn:'+id);
+      updaters.push((t,dt,st)=>{const my=st.at(s.id),age=my?.pressed?.id==='btn:'+id?t-my.pressed.t:9;face.position.z=.01-(age>=0&&age<.18?Math.sin(age/.18*Math.PI)*.006:0);face.material.color.setScalar(my?.on?.[id]===false ? .4 : id==='auto'&&my?.extra?.auto ? 1.4 : 1);});
+    }
     return g;
   }
   // Solid spines physically close the gaps between cabinets, matching the host's
@@ -268,7 +273,7 @@ export function* buildMachinesSteps(ctx, seats) {
       const knob = new THREE.Mesh(slotKnobGeometry, MAT.candy(0xe0203a)); knob.position.y = 0.52; knob.castShadow = true; lever.add(knob);
       B.add(cyl(0.045, 0.05, 0.08, 14), MAT.chrome, at(0.05, 0.44, 1.0), yaw, null, 0, Math.PI / 2);
       RC.slotLevers[s.id] = lever;
-      chipSlot(s, at, DECK[kind], high ? MAT.blackGloss : MAT.candy(0x7a1020), sc.x, sc.y, sc.z);
+      slotButtons(s, at, DECK[kind], high ? MAT.blackGloss : MAT.candy(0x7a1020), sc.x, sc.y, sc.z);
       // the screen sits 3 cm in front of the window, clear of the sloped bezel that hid the bottom reel row
       focusAt(s.id, 'core', lever, screen({ w: A.w, h: A.h, cw: 384, ch: 300, paint: (g, w, h, t, a) => P.paintSlots(g, w, h, t, a), key: P.slotFrameKey, pos: at(A.z + 0.036, A.x, A.y), yaw, tilt: 0, every: 0.25, seat: s.id, arg: st => { const m = st.at(s.id); return m ? { tier: s.tier, ...m.view, bet: m.extra && m.extra.bet } : { tier: s.tier }; } }));
       continue;
@@ -287,7 +292,7 @@ export function* buildMachinesSteps(ctx, seats) {
     B.add(new THREE.CylinderGeometry(0.4, 0.4, 0.06, 32, 1, false, -Math.PI / 2, Math.PI), topMat, at(0.16, 0, 2.13), yaw, null, 0, Math.PI / 2);
     const lbl = new THREE.Mesh(new THREE.PlaneGeometry(0.56, 0.16), basicGlow(T.neonTexture(high ? '$ HIGH $' : sd.machine % 2 ? '777' : 'LUCKY', high ? '#ffd040' : '#ff7ac8', 512, 150, 'bold italic 100px Georgia'), 1.6, { blending: THREE.AdditiveBlending, transparent: true, depthWrite: false }));
     lbl.position.copy(at(0.21, 0, 2.27)); lbl.rotation.y = yaw; add(lbl);
-    chipSlot(s, at, DECK.built, body);
+    slotButtons(s, at, DECK.built, body);
     // the lever pivots at its foot; pulling it swings the ball toward you
     const lever = new THREE.Group(); lever.position.copy(at(0, 0.44, 1.1)); lever.rotation.set(0, yaw, 0, 'YXZ'); add(lever);
     const stick = new THREE.Mesh(slotStickGeometry, MAT.chrome); stick.position.y = 0.25; lever.add(stick);

@@ -151,7 +151,7 @@ try {
   await page.evaluate(() => { const L = window.__lastCall; L.noLock(); L.start('gambler'); L.step(0.1); L.state.chars[0].alive = false; L.step(0.1); L.render(); });
   await page.keyboard.press('c');
   await page.waitForFunction(() => window.__lastCall.view.priv.cameraFeed === 'floor');
-  await page.locator('#secCard [data-feed="bar"]').click();
+  await canvasClick(0);
   await page.waitForFunction(() => window.__lastCall.view.priv.cameraFeed === 'bar');
   const ghostCam = await page.evaluate(() => window.__lastCall.scene().camera.position.toArray());
   assert.ok(ghostCam[0] < 2 && ghostCam[2] < 2);
@@ -165,38 +165,23 @@ try {
   }, STAFF_DOORS[0]);
   assert.equal(await page.evaluate(() => window.__lastCall.view.priv.ctx), 'Report body');
   await page.keyboard.press('e'); // selected ability must take priority over the nearby body's generic use action
-  await page.waitForSelector('#picker.vent-picker');
-  const before = await page.evaluate(() => { const L = window.__lastCall; return [L.state.chars[0].x, L.state.chars[0].y]; });
-  const destination = page.locator('#picker .pk-list button').first();
-  await destination.click();
-  await page.waitForFunction(() => document.querySelector('#picker .pk-title').textContent.includes('again'));
-  const preview = await page.evaluate(() => { const L = window.__lastCall; L.render(); return { pos: [L.state.chars[0].x, L.state.chars[0].y], cam: L.scene().camera.position.toArray() }; });
-  assert.deepEqual(preview.pos, before, 'preview must not move the killer');
-  assert.ok(preview.cam[2] > 12, 'preview must look into the selected restroom');
-  await destination.click();
-  await page.waitForFunction(door => Math.hypot(window.__lastCall.state.chars[0].x - door.sx, window.__lastCall.state.chars[0].y - door.sy) < 2, STAFF_DOORS[1]);
-  await page.waitForSelector('#picker.hidden', { state: 'attached' });
-  // Cancel a fresh preview and verify there is no teleport or lingering camera.
-  await page.evaluate(() => { const L = window.__lastCall; L.state.chars[0].cd.staff = 0; L.step(0.1); L.act('use'); });
-  await page.waitForSelector('#picker.vent-picker');
-  await page.locator('#picker .pk-list button').first().click();
-  await page.keyboard.press('Escape');
-  await page.waitForSelector('#picker.hidden', { state: 'attached' });
-  await page.waitForFunction(() => !document.body.classList.contains('cctv'));
+  await page.waitForFunction(()=>__lastCall.view.priv.staffInside);
+  assert.equal(await page.locator('#picker').isVisible(),false);
+  const before = await page.evaluate(()=>[__lastCall.state.chars[0].x,__lastCall.state.chars[0].y]);
+  await canvasClick(0);
+  await page.waitForFunction(()=>__lastCall.view.priv.cameraFeed==='rest');
+  assert.deepEqual(await page.evaluate(()=>[__lastCall.state.chars[0].x,__lastCall.state.chars[0].y]),before);
+  await canvasClick(2);
+  await page.waitForFunction(door=>Math.hypot(__lastCall.state.chars[0].x-door.sx,__lastCall.state.chars[0].y-door.sy)<2,STAFF_DOORS[1]);
+  await page.waitForFunction(()=>!__lastCall.view.priv.staffInside);
   await page.waitForFunction(() => window.__lastCall.audio().lib && window.__lastCall.audio().sfx > 0);
   assert.match(await page.evaluate(() => window.__lastCall.audio().music), /house-after-hours/);
   assert.deepEqual(errors, []);
-  // Dying or ending the round with a preview open must release its camera and picker.
-  for (const end of ['death', 'round']) {
-    await page.evaluate(door => { const L = window.__lastCall; L.start('killer', { perk: 'staff' }); L.step(0.1); L.place(door.sx, door.sy); L.step(0.1); L.render(); }, STAFF_DOORS[0]);
-    await page.keyboard.press('e');
-    await page.waitForSelector('#picker.vent-picker');
-    await page.locator('#picker .pk-list button').first().click();
-    await page.waitForFunction(() => document.body.classList.contains('cctv'));
-    await page.evaluate(end => { const L = window.__lastCall; if (end === 'death') L.state.chars[0].alive = false; else L.state.over = { text: 'Test round complete', killersWin: true }; L.step(0.01); L.render(); }, end);
-    await page.waitForSelector('#picker.hidden', { state: 'attached' });
-    await page.waitForFunction(() => !document.body.classList.contains('cctv'));
-  }
+  // Ending a round clears the camera UI immediately.
+  await page.evaluate(door=>{const L=__lastCall;L.start('killer',{perk:'staff'});L.step(.1);L.place(door.sx,door.sy);L.step(.1);L.act('staff');L.step(.01);L.render();},STAFF_DOORS[0]);
+  await page.waitForFunction(()=>document.body.classList.contains('cctv'));
+  await page.evaluate(()=>{__lastCall.state.over={text:'Test round complete',killersWin:true};__lastCall.step(.01);__lastCall.render();});
+  await page.waitForFunction(()=>!document.body.classList.contains('cctv'));
   assert.deepEqual(errors, []);
-  console.log('PASS: ghost cameras, E-selected vents beside a body, room previews, second-click travel, cancellation, death, and round-end cleanup.');
+  console.log('PASS: ghost camera mouse controls, E-selected staff passage beside a body, direct entry, click cycling/exit and round-end cleanup.');
 } finally { if (browser) await browser.close(); if (server) server.close(); }

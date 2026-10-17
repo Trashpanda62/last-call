@@ -22,7 +22,7 @@ const TIPS = {
 };
 const FEEDS = [['floor', 'Floor'], ['bar', 'Bar'], ['arcade', 'Arcade'], ['race', 'Pond'], ['slots', 'Slots'], ['vip', 'VIP']];
 
-let act = () => {}, unlock = () => {}, relock = () => {}, picker = null, last = null, ventPreview = null;
+let act = () => {}, unlock = () => {}, relock = () => {}, picker = null, last = null;
 const controls = new Map();
 const control = selector => {
   if (!controls.has(selector)) controls.set(selector, document.querySelector(selector));
@@ -31,7 +31,7 @@ const control = selector => {
 const text = (el, value) => { if (el.textContent !== value) el.textContent = value; };
 const disabled = (el, on) => { if (el.disabled !== !!on) el.disabled = !!on; };
 const title = (el, value) => { if (el.title !== value) el.title = value; };
-export const cameraView = () => ventPreview ? ventPreview.room : last && last.priv.cameraFeed || null;
+export const cameraView = () => last?.pub.mode === 'play' && !last.pub.over ? last.priv.cameraFeed || (last.priv.seat?.game === 'cams' && last.pub.security.cams ? last.pub.security.feed : null) : null;
 
 export function initMoves(opts) {
   ({ act, unlock, relock } = opts);
@@ -84,6 +84,7 @@ function bladeAimed() {
 // Returns true when the key was ours. Number keys remain alternate bindings.
 export function keyMove(k) {
   if (barKey(k)) return true;
+  if (k === 'escape' && last?.priv.staffInside) { act('staffexit'); return true; }
   if (last && !last.priv.alive && (k === 'c' || (k === 'escape' && last.priv.cameraFeed))) { act('cameras'); return true; }
   if (picker && k === 'escape') { closePicker(); return true; }
   if (picker && /^[0-9]$/.test(k)) { const b = $('picker').querySelectorAll('.pk-list button')[(+k + 9) % 10]; if (b) b.click(); return true; }
@@ -134,21 +135,18 @@ function move(k) {
 }
 
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-// The staff passages: E at a STAFF ONLY door picks the door to come out of.
-export function staffPicker(doors, here) {
-  const options = doors.filter(d => d.id !== here);
-  openPicker('Choose a room to preview', options.map(d => ({ id: d.id, name: cap(ROOMS[d.room].name), color: '#c8b890' })), () => {});
-  picker.kind = 'vent'; picker.here = here;
-  $('picker').classList.add('vent-picker');
-  $('picker').querySelectorAll('.pk-list button').forEach((b, i) => {
-    const destination = options[i];
-    b.onclick = () => {
-      if (ventPreview && ventPreview.id === destination.id) { closePicker(); act('staff', destination.id); return; }
-      ventPreview = destination;
-      $('picker').querySelector('.pk-title').textContent = cap(ROOMS[destination.room].name) + ' · click this room again to enter';
-      $('picker').querySelectorAll('.pk-list button').forEach(button => { button.classList.toggle('on', button === b); button.setAttribute('aria-pressed', button === b ? 'true' : 'false'); });
-    };
-  });
+// Camera clicks are handled before world interaction so they cannot attack or use props.
+export function cameraMouse(button) {
+  if (!last || last.pub.mode !== 'play' || last.pub.over) return false;
+  const {priv,pub} = last, desk = priv.seat?.game === 'cams';
+  if (!priv.cameraFeed && !desk) return false;
+  if (button === 2) { act(priv.staffInside ? 'staffexit' : desk ? 'use' : 'cameras'); return true; }
+  if (button === 0) {
+    const feeds = priv.staffInside ? ['bar','rest','floor','arcade','vip','slots'] : FEEDS.map(f=>f[0]);
+    const current = priv.cameraFeed || pub.security.feed;
+    act('feed',feeds[(feeds.indexOf(current)+1)%feeds.length]); return true;
+  }
+  return false;
 }
 function openPicker(title, chars, pick) {
   const p = $('picker');
@@ -163,20 +161,19 @@ function openPicker(title, chars, pick) {
   });
   p.classList.remove('hidden'); picker = { pick }; unlock();
 }
-function closePicker() { if (!picker) return; picker = null; ventPreview = null; $('picker').classList.remove('vent-picker'); $('picker').classList.add('hidden'); relock(); }
+function closePicker() { if (!picker) return; picker = null; $('picker').classList.add('hidden'); relock(); }
 export const pickerOpen = () => !!picker || barOpen();
 function movesFan(on) { document.body.classList.toggle('movesOpen', !!on); $('movesBtn').setAttribute('aria-expanded', on ? 'true' : 'false'); }
 // Leaving a game: nothing it opened stays on screen.
-export function resetMoves() { resetBar(); picker = null; last = null; ventPreview = null; $('picker').classList.remove('vent-picker'); $('picker').classList.add('hidden'); document.body.classList.remove('sick', 'ghost', 'cctv'); movesFan(false); }
+export function resetMoves() { resetBar(); picker = null; last = null; $('picker').classList.add('hidden'); document.body.classList.remove('sick', 'ghost', 'cctv'); movesFan(false); }
 
 export function updateMoves(v) {
   last = v;
   const { pub, priv } = v;
   const play = pub.mode === 'play' && !pub.over;
   if (!play && picker) closePicker();
-  if (picker && picker.kind === 'vent' && (!priv.alive || priv.perk !== 'staff' || priv.staffAt !== picker.here)) closePicker();
   // killer bar
-  $('killerBar').classList.toggle('hidden', !(play && priv.isKiller && priv.alive && !priv.seat));
+  $('killerBar').classList.toggle('hidden', !(play && priv.isKiller && priv.alive && !priv.seat && !priv.cameraFeed));
   if (priv.isKiller && priv.alive) for (const k of KILL_KEYS) {
     const b = control(`#killerBar [data-move=${k}]`), cd = priv.cd[k] || 0;
     const noVictim = k === 'disguise' && !priv.disguise && !priv.canDisguise; // a disguise is your last victim's look
@@ -231,7 +228,7 @@ export function updateMoves(v) {
     const b = control(`#touchBtns [data-act=${a}]`); if (b && b.classList.contains('hidden') === on) b.classList.toggle('hidden', !on);
   }
   const ck = control('#touchBtns [data-act=inspect]'), ckt = priv.inspectT > 0 ? 'Checking' : quietNote() ? 'Fine' : 'Check'; if (ck) text(ck, ckt); // (the check in progress)
-  const killer = play && priv.alive && priv.isKiller && !priv.seat, mb = $('movesBtn'); // seated controls belong to the current game
+  const killer = play && priv.alive && priv.isKiller && !priv.seat && !priv.cameraFeed, mb = $('movesBtn'); // seated controls belong to the current game
   if (mb.classList.contains('hidden') === killer) mb.classList.toggle('hidden', !killer);
   if (!killer && document.body.classList.contains('movesOpen')) movesFan(false);
   if (killer) { const n = [...KILL_KEYS, 'perk', 'transform', 'leap'].map(k => control(`#killerBar [data-move=${k}]`)).filter(b => !b.classList.contains('hidden') && !b.disabled).length, t = n ? `Moves ${n}` : 'Moves'; text(mb, t); }
@@ -247,19 +244,21 @@ export function updateMoves(v) {
   $('sickBar').classList.toggle('hidden', !sick);
   if (sick) text($('sickBar'), pub.antidotes > 0 ? `POISONED · ${priv.poisonT}s · antidote at the bar (${pub.antidotes} left)` : `POISONED · ${priv.poisonT}s · no antidote left`);
   // the security desk
+  const passage = play && !!priv.staffInside;
   const ghostCams = play && !priv.alive && !!priv.cameraFeed;
-  const desk = play && (ghostCams || (priv.alive && priv.seat && priv.seat.game === 'cams'));
+  const desk = play && (passage || ghostCams || (priv.alive && priv.seat && priv.seat.game === 'cams'));
   const card = $('secCard');
   card.classList.toggle('hidden', !desk);
   if (desk) {
-    const S = ghostCams ? { ...pub.security, cams: true, feed: priv.cameraFeed } : pub.security, key = [ghostCams, S.cams, S.feed, !!pub.guard, pub.guard && pub.guard.t, S.guardPrice, pub.bank > S.guardPrice * 2].join();
+    const S = ghostCams || passage ? { ...pub.security, cams: true, feed: priv.cameraFeed } : pub.security, key = [passage, ghostCams, S.cams, S.feed, !!pub.guard, pub.guard && pub.guard.t, S.guardPrice, pub.bank > S.guardPrice * 2].join();
     if (card.dataset.key !== key) {
       card.dataset.key = key;
-      card.innerHTML = `<b>${ghostCams ? 'Ghost cameras' : 'Security desk'}</b>
-        <p>${ghostCams ? 'Pick a room to watch. C or Escape returns to roaming.' : 'The cameras run while you sit here. Pick a room to watch.'}</p>
-        ${S.cams ? `<div class="feeds">${FEEDS.map(([k, n]) => `<button data-feed="${k}" class="${S.feed === k ? 'on' : ''}">${n}</button>`).join('')}</div><p>Live: ${esc(FEEDS.find(f => f[0] === S.feed)[1])}. You see anything that happens in that room.</p>` : '<p>The cameras are warming up...</p>'}
-        ${ghostCams ? '<button data-close-cams>Return to roaming</button>' : `<button data-buy="guard" ${pub.guard || pub.bank < S.guardPrice * 2 ? 'disabled' : ''}>${pub.guard ? `Guard on patrol · ${Math.ceil(pub.guard.t / 60)} min` : `Hire a guard (2 min) · ${money(S.guardPrice)} from the crew bank`}</button>`}`;
-      const close = card.querySelector('[data-close-cams]'); if (close) close.onclick = () => act('cameras');
+      card.innerHTML = `<b>${passage ? 'Staff passage' : ghostCams ? 'Ghost cameras' : 'Security cameras'}</b>
+        <p>Live: ${esc(ROOMS[S.feed]?.name || S.feed)} · Left click: next camera · Right click: exit</p>
+        <button data-next-camera>Next camera</button><button data-close-cams>Exit${passage ? ' into this room' : ''}</button>
+        ${!passage && !ghostCams ? `<button data-buy="guard" ${pub.guard || pub.bank < S.guardPrice * 2 ? 'disabled' : ''}>${pub.guard ? `Guard on patrol · ${Math.ceil(pub.guard.t / 60)} min` : `Hire a guard (2 min) · ${money(S.guardPrice)} from the crew bank`}</button>` : ''}`;
+      card.querySelector('[data-next-camera]').onclick = () => cameraMouse(0);
+      card.querySelector('[data-close-cams]').onclick = () => cameraMouse(2);
       card.querySelectorAll('[data-buy]').forEach(b => { b.onclick = () => act('buy', b.dataset.buy); });
       card.querySelectorAll('[data-feed]').forEach(b => { b.onclick = () => act('feed', b.dataset.feed); });
     }

@@ -9,7 +9,9 @@ export const CFG = {
     17: 25.34, 18: 28.05, 19: 31.45, 20: 34.07, 21: 35.35, 22: 38.63, 23: 43.94, 24: 48.67, 25: 50.91, 26: 54.56, 27: 58.42, 28: 61.41, 29: 66.17, 30: 71.31, 31: 74.33, 32: 80.02 },
   killerBank: { 1: 1, 2: 0.7, 3: 0.55, 4: 0.45, 5: 0.37, 6: 0.32, 7: 0.28, 8: 0.25 }, // more killers, a smaller target
   cdScale: { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1 }, // (Steve, 2026-10-16: a kill is ready every 60 s however many killers are alive)
-  // about one killer for every four players: 1 at 4-6, 2 at 7+, 3 at 11+, 4 at 13+, 5 at 17+, 6 at 21+, 7 at 25+, 8 at 29+
+  // Recommend one killer per eight players; the optional maximum remains about one per four.
+  // Maximum: 1 at 4-6, 2 at 7+, 3 at 11+, 4 at 13+, 5 at 17+, 6 at 21+, 7 at 25+, 8 at 29+
+  recommendedKillers: n => Math.max(1, Math.ceil(n / 8)),
   maxKillers: n => n >= 29 ? 8 : n >= 25 ? 7 : n >= 21 ? 6 : n >= 17 ? 5 : n >= 13 ? 4 : n >= 11 ? 3 : n >= 7 ? 2 : 1,
   maxPlayers: 32,
   playerSpeed: 180, ghostSpeed: 260, botSpeed: 142, radius: 15, // (Steve, 2026-10-16: everyone 20% faster)

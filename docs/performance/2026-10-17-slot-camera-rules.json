@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-17T06:15:11.776Z",
+  "recommendations": [
+    [
+      16,
+      2
+    ],
+    [
+      32,
+      4
+    ]
+  ],
+  "slots": [
+    {
+      "tier": "penny",
+      "initial": 10,
+      "max": 120000,
+      "spaceSpin": true,
+      "betLockedDuringSpin": true,
+      "physicalAuto": true
+    },
+    {
+      "tier": "high",
+      "initial": 1000,
+      "max": 120000,
+      "spaceSpin": true,
+      "betLockedDuringSpin": true,
+      "physicalAuto": true
+    }
+  ],
+  "passage": {
+    "hostOwned": true,
+    "hiddenFromObserver": true,
+    "privateFeed": true,
+    "inputBlocked": true,
+    "exitAtSelectedDoor": true,
+    "cooldown": true,
+    "disconnectRestores": true
+  }
+}

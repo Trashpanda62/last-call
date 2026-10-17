@@ -3,7 +3,7 @@ import { initLoading, loadingProgress, showBriefing, briefingReady, preloadInter
 import { createGamepad } from './gamepad.js';
 import { CFG, DEATH_SOUNDS } from './config.js';
 import { clamp } from './util.js';
-import { collide, roomOf, los, W, H, STAFF_DOORS } from './map.js';
+import { collide, roomOf, los, W, H } from './map.js';
 import { PERKS, PERK } from './perks.js';
 import { createGame } from './sim.js';
 import { DEATH_SECONDS } from './3d/death-scene.js';
@@ -12,7 +12,7 @@ import { settings, onSettings, firstRun, set as setSetting } from './settings.js
 import { initSettings, openSettings, closeSettings, settingsOpen } from './settings-ui.js';
 import * as audio from './audio.js';
 import { $, show, toast, clearToasts, lastToastAt, whisper, quietNote, splash, updateHud, renderMeeting, resetMeeting, renderOver, renderPick, marks } from './ui.js';
-import { initMoves, updateMoves, keyMove, mouseMove, pickerOpen, resetMoves, staffPicker, cameraView } from './moves.js';
+import { initMoves, updateMoves, keyMove, mouseMove, pickerOpen, resetMoves, cameraMouse, cameraView } from './moves.js';
 import { openMixer, openShop } from './bar.js';
 import { resetTableLuck, openTable, closeTable, closeAllTables, tablesBusy, tableViews, tableGame, tableSeat, tableView, tableTick, tableBar, cycleChip, chipHud, setHandHook, press as pressPart, partInfo, tableStart, spaceTable, releaseTable, tableLook } from './tables.js';
 import { CHIP_COL } from './3d/rig.js';
@@ -134,8 +134,8 @@ function clearGameUI() { resetMoves(); clearToasts(); document.body.classList.re
 // The line under the lobby: progress and tips in grey, real errors in red.
 function setupNote(text, err = false) { const e = $('setupErr'); e.textContent = text; e.classList.toggle('info', !err); }
 function syncKillers() {
-  const n = +$('optPlayers').value, max = CFG.maxKillers(n);
-  $('optKillers').innerHTML = Array.from({ length: max }, (_, i) => i + 1).map(k => `<option value="${k}" ${k === max ? 'selected' : ''}>${k}${k === max ? ' (balanced)' : ' (easier)'}</option>`).join('');
+  const n = +$('optPlayers').value, max = CFG.maxKillers(n), recommended = CFG.recommendedKillers(n);
+  $('optKillers').innerHTML = Array.from({ length: max }, (_, i) => i + 1).map(k => `<option value="${k}" ${k === recommended ? 'selected' : ''}>${k}${k === recommended ? ' (recommended)' : k < recommended ? ' (easier)' : ' (harder)'}</option>`).join('');
 }
 $('optPlayers').innerHTML = Array.from({ length: CFG.maxPlayers - 3 }, (_, i) => i + 4).map(n => `<option ${n === 10 ? 'selected' : ''}>${n}</option>`).join('');
 $('optKillers').innerHTML = '<option value="2" selected>2</option>';
@@ -387,7 +387,6 @@ function act(k, arg) {
   const p = S.view && S.view.priv;
   if (k === 'use' && arg === undefined && p && p.ctx === 'Talk to the bartender') { openMixer(); return; } // the mixer (bar.js)
   if (k === 'use' && arg === undefined && p && p.ctx === 'Talk to the shady guy') { openShop(); return; }
-  if (arg === undefined && p && p.staffAt !== null && p.staffAt !== undefined && (k === 'staff' || (k === 'use' && p.ctx && p.ctx.startsWith('Take the staff')))) { staffPicker(STAFF_DOORS, p.staffAt); return; } // pick where to come out
   if (S.sim) S.sim.action(S.myId, k, arg);
   else if (S.role === 'guest' && S.room) S.room.send({ t: 'act', k, arg });
 }
@@ -535,6 +534,7 @@ let drag = null;
 view.addEventListener('mousedown', e => {
   audio.unlock();
   if (deathPlaying()) return;
+  if (!S.paused && cameraMouse(e.button)) { e.preventDefault(); return; }
   if (touchMode) return;
   mouse.x = e.clientX; mouse.y = e.clientY;
   if (tableMode() && !locked()) { if (e.button === 0 || e.button === 2) pressAtNdc(...ndcOf(e.clientX, e.clientY), e.button === 2); return; } // click the felt
@@ -848,9 +848,9 @@ function seatedHud() {
   view.style.cursor = tm && !touchMode ? (h ? 'pointer' : 'default') : '';
   // Betting and round actions already have their own contextual prompts.
   // Walking up to a machine must not advertise another game's controls.
-  if (seated) $('hint').textContent = '';
+  if (seated || cameraView() || S.view.priv.seat?.game === 'cams') $('hint').textContent = '';
   drawBar(tm ? tableBar() : null);
-  drawChip(tm ? null : seated ? chipHud() : playing() && !touchMode ? chipHud(S.view.pub.maxBet) : null); // (the chip in hand shows on the way to a game too)
+  drawChip(tm || cameraView() || S.view.priv.seat?.game === 'cams' ? null : seated ? chipHud() : playing() && !touchMode ? chipHud(S.view.pub.maxBet) : null); // (the chip in hand shows on the way to a game too)
   $('chipHud').classList.toggle('walk', !seated); // (walking: just the coin, small)
 }
 const gameControls = document.createElement('div'); gameControls.id = 'gameControls'; gameControls.className = 'hidden'; $('bottom').prepend(gameControls);

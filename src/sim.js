@@ -161,7 +161,8 @@ function makeApi(G) {
   // ---------- Vision ----------
   const viewRange = () => G.lightsT > 0 || G.blackout ? CFG.darkRange : CFG.viewRange;
   function canSee(v, p) {
-    if (!v.alive) return false;
+    if (!v.alive || p.staffInside) return false;
+    if (v.staffInside) return roomOf(p) === v.cameraFeed;
     // the security desk's camera feed shows one room at a time, wherever it is
     if (v.seat && v.seat.game === 'cams' && roomOf(p) === G.security.feed) return true;
     const d = dist(v, p);
@@ -280,7 +281,7 @@ function makeApi(G) {
     const rx = Math.cos(c.look), ry = Math.sin(c.look);
     let hit = null, best = 1e9;
     for (const o of G.chars) {
-      if (o === c || !o.alive) continue;
+      if (o === c || !o.alive || o.staffInside) continue;
       const dx = o.x - c.x, dy = o.y - c.y, along = dx * rx + dy * ry;
       if (along <= 0 || along > CFG.gunRange || Math.abs(dx * ry - dy * rx) > CFG.gunWidth + along * 0.02) continue;
       if (along < best && los(c, o)) { best = along; hit = o; }
@@ -302,7 +303,7 @@ function makeApi(G) {
   }
   // A bot with the gun shoots the one it is surest about, once it is sure enough and has a clear shot.
   function botGun(c) {
-    const v = G.chars.filter(o => o.alive && o !== c && (c.sus[o.id] || 0) >= CFG.gunSus && dist(c, o) < CFG.gunRange && los(c, o)).sort((a, b) => c.sus[b.id] - c.sus[a.id])[0];
+    const v = G.chars.filter(o => o.alive && !o.staffInside && o !== c && (c.sus[o.id] || 0) >= CFG.gunSus && dist(c, o) < CFG.gunRange && los(c, o)).sort((a, b) => c.sus[b.id] - c.sus[a.id])[0];
     if (!v) return false;
     c.face = c.look = Math.atan2(v.y - c.y, v.x - c.x); c.path = []; shoot(c);
     return true;
@@ -725,7 +726,7 @@ function makeApi(G) {
   };
   function kill(v, cause, by) {
     const knew = by && v.alive && cause !== 'monster' && canSee(v, by); // (nobody knows who the monster is)
-    v.alive = false; v.poisonT = 0; v.trapT = 0; v.inspect = null;
+    v.staffInside = null; v.cameraFeed = null; v.alive = false; v.poisonT = 0; v.trapT = 0; v.inspect = null;
     v.killedBy = knew ? appearAs(by).id : null;
     const seenAttacker = by && ['blade', 'monster', 'shiv', 'shot'].includes(cause) ? appearAs(by) : null;
     v.deathScene = { t: G.t, x: v.x, y: v.y, face: v.look ?? v.face, cause, killer: by ? {id: by.id, name: by.name} : null, attacker: seenAttacker ? { color: seenAttacker.color, hat: seenAttacker.hat, monster: cause === 'monster' } : null };
@@ -1357,7 +1358,7 @@ function makeApi(G) {
     m.tally = tally; m.skips = skips;
     if (!ej) m.result = `No one was thrown out (${skips} skipped).`;
     else {
-      ej.alive = false; ej.ejected = true; ej.poisonT = 0; ej.trapT = 0; ej.inspect = null;
+      ej.staffInside = null; ej.cameraFeed = null; ej.alive = false; ej.ejected = true; ej.poisonT = 0; ej.trapT = 0; ej.inspect = null;
       if (ej.seat) { ej.seat.occ = null; ej.seat = null; ej.leftSeatT = G.t; }
       if (ej.monster) endBlackout('fixed');
       if (ej.target && ej.target.claim === ej.id) ej.target.claim = null;
@@ -1449,13 +1450,18 @@ function makeApi(G) {
     if (c.seat) return tell(c, 'Step away from the game first.');
     if (k === 'lure') { if (Object.hasOwn(ROOMS, arg)) lure(c, arg); else tell(c, 'Pick a room for the siren.'); return; }
     const from = staffDoorAt(c), to = STAFF_DOORS[+arg];
+    if (arg === undefined && from && c.isHuman && !c.monster) {
+      for (const w of witnessesOf(c)) remember(w,c,'staff',null,`slip through the STAFF ONLY door in ${ROOMS[from.room].name}`,15,false);
+      c.staffInside = { from: from.id }; c.cameraFeed = from.room; c.path = []; c.inspect = null; c.moving = false; c.sprinting = false; c.posVer++;
+      sfxTo(c,'door'); return;
+    }
     if (!from) tell(c, 'Stand at a STAFF ONLY door.');
     else if (!to || to === from) tell(c, 'Pick another door.');
     else staffWalk(c, from, to);
   }
   // Through the staff corridors: in one door, out of another. Anyone who sees either end remembers it (not proof).
-  function staffWalk(k, from, to) {
-    for (const w of witnessesOf(k)) remember(w, k, 'staff', null, `slip through the STAFF ONLY door in ${ROOMS[from.room].name}`, 15, false);
+  function staffWalk(k, from, to, fromPassage = false) {
+    if (!fromPassage) for (const w of witnessesOf(k)) remember(w, k, 'staff', null, `slip through the STAFF ONLY door in ${ROOMS[from.room].name}`, 15, false);
     if (k.drink) { k.drink.x = to.sx; k.drink.y = to.sy; }
     k.x = to.sx; k.y = to.sy; k.face = k.look = to.face; k.path = []; k.inspect = null; k.posVer++; k.cd.staff = CFG.staffCd;
     for (const w of witnessesOf(k)) remember(w, k, 'staff', null, `come out of the STAFF ONLY door in ${ROOMS[to.room].name}`, 15, false);
@@ -1488,7 +1494,7 @@ function makeApi(G) {
     if (body && !G.escape) return { label: 'Report body', act: () => callMeeting(c, body, `${c.name} found ${byId(body.id).name}'s body.`) };
     if (c.seat && sitsDown(c, c.seat)) return { label: 'Stand up', act: () => standUp(c) }; // (at a game E presses what you aim at)
     const door = c.isKiller && c.perk === 'staff' ? staffDoorAt(c) : null;
-    if (door) return { label: 'Take the staff passage', act: () => usePerk(c, 'staff', (door.id + 1) % STAFF_DOORS.length) }; // (the picker chooses where; this is the next door)
+    if (door) return { label: 'Take the staff passage', act: () => usePerk(c, 'staff') }; // enters the private camera passage
     if (atBar(c)) {
       if (sick(c) && G.antidotes > 0) return { label: `Take the antidote (${G.antidotes} left)`, act: () => takeAntidote(c) }; // once it's felt
       return { label: 'Talk to the bartender', act: () => { if (!c.isHuman) pourFor(c); } }; // (a player's own screen opens the mixer: bar.js)
@@ -1532,7 +1538,7 @@ function makeApi(G) {
       else tell(c, 'Just salty pretzels.');
     }
   }
-  const living = id => { const o = byId(id); return o && o.alive ? o : null; };
+  const living = id => { const o = byId(id); return o && o.alive && !o.staffInside ? o : null; };
   const mbOf = c => Math.max(Gm.maxBet(G.bank), c.mbPeak || 0);
   // A player's settlements are metered: about one max bet a second reaches the bank (no real table turns faster), four
   // in a burst (a split blackjack hand with both halves doubled), and each table's rounds no faster than it deals them
@@ -1583,6 +1589,14 @@ function makeApi(G) {
   const GHOST_PLAYS = new Set(['crash', 'cashout', 'race', 'play', 'cameras', 'feed', 'skee', 'arcade']);
   function action(id, k, arg) {
     const c = byId(id); if (!c || !c.isHuman || G.over) return;
+    if (c.staffInside && c.alive && G.mode === 'play') {
+      if (k === 'feed' && STAFF_DOORS.some(d=>d.room===arg)) c.cameraFeed = arg;
+      if (k === 'staffexit') {
+        const from = STAFF_DOORS[c.staffInside.from], to = STAFF_DOORS.find(d=>d.room===c.cameraFeed) || from;
+        c.staffInside = null; c.cameraFeed = null; staffWalk(c,from,to,true);
+      }
+      return;
+    }
     if (G.mode === 'pick') {
       if (k === 'perk' && c.isKiller && Object.hasOwn(PERK, arg)) c.perk = arg;
       else if (k === 'ready' && G.pickEarly) G.pickReady = true; // solo: start the night now
@@ -1736,7 +1750,7 @@ function makeApi(G) {
     }
   }
   function setInput(id, inp, remote = false) {
-    const c = byId(id); if (!c || !c.isHuman || !inp) return;
+    const c = byId(id); if (!c || !c.isHuman || !inp || c.staffInside) return;
     if (inp.posVer !== c.posVer) return; // client hasn't caught up with a teleport yet
     if (remote && G.mode !== 'play') { c.inT = G.t; c.mvBudget = 60; return; }
     const seated = c.seat && sitsDown(c, c.seat);
@@ -1772,7 +1786,7 @@ function makeApi(G) {
   }
   function dropHuman(id) {
     const c = byId(id); if (!c || !c.isHuman) return;
-    c.isHuman = false; c.netKey = null; c.path = []; c.inspect = null;
+    c.staffInside = null; c.cameraFeed = null; c.isHuman = false; c.netKey = null; c.path = []; c.inspect = null;
     if (c.seat) { c.x = c.seat.x; c.y = c.seat.y; c.face = c.look = c.seat.face; c.posVer++; c.state = 'seated'; c.sitT = rand(5, 15); c.gameT = 2; } else c.state = 'idle';
     tellAll(`${c.name} left. A bot took their place.`);
   }
@@ -1824,6 +1838,7 @@ function makeApi(G) {
         }
         if (!c.sickTold && sick(c)) { c.sickTold = true; tell(c, G.antidotes > 0 ? `You feel sick. Poison! Get the antidote at the bar in ${Math.floor(c.poisonT)} seconds.` : 'You feel sick. Poison, and the antidote is gone.', true, 'poison'); }
       }
+      if (c.staffInside) continue;
       if (c.isHuman) humanTick(c, dt); else botTick(c, dt);
       const room = roomOf(c), tr = c.trail; if (tr[tr.length - 1].room !== room) { tr.push({ t: G.t, room }); if (tr.length > 60) tr.shift(); }
       if (c.drink) { c.drink.x = c.x + Math.cos(c.face + 0.9) * 16; c.drink.y = c.y + Math.sin(c.face + 0.9) * 16; }
@@ -1862,7 +1877,7 @@ function makeApi(G) {
       blackout: G.blackout && { t: +G.blackout.t.toFixed(1), br: G.blackout.br.map(b => [b.i, +Math.min(1, b.work / CFG.breakerWork).toFixed(2), b.done ? 1 : 0]) },
       chars: G.chars.map(c => { const a = c.monster ? MONSTER_LOOK : appearAs(c); return { id: c.id, name: a.name, color: a.color, hat: a.hat, x: Math.round(c.x), y: Math.round(c.y), look: +c.look.toFixed(2), face: +c.face.toFixed(2),
         alive: c.alive, eating: Math.max(0, 2.4 - (G.t - (c.eatAt ?? -99))), snack: c.snack || 0, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: sick(c), human: a === c ? c.isHuman : !!a.isHuman, lucky: c.lucky > 0, inspecting: !!c.inspect, bet: G.t - (c.betAt ?? -9) < 1.2,
-        monster: c.monster, flash: c.flash, held: c.grabbed !== null, maul: !!c.grab, escaped: !!c.escaped, leap: !!(c.leap && c.leap.miss === null) }; }),
+        monster: c.monster, flash: c.flash, held: c.grabbed !== null, maul: !!c.grab, staffInside: !!c.staffInside, escaped: !!c.escaped, leap: !!(c.leap && c.leap.miss === null) }; }),
       drinks: G.drinks.map(d => ({ id: d.id, owner: d.owner, holder: d.holder, x: Math.round(d.x), y: Math.round(d.y), sips: d.sips, color: d.color, kind: d.glass })), // (kind: the glass it's in)
       bodies: G.bodies.map(b => ({ id: b.id, x: Math.round(b.x), y: Math.round(b.y), cause: b.cause })),
       bowls: G.bowls.map(b => ({ id: b.id, x: b.x, y: b.y })),
@@ -1893,7 +1908,7 @@ function makeApi(G) {
     const myDrink = c.drink;
     const cd = {}; for (const k in c.cd) cd[k] = Math.ceil(c.cd[k]);
     const priv = {
-      me: c.id, isKiller: c.isKiller, killers: c.isKiller ? G.killerIds.slice() : [], alive: c.alive, deathScene: !c.alive ? c.deathScene || null : null, cameraFeed: !c.alive ? c.cameraFeed || null : null,
+      me: c.id, isKiller: c.isKiller, killers: c.isKiller ? G.killerIds.slice() : [], alive: c.alive, deathScene: !c.alive ? c.deathScene || null : null, cameraFeed: !c.alive || c.staffInside ? c.cameraFeed || null : null, staffInside: !!c.staffInside,
       footsteps: c.footsteps?.length ? {seq: c.footstepSeq = (c.footstepSeq || 0) + 1, ids: c.footsteps.splice(0)} : null,
       thirst: Math.round(c.thirst), hunger: Math.round(c.hunger), stamina: +(c.stamina / staMax(c)).toFixed(2), staminaMax: staMax(c), cd,
       perk: c.perk, crew: c.isKiller ? G.killerIds.map(id => ({ id, perk: byId(id).perk, human: byId(id).isHuman })) : [], senseT: +c.senseT.toFixed(1),

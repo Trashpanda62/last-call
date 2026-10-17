@@ -1,0 +1,29 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+const {chromium}=createRequire(import.meta.url)(process.env.PW||'playwright');
+const out='shots/slot-camera',report={at:new Date().toISOString(),variants:[],errors:[]};fs.mkdirSync(out,{recursive:true});
+const browser=await chromium.launch({headless:true,args:['--use-angle=vulkan','--enable-features=Vulkan','--ignore-gpu-blocklist'],ignoreDefaultArgs:['--disable-gpu']});
+try{for(const variant of ['normal','noprops']){
+ const p=await browser.newPage({viewport:{width:1440,height:900}});p.on('pageerror',e=>report.errors.push(e.stack||e.message));await p.goto((process.env.LC_URL||'http://127.0.0.1:8319/')+(variant==='noprops'?'?noprops':''));await p.waitForFunction(()=>__lastCall?.S.ready,null,{timeout:120000});
+ await p.evaluate(()=>{const L=__lastCall;L.noLock();L.start('killer',{players:6,killers:1,perk:'staff'});L.step(.1);L.S.paused=true;L.state.target=1e12;for(const c of L.state.chars){c.isHuman=true;if(c.seat)c.seat.occ=null;c.seat=null;if(c.id!==L.S.myId){c.x=1300;c.y=400+c.id*40;}}});
+ const click=async part=>{const pt=await p.evaluate(part=>{const L=__lastCall;L.aimAt(part);L.render();return L.parts().find(p=>p.part===part);},part);assert.ok(pt,'physical '+part);await p.mouse.click(pt.x,pt.y);await p.evaluate(()=>{__lastCall.step(.02);__lastCall.render();});};
+ const sit=async(tier)=>p.evaluate(tier=>{const L=__lastCall;L.act('leave');L.step(.02);const s=L.state.seats.find(s=>s.game===(tier==='cams'?'cams':'slots')&&(tier==='cams'||s.tier===tier));s.occ=s.claim=null;L.place(s.x,s.y);L.look(s.face,-.2);L.S.paused=false;L.render();L.render();},tier);
+ const row={variant,slots:[]};
+ for(const tier of ['penny','high']){
+  await sit(tier);const initial=await p.evaluate(()=>__lastCall.table().extra.bet);await click('btn:betup');assert.ok(await p.evaluate(n=>__lastCall.table().extra.bet>n,initial));await click('btn:betdown');assert.equal(await p.evaluate(()=>__lastCall.table().extra.bet),initial);
+  await click('btn:betmax');assert.equal(await p.evaluate(()=>__lastCall.table().extra.bet===__lastCall.table().maxBet),true);await click('btn:betdown');
+  await p.keyboard.press('Space');assert.ok(await p.evaluate(()=>!!__lastCall.table().view.spin));
+  await click('btn:auto');assert.equal(await p.evaluate(()=>__lastCall.table().extra.auto),true);await click('btn:auto');assert.equal(await p.evaluate(()=>__lastCall.table().extra.auto),false);
+  await p.evaluate(()=>{const L=__lastCall;L.look(L.view.priv.seat.face,-.2);L.render();});await p.waitForTimeout(800);await p.screenshot({path:`${out}/${variant}-${tier}.jpg`,type:'jpeg',quality:92});
+  const data=await p.evaluate(()=>({parts:__lastCall.parts().map(p=>p.part),stacks:__lastCall.table().stacks,chipHidden:document.querySelector('#chipHud').classList.contains('hidden'),hud:document.querySelector('#gameControls').textContent}));assert.ok(!data.parts.includes('spot:main'));assert.deepEqual(data.stacks,[]);assert.equal(data.chipHidden,true);assert.ok(!/AUTO/.test(data.hud));row.slots.push({tier,initial,...data});
+ }
+ await p.evaluate(async()=>{const L=__lastCall,{STAFF_DOORS}=await import('./src/map.js');L.act('leave');L.step(.1);const d=STAFF_DOORS[0],c=L.state.chars[L.S.myId];c.perk='staff';c.cd.staff=0;L.place(d.sx,d.sy);L.look(d.face,0);L.render();L.render();});
+ await p.mouse.click(720,450);await p.evaluate(()=>{__lastCall.step(.05);__lastCall.render();});
+ assert.equal(await p.evaluate(()=>__lastCall.view.priv.staffInside),true);assert.equal(await p.locator('#picker').isVisible(),false);const first=await p.evaluate(()=>__lastCall.view.priv.cameraFeed);await p.mouse.click(720,450);await p.evaluate(()=>{__lastCall.step(.05);__lastCall.render();});const next=await p.evaluate(()=>__lastCall.view.priv.cameraFeed);assert.notEqual(first,next);
+ row.staff=await p.evaluate(()=>({feed:__lastCall.view.priv.cameraFeed,actor:__lastCall.scene().actors.find(a=>a.id===__lastCall.S.myId),card:document.querySelector('#secCard').textContent}));assert.equal(row.staff.actor.visible,false);await p.screenshot({path:`${out}/${variant}-staff-camera.jpg`,type:'jpeg',quality:90});
+ await p.locator('[data-close-cams]').click();await p.evaluate(()=>{__lastCall.step(.05);__lastCall.render();});assert.equal(await p.evaluate(()=>__lastCall.view.priv.staffInside),false);
+ await sit('cams');const deskFirst=await p.evaluate(()=>__lastCall.view.pub.security.feed);await p.mouse.click(720,450);await p.evaluate(()=>{__lastCall.step(.02);__lastCall.render();});assert.notEqual(await p.evaluate(()=>__lastCall.view.pub.security.feed),deskFirst);await p.mouse.click(720,450,{button:'right'});await p.evaluate(()=>{__lastCall.step(.02);__lastCall.render();});assert.equal(await p.evaluate(()=>__lastCall.view.priv.seat),null);
+ await p.evaluate(()=>{const L=__lastCall;L.state.chars[L.S.myId].alive=false;L.act('cameras');L.step(.01);L.render();});const ghostFirst=await p.evaluate(()=>__lastCall.view.priv.cameraFeed);await p.mouse.click(720,450);await p.evaluate(()=>{__lastCall.step(.02);__lastCall.render();});assert.notEqual(await p.evaluate(()=>__lastCall.view.priv.cameraFeed),ghostFirst);await p.mouse.click(720,450,{button:'right'});await p.evaluate(()=>{__lastCall.step(.02);__lastCall.render();});assert.equal(await p.evaluate(()=>__lastCall.view.priv.cameraFeed),null);
+ row.cameras={deskClickCycle:true,deskRightExit:true,ghostClickCycle:true,ghostRightExit:true};report.variants.push(row);await p.close();
+}assert.deepEqual(report.errors,[]);console.log('PASS physical slot betting/spin/auto, Space spin, direct hidden staff passage, desk/ghost camera mouse controls, both graphics variants');}catch(e){report.errors.push(e.stack||String(e));throw e;}finally{fs.writeFileSync(out+'/report.json',JSON.stringify(report,null,2)+'\n');await browser.close();}

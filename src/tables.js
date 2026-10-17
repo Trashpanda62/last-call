@@ -19,7 +19,7 @@ const RL_RED = Gm.RL_RED;
 export const RL_SPOTS = new Set([...Array(37).keys()].map(n => 'n' + n).concat(Object.keys(Gm.RL_BETS), Object.keys(Gm.RL_COLS)));
 // Chips stay staged until the game control starts the round.
 const START_LABEL = { roulette: 'Spin', bj: 'Deal', dice: 'Roll', coin: 'Flip', wheel: 'Spin', slots: 'Spin', plinko: 'Drop', mines: 'Start', tower: 'Climb', skee: 'Start round' };
-const START_HINT = { bj: 'PRESS HIT TO DEAL', roulette: 'CLICK THE WHEEL TO SPIN', dice: 'CLICK THE DICE TO ROLL', coin: 'CLICK THE COIN TO FLIP', wheel: 'CLICK THE WHEEL TO SPIN', slots: 'PULL THE LEVER', plinko: 'PRESS THE GREEN DROP BUTTON', mines: 'PICK A TILE TO START', tower: 'PICK AN EGG TO START', pusher: 'PRESS START / TIME YOUR DROP', claw: 'PRESS START / POSITION THE CLAW', flappy: 'PRESS START / SPACE TO FLAP' };
+const START_HINT = { bj: 'PRESS HIT TO DEAL', roulette: 'CLICK THE WHEEL TO SPIN', dice: 'CLICK THE DICE TO ROLL', coin: 'CLICK THE COIN TO FLIP', wheel: 'CLICK THE WHEEL TO SPIN', slots: 'SPACE / SPIN BUTTON', plinko: 'PRESS THE GREEN DROP BUTTON', mines: 'PICK A TILE TO START', tower: 'PICK AN EGG TO START', pusher: 'PRESS START / TIME YOUR DROP', claw: 'PRESS START / POSITION THE CLAW', flappy: 'PRESS START / SPACE TO FLAP' };
 const START = { roulette: 'spin', bj: 'deal', dice: 'roll', coin: 'flip', wheel: 'spin', slots: 'lever', plinko: 'drop', mines: 'start', tower: 'start', skee: 'start' };
 
 const runs = new Map();
@@ -110,10 +110,9 @@ export function tableTick(v) {
 export function tableStart() {
   if (!tb || tb.game === 'vip') return null;
   const g = tb.g, game = tb.game;
-  // Games with a physical starter (Hit, the lever, the wheel, the dice, the coin, the chute, the first tile or egg)
-  // have no SPACE prompt; the duck race uses its physical START button;
-  // only Crash's shared rocket and the skee roll keep one.
-  if (!['crash', 'skee', 'flappy'].includes(game)) return null;
+  // Slots share SPIN with Space. Other physical starters keep their own controls;
+  // Crash, skee and Flappy also expose their contextual keyboard action.
+  if (!['crash', 'skee', 'flappy', 'slots'].includes(game)) return null;
   if (game === 'crash') {
     const round = tb.cr.C, mine = tb.cr.mine;
     if (!round) return null;
@@ -311,7 +310,7 @@ export function tableView() {
   const g = tb.g, on = {};
   for (const b of g.btns || []) on[b] = g.on ? !!g.on(b) : true;
   const sh = g.show ? g.show() : tb.bets; let down = 0; for (const k in sh) down += sh[k];
-  return { game: tb.game, seat: tb.seat, tier: tb.tier, view: tb.view, chip: chipNow(), maxBet: tb.maxBet, on, stacks: stacks(), hist: rlHist,
+  return { game: tb.game, seat: tb.seat, tier: tb.tier, view: tb.view, chip: chipNow(), maxBet: tb.maxBet, on, stacks: tb.game === 'slots' ? [] : stacks(), hist: rlHist,
     ui: g.ui ? g.ui() : null, extra: g.extra ? g.extra() : null, pressed: tb.pressed, idle: !down && !(g.locked && g.locked()) };
 }
 const k01 = x => Math.max(0, Math.min(1, x));
@@ -360,7 +359,7 @@ export function consoleHit(x, y) {
 // The chip icon at the bottom of the screen: the chip in hand, what is down, the game's status and the last result.
 export function chipHud(maxBet) {
   if (!tb && maxBet) { const c = chipAt(maxBet); return { chip: c, label: chipLabel(c), i: CHIPS.indexOf(c), down: '', max: S(maxBet), status: '', note: null }; }
-  if (!tb || tb.game === 'vip') return null;
+  if (!tb || tb.game === 'vip' || tb.game === 'slots') return null;
   const b = tableBar(), c = chipNow(), sh = tb.g.show ? tb.g.show() : tb.bets; let down = 0; for (const k in sh) down += sh[k];
   return { chip: c, label: chipLabel(c), i: CHIPS.indexOf(c), down: down ? S(down) : '', max: S(tb.maxBet), status: tb.game === 'bj' && tb.s?.over || b.status.startsWith('BET READY') ? '' : b.status,
     note: b.flash ? ['flash', b.flash] : b.res.text ? [b.res.cls, b.res.text] : null };
@@ -512,14 +511,20 @@ const GAMES = {
   },
 
   slots: {
-    main: 'main', btns: ['lever', 'auto'], bar: ['auto', 'lever'],
+    main: 'main', noChips: true, btns: ['betdown', 'betup', 'betmax', 'lever', 'auto'], bar: [],
     short(id) { return id === 'auto' ? (tb.auto ? 'AUTO ON' : 'AUTO') : null; },
     status() { return tb.busy ? (tb.auto ? 'AUTO · SPINNING' : 'SPINNING') : tb.auto ? 'AUTO PLAY' : null; },
-    init() { tb.auto = false; tb.busy = false; tb.view = { tier: tb.tier }; },
+    init() { tb.auto = false; tb.busy = false; tb.view = { tier: tb.tier }; tb.bets.main = Math.min(minBet(), tb.maxBet); },
     locked() { return tb.busy; },
-    on(id) { return id === 'auto' ? true : !tb.busy; },
-    label(id) { return { lever: tb.busy ? 'SPINNING' : 'PULL THE LEVER · ' + S(stake()), auto: 'AUTO SPIN · ' + (tb.auto ? 'ON' : 'OFF') }[id]; },
+    on(id) { return id === 'auto' ? true : !tb.busy && (id !== 'lever' || stake() >= minBet()); },
+    label(id) { return { betdown: 'BET − · ' + S(stake()), betup: 'BET + · ' + S(stake()), betmax: 'MAX BET · ' + S(tb.maxBet), lever: tb.busy ? 'SPINNING' : 'SPIN · ' + S(stake()), auto: 'AUTO SPIN · ' + (tb.auto ? 'ON' : 'OFF') }[id]; },
     press(id) {
+      if (['betdown', 'betup', 'betmax'].includes(id)) {
+        if (tb.busy) return;
+        const base = minBet(), choices = [...new Set([base, ...[1, 5, 10, 25, 50, 100].map(n => base*n), tb.maxBet].filter(n=>n<=tb.maxBet))].sort((a,b)=>a-b);
+        tb.bets.main = id === 'betmax' ? tb.maxBet : id === 'betup' ? choices.find(n=>n>stake()) ?? tb.maxBet : choices.filter(n=>n<stake()).pop() ?? choices[0];
+        hand('press'); sfx('click'); return;
+      }
       if (id === 'lever') return this.spin();
       if (id === 'auto') { tb.auto = !tb.auto; sfx('click'); hand('press'); if (tb.auto && !tb.busy) this.spin(); }
     },
