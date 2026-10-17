@@ -2,6 +2,15 @@
 
 Updated **2026-10-16** after Steve explicitly resumed work in this session. The outstanding integrated scenery audit/startup profile is complete. Contextual table controls are implemented and deployed; expanded solo/three-browser death checks and plaque checks pass. The broader game work remains **ACTIVE and unfinished**.
 
+## What's left (Steve's third pass, 2026-10-16 late night)
+
+Everything below is committed and pushed (9bc4410 on master). Steve's next list, in [active-plan.md](active-plan.md):
+
+1. **B11 Plinko (reopened):** still doesn't work; a broken white circle graphic sits below the screen. Reproduce from a player's view on the live build first; the passing checks missed it.
+2. **B13 Duck race (reopened):** still not redesigned. Needs a full rebuild like the other games, not just new desks and buttons.
+3. **B14 Chips on the machine (new):** in many games the chips are not placed on the machine. Check the rocket (Crash) game first. Steve wants physical circles, like the buttons, to place chips on, for every game.
+4. **C02 balance:** on hold until Steve has tested (nights ~6-8.5 min, killers ~70%).
+
 ## Latest (Claude session, 2026-10-16 night): Steve's second playtest list
 
 - B10 tables keep running when you walk off (spins, AUTO slots; held for you); blackjack/Mines/Tower/coin pot/dice point settle past 10 ft. B11 Plinko rebuilt bottom (pockets, gates per risk, playfield in front of the model's fascia, auto-bet on the chute), rocket statue removed. B12 signs beside doors on black backers, lowered; real restroom mirror (src/3d/mirror.js). B13 duck race: chips on a duck are the bet, duck buttons on walnut desks. C02 kill cooldowns 60 s, everyone 20% faster, monster 1.5x.
@@ -24,7 +33,7 @@ Updated **2026-10-16** after Steve explicitly resumed work in this session. The 
 
 ## Workspace and deployed build
 
-- Workspace: **C:/dev/last-call**, branch **master**. Extensive intentional uncommitted/untracked work exists, including .claude/, .dev/ and tools/prop_fit.py. Preserve all of it. No commit, reset, cleanup, public release or new branch was requested.
+- Workspace: **C:/dev/last-call**, branch **master**. All work is committed and pushed (9bc4410); .claude/, .dev/ and shots/ stay untracked on disk. Preserve them.
 - Playtest: **https://10.42.0.37:3161/**, TrueNAS nginx, self-signed HTTPS and no-store. Hosting continues independently of this PC.
 - [Delivery receipt](playtest-build-2026-10-16.json): all **92 runtime/asset files** match served bytes for the current production candidate. Documentation/tool changes are synced after verification.
 - Current src/3d/render3d.js SHA-256: **822f68b22167b5d389f6292b4e788f0168847dec184ac6fec96be95da1584df9**.
