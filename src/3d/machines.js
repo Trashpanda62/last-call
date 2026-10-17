@@ -7,13 +7,14 @@ import * as T from './textures.js';
 import * as P from '../paint.js';
 import * as Gm from '../games.js';
 import { buildArcade } from './arcade.js';
+import { buildRocketFlight } from './rocket-flight.js';
 import { buildSkee } from './skee.js';
 import { blackjackSpot } from './blackjack-layout.js';
 import { MAT, GLOWS, glowMat, basicGlow, v3, box, rbox, cyl, sph, lathe, torus, yawOf, uvScale } from './world.js';
 import { buildRig, rouletteLayoutTex, diceLayoutTex } from './rig.js';
 import { hasProp, placeProps, propObject, propScale, dyeFelt } from './props.js';
 import { roomOf } from '../map.js';
-import { BJ_TABLES, RL_TABLE, CRASH_SCREEN, PLINKO_STATIONS, MINES_XS, TOWER_XS, POND, RACE_XS, SLOT_STATIONS, JACKPOT, DICE_TABLE, WHEEL_X, COIN, OBSTACLES } from '../map.js';
+import { BJ_TABLES, RL_TABLE, CRASH_SCREEN, PLINKO_STATIONS, MINES_XS, TOWER_XS, POND, RACE_XS, SLOT_STATIONS, SLOT_BANKS, JACKPOT, DICE_TABLE, WHEEL_X, COIN, OBSTACLES } from '../map.js';
 
 const M = 1 / 60;
 const RL_TRACK = new THREE.MeshStandardMaterial({ color: 0x5a2c14, roughness: 0.22, metalness: 0.08, side: THREE.DoubleSide });
@@ -245,6 +246,14 @@ export function* buildMachinesSteps(ctx, seats) {
     betSocket(s, 'main', tray.clone().setY(tray.y + .007), 'BET');
     return g;
   }
+  // Solid spines physically close the gaps between cabinets, matching the host's
+  // bank occluders. A far-side player is concealed by real geometry at eye height.
+  for(const bank of SLOT_BANKS){
+    const x=(bank.x+bank.w/2)*M,z=(bank.y+bank.h/2)*M,w=bank.w*M;
+    B.add(rbox(w,2.08,.22,.025),MAT.blackGloss,v3(x,1.04,z));
+    B.add(box(w+.04,.045,.26),MAT.gold,v3(x,2.10,z));
+    B.add(rbox(w,.10,bank.h*M,.025),MAT.darkWood,v3(x,.05,z));
+  }
   const slotDefs = SLOT_STATIONS;
   for (const sd of slotDefs) {
     const s = seatOf('slots', sd.machine), high = s.tier === 'high';
@@ -314,7 +323,8 @@ export function* buildMachinesSteps(ctx, seats) {
     const w = (CRASH_SCREEN.x1 - CRASH_SCREEN.x0) * M * 0.9, h = 2.7, cx = (CRASH_SCREEN.x0 + CRASH_SCREEN.x1) / 2 * M, z = 20 * M + 0.08;
     B.add(rbox(w + 0.3, h + 0.3, 0.14, 0.06), MAT.blackGloss, v3(cx, 1.95, z - 0.02));
     B.add(box(w + 0.36, 0.04, 0.04), glowMat(0xb64235, 1.6), v3(cx, 1.95 + h / 2 + 0.17, z + 0.05)); B.add(box(w + 0.36, 0.04, 0.04), glowMat(0xd5ab68, 1.6), v3(cx, 1.95 - h / 2 - 0.17, z + 0.05));
-    const big = screen({ w, h, cw: 2048, ch: 768, paint: (g, W, H, t, a) => P.paintCrash(g, W, H, t, a && a.C, a && a.me), pos: v3(cx, 1.95, z + 0.06), every: 1 / 15, strength: 1.2, far: 40, arg: st => st.pub && { C: st.pub.crash, me: st.priv ? st.priv.me : -1 } });
+    const big = screen({ w, h, cw: 2048, ch: 768, paint: (g, W, H, t, a) => P.paintCrash(g, W, H, t, a && a.C, a && a.me, true), pos: v3(cx, 1.95, z + 0.06), every: 1 / 15, strength: 1.2, far: 40, arg: st => st.pub && { C: st.pub.crash, me: st.priv ? st.priv.me : -1 } });
+    buildRocketFlight(group,updaters,cx,z,w,h);
     for (const s of seats) if (s.game === 'crash') focusAt(s.id, 'extra', big);
     for (const o of OBSTACLES.filter(o => o.kind === 'crashDesk')) {
       const x = (o.x + o.w / 2) * M, dz = (o.y + o.h / 2) * M;
@@ -590,7 +600,7 @@ export function* buildMachinesSteps(ctx, seats) {
   yield 'Building street dice';
   {
     const o = DICE_TABLE, cx = (o.x + o.w / 2) * M, cz = (o.y + o.h / 2) * M, w = o.w * M, d = o.h * M;
-    if (hasProp('diceTable')) placeProps(group, 'diceTable', [{ x: cx, z: cz, fit: [w + 0.2, 0.86, d + 0.2], stretch: true }]); // our felt floats in its tub at the hand-built height
+    if (hasProp('diceTable')) placeProps(group, 'diceTable', [{ x: cx, z: cz, yaw: Math.PI, fit: [w + 0.2, 0.86, d + 0.2], stretch: true }]); // our felt floats in its tub at the hand-built height
     else {
       B.add(rbox(w, 0.68, d, 0.3), MAT.darkWood, v3(cx, 0.34, cz));
       for (const [x, z, ww, dd] of [[cx, cz - d / 2 + 0.09, w - 0.1, 0.18], [cx, cz + d / 2 - 0.09, w - 0.1, 0.18], [cx - w / 2 + 0.09, cz, 0.18, d - 0.1], [cx + w / 2 - 0.09, cz, 0.18, d - 0.1]]) B.add(rbox(ww, 0.12, dd, 0.05), MAT.leather, v3(x, 0.72, z));
@@ -674,7 +684,7 @@ export function* buildMachinesSteps(ctx, seats) {
     coin.name = 'coin-flip-hero'; coin.scale.setScalar(1.45); coin.castShadow = true; add(coin);
     starter('coin', () => true, coin, 'btn:flip'); // click the coin to flip
     const coinTitle = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.38), basicGlow(T.plaque('HEADS OR TAILS', { w: 1536, h: 256, bg: '#140c0e', ink: '#ffe0a0', font: 'bold 112px Georgia' }), 1));
-    coinTitle.name = 'coin-flip-sign'; coinTitle.position.set(x, 2.65, z); add(coinTitle);
+    coinTitle.rotation.y = Math.PI; coinTitle.name = 'coin-flip-sign'; coinTitle.position.set(x, 2.65, z); add(coinTitle);
     for (const side of [-1, 1]) { const ring = new THREE.Mesh(torus(.78, .025, 8, 64), glowMat(side < 0 ? 0xd0ad6a : 0xe2bb7b, 1.4)); ring.position.set(x, 1.55, z + side * .08); add(ring); }
 
     for (const s of seats.filter(q => q.game === 'coin')) { // a betting stand in front of each coin seat

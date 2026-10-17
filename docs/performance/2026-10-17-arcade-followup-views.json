@@ -1,0 +1,223 @@
+{
+  "at": "2026-10-17T06:02:39.946Z",
+  "variants": [
+    {
+      "variant": "normal",
+      "slotOcclusion": [
+        {
+          "x": 250,
+          "hits": 5
+        },
+        {
+          "x": 300,
+          "hits": 5
+        },
+        {
+          "x": 400,
+          "hits": 6
+        },
+        {
+          "x": 500,
+          "hits": 5
+        },
+        {
+          "x": 550,
+          "hits": 5
+        }
+      ],
+      "diceDoor": {
+        "signEnd": 822.8999984264374,
+        "blockers": []
+      },
+      "start": "aim",
+      "parts": [
+        "spot:main",
+        "btn:start",
+        "btn:drop"
+      ],
+      "flappy": {
+        "score": 9,
+        "phase": "fly",
+        "sequence": 33
+      },
+      "race": {
+        "phase": "run",
+        "t": 0.08333333333333333
+      },
+      "roulette": {
+        "stacks": [
+          {
+            "spot": "red",
+            "amount": 1000,
+            "slot": 0,
+            "anim": "",
+            "u": 0,
+            "add": 12.064199999988078
+          }
+        ],
+        "ringCount": 0
+      },
+      "rocket": {
+        "auto": 0,
+        "mesh": {
+          "visible": true,
+          "meshChildren": 8,
+          "trail": 64
+        }
+      },
+      "gfx": {
+        "frames": 2152,
+        "calls": 424,
+        "tris": 566233,
+        "geos": 833,
+        "tex": 389,
+        "cam": [
+          41.67,
+          1.21,
+          7.79,
+          0.05,
+          0
+        ],
+        "gestures": {
+          "tap": 1,
+          "wave": 1
+        },
+        "props": 32,
+        "rebuildPending": false,
+        "rooms": [
+          "arcade"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 11,
+          "offscreen": 0
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1440,
+          900
+        ],
+        "out": [
+          1440,
+          900
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "variant": "noprops",
+      "slotOcclusion": [
+        {
+          "x": 250,
+          "hits": 4
+        },
+        {
+          "x": 300,
+          "hits": 4
+        },
+        {
+          "x": 400,
+          "hits": 4
+        },
+        {
+          "x": 500,
+          "hits": 4
+        },
+        {
+          "x": 550,
+          "hits": 4
+        }
+      ],
+      "diceDoor": {
+        "signEnd": 822.8999984264374,
+        "blockers": []
+      },
+      "start": "aim",
+      "parts": [
+        "spot:main",
+        "btn:start",
+        "btn:drop"
+      ],
+      "flappy": {
+        "score": 9,
+        "phase": "fly",
+        "sequence": 34
+      },
+      "race": {
+        "phase": "run",
+        "t": 0.06666666666666667
+      },
+      "roulette": {
+        "stacks": [
+          {
+            "spot": "red",
+            "amount": 1000,
+            "slot": 0,
+            "anim": "",
+            "u": 0,
+            "add": 10.439400000035763
+          }
+        ],
+        "ringCount": 0
+      },
+      "rocket": {
+        "auto": 0,
+        "mesh": {
+          "visible": true,
+          "meshChildren": 8,
+          "trail": 64
+        }
+      },
+      "gfx": {
+        "frames": 2123,
+        "calls": 432,
+        "tris": 679943,
+        "geos": 1167,
+        "tex": 363,
+        "cam": [
+          41.67,
+          1.25,
+          7.79,
+          0.05,
+          0
+        ],
+        "gestures": {
+          "wave": 1
+        },
+        "props": 0,
+        "rebuildPending": false,
+        "rooms": [
+          "arcade"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 11,
+          "offscreen": 0
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1440,
+          900
+        ],
+        "out": [
+          1440,
+          900
+        ],
+        "pr": 1
+      }
+    }
+  ],
+  "errors": []
+}

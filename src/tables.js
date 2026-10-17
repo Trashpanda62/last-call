@@ -19,7 +19,7 @@ const RL_RED = Gm.RL_RED;
 export const RL_SPOTS = new Set([...Array(37).keys()].map(n => 'n' + n).concat(Object.keys(Gm.RL_BETS), Object.keys(Gm.RL_COLS)));
 // Chips stay staged until the game control starts the round.
 const START_LABEL = { roulette: 'Spin', bj: 'Deal', dice: 'Roll', coin: 'Flip', wheel: 'Spin', slots: 'Spin', plinko: 'Drop', mines: 'Start', tower: 'Climb', skee: 'Start round' };
-const START_HINT = { bj: 'PRESS HIT TO DEAL', roulette: 'CLICK THE WHEEL TO SPIN', dice: 'CLICK THE DICE TO ROLL', coin: 'CLICK THE COIN TO FLIP', wheel: 'CLICK THE WHEEL TO SPIN', slots: 'PULL THE LEVER', plinko: 'PRESS THE GREEN DROP BUTTON', mines: 'PICK A TILE TO START', tower: 'PICK AN EGG TO START', pusher: 'PRESS START / TIME YOUR DROP', claw: 'PRESS START / POSITION THE CLAW' };
+const START_HINT = { bj: 'PRESS HIT TO DEAL', roulette: 'CLICK THE WHEEL TO SPIN', dice: 'CLICK THE DICE TO ROLL', coin: 'CLICK THE COIN TO FLIP', wheel: 'CLICK THE WHEEL TO SPIN', slots: 'PULL THE LEVER', plinko: 'PRESS THE GREEN DROP BUTTON', mines: 'PICK A TILE TO START', tower: 'PICK AN EGG TO START', pusher: 'PRESS START / TIME YOUR DROP', claw: 'PRESS START / POSITION THE CLAW', flappy: 'PRESS START / SPACE TO FLAP' };
 const START = { roulette: 'spin', bj: 'deal', dice: 'roll', coin: 'flip', wheel: 'spin', slots: 'lever', plinko: 'drop', mines: 'start', tower: 'start', skee: 'start' };
 
 const runs = new Map();
@@ -28,7 +28,7 @@ export function resetTableLuck() { runs.clear(); }
 let receiptSeq = 0; // monotonic for this client; the host rejects replayed accepted-stake IDs
 let tb = null;            // the table I'm at
 let chip = 1000;          // the chip in hand, remembered between tables
-let crashAuto = 2;        // auto cash-out, remembered
+let crashAuto = 0;        // auto cash-out, remembered
 const rlHist = [];        // the last roulette numbers you saw land, newest first
 let handHook = () => {};  // first-person hand animation hook: hand(kind)
 export function setHandHook(fn) { handHook = fn; }
@@ -113,13 +113,14 @@ export function tableStart() {
   // Games with a physical starter (Hit, the lever, the wheel, the dice, the coin, the chute, the first tile or egg)
   // have no SPACE prompt; the duck race uses its physical START button;
   // only Crash's shared rocket and the skee roll keep one.
-  if (!['crash', 'skee'].includes(game)) return null;
+  if (!['crash', 'skee', 'flappy'].includes(game)) return null;
   if (game === 'crash') {
     const round = tb.cr.C, mine = tb.cr.mine;
     if (!round) return null;
     if (game === 'crash' && round.phase === 'fly' && mine && !mine[2]) return { id: 'btn:cash', label: 'Cash out', on: true };
     return { id: 'btn:bet', label: mine ? 'Bet placed' : 'Place bet', on: round.phase === 'bet' && !mine && stake() >= minBet() };
   }
+  if (game === 'flappy') return {id:'btn:drop',label:'Flap',on:!!tb.g.on('drop')};
   if (game === 'skee') {
     const r = tb.round;
     if (r && r.phase !== 'done') return { id: 'btn:roll', label: r.phase === 'aim' ? tb.charging !== null ? 'Release · ' + Math.round(skeePower() * 100) + '%' : 'Hold to roll' : 'Ball in play', on: r.phase === 'aim' && !tb.pending };
@@ -371,7 +372,7 @@ export function chipHud(maxBet) {
 // units, tapUI(id); tap(x, y) for the rest of the screen. show(): the chips to draw when they differ from the bets.
 function arcadeController(game) {
   return {
-    main:'main',btns:['start','left','right',...(game==='claw'?['back','forward']:[]),'drop'],bar:[],
+    main:'main',btns:game==='flappy'?['start','drop']:['start','left','right',...(game==='claw'?['back','forward']:[]),'drop'],bar:[],
     init(){tb.round=null;tb.laneRound=null;tb.pending=false;tb.resultRound=null;},
     live(v){const r=v.pub.arcade?.[game];tb.laneRound=r||null;
       if(tb.pending && (now()>tb.pendingUntil || r?.seq!==tb.pendingSeq || r?.id!==tb.pendingRound))tb.pending=false;
@@ -379,18 +380,18 @@ function arcadeController(game) {
       if(tb.round?.phase==='done'&&tb.resultRound!==r.id){tb.resultRound=r.id;const back=r.bet*r.mult,net=r.net||0;result('PAID '+money(back)+' / BANK '+(net>0?'+':'')+money(net),net>0?'win':net<0?'lose':'');}
     },
     locked(){return !!(tb.pending||tb.laneRound&&tb.laneRound.phase!=='done');},
-    on(id){return id==='start'?!this.locked()&&stake()>=minBet():!!(tb.round?.phase==='aim'&&!tb.pending);},
-    label(id){return ({start:'START ROUND',left:'MOVE LEFT',right:'MOVE RIGHT',back:'MOVE BACK',forward:'MOVE FORWARD',drop:game==='claw'?'LOWER CLAW':'DROP TOKEN'})[id];},
+    on(id){return id==='start'?!this.locked()&&stake()>=minBet():!!((tb.round?.phase==='aim'||game==='flappy'&&tb.round?.phase==='fly')&&!tb.pending);},
+    label(id){return ({start:'START ROUND',left:'MOVE LEFT',right:'MOVE RIGHT',back:'MOVE BACK',forward:'MOVE FORWARD',drop:game==='flappy'?'FLAP':game==='claw'?'LOWER CLAW':'DROP TOKEN'})[id];},
     press(id){if(!this.on(id))return;const r=tb.round;tb.pending=true;tb.pendingUntil=now()+2.5;tb.pendingRound=r?.id;tb.pendingSeq=r?.seq;
       const msg=id==='start'?{kind:'start',after:tb.laneRound?.id||0,bet:stake()}:{kind:id==='drop'?'drop':'move',round:r.id,sequence:r.seq+1,dx:id==='left'?-1:id==='right'?1:0,dz:id==='back'?-1:id==='forward'?1:0};
       tb.act('arcade',msg);hand('press');sfx('click');
     },
     show(){return this.locked()&&tb.round?{main:tb.round.bet}:tb.bets;},
-    status(){const r=tb.round;if(!r)return null;if(r.phase==='done'){const back=r.bet*r.mult,net=r.net||0;return 'PAID '+money(back)+' / BANK '+(net>0?'+':'')+money(net);}return (game==='claw'?(r.phase==='drop'?'DELIVERING PRIZE':ARCADE.clawTries-r.used+' GRAB LEFT'):(r.phase==='settle'?'COUNTING FALLEN COINS':r.phase==='drop'?'PUSHING COINS':ARCADE.pusherTokens-r.used+' TOKEN LEFT'))+' / '+r.score+' POINTS'+(r.assist?' / GOLD ASSIST':'');},
+    status(){const r=tb.round;if(!r)return null;if(r.phase==='done'){const back=r.bet*r.mult,net=r.net||0;return 'PAID '+money(back)+' / BANK '+(net>0?'+':'')+money(net);}if(game==='flappy')return r.score+' PIPES / '+(r.phase==='aim'?'PRESS FLAP OR SPACE':'SPACE OR FLAP TO FLY');return (game==='claw'?(r.phase==='drop'?'DELIVERING PRIZE':ARCADE.clawTries-r.used+' GRAB LEFT'):(r.phase==='settle'?'COUNTING FALLEN COINS':r.phase==='drop'?'PUSHING COINS':ARCADE.pusherTokens-r.used+' TOKEN LEFT'))+' / '+r.score+' POINTS'+(r.assist?' / GOLD ASSIST':'');},
   };
 }
 const GAMES = {
-  pusher: arcadeController('pusher'), claw: arcadeController('claw'),
+  flappy: arcadeController('flappy'), pusher: arcadeController('pusher'), claw: arcadeController('claw'),
   vip: { btns: [] },
 
   skee: {

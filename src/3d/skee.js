@@ -12,7 +12,7 @@ export function buildSkee(ctx, seats, screen, updaters) {
   for (const p of SKEE_POCKETS) { const hole = new THREE.Path(); hole.absarc(p.x, (p.y - SKEE.boardY) * stretch, p.radius, 0, Math.PI * 2, true); face.holes.push(hole); }
   const boardGeo = new THREE.ExtrudeGeometry(face, { depth: .035, bevelEnabled: false, curveSegments: 32 });
   const boardMat = new THREE.MeshStandardMaterial({ color: 0x193b35, roughness: .78 });
-  const ballGeo = sph(SKEE.radius, 20), ballMat = new THREE.MeshStandardMaterial({ color: 0xeee3c8, roughness: .38, metalness: .08 });
+  const ballGeo = sph(SKEE.radius, 20), ballMat = new THREE.MeshStandardMaterial({ color: 0xeee3c8, map: T.wood('#ead8b1','#c1a67c'), roughness: .38, metalness: .08 });
   const ringGeos = new Map(), recessGeos = new Map(), labels = new Map(), labelGeos = [new THREE.PlaneGeometry(.16, .08), new THREE.PlaneGeometry(.19, .08)], powerGeo = box(.68, .013, .035);
   for (const p of SKEE_POCKETS) {
     if (!ringGeos.has(p.radius)) ringGeos.set(p.radius, new THREE.TorusGeometry(p.radius + .018, .018, 8, 36));
@@ -21,7 +21,7 @@ export function buildSkee(ctx, seats, screen, updaters) {
   }
   const laneGeo = new THREE.PlaneGeometry(.96, 2.60, 1, 1), laneMat = new THREE.MeshStandardMaterial({ color: 0x88532d, roughness: .48, map: T.wood('#ad8251', '#694527') });
   const ramp = new THREE.BufferGeometry(), points = [], uv = [], indices = [];
-  for (let i = 0; i <= 20; i++) { const z = -.38 - i / 20 * .44, y = .638 + .20 * (i / 20) ** 2; points.push(-.48, y, z, .48, y, z); uv.push(0, i / 20, 1, i / 20); if (i < 20) { const n = i * 2; indices.push(n, n + 1, n + 2, n + 1, n + 3, n + 2); } }
+  for (let i = 0; i <= 20; i++) { const z = -.38 - i / 20 * .44, y = .638 + .32 * (i / 20) ** 2; points.push(-.48, y, z, .48, y, z); uv.push(0, i / 20, 1, i / 20); if (i < 20) { const n = i * 2; indices.push(n, n + 1, n + 2, n + 1, n + 3, n + 2); } }
   ramp.setAttribute('position', new THREE.Float32BufferAttribute(points, 3)); ramp.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); ramp.setIndex(indices); ramp.computeVertexNormals();
   const arrowGeo = new THREE.ConeGeometry(.06, .19, 3), arrowMat = new THREE.MeshBasicMaterial({ color: 0xefd185 });
   const shells = [];
@@ -78,7 +78,7 @@ export function buildSkee(ctx, seats, screen, updaters) {
         const key = r.id + ':' + r.launched;
         if (key !== lastBall || b.stage !== prevPhase) moving.position.set(b.x, b.y, b.z);
         else moving.position.lerp(target.set(b.x, b.y, b.z), Math.min(1, dt * 35));
-        moving.rotation.x -= dt * 5; lastBall = key; prevPhase = b.stage;
+        moving.rotation.x = -(b.spin || 0); lastBall = key; prevPhase = b.stage;
         if (lastAssist !== !!b.assist) { lastAssist = !!b.assist; moving.material.color.set(lastAssist ? 0xffcf5a : 0xeee3c8); }
       }
       arrow.visible = !!(my && r?.phase === 'aim'); power.visible = arrow.visible && my.extra?.power !== null;

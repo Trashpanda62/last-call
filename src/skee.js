@@ -16,9 +16,21 @@ export function skeeNew(id, seat, player, bet, hot = false) {
 export function skeeLaunch(r, aim, power, sequence) {
   if (!r || r.phase !== 'aim' || r.abandoned || r.launched >= SKEE.balls || sequence !== r.launched + 1 || !Number.isFinite(aim) || !Number.isFinite(power)) return false;
   aim = Math.max(-1, Math.min(1, aim)); power = Math.max(0, Math.min(1, power));
-  const speed = 2.8 + power * 4.2;
+  // Launch velocity follows the same curved ramp as the visible lane. A protected
+  // roll chooses a launch energy up front; nothing steers the ball during flight.
+  let speed = 2.05 + power * 4.4, lateral = aim * .40;
+  if(r.hot) {
+    const p=SKEE_POCKETS[4+((r.launched+1)%3)], distance=SKEE.tip-p.z-SKEE.radius;
+    const tangent=2*.32/.44, needed=Math.sqrt(4.9*distance*distance/(tangent*distance-(p.y-1.01)));
+    const travel = initial => {let z=SKEE.front,v=-initial,t=0;for(let i=0;i<2400&&z>SKEE.tip;i++){
+      const u=Math.max(0,Math.min(1,(-z-.38)/.44)),slope=2*.32*u/.44;
+      v=Math.min(-.2,v+(.12+(9.8*slope+2*.32/(.44*.44)*slope*v*v)/(1+slope*slope))*SKEE.step);z+=v*SKEE.step;t+=SKEE.step;
+    }return {speed:-v,time:t};};
+    let lo=1,hi=8;for(let i=0;i<28;i++){const mid=(lo+hi)/2;if(travel(mid).speed<needed)lo=mid;else hi=mid;}
+    speed=(lo+hi)/2;lateral=p.x/(travel(speed).time+distance/needed);
+  }
   r.launched++; r.phase = 'roll'; r.wait = 0;
-  r.ball = { x: 0, y: .69, z: SKEE.front, vx: aim * .43 / 3.41 * speed, vy: 0, vz: -speed, age: 0, stage: 'lane', power, aim, assist: false };
+  r.ball = { x: 0, y: .69, z: SKEE.front, vx: lateral, vy: 0, vz: -speed, age: 0, stage: 'lane', power, aim, assist: false, spin: 0, bounces: 0 };
   return true;
 }
 const plane = b => b.z - SKEE.boardZ + SKEE.slope * (b.y - SKEE.boardY);
@@ -32,34 +44,47 @@ function step(r, dt) {
   if (r.phase === 'roll' && b) {
     b.age += dt;
     if (b.stage === 'lane') {
+      const u = Math.max(0, Math.min(1, (-b.z - .38) / .44));
+      const slope = 2 * .32 * u / .44;
+      const decel = .12 + (9.8 * slope + 2*.32/(.44*.44)*slope*b.vz*b.vz) / (1 + slope * slope);
+      b.vz = Math.min(-.2, b.vz + decel * dt);
+      if(b.vz>=-.21){caught(r,null);return;}
       b.x += b.vx * dt; b.z += b.vz * dt;
-      const u = Math.max(0, Math.min(1, (-b.z - .38) / .44)); b.y = .69 + .20 * u * u;
-      if (b.z <= SKEE.tip) { b.z = SKEE.tip; b.y = .89; b.vy = .2 + b.power * 10; b.stage = 'flight'; b.age = 0; b.assist = !!r.hot; }
+      b.y = .69 + .32 * Math.max(0, Math.min(1, (-b.z - .38) / .44)) ** 2;
+      b.spin += Math.hypot(b.vx,b.vz) * dt / SKEE.radius;
+      if (Math.abs(b.x) > SKEE.halfWidth - SKEE.radius) { b.x = Math.sign(b.x) * (SKEE.halfWidth-SKEE.radius); b.vx *= -.65; b.bounces++; }
+      if (b.z <= SKEE.tip) {
+        b.z = SKEE.tip; b.y = 1.01;
+        b.vy = -b.vz * (2 * .32 / .44); b.stage = 'flight'; b.age = 0;
+      }
     } else {
       const before = { x: b.x, y: b.y, z: b.z }, old = plane(b);
-      if (b.assist) {
-        // A visible golden bend guides a lucky roll into a real pocket. Its banked value
-        // is still determined by this same swept pocket check, never a fabricated score.
-        const p = SKEE_POCKETS[4 + (r.launched % 3)], u = Math.min(1, b.age / .32);
-        b.x = b.aim * .34 * (1 - u) + p.x * u;
-        b.y = .89 + (p.y - .89) * u + Math.sin(u * Math.PI) * .18;
-        b.z = SKEE.tip + (p.z + SKEE.radius - .002 - SKEE.tip) * u;
-      } else { b.x += b.vx * dt; b.y += b.vy * dt - 4.9 * dt * dt; b.vy -= 9.8 * dt; b.z += b.vz * dt; }
-      const after = plane(b);
-      if (old > SKEE.radius && after <= SKEE.radius) {
-        const f = (old - SKEE.radius) / (old - after);
+      b.x += b.vx * dt; b.y += b.vy * dt - 4.9 * dt * dt; b.vy -= 9.8 * dt; b.z += b.vz * dt;
+      b.spin += Math.hypot(b.vx,b.vy,b.vz) * dt / SKEE.radius;
+      if (old > SKEE.radius && plane(b) <= SKEE.radius && b.stage === 'flight') {
+        const f = (old - SKEE.radius) / (old - plane(b));
         b.x = before.x + (b.x - before.x) * f; b.y = before.y + (b.y - before.y) * f; b.z = before.z + (b.z - before.z) * f;
         const p = SKEE_POCKETS.find(p => Math.hypot(b.x - p.x, (b.y - p.y) * Math.sqrt(1 + SKEE.slope ** 2)) <= p.radius - SKEE.radius);
-        caught(r, p); return;
+        if (p) { caught(r,p); return; }
+        // Solid target face: reflect velocity about the inclined board normal.
+        const dot = (b.vz + SKEE.slope * b.vy) / (1 + SKEE.slope ** 2);
+        b.vz -= 1.48 * dot; b.vy -= 1.48 * dot * SKEE.slope;
+        b.z += .004; b.stage='rebound'; b.bounces++;
       }
-      if (b.y < .59 || Math.abs(b.x) > SKEE.halfWidth || b.age > 1.3) caught(r, null);
+      if (Math.abs(b.x) > SKEE.halfWidth-SKEE.radius) { b.x=Math.sign(b.x)*(SKEE.halfWidth-SKEE.radius); b.vx *= -.6; b.bounces++; }
+      if (b.y < .69) {
+        b.y=.69;
+        if (b.vy < -.7 && b.bounces < 4) { b.vy *= -.38; b.vz *= .72; b.bounces++; }
+        else { caught(r,null); return; }
+      }
+      if (b.age > 2.5 || b.z > SKEE.front) caught(r,null);
     }
   } else if (r.phase === 'result') {
     r.wait -= dt;
     if (b) {
       b.age += dt;
       const u = Math.min(1, b.age / (b.stage === 'pocket' ? .65 : 1.05));
-      b.x = b.from.x * (1 - u); b.y = b.stage === 'pocket' ? b.from.y - .24 * u : .64 + Math.sin(u * Math.PI) * .08;
+      b.x = b.stage === 'pocket' ? b.from.x : b.from.x * (1 - u); b.y = b.stage === 'pocket' ? b.from.y - Math.min(.35, 4.9*b.age*b.age) : .64 + Math.sin(u * Math.PI) * .08;
       b.z = b.stage === 'pocket' ? b.from.z - .16 * u : b.from.z + (SKEE.front - b.from.z) * u;
     }
     if (r.wait <= 0) { r.ball = null; r.phase = r.launched >= SKEE.balls || r.abandoned ? 'done' : 'aim'; }
@@ -77,6 +102,6 @@ export function skeeTick(r, dt) {
 export function skeeView(r) {
   return r && { id: r.id, seat: r.seat, player: r.player, bet: r.bet, phase: r.phase, launched: r.launched, score: r.score, last: r.last,
     seconds: Math.ceil(r.time), mult: r.phase === 'done' ? skeeMultiplier(r.score) : null,
-    ball: r.ball && { x: r.ball.x, y: r.ball.y, z: r.ball.z, stage: r.ball.stage, assist: r.ball.assist } };
+    ball: r.ball && { x: r.ball.x, y: r.ball.y, z: r.ball.z, stage: r.ball.stage, assist: r.ball.assist, spin: r.ball.spin, bounces: r.ball.bounces } };
 }
 

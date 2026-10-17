@@ -1,0 +1,128 @@
+{
+  "at": "2026-10-17T06:03:07.048Z",
+  "rows": [
+    {
+      "game": "pusher",
+      "hot": false,
+      "score": 1,
+      "mult": 1
+    },
+    {
+      "game": "pusher",
+      "hot": true,
+      "score": 7,
+      "mult": 3
+    },
+    {
+      "game": "claw",
+      "hot": false,
+      "score": 2,
+      "mult": 2
+    },
+    {
+      "game": "claw",
+      "hot": true,
+      "score": 2,
+      "mult": 2
+    },
+    {
+      "game": "pusher",
+      "host": true,
+      "used": 1,
+      "score": 1,
+      "bank": 500100,
+      "paid": true
+    },
+    {
+      "game": "claw",
+      "host": true,
+      "used": 1,
+      "score": 2,
+      "bank": 501100,
+      "paid": true
+    },
+    {
+      "game": "pusher",
+      "inFlight": false,
+      "abandoned": true,
+      "insurance": true,
+      "paid": true,
+      "bank": 500100
+    },
+    {
+      "game": "pusher",
+      "inFlight": true,
+      "abandoned": true,
+      "insurance": true,
+      "paid": true,
+      "bank": 500100
+    },
+    {
+      "game": "claw",
+      "inFlight": false,
+      "abandoned": true,
+      "insurance": true,
+      "paid": true,
+      "bank": 500100
+    },
+    {
+      "game": "claw",
+      "inFlight": true,
+      "abandoned": true,
+      "insurance": true,
+      "paid": true,
+      "bank": 501100
+    },
+    {
+      "game": "claw",
+      "tag": 1,
+      "grabCount": 1,
+      "gross": 1000,
+      "net": 100,
+      "bankBefore": 500000,
+      "bankAfter": 500100,
+      "once": true
+    },
+    {
+      "game": "claw",
+      "tag": 2,
+      "grabCount": 1,
+      "gross": 2000,
+      "net": 1100,
+      "bankBefore": 500000,
+      "bankAfter": 501100,
+      "once": true
+    },
+    {
+      "game": "claw",
+      "tag": 3,
+      "grabCount": 1,
+      "gross": 3000,
+      "net": 2100,
+      "bankBefore": 500000,
+      "bankAfter": 502100,
+      "once": true
+    },
+    {
+      "game": "claw",
+      "tag": 0,
+      "grabCount": 1,
+      "gross": 0,
+      "net": -900,
+      "bankBefore": 500000,
+      "bankAfter": 499100,
+      "once": true
+    },
+    {
+      "game": "pusher",
+      "assist": false,
+      "fallenCoins": 1,
+      "tokenCount": 1,
+      "gross": 1000,
+      "net": 100,
+      "bankBefore": 500000,
+      "bankAfter": 500100,
+      "once": true
+    }
+  ]
+}

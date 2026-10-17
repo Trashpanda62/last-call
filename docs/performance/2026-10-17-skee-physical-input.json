@@ -1,0 +1,2246 @@
+{
+  "at": "2026-10-17T05:57:36.760Z",
+  "rows": [
+    {
+      "fallback": false,
+      "rows": [
+        {
+          "label": "ready",
+          "seat": 82,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "controls": [],
+          "links": 0,
+          "buffers": 0
+        },
+        {
+          "label": "start",
+          "seat": 82,
+          "phase": "aim",
+          "score": 0,
+          "launched": 0,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "controls": [
+            {
+              "text": "◈  SPACE · Hold to roll",
+              "disabled": false
+            }
+          ],
+          "links": 0,
+          "buffers": 0
+        },
+        {
+          "label": "charging",
+          "seat": 82,
+          "phase": "aim",
+          "score": 0,
+          "launched": 0,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "controls": [
+            {
+              "text": "◈  SPACE · Release · 40%",
+              "disabled": false
+            }
+          ],
+          "links": 0,
+          "buffers": 0
+        },
+        {
+          "label": "rolling",
+          "seat": 82,
+          "phase": "roll",
+          "score": 0,
+          "launched": 1,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": true,
+            "position": [
+              0,
+              0.69,
+              1.3399249999999991
+            ]
+          },
+          "controls": [],
+          "links": 0,
+          "buffers": 0
+        },
+        {
+          "label": "first score",
+          "seat": 82,
+          "phase": "aim",
+          "score": 0,
+          "launched": 1,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": false,
+            "position": [
+              0,
+              0.6428396915227911,
+              1.8784951253478692
+            ]
+          },
+          "controls": [
+            {
+              "text": "◈  SPACE · Hold to roll",
+              "disabled": false
+            }
+          ],
+          "links": 0,
+          "buffers": 0
+        },
+        {
+          "label": "completed",
+          "seat": 82,
+          "phase": "done",
+          "score": 0,
+          "launched": 9,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": false,
+            "position": [
+              0,
+              0.6448289765215659,
+              1.8566273552311048
+            ]
+          },
+          "controls": [
+            {
+              "text": "◈  SPACE · Start round",
+              "disabled": false
+            }
+          ],
+          "links": 0,
+          "buffers": 0
+        }
+      ],
+      "firstPower": 0.40000000000000036,
+      "round": {
+        "score": 0,
+        "history": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "paid": true
+      },
+      "links": 0,
+      "buffers": 0,
+      "memory": {
+        "geometries": 833,
+        "textures": 389
+      },
+      "assetRequests": [
+        "http://127.0.0.1:8319/assets/fonts/cinzel.ttf",
+        "http://127.0.0.1:8319/assets/fonts/manrope.ttf",
+        "http://127.0.0.1:8319/assets/chars/bean.glb",
+        "http://127.0.0.1:8319/assets/chars/round.glb",
+        "http://127.0.0.1:8319/assets/chars/croupier.glb",
+        "http://127.0.0.1:8319/assets/chars/bartender.glb",
+        "http://127.0.0.1:8319/assets/chars/guard.glb",
+        "http://127.0.0.1:8319/assets/props/bjTable.glb",
+        "http://127.0.0.1:8319/assets/props/rouletteTable.glb",
+        "http://127.0.0.1:8319/assets/props/diceTable.glb",
+        "http://127.0.0.1:8319/assets/props/slot.glb",
+        "http://127.0.0.1:8319/assets/hands/casino-glove.glb",
+        "http://127.0.0.1:8319/assets/monster/monster.glb",
+        "http://127.0.0.1:8319/assets/art2/menu-mystery-v2.webp",
+        "http://127.0.0.1:8319/assets/art2/menu-escape-v2.webp",
+        "http://127.0.0.1:8319/assets/art2/loading-arrival-v1.webp",
+        "http://127.0.0.1:8319/assets/art2/loading-controls-v1.webp",
+        "http://127.0.0.1:8319/assets/art2/ability-icons-v1.webp",
+        "http://127.0.0.1:8319/assets/audio/audio.json",
+        "http://127.0.0.1:8319/assets/mats/feltGreen-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/feltBlue-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/feltRed-color.jpg",
+        "http://127.0.0.1:8319/assets/art/chip0.webp",
+        "http://127.0.0.1:8319/assets/art/chip1.webp",
+        "http://127.0.0.1:8319/assets/art/chip2.webp",
+        "http://127.0.0.1:8319/assets/art/chip3.webp",
+        "http://127.0.0.1:8319/assets/art/chip4.webp",
+        "http://127.0.0.1:8319/assets/art/chip5.webp",
+        "http://127.0.0.1:8319/assets/art/king.webp",
+        "http://127.0.0.1:8319/assets/art/queen.webp",
+        "http://127.0.0.1:8319/assets/art/jack.webp",
+        "http://127.0.0.1:8319/assets/art/cardBack.webp",
+        "http://127.0.0.1:8319/assets/art/crest.webp",
+        "http://127.0.0.1:8319/assets/art2/jukebox-marquee-v2.webp",
+        "http://127.0.0.1:8319/assets/art2/portrait-gambler.webp",
+        "http://127.0.0.1:8319/assets/art2/portrait-queen.webp",
+        "http://127.0.0.1:8319/assets/art2/portrait-bartender.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-diamond.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-seven.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-bar.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-bell.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-cherry.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-lemon.webp",
+        "http://127.0.0.1:8319/assets/art2/screen-mines.webp",
+        "http://127.0.0.1:8319/assets/art2/screen-tower.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-lastcall.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-bar.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-vip.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-restrooms.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-duckrace.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-slots.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-highlimit.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-dice.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-spintowin.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-plinko.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-mines.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-dragontower.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-smoke.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-sparks.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-confetti.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-fizz.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-stars.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-ghost.webp",
+        "http://127.0.0.1:8319/assets/mats/noirMarble-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/noirMarble-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/oxbloodCarpet-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/oxbloodCarpet-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/ceiling-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/ceiling-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/darkWood-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/darkWood-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/velvet-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/velvet-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/leather-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/leather-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/goldLeaf-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/goldLeaf-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/brass-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/brass-normal.jpg",
+        "http://127.0.0.1:8319/assets/backrooms/wallpaper-color.webp",
+        "http://127.0.0.1:8319/assets/backrooms/carpet-color.webp",
+        "http://127.0.0.1:8319/assets/backrooms/ceiling-color.webp",
+        "http://127.0.0.1:8319/assets/backrooms/ceiling-glow.webp",
+        "http://127.0.0.1:8319/assets/backrooms/wallpaper-normal.webp",
+        "http://127.0.0.1:8319/assets/backrooms/carpet-normal.webp",
+        "http://127.0.0.1:8319/assets/backrooms/ceiling-normal.webp",
+        "http://127.0.0.1:8319/assets/audio/sfx/ballDrop-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/ballDrop-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/boom-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/boom-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/cam-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/cam-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/card-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/card-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/card-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/cashout-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chandelier-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chat-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/cheer-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chip-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chip-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chip-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chips-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chips-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/click-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/click-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/clink-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/clink-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/coin-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/coin-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/coinFlip-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/coinFlip-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/diceRoll-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/diceRoll-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/diceShake-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/die-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/die-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/door-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/eject-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallCarpet-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallCarpet-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallCarpet-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallStreet-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallStreet-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallStreet-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallTile-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallTile-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallTile-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallWood-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallWood-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallWood-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/flip-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/flip-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/gasp-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/gasp-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/gem-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/gem-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/gun-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/haunt-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/haunt-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/jackpot-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/lever-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/lever-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/lights-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/lightsOn-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/meeting-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/mine-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/peg-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/peg-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/peg-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/poison-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/pour-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/pour-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/radio-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/reels-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/reelStop-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/reelStop-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/reelStop-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/rocket-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/rouletteSpin-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/shuffle-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/sip-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/sip-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/slotLand-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/slotLand-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/smallWin-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/smallWin-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/splash-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/splash-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/squeak-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/squeak-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/stab-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/stab-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/start-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/step-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/step-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/vote-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/vote-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/wheelSpin-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/cough.mp3",
+        "http://127.0.0.1:8319/assets/props/slotHigh.glb",
+        "http://127.0.0.1:8319/assets/props/jackpot.glb",
+        "http://127.0.0.1:8319/assets/props/plinko.glb",
+        "http://127.0.0.1:8319/assets/props/console.glb",
+        "http://127.0.0.1:8319/assets/anim/snatched.json",
+        "http://127.0.0.1:8319/assets/anim/cheer.json",
+        "http://127.0.0.1:8319/assets/anim/despair.json",
+        "http://127.0.0.1:8319/assets/anim/gasp.json",
+        "http://127.0.0.1:8319/assets/anim/point.json",
+        "http://127.0.0.1:8319/assets/anim/shrug.json",
+        "http://127.0.0.1:8319/assets/anim/cry.json",
+        "http://127.0.0.1:8319/assets/anim/laugh.json",
+        "http://127.0.0.1:8319/assets/anim/stab.json",
+        "http://127.0.0.1:8319/assets/anim/pour.json",
+        "http://127.0.0.1:8319/assets/anim/sip.json",
+        "http://127.0.0.1:8319/assets/anim/wave.json",
+        "http://127.0.0.1:8319/assets/anim/dance.json",
+        "http://127.0.0.1:8319/assets/anim/lever.json",
+        "http://127.0.0.1:8319/assets/anim/tap.json",
+        "http://127.0.0.1:8319/assets/anim/clap.json",
+        "http://127.0.0.1:8319/assets/anim/facepalm.json",
+        "http://127.0.0.1:8319/assets/anim/nervous.json",
+        "http://127.0.0.1:8319/assets/anim/lookaround.json",
+        "http://127.0.0.1:8319/assets/anim/thinking.json",
+        "http://127.0.0.1:8319/assets/anim/bow.json",
+        "http://127.0.0.1:8319/assets/anim/chips.json",
+        "http://127.0.0.1:8319/assets/anim/push.json",
+        "http://127.0.0.1:8319/assets/audio/monster/roar.mp3",
+        "http://127.0.0.1:8319/assets/audio/monster/growl.mp3",
+        "http://127.0.0.1:8319/assets/audio/monster/step.mp3",
+        "http://127.0.0.1:8319/assets/audio/monster/maul.mp3",
+        "http://127.0.0.1:8319/assets/audio/monster/breaker.mp3",
+        "http://127.0.0.1:8319/assets/audio/monster/powerup.mp3",
+        "http://127.0.0.1:8319/assets/hats/hats.json",
+        "http://127.0.0.1:8319/assets/props/prizeWheel.glb",
+        "http://127.0.0.1:8319/assets/props/duck.glb",
+        "http://127.0.0.1:8319/assets/props/barCounter.glb",
+        "http://127.0.0.1:8319/assets/props/backBar.glb",
+        "http://127.0.0.1:8319/assets/hats/beanie.glb",
+        "http://127.0.0.1:8319/assets/hats/beret.glb",
+        "http://127.0.0.1:8319/assets/hats/bow.glb",
+        "http://127.0.0.1:8319/assets/hats/bowler.glb",
+        "http://127.0.0.1:8319/assets/hats/bucket.glb",
+        "http://127.0.0.1:8319/assets/hats/bunny.glb",
+        "http://127.0.0.1:8319/assets/hats/cap.glb",
+        "http://127.0.0.1:8319/assets/hats/captain.glb",
+        "http://127.0.0.1:8319/assets/hats/catears.glb",
+        "http://127.0.0.1:8319/assets/hats/chef.glb",
+        "http://127.0.0.1:8319/assets/hats/cowboy.glb",
+        "http://127.0.0.1:8319/assets/hats/crown.glb",
+        "http://127.0.0.1:8319/assets/hats/deerstalker.glb",
+        "http://127.0.0.1:8319/assets/hats/fedora.glb",
+        "http://127.0.0.1:8319/assets/hats/fez.glb",
+        "http://127.0.0.1:8319/assets/hats/flower.glb",
+        "http://127.0.0.1:8319/assets/hats/hardhat.glb",
+        "http://127.0.0.1:8319/assets/hats/headphones.glb",
+        "http://127.0.0.1:8319/assets/hats/jester.glb",
+        "http://127.0.0.1:8319/assets/hats/mortarboard.glb",
+        "http://127.0.0.1:8319/assets/hats/nightcap.glb",
+        "http://127.0.0.1:8319/assets/hats/party.glb",
+        "http://127.0.0.1:8319/assets/hats/pirate.glb",
+        "http://127.0.0.1:8319/assets/hats/plume.glb",
+        "http://127.0.0.1:8319/assets/hats/propeller.glb",
+        "http://127.0.0.1:8319/assets/hats/sombrero.glb",
+        "http://127.0.0.1:8319/assets/hats/tophat.glb",
+        "http://127.0.0.1:8319/assets/hats/umbrella.glb",
+        "http://127.0.0.1:8319/assets/hats/ushanka.glb",
+        "http://127.0.0.1:8319/assets/hats/viking.glb",
+        "http://127.0.0.1:8319/assets/hats/visor.glb",
+        "http://127.0.0.1:8319/assets/hats/wizard.glb",
+        "http://127.0.0.1:8319/assets/audio/cues/breath-behind-a.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/breath-behind-b.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/breath-behind-c.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/death-yell-a.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/death-yell-b.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/death-yell-c.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-step-carpet-a.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-step-carpet-b.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-step-tile-a.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-step-tile-b.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-mutter-a.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-mutter-b.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-chuckle.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-sigh.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/vent-knock.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/whisper-behind.mp3",
+        "http://127.0.0.1:8319/assets/props/stool.glb",
+        "http://127.0.0.1:8319/assets/props/chair.glb",
+        "http://127.0.0.1:8319/assets/props/booth.glb",
+        "http://127.0.0.1:8319/assets/audio/death/scream.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/wail.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/gasp.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/squeak.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/duck.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/trombone.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/whistle.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/pop.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/ghost.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/organ.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/slots.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/glass.mp3",
+        "http://127.0.0.1:8319/assets/audio/music/menu-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/casino-eerie.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/bar-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/floor-mixed-tables.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/race-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/rest-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/slots-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/floor-card-room.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/floor-roulette-room.mp3",
+        "http://127.0.0.1:8319/assets/audio/music/house-after-hours.mp3",
+        "http://127.0.0.1:8319/assets/audio/music/house-empty-chairs.mp3",
+        "http://127.0.0.1:8319/assets/audio/music/house-last-wager.mp3",
+        "http://127.0.0.1:8319/assets/props/couch.glb",
+        "http://127.0.0.1:8319/assets/props/armchair.glb",
+        "http://127.0.0.1:8319/assets/props/chandelier.glb",
+        "http://127.0.0.1:8319/assets/props/piano.glb",
+        "http://127.0.0.1:8319/assets/props/poolTable.glb",
+        "http://127.0.0.1:8319/assets/props/champagne.glb",
+        "http://127.0.0.1:8319/assets/props/skeeCabinet.glb",
+        "http://127.0.0.1:8319/assets/props/snackDonut.glb",
+        "http://127.0.0.1:8319/assets/props/snackPretzel.glb",
+        "http://127.0.0.1:8319/assets/props/palm.glb",
+        "http://127.0.0.1:8319/assets/props/camera.glb",
+        "http://127.0.0.1:8319/assets/props/pitBell.glb",
+        "http://127.0.0.1:8319/assets/props/toilet.glb",
+        "http://127.0.0.1:8319/assets/props/sink.glb",
+        "http://127.0.0.1:8319/assets/props/rocket.glb",
+        "http://127.0.0.1:8319/assets/props/ottoman.glb",
+        "http://127.0.0.1:8319/assets/props/breaker.glb"
+      ],
+      "inputs": {
+        "mouse": {
+          "power": 0.4324285714115409,
+          "balls": 1
+        },
+        "controller": {
+          "power": 0.5113571428826904,
+          "balls": 2
+        },
+        "rightStickAim": 0.35459662288930616,
+        "compact": {
+          "visible": true,
+          "rect": {
+            "x": 304.2109375,
+            "y": 255.609375,
+            "width": 131.5625,
+            "height": 44
+          },
+          "overflow": false,
+          "blackjack": false
+        },
+        "controllerHardware": "simulated standard mapping; physical device untested"
+      }
+    },
+    {
+      "fallback": true,
+      "rows": [
+        {
+          "label": "ready",
+          "seat": 82,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "controls": [],
+          "links": 0,
+          "buffers": 0
+        },
+        {
+          "label": "start",
+          "seat": 82,
+          "phase": "aim",
+          "score": 0,
+          "launched": 0,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "controls": [
+            {
+              "text": "◈  SPACE · Hold to roll",
+              "disabled": false
+            }
+          ],
+          "links": 0,
+          "buffers": 0
+        },
+        {
+          "label": "charging",
+          "seat": 82,
+          "phase": "aim",
+          "score": 0,
+          "launched": 0,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": false,
+            "position": [
+              0,
+              0,
+              0
+            ]
+          },
+          "controls": [
+            {
+              "text": "◈  SPACE · Release · 40%",
+              "disabled": false
+            }
+          ],
+          "links": 0,
+          "buffers": 0
+        },
+        {
+          "label": "rolling",
+          "seat": 82,
+          "phase": "roll",
+          "score": 0,
+          "launched": 1,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": true,
+            "position": [
+              0,
+              0.69,
+              1.3399250000000003
+            ]
+          },
+          "controls": [],
+          "links": 0,
+          "buffers": 0
+        },
+        {
+          "label": "first score",
+          "seat": 82,
+          "phase": "aim",
+          "score": 0,
+          "launched": 1,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": false,
+            "position": [
+              0,
+              0.6428396915227911,
+              1.8784951253478694
+            ]
+          },
+          "controls": [
+            {
+              "text": "◈  SPACE · Hold to roll",
+              "disabled": false
+            }
+          ],
+          "links": 0,
+          "buffers": 0
+        },
+        {
+          "label": "completed",
+          "seat": 82,
+          "phase": "done",
+          "score": 0,
+          "launched": 9,
+          "pockets": [
+            {
+              "value": 10,
+              "world": [
+                45.9,
+                0.84,
+                2.3268000000000004
+              ],
+              "projection": [
+                0,
+                0.025792154094592967,
+                0.9785285867735594
+              ],
+              "blocker": "static-arcade"
+            },
+            {
+              "value": 20,
+              "world": [
+                45.9,
+                1.04,
+                2.2708000000000004
+              ],
+              "projection": [
+                0,
+                0.08931204899755182,
+                0.9786577374148077
+              ],
+              "blocker": null
+            },
+            {
+              "value": 30,
+              "world": [
+                45.9,
+                1.24,
+                2.2148000000000003
+              ],
+              "projection": [
+                0,
+                0.152109547857003,
+                0.978785419257778
+              ],
+              "blocker": null
+            },
+            {
+              "value": 40,
+              "world": [
+                45.9,
+                1.44,
+                2.1588000000000003
+              ],
+              "projection": [
+                0,
+                0.21419690444052714,
+                0.9789116572172144
+              ],
+              "blocker": null
+            },
+            {
+              "value": 50,
+              "world": [
+                45.9,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                45.55,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                -0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            },
+            {
+              "value": 100,
+              "world": [
+                46.25,
+                1.64,
+                2.1028000000000002
+              ],
+              "projection": [
+                0.07473153332366557,
+                0.27558609693172215,
+                0.9790364756475356
+              ],
+              "blocker": null
+            }
+          ],
+          "chip": {
+            "part": "spot:main",
+            "x": 640,
+            "y": 824.8202443358767,
+            "on": true,
+            "p": [
+              45.9,
+              0.804,
+              5.9799999999999995
+            ]
+          },
+          "ball": {
+            "visible": false,
+            "position": [
+              0,
+              0.6448289765215659,
+              1.8566273552311048
+            ]
+          },
+          "controls": [
+            {
+              "text": "◈  SPACE · Start round",
+              "disabled": false
+            }
+          ],
+          "links": 0,
+          "buffers": 0
+        }
+      ],
+      "firstPower": 0.39999999999999974,
+      "round": {
+        "score": 0,
+        "history": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "paid": true
+      },
+      "links": 0,
+      "buffers": 0,
+      "memory": {
+        "geometries": 1167,
+        "textures": 364
+      },
+      "assetRequests": [
+        "http://127.0.0.1:8319/assets/fonts/cinzel.ttf",
+        "http://127.0.0.1:8319/assets/fonts/manrope.ttf",
+        "http://127.0.0.1:8319/assets/chars/bean.glb",
+        "http://127.0.0.1:8319/assets/chars/round.glb",
+        "http://127.0.0.1:8319/assets/chars/croupier.glb",
+        "http://127.0.0.1:8319/assets/chars/bartender.glb",
+        "http://127.0.0.1:8319/assets/chars/guard.glb",
+        "http://127.0.0.1:8319/assets/monster/monster.glb",
+        "http://127.0.0.1:8319/assets/art2/menu-mystery-v2.webp",
+        "http://127.0.0.1:8319/assets/art2/menu-escape-v2.webp",
+        "http://127.0.0.1:8319/assets/art2/loading-arrival-v1.webp",
+        "http://127.0.0.1:8319/assets/art2/loading-controls-v1.webp",
+        "http://127.0.0.1:8319/assets/art2/ability-icons-v1.webp",
+        "http://127.0.0.1:8319/assets/audio/audio.json",
+        "http://127.0.0.1:8319/assets/mats/feltGreen-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/feltBlue-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/feltRed-color.jpg",
+        "http://127.0.0.1:8319/assets/art/chip0.webp",
+        "http://127.0.0.1:8319/assets/art/chip1.webp",
+        "http://127.0.0.1:8319/assets/art/chip2.webp",
+        "http://127.0.0.1:8319/assets/art/chip3.webp",
+        "http://127.0.0.1:8319/assets/art/chip4.webp",
+        "http://127.0.0.1:8319/assets/art/chip5.webp",
+        "http://127.0.0.1:8319/assets/art/king.webp",
+        "http://127.0.0.1:8319/assets/art/queen.webp",
+        "http://127.0.0.1:8319/assets/art/jack.webp",
+        "http://127.0.0.1:8319/assets/art/cardBack.webp",
+        "http://127.0.0.1:8319/assets/art/crest.webp",
+        "http://127.0.0.1:8319/assets/art2/jukebox-marquee-v2.webp",
+        "http://127.0.0.1:8319/assets/art2/portrait-gambler.webp",
+        "http://127.0.0.1:8319/assets/art2/portrait-queen.webp",
+        "http://127.0.0.1:8319/assets/art2/portrait-bartender.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-diamond.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-seven.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-bar.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-bell.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-cherry.webp",
+        "http://127.0.0.1:8319/assets/art2/sym-lemon.webp",
+        "http://127.0.0.1:8319/assets/art2/screen-mines.webp",
+        "http://127.0.0.1:8319/assets/art2/screen-tower.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-lastcall.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-bar.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-vip.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-restrooms.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-duckrace.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-slots.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-highlimit.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-dice.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-spintowin.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-plinko.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-mines.webp",
+        "http://127.0.0.1:8319/assets/art2/sign-dragontower.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-smoke.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-sparks.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-confetti.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-fizz.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-stars.webp",
+        "http://127.0.0.1:8319/assets/art2/fx-ghost.webp",
+        "http://127.0.0.1:8319/assets/mats/noirMarble-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/noirMarble-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/oxbloodCarpet-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/oxbloodCarpet-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/ceiling-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/ceiling-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/darkWood-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/darkWood-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/velvet-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/velvet-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/leather-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/leather-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/goldLeaf-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/goldLeaf-normal.jpg",
+        "http://127.0.0.1:8319/assets/mats/brass-color.jpg",
+        "http://127.0.0.1:8319/assets/mats/brass-normal.jpg",
+        "http://127.0.0.1:8319/assets/backrooms/wallpaper-color.webp",
+        "http://127.0.0.1:8319/assets/backrooms/carpet-color.webp",
+        "http://127.0.0.1:8319/assets/backrooms/ceiling-color.webp",
+        "http://127.0.0.1:8319/assets/backrooms/ceiling-glow.webp",
+        "http://127.0.0.1:8319/assets/backrooms/wallpaper-normal.webp",
+        "http://127.0.0.1:8319/assets/backrooms/carpet-normal.webp",
+        "http://127.0.0.1:8319/assets/backrooms/ceiling-normal.webp",
+        "http://127.0.0.1:8319/assets/audio/sfx/ballDrop-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/ballDrop-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/boom-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/boom-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/cam-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/cam-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/card-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/card-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/card-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/cashout-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chandelier-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chat-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/cheer-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chip-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chip-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chip-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chips-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/chips-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/click-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/click-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/clink-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/clink-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/coin-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/coin-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/coinFlip-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/coinFlip-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/diceRoll-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/diceRoll-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/diceShake-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/die-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/die-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/door-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/eject-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallCarpet-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallCarpet-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallCarpet-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallStreet-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallStreet-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallStreet-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallTile-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallTile-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallTile-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallWood-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallWood-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/fallWood-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/flip-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/flip-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/gasp-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/gasp-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/gem-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/gem-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/gun-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/haunt-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/haunt-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/jackpot-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/lever-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/lever-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/lights-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/lightsOn-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/meeting-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/mine-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/peg-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/peg-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/peg-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/poison-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/pour-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/pour-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/radio-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/reels-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/reelStop-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/reelStop-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/reelStop-3.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/rocket-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/rouletteSpin-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/shuffle-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/sip-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/sip-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/slotLand-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/slotLand-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/smallWin-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/smallWin-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/splash-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/splash-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/squeak-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/squeak-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/stab-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/stab-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/start-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/step-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/step-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/vote-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/vote-2.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/wheelSpin-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/sfx/cough.mp3",
+        "http://127.0.0.1:8319/assets/anim/snatched.json",
+        "http://127.0.0.1:8319/assets/anim/cheer.json",
+        "http://127.0.0.1:8319/assets/anim/despair.json",
+        "http://127.0.0.1:8319/assets/anim/gasp.json",
+        "http://127.0.0.1:8319/assets/anim/point.json",
+        "http://127.0.0.1:8319/assets/anim/shrug.json",
+        "http://127.0.0.1:8319/assets/anim/cry.json",
+        "http://127.0.0.1:8319/assets/anim/laugh.json",
+        "http://127.0.0.1:8319/assets/anim/stab.json",
+        "http://127.0.0.1:8319/assets/anim/pour.json",
+        "http://127.0.0.1:8319/assets/anim/sip.json",
+        "http://127.0.0.1:8319/assets/anim/wave.json",
+        "http://127.0.0.1:8319/assets/anim/dance.json",
+        "http://127.0.0.1:8319/assets/anim/lever.json",
+        "http://127.0.0.1:8319/assets/anim/tap.json",
+        "http://127.0.0.1:8319/assets/anim/clap.json",
+        "http://127.0.0.1:8319/assets/anim/facepalm.json",
+        "http://127.0.0.1:8319/assets/anim/nervous.json",
+        "http://127.0.0.1:8319/assets/anim/lookaround.json",
+        "http://127.0.0.1:8319/assets/anim/thinking.json",
+        "http://127.0.0.1:8319/assets/anim/bow.json",
+        "http://127.0.0.1:8319/assets/anim/chips.json",
+        "http://127.0.0.1:8319/assets/anim/push.json",
+        "http://127.0.0.1:8319/assets/audio/monster/roar.mp3",
+        "http://127.0.0.1:8319/assets/audio/monster/growl.mp3",
+        "http://127.0.0.1:8319/assets/audio/monster/step.mp3",
+        "http://127.0.0.1:8319/assets/audio/monster/maul.mp3",
+        "http://127.0.0.1:8319/assets/audio/monster/breaker.mp3",
+        "http://127.0.0.1:8319/assets/audio/monster/powerup.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/breath-behind-a.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/breath-behind-b.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/breath-behind-c.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/death-yell-a.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/death-yell-b.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/death-yell-c.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-step-carpet-a.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-step-carpet-b.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-step-tile-a.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-step-tile-b.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-mutter-a.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-mutter-b.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-chuckle.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/potato-sigh.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/vent-knock.mp3",
+        "http://127.0.0.1:8319/assets/audio/cues/whisper-behind.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/scream.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/wail.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/gasp.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/squeak.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/duck.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/trombone.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/whistle.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/pop.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/ghost.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/organ.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/slots.mp3",
+        "http://127.0.0.1:8319/assets/audio/death/glass.mp3",
+        "http://127.0.0.1:8319/assets/audio/music/menu-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/casino-eerie.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/bar-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/floor-mixed-tables.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/race-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/rest-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/slots-1.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/floor-card-room.mp3",
+        "http://127.0.0.1:8319/assets/audio/amb/floor-roulette-room.mp3",
+        "http://127.0.0.1:8319/assets/audio/music/house-after-hours.mp3",
+        "http://127.0.0.1:8319/assets/audio/music/house-empty-chairs.mp3",
+        "http://127.0.0.1:8319/assets/audio/music/house-last-wager.mp3"
+      ],
+      "inputs": {
+        "mouse": {
+          "power": 0.4386428571598852,
+          "balls": 1
+        },
+        "controller": {
+          "power": 0.5112857142942318,
+          "balls": 2
+        },
+        "rightStickAim": 0.35436022514071774,
+        "compact": {
+          "visible": true,
+          "rect": {
+            "x": 304.2109375,
+            "y": 255.609375,
+            "width": 131.5625,
+            "height": 44
+          },
+          "overflow": false,
+          "blackjack": false
+        },
+        "controllerHardware": "simulated standard mapping; physical device untested"
+      }
+    }
+  ],
+  "errors": []
+}

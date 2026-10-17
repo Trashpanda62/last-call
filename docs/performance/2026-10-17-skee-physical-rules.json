@@ -1,0 +1,127 @@
+{
+  "at": "2026-10-17T05:57:34.955Z",
+  "probes": 16281,
+  "witnesses": {
+    "0": {
+      "aim": -1,
+      "power": 0,
+      "value": 0
+    },
+    "10": {
+      "aim": -0.075,
+      "power": 0.315,
+      "value": 10
+    },
+    "20": {
+      "aim": -0.075,
+      "power": 0.375,
+      "value": 20
+    },
+    "30": {
+      "aim": -0.075,
+      "power": 0.45,
+      "value": 30
+    },
+    "40": {
+      "aim": -0.075,
+      "power": 0.565,
+      "value": 40
+    },
+    "50": {
+      "aim": -0.075,
+      "power": 0.735,
+      "value": 50
+    },
+    "100-left": {
+      "aim": -1,
+      "power": 0.69,
+      "value": 100
+    },
+    "100-right": {
+      "aim": 0.925,
+      "power": 0.705,
+      "value": 100
+    }
+  },
+  "fixedStepChecks": 32,
+  "protectedRounds": 25,
+  "payout": [
+    [
+      0,
+      0
+    ],
+    [
+      119,
+      0
+    ],
+    [
+      120,
+      0.5
+    ],
+    [
+      199,
+      0.5
+    ],
+    [
+      200,
+      1
+    ],
+    [
+      299,
+      1
+    ],
+    [
+      300,
+      1.5
+    ],
+    [
+      399,
+      1.5
+    ],
+    [
+      400,
+      2
+    ],
+    [
+      549,
+      2
+    ],
+    [
+      550,
+      3
+    ],
+    [
+      900,
+      3
+    ]
+  ],
+  "host": {
+    "simultaneousLanes": 2,
+    "ballsPerLane": 9,
+    "score": 360,
+    "bankDelta": 120,
+    "duplicateRolls": "rejected",
+    "delayedStartReplay": "rejected",
+    "clientSettlement": "rejected",
+    "wrongOwnerAndRound": "rejected",
+    "wireRoundTrips": 3,
+    "leave": {
+      "launched": 1,
+      "score": 40,
+      "paid": true
+    },
+    "death": {
+      "score": 0,
+      "paid": true
+    },
+    "ghost": {
+      "score": 40
+    },
+    "disconnect": {
+      "bot": true,
+      "launched": 9,
+      "score": 40,
+      "paid": true
+    }
+  }
+}

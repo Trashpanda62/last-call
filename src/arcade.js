@@ -1,7 +1,9 @@
+import {flappyNew,flappyFlap,flappyTick,flappyView,flappyMultiplier} from './flappy.js';
 // Bounded, deterministic host simulations. Cabinet-local metres, +z toward the player.
 export const ARCADE = Object.freeze({ step: 1 / 120, pusherTokens: 1, clawTries: 1, seconds: 60 });
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 export function arcadeNew(game, id, seat, player, bet, hot = false) {
+  if(game==='flappy')return flappyNew(id,seat,player,bet);
   const r = { game, id, seat, player, bet, hot, phase: 'aim', used: 0, score: 0, time: ARCADE.seconds,
     elapsed: 0, acc: 0, seq: 0, paid: false, abandoned: false, x: 0, z: 0, timer: 0, shelf: -.42, grabbed: -1, coins: [], prizes: [] };
   if (game === 'pusher') for (let row = 0; row < 5; row++) for (let col = 0; col < 7; col++) {
@@ -10,7 +12,7 @@ export function arcadeNew(game, id, seat, player, bet, hot = false) {
   else for (let i = 0; i < 9; i++) r.prizes.push({ id: i, x: (i % 3 - 1) * .29, z: (Math.floor(i / 3) - 1) * .26, value: i % 3 + 1, taken: false });
   return r;
 }
-export const arcadeMultiplier = r => r.game === 'claw' ? r.score : Math.min(3, r.score);
+export const arcadeMultiplier = r => r.game === 'flappy' ? flappyMultiplier(r.score) : r.game === 'claw' ? r.score : Math.min(3, r.score);
 export function arcadeMove(r, dx, dz, seq) {
   if (!r || r.phase !== 'aim' || r.abandoned || seq !== r.seq + 1 || !Number.isFinite(dx) || !Number.isFinite(dz)) return false;
   // A message moves one detent; sending a large value cannot teleport the carriage.
@@ -19,6 +21,7 @@ export function arcadeMove(r, dx, dz, seq) {
   r.seq = seq; return true;
 }
 export function arcadeDrop(r, seq) {
+  if(r?.game==='flappy')return flappyFlap(r,seq);
   if (!r || r.phase !== 'aim' || r.abandoned || seq !== r.seq + 1 || r.used >= (r.game === 'pusher' ? ARCADE.pusherTokens : ARCADE.clawTries)) return false;
   r.seq = seq; r.used++; r.timer = 0; r.phase = 'drop';
   if (r.game === 'pusher') r.coins.push({ id: r.coins.length, x: r.x, z: -.31, y: 1.65, paid: false, falling: true });
@@ -69,6 +72,7 @@ function step(r, dt) {
   }
 }
 export function arcadeTick(r, dt) {
+  if(r?.game==='flappy')return flappyTick(r,dt);
   if (!r || r.phase === 'done' || !(dt > 0) || !Number.isFinite(dt)) return;
   r.time = Math.max(0, r.time - dt); if (!r.time) r.abandoned = true;
   if (r.abandoned && r.phase === 'aim') { r.phase = 'done'; return; }
@@ -77,6 +81,7 @@ export function arcadeTick(r, dt) {
 }
 export function arcadeView(r) {
   if (!r) return null;
+  if(r.game==='flappy')return flappyView(r);
   const { policy, paid, hot, acc, abandoned, ...out } = r;
   return { ...out, assist: hot, mult: arcadeMultiplier(r) };
 }

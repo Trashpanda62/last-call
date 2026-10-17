@@ -14,10 +14,10 @@ try{
  const games=['pusher','claw'];
  for(const [i,p]of[h,g].entries())await p.waitForFunction(game=>__lastCall.view.priv.seat?.game===game,games[i],{timeout:15000});
  for(const p of[h,g])await p.evaluate(()=>{const L=__lastCall;L.render();if(!L.press('spot:main')||!L.press('btn:start'))throw Error('physical start failed');});
- await w.waitForFunction(()=>Object.values(__lastCall.view.pub.arcade).every(r=>r?.phase==='aim'));
+ await w.waitForFunction(()=>Object.values(__lastCall.view.pub.arcade).filter(Boolean).every(r=>r?.phase==='aim'));
  report.started=await Promise.all(pages.map(read));const original=report.started[2];
- await w.evaluate(r=>{for(const v of Object.values(r))__lastCall.act('arcade',{kind:'drop',round:v.id,sequence:1});__lastCall.act('bank',{d:999999,b:100});},original);
- await h.waitForTimeout(250);for(const r of Object.values(await read(h)))assert.equal(r.used,0);
+ await w.evaluate(r=>{for(const v of Object.values(r).filter(Boolean))__lastCall.act('arcade',{kind:'drop',round:v.id,sequence:1});__lastCall.act('bank',{d:999999,b:100});},original);
+ await h.waitForTimeout(250);for(const r of Object.values(await read(h)).filter(Boolean))assert.equal(r.used,0);
  for(let n=1;n<=1;n++){
   for(const [i,p]of[h,g].entries())if(n<=(1)){
    const game=games[i];await p.waitForFunction(game=>__lastCall.view.pub.arcade[game].phase==='aim',game);
@@ -28,7 +28,7 @@ try{
   for(const p of[g,w])await p.waitForFunction(n=>__lastCall.view.pub.arcade.pusher.used===n&&['aim','done'].includes(__lastCall.view.pub.arcade.pusher.phase)&&['aim','done'].includes(__lastCall.view.pub.arcade.claw.phase),n);
  }
  report.finished=await Promise.all(pages.map(read));assert.deepEqual(report.finished[0],report.finished[1]);assert.deepEqual(report.finished[0],report.finished[2]);
- for(const r of Object.values(report.finished[0])){assert.equal(r.phase,'done');assert.ok(r.assist?r.mult>1:r.mult>=0);assert.ok(!('policy' in r));}
+ for(const r of Object.values(report.finished[0]).filter(Boolean)){assert.equal(r.phase,'done');assert.ok(r.assist?r.mult>1:r.mult>=0);assert.ok(!('policy' in r));}
  const bank=await h.evaluate(()=>__lastCall.state.bank);
  await g.evaluate(r=>__lastCall.act('arcade',{kind:'start',after:r.claw.id-1,bet:100}),original);await h.waitForTimeout(200);assert.equal(await h.evaluate(()=>__lastCall.state.bank),bank);
  await g.evaluate(()=>{const r=__lastCall.view.pub.arcade.claw;__lastCall.act('arcade',{kind:'start',after:r.id,bet:100});});

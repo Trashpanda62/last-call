@@ -59,13 +59,19 @@ export const SKEE_LANES = [2754, 2862].map((x, machine) => ({ x, y: 222, w: 84, 
 // relocated cabinet and hid half its board). r is its footprint radius, h its height in metres.
 export const ARCADE_ROCKET = { x: 2045, y: 52, r: 24, h: 1.6 };
 export const MINES_XS = [2148], TOWER_XS = [2292];  // consoles on the arcade's south wall
-export const ARCADE_CABS = [{ game: 'pusher', x: 2920, y: 522, w: 90, h: 102 }, { game: 'claw', x: 2920, y: 638, w: 96, h: 102 }];
+export const ARCADE_CABS = [{ game: 'pusher', x: 2920, y: 522, w: 90, h: 102 }, { game: 'claw', x: 2920, y: 638, w: 96, h: 102 }, { game: 'flappy', x: 2635, y: 530, w: 90, h: 88 }];
 export const POND = { x: 2140, y: 900, w: 780, h: 170 };                     // the duck race channel, ducks swim east
 export const RACE_XS = [2690]; // one shared betting pedestal, east of the arcade doorway
+// Four continuous back-to-back banks. The centre aisle links both public doors;
+// outer/end aisles allow escape, while full-height cabinets conceal the far side.
 export const SLOT_STATIONS = [
-  ...[350,434,518,1122,1206,1290].flatMap(x => [{x,y:1470,face:-Math.PI/2,tier:'penny'},{x,y:1534,face:Math.PI/2,tier:'penny'}]),
+  ...[400, 1120].flatMap(cx => [1390, 1690].flatMap(y =>
+    [-168,-84,0,84,168].flatMap(dx => [
+      {x:cx+dx,y:y-32,face:-Math.PI/2,tier:'penny'},
+      {x:cx+dx,y:y+32,face:Math.PI/2,tier:'penny'}]))),
   ...[1370,1454,1696,1780].map(y => ({x:1660,y,face:0,tier:'high'})),
 ].map((s,machine)=>({...s,machine}));
+export const SLOT_BANKS = [400,1120].flatMap(x => [1390,1690].map(y => ({x:x-204,y:y-58,w:408,h:116,kind:'slot-bank'})));
 export const SLOT_WEST_YS = [1300, 1410, 1520, 1630, 1740];                  // penny machines on the slot hall's west wall
 export const SLOT_SOUTH_XS = [380, 500, 620, 740, 860];                      // south wall: one penny, four high limit
 export const JACKPOT = { x: 820, y: 1540 };                                  // the progressive jackpot tower
@@ -95,6 +101,7 @@ export const OBSTACLES = [
   { ...POND, kind: 'pond' },
   ...RACE_XS.map(x => ({ x: x - 35, y: 838, w: 70, h: 22, kind: 'desk' })),
   ...SLOT_STATIONS.map(s=>({x:s.x-26,y:s.y-26,w:52,h:52,kind:'slot'})),
+  ...SLOT_BANKS,
   { x: JACKPOT.x - 40, y: JACKPOT.y - 40, w: 80, h: 80, kind: 'jackpot' },
   { ...DICE_TABLE, kind: 'dice' },
   ...[WHEEL_X - 60, WHEEL_X + 60].map(x => ({ x: x - 20, y: 1800, w: 40, h: 30, kind: 'wheelDesk' })),
@@ -108,7 +115,7 @@ export const OBSTACLES = [
   { x: SHADY.x - 18, y: SHADY.y - 18, w: 36, h: 36, kind: 'shady' },
   { x: SHADY.x + 22, y: SHADY.y - 51, w: 6, h: 102, kind: 'shop-wall' }, // solid back of the insurance alcove
   { x: 2915, y: 1765, w: 40, h: 24, kind: 'crates' }, // his stock: a couple of crates in the corner beside him
-  { x: 80, y: 1550, w: 100, h: 100, kind: 'ottoman' },
+  { x: 50, y: 1480, w: 90, h: 90, kind: 'ottoman' },
   { x: 2110, y: 1290, w: 150, h: 80, kind: 'pool' }, { x: 2745, y: 1270, w: 56, h: 56, kind: 'champagne' }, { x: PIANO.x - 51, y: PIANO.y - 72, w: 102, h: 120, kind: 'piano' },
 ];
 
@@ -117,7 +124,7 @@ export const CHANDELIERS = [
   [320, 330], [320, 950], [2300, 380], [2700, 380], [2500, 1060], [300, 1450], [700, 1650], [2500, 1540],
   [1300, 1330], [1760, 1560], // the slot hall's east end (by the dice), the VIP lounge's west end (the coin flip and the wheel)
 ];
-export const PLANTS = [[980, 1800], [695, 70], [1940, 80], [690, 1125], [1950, 1130], [560, 75], [2935, 80], [2050, 660], [70, 1740], [80, 1820], [1072, 1770]];
+export const PLANTS = [[695, 70], [1940, 80], [690, 1125], [1950, 1130], [560, 75], [2935, 80], [2050, 660], [70, 1740], [80, 1820], [1450, 1815]];
 // STAFF ONLY doors, one per room but the duck pond: [room, x, y] on a wall's inner face and the way the door faces into
 // the room. A killer with the staff-passage edge steps in one and out of another (at the stand spot, 38 px out).
 export const STAFF_DOORS = [['bar', 20, 640, 0], ['rest', 110, 1180, -Math.PI / 2], ['floor', 780, 20, Math.PI / 2], ['arcade', 2880, 20, Math.PI / 2],
@@ -126,10 +133,10 @@ export const STAFF_DOORS = [['bar', 20, 640, 0], ['rest', 110, 1180, -Math.PI / 
 export const TAP = { x: 260, y: 145 };
 
 export const REST_SPOTS = [{ x: 110, y: 820 }, { x: 110, y: 980 }, { x: 320, y: 1120 }, { x: 440, y: 1120 }, { x: 560, y: 1120 }];
-export const BOWL_SPOTS = [{ x: 530, y: 160 }, { x: 2900, y: 1300 }, { x: 2070, y: 480 }, { x: 1520, y: 1280 }, { x: 1900, y: 1100 }, { x: 1000, y: 1360 }]; // bar, VIP, arcade, slot hall (east, by the dice), casino floor, slot hall
+export const BOWL_SPOTS = [{ x: 530, y: 160 }, { x: 2900, y: 1300 }, { x: 2070, y: 480 }, { x: 1520, y: 1280 }, { x: 1900, y: 1100 }, { x: 980, y: 1250 }]; // bar, VIP, arcade, slot hall (east, by the dice), casino floor, slot hall
 export const GAME_NAMES = {
   bj: 'blackjack', roulette: 'roulette', race: 'the duck race', vip: 'the VIP lounge', slots: 'the slots', crash: 'Crash',
-  pusher: 'the coin-pusher', claw: 'the prize claw', skee: 'skee-ball', plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice', cams: 'the security desk',
+  flappy: 'Flappy Bird', pusher: 'the coin-pusher', claw: 'the prize claw', skee: 'skee-ball', plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice', cams: 'the security desk',
 };
 
 export function makeSeats() {
@@ -152,12 +159,12 @@ export function makeSeats() {
   TOWER_XS.forEach((x, i) => add('tower', x, 612, Math.PI / 2, { machine: i }));
   [-60, 60].forEach((dx, i) => add('wheel', WHEEL_X + dx, 1762, Math.PI / 2, { machine: i }));
   for (const x of [DICE_TABLE.x+100, DICE_TABLE.x+220]) { add('dice', x, DICE_TABLE.y - 40, Math.PI / 2); add('dice', x, DICE_TABLE.y + DICE_TABLE.h + 40, -Math.PI / 2); }
-  for (const [x, y] of [[COIN.x-75, COIN.y+95], [COIN.x+75, COIN.y+95]]) add('coin', x, y, Math.atan2(COIN.y - y, COIN.x - x));
+  for (const [x, y] of [[COIN.x-75, COIN.y-70], [COIN.x+75, COIN.y-70]]) add('coin', x, y, Math.atan2(COIN.y - y, COIN.x - x));
   add('cams', SECURITY.x + SECURITY.w + 38, SECURITY.y + SECURITY.h / 2, Math.PI);
   add('vip', COFFEE.x - 70, COFFEE.y + 35, 0); add('vip', COFFEE.x + COFFEE.w + 70, COFFEE.y + 35, Math.PI);
   add('vip', COFFEE.x + 80, COFFEE.y - 65, Math.PI / 2); add('vip', COFFEE.x + 80, COFFEE.y + COFFEE.h + 65, -Math.PI / 2);
   SKEE_LANES.forEach(p => add('skee', p.x, p.playerY, -Math.PI / 2, { machine: p.machine }));
-  ARCADE_CABS.forEach(c => add(c.game, c.x-c.w/2-38, c.y, 0, { machine: 0 }));
+  ARCADE_CABS.forEach(c => c.game==='flappy'?add(c.game,c.x,c.y+82,-Math.PI/2,{machine:0}):add(c.game, c.x-c.w/2-38, c.y, 0, { machine: 0 }));
   return seats;
 }
 
@@ -173,7 +180,8 @@ export function segRect(x1, y1, x2, y2, r) {
   }
   return true;
 }
-export function los(a, b) { for (const w of WALLS) if (segRect(a.x, a.y, b.x, b.y, w)) return false; return true; }
+const VISION_SOLIDS = WALLS.concat(SLOT_BANKS);
+export function los(a, b) { for (const w of VISION_SOLIDS) if (segRect(a.x, a.y, b.x, b.y, w)) return false; return true; }
 export const SOLIDS = WALLS.concat(OBSTACLES);
 export function collide(c) {
   const R = CFG.radius;

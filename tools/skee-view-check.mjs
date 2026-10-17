@@ -7,7 +7,7 @@ try{
  for(const fallback of[false,true]){
   const p=await browser.newPage({ignoreHTTPSErrors:true,viewport:{width:1280,height:900}});p.on('pageerror',e=>{report.errors.push(e.message);console.log('PAGE ERROR',e.stack);});p.on('console',m=>{if(m.type()==='error')console.log('BROWSER ERROR',m.text());});
   const requests=[];p.on('request',r=>{if(/assets\//.test(r.url()))requests.push(r.url());});
-  await p.goto('https://10.42.0.37:3161/'+(fallback?'?noprops':''));await p.waitForFunction(()=>window.__lastCall?.S.ready||window.__lastCall?.S.boot?.error,null,{timeout:120000});
+  await p.goto((process.env.LC_URL||'https://10.42.0.37:3161/')+(fallback?'?noprops':''));await p.waitForFunction(()=>window.__lastCall?.S.ready||window.__lastCall?.S.boot?.error,null,{timeout:120000});
   if(await p.evaluate(()=>!!__lastCall.S.boot.error)) { const cause=await p.evaluate(async()=>{try{const{GLTFLoader}=await import('three/addons/loaders/GLTFLoader.js');await new GLTFLoader().loadAsync('assets/props/skeeCabinet.glb');return 'direct load succeeded';}catch(e){return e.stack;}});throw Error(cause);}
   const result=await p.evaluate(async fallback=>{
    const D=await import('./src/3d/render3d.js'),THREE=await import('three'),T=await import('./src/tables.js'),{SKEE_POCKETS}=await import('./src/skee.js');
@@ -29,8 +29,8 @@ try{
    // Actual held keyboard action changes power; a repeated keydown never creates another launch.
    window.dispatchEvent(new KeyboardEvent('keydown',{key:' '}));clock+=560;L.render();rows.push(snap('charging'));window.dispatchEvent(new KeyboardEvent('keydown',{key:' ',repeat:true}));window.dispatchEvent(new KeyboardEvent('keyup',{key:' '}));
    L.step(.15);L.render();rows.push(snap('rolling'));assert(round.launched===1);const firstPower=round.ball?.power;
-   for(let i=0;i<120&&round.phase!=='aim';i++){L.step(1/60);clock+=1000/60;L.render();}
-   rows.push(snap('first score'));for(let n=2;n<=9;n++){L.press('btn:roll');L.step(1/60);L.render();for(let i=0;i<180&&round.phase!=='aim'&&round.phase!=='done';i++){L.step(1/60);clock+=1000/60;L.render();}}
+   for(let i=0;i<480&&round.phase!=='aim';i++){L.step(1/60);clock+=1000/60;L.render();}
+   rows.push(snap('first score'));for(let n=2;n<=9;n++){L.press('btn:roll');L.step(1/60);L.render();for(let i=0;i<480&&round.phase!=='aim'&&round.phase!=='done';i++){L.step(1/60);clock+=1000/60;L.render();}}
    rows.push(snap('completed'));assert(round.launched===9&&round.paid&&round.phase==='done');
    // Final first-person play frame and a second lane/spectator overview.
    L.step(1.2);L.look(seat.face,-.15);L.S.disp={};L.render();const png=document.getElementById('view').toDataURL('image/png');

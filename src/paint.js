@@ -35,7 +35,7 @@ function glowText(g, s, x, y, size, color, font = ARC) {
 
 // ---------- Crash ----------
 // state: pub.crash, plus optional `me` (my id) to highlight my bet.
-export function paintCrash(g, w, h, t, C, me) {
+export function paintCrash(g, w, h, t, C, me, spatial = false) {
   bg(g, w, h, '#071b2d', '#020710');
   // A clean flight display, with sharp stars instead of the old plush backdrop.
   for (let i = 0; i < 72; i++) { const x = ((i * 174.37) % 1) * w, y = ((i * 83.17) % 1) * h; g.fillStyle = i % 5 ? '#608aa0' : '#dbe9ef'; g.fillRect(x, y, i % 5 ? 1 : 2, i % 5 ? 1 : 2); }
@@ -53,6 +53,7 @@ export function paintCrash(g, w, h, t, C, me) {
   for (let i = 1; i <= 4; i++) { const m = 1 + (mMax - 1) * i / 4; text(g, xfmt(m), gx0 - pad * 0.2, Y(m), h * 0.035, 'rgba(200,190,255,0.6)', ARC, 'right'); }
   if (fly) {
     const boom = C.phase === 'boom';
+    if (!spatial) {
     g.lineWidth = h * 0.012; g.lineCap = 'round';
     const lg = g.createLinearGradient(gx0, 0, X(tNow), 0); lg.addColorStop(0, boom ? '#ff2a4a' : '#7a5cff'); lg.addColorStop(1, boom ? '#ff6a3a' : '#3fe0ff');
     g.strokeStyle = lg; g.beginPath();
@@ -63,13 +64,14 @@ export function paintCrash(g, w, h, t, C, me) {
     if (boom) {
       for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2, r = h * (0.04 + ((t * 3 + i) % 1) * 0.08); g.fillStyle = i % 2 ? '#ffd040' : '#ff3a2a'; g.beginPath(); g.arc(rx + Math.cos(a) * r, ry + Math.sin(a) * r, h * 0.012, 0, 7); g.fill(); }
     } else rocket(g, rx, ry, h * 0.11, Math.atan2(-(Y(Gm.crashAt(tNow)) - Y(Gm.crashAt(Math.max(0, tNow - 0.3)))), X(tNow) - X(tNow - 0.3)), t);
+    }
     glowText(g, xfmt(C.mult), w / 2, h * 0.36, h * 0.2, boom ? '#ff4a5a' : '#3fe0ff');
     if (boom) glowText(g, 'CRASHED', w / 2, h * 0.55, h * 0.08, '#ff4a5a');
   } else {
     const left = Math.max(0, Gm.CRASH.betTime - C.t), any = (C.bets || []).length > 0; // (the countdown waits for the first bet)
     glowText(g, 'NEXT ROCKET', w / 2, h * 0.3, h * 0.09, '#ff3fa4');
     glowText(g, any ? left.toFixed(1) + 's' : 'BET TO LAUNCH', w / 2, h * 0.48, any ? h * 0.16 : h * 0.1, '#ffd040');
-    rocket(g, w / 2, h * 0.72, h * 0.14, -Math.PI / 2, t);
+    if(!spatial) rocket(g, w / 2, h * 0.72, h * 0.14, -Math.PI / 2, t);
   }
   // bettors down the right side
   const bets = (C.bets || []).slice(0, 8);

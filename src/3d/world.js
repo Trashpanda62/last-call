@@ -336,7 +336,7 @@ export function* buildWorldSteps(scene, opts = {}) {
   sign('DUCK RACE', 0xd8b36e, beside(2560, 1, 2.0, 0.65), 2.25, 700 * M - 0.24, Math.PI, 2.0, 0.3);
   sign('SLOTS', 0xffd040, 510 * M, 2.35, 1200 * M + 0.24, 0, 1.8, 0.45);
   sign('HIGH LIMIT', 0xffd040, 1620 * M + .24, 2.5, 1270 * M, Math.PI/2, 1.8, 0.30, true, true);
-  sign('DICE', 0xe2bb72, 2000 * M - .24, 2.35, 975 * M, -Math.PI/2, 1.3, 0.4); // aligned with the southern table pit
+  sign('DICE', 0xe2bb72, 2000 * M - .24, 2.35, 780 * M, -Math.PI/2, 1.3, 0.4); // aligned with the southern table pit
   // The coin game has its own HEADS OR TAILS title; a second wall label hid behind the coin.
   bulbsMesh(ctx);
 

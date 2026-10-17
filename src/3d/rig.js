@@ -147,7 +147,7 @@ const AT = {
 // The table camera: how steeply it looks down (radians) and its narrowest field of view (degrees; it widens when the
 // ceiling is in the way).
 const SHOT = { roulette: [-1.1, 44], bj: [-0.92, 46], dice: [-0.95, 46], slots: [-0.12, 44], plinko: [-0.22, 46], mines: [-0.3, 40], tower: [-0.3, 40],
-  crash: [-0.22, 50], race: [-0.62, 50], coin: [-0.55, 46], wheel: [-0.16, 50] };
+  flappy: [0.08, 48], crash: [-0.22, 50], race: [-0.62, 50], coin: [-0.55, 46], wheel: [-0.16, 50] };
 // Chips on the felt are drawn bigger than life so they read from the table camera.
 const CHIP_SCALE = { roulette: 2.5, dice: 2.2, bj: 2.3 };
 export const STANDS = { plinko: [0.68, 0.96, 0.62, 0.66] }; // betting stands in front of these seats: [ahead, width, depth, height]
@@ -325,7 +325,7 @@ export function buildRig(ctx, seats, felts) {
     for (const [obj, part] of ctx.starters[my.seat] || []) { obj.traverse(m => { if (m.isMesh) m.userData.part = part; }); addHits(obj); }
     cur.hidden = ctx.deco[my.seat] || []; for (const m of cur.hidden) m.visible = false;
     feltRings.count = 0;
-    const ringSpots = my.game === 'roulette' ? RL_CELLS.map(c => c.id) : my.game === 'dice' ? ['pass', 'field'] : [];
+    const ringSpots = my.game === 'dice' ? ['pass', 'field'] : [];
     const rotation = new THREE.Quaternion().setFromAxisAngle(v3(1, 0, 0), -Math.PI / 2);
     for (const spot of ringSpots) { const pos = spotPos(spot); if (!pos) continue; pos.y += .002; feltRings.setMatrixAt(feltRings.count++, new THREE.Matrix4().compose(pos, rotation, v3(1, 1, 1))); }
     if (feltRings.count) feltRings.instanceMatrix.needsUpdate = true;

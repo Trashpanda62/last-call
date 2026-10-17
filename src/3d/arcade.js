@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { FLAPPY } from '../flappy.js';
 import { ARCADE } from '../arcade.js';
 import { ARCADE_CABS } from '../map.js';
 import { MAT, v3, box, rbox, cyl, sph, basicGlow } from './world.js';
@@ -17,6 +18,43 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
     const B={add:(g,m,p)=>batch.add(g,m,p,yaw)};
     const pos = (x,y,z) => v3(x,y,z).applyAxisAngle(axis,yaw).add(origin);
     const add = (geo,mat,x,y,z,name) => { const m = new THREE.Mesh(geo,mat);m.position.set(x,y,z);if(name)m.name=name;root.add(m);return m; };
+    if(c.game==='flappy') {
+      root.rotation.y=0; // Cabinet faces south into the arcade's clear central bay.
+      const fp=(x,y,z)=>v3(c.x/60+x,y,c.y/60+z);
+      const cabinet=(g,m,x,y,z)=>batch.add(g,m,fp(x,y,z));
+      cabinet(rbox(1.18,.90,.85,.045),MAT.blackGloss,0,.45,0);
+      cabinet(rbox(1.18,1.26,.25,.04),MAT.darkWood,0,1.53,-.25);
+      for(const x of[-.6,.6])cabinet(box(.035,2.2,.9),MAT.gold,x,1.1,0);
+      cabinet(rbox(1.2,.12,.96,.025),MAT.blackGloss,0,2.23,0);
+      cabinet(rbox(1.2,.08,.42,.025),MAT.darkWood,0,.94,.30);
+      betSocket(seat,'main',fp(-.33,.985,.32),'BET',.105);
+      actionButton(seat,'btn:start','START',fp(.04,.985,.32),'#278459',.075);
+      actionButton(seat,'btn:drop','FLAP',fp(.34,.985,.32),'#a0672c',.10);
+      const face=screen({w:1.05,h:1.10,cw:630,ch:660,pos:fp(0,1.59,-.105),seat:seat.id,every:1/60,far:18,
+        key:(t,r)=>r?.phase==='fly'?t:r?[r.id,r.phase,r.score].join(':'):'idle',
+        paint:(g,w,h,t,r)=>{
+          g.fillStyle='#130b12';g.fillRect(0,0,w,h);g.strokeStyle='#ba9454';g.lineWidth=6;g.strokeRect(3,3,w-6,h-6);
+          const top=100,bottom=h-92,ph=bottom-top;
+          g.fillStyle='#221522';g.fillRect(9,top,w-18,ph);
+          for(let i=0;i<25;i++){g.fillStyle='#a88d64';g.fillRect((i*137)%w,top+(i*83)%ph,2,2);}
+          const pipes=r?.pipes||[{x:.8,y:.5}];
+          for(const p of pipes){const x=p.x*w,bw=FLAPPY.width*w,y=bottom-p.y*ph,gap=FLAPPY.gap*ph;
+            g.fillStyle='#763535';g.fillRect(x-bw/2,top,bw,y-gap/2-top);g.fillRect(x-bw/2,y+gap/2,bw,bottom-y-gap/2);
+            g.fillStyle='#d3b273';g.fillRect(x-bw/2-5,y-gap/2-12,bw+10,12);g.fillRect(x-bw/2-5,y+gap/2,bw+10,12);
+          }
+          const x=FLAPPY.x*w,y=bottom-(r?.y??.5)*ph;
+          g.save();g.translate(x,y);g.rotate(-Math.max(-.6,Math.min(.8,(r?.vy||0)*-.8)));
+          g.fillStyle='#e4b14d';g.beginPath();g.ellipse(0,0,18,14,0,0,7);g.fill();
+          g.fillStyle='#f7dd8e';g.beginPath();g.ellipse(-8,4+Math.sin(t*18)*4,10,6,-.4,0,7);g.fill();
+          g.fillStyle='#eee4ca';g.beginPath();g.arc(8,-5,7,0,7);g.fill();g.fillStyle='#170d10';g.fillRect(10,-7,4,5);
+          g.fillStyle='#c86134';g.beginPath();g.moveTo(16,0);g.lineTo(28,4);g.lineTo(16,8);g.fill();g.restore();
+          g.textAlign='center';g.textBaseline='middle';g.font='bold 45px Georgia';g.fillStyle='#e5c27e';g.fillText('FLAPPY BIRD',w/2,43);
+          g.font='bold 24px Arial';g.fillText(r?.phase==='done'?'PAID '+(r.bet*r.mult).toFixed(0)+' / '+r.score+' PIPES':r?.phase==='fly'?r.score+' PIPES':r?'SPACE OR FLAP TO FLY':'PLACE CHIPS / START',w/2,81);
+          g.font='bold 19px Arial';g.fillText('3 PIPES 1x / 6 1.5x / 10 2x / 15 3x',w/2,h-62);g.fillText('SPACE / CLICK FLAP',w/2,h-28);
+        },arg:st=>st.pub?.arcade?.flappy||null});
+      face.name='flappy-screen';focusAt(seat.id,'core',face);
+      lightSpots.push({p:fp(0,2.65,.6),color:0xffdca0,power:2,range:3});continue;
+    }
     B.add(rbox(1.64,.82,1.48,.045),wood,pos(0,.41,0));
     B.add(rbox(1.55,.04,1.37,.018),bed,pos(0,.84,0));
     B.add(rbox(1.68,.06,.37,.025),wood,pos(0,.87,.64));

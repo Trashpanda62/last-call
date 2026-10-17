@@ -110,6 +110,10 @@ The approved single-generation standard-body pilot and High detail option are im
 
 The supplied red/black/gold reference is applied to the actual rooms: cracked black stone, oxblood carpet, gold borders, burgundy seating and warm lighting. Existing layout, clearances and game cues remain; normal/no-prop/procedural material views and doorway/VIP regressions are recorded in performance/2026-10-17-casino-aesthetic.json. [Reference and previews](../design/casino-aesthetic/README.md). Visual acceptance remains Steve's review.
 
+## October 17 arcade and slot hall follow-up — DONE
+
+Steve requested immediate Duck Derby start, physical skee-ball motion, Flappy Bird, corrected dice orientation/door sign, dense back-to-back slots with concealed aisles, removal of roulette chip circles and manual rocket cash-out with 3D presentation. All are implemented. The slot hall has four banks / 40 penny slots and actual witness occlusion; VIP retains four high-limit machines. Dice model rotated, DICE doorway sign moved and lounge coin title/approaches corrected. Flappy uses original local art and the existing authoritative arcade transport/settlement. No paid generation or night-length/killer-win tuning. [Previews, controls and verification](../design/arcade-followup/README.md). All 87 game positions / 2,418 routes pass; native rules, actual input in both graphics modes, three-browser transport and eight affected gameplay/resource scenarios pass. LAN receipt: playtest-build-arcade-followup-2026-10-17.json (855 runtime/vendor/asset/entry files).
+
 ## Remaining manual acceptance
 
 | ID | Task | Status | Completion evidence / next action |
