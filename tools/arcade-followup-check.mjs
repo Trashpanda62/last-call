@@ -27,4 +27,3 @@ for(const hot of[false,true])for(const aim of[-1,0,1]){const sr=skeeNew(1,0,0,10
  if(sr.ball?.stage==='rebound')rebounds++;
  }}assert.ok(ballisticSamples>20&&rebounds>0);
 const report={skeeball:{ballisticSamples,rebounds,noMidflightSteering:true},at:new Date().toISOString(),race:{instantStart:true,lateBetRejected:true,round:rid},flappy:{winningHostScore:wr.score,winningBankDelta:wr.net,autopilotScore:r.score,miss:fail.score,ownership:true,replay:true,paidOnce:true,bankDelta:settled-bank,wire:true},slotHall:{machines:M.SLOT_STATIONS.filter(s=>s.tier==='penny').length,banks:M.SLOT_BANKS.length,hiddenSightline:true,realMurderHidden:true,openAisleMurderWitnessed:true,centreAisleClear:true},clearSeats:seats.length};fs.writeFileSync('docs/performance/2026-10-17-arcade-followup-rules.json',JSON.stringify(report,null,2)+'\n');console.log(report);
-
