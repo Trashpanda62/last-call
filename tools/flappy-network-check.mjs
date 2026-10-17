@@ -1,4 +1,4 @@
-// Real three-browser PeerJS transport: two skee lanes plus a spectator.
+// Real three-browser PeerJS transport: Flappy guest input plus a spectator.
 import fs from 'node:fs';import assert from 'node:assert/strict';import {createRequire} from 'node:module';
 const {chromium}=createRequire(import.meta.url)(process.env.PW||'playwright');
 const browser=await chromium.launch({headless:true,args:['--use-angle=vulkan','--enable-features=Vulkan','--ignore-gpu-blocklist','--disable-background-timer-throttling','--disable-renderer-backgrounding'],ignoreDefaultArgs:['--disable-gpu']});
@@ -16,6 +16,7 @@ try{
  await g.evaluate(()=>{const L=__lastCall;L.render();L.press('spot:main');L.press('btn:start');});
  await h.waitForFunction(()=>__lastCall.state.arcade.flappy?.phase==='aim');
  const first=await h.evaluate(()=>__lastCall.state.arcade.flappy.id);
+ await g.waitForFunction(id=>__lastCall.view.pub.arcade.flappy?.id===id&&__lastCall.table()?.on?.drop,first);
  await g.keyboard.press('Space');await h.waitForFunction(()=>__lastCall.state.arcade.flappy.seq===1);
  await w.evaluate(id=>__lastCall.act('arcade',{kind:'drop',round:id,sequence:2}),first);await h.waitForTimeout(150);assert.equal(await h.evaluate(()=>__lastCall.state.arcade.flappy.seq),1);
  await h.evaluate(()=>{const L=__lastCall,r=L.state.arcade.flappy;L.S.paused=true;for(let i=0;i<1500&&r.phase!=='done';i++){L.step(1/120);}});
@@ -24,4 +25,4 @@ try{
  const bank=await h.evaluate(()=>__lastCall.state.bank);await g.evaluate(id=>{__lastCall.act('arcade',{kind:'drop',round:id,sequence:1});__lastCall.act('arcade',{kind:'start',after:0,bet:1000});},first);await h.waitForTimeout(200);assert.equal(await h.evaluate(()=>__lastCall.state.bank),bank);assert.equal(await h.evaluate(()=>__lastCall.state.arcade.flappy.id),first);
  await h.evaluate(()=>__lastCall.S.paused=false);await g.evaluate(id=>__lastCall.act('arcade',{kind:'start',after:id,bet:1000}),first);await h.waitForFunction(id=>__lastCall.state.arcade.flappy.id!==id,first);await g.close();await h.waitForFunction(()=>!__lastCall.state.chars[1].isHuman,null,{timeout:15000});await h.evaluate(()=>{for(let i=0;i<6000;i++)__lastCall.step(1/120);});assert.equal(await h.evaluate(()=>__lastCall.state.arcade.flappy.phase),'done');assert.equal(await h.evaluate(()=>__lastCall.state.arcade.flappy.paid),true);
  report.disconnect={bot:true,paid:true};report.keyboardFlap=true;report.foreignReplayRejected=true;assert.deepEqual(errors,[]);report.errors=errors;fs.writeFileSync('shots/flappy-network.json',JSON.stringify(report,null,2)+'\n');console.log('PASS: Flappy guest keyboard control, host/guest/spectator snapshots, settlement, replay/foreign rejection and disconnect takeover.');
-}catch(error){report.failure=error.stack;fs.writeFileSync('shots/flappy-network.json',JSON.stringify(report,null,2)+'\n');throw error;}finally{await browser.close();}
+}catch(error){report.failure=error.stack;report.diagnostics=await Promise.all(pages.filter(p=>!p.isClosed()).map(p=>p.evaluate(()=>({role:__lastCall.S.role,screen:__lastCall.S.screen,paused:__lastCall.S.paused,seat:__lastCall.view?.priv.seat,table:__lastCall.table(),round:__lastCall.view?.pub.arcade.flappy})).catch(e=>({error:e.message}))));fs.writeFileSync('shots/flappy-network.json',JSON.stringify(report,null,2)+'\n');throw error;}finally{await browser.close();}

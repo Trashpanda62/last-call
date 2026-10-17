@@ -1,7 +1,7 @@
 // Bounded skee-ball rules and lane physics, shared by the host and independent checks.
 // Cabinet-local metres: +x right, +z toward the roller, y up. No DOM or random state.
-export const SKEE = Object.freeze({ balls: 9, seconds: 90, step: 1 / 120, radius: .052,
-  front: 1.91, tip: -.82, boardZ: -1.50, boardY: 1.25, slope: .28, halfWidth: .49 });
+export const SKEE = Object.freeze({ balls: 9, seconds: 90, step: 1 / 120, radius: .040,
+  laneY: .638, rise: .32, front: 1.91, tip: -.82, boardZ: -1.50, boardY: 1.25, slope: .28, halfWidth: .49 });
 export const SKEE_POCKETS = Object.freeze([
   { value: 10, x: 0, y: .84, radius: .095 }, { value: 20, x: 0, y: 1.04, radius: .092 },
   { value: 30, x: 0, y: 1.24, radius: .087 }, { value: 40, x: 0, y: 1.44, radius: .082 },
@@ -18,25 +18,30 @@ export function skeeLaunch(r, aim, power, sequence) {
   aim = Math.max(-1, Math.min(1, aim)); power = Math.max(0, Math.min(1, power));
   // Launch velocity follows the same curved ramp as the visible lane. A protected
   // roll chooses a launch energy up front; nothing steers the ball during flight.
-  let speed = 2.05 + power * 4.4, lateral = aim * .40;
+  let speed = 3.35 + power * 2.65, lateral = aim * .40;
   if(r.hot) {
-    const p=SKEE_POCKETS[4+((r.launched+1)%3)], distance=SKEE.tip-p.z-SKEE.radius;
-    const tangent=2*.32/.44, needed=Math.sqrt(4.9*distance*distance/(tangent*distance-(p.y-1.01)));
+    const p=SKEE_POCKETS[4+((r.launched+1)%3)], distance=SKEE.tip-p.z;
+    const tangent=2*.32/.44, needed=Math.sqrt(4.9*distance*distance/(tangent*distance-(p.y-(SKEE.laneY+SKEE.radius+SKEE.rise))));
     const travel = initial => {let z=SKEE.front,v=-initial,t=0;for(let i=0;i<2400&&z>SKEE.tip;i++){
       const u=Math.max(0,Math.min(1,(-z-.38)/.44)),slope=2*.32*u/.44;
       v=Math.min(-.2,v+(.12+(9.8*slope+2*.32/(.44*.44)*slope*v*v)/(1+slope*slope))*SKEE.step);z+=v*SKEE.step;t+=SKEE.step;
     }return {speed:-v,time:t};};
     let lo=1,hi=8;for(let i=0;i<28;i++){const mid=(lo+hi)/2;if(travel(mid).speed<needed)lo=mid;else hi=mid;}
-    speed=(lo+hi)/2;lateral=p.x/(travel(speed).time+distance/needed);
+    speed=(lo+hi)/2;
+    // Fixed ramp steps straddle the lip at different times. Refine against the
+    // actual exit speed rather than assuming that discrete curve is monotonic.
+    let error=Infinity;
+    for(let i=0;i<=256;i++) { const candidate=(lo+hi)/2-.24+i*.48/256,e=Math.abs(travel(candidate).speed-needed);if(e<error){error=e;speed=candidate;} }
+    const exit=travel(speed);lateral=p.x/(exit.time+distance/exit.speed);
   }
   r.launched++; r.phase = 'roll'; r.wait = 0;
-  r.ball = { x: 0, y: .69, z: SKEE.front, vx: lateral, vy: 0, vz: -speed, age: 0, stage: 'lane', power, aim, assist: false, spin: 0, bounces: 0 };
+  r.ball = { x: 0, y: SKEE.laneY+SKEE.radius, z: SKEE.front, vx: lateral, vy: 0, vz: -speed, age: 0, stage: 'lane', power, aim, assist: false, spin: 0, bounces: 0 };
   return true;
 }
 const plane = b => b.z - SKEE.boardZ + SKEE.slope * (b.y - SKEE.boardY);
 function caught(r, pocket) {
   const b = r.ball; r.last = pocket?.value || 0; r.score += r.last; r.history.push(r.last);
-  b.stage = pocket ? 'pocket' : 'return'; b.from = { x: b.x, y: b.y, z: b.z }; b.age = 0;
+  b.stage = pocket ? 'pocket' : 'return'; b.from = { x: b.x, y: b.y, z: b.z, vx: b.vx, vy: b.vy, vz: b.vz }; b.age = 0;
   r.phase = 'result'; r.wait = pocket ? .65 : 1.05;
 }
 function step(r, dt) {
@@ -50,30 +55,39 @@ function step(r, dt) {
       b.vz = Math.min(-.2, b.vz + decel * dt);
       if(b.vz>=-.21){caught(r,null);return;}
       b.x += b.vx * dt; b.z += b.vz * dt;
-      b.y = .69 + .32 * Math.max(0, Math.min(1, (-b.z - .38) / .44)) ** 2;
+      b.y = SKEE.laneY+SKEE.radius + SKEE.rise * Math.max(0, Math.min(1, (-b.z - .38) / .44)) ** 2;
       b.spin += Math.hypot(b.vx,b.vz) * dt / SKEE.radius;
       if (Math.abs(b.x) > SKEE.halfWidth - SKEE.radius) { b.x = Math.sign(b.x) * (SKEE.halfWidth-SKEE.radius); b.vx *= -.65; b.bounces++; }
       if (b.z <= SKEE.tip) {
-        b.z = SKEE.tip; b.y = 1.01;
+        b.z = SKEE.tip; b.y = SKEE.laneY+SKEE.radius+SKEE.rise;
         b.vy = -b.vz * (2 * .32 / .44); b.stage = 'flight'; b.age = 0;
       }
     } else {
       const before = { x: b.x, y: b.y, z: b.z }, old = plane(b);
       b.x += b.vx * dt; b.y += b.vy * dt - 4.9 * dt * dt; b.vy -= 9.8 * dt; b.z += b.vz * dt;
       b.spin += Math.hypot(b.vx,b.vy,b.vz) * dt / SKEE.radius;
-      if (old > SKEE.radius && plane(b) <= SKEE.radius && b.stage === 'flight') {
-        const f = (old - SKEE.radius) / (old - plane(b));
-        b.x = before.x + (b.x - before.x) * f; b.y = before.y + (b.y - before.y) * f; b.z = before.z + (b.z - before.z) * f;
-        const p = SKEE_POCKETS.find(p => Math.hypot(b.x - p.x, (b.y - p.y) * Math.sqrt(1 + SKEE.slope ** 2)) <= p.radius - SKEE.radius);
-        if (p) { caught(r,p); return; }
-        // Solid target face: reflect velocity about the inclined board normal.
-        const dot = (b.vz + SKEE.slope * b.vy) / (1 + SKEE.slope ** 2);
-        b.vz -= 1.48 * dot; b.vy -= 1.48 * dot * SKEE.slope;
-        b.z += .004; b.stage='rebound'; b.bounces++;
+      const contact = SKEE.radius * Math.sqrt(1 + SKEE.slope ** 2);
+      if (!b.opening && old > contact && plane(b) <= contact && b.stage === 'flight') {
+        // Test the trajectory at the actual hole plane, not where the front of
+        // the sphere first touches the board. Those heights differ substantially
+        // on a rising throw. A clear sphere continues freely through the opening.
+        const a = -4.9*SKEE.slope, v = b.vz + SKEE.slope*b.vy;
+        const t = (-v - Math.sqrt(v*v - 4*a*plane(b))) / (2*a);
+        const x = b.x + b.vx*t, y = b.y + b.vy*t - 4.9*t*t;
+        b.opening = SKEE_POCKETS.find(p => Math.hypot(x-p.x,(y-p.y)*Math.sqrt(1+SKEE.slope**2)) <= p.radius-SKEE.radius);
+        if (!b.opening) {
+          const f = (old - contact) / (old - plane(b));
+          b.x = before.x + (b.x - before.x) * f; b.y = before.y + (b.y - before.y) * f; b.z = before.z + (b.z - before.z) * f;
+          // Solid target face: reflect velocity about the inclined board normal.
+          const dot = (b.vz + SKEE.slope * b.vy) / (1 + SKEE.slope ** 2);
+          b.vz -= 1.48 * dot; b.vy -= 1.48 * dot * SKEE.slope;
+          b.z += .004; b.stage='rebound'; b.bounces++;
+        }
       }
+      if (b.opening && plane(b) <= 0) { caught(r,b.opening); return; }
       if (Math.abs(b.x) > SKEE.halfWidth-SKEE.radius) { b.x=Math.sign(b.x)*(SKEE.halfWidth-SKEE.radius); b.vx *= -.6; b.bounces++; }
-      if (b.y < .69) {
-        b.y=.69;
+      if (b.y < SKEE.laneY+SKEE.radius) {
+        b.y=SKEE.laneY+SKEE.radius;
         if (b.vy < -.7 && b.bounces < 4) { b.vy *= -.38; b.vz *= .72; b.bounces++; }
         else { caught(r,null); return; }
       }
@@ -84,8 +98,14 @@ function step(r, dt) {
     if (b) {
       b.age += dt;
       const u = Math.min(1, b.age / (b.stage === 'pocket' ? .65 : 1.05));
-      b.x = b.stage === 'pocket' ? b.from.x : b.from.x * (1 - u); b.y = b.stage === 'pocket' ? b.from.y - Math.min(.35, 4.9*b.age*b.age) : .64 + Math.sin(u * Math.PI) * .08;
-      b.z = b.stage === 'pocket' ? b.from.z - .16 * u : b.from.z + (SKEE.front - b.from.z) * u;
+      if (b.stage === 'pocket') {
+        // Preserve entry momentum until behind the target, then let the hidden
+        // return collect it. Dropping vertically at the lip looked like a miss.
+        const t = Math.min(.20,b.age);
+        b.x=b.from.x+b.from.vx*t; b.y=b.from.y+b.from.vy*t-4.9*t*t; b.z=b.from.z+b.from.vz*t;
+      } else {
+        b.x=b.from.x*(1-u); b.y=.64+Math.sin(u*Math.PI)*.08; b.z=b.from.z+(SKEE.front-b.from.z)*u;
+      }
     }
     if (r.wait <= 0) { r.ball = null; r.phase = r.launched >= SKEE.balls || r.abandoned ? 'done' : 'aim'; }
   }

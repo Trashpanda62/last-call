@@ -37,6 +37,12 @@ Duck START now launches immediately. Skee uses rolling energy, curved-ramp launc
 
 Slots now use physical BET âˆ’ / BET + / MAX BET / SPIN / AUTO SPIN buttons on fitted decks. Space spins too; chip sockets/trays/stacks and the HUD AUTO icon are removed. Bets follow each tier's effective minimum and the current maximum. Lobby recommendations are 2 killers at 16 players and 4 at 32. Camera left click cycles; right click exits. Staff doors enter immediately with no room picker: the host hides the character, freezes movement and supplies private room cameras; Exit emerges at the viewed room's staff door. Packed network visibility, observer rendering and disconnect recovery pass. [Previews and controls](../design/slot-camera-controls/README.md). Current reports: performance/2026-10-17-slot-camera-{rules,views,network}.json.
 
+## Skeeball entry / Flappy placement and difficulty follow-up
+
+Corrected the skee collision test to check the ballistic path at the actual hole plane, instead of judging it where the front of the ball touches the board. An accepted ball now carries its velocity through the opening before falling behind the face; it no longer drops vertically at the lip. Ball diameter is 80 mm, matching the rendered sphere and giving practical clearance inside the 156–190 mm openings. Roll energy is mapped across a more useful range. All seven pockets, misses, protected rounds and one-time host settlement pass, with actual rendered opening rays and entry motion in both graphics paths.
+
+Flappy is now against the south arcade wall at (2660, 650), facing north beside the duck doorway; its playing/approach positions and the promenade stay clear. Moved the obsolete MINES / DRAGON TOWER wall labels over their actual machines. Flappy starts 36% faster, speeds up with score and narrows later gaps from .28 to .21; each pipe retains its own visible/collision gap while on screen. A precise scripted run can still clear 15 pipes; idle and repeated flap spam lose. The top-down plan is updated. [Previews and proposed next games](../design/arcade-entry/README.md). Current reports: performance/2026-10-17-skee-entry-rules.json, arcade-entry-{rules,views}.json, flappy-difficulty.json and the current entry network reports. No additional games were added in this follow-up.
+
 ## Manual acceptance and holds
 
 The more realistic standard potato pilot is integrated at the shipped 1.41 m height, with natural skin, inset eyes, waistcoat/gloves and the existing local rig/animations. Steve approved the single 30-credit ($0.30) Hunyuan generation; no further paid variants were generated. Standard uses 24K triangles and baked 2K PBR maps. Graphics > Potato detail > High (original mesh), also included in Ultra, retains the full 1.5M-triangle model and 4K maps for the nearest potato up close. The optional download does not block startup. Corrected Steve's reported side-view arm: symmetric fitted shoulder/elbow/wrist joints, continuous upper-arm weights and ascending chest joints on both meshes. Both sides were visually checked idle and walking. Round/staff bodies and meeting portraits retain their previous designs pending pilot review. [Pilot details and evidence](../design/characters/potato-realism/README.md).
@@ -52,7 +58,7 @@ Latest layout/payout evidence uses the layout-review and arcade-payout report na
 
 LAN playtest: https://10.42.0.37:3161/ (existing self-signed LAN HTTPS).
 
-Delivery identity: [complete source/asset/vendor receipt](playtest-build-slot-camera-2026-10-17.json), generated after sync. All 855 Git-tracked files in src/, assets/, vendor/ and the three entry files match served SHA-256 bytes, including the mirror and new arcade modules.
+Delivery identity: [complete source/asset/vendor receipt](playtest-build-arcade-entry-2026-10-17.json), generated after sync. All 855 Git-tracked files in src/, assets/, vendor/ and the three entry files match served SHA-256 bytes, including the mirror and new arcade modules.
 
 The sync tool now copies Git-tracked files only. Stage new deliverables before syncing; preserve local untracked .claude/, .dev/ and shots/. Existing voice-server configuration is retained. No new generation or balance sweep is needed.
 

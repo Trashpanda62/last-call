@@ -1,6 +1,6 @@
 {
-  "at": "2026-10-17T05:57:07.950Z",
-  "status": "four populated slot banks, original Flappy cabinet and lounge-facing coin; constructed",
+  "at": "2026-10-17T06:37:16.398Z",
+  "status": "populated slot banks, south-wall Flappy cabinet and lounge-facing coin; constructed",
   "units": "60 simulation pixels = 1 metre",
   "plantCanopyRadius": 71,
   "rooms": {
@@ -583,8 +583,8 @@
       "kind": "claw"
     },
     {
-      "x": 2590,
-      "y": 486,
+      "x": 2615,
+      "y": 606,
       "w": 90,
       "h": 88,
       "kind": "flappy"
@@ -2682,16 +2682,16 @@
     {
       "id": 86,
       "game": "flappy",
-      "x": 2635,
-      "y": 612,
-      "face": -1.5707963267948966,
+      "x": 2660,
+      "y": 568,
+      "face": 1.5707963267948966,
       "drink": {
-        "x": 2635,
-        "y": 654
+        "x": 2660,
+        "y": 526
       },
       "approach": {
-        "x": 2635,
-        "y": 672.9
+        "x": 2660,
+        "y": 507.1
       },
       "occ": null,
       "claim": null,

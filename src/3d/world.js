@@ -905,8 +905,8 @@ function staffDoors(ctx) {
 // ---------- The arcade ----------
 function arcadeDressing(ctx) {
   ctx.sign('PLINKO', 0xe2bb72, 2166 * M, 2.75, 3.05, 0, 2.0, 0.36, true, true); // follows the relocated north-wall pair
-  ctx.sign('MINES', 0xe2bb72, 2210 * M, 2.45, 700 * M - 0.24, Math.PI, 1.5, 0.4);
-  ctx.sign('DRAGON TOWER', 0xffa040, 2770 * M, 2.45, 700 * M - 0.24, Math.PI, 2.4, 0.4);
+  ctx.sign('MINES', 0xe2bb72, 2148 * M, 2.45, 700 * M - 0.24, Math.PI, 1.5, 0.4);
+  ctx.sign('DRAGON TOWER', 0xffa040, 2292 * M, 2.45, 700 * M - 0.24, Math.PI, 2.4, 0.4);
 }
 
 // Marquee bulbs everywhere share one instanced mesh with a chasing pattern.

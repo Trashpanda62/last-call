@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-17T06:03:11.746Z",
+  "at": "2026-10-17T06:32:00.631Z",
   "snacks": [
     {
       "id": 0,
@@ -69,7 +69,7 @@
     "h": 1.6,
     "arcadeSeats": 13,
     "routes": 338,
-    "samples": 273443
+    "samples": 274101
   },
   "scope": "All current seat approaches and occupied positions, all six snacks, every door and staff exit. Blackjack seated positions intentionally exempt their own table rectangle.",
   "seats": [
@@ -936,16 +936,16 @@
     {
       "id": 86,
       "game": "flappy",
-      "x": 2635,
-      "y": 612,
+      "x": 2660,
+      "y": 568,
       "approach": {
-        "x": 2635,
-        "y": 672.9
+        "x": 2660,
+        "y": 507.1
       }
     }
   ],
   "routes": 2418,
-  "segments": 12666,
+  "segments": 12650,
   "rows": [
     {
       "from": "door-0-0",
@@ -10983,25 +10983,25 @@
       "from": "door-4-0",
       "seat": 64,
       "game": "crash",
-      "waypoints": 7
+      "waypoints": 6
     },
     {
       "from": "door-4-1",
       "seat": 64,
       "game": "crash",
-      "waypoints": 5
+      "waypoints": 4
     },
     {
       "from": "door-5-0",
       "seat": 64,
       "game": "crash",
-      "waypoints": 2
+      "waypoints": 1
     },
     {
       "from": "door-5-1",
       "seat": 64,
       "game": "crash",
-      "waypoints": 4
+      "waypoints": 3
     },
     {
       "from": "door-6-0",
@@ -11019,2998 +11019,2998 @@
       "from": "door-7-0",
       "seat": 64,
       "game": "crash",
-      "waypoints": 7
+      "waypoints": 6
     },
     {
       "from": "door-7-1",
       "seat": 64,
       "game": "crash",
-      "waypoints": 9
+      "waypoints": 8
     },
     {
       "from": "door-8-0",
       "seat": 64,
       "game": "crash",
-      "waypoints": 6
+      "waypoints": 5
     },
     {
       "from": "door-8-1",
       "seat": 64,
       "game": "crash",
-      "waypoints": 8
+      "waypoints": 7
     },
     {
       "from": "door-9-0",
       "seat": 64,
       "game": "crash",
+      "waypoints": 11
+    },
+    {
+      "from": "door-9-1",
+      "seat": 64,
+      "game": "crash",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-0",
+      "seat": 64,
+      "game": "crash",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-1",
+      "seat": 64,
+      "game": "crash",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-2",
+      "seat": 64,
+      "game": "crash",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-3",
+      "seat": 64,
+      "game": "crash",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-4",
+      "seat": 64,
+      "game": "crash",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-5",
+      "seat": 64,
+      "game": "crash",
+      "waypoints": 7
+    },
+    {
+      "from": "door-0-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 3
+    },
+    {
+      "from": "door-1-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 6
+    },
+    {
+      "from": "door-1-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 4
+    },
+    {
+      "from": "door-2-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-2-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 6
+    },
+    {
+      "from": "door-3-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 3
+    },
+    {
+      "from": "door-3-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 3
+    },
+    {
+      "from": "door-4-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-5-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 1
+    },
+    {
+      "from": "door-5-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 3
+    },
+    {
+      "from": "door-6-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 7
+    },
+    {
+      "from": "door-7-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 7
+    },
+    {
+      "from": "door-9-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 8
+    },
+    {
+      "from": "door-9-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-0",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-1",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-2",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-3",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-4",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-5",
+      "seat": 65,
+      "game": "plinko",
+      "waypoints": 7
+    },
+    {
+      "from": "door-0-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 3
+    },
+    {
+      "from": "door-1-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 6
+    },
+    {
+      "from": "door-1-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 4
+    },
+    {
+      "from": "door-2-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-2-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 6
+    },
+    {
+      "from": "door-3-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 3
+    },
+    {
+      "from": "door-3-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 3
+    },
+    {
+      "from": "door-4-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-5-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 1
+    },
+    {
+      "from": "door-5-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 3
+    },
+    {
+      "from": "door-6-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 7
+    },
+    {
+      "from": "door-7-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 7
+    },
+    {
+      "from": "door-9-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 8
+    },
+    {
+      "from": "door-9-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-0",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-1",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-2",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-3",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-4",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-5",
+      "seat": 66,
+      "game": "plinko",
+      "waypoints": 7
+    },
+    {
+      "from": "door-0-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 3
+    },
+    {
+      "from": "door-1-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 6
+    },
+    {
+      "from": "door-1-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 4
+    },
+    {
+      "from": "door-2-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 5
+    },
+    {
+      "from": "door-2-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 6
+    },
+    {
+      "from": "door-3-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 3
+    },
+    {
+      "from": "door-3-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 3
+    },
+    {
+      "from": "door-4-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 4
+    },
+    {
+      "from": "door-5-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 1
+    },
+    {
+      "from": "door-5-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 3
+    },
+    {
+      "from": "door-6-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 7
+    },
+    {
+      "from": "door-7-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 7
+    },
+    {
+      "from": "door-9-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 8
+    },
+    {
+      "from": "door-9-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-0",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-1",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-2",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-3",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-4",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-5",
+      "seat": 67,
+      "game": "mines",
+      "waypoints": 7
+    },
+    {
+      "from": "door-0-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 3
+    },
+    {
+      "from": "door-1-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 6
+    },
+    {
+      "from": "door-1-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 4
+    },
+    {
+      "from": "door-2-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 5
+    },
+    {
+      "from": "door-2-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 6
+    },
+    {
+      "from": "door-3-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 3
+    },
+    {
+      "from": "door-3-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 6
+    },
+    {
+      "from": "door-4-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 4
+    },
+    {
+      "from": "door-5-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 1
+    },
+    {
+      "from": "door-5-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 3
+    },
+    {
+      "from": "door-6-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 7
+    },
+    {
+      "from": "door-7-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 6
+    },
+    {
+      "from": "door-7-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 8
+    },
+    {
+      "from": "door-8-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 7
+    },
+    {
+      "from": "door-9-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 11
+    },
+    {
+      "from": "door-9-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-0",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-1",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-2",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-3",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 3
+    },
+    {
+      "from": "staff-4",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-5",
+      "seat": 68,
+      "game": "tower",
+      "waypoints": 7
+    },
+    {
+      "from": "door-0-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 7
+    },
+    {
+      "from": "door-0-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 5
+    },
+    {
+      "from": "door-1-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 8
+    },
+    {
+      "from": "door-1-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 6
+    },
+    {
+      "from": "door-2-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 10
+    },
+    {
+      "from": "door-2-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 8
+    },
+    {
+      "from": "door-3-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 3
+    },
+    {
+      "from": "door-3-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 5
+    },
+    {
+      "from": "door-4-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 3
+    },
+    {
+      "from": "door-4-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 5
+    },
+    {
+      "from": "door-5-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 7
+    },
+    {
+      "from": "door-5-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 6
+    },
+    {
+      "from": "door-6-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 4
+    },
+    {
+      "from": "door-7-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 1
+    },
+    {
+      "from": "door-8-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 3
+    },
+    {
+      "from": "door-8-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 1
+    },
+    {
+      "from": "door-9-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 3
+    },
+    {
+      "from": "door-9-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-0",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 10
+    },
+    {
+      "from": "staff-1",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-2",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-3",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-4",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 2
+    },
+    {
+      "from": "staff-5",
+      "seat": 69,
+      "game": "wheel",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 7
+    },
+    {
+      "from": "door-0-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 5
+    },
+    {
+      "from": "door-1-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 8
+    },
+    {
+      "from": "door-1-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 6
+    },
+    {
+      "from": "door-2-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 10
+    },
+    {
+      "from": "door-2-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 8
+    },
+    {
+      "from": "door-3-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 3
+    },
+    {
+      "from": "door-3-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 7
+    },
+    {
+      "from": "door-4-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 3
+    },
+    {
+      "from": "door-4-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 4
+    },
+    {
+      "from": "door-5-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 7
+    },
+    {
+      "from": "door-5-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 6
+    },
+    {
+      "from": "door-6-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 4
+    },
+    {
+      "from": "door-7-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 1
+    },
+    {
+      "from": "door-8-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 3
+    },
+    {
+      "from": "door-8-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 1
+    },
+    {
+      "from": "door-9-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 3
+    },
+    {
+      "from": "door-9-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-0",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 10
+    },
+    {
+      "from": "staff-1",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-2",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-3",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-4",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 2
+    },
+    {
+      "from": "staff-5",
+      "seat": 70,
+      "game": "wheel",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-0-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-1-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-1-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 2
+    },
+    {
+      "from": "door-2-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-2-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-3-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-3-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-4-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-5-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-5-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-6-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-6-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "door-7-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 2
+    },
+    {
+      "from": "door-7-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-8-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-8-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-9-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 7
+    },
+    {
+      "from": "door-9-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-0",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-1",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-2",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "staff-3",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-4",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-5",
+      "seat": 71,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-1-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-1-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 2
+    },
+    {
+      "from": "door-2-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-2-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-3-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 2
+    },
+    {
+      "from": "door-3-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-4-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-5-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-5-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-6-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-6-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-7-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-8-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-8-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-9-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-9-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-0",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-1",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-2",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-3",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-4",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-5",
+      "seat": 72,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-0-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-0-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-1-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-1-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 2
+    },
+    {
+      "from": "door-2-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-2-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-3-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-3-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-4-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-5-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-5-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-6-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-6-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "door-7-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 2
+    },
+    {
+      "from": "door-7-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-8-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-8-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-9-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 7
+    },
+    {
+      "from": "door-9-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-0",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-1",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-2",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 2
+    },
+    {
+      "from": "staff-3",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-4",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-5",
+      "seat": 73,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-1-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-1-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 2
+    },
+    {
+      "from": "door-2-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-2-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-3-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 2
+    },
+    {
+      "from": "door-3-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-4-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-5-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-5-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-6-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-6-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 1
+    },
+    {
+      "from": "door-7-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-8-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "door-8-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-9-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "door-9-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-0",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-1",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-2",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-3",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-4",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-5",
+      "seat": 74,
+      "game": "dice",
+      "waypoints": 3
+    },
+    {
+      "from": "door-0-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 8
+    },
+    {
+      "from": "door-0-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 6
+    },
+    {
+      "from": "door-1-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 7
+    },
+    {
+      "from": "door-1-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 5
+    },
+    {
+      "from": "door-2-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 9
+    },
+    {
+      "from": "door-2-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 7
+    },
+    {
+      "from": "door-3-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 11
+    },
+    {
+      "from": "door-3-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 9
+    },
+    {
+      "from": "door-4-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 8
+    },
+    {
+      "from": "door-4-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 6
+    },
+    {
+      "from": "door-5-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 9
+    },
+    {
+      "from": "door-5-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 7
+    },
+    {
+      "from": "door-6-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 6
+    },
+    {
+      "from": "door-6-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 4
+    },
+    {
+      "from": "door-7-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 4
+    },
+    {
+      "from": "door-7-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 2
+    },
+    {
+      "from": "door-8-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 3
+    },
+    {
+      "from": "door-9-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 3
+    },
+    {
+      "from": "door-9-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-0",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-1",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-2",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-3",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 11
+    },
+    {
+      "from": "staff-4",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 2
+    },
+    {
+      "from": "staff-5",
+      "seat": 75,
+      "game": "coin",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 9
+    },
+    {
+      "from": "door-0-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 7
+    },
+    {
+      "from": "door-1-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 8
+    },
+    {
+      "from": "door-1-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 6
+    },
+    {
+      "from": "door-2-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 10
+    },
+    {
+      "from": "door-2-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 8
+    },
+    {
+      "from": "door-3-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 9
+    },
+    {
+      "from": "door-3-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 7
+    },
+    {
+      "from": "door-4-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 6
+    },
+    {
+      "from": "door-4-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 4
+    },
+    {
+      "from": "door-5-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 7
+    },
+    {
+      "from": "door-5-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 7
+    },
+    {
+      "from": "door-6-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 5
+    },
+    {
+      "from": "door-7-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 5
+    },
+    {
+      "from": "door-7-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 3
+    },
+    {
+      "from": "door-8-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 3
+    },
+    {
+      "from": "door-8-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 1
+    },
+    {
+      "from": "door-9-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 4
+    },
+    {
+      "from": "door-9-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 2
+    },
+    {
+      "from": "staff-0",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 10
+    },
+    {
+      "from": "staff-1",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-2",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-3",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-4",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-5",
+      "seat": 76,
+      "game": "coin",
+      "waypoints": 6
+    },
+    {
+      "from": "door-0-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 3
+    },
+    {
+      "from": "door-0-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 1
+    },
+    {
+      "from": "door-1-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 3
+    },
+    {
+      "from": "door-1-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 1
+    },
+    {
+      "from": "door-2-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 3
+    },
+    {
+      "from": "door-2-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 3
+    },
+    {
+      "from": "door-3-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 1
+    },
+    {
+      "from": "door-3-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 3
+    },
+    {
+      "from": "door-4-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 3
+    },
+    {
+      "from": "door-5-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 3
+    },
+    {
+      "from": "door-5-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 4
+    },
+    {
+      "from": "door-6-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 1
+    },
+    {
+      "from": "door-6-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 4
+    },
+    {
+      "from": "door-8-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 6
+    },
+    {
+      "from": "door-9-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 4
+    },
+    {
+      "from": "door-9-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-0",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-1",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-2",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-3",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-4",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-5",
+      "seat": 77,
+      "game": "cams",
+      "waypoints": 3
+    },
+    {
+      "from": "door-0-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-0-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-1-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-1-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 4
+    },
+    {
+      "from": "door-2-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 8
+    },
+    {
+      "from": "door-2-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-3-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-3-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-4-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-4-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 4
+    },
+    {
+      "from": "door-5-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-5-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-6-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 4
+    },
+    {
+      "from": "door-7-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "door-8-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-8-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "door-9-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-9-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-0",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-1",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-2",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-3",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-4",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 2
+    },
+    {
+      "from": "staff-5",
+      "seat": 78,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "door-0-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-1-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 8
+    },
+    {
+      "from": "door-1-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-2-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 10
+    },
+    {
+      "from": "door-2-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 8
+    },
+    {
+      "from": "door-3-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "door-3-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-4-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-4-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 4
+    },
+    {
+      "from": "door-5-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-5-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-7-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-7-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-8-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-8-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "door-9-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-9-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "staff-0",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 10
+    },
+    {
+      "from": "staff-1",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-2",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-3",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-4",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-5",
+      "seat": 79,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-0-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 8
+    },
+    {
+      "from": "door-0-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-1-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-1-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-2-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "door-2-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-3-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "door-3-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-4-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-4-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 4
+    },
+    {
+      "from": "door-5-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-5-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-6-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 4
+    },
+    {
+      "from": "door-6-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 4
+    },
+    {
+      "from": "door-7-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 4
+    },
+    {
+      "from": "door-7-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 2
+    },
+    {
+      "from": "door-8-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-8-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "door-9-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-9-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-0",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-1",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-2",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-3",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-4",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-5",
+      "seat": 80,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-0-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-1-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-1-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 4
+    },
+    {
+      "from": "door-2-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 8
+    },
+    {
+      "from": "door-2-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-3-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 11
+    },
+    {
+      "from": "door-3-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "door-4-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 8
+    },
+    {
+      "from": "door-4-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-5-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 9
+    },
+    {
+      "from": "door-5-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "door-6-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 6
+    },
+    {
+      "from": "door-6-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 4
+    },
+    {
+      "from": "door-7-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-7-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "door-8-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-9-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 3
+    },
+    {
+      "from": "door-9-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-0",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-1",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-2",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "staff-3",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 11
+    },
+    {
+      "from": "staff-4",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 1
+    },
+    {
+      "from": "staff-5",
+      "seat": 81,
+      "game": "vip",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 3
+    },
+    {
+      "from": "door-1-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 6
+    },
+    {
+      "from": "door-1-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 4
+    },
+    {
+      "from": "door-2-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 5
+    },
+    {
+      "from": "door-2-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 6
+    },
+    {
+      "from": "door-3-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 3
+    },
+    {
+      "from": "door-3-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 6
+    },
+    {
+      "from": "door-4-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 4
+    },
+    {
+      "from": "door-5-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 1
+    },
+    {
+      "from": "door-5-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 3
+    },
+    {
+      "from": "door-6-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 7
+    },
+    {
+      "from": "door-6-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 9
+    },
+    {
+      "from": "door-7-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 6
+    },
+    {
+      "from": "door-7-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 8
+    },
+    {
+      "from": "door-8-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 5
+    },
+    {
+      "from": "door-8-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 7
+    },
+    {
+      "from": "door-9-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 11
+    },
+    {
+      "from": "door-9-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 9
+    },
+    {
+      "from": "staff-0",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 6
+    },
+    {
+      "from": "staff-1",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 7
+    },
+    {
+      "from": "staff-2",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 4
+    },
+    {
+      "from": "staff-3",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 3
+    },
+    {
+      "from": "staff-4",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 8
+    },
+    {
+      "from": "staff-5",
+      "seat": 82,
+      "game": "skee",
+      "waypoints": 9
+    },
+    {
+      "from": "door-0-0",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 5
+    },
+    {
+      "from": "door-0-1",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 3
+    },
+    {
+      "from": "door-1-0",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 6
+    },
+    {
+      "from": "door-1-1",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 4
+    },
+    {
+      "from": "door-2-0",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 5
+    },
+    {
+      "from": "door-2-1",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 6
+    },
+    {
+      "from": "door-3-0",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 3
+    },
+    {
+      "from": "door-3-1",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 1
+    },
+    {
+      "from": "door-4-0",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 7
+    },
+    {
+      "from": "door-4-1",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 5
+    },
+    {
+      "from": "door-5-0",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 2
+    },
+    {
+      "from": "door-5-1",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 4
+    },
+    {
+      "from": "door-6-0",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 8
+    },
+    {
+      "from": "door-6-1",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 10
+    },
+    {
+      "from": "door-7-0",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 7
+    },
+    {
+      "from": "door-7-1",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 9
+    },
+    {
+      "from": "door-8-0",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 6
+    },
+    {
+      "from": "door-8-1",
+      "seat": 83,
+      "game": "skee",
+      "waypoints": 8
+    },
+    {
+      "from": "door-9-0",
+      "seat": 83,
+      "game": "skee",
       "waypoints": 12
     },
     {
       "from": "door-9-1",
-      "seat": 64,
-      "game": "crash",
-      "waypoints": 10
-    },
-    {
-      "from": "staff-0",
-      "seat": 64,
-      "game": "crash",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-1",
-      "seat": 64,
-      "game": "crash",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-2",
-      "seat": 64,
-      "game": "crash",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-3",
-      "seat": 64,
-      "game": "crash",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-4",
-      "seat": 64,
-      "game": "crash",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-5",
-      "seat": 64,
-      "game": "crash",
-      "waypoints": 7
-    },
-    {
-      "from": "door-0-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 3
-    },
-    {
-      "from": "door-1-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 6
-    },
-    {
-      "from": "door-1-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 4
-    },
-    {
-      "from": "door-2-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-2-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 6
-    },
-    {
-      "from": "door-3-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 3
-    },
-    {
-      "from": "door-3-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 3
-    },
-    {
-      "from": "door-4-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-5-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 1
-    },
-    {
-      "from": "door-5-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 3
-    },
-    {
-      "from": "door-6-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 7
-    },
-    {
-      "from": "door-7-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-8-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-8-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 7
-    },
-    {
-      "from": "door-9-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 8
-    },
-    {
-      "from": "door-9-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-0",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-1",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-2",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-3",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-4",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 8
-    },
-    {
-      "from": "staff-5",
-      "seat": 65,
-      "game": "plinko",
-      "waypoints": 7
-    },
-    {
-      "from": "door-0-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 3
-    },
-    {
-      "from": "door-1-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 6
-    },
-    {
-      "from": "door-1-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 4
-    },
-    {
-      "from": "door-2-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-2-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 6
-    },
-    {
-      "from": "door-3-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 3
-    },
-    {
-      "from": "door-3-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 3
-    },
-    {
-      "from": "door-4-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-5-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 1
-    },
-    {
-      "from": "door-5-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 3
-    },
-    {
-      "from": "door-6-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 7
-    },
-    {
-      "from": "door-7-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-8-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 5
-    },
-    {
-      "from": "door-8-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 7
-    },
-    {
-      "from": "door-9-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 8
-    },
-    {
-      "from": "door-9-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-0",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-1",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-2",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-3",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-4",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 8
-    },
-    {
-      "from": "staff-5",
-      "seat": 66,
-      "game": "plinko",
-      "waypoints": 7
-    },
-    {
-      "from": "door-0-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 3
-    },
-    {
-      "from": "door-1-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 6
-    },
-    {
-      "from": "door-1-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 4
-    },
-    {
-      "from": "door-2-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 5
-    },
-    {
-      "from": "door-2-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 6
-    },
-    {
-      "from": "door-3-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 3
-    },
-    {
-      "from": "door-3-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 3
-    },
-    {
-      "from": "door-4-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 4
-    },
-    {
-      "from": "door-5-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 1
-    },
-    {
-      "from": "door-5-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 3
-    },
-    {
-      "from": "door-6-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 7
-    },
-    {
-      "from": "door-7-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 5
-    },
-    {
-      "from": "door-8-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 5
-    },
-    {
-      "from": "door-8-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 7
-    },
-    {
-      "from": "door-9-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 8
-    },
-    {
-      "from": "door-9-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-0",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-1",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-2",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-3",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-4",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 8
-    },
-    {
-      "from": "staff-5",
-      "seat": 67,
-      "game": "mines",
-      "waypoints": 7
-    },
-    {
-      "from": "door-0-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 3
-    },
-    {
-      "from": "door-1-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 6
-    },
-    {
-      "from": "door-1-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 4
-    },
-    {
-      "from": "door-2-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 5
-    },
-    {
-      "from": "door-2-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 6
-    },
-    {
-      "from": "door-3-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 3
-    },
-    {
-      "from": "door-3-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 6
-    },
-    {
-      "from": "door-4-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 4
-    },
-    {
-      "from": "door-5-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 1
-    },
-    {
-      "from": "door-5-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 3
-    },
-    {
-      "from": "door-6-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 7
-    },
-    {
-      "from": "door-7-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 6
-    },
-    {
-      "from": "door-7-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 8
-    },
-    {
-      "from": "door-8-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 5
-    },
-    {
-      "from": "door-8-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 7
-    },
-    {
-      "from": "door-9-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 11
-    },
-    {
-      "from": "door-9-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-0",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-1",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-2",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-3",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 3
-    },
-    {
-      "from": "staff-4",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 8
-    },
-    {
-      "from": "staff-5",
-      "seat": 68,
-      "game": "tower",
-      "waypoints": 7
-    },
-    {
-      "from": "door-0-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 7
-    },
-    {
-      "from": "door-0-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 5
-    },
-    {
-      "from": "door-1-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 8
-    },
-    {
-      "from": "door-1-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 6
-    },
-    {
-      "from": "door-2-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 10
-    },
-    {
-      "from": "door-2-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 8
-    },
-    {
-      "from": "door-3-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 3
-    },
-    {
-      "from": "door-3-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 5
-    },
-    {
-      "from": "door-4-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 3
-    },
-    {
-      "from": "door-4-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 5
-    },
-    {
-      "from": "door-5-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 7
-    },
-    {
-      "from": "door-5-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 6
-    },
-    {
-      "from": "door-6-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 4
-    },
-    {
-      "from": "door-7-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 1
-    },
-    {
-      "from": "door-8-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 3
-    },
-    {
-      "from": "door-8-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 1
-    },
-    {
-      "from": "door-9-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 3
-    },
-    {
-      "from": "door-9-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-0",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 10
-    },
-    {
-      "from": "staff-1",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-2",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-3",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-4",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 2
-    },
-    {
-      "from": "staff-5",
-      "seat": 69,
-      "game": "wheel",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 7
-    },
-    {
-      "from": "door-0-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 5
-    },
-    {
-      "from": "door-1-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 8
-    },
-    {
-      "from": "door-1-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 6
-    },
-    {
-      "from": "door-2-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 10
-    },
-    {
-      "from": "door-2-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 8
-    },
-    {
-      "from": "door-3-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 3
-    },
-    {
-      "from": "door-3-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 7
-    },
-    {
-      "from": "door-4-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 3
-    },
-    {
-      "from": "door-4-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 4
-    },
-    {
-      "from": "door-5-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 7
-    },
-    {
-      "from": "door-5-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 6
-    },
-    {
-      "from": "door-6-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 4
-    },
-    {
-      "from": "door-7-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 1
-    },
-    {
-      "from": "door-8-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 3
-    },
-    {
-      "from": "door-8-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 1
-    },
-    {
-      "from": "door-9-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 3
-    },
-    {
-      "from": "door-9-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-0",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 10
-    },
-    {
-      "from": "staff-1",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-2",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-3",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-4",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 2
-    },
-    {
-      "from": "staff-5",
-      "seat": 70,
-      "game": "wheel",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-0-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-1-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-1-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 2
-    },
-    {
-      "from": "door-2-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-2-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-3-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-3-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-4-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-5-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-5-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-6-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-6-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "door-7-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 2
-    },
-    {
-      "from": "door-7-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-8-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-8-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-9-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 7
-    },
-    {
-      "from": "door-9-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-0",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-1",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-2",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "staff-3",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-4",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-5",
-      "seat": 71,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-1-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-1-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 2
-    },
-    {
-      "from": "door-2-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-2-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-3-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 2
-    },
-    {
-      "from": "door-3-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-4-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-5-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-5-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-6-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-6-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-7-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-8-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-8-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-9-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-9-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-0",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-1",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-2",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-3",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-4",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-5",
-      "seat": 72,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-0-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-0-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-1-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-1-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 2
-    },
-    {
-      "from": "door-2-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-2-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-3-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-3-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-4-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-5-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-5-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-6-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-6-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "door-7-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 2
-    },
-    {
-      "from": "door-7-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-8-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-8-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-9-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 7
-    },
-    {
-      "from": "door-9-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-0",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-1",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-2",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 2
-    },
-    {
-      "from": "staff-3",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-4",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-5",
-      "seat": 73,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-1-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-1-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 2
-    },
-    {
-      "from": "door-2-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-2-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-3-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 2
-    },
-    {
-      "from": "door-3-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-4-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-5-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-5-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-6-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-6-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 1
-    },
-    {
-      "from": "door-7-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-8-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "door-8-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-9-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "door-9-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-0",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-1",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-2",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-3",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 8
-    },
-    {
-      "from": "staff-4",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-5",
-      "seat": 74,
-      "game": "dice",
-      "waypoints": 3
-    },
-    {
-      "from": "door-0-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 8
-    },
-    {
-      "from": "door-0-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 6
-    },
-    {
-      "from": "door-1-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 7
-    },
-    {
-      "from": "door-1-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 5
-    },
-    {
-      "from": "door-2-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 9
-    },
-    {
-      "from": "door-2-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 7
-    },
-    {
-      "from": "door-3-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 11
-    },
-    {
-      "from": "door-3-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 9
-    },
-    {
-      "from": "door-4-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 8
-    },
-    {
-      "from": "door-4-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 6
-    },
-    {
-      "from": "door-5-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 9
-    },
-    {
-      "from": "door-5-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 7
-    },
-    {
-      "from": "door-6-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 6
-    },
-    {
-      "from": "door-6-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 4
-    },
-    {
-      "from": "door-7-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 4
-    },
-    {
-      "from": "door-7-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 2
-    },
-    {
-      "from": "door-8-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 5
-    },
-    {
-      "from": "door-8-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 3
-    },
-    {
-      "from": "door-9-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 3
-    },
-    {
-      "from": "door-9-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-0",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-1",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 8
-    },
-    {
-      "from": "staff-2",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-3",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 11
-    },
-    {
-      "from": "staff-4",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 2
-    },
-    {
-      "from": "staff-5",
-      "seat": 75,
-      "game": "coin",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 9
-    },
-    {
-      "from": "door-0-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 7
-    },
-    {
-      "from": "door-1-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 8
-    },
-    {
-      "from": "door-1-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 6
-    },
-    {
-      "from": "door-2-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 10
-    },
-    {
-      "from": "door-2-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 8
-    },
-    {
-      "from": "door-3-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 9
-    },
-    {
-      "from": "door-3-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 7
-    },
-    {
-      "from": "door-4-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 6
-    },
-    {
-      "from": "door-4-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 4
-    },
-    {
-      "from": "door-5-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 7
-    },
-    {
-      "from": "door-5-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 7
-    },
-    {
-      "from": "door-6-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 5
-    },
-    {
-      "from": "door-7-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 5
-    },
-    {
-      "from": "door-7-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 3
-    },
-    {
-      "from": "door-8-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 3
-    },
-    {
-      "from": "door-8-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 1
-    },
-    {
-      "from": "door-9-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 4
-    },
-    {
-      "from": "door-9-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 2
-    },
-    {
-      "from": "staff-0",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 10
-    },
-    {
-      "from": "staff-1",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-2",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-3",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-4",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-5",
-      "seat": 76,
-      "game": "coin",
-      "waypoints": 6
-    },
-    {
-      "from": "door-0-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 3
-    },
-    {
-      "from": "door-0-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 1
-    },
-    {
-      "from": "door-1-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 3
-    },
-    {
-      "from": "door-1-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 1
-    },
-    {
-      "from": "door-2-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 3
-    },
-    {
-      "from": "door-2-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 3
-    },
-    {
-      "from": "door-3-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 1
-    },
-    {
-      "from": "door-3-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 3
-    },
-    {
-      "from": "door-4-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 3
-    },
-    {
-      "from": "door-5-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 3
-    },
-    {
-      "from": "door-5-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 4
-    },
-    {
-      "from": "door-6-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 1
-    },
-    {
-      "from": "door-6-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 5
-    },
-    {
-      "from": "door-8-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 4
-    },
-    {
-      "from": "door-8-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 6
-    },
-    {
-      "from": "door-9-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 4
-    },
-    {
-      "from": "door-9-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-0",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-1",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-2",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-3",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-4",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-5",
-      "seat": 77,
-      "game": "cams",
-      "waypoints": 3
-    },
-    {
-      "from": "door-0-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-0-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-1-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-1-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 4
-    },
-    {
-      "from": "door-2-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 8
-    },
-    {
-      "from": "door-2-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-3-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-3-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-4-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-4-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 4
-    },
-    {
-      "from": "door-5-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-5-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-6-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 4
-    },
-    {
-      "from": "door-7-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "door-8-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-8-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "door-9-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-9-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-0",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 8
-    },
-    {
-      "from": "staff-1",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-2",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-3",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-4",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 2
-    },
-    {
-      "from": "staff-5",
-      "seat": 78,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "door-0-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-1-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 8
-    },
-    {
-      "from": "door-1-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-2-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 10
-    },
-    {
-      "from": "door-2-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 8
-    },
-    {
-      "from": "door-3-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "door-3-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-4-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-4-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 4
-    },
-    {
-      "from": "door-5-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-5-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-7-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-7-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-8-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-8-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "door-9-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-9-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "staff-0",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 10
-    },
-    {
-      "from": "staff-1",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-2",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-3",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-4",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-5",
-      "seat": 79,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-0-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 8
-    },
-    {
-      "from": "door-0-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-1-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-1-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-2-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "door-2-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-3-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "door-3-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-4-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-4-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 4
-    },
-    {
-      "from": "door-5-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-5-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-6-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 4
-    },
-    {
-      "from": "door-6-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 4
-    },
-    {
-      "from": "door-7-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 4
-    },
-    {
-      "from": "door-7-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 2
-    },
-    {
-      "from": "door-8-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-8-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "door-9-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-9-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-0",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-1",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 8
-    },
-    {
-      "from": "staff-2",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-3",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-4",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-5",
-      "seat": 80,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-0-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-1-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-1-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 4
-    },
-    {
-      "from": "door-2-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 8
-    },
-    {
-      "from": "door-2-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-3-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 11
-    },
-    {
-      "from": "door-3-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "door-4-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 8
-    },
-    {
-      "from": "door-4-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-5-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 9
-    },
-    {
-      "from": "door-5-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "door-6-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 6
-    },
-    {
-      "from": "door-6-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 4
-    },
-    {
-      "from": "door-7-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-7-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "door-8-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-8-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-9-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 3
-    },
-    {
-      "from": "door-9-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-0",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 8
-    },
-    {
-      "from": "staff-1",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-2",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "staff-3",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 11
-    },
-    {
-      "from": "staff-4",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 1
-    },
-    {
-      "from": "staff-5",
-      "seat": 81,
-      "game": "vip",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 3
-    },
-    {
-      "from": "door-1-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 6
-    },
-    {
-      "from": "door-1-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 4
-    },
-    {
-      "from": "door-2-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 5
-    },
-    {
-      "from": "door-2-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 6
-    },
-    {
-      "from": "door-3-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 3
-    },
-    {
-      "from": "door-3-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 7
-    },
-    {
-      "from": "door-4-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 5
-    },
-    {
-      "from": "door-5-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 2
-    },
-    {
-      "from": "door-5-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 4
-    },
-    {
-      "from": "door-6-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 8
-    },
-    {
-      "from": "door-6-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 10
-    },
-    {
-      "from": "door-7-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 7
-    },
-    {
-      "from": "door-7-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 9
-    },
-    {
-      "from": "door-8-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 6
-    },
-    {
-      "from": "door-8-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 8
-    },
-    {
-      "from": "door-9-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 12
-    },
-    {
-      "from": "door-9-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 10
-    },
-    {
-      "from": "staff-0",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 6
-    },
-    {
-      "from": "staff-1",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 7
-    },
-    {
-      "from": "staff-2",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 4
-    },
-    {
-      "from": "staff-3",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 3
-    },
-    {
-      "from": "staff-4",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 9
-    },
-    {
-      "from": "staff-5",
-      "seat": 82,
-      "game": "skee",
-      "waypoints": 10
-    },
-    {
-      "from": "door-0-0",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 5
-    },
-    {
-      "from": "door-0-1",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 3
-    },
-    {
-      "from": "door-1-0",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 6
-    },
-    {
-      "from": "door-1-1",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 4
-    },
-    {
-      "from": "door-2-0",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 5
-    },
-    {
-      "from": "door-2-1",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 6
-    },
-    {
-      "from": "door-3-0",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 3
-    },
-    {
-      "from": "door-3-1",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 1
-    },
-    {
-      "from": "door-4-0",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 7
-    },
-    {
-      "from": "door-4-1",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 5
-    },
-    {
-      "from": "door-5-0",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 2
-    },
-    {
-      "from": "door-5-1",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 4
-    },
-    {
-      "from": "door-6-0",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 8
-    },
-    {
-      "from": "door-6-1",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 10
-    },
-    {
-      "from": "door-7-0",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 7
-    },
-    {
-      "from": "door-7-1",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 9
-    },
-    {
-      "from": "door-8-0",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 6
-    },
-    {
-      "from": "door-8-1",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 8
-    },
-    {
-      "from": "door-9-0",
-      "seat": 83,
-      "game": "skee",
-      "waypoints": 12
-    },
-    {
-      "from": "door-9-1",
       "seat": 83,
       "game": "skee",
       "waypoints": 10
@@ -14055,49 +14055,49 @@
       "from": "door-0-0",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 6
+      "waypoints": 5
     },
     {
       "from": "door-0-1",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 4
+      "waypoints": 3
     },
     {
       "from": "door-1-0",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 7
+      "waypoints": 6
     },
     {
       "from": "door-1-1",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 5
+      "waypoints": 4
     },
     {
       "from": "door-2-0",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 6
+      "waypoints": 5
     },
     {
       "from": "door-2-1",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 7
+      "waypoints": 6
     },
     {
       "from": "door-3-0",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 4
+      "waypoints": 3
     },
     {
       "from": "door-3-1",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 2
+      "waypoints": 1
     },
     {
       "from": "door-4-0",
@@ -14175,19 +14175,19 @@
       "from": "staff-0",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 7
+      "waypoints": 6
     },
     {
       "from": "staff-1",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 8
+      "waypoints": 7
     },
     {
       "from": "staff-2",
       "seat": 84,
       "game": "pusher",
-      "waypoints": 5
+      "waypoints": 4
     },
     {
       "from": "staff-3",
@@ -14223,13 +14223,13 @@
       "from": "door-1-0",
       "seat": 85,
       "game": "claw",
-      "waypoints": 10
+      "waypoints": 12
     },
     {
       "from": "door-1-1",
       "seat": 85,
       "game": "claw",
-      "waypoints": 8
+      "waypoints": 10
     },
     {
       "from": "door-2-0",
@@ -14241,7 +14241,7 @@
       "from": "door-2-1",
       "seat": 85,
       "game": "claw",
-      "waypoints": 10
+      "waypoints": 12
     },
     {
       "from": "door-3-0",
@@ -14259,73 +14259,73 @@
       "from": "door-4-0",
       "seat": 85,
       "game": "claw",
-      "waypoints": 6
+      "waypoints": 8
     },
     {
       "from": "door-4-1",
       "seat": 85,
       "game": "claw",
-      "waypoints": 4
+      "waypoints": 6
     },
     {
       "from": "door-5-0",
       "seat": 85,
       "game": "claw",
-      "waypoints": 1
+      "waypoints": 3
     },
     {
       "from": "door-5-1",
       "seat": 85,
       "game": "claw",
-      "waypoints": 3
+      "waypoints": 5
     },
     {
       "from": "door-6-0",
       "seat": 85,
       "game": "claw",
-      "waypoints": 7
+      "waypoints": 9
     },
     {
       "from": "door-6-1",
       "seat": 85,
       "game": "claw",
-      "waypoints": 9
+      "waypoints": 11
     },
     {
       "from": "door-7-0",
       "seat": 85,
       "game": "claw",
-      "waypoints": 6
+      "waypoints": 8
     },
     {
       "from": "door-7-1",
       "seat": 85,
       "game": "claw",
-      "waypoints": 8
+      "waypoints": 10
     },
     {
       "from": "door-8-0",
       "seat": 85,
       "game": "claw",
-      "waypoints": 5
+      "waypoints": 7
     },
     {
       "from": "door-8-1",
       "seat": 85,
       "game": "claw",
-      "waypoints": 7
+      "waypoints": 9
     },
     {
       "from": "door-9-0",
       "seat": 85,
       "game": "claw",
-      "waypoints": 11
+      "waypoints": 13
     },
     {
       "from": "door-9-1",
       "seat": 85,
       "game": "claw",
-      "waypoints": 9
+      "waypoints": 11
     },
     {
       "from": "staff-0",
@@ -14337,7 +14337,7 @@
       "from": "staff-1",
       "seat": 85,
       "game": "claw",
-      "waypoints": 11
+      "waypoints": 13
     },
     {
       "from": "staff-2",
@@ -14355,13 +14355,13 @@
       "from": "staff-4",
       "seat": 85,
       "game": "claw",
-      "waypoints": 8
+      "waypoints": 10
     },
     {
       "from": "staff-5",
       "seat": 85,
       "game": "claw",
-      "waypoints": 9
+      "waypoints": 11
     },
     {
       "from": "door-0-0",
@@ -14379,13 +14379,13 @@
       "from": "door-1-0",
       "seat": 86,
       "game": "flappy",
-      "waypoints": 10
+      "waypoints": 6
     },
     {
       "from": "door-1-1",
       "seat": 86,
       "game": "flappy",
-      "waypoints": 8
+      "waypoints": 4
     },
     {
       "from": "door-2-0",
@@ -14397,7 +14397,7 @@
       "from": "door-2-1",
       "seat": 86,
       "game": "flappy",
-      "waypoints": 10
+      "waypoints": 6
     },
     {
       "from": "door-3-0",
@@ -14493,7 +14493,7 @@
       "from": "staff-1",
       "seat": 86,
       "game": "flappy",
-      "waypoints": 11
+      "waypoints": 7
     },
     {
       "from": "staff-2",

@@ -59,7 +59,7 @@ export const SKEE_LANES = [2754, 2862].map((x, machine) => ({ x, y: 222, w: 84, 
 // relocated cabinet and hid half its board). r is its footprint radius, h its height in metres.
 export const ARCADE_ROCKET = { x: 2045, y: 52, r: 24, h: 1.6 };
 export const MINES_XS = [2148], TOWER_XS = [2292];  // consoles on the arcade's south wall
-export const ARCADE_CABS = [{ game: 'pusher', x: 2920, y: 522, w: 90, h: 102 }, { game: 'claw', x: 2920, y: 638, w: 96, h: 102 }, { game: 'flappy', x: 2635, y: 530, w: 90, h: 88 }];
+export const ARCADE_CABS = [{ game: 'pusher', x: 2920, y: 522, w: 90, h: 102 }, { game: 'claw', x: 2920, y: 638, w: 96, h: 102 }, { game: 'flappy', x: 2660, y: 650, w: 90, h: 88 }];
 export const POND = { x: 2140, y: 900, w: 780, h: 170 };                     // the duck race channel, ducks swim east
 export const RACE_XS = [2690]; // one shared betting pedestal, east of the arcade doorway
 // Four continuous back-to-back banks. The centre aisle links both public doors;
@@ -164,7 +164,7 @@ export function makeSeats() {
   add('vip', COFFEE.x - 70, COFFEE.y + 35, 0); add('vip', COFFEE.x + COFFEE.w + 70, COFFEE.y + 35, Math.PI);
   add('vip', COFFEE.x + 80, COFFEE.y - 65, Math.PI / 2); add('vip', COFFEE.x + 80, COFFEE.y + COFFEE.h + 65, -Math.PI / 2);
   SKEE_LANES.forEach(p => add('skee', p.x, p.playerY, -Math.PI / 2, { machine: p.machine }));
-  ARCADE_CABS.forEach(c => c.game==='flappy'?add(c.game,c.x,c.y+82,-Math.PI/2,{machine:0}):add(c.game, c.x-c.w/2-38, c.y, 0, { machine: 0 }));
+  ARCADE_CABS.forEach(c => c.game==='flappy'?add(c.game,c.x,c.y-82,Math.PI/2,{machine:0}):add(c.game, c.x-c.w/2-38, c.y, 0, { machine: 0 }));
   return seats;
 }
 

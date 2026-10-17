@@ -19,9 +19,9 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
     const pos = (x,y,z) => v3(x,y,z).applyAxisAngle(axis,yaw).add(origin);
     const add = (geo,mat,x,y,z,name) => { const m = new THREE.Mesh(geo,mat);m.position.set(x,y,z);if(name)m.name=name;root.add(m);return m; };
     if(c.game==='flappy') {
-      root.rotation.y=0; // Cabinet faces south into the arcade's clear central bay.
-      const fp=(x,y,z)=>v3(c.x/60+x,y,c.y/60+z);
-      const cabinet=(g,m,x,y,z)=>batch.add(g,m,fp(x,y,z));
+      root.rotation.y=Math.PI; // South-wall cabinet faces north; leave the doorway/promenade clear.
+      const fp=(x,y,z)=>v3(c.x/60-x,y,c.y/60-z);
+      const cabinet=(g,m,x,y,z)=>batch.add(g,m,fp(x,y,z),Math.PI);
       cabinet(rbox(1.18,.90,.85,.045),MAT.blackGloss,0,.45,0);
       cabinet(rbox(1.18,1.26,.25,.04),MAT.darkWood,0,1.53,-.25);
       for(const x of[-.6,.6])cabinet(box(.035,2.2,.9),MAT.gold,x,1.1,0);
@@ -30,7 +30,7 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
       betSocket(seat,'main',fp(-.33,.985,.32),'BET',.105);
       actionButton(seat,'btn:start','START',fp(.04,.985,.32),'#278459',.075);
       actionButton(seat,'btn:drop','FLAP',fp(.34,.985,.32),'#a0672c',.10);
-      const face=screen({w:1.05,h:1.10,cw:630,ch:660,pos:fp(0,1.59,-.105),seat:seat.id,every:1/60,far:18,
+      const face=screen({w:1.05,h:1.10,cw:630,ch:660,pos:fp(0,1.59,-.105),yaw:Math.PI,seat:seat.id,every:1/60,far:18,
         key:(t,r)=>r?.phase==='fly'?t:r?[r.id,r.phase,r.score].join(':'):'idle',
         paint:(g,w,h,t,r)=>{
           g.fillStyle='#130b12';g.fillRect(0,0,w,h);g.strokeStyle='#ba9454';g.lineWidth=6;g.strokeRect(3,3,w-6,h-6);
@@ -38,7 +38,7 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
           g.fillStyle='#221522';g.fillRect(9,top,w-18,ph);
           for(let i=0;i<25;i++){g.fillStyle='#a88d64';g.fillRect((i*137)%w,top+(i*83)%ph,2,2);}
           const pipes=r?.pipes||[{x:.8,y:.5}];
-          for(const p of pipes){const x=p.x*w,bw=FLAPPY.width*w,y=bottom-p.y*ph,gap=FLAPPY.gap*ph;
+          for(const p of pipes){const x=p.x*w,bw=FLAPPY.width*w,y=bottom-p.y*ph,gap=(p.gap??FLAPPY.gap)*ph;
             g.fillStyle='#763535';g.fillRect(x-bw/2,top,bw,y-gap/2-top);g.fillRect(x-bw/2,y+gap/2,bw,bottom-y-gap/2);
             g.fillStyle='#d3b273';g.fillRect(x-bw/2-5,y-gap/2-12,bw+10,12);g.fillRect(x-bw/2-5,y+gap/2,bw+10,12);
           }
