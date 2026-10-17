@@ -2,6 +2,7 @@
 // applies at once and is kept in this browser.
 import { settings, onSettings, set, setPreset, resetGfx } from './settings.js';
 import { $, show } from './ui.js';
+import { buildSoundBrowser } from './sound-library-ui.js';
 
 const pct = v => Math.round(v * 100) + '%';
 const OPT = (...pairs) => pairs.map(p => Array.isArray(p) ? p : [p, String(p)]);
@@ -41,9 +42,11 @@ const TABS = {
   ] },
   sound: { title: 'Sound', rows: [
     { k: 'master', label: 'Master volume', type: 'range', min: 0, max: 1, step: 0.01, fmt: pct, audio: true },
-    { k: 'music', label: 'Music', type: 'range', min: 0, max: 1, step: 0.01, fmt: pct, audio: true },
-    { k: 'sfx', label: 'Effects', type: 'range', min: 0, max: 1, step: 0.01, fmt: pct, audio: true },
-    { k: '_musicOn', label: 'Music on', type: 'toggle', get: A => A.settings().music, put: (A, v) => A.setMusic(v) },
+      { k: 'music', label: 'Casino music & jukebox', type: 'range', min: 0, max: 1, step: 0.01, fmt: pct, audio: true },
+      { k: '_musicOn', label: 'Music on', type: 'toggle', get: A => A.settings().music, put: (A, v) => A.setMusic(v) },
+      { k: '_score', label: 'Casino soundtrack', type: 'select', opts: OPT(['0', 'After Hours'], ['1', 'Empty Chairs'], ['2', 'The Last Wager']), get: A => A.soundscape().music, put: (A, v) => A.setSoundscape('music', v) },
+      { k: '_floor', label: 'Table-floor ambience', type: 'select', opts: OPT(['auto', 'Follow nearby tables'], ['tables', 'Mixed tables'], ['blackjack', 'Card room'], ['roulette', 'Roulette pit']), get: A => A.soundscape().floor, put: (A, v) => A.setSoundscape('floor', v), note: 'Cards, chips and roulette near their tables. Slot machines stay in the slot hall.' },
+    { k: 'sfx', label: 'Casino & effects', type: 'range', min: 0, max: 1, step: 0.01, fmt: pct, audio: true },
     { k: '_sfxOn', label: 'Sounds on', type: 'toggle', get: A => A.settings().sfx, put: (A, v) => A.setSfx(v) },
   ] },
   voice: { title: 'Voice', part: 'voice', rows: [
@@ -60,12 +63,12 @@ const TABS = {
   controls: { title: 'Controls', part: 'controls', rows: [
     { k: 'sens', label: 'Mouse sensitivity', type: 'range', min: 0.2, max: 3, step: 0.05, fmt: v => v.toFixed(2) + 'x' },
     { k: 'invertY', label: 'Invert mouse Y', type: 'toggle' },
-    { k: '_keys', label: 'Keys', type: 'info', text: () => 'WASD walk · Shift sprint · E or click use · F sip · R check · X pour · G send a drink · Space mark · wheel: chip size · 1-7 killer moves · V hold: killer view · H haunt · Esc menu' },
+    { k: '_keys', label: 'Keys', type: 'info', text: () => 'WASD move · Mouse look · Left click interact, place chips, press table buttons (killer: murder from behind) · E selected killer ability (hold for peek) · Shift sprint / monster leap · RMB disguise or remove chips · Q transform (gambler: revolver) · Space start tables / mark · H/J/K blackjack · Wheel: chip size · F sip / flashlight · R inspect · X pour · G mixer · 1–6 alternate killer moves · J killer revolver away from tables · Ghost: C cameras, H haunt · Tab phone · Esc pause' },
   ] },
 };
 let mics = [['', 'Default']];
 let voiceStatus = () => 'Off';
-let tab = 'gfx', built = null, ctx = null;
+let tab = 'gfx', built = null, ctx = null, destroySoundBrowser = null;
 
 function resNote(g) {
   const s = ctx.gfxState && ctx.gfxState(); if (!s) return '';
@@ -85,6 +88,7 @@ function put(t, r, v) {
   set(TABS[t].part, r.k, v);
 }
 function build() {
+  destroySoundBrowser?.(); destroySoundBrowser = null;
   const body = $('setBody'); body.innerHTML = ''; built = [];
   for (const b of document.querySelectorAll('#setTabs button')) b.classList.toggle('on', b.dataset.tab === tab);
   for (const r of TABS[tab].rows) {
@@ -116,6 +120,12 @@ function build() {
     if (r.note) { note = document.createElement('div'); note.className = 'set-note'; row.appendChild(note); }
     body.appendChild(row);
     built.push({ r, row, el, out, note });
+  }
+  if (tab === 'sound') {
+    destroySoundBrowser = buildSoundBrowser(ctx.audio, body);
+    const browse = document.createElement('button'); browse.className = 'sound-jump'; browse.textContent = `Browse ${ctx.audio.soundList().length} sounds`;
+    browse.onclick = () => body.querySelector('.sound-browser').scrollIntoView({block: 'start'});
+    body.prepend(browse);
   }
   refresh();
 }
@@ -163,6 +173,7 @@ export function openSettings(which) {
   if (ctx.onOpen) ctx.onOpen();
 }
 export function closeSettings() {
+  destroySoundBrowser?.(); destroySoundBrowser = null;
   show('settings', false); built = null;
   if (ctx.onClose) ctx.onClose();
 }

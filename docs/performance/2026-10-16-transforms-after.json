@@ -1,0 +1,66 @@
+{
+  "totals": {
+    "updateMatrixWorld": 97,
+    "updateMatrix": 1379,
+    "updateWorldMatrix": 1337
+  },
+  "repeated": [
+    {
+      "method": "updateMatrixWorld",
+      "id": 5,
+      "type": "OrthographicCamera",
+      "path": "OrthographicCamera",
+      "calls": 5
+    },
+    {
+      "method": "updateMatrix",
+      "id": 5,
+      "type": "OrthographicCamera",
+      "path": "OrthographicCamera",
+      "calls": 5
+    },
+    {
+      "method": "updateMatrixWorld",
+      "id": 297,
+      "type": "PerspectiveCamera",
+      "path": "PerspectiveCamera",
+      "calls": 4
+    },
+    {
+      "method": "updateMatrix",
+      "id": 297,
+      "type": "PerspectiveCamera",
+      "path": "PerspectiveCamera",
+      "calls": 4
+    },
+    {
+      "method": "updateMatrixWorld",
+      "id": 1283,
+      "type": "Mesh",
+      "path": "Mesh",
+      "calls": 4
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1283,
+      "type": "Mesh",
+      "path": "Mesh",
+      "calls": 4
+    },
+    {
+      "method": "updateMatrix",
+      "id": 301,
+      "type": "Object3D",
+      "path": "Scene/Object3D",
+      "calls": 2
+    },
+    {
+      "method": "updateMatrix",
+      "id": 302,
+      "type": "OrthographicCamera",
+      "path": "OrthographicCamera",
+      "calls": 2
+    }
+  ],
+  "queries": []
+}

@@ -1,0 +1,231 @@
+{
+  "at": "2026-10-16T21:13:23.486Z",
+  "host": "local Node",
+  "seed": 42,
+  "simulation": [
+    {
+      "players": 6,
+      "mode": "play",
+      "escape": false,
+      "exits": false,
+      "ticks": 1800,
+      "modes": {
+        "play": 1800
+      },
+      "totalMs": 51.43,
+      "p95Ms": 0.038,
+      "maxMs": 21.994
+    },
+    {
+      "players": 6,
+      "mode": "blackout",
+      "escape": false,
+      "exits": false,
+      "ticks": 1800,
+      "modes": {
+        "blackout": 980,
+        "play": 820
+      },
+      "totalMs": 45.15,
+      "p95Ms": 0.045,
+      "maxMs": 3.269
+    },
+    {
+      "players": 6,
+      "mode": "escape-night",
+      "escape": true,
+      "exits": true,
+      "ticks": 1800,
+      "modes": {
+        "blackout": 1800
+      },
+      "totalMs": 46.68,
+      "p95Ms": 0.041,
+      "maxMs": 2.757
+    },
+    {
+      "players": 6,
+      "mode": "escape-exits",
+      "escape": true,
+      "exits": true,
+      "ticks": 1800,
+      "modes": {
+        "blackout": 1307,
+        "over": 493
+      },
+      "totalMs": 31.36,
+      "p95Ms": 0.033,
+      "maxMs": 1.358
+    },
+    {
+      "players": 16,
+      "mode": "play",
+      "escape": false,
+      "exits": false,
+      "ticks": 1800,
+      "modes": {
+        "play": 1800
+      },
+      "totalMs": 102.85,
+      "p95Ms": 0.107,
+      "maxMs": 7.148
+    },
+    {
+      "players": 16,
+      "mode": "blackout",
+      "escape": false,
+      "exits": false,
+      "ticks": 1800,
+      "modes": {
+        "blackout": 853,
+        "play": 947
+      },
+      "totalMs": 74.83,
+      "p95Ms": 0.08,
+      "maxMs": 5.113
+    },
+    {
+      "players": 16,
+      "mode": "escape-night",
+      "escape": true,
+      "exits": true,
+      "ticks": 1800,
+      "modes": {
+        "blackout": 1800
+      },
+      "totalMs": 85.81,
+      "p95Ms": 0.09,
+      "maxMs": 1.751
+    },
+    {
+      "players": 16,
+      "mode": "escape-exits",
+      "escape": true,
+      "exits": true,
+      "ticks": 1800,
+      "modes": {
+        "blackout": 1208,
+        "over": 592
+      },
+      "totalMs": 61.3,
+      "p95Ms": 0.088,
+      "maxMs": 1.803
+    },
+    {
+      "players": 32,
+      "mode": "play",
+      "escape": false,
+      "exits": false,
+      "ticks": 1800,
+      "modes": {
+        "play": 1800
+      },
+      "totalMs": 153.8,
+      "p95Ms": 0.209,
+      "maxMs": 5.234
+    },
+    {
+      "players": 32,
+      "mode": "blackout",
+      "escape": false,
+      "exits": false,
+      "ticks": 1800,
+      "modes": {
+        "blackout": 922,
+        "play": 878
+      },
+      "totalMs": 141.82,
+      "p95Ms": 0.179,
+      "maxMs": 4.64
+    },
+    {
+      "players": 32,
+      "mode": "escape-night",
+      "escape": true,
+      "exits": true,
+      "ticks": 1800,
+      "modes": {
+        "blackout": 1800
+      },
+      "totalMs": 171.34,
+      "p95Ms": 0.207,
+      "maxMs": 5.326
+    },
+    {
+      "players": 32,
+      "mode": "escape-exits",
+      "escape": true,
+      "exits": true,
+      "ticks": 1800,
+      "modes": {
+        "blackout": 1557,
+        "over": 243
+      },
+      "totalMs": 176.23,
+      "p95Ms": 0.256,
+      "maxMs": 2.188
+    }
+  ],
+  "network": [
+    {
+      "players": 6,
+      "moving": false,
+      "guests": 5,
+      "hz": 15,
+      "snapshots": 600,
+      "packedMbps": 0.582,
+      "plainMbps": 2.742,
+      "p95HostBatchWithValidationMs": 0.348
+    },
+    {
+      "players": 6,
+      "moving": true,
+      "guests": 5,
+      "hz": 15,
+      "snapshots": 600,
+      "packedMbps": 0.721,
+      "plainMbps": 2.753,
+      "p95HostBatchWithValidationMs": 0.34
+    },
+    {
+      "players": 16,
+      "moving": false,
+      "guests": 15,
+      "hz": 15,
+      "snapshots": 1800,
+      "packedMbps": 1.814,
+      "plainMbps": 14.275,
+      "p95HostBatchWithValidationMs": 0.815
+    },
+    {
+      "players": 16,
+      "moving": true,
+      "guests": 15,
+      "hz": 15,
+      "snapshots": 1800,
+      "packedMbps": 2.88,
+      "plainMbps": 14.291,
+      "p95HostBatchWithValidationMs": 1.227
+    },
+    {
+      "players": 32,
+      "moving": false,
+      "guests": 31,
+      "hz": 15,
+      "snapshots": 3720,
+      "packedMbps": 3.927,
+      "plainMbps": 49.548,
+      "p95HostBatchWithValidationMs": 2.534
+    },
+    {
+      "players": 32,
+      "moving": true,
+      "guests": 31,
+      "hz": 15,
+      "snapshots": 3720,
+      "packedMbps": 8.292,
+      "plainMbps": 49.42,
+      "p95HostBatchWithValidationMs": 3.195
+    }
+  ]
+}

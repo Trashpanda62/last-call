@@ -1,0 +1,242 @@
+{
+  "at": "2026-10-16T17:12:54.204Z",
+  "baseline": false,
+  "cases": [
+    {
+      "replacement": false,
+      "canceled": {
+        "frames": 72,
+        "stages": 5,
+        "monsters": [
+          {
+            "disposed": false
+          }
+        ]
+      },
+      "beforeRelease": {
+        "frames": 72,
+        "runs": [
+          {
+            "players": 6,
+            "ended": false,
+            "stages": 5
+          }
+        ]
+      },
+      "after": {
+        "screen": "menu",
+        "frames": 72,
+        "runs": [
+          {
+            "players": 6,
+            "stages": [
+              {
+                "n": 0.02,
+                "text": "Preparing the view",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.04,
+                "text": "Preparing rooms",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.06,
+                "text": "Preparing players",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.1,
+                "text": "Preparing the casino",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.14,
+                "text": "Preparing scene bounds",
+                "screen": "briefing"
+              }
+            ],
+            "ended": true
+          }
+        ],
+        "draws": [
+          {
+            "screen": "briefing",
+            "players": 6,
+            "prepareOnly": true
+          }
+        ],
+        "monsters": [
+          {
+            "disposed": true
+          }
+        ],
+        "ready": false,
+        "status": "Preparing scene bounds"
+      }
+    },
+    {
+      "replacement": true,
+      "canceled": {
+        "frames": 72,
+        "stages": 5,
+        "monsters": [
+          {
+            "disposed": false
+          }
+        ]
+      },
+      "beforeRelease": {
+        "frames": 72,
+        "runs": [
+          {
+            "players": 6,
+            "ended": false,
+            "stages": 5
+          },
+          {
+            "players": 32,
+            "ended": false,
+            "stages": 0
+          }
+        ]
+      },
+      "after": {
+        "screen": "briefing",
+        "frames": 78,
+        "runs": [
+          {
+            "players": 6,
+            "stages": [
+              {
+                "n": 0.02,
+                "text": "Preparing the view",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.04,
+                "text": "Preparing rooms",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.06,
+                "text": "Preparing players",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.1,
+                "text": "Preparing the casino",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.14,
+                "text": "Preparing scene bounds",
+                "screen": "briefing"
+              }
+            ],
+            "ended": true
+          },
+          {
+            "players": 32,
+            "stages": [
+              {
+                "n": 0.02,
+                "text": "Preparing the view",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.04,
+                "text": "Preparing rooms",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.06,
+                "text": "Preparing players",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.0721875,
+                "text": "Preparing players",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.080625,
+                "text": "Preparing players",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.1,
+                "text": "Preparing the casino",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.14,
+                "text": "Preparing scene bounds",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.64,
+                "text": "Uploading geometry",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.7,
+                "text": "Preparing shaders",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.87,
+                "text": "Preparing screen effects",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.88,
+                "text": "Finalizing shaders",
+                "screen": "briefing"
+              },
+              {
+                "n": 0.9,
+                "text": "Finishing the scene",
+                "screen": "briefing"
+              },
+              {
+                "n": 1,
+                "text": "Ready",
+                "screen": "briefing"
+              }
+            ],
+            "ended": true
+          }
+        ],
+        "draws": [
+          {
+            "screen": "briefing",
+            "players": 6,
+            "prepareOnly": true
+          },
+          {
+            "screen": "briefing",
+            "players": 32,
+            "prepareOnly": true
+          },
+          {
+            "screen": "briefing",
+            "players": 32,
+            "prepareOnly": false
+          }
+        ],
+        "monsters": [
+          {
+            "disposed": true
+          },
+          {
+            "disposed": true
+          }
+        ],
+        "ready": true,
+        "status": "Ready when you are. Read the controls, then continue."
+      }
+    }
+  ],
+  "errors": []
+}

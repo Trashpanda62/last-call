@@ -1,0 +1,186 @@
+{
+  "at": "2026-10-16T13:56:36.927Z",
+  "constructed": 4508.099999964237,
+  "paints": [
+    {
+      "kind": "wall",
+      "at": 4518.800000011921,
+      "ms": 2
+    },
+    {
+      "kind": "floor",
+      "at": 4520.800000011921,
+      "ms": 13.599999964237213
+    },
+    {
+      "kind": "ceil",
+      "at": 4534.399999976158,
+      "ms": 2.699999988079071
+    },
+    {
+      "kind": "glow",
+      "at": 4537.099999964237,
+      "ms": 0.20000004768371582
+    }
+  ],
+  "readyMs": 9380.299999952316,
+  "retainedCanvases": 4,
+  "resources": [],
+  "maps": [
+    {
+      "material": "br-wall",
+      "key": "map",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.35,
+        0.35
+      ]
+    },
+    {
+      "material": "br-wall",
+      "key": "map",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.4166666666666667,
+        0.4166666666666667
+      ],
+      "normal": [
+        0.35,
+        0.35
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.7499999999999999,
+        0.7499999999999999
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.37499999999999994,
+        0.37499999999999994
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.6875,
+        0.6875
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.43749999999999994,
+        0.43749999999999994
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-ceil",
+      "key": "map",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.4166666666666667,
+        0.4166666666666667
+      ],
+      "normal": [
+        0.6,
+        0.6
+      ]
+    },
+    {
+      "material": "br-ceil",
+      "key": "emissiveMap",
+      "image": "canvas",
+      "anisotropy": 8,
+      "repeat": [
+        0.4166666666666667,
+        0.4166666666666667
+      ],
+      "normal": [
+        0.6,
+        0.6
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,636 @@
+{
+  "totals": {
+    "updateMatrixWorld": 97,
+    "updateMatrix": 1496,
+    "getWorldPosition": 31,
+    "updateWorldMatrix": 1454,
+    "getWorldScale": 8
+  },
+  "repeated": [
+    {
+      "method": "updateWorldMatrix",
+      "id": 271,
+      "type": "Scene",
+      "path": "Scene",
+      "calls": 40
+    },
+    {
+      "method": "updateMatrix",
+      "id": 271,
+      "type": "Scene",
+      "path": "Scene",
+      "calls": 40
+    },
+    {
+      "method": "updateMatrixWorld",
+      "id": 5,
+      "type": "OrthographicCamera",
+      "path": "OrthographicCamera",
+      "calls": 5
+    },
+    {
+      "method": "updateMatrix",
+      "id": 5,
+      "type": "OrthographicCamera",
+      "path": "OrthographicCamera",
+      "calls": 5
+    },
+    {
+      "method": "updateMatrixWorld",
+      "id": 297,
+      "type": "PerspectiveCamera",
+      "path": "PerspectiveCamera",
+      "calls": 4
+    },
+    {
+      "method": "updateMatrix",
+      "id": 297,
+      "type": "PerspectiveCamera",
+      "path": "PerspectiveCamera",
+      "calls": 4
+    },
+    {
+      "method": "updateMatrixWorld",
+      "id": 1283,
+      "type": "Mesh",
+      "path": "Mesh",
+      "calls": 4
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1283,
+      "type": "Mesh",
+      "path": "Mesh",
+      "calls": 4
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1497,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1464,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1464,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1497,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1542,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1498,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1498,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1542,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1577,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1543,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1543,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1577,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1612,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1578,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1578,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1612,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1649,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1613,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1613,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1649,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1683,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1650,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1650,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1683,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1722,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1684,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1684,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1722,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1759,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1723,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1723,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1759,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 3
+    },
+    {
+      "method": "updateMatrix",
+      "id": 301,
+      "type": "Object3D",
+      "path": "Scene/Object3D",
+      "calls": 2
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1359,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 2
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1325,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 2
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1325,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 2
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1359,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 2
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1394,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 2
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1360,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 2
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1360,
+      "type": "Group",
+      "path": "Scene/Group",
+      "calls": 2
+    },
+    {
+      "method": "updateMatrix",
+      "id": 1394,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 2
+    },
+    {
+      "method": "updateWorldMatrix",
+      "id": 1428,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 2
+    }
+  ],
+  "queries": [
+    {
+      "method": "getWorldPosition",
+      "id": 1359,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1394,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1428,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1463,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1497,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldScale",
+      "id": 1497,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1542,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldScale",
+      "id": 1542,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1577,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldScale",
+      "id": 1577,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1612,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldScale",
+      "id": 1612,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1649,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldScale",
+      "id": 1649,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1683,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldScale",
+      "id": 1683,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1722,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldScale",
+      "id": 1722,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1759,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldScale",
+      "id": 1759,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1798,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1833,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1868,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2589,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1940,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 1978,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2015,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2054,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2089,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2125,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2160,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2195,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2232,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2268,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2303,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2338,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2374,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2411,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    },
+    {
+      "method": "getWorldPosition",
+      "id": 2446,
+      "type": "Sprite",
+      "path": "Scene/Group/Sprite",
+      "calls": 1
+    }
+  ]
+}

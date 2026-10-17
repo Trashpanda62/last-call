@@ -1,0 +1,185 @@
+{
+ "at": "2026-10-17T00:03:15.473Z",
+ "url": "https://10.42.0.37:3161/",
+ "fallback": false,
+ "rows": [
+  {
+   "game": "bj",
+   "spot": "spot:main",
+   "starter": "btn:hit",
+   "chipPlaced": true,
+   "status": "PRESS HIT TO DEAL",
+   "hud": [],
+   "spaceChanged": false,
+   "target": {
+    "x": 558.1259831029034,
+    "y": 511.2928066947447,
+    "yaw": 0,
+    "pitch": -0.55
+   },
+   "started": true
+  },
+  {
+   "game": "slots",
+   "spot": "spot:main",
+   "starter": "btn:lever",
+   "chipPlaced": true,
+   "status": "PULL THE LEVER",
+   "hud": [
+    {
+     "id": "btn:auto",
+     "text": "AUTO"
+    }
+   ],
+   "spaceChanged": false,
+   "target": {
+    "x": 835.5155741648122,
+    "y": 358.17900375016865,
+    "yaw": 0,
+    "pitch": -0.15
+   },
+   "started": true
+  },
+  {
+   "game": "plinko",
+   "spot": "spot:main",
+   "starter": "btn:drop",
+   "chipPlaced": true,
+   "status": "CLICK THE CHUTE · MEDIUM RISK · EDGES 110×",
+   "hud": [
+    {
+     "id": "btn:risk:low",
+     "text": "LOW"
+    },
+    {
+     "id": "btn:risk:medium",
+     "text": "MED"
+    },
+    {
+     "id": "btn:risk:high",
+     "text": "HIGH"
+    }
+   ],
+   "spaceChanged": false,
+   "target": {
+    "x": 649.6764519315323,
+    "y": 134.14312559983003,
+    "yaw": 0,
+    "pitch": 0
+   },
+   "started": true
+  },
+  {
+   "game": "roulette",
+   "spot": "spot:red",
+   "starter": "btn:spin",
+   "chipPlaced": true,
+   "status": "CLICK THE WHEEL TO SPIN",
+   "hud": [],
+   "spaceChanged": false,
+   "target": {
+    "x": 1133.9663532217692,
+    "y": 392.1829413868823,
+    "yaw": 0.3,
+    "pitch": -0.15
+   },
+   "started": true
+  },
+  {
+   "game": "dice",
+   "spot": "spot:pass",
+   "starter": "btn:roll",
+   "chipPlaced": true,
+   "status": "CLICK THE DICE TO ROLL",
+   "hud": [],
+   "spaceChanged": false,
+   "target": {
+    "x": 215.11916089371175,
+    "y": 441.16399546772703,
+    "yaw": 0,
+    "pitch": -0.15
+   },
+   "started": true
+  },
+  {
+   "game": "coin",
+   "spot": "spot:heads",
+   "starter": "btn:flip",
+   "chipPlaced": true,
+   "status": "CLICK THE COIN TO FLIP",
+   "hud": [
+    {
+     "id": "btn:take",
+     "text": "TAKE"
+    }
+   ],
+   "spaceChanged": false,
+   "target": {
+    "x": 640,
+    "y": 274.942322097637,
+    "yaw": 0,
+    "pitch": -0.15
+   },
+   "started": true
+  },
+  {
+   "game": "wheel",
+   "spot": "spot:main",
+   "starter": "btn:spin",
+   "chipPlaced": true,
+   "status": "CLICK THE WHEEL TO SPIN",
+   "hud": [],
+   "spaceChanged": false,
+   "target": {
+    "x": 303.4996203627817,
+    "y": 125.49248839047044,
+    "yaw": 0,
+    "pitch": -0.15
+   },
+   "started": true
+  },
+  {
+   "game": "mines",
+   "spot": "spot:main",
+   "starter": "scr",
+   "chipPlaced": true,
+   "status": "PICK A TILE TO START",
+   "hud": [],
+   "spaceChanged": false,
+   "target": {
+    "x": 553.6441771856491,
+    "y": 328.21394144281584,
+    "pitch": -0.15
+   },
+   "started": true
+  },
+  {
+   "game": "tower",
+   "spot": "spot:main",
+   "starter": "scr",
+   "chipPlaced": true,
+   "status": "PICK AN EGG TO START",
+   "hud": [],
+   "spaceChanged": false,
+   "target": {
+    "x": 546.2422495158487,
+    "y": 328.21394144281595,
+    "pitch": -0.15
+   },
+   "started": true
+  },
+  {
+   "slotSpotParts": 1
+  },
+  {
+   "bar": {
+    "ctx": "Talk to the bartender",
+    "perk": "staff",
+    "killer": true
+   },
+   "afterE": false,
+   "afterClick": true
+  }
+ ],
+ "errors": []
+}

@@ -3,12 +3,16 @@
 import * as THREE from 'three';
 import * as T from './textures.js';
 import { SECURITY, ROOMS, makeSeats } from '../map.js';
-import { makeBean, onPlushReady } from './plush.js';
+import { makeBean, onPlushReady, plushReady } from './plush.js';
 import { onPropsReady, hasProp, propObject } from './props.js';
 import { MAT, glowMat, rbox, box, cyl, v3, yawOf, Batch, WALL_H } from './world.js';
 
 const M = 1 / 60;
 const SEATS = makeSeats();
+const EFFECT_SPRITES = ['sparks', 'smoke', 'confetti', 'stars', 'fizz', 'ghost'];
+const alphaEffect = k => k === 'smoke' || k === 'confetti';
+const effectMap = k => T.art2Tex('fx-' + k, alphaEffect(k));
+export function* prepareEffectTextures() { for (const k of EFFECT_SPRITES) yield effectMap(k); }
 // CCTV: a camera high in a corner of each room, looking at its middle
 const CCTV = {};
 for (const k in ROOMS) {
@@ -21,11 +25,11 @@ export class Hazards {
     this.group = new THREE.Group(); scene.add(this.group);
     this.desk();
     const guard = () => {
-      if (this.guard) this.group.remove(this.guard.root);
+      if (this.guard) { this.group.remove(this.guard.root); this.guard.dispose?.(); }
       this.guard = makeBean({ kind: 'guard', color: '#1d2a44', hat: 'cap', name: 'Security' }); this.guard.setLabel('SECURITY', '#9fd8ff');
       this.guard.root.visible = false; this.group.add(this.guard.root);
     };
-    guard(); onPlushReady(guard);
+    guard(); if (!plushReady()) onPlushReady(guard);
     // a camera model in each room's corner, just behind the CCTV eye so the live view never sees it
     onPropsReady(() => {
       if (!hasProp('camera')) return;
@@ -35,7 +39,7 @@ export class Hazards {
         o.rotation.set(Math.atan2(p.y - look.y, flat), Math.atan2(look.x - p.x, look.z - p.z), 0, 'YXZ'); this.group.add(o);
       }
     });
-    const mk = (geo, mat, n = 120) => { const m = new THREE.InstancedMesh(geo, mat, n); m.count = 0; m.frustumCulled = false; this.group.add(m); return m; };
+    const mk = (geo, mat, n = 120) => { const m = new THREE.InstancedMesh(geo, mat, n); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.count = 0; m.frustumCulled = false; this.group.add(m); return m; };
     this.fx = {
       sparks: mk(new THREE.BoxGeometry(0.02, 0.02, 0.06), new THREE.MeshBasicMaterial({ color: 0xfff080, toneMapped: false })),
       splash: mk(new THREE.SphereGeometry(0.045, 8, 6), new THREE.MeshStandardMaterial({ color: 0x9fe8ff, roughness: 0.05, transparent: true, opacity: 0.8 })),
@@ -45,12 +49,23 @@ export class Hazards {
     this.tmp = new THREE.Object3D();
     this.sprites = []; // a pool for the generated effect sprites (assets/art2 fx-*), refilled every frame
   }
+  // Keep these in the real pool so their compiled programs survive loading.
+  // Yield after each map: smoke/confetti masks require a large canvas readback.
+  *prepareSprites() {
+    if (this.effectsPrepared) return;
+    for (const k of EFFECT_SPRITES) {
+      const map = effectMap(k); if (!map) continue;
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map, transparent: true, depthWrite: false, blending: alphaEffect(k) ? THREE.NormalBlending : THREE.AdditiveBlending }));
+      sp.visible = false; this.sprites.push(sp); this.group.add(sp); yield sp;
+    }
+    this.effectsPrepared = true;
+  }
   // one effect sprite: the art's black is see-through (additive glows, or alpha from brightness for smoke and confetti)
   sprite(i, k, x, y, z, size, opacity, rot = 0) {
-    const map = T.art2Tex('fx-' + k, k === 'smoke' || k === 'confetti'); if (!map) return i;
+    const map = effectMap(k); if (!map) return i;
     let sp = this.sprites[i];
     if (!sp) { sp = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true, depthWrite: false })); this.sprites.push(sp); this.group.add(sp); }
-    const m = sp.material, add = !(k === 'smoke' || k === 'confetti');
+    const m = sp.material, add = !alphaEffect(k);
     if (m.map !== map) { m.map = map; m.blending = add ? THREE.AdditiveBlending : THREE.NormalBlending; m.needsUpdate = true; }
     sp.position.set(x, y, z);
     // an effect right in front of the camera (a win at your own table, seen from the table view) fades out instead of filling the screen
@@ -145,12 +160,16 @@ export class Hazards {
       const s = SEATS[id]; if (!s) continue;
       for (let i = 0; i < 3; i++) { const ang = t * 7 + i * 2.1; put('sparks', s.x * M + Math.cos(ang) * 0.18, 0.95 + Math.abs(Math.sin(t * 9 + i)) * 0.2, s.y * M + Math.sin(ang) * 0.18, 0.8, t * 5, ang); }
     }
-    for (const k in this.fx) { const m = this.fx[k]; m.count = counts[k]; m.instanceMatrix.needsUpdate = true; }
+    for (const k in this.fx) {
+      const m = this.fx[k]; m.count = Math.min(counts[k], m.instanceMatrix.count);
+      if (m.count) { m.instanceMatrix.addUpdateRange(0, m.count * 16); m.instanceMatrix.needsUpdate = true; }
+    }
   }
   // Seated at the security desk with the cameras on, your view is the live camera.
-  cctv(cam, pub, priv) {
-    if (!priv || !priv.seat || priv.seat.game !== 'cams' || !pub.security || !pub.security.cams || pub.mode !== 'play') return false;
-    const c = CCTV[pub.security.feed]; if (!c) return false;
+  cctv(cam, pub, priv, preview = null) {
+    if (!priv || pub.mode !== 'play' || pub.over) return false;
+    const feed = preview || priv.cameraFeed || (priv.seat && priv.seat.game === 'cams' && pub.security && pub.security.cams ? pub.security.feed : null);
+    const c = CCTV[feed]; if (!c) return false;
     cam.position.copy(c.p); cam.lookAt(c.look);
     return true;
   }

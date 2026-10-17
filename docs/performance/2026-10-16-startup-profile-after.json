@@ -1,0 +1,628 @@
+{
+  "at": "2026-10-16T10:27:02.306Z",
+  "readyMs": 9028.5,
+  "longTasks": [
+    {
+      "at": 133.80000001192093,
+      "ms": 287
+    },
+    {
+      "at": 604.6999999880791,
+      "ms": 258
+    },
+    {
+      "at": 1437.699999988079,
+      "ms": 97
+    },
+    {
+      "at": 1537.199999988079,
+      "ms": 57
+    },
+    {
+      "at": 2697.599999964237,
+      "ms": 1058
+    },
+    {
+      "at": 3756.300000011921,
+      "ms": 121
+    },
+    {
+      "at": 3914.099999964237,
+      "ms": 462
+    },
+    {
+      "at": 4430.699999988079,
+      "ms": 133
+    },
+    {
+      "at": 4730.800000011921,
+      "ms": 67
+    },
+    {
+      "at": 4847.5,
+      "ms": 70
+    },
+    {
+      "at": 5214.099999964237,
+      "ms": 104
+    },
+    {
+      "at": 5647.399999976158,
+      "ms": 71
+    },
+    {
+      "at": 6480.699999988079,
+      "ms": 61
+    },
+    {
+      "at": 7030.699999988079,
+      "ms": 75
+    },
+    {
+      "at": 7114.099999964237,
+      "ms": 63
+    },
+    {
+      "at": 7180.699999988079,
+      "ms": 63
+    },
+    {
+      "at": 7247.399999976158,
+      "ms": 63
+    },
+    {
+      "at": 7314,
+      "ms": 59
+    },
+    {
+      "at": 7380.800000011921,
+      "ms": 60
+    },
+    {
+      "at": 7447.399999976158,
+      "ms": 72
+    },
+    {
+      "at": 7530.599999964237,
+      "ms": 52
+    },
+    {
+      "at": 7597.399999976158,
+      "ms": 63
+    },
+    {
+      "at": 7664.099999964237,
+      "ms": 89
+    },
+    {
+      "at": 7764,
+      "ms": 63
+    },
+    {
+      "at": 7830.699999988079,
+      "ms": 62
+    },
+    {
+      "at": 7897.399999976158,
+      "ms": 63
+    },
+    {
+      "at": 7964.099999964237,
+      "ms": 64
+    },
+    {
+      "at": 8030.699999988079,
+      "ms": 51
+    },
+    {
+      "at": 8097.399999976158,
+      "ms": 60
+    },
+    {
+      "at": 8164,
+      "ms": 59
+    },
+    {
+      "at": 8230.699999988079,
+      "ms": 72
+    },
+    {
+      "at": 8347.399999976158,
+      "ms": 64
+    },
+    {
+      "at": 8414,
+      "ms": 62
+    },
+    {
+      "at": 8480.599999964237,
+      "ms": 61
+    },
+    {
+      "at": 8780.699999988079,
+      "ms": 155
+    },
+    {
+      "at": 9004.300000011921,
+      "ms": 811
+    }
+  ],
+  "stages": [
+    {
+      "at": 42.09999996423721,
+      "text": "Opening the casino…"
+    },
+    {
+      "at": 848.8999999761581,
+      "text": "Loading art and sound"
+    },
+    {
+      "at": 1121.5,
+      "text": "Cards and table art"
+    },
+    {
+      "at": 1183.5999999642372,
+      "text": "Room materials"
+    },
+    {
+      "at": 1289.699999988079,
+      "text": "Monster"
+    },
+    {
+      "at": 2175.5,
+      "text": "Characters and animation"
+    },
+    {
+      "at": 2681.300000011921,
+      "text": "Casino models"
+    },
+    {
+      "at": 2681.5,
+      "text": "Building the casino"
+    },
+    {
+      "at": 3889.800000011921,
+      "text": "Preparing the casino"
+    },
+    {
+      "at": 4425.800000011921,
+      "text": "Uploading textures"
+    },
+    {
+      "at": 8758.699999988079,
+      "text": "Preparing shaders"
+    },
+    {
+      "at": 8967.199999988079,
+      "text": "Finishing the scene"
+    },
+    {
+      "at": 9830.800000011921,
+      "text": "Ready"
+    }
+  ],
+  "self": [
+    {
+      "ms": 3209,
+      "fn": "texSubImage2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 10646
+    },
+    {
+      "ms": 1202,
+      "fn": "(program)",
+      "url": "",
+      "line": 0
+    },
+    {
+      "ms": 375,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 279,
+      "fn": "",
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js",
+      "line": 7
+    },
+    {
+      "ms": 163,
+      "fn": "(garbage collector)",
+      "url": "",
+      "line": 0
+    },
+    {
+      "ms": 145,
+      "fn": "",
+      "url": "vendor/three/addons/loaders/GLTFLoader.js",
+      "line": 3310
+    },
+    {
+      "ms": 144,
+      "fn": "texSubImage2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 10646
+    },
+    {
+      "ms": 138,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 82,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 62,
+      "fn": "",
+      "url": "vendor/three/build/three.core.js",
+      "line": 44668
+    },
+    {
+      "ms": 58,
+      "fn": "feltFill",
+      "url": "src/3d/textures.js",
+      "line": 179
+    },
+    {
+      "ms": 58,
+      "fn": "crestImage",
+      "url": "src/3d/textures.js",
+      "line": 417
+    },
+    {
+      "ms": 57,
+      "fn": "paintBj",
+      "url": "src/3d/textures.js",
+      "line": 195
+    },
+    {
+      "ms": 52,
+      "fn": "feltFill",
+      "url": "src/3d/textures.js",
+      "line": 179
+    },
+    {
+      "ms": 52,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 46,
+      "fn": "smoothNormals",
+      "url": "src/3d/plush.js",
+      "line": 87
+    },
+    {
+      "ms": 44,
+      "fn": "feltBase",
+      "url": "src/3d/rig.js",
+      "line": 99
+    },
+    {
+      "ms": 37,
+      "fn": "",
+      "url": "src/util.js",
+      "line": 1
+    },
+    {
+      "ms": 37,
+      "fn": "unlock",
+      "url": "src/audio.js",
+      "line": 11
+    },
+    {
+      "ms": 37,
+      "fn": "",
+      "url": "vendor/three/addons/loaders/GLTFLoader.js",
+      "line": 3054
+    },
+    {
+      "ms": 37,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 35,
+      "fn": "GLTFBinaryExtension",
+      "url": "vendor/three/addons/loaders/GLTFLoader.js",
+      "line": 1840
+    },
+    {
+      "ms": 33,
+      "fn": "applyBoneTransform",
+      "url": "vendor/three/build/three.core.js",
+      "line": 24095
+    },
+    {
+      "ms": 30,
+      "fn": "WebGLRenderer.setSize",
+      "url": "vendor/three/build/three.module.js",
+      "line": 16653
+    },
+    {
+      "ms": 25,
+      "fn": "noiseFill",
+      "url": "src/3d/textures.js",
+      "line": 20
+    },
+    {
+      "ms": 23,
+      "fn": "feltFill",
+      "url": "src/3d/textures.js",
+      "line": 179
+    },
+    {
+      "ms": 23,
+      "fn": "",
+      "url": "src/3d/backrooms.js",
+      "line": 141
+    },
+    {
+      "ms": 21,
+      "fn": "buildWorld",
+      "url": "src/3d/world.js",
+      "line": 154
+    },
+    {
+      "ms": 20,
+      "fn": "noiseFill",
+      "url": "src/3d/textures.js",
+      "line": 20
+    },
+    {
+      "ms": 20,
+      "fn": "getContext",
+      "url": "vendor/three/build/three.module.js",
+      "line": 16358
+    },
+    {
+      "ms": 20,
+      "fn": "feltBase",
+      "url": "src/3d/rig.js",
+      "line": 99
+    },
+    {
+      "ms": 20,
+      "fn": "WebGLShader",
+      "url": "vendor/three/build/three.module.js",
+      "line": 6233
+    },
+    {
+      "ms": 20,
+      "fn": "WebGLShader",
+      "url": "vendor/three/build/three.module.js",
+      "line": 6233
+    },
+    {
+      "ms": 19,
+      "fn": "prep",
+      "url": "src/3d/plush.js",
+      "line": 106
+    },
+    {
+      "ms": 19,
+      "fn": "casinoGuide",
+      "url": "src/3d/world.js",
+      "line": 598
+    }
+  ],
+  "inclusive": [
+    {
+      "ms": 4664,
+      "fn": "warmup",
+      "url": "src/3d/render3d.js",
+      "line": 760
+    },
+    {
+      "ms": 3234,
+      "fn": "WebGLRenderer.initTexture",
+      "url": "vendor/three/build/three.module.js",
+      "line": 19523
+    },
+    {
+      "ms": 3233,
+      "fn": "setTexture2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 11558
+    },
+    {
+      "ms": 3231,
+      "fn": "uploadTexture",
+      "url": "vendor/three/build/three.module.js",
+      "line": 11905
+    },
+    {
+      "ms": 3209,
+      "fn": "texSubImage2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 10646
+    },
+    {
+      "ms": 1253,
+      "fn": "draw",
+      "url": "src/3d/render3d.js",
+      "line": 496
+    },
+    {
+      "ms": 1202,
+      "fn": "(program)",
+      "url": "",
+      "line": 0
+    },
+    {
+      "ms": 1026,
+      "fn": "boot",
+      "url": "src/main.js",
+      "line": 1035
+    },
+    {
+      "ms": 1019,
+      "fn": "init",
+      "url": "src/3d/render3d.js",
+      "line": 49
+    },
+    {
+      "ms": 805,
+      "fn": "render",
+      "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+      "line": 214
+    },
+    {
+      "ms": 730,
+      "fn": "buildWorld",
+      "url": "src/3d/world.js",
+      "line": 154
+    },
+    {
+      "ms": 683,
+      "fn": "WebGLRenderer.render",
+      "url": "vendor/three/build/three.module.js",
+      "line": 17603
+    },
+    {
+      "ms": 683,
+      "fn": "render",
+      "url": "vendor/three/addons/postprocessing/RenderPass.js",
+      "line": 121
+    },
+    {
+      "ms": 521,
+      "fn": "buildMachines",
+      "url": "src/3d/machines.js",
+      "line": 34
+    },
+    {
+      "ms": 441,
+      "fn": "WebGLShadowMap.render",
+      "url": "vendor/three/build/three.module.js",
+      "line": 9141
+    },
+    {
+      "ms": 439,
+      "fn": "renderObject",
+      "url": "vendor/three/build/three.module.js",
+      "line": 9556
+    },
+    {
+      "ms": 439,
+      "fn": "renderObject",
+      "url": "vendor/three/build/three.module.js",
+      "line": 9556
+    },
+    {
+      "ms": 438,
+      "fn": "renderObject",
+      "url": "vendor/three/build/three.module.js",
+      "line": 9556
+    },
+    {
+      "ms": 380,
+      "fn": "WebGLRenderer.renderBufferDirect",
+      "url": "vendor/three/build/three.module.js",
+      "line": 17178
+    },
+    {
+      "ms": 378,
+      "fn": "setProgram",
+      "url": "vendor/three/build/three.module.js",
+      "line": 18328
+    },
+    {
+      "ms": 375,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 375,
+      "fn": "WebGLProgram.getUniforms",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7193
+    },
+    {
+      "ms": 331,
+      "fn": "update",
+      "url": "src/3d/backrooms.js",
+      "line": 252
+    },
+    {
+      "ms": 286,
+      "fn": "",
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js",
+      "line": 1
+    },
+    {
+      "ms": 286,
+      "fn": "",
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js",
+      "line": 1
+    },
+    {
+      "ms": 280,
+      "fn": "",
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js",
+      "line": 7
+    },
+    {
+      "ms": 280,
+      "fn": "",
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js",
+      "line": 7
+    },
+    {
+      "ms": 267,
+      "fn": "warm",
+      "url": "src/3d/backrooms.js",
+      "line": 295
+    },
+    {
+      "ms": 236,
+      "fn": "",
+      "url": "src/3d/machines.js",
+      "line": 74
+    },
+    {
+      "ms": 211,
+      "fn": "renderObjects",
+      "url": "vendor/three/build/three.module.js",
+      "line": 18091
+    },
+    {
+      "ms": 211,
+      "fn": "renderScene",
+      "url": "vendor/three/build/three.module.js",
+      "line": 17943
+    },
+    {
+      "ms": 210,
+      "fn": "renderObject",
+      "url": "vendor/three/build/three.module.js",
+      "line": 18118
+    },
+    {
+      "ms": 209,
+      "fn": "WebGLRenderer.renderBufferDirect",
+      "url": "vendor/three/build/three.module.js",
+      "line": 17178
+    },
+    {
+      "ms": 200,
+      "fn": "paintBj",
+      "url": "src/3d/textures.js",
+      "line": 195
+    },
+    {
+      "ms": 200,
+      "fn": "paint",
+      "url": "src/3d/textures.js",
+      "line": 191
+    }
+  ]
+}

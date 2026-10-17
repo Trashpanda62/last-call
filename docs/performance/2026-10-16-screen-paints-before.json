@@ -1,0 +1,154 @@
+{
+  "at": "2026-10-16T14:10:34.924Z",
+  "result": {
+    "timing": [
+      {
+        "name": "settled-slot",
+        "updates": 120,
+        "paints": 120,
+        "uploads": 120,
+        "ms": 33.5
+      },
+      {
+        "name": "idle-slot",
+        "updates": 40,
+        "paints": 40,
+        "uploads": 40,
+        "ms": 9.399999976158142
+      },
+      {
+        "name": "crew-bank",
+        "updates": 60,
+        "paints": 60,
+        "uploads": 60,
+        "ms": 18.900000035762787
+      },
+      {
+        "name": "race-waiting",
+        "updates": 100,
+        "paints": 100,
+        "uploads": 100,
+        "ms": 34.69999998807907
+      },
+      {
+        "name": "race-countdown",
+        "updates": 60,
+        "paints": 60,
+        "uploads": 60,
+        "ms": 25.19999998807907
+      },
+      {
+        "name": "race-result",
+        "updates": 50,
+        "paints": 50,
+        "uploads": 50,
+        "ms": 16.400000035762787
+      },
+      {
+        "name": "race-running",
+        "updates": 20,
+        "paints": 20,
+        "uploads": 20,
+        "ms": 6.699999988079071
+      },
+      {
+        "name": "slot-spinning",
+        "updates": 60,
+        "paints": 60,
+        "uploads": 60,
+        "ms": 19.5
+      },
+      {
+        "name": "tv-race-waiting",
+        "updates": 100,
+        "paints": 100,
+        "uploads": 100,
+        "ms": 29.69999998807907
+      },
+      {
+        "name": "tv-rocket",
+        "updates": 30,
+        "paints": 30,
+        "uploads": 30,
+        "ms": 16.69999998807907
+      }
+    ],
+    "pixels": [
+      {
+        "name": "slot-penny",
+        "states": 78,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      },
+      {
+        "name": "slot-high",
+        "states": 78,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      },
+      {
+        "name": "bank",
+        "states": 9,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      },
+      {
+        "name": "race",
+        "states": 35,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      },
+      {
+        "name": "tv",
+        "states": 105,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      }
+    ],
+    "raceRunTime": 12,
+    "gfx": {
+      "frames": 91,
+      "calls": 478,
+      "tris": 1672200,
+      "geos": 501,
+      "tex": 321,
+      "cam": [
+        24.29,
+        1.12,
+        10,
+        0,
+        -4.71
+      ],
+      "gestures": {},
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "bar",
+        "rest",
+        "slots"
+      ],
+      "actorWork": {
+        "posed": 8,
+        "total": 11
+      },
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,514 @@
+{
+  "at": "2026-10-16T22:53:14.422Z",
+  "rows": [
+    {
+      "fallback": false,
+      "cases": [
+        {
+          "name": "unchanged",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 1
+        },
+        {
+          "name": "turn",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 2
+        },
+        {
+          "name": "translate",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 3
+        },
+        {
+          "name": "fov-110",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 4
+        },
+        {
+          "name": "fov-55",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 5
+        },
+        {
+          "name": "preset-low",
+          "hidden": 18,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 6
+        },
+        {
+          "name": "preset-ultra",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "preset-high",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "shadow-flag-off",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "shadow-flag-return",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "moved-parent",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "parent-return",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "backrooms",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "casino-return",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "return-turn-0",
+          "hidden": 11,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 8
+        },
+        {
+          "name": "return-turn-1",
+          "hidden": 18,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 9
+        },
+        {
+          "name": "return-turn-2",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 10
+        },
+        {
+          "name": "return-turn-3",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 11
+        },
+        {
+          "name": "return-turn-4",
+          "hidden": 15,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 12
+        },
+        {
+          "name": "return-turn-5",
+          "hidden": 15,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 13
+        },
+        {
+          "name": "return-turn-6",
+          "hidden": 10,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 14
+        },
+        {
+          "name": "return-turn-7",
+          "hidden": 11,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 15
+        },
+        {
+          "name": "return-turn-8",
+          "hidden": 14,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 16
+        },
+        {
+          "name": "return-turn-9",
+          "hidden": 13,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 17
+        },
+        {
+          "name": "return-turn-10",
+          "hidden": 15,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 18
+        },
+        {
+          "name": "return-turn-11",
+          "hidden": 14,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 19
+        },
+        {
+          "name": "after-render-error",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 20
+        },
+        {
+          "name": "world-replacement",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 1
+        }
+      ],
+      "failures": [],
+      "caught": true,
+      "errorRestored": true,
+      "replacement": {
+        "worldChanged": true,
+        "cacheChanged": true,
+        "oldObjectsRetained": false,
+        "entries": 154
+      },
+      "gfx": {
+        "frames": 822,
+        "calls": 424,
+        "tris": 2018453,
+        "geos": 470,
+        "tex": 402,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {
+          "shrug": 1
+        },
+        "props": 32,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37,
+          "offscreen": 11
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "fallback": true,
+      "cases": [
+        {
+          "name": "unchanged",
+          "hidden": 14,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 1
+        },
+        {
+          "name": "turn",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 2
+        },
+        {
+          "name": "translate",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 3
+        },
+        {
+          "name": "fov-110",
+          "hidden": 14,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 4
+        },
+        {
+          "name": "fov-55",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 5
+        },
+        {
+          "name": "preset-low",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 6
+        },
+        {
+          "name": "preset-ultra",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "preset-high",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "shadow-flag-off",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "shadow-flag-return",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "moved-parent",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "parent-return",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "backrooms",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "casino-return",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 7
+        },
+        {
+          "name": "return-turn-0",
+          "hidden": 11,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 8
+        },
+        {
+          "name": "return-turn-1",
+          "hidden": 17,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 9
+        },
+        {
+          "name": "return-turn-2",
+          "hidden": 16,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 10
+        },
+        {
+          "name": "return-turn-3",
+          "hidden": 14,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 11
+        },
+        {
+          "name": "return-turn-4",
+          "hidden": 12,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 12
+        },
+        {
+          "name": "return-turn-5",
+          "hidden": 12,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 13
+        },
+        {
+          "name": "return-turn-6",
+          "hidden": 8,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 14
+        },
+        {
+          "name": "return-turn-7",
+          "hidden": 9,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 15
+        },
+        {
+          "name": "return-turn-8",
+          "hidden": 11,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 16
+        },
+        {
+          "name": "return-turn-9",
+          "hidden": 13,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 17
+        },
+        {
+          "name": "return-turn-10",
+          "hidden": 14,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 18
+        },
+        {
+          "name": "return-turn-11",
+          "hidden": 13,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 19
+        },
+        {
+          "name": "after-render-error",
+          "hidden": 14,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 20
+        },
+        {
+          "name": "world-replacement",
+          "hidden": 14,
+          "restored": true,
+          "repeated": 0,
+          "epoch": 1
+        }
+      ],
+      "failures": [],
+      "caught": true,
+      "errorRestored": true,
+      "replacement": {
+        "worldChanged": true,
+        "cacheChanged": true,
+        "oldObjectsRetained": false,
+        "entries": 158
+      },
+      "gfx": {
+        "frames": 855,
+        "calls": 772,
+        "tris": 1262591,
+        "geos": 763,
+        "tex": 319,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 0,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37,
+          "offscreen": 11
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    }
+  ],
+  "errors": []
+}

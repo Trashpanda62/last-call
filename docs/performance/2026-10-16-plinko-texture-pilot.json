@@ -1,0 +1,293 @@
+{
+  "at": "2026-10-16T23:46:27.979Z",
+  "ready": {
+    "paints": 51,
+    "uploads": 3,
+    "uniqueMaps": 1
+  },
+  "rows": [
+    {
+      "seat": 36,
+      "risk": "low",
+      "selected": "low",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 415,
+      "sameMap": true
+    },
+    {
+      "seat": 36,
+      "risk": "high",
+      "selected": "high",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 416,
+      "sameMap": true
+    },
+    {
+      "seat": 36,
+      "risk": "medium",
+      "selected": "medium",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 214,
+      "sameMap": true
+    },
+    {
+      "seat": 36,
+      "risk": "high",
+      "selected": "high",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 416,
+      "sameMap": true
+    },
+    {
+      "seat": 36,
+      "risk": "low",
+      "selected": "low",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 415,
+      "sameMap": true
+    },
+    {
+      "seat": 36,
+      "risk": "medium",
+      "selected": "medium",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 214,
+      "sameMap": true
+    },
+    {
+      "seat": 37,
+      "risk": "low",
+      "selected": "low",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 415,
+      "sameMap": true
+    },
+    {
+      "seat": 37,
+      "risk": "high",
+      "selected": "high",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 416,
+      "sameMap": true
+    },
+    {
+      "seat": 37,
+      "risk": "medium",
+      "selected": "medium",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 214,
+      "sameMap": true
+    },
+    {
+      "seat": 37,
+      "risk": "high",
+      "selected": "high",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 416,
+      "sameMap": true
+    },
+    {
+      "seat": 37,
+      "risk": "low",
+      "selected": "low",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 415,
+      "sameMap": true
+    },
+    {
+      "seat": 37,
+      "risk": "medium",
+      "selected": "medium",
+      "paints": 0,
+      "uploads": 0,
+      "links": 0,
+      "different": 0,
+      "otherDifferent": [
+        0
+      ],
+      "map": 214,
+      "sameMap": true
+    }
+  ],
+  "uniqueRiskMaps": 3,
+  "finalDifferences": [
+    0,
+    0
+  ],
+  "busy": {
+    "placed": true,
+    "balls": 1,
+    "riskButtons": [
+      {
+        "id": "btn:risk:low",
+        "disabled": true
+      },
+      {
+        "id": "btn:risk:medium",
+        "disabled": false
+      },
+      {
+        "id": "btn:risk:high",
+        "disabled": true
+      }
+    ]
+  },
+  "filtering": [
+    {
+      "anisotropy": 2,
+      "revised": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "values": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "same": true,
+      "prepared": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "paints": 0,
+      "uploads": 3
+    },
+    {
+      "anisotropy": 8,
+      "revised": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "values": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "same": true,
+      "prepared": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "paints": 0,
+      "uploads": 3
+    }
+  ],
+  "gfx": {
+    "frames": 378,
+    "calls": 147,
+    "tris": 384792,
+    "geos": 477,
+    "tex": 393,
+    "cam": [
+      35.25,
+      1.42,
+      3.67,
+      -0.35,
+      0
+    ],
+    "gestures": {},
+    "props": 32,
+    "rebuildPending": false,
+    "rooms": [
+      "arcade"
+    ],
+    "actorWork": {
+      "posed": 0,
+      "total": 37,
+      "offscreen": 0
+    },
+    "ao": true,
+    "passes": [
+      "RenderPass",
+      "GTAOPass",
+      "RenderPass",
+      "OutputPass"
+    ],
+    "internal": [
+      1280,
+      720
+    ],
+    "out": [
+      1280,
+      720
+    ],
+    "pr": 1
+  },
+  "errors": []
+}

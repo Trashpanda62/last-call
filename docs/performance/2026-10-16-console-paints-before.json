@@ -1,0 +1,194 @@
+{
+  "at": "2026-10-16T14:21:52.293Z",
+  "result": {
+    "timing": [
+      {
+        "name": "settled-slot",
+        "updates": 120,
+        "paints": 1,
+        "uploads": 1,
+        "ms": 3
+      },
+      {
+        "name": "idle-slot",
+        "updates": 40,
+        "paints": 10,
+        "uploads": 10,
+        "ms": 3.199999988079071
+      },
+      {
+        "name": "crew-bank",
+        "updates": 60,
+        "paints": 1,
+        "uploads": 1,
+        "ms": 7.799999952316284
+      },
+      {
+        "name": "race-waiting",
+        "updates": 100,
+        "paints": 1,
+        "uploads": 1,
+        "ms": 9.699999988079071
+      },
+      {
+        "name": "race-countdown",
+        "updates": 60,
+        "paints": 6,
+        "uploads": 6,
+        "ms": 8.099999964237213
+      },
+      {
+        "name": "race-result",
+        "updates": 50,
+        "paints": 1,
+        "uploads": 1,
+        "ms": 5.100000023841858
+      },
+      {
+        "name": "race-running",
+        "updates": 20,
+        "paints": 20,
+        "uploads": 20,
+        "ms": 6.5
+      },
+      {
+        "name": "slot-spinning",
+        "updates": 60,
+        "paints": 52,
+        "uploads": 52,
+        "ms": 18
+      },
+      {
+        "name": "tv-race-waiting",
+        "updates": 100,
+        "paints": 1,
+        "uploads": 1,
+        "ms": 7.199999988079071
+      },
+      {
+        "name": "tv-rocket",
+        "updates": 30,
+        "paints": 30,
+        "uploads": 30,
+        "ms": 17.5
+      },
+      {
+        "name": "mines-selected",
+        "updates": 120,
+        "paints": 120,
+        "uploads": 120,
+        "ms": 26.299999952316284
+      },
+      {
+        "name": "tower-selected",
+        "updates": 120,
+        "paints": 120,
+        "uploads": 120,
+        "ms": 33.5
+      },
+      {
+        "name": "mines-idle",
+        "updates": 60,
+        "paints": 60,
+        "uploads": 60,
+        "ms": 11.700000047683716
+      },
+      {
+        "name": "tower-idle",
+        "updates": 60,
+        "paints": 60,
+        "uploads": 60,
+        "ms": 13.100000023841858
+      }
+    ],
+    "pixels": [
+      {
+        "name": "slot-penny",
+        "states": 78,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      },
+      {
+        "name": "slot-high",
+        "states": 78,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      },
+      {
+        "name": "bank",
+        "states": 9,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      },
+      {
+        "name": "race",
+        "states": 35,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      },
+      {
+        "name": "tv",
+        "states": 105,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      },
+      {
+        "name": "mines",
+        "states": 70,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      },
+      {
+        "name": "tower",
+        "states": 70,
+        "maxChannelError": 0,
+        "changedChannels": 0
+      }
+    ],
+    "raceRunTime": 12,
+    "gfx": {
+      "frames": 107,
+      "calls": 478,
+      "tris": 1672200,
+      "geos": 501,
+      "tex": 321,
+      "cam": [
+        24.29,
+        1.12,
+        10,
+        0,
+        -4.71
+      ],
+      "gestures": {},
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "bar",
+        "rest",
+        "slots"
+      ],
+      "actorWork": {
+        "posed": 8,
+        "total": 11
+      },
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1
+    }
+  },
+  "errors": []
+}

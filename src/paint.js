@@ -36,7 +36,10 @@ function glowText(g, s, x, y, size, color, font = ARC) {
 // ---------- Crash ----------
 // state: pub.crash, plus optional `me` (my id) to highlight my bet.
 export function paintCrash(g, w, h, t, C, me) {
-  bg(g, w, h, '#120a2a', '#04030a', 'crash');
+  bg(g, w, h, '#071b2d', '#020710');
+  // A clean flight display, with sharp stars instead of the old plush backdrop.
+  for (let i = 0; i < 72; i++) { const x = ((i * 174.37) % 1) * w, y = ((i * 83.17) % 1) * h; g.fillStyle = i % 5 ? '#608aa0' : '#dbe9ef'; g.fillRect(x, y, i % 5 ? 1 : 2, i % 5 ? 1 : 2); }
+  text(g, 'ROCKET RUN / LIVE FLIGHT', w * .035, h * .045, h * .032, '#b7ced7', ARC, 'left');
   if (!C) return;
   const pad = h * 0.08, gx0 = pad * 1.4, gy0 = h - pad, gw = w - gx0 - pad, gh = h - pad * 2.2;
   // grid
@@ -59,14 +62,14 @@ export function paintCrash(g, w, h, t, C, me) {
     const rx = X(tNow), ry = Y(Math.min(C.mult, mMax));
     if (boom) {
       for (let i = 0; i < 14; i++) { const a = i / 14 * Math.PI * 2, r = h * (0.04 + ((t * 3 + i) % 1) * 0.08); g.fillStyle = i % 2 ? '#ffd040' : '#ff3a2a'; g.beginPath(); g.arc(rx + Math.cos(a) * r, ry + Math.sin(a) * r, h * 0.012, 0, 7); g.fill(); }
-    } else rocket(g, rx, ry, h * 0.07, Math.atan2(-(Y(Gm.crashAt(tNow)) - Y(Gm.crashAt(Math.max(0, tNow - 0.3)))), X(tNow) - X(tNow - 0.3)), t);
+    } else rocket(g, rx, ry, h * 0.11, Math.atan2(-(Y(Gm.crashAt(tNow)) - Y(Gm.crashAt(Math.max(0, tNow - 0.3)))), X(tNow) - X(tNow - 0.3)), t);
     glowText(g, xfmt(C.mult), w / 2, h * 0.36, h * 0.2, boom ? '#ff4a5a' : '#3fe0ff');
     if (boom) glowText(g, 'CRASHED', w / 2, h * 0.55, h * 0.08, '#ff4a5a');
   } else {
     const left = Math.max(0, Gm.CRASH.betTime - C.t), any = (C.bets || []).length > 0; // (the countdown waits for the first bet)
     glowText(g, 'NEXT ROCKET', w / 2, h * 0.3, h * 0.09, '#ff3fa4');
     glowText(g, any ? left.toFixed(1) + 's' : 'BET TO LAUNCH', w / 2, h * 0.48, any ? h * 0.16 : h * 0.1, '#ffd040');
-    rocket(g, w / 2, h * 0.72, h * 0.09, -Math.PI / 2, t);
+    rocket(g, w / 2, h * 0.72, h * 0.14, -Math.PI / 2, t);
   }
   // bettors down the right side
   const bets = (C.bets || []).slice(0, 8);
@@ -76,20 +79,31 @@ export function paintCrash(g, w, h, t, C, me) {
   });
 }
 function rocket(g, x, y, s, ang, t) {
-  g.save(); g.translate(x, y); g.rotate(ang);
-  g.fillStyle = '#ffb040'; g.beginPath(); g.moveTo(-s * 0.6, -s * 0.18); g.lineTo(-s * (0.9 + Math.sin(t * 40) * 0.15), 0); g.lineTo(-s * 0.6, s * 0.18); g.fill();
-  g.fillStyle = '#f3f0ff'; g.beginPath(); g.ellipse(0, 0, s * 0.6, s * 0.22, 0, 0, 7); g.fill();
-  g.fillStyle = '#ff3fa4'; g.beginPath(); g.moveTo(s * 0.45, -s * 0.16); g.quadraticCurveTo(s * 0.8, 0, s * 0.45, s * 0.16); g.fill();
-  g.fillStyle = '#3fe0ff'; g.beginPath(); g.arc(s * 0.12, 0, s * 0.09, 0, 7); g.fill();
-  g.fillStyle = '#ff3fa4'; g.beginPath(); g.moveTo(-s * 0.35, -s * 0.2); g.lineTo(-s * 0.6, -s * 0.42); g.lineTo(-s * 0.55, -s * 0.15); g.fill(); g.beginPath(); g.moveTo(-s * 0.35, s * 0.2); g.lineTo(-s * 0.6, s * 0.42); g.lineTo(-s * 0.55, s * 0.15); g.fill();
-  g.restore();
+  g.save(); g.translate(x, y); g.rotate(ang); g.lineJoin = 'round';
+  // Layered exhaust, metallic fuselage, swept fins and a blue pressure window.
+  for (let i = 0; i < 3; i++) { g.fillStyle = ['#f66b26','#ffbd50','#fff4c8'][i]; g.beginPath(); g.moveTo(-s * .48, -s * (.22 - i * .055)); g.quadraticCurveTo(-s * (1.75 - i * .34 + Math.sin(t * 32) * .12), 0, -s * .48, s * (.22 - i * .055)); g.fill(); }
+  g.fillStyle = '#bf3b22'; for (const side of [-1, 1]) { g.beginPath(); g.moveTo(-s * .1, side * s * .2); g.lineTo(-s * .65, side * s * .55); g.lineTo(-s * .54, side * s * .13); g.fill(); }
+  const steel = g.createLinearGradient(0,-s*.28,0,s*.28); steel.addColorStop(0,'#fcfcf3'); steel.addColorStop(.45,'#ccdbe0'); steel.addColorStop(1,'#536877');
+  g.fillStyle = steel; g.strokeStyle = '#223948'; g.lineWidth = s * .025; g.beginPath(); g.moveTo(-s*.55,-s*.23); g.lineTo(s*.35,-s*.23); g.quadraticCurveTo(s*.85,-s*.16,s*.98,0); g.quadraticCurveTo(s*.85,s*.16,s*.35,s*.23); g.lineTo(-s*.55,s*.23); g.closePath(); g.fill(); g.stroke();
+  g.fillStyle = '#e75a2e'; g.beginPath(); g.moveTo(s*.49,-s*.20); g.quadraticCurveTo(s*.88,-s*.13,s*.98,0); g.quadraticCurveTo(s*.88,s*.13,s*.49,s*.20); g.closePath(); g.fill();
+  g.strokeStyle = '#b18d55'; g.lineWidth = s*.055; g.fillStyle = '#163f5d'; g.beginPath(); g.arc(s*.17,0,s*.13,0,Math.PI*2); g.fill(); g.stroke();
+  g.fillStyle = '#a5eeff'; g.beginPath(); g.arc(s*.14,-s*.035,s*.045,0,Math.PI*2); g.fill();
+  g.fillStyle = '#344a55'; g.fillRect(-s*.58,-s*.18,s*.13,s*.36); g.restore();
 }
 
 // ---------- Duck race tote board ----------
+export function toteFrameKey(t, R, me) {
+  if (!R) return 'empty';
+  if (R.phase === 'run') return undefined;
+  const bets = R.bets || [];
+  return JSON.stringify([R.phase, R.pays, R.winner, R.seed,
+    R.phase === 'bet' && bets.length ? Math.ceil(Gm.RACE.betTime - R.t) : null,
+    bets.filter(b => b[0] === me)]);
+}
 export function paintTote(g, w, h, t, R, me) {
   bg(g, w, h, '#06263a', '#020c14');
   if (!R) return;
-  const head = R.phase === 'bet' ? ((R.bets || []).length ? `BETS CLOSE IN ${Math.ceil(Gm.RACE.betTime - R.t)}` : 'BET TO START THE RACE') : R.phase === 'run' ? "THEY'RE OFF!" : `WINNER: ${Gm.DUCKS[R.winner].name.toUpperCase()}`;
+  const head = R.phase === 'bet' ? ((R.bets || []).length ? `BETS CLOSE IN ${Math.ceil(Gm.RACE.betTime - R.t)}` : 'PICK A DUCK TO START THE RACE') : R.phase === 'run' ? "THEY'RE OFF!" : `WINNER: ${Gm.DUCKS[R.winner].name.toUpperCase()}`;
   glowText(g, head, w / 2, h * 0.11, h * 0.09, R.phase === 'show' ? '#ffd040' : '#7fe8ff');
   const lanes = R.phase === 'bet' ? null : Gm.raceLanes(R.phase === 'run' ? R.t : Gm.RACE.runTime, R.winner, R.seed);
   Gm.DUCKS.forEach((d, i) => {
@@ -112,6 +126,11 @@ export function paintTote(g, w, h, t, R, me) {
 // st: { reels: [sym, sym, sym], spin: { t0, stops } | null, win, tier }
 const SYM_COL = { '💎': '#3fe0ff', '7': '#ff2a3a', BAR: '#151515', '🔔': '#ffb020', '🍒': '#e0203a', '🍋': '#f0d020' };
 const SYM_ART = { '💎': 'sym-diamond', '7': 'sym-seven', BAR: 'sym-bar', '🔔': 'sym-bell', '🍒': 'sym-cherry', '🍋': 'sym-lemon' };
+export function slotFrameKey(t, st) {
+  // Reel motion and the delayed win reveal keep their existing paint cadence.
+  if (st?.spin && t - st.spin.t0 < 1.7) return undefined;
+  return JSON.stringify([st?.tier || 'penny', st?.reels || [0, 1, 2].map(i => Math.floor(t / 3 + i * 1.7) % 6), st?.win || null, st?.bet || 0]);
+}
 export function paintSlots(g, w, h, t, st) {
   const tier = st && st.tier || 'penny';
   bg(g, w, h, tier === 'high' ? '#2a1a04' : '#2a0418', '#080206');
@@ -150,6 +169,9 @@ export function paintSlots(g, w, h, t, st) {
 
 // ---------- Mines ----------
 // st: { m, open: [tiles], mines: Set|null (shown when over), over, dead, mult, next }
+export function minesFrameKey(t, st, ui) {
+  return JSON.stringify([st ? [st.m, st.open, st.over, st.dead, st.mult, st.next, st.over && st.mines ? [...st.mines] : null] : Math.floor(t * 3) % 11, ui]);
+}
 export function paintMines(g, w, h, t, st) {
   bg(g, w, h, '#06281a', '#020a06', 'mines');
   const n = 5, s = Math.min(w * 0.62, h * 0.86) / n, x0 = w * 0.05, y0 = (h - s * n) / 2;
@@ -182,6 +204,9 @@ function bomb(g, x, y, r) {
 
 // ---------- Dragon Tower ----------
 // st: { mode, eggs, row, picks, rows (Sets, shown when over), over, dead, mult }
+export function towerFrameKey(t, st, ui) {
+  return JSON.stringify([st ? [st.mode, st.eggs, st.row, st.picks, st.over, st.dead, st.over && st.rows ? st.rows.map(row => [...row]) : null] : Math.floor(t * 2) % 7, ui]);
+}
 export function paintTower(g, w, h, t, st) {
   bg(g, w, h, '#2a1006', '#0a0402', 'tower');
   const rows = Gm.TOWER.rows, eggs = st ? st.eggs : 3, rh = h * 0.86 / rows, y0 = h * 0.07, cw = w * 0.6 / eggs, x0 = w * 0.04;
@@ -349,6 +374,7 @@ function card(g, x, y, cw, ch, c) {
 }
 
 // ---------- The crew bank board (the jackpot tower) ----------
+export const bankFrameKey = (t, pub) => pub ? JSON.stringify([pub.bank, pub.target]) : 'empty';
 export function paintBankBoard(g, w, h, t, pub) {
   bg(g, w, h, '#1a0a2a', '#05020a');
   if (!pub) return;

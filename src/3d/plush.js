@@ -34,15 +34,21 @@ const HAT_GROW = { party: 1.6 }; // the hand-built party hat is a thin cone; the
 export function loadHats(base = 'assets/hats/') {
   if (/[?&](toy|noprops)\b/.test(location.search)) return;
   const loader = new GLTFLoader();
-  fetch(base + 'hats.json').then(r => r.json()) // the kinds that have a model; the rest keep the hand-built hat
+  return fetch(base + 'hats.json').then(r => { if (!r.ok) throw new Error('Hat catalog failed to load'); return r.json(); }) // the kinds that have a model; the rest keep the hand-built hat
     .then(kinds => Promise.all(kinds.map(k => loader.loadAsync(base + k + '.glb').then(g => { HAT_SRC[k] = g.scene; }).catch(() => null))))
-    .then(() => { for (const r of hatted) { const b = r.deref(); if (b) b.fitHat(); } hatted.clear(); }).catch(() => null);
+    .then(() => { for (const r of hatted) { const b = r.deref(); if (b) b.fitHat(); } hatted.clear(); });
 }
+const HAT_FIT = new Map();
 function hatModel(kind, color) {
   const src = HAT_SRC[kind]; if (!src) return null;
-  const ref = new THREE.Box3().setFromObject(makeHat(kind, color)), m = src.clone(true), gb = new THREE.Box3().setFromObject(m);
-  const k = (ref.max.x - ref.min.x) / (gb.max.x - gb.min.x) * (HAT_GROW[kind] || 1);
-  m.scale.setScalar(k); m.position.y = ref.min.y - gb.min.y * k;
+  let fit = HAT_FIT.get(kind);
+  if (!fit) {
+    const ref = new THREE.Box3().setFromObject(makeHat(kind, color)), gb = new THREE.Box3().setFromObject(src);
+    const k = (ref.max.x - ref.min.x) / (gb.max.x - gb.min.x) * (HAT_GROW[kind] || 1);
+    HAT_FIT.set(kind, fit = { k, y: ref.min.y - gb.min.y * k });
+  }
+  const m = src.clone(true), k = fit.k;
+  m.scale.setScalar(k); m.position.y = fit.y;
   m.traverse(o => { if (o.isMesh) { o.castShadow = true; o.material = hatFelt(o.material, k); o.material.envMapIntensity = 0.4; } });
   const g = new THREE.Group(); g.add(m); g.userData.model = true; return g;
 }
@@ -110,6 +116,10 @@ function prep(scene) {
     if (o.isSkinnedMesh) mesh = o;
   });
   smoothNormals(mesh.geometry);
+  // Clones share this rest pose. Compute its bounds once per source, rather than
+  // skinning every vertex again for each of the 32 characters during warmup.
+  scene.updateMatrixWorld(true);
+  scene.traverse(o => { if (o.isSkinnedMesh && !o.boundingSphere) o.computeBoundingSphere(); });
   const src = mesh.material, map = src.map;
   return { scene, info, map, src, ref: map && map.image ? feltLum(map.image) : 0.08, skin: POTATO && map && map.image ? skinMean(map.image) : null };
 }
@@ -503,6 +513,7 @@ function strandBeforeRender(r, sc, cam, geo, mat) {
 }
 
 const BONES = ['Hips', 'Spine', 'Spine1', 'Head', 'LeftArm', 'LeftForeArm', 'LeftHand', 'RightArm', 'RightForeArm', 'RightHand', 'LeftUpLeg', 'LeftLeg', 'LeftFoot', 'RightUpLeg', 'RightLeg', 'RightFoot'];
+const cacheBoneRotations = !/[?&]legacyBoneRotations\b/.test(location.search);
 const shadowMat = new THREE.MeshBasicMaterial({ map: T.blob(), transparent: true, depthWrite: false, opacity: 0.8 });
 const luckyMat = new THREE.MeshBasicMaterial({ map: T.glow(), color: 0xffd060, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
 const bubbleMat = new THREE.MeshBasicMaterial({ color: 0x7dff5a, transparent: true, opacity: 0.8 });
@@ -511,9 +522,9 @@ const SICK = new THREE.Color(0x9ad870);
 const qa = new THREE.Quaternion(), qb = new THREE.Quaternion(), eu = new THREE.Euler();
 
 // ---------- Gestures: Sorceress hy-motion clips (SMPL joint positions), retargeted by matching bone directions ----------
-const CLIPS = {}, BAKED = {};
+const CLIPS = {}, BAKED = {}, CLIP_TASKS = {};
 export function loadClips(names, base = 'assets/anim/') {
-  return Promise.all(names.map(n => fetch(base + n + '.json').then(r => r.json()).then(c => { CLIPS[n] = { fps: c.fps, n: c.n, j: Float32Array.from(c.j) }; }).catch(() => {})));
+  return Promise.all(names.map(n => CLIP_TASKS[n] || (CLIP_TASKS[n] = fetch(base + n + '.json').then(r => { if (!r.ok) throw new Error('Animation failed: ' + n); return r.json(); }).then(c => { CLIPS[n] = { fps: c.fps, n: c.n, j: Float32Array.from(c.j) }; }))));
 }
 export const hasClip = n => !!CLIPS[n];
 export const PLAYED = {}; // gestures started, by name (debug info)
@@ -530,8 +541,23 @@ const UPPER = new Set(['Spine', 'Spine1', 'Head', 'LeftArm', 'LeftForeArm', 'Lef
 // putting the mitten over the felt's edge (felts about 0.68 m high, 0.55-0.75 m in front of where a gambler stands).
 const REACH = { chips: { step: 0.28, lift: 0.38 }, push: { step: 0.3, lift: 0.5 } };
 const AX = new THREE.Vector3(1, 0, 0), qc = new THREE.Quaternion(), qd = new THREE.Quaternion();
+const legacyGestureMatrices = /[?&]legacyGestureMatrices\b/.test(location.search);
+const gesturePosition = new THREE.Vector3(), gestureScale = new THREE.Vector3();
 function bake(kind, name) {
   const key = kind + ':' + name; if (BAKED[key]) return BAKED[key];
+  const steps = bakeSteps(kind, name); let step;
+  while (!(step = steps.next()).done) { /* synchronous fallback for new clips */ }
+  return step.value;
+}
+// The exact same retargeting can run a frame at a time during loading. Keep the
+// ordinary cached gesture path above free of generator allocation.
+export function* prepareClips(names, kinds = KINDS) {
+  for (const kind of kinds) for (const name of names) {
+    if (SRC[kind] && CLIPS[name] && !BAKED[kind + ':' + name]) yield* bakeSteps(kind, name);
+  }
+}
+function* bakeSteps(kind, name) {
+  const key = kind + ':' + name;
   const C = CLIPS[name], S = SRC[kind]; if (!C || !S) return null;
   const tpl = skClone(S.scene); tpl.updateMatrixWorld(true);
   const bones = {}; tpl.traverse(o => { if (o.isBone) bones[o.name] = o; });
@@ -568,6 +594,7 @@ function bake(kind, name) {
     }
     BONES.forEach((n, i) => bones[n].quaternion.toArray(out.q, (f * BONES.length + i) * 4));
     out.y[f] = (J(f, 0, a).y - y0) * S.info.legTop / leg; // bounces scaled to the bean's short legs
+    yield;
   }
   return (BAKED[key] = out);
 }
@@ -627,7 +654,7 @@ export class PlushBean {
     this.label = null; this.labelKey = ''; this.labelY = H + 0.57;
     if (name) this.setLabel(name, '#f3ead8');
     this.phase = Math.random() * 10; this.walk = 0; this.yaw = 0; this.eyeYaw = 0; this.seatBlend = 0; this.dead = false; this.holding = false;
-    this.seatLift = Math.max(0, 0.49 - S.info.legTop);
+    this.seatLift = Math.max(0, 0.65 - S.info.legTop);
   }
   // the generated hat has arrived: put it where the hand-built one sits
   fitHat() {
@@ -641,19 +668,44 @@ export class PlushBean {
     this.label = T.textSprite(text, { color, size: 40, h: 0.055, screen: true }); this.label.position.y = this.labelY; this.root.add(this.label);
   }
   setDead(on) { this.dead = on; if (this.label) this.label.visible = !on; }
+  // Body materials and cloned skeletons belong to this actor. Model geometry,
+  // skin/hat maps, hats and effect materials are shared with the asset library.
+  dispose() {
+    if (this.disposed) return; this.disposed = true;
+    this.root.removeFromParent(); this.mat.dispose();
+    const skeletons = new Set(), materials = new Set();
+    this.model.traverse(o => {
+      if (o.skeleton) skeletons.add(o.skeleton);
+      if (o.userData.fur) materials.add(o.material);
+    });
+    skeletons.forEach(s => s.dispose()); materials.forEach(m => m.dispose());
+    if (this.label) { this.label.material.map?.dispose(); this.label.material.dispose(); }
+  }
   // play a gesture over the procedural pose; upper: arms, spine and head only (seated, or holding still)
   play(name, upper = false) { if (!CLIPS[name] || this.dead) return false; this.g = { name, t: 0, upper }; PLAYED[name] = (PLAYED[name] || 0) + 1; return true; }
   get busy() { return !!this.g; }
   // a rotation given in the character's axes (x pitch forward/back, y turn, z roll), applied about the bone's joint
   rot(name, x = 0, y = 0, z = 0) {
     const B = this.b[name]; if (!B) return;
+    if (cacheBoneRotations) {
+      if (!B.poseRotation || B.poseX !== x || B.poseY !== y || B.poseZ !== z) {
+        qa.setFromEuler(eu.set(x, y, z, 'XYZ'));
+        qb.copy(B.wi).multiply(qa).multiply(B.w);
+        (B.poseRotation || (B.poseRotation = new THREE.Quaternion())).multiplyQuaternions(B.rest, qb);
+        B.poseX = x; B.poseY = y; B.poseZ = z;
+      }
+      // Gestures and eating can overwrite the bone after rot(). Restore those
+      // changes, but avoid another Euler conversion when it is already exact.
+      if (!B.o.quaternion.equals(B.poseRotation)) B.o.quaternion.copy(B.poseRotation);
+      return;
+    }
     qa.setFromEuler(eu.set(x, y, z, 'XYZ'));
     qb.copy(B.wi).multiply(qa).multiply(B.w);
     B.o.quaternion.copy(B.rest).multiply(qb);
   }
   // s: { x, z, face, look, moving, seated, pale, lucky, t, dt }
   update(s) {
-    const dt = Math.min(0.1, s.dt || 0.016), H = this.info.height;
+    const dt = Math.min(0.1, s.dt ?? 0.016), H = this.info.height;
     this.root.position.set(s.x, 0, s.z);
     if (this.dead) {
       this.root.rotation.y = s.face;
@@ -677,7 +729,7 @@ export class PlushBean {
     this.phase += dt * 11 * (0.3 + this.walk);
     const sw = Math.sin(this.phase) * this.walk, sb = this.seatBlend, w = this.walk;
     const breathe = Math.sin(s.t * 2.2 + this.phase);
-    this.model.position.set(0, Math.abs(Math.cos(this.phase)) * 0.045 * w + sb * this.seatLift, 0);
+    this.model.position.set(0, Math.abs(Math.cos(this.phase)) * 0.045 * w + sb * Math.max(0, (s.seatHeight || 0.58) + 0.08 - this.info.legTop), sb * 0.22);
     this.rot('Hips', 0, 0, sw * 0.06);
     this.rot('Spine', 0.05 * w + 0.04 * sb, 0, -sw * 0.03);
     this.rot('Spine1', 0, this.eyeYaw * 0.15, 0);
@@ -695,7 +747,8 @@ export class PlushBean {
       this.rot(`${side}Foot`, -sb * 0.1, 0, 0);
     }
     const sp = this.b.Spine1; if (sp) sp.o.scale.copy(sp.restScale).multiplyScalar(1 + breathe * 0.006);
-    if (this.g) this.gesture(dt, s.moving);
+    if (this.g && !s.eating) this.gesture(dt, s.moving);
+    if (s.eating) { const chew = Math.sin(s.t * 23); this.rot('RightArm', -1.05 + chew * .06, 0, .1); this.rot('RightForeArm', -1.1, 0, 0); this.rot('Head', .08 + chew * .055, Math.sin(s.t * 5) * .04, chew * .035); this.model.position.y += Math.abs(chew) * .012; }
     if (this.hat && this.hat.userData.spin) this.hat.userData.spin.rotation.y += dt * (4 + w * 20);
     // poisoned: going green, bubbles over the head
     const u = this.mat.userData.u;
@@ -729,8 +782,17 @@ PlushBean.prototype.gesture = function (dt, moving) {
   const r = (B.reach[f0] * (1 - u) + B.reach[f1] * u) * w, e = r * r * (3 - 2 * r); // eased
   this.model.position.z += R.step * e;
   // the arm lifted about the shoulder in the character's frame (pitch up: a negative turn about its left-right axis)
-  const arm = this.b.RightArm.o; this.model.updateMatrixWorld(true);
-  arm.parent.getWorldQuaternion(qc); this.model.getWorldQuaternion(qd);
+  const arm = this.b.RightArm.o;
+  if (legacyGestureMatrices) {
+    this.model.updateMatrixWorld(true);
+    arm.parent.getWorldQuaternion(qc); this.model.getWorldQuaternion(qd);
+  } else {
+    // Only these two ancestor rotations are needed before the arm is lifted.
+    // The final visible-scene update refreshes the completed pose and its skin.
+    arm.parent.updateWorldMatrix(true, false);
+    arm.parent.matrixWorld.decompose(gesturePosition, qc, gestureScale);
+    this.model.matrixWorld.decompose(gesturePosition, qd, gestureScale);
+  }
   qa.setFromAxisAngle(AX, -R.lift * e).premultiply(qd).multiply(qd.invert()); // the lift in world axes
   arm.quaternion.premultiply(qc).premultiply(qa).premultiply(qc.invert());
 };

@@ -1,0 +1,373 @@
+{
+  "at": "2026-10-16T14:31:44.377Z",
+  "rows": [
+    {
+      "name": "bar",
+      "uploads": [],
+      "bytes": 0,
+      "gfx": {
+        "frames": 99,
+        "calls": 131,
+        "tris": 578579,
+        "geos": 493,
+        "tex": 371,
+        "cam": [
+          5.83,
+          1.12,
+          6.79,
+          -0.05,
+          0
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "bar"
+        ],
+        "actorWork": {
+          "posed": 2,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "name": "rest",
+      "uploads": [],
+      "bytes": 0,
+      "gfx": {
+        "frames": 107,
+        "calls": 143,
+        "tris": 274950,
+        "geos": 493,
+        "tex": 371,
+        "cam": [
+          5.62,
+          1.12,
+          16.67,
+          -0.05,
+          -4.71
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "rest"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "name": "arcade",
+      "uploads": [],
+      "bytes": 0,
+      "gfx": {
+        "frames": 115,
+        "calls": 153,
+        "tris": 338147,
+        "geos": 493,
+        "tex": 371,
+        "cam": [
+          42.17,
+          1.12,
+          7.29,
+          -0.05,
+          0
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "arcade"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "name": "race",
+      "uploads": [],
+      "bytes": 0,
+      "gfx": {
+        "frames": 123,
+        "calls": 264,
+        "tris": 521019,
+        "geos": 493,
+        "tex": 371,
+        "cam": [
+          42,
+          1.12,
+          16.79,
+          -0.05,
+          0
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "race",
+          "arcade"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "name": "slots",
+      "uploads": [],
+      "bytes": 0,
+      "gfx": {
+        "frames": 131,
+        "calls": 119,
+        "tris": 483187,
+        "geos": 493,
+        "tex": 375,
+        "cam": [
+          21.67,
+          1.17,
+          24.55,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "slots"
+        ],
+        "actorWork": {
+          "posed": 1,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "name": "vip",
+      "uploads": [],
+      "bytes": 0,
+      "gfx": {
+        "frames": 139,
+        "calls": 113,
+        "tris": 454849,
+        "geos": 493,
+        "tex": 375,
+        "cam": [
+          41.67,
+          1.15,
+          24.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "name": "north",
+      "uploads": [],
+      "bytes": 0,
+      "gfx": {
+        "frames": 147,
+        "calls": 698,
+        "tris": 3188683,
+        "geos": 493,
+        "tex": 375,
+        "cam": [
+          18.5,
+          1.15,
+          4.93,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "rest",
+          "race",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "name": "backrooms",
+      "uploads": [],
+      "bytes": 0,
+      "gfx": {
+        "frames": 155,
+        "calls": 408,
+        "tris": 1661079,
+        "geos": 493,
+        "tex": 375,
+        "cam": [
+          21.67,
+          1.15,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    }
+  ],
+  "errors": []
+}

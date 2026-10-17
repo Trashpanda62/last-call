@@ -1,17 +1,20 @@
 // Screens, modes (solo, host, guest), input and the main loop.
+import { initLoading, loadingProgress, showBriefing, briefingReady, preloadInterface } from './loading.js';
+import { createGamepad } from './gamepad.js';
 import { CFG, DEATH_SOUNDS } from './config.js';
 import { clamp } from './util.js';
 import { collide, roomOf, los, W, H, STAFF_DOORS } from './map.js';
 import { PERKS, PERK } from './perks.js';
 import { createGame } from './sim.js';
-import { init as init3d, draw, playHand, gesture, info as gfxInfo, debugScene, pick, pickNear, partsOnScreen, screenPointOf, consolePointOf, setHover, camPos, applyGfx, gfxState } from './3d/render3d.js';
+import { DEATH_SECONDS } from './3d/death-scene.js';
+import { init as init3d, preloadAssets, warmup, draw, playHand, gesture, info as gfxInfo, debugScene, deathPlaying as sceneDeathPlaying, pick, pickNear, partsOnScreen, screenPointOf, consolePointOf, setHover, camPos, applyGfx, gfxState } from './3d/render3d.js';
 import { settings, onSettings, firstRun, set as setSetting } from './settings.js';
 import { initSettings, openSettings, closeSettings, settingsOpen } from './settings-ui.js';
 import * as audio from './audio.js';
 import { $, show, toast, clearToasts, lastToastAt, whisper, quietNote, splash, updateHud, renderMeeting, resetMeeting, renderOver, renderPick, marks } from './ui.js';
-import { initMoves, updateMoves, keyMove, pickerOpen, resetMoves, staffPicker } from './moves.js';
+import { initMoves, updateMoves, keyMove, mouseMove, pickerOpen, resetMoves, staffPicker, cameraView } from './moves.js';
 import { openMixer, openShop } from './bar.js';
-import { openTable, closeTable, tableGame, tableSeat, tableView, tableTick, tableBar, cycleChip, chipHud, setHandHook, press as pressPart, partInfo } from './tables.js';
+import { resetTableLuck, openTable, closeTable, closeAllTables, tablesBusy, tableViews, tableGame, tableSeat, tableView, tableTick, tableBar, cycleChip, chipHud, setHandHook, press as pressPart, partInfo, tableStart, spaceTable, releaseTable, tableLook } from './tables.js';
 import { CHIP_COL } from './3d/rig.js';
 import { hostRoom, joinRoom } from './net.js';
 import { packPub, packFor, unpackSnap, resetWire } from './wire.js';
@@ -20,14 +23,14 @@ import { createDiscordLink } from './discord-link.js';
 
 const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* optional */ } } };
 const S = {
-  screen: 'menu', role: null, sim: null, myId: 0, view: null, paused: false, room: null, code: '', guests: new Map(),
+  screen: 'boot', ready: false, role: null, sim: null, myId: 0, view: null, paused: false, room: null, code: '', guests: new Map(),
   me: { x: 0, y: 0, look: 0, pitch: 0, moving: false, posVer: -1 }, demo: null, lastMode: null, overShown: false, sendT: 0, acc: 0, disp: {}, standReq: false, opts: null,
 };
 const keys = {}; const mouse = { x: 0, y: 0 };
 const stick = { id: null, active: false, x: 0, y: 0, ox: 0, oy: 0 };
-let touchMode = false;
+let touchMode = false, inputMode = 'keyboard', padDispatch = false;
 const lowPower = matchMedia('(pointer: coarse)').matches;
-firstRun(lowPower); init3d(document.getElementById('view'), { lowPower });
+firstRun(lowPower); initLoading();
 applyGfx(settings().gfx); onSettings((s, part) => { if (part === 'gfx') applyGfx(s.gfx); if (part === 'voice') { voiceSync(); showVoiceLine(); } });
 let pressAt = null; // where on screen the current press happened (the hand reaches there)
 setHandHook(kind => playHand(kind, pressAt));
@@ -75,10 +78,8 @@ async function recordDeath() {
 }
 function refreshSettings() {
   const s = audio.settings();
-  $('musicBtn').textContent = $('pMusic').textContent = 'Music: ' + (s.music ? 'on' : 'off');
   $('sfxBtn').textContent = $('pSfx').textContent = 'Sounds: ' + (s.sfx ? 'on' : 'off');
 }
-const toggleMusic = () => { audio.unlock(); audio.setMusic(!audio.settings().music); refreshSettings(); };
 const toggleSfx = () => { audio.unlock(); audio.setSfx(!audio.settings().sfx); refreshSettings(); };
 function refreshStats() {
   const st = store.get('lc.stats', { games: 0, wins: 0, killerGames: 0, killerWins: 0 });
@@ -88,9 +89,27 @@ refreshSettings(); refreshStats();
 const joinParam = new URLSearchParams(location.search).get('join');
 if (joinParam) $('codeIn').value = joinParam.toUpperCase().slice(0, 4);
 
+// The title screen keeps the play choices in one column; secondary details
+// open in an accessible side panel without changing the selected mode.
+let menuPanel = null;
+function closeMenuPanel() {
+  for (const id of ['joinPanel', 'profilePanel']) show(id, false);
+  $('joinToggle').setAttribute('aria-expanded', 'false'); $('profileBtn').setAttribute('aria-expanded', 'false');
+  menuPanel = null;
+}
+function openMenuPanel(id) {
+  const toggle = menuPanel === id; closeMenuPanel(); if (toggle) return;
+  menuPanel = id; show(id, true); $(id === 'joinPanel' ? 'joinToggle' : 'profileBtn').setAttribute('aria-expanded', 'true');
+  $(id === 'joinPanel' ? 'codeIn' : 'nameIn').focus(); audio.unlock();
+}
+$('joinToggle').onclick = () => openMenuPanel('joinPanel');
+$('profileBtn').onclick = () => openMenuPanel('profilePanel');
+document.querySelectorAll('[data-close-panel]').forEach(b => b.onclick = closeMenuPanel);
+const profileName = () => { $('profileName').textContent = $('nameIn').value.trim() || 'Guest'; };
+$('nameIn').addEventListener('input', profileName); profileName();
 // ---------- Screens ----------
 const OVERLAYS = ['menu', 'setup', 'how', 'pause', 'over', 'pick', 'settings']; // (the meeting is the phone: setPhone)
-function only(...ids) { for (const o of OVERLAYS) show(o, ids.includes(o)); }
+function only(...ids) { if (!ids.includes('settings') && settingsOpen()) closeSettings(); for (const o of OVERLAYS) show(o, ids.includes(o)); }
 // The meeting is on your phone (Steve, 2026-10-15): a notification when a murder is found, Tab (or the phone badge)
 // brings it up and puts it away, and the night goes on behind it, so you can ignore it and keep playing.
 function setPhone(on) {
@@ -101,11 +120,12 @@ function setPhone(on) {
   else { if (document.activeElement && document.activeElement.id === 'chatIn') document.activeElement.blur(); if (S.screen === 'game' && !S.paused) requestLock(); }
 }
 function toMenu(err) {
-  closeTable(); // first, while the game and the line to the host are still there: an open round is settled, not dropped
+  closeAllTables(); // first, while the game and the line to the host are still there: an open round is settled, not dropped
   voiceOff();
   if (S.room) { try { S.room.close(); } catch (e) { /* ignore */ } }
   releaseLock(); setPhone(false); show('meeting', false); S.phone = false;
   Object.assign(S, { screen: 'menu', role: null, sim: null, view: null, room: null, paused: false, guests: new Map() });
+  S.briefingToken = null; show('levelLoading', false);
   show('hud', false); only('menu'); $('menuErr').textContent = err || ''; refreshStats(); audio.setMood('menu'); clearGameUI();
 }
 // Whatever a game left on the page: the name picker, the camera filter, the table cursor.
@@ -122,7 +142,7 @@ $('optKillers').innerHTML = '<option value="2" selected>2</option>';
 $('optPlayers').onchange = syncKillers; syncKillers();
 function openSetup(mode) {
   S.screen = mode === 'solo' ? 'setup' : 'lobby';
-  only('setup');
+  closeMenuPanel(); only('setup');
   $('setupTitle').textContent = (mode === 'solo' ? 'Solo game' : mode === 'host' ? 'Your room' : 'Joined room') + (mode === 'guest' ? '' : ' · ' + MODE_NAME[S.gameMode]);
   show('roomBox', mode !== 'solo'); show('opts', mode !== 'guest'); show('roleField', mode === 'solo');
   show('guestWait', mode === 'guest'); show('startBtn', mode !== 'guest'); $('setupErr').textContent = '';
@@ -137,21 +157,27 @@ const MODE_NAME = { classic: 'Murder Mystery', escape: 'Escape' };
 S.gameMode = store.get('lc-mode', 'classic') === 'escape' ? 'escape' : 'classic';
 function setMode(m) {
   S.gameMode = m === 'escape' ? 'escape' : 'classic'; store.set('lc-mode', S.gameMode);
+  $('menu').dataset.mode = S.gameMode;
+  $('modeDescription').textContent = S.gameMode === 'escape' ? 'Restore the power. Find the exit. Don’t look back.' : 'Find the killers. Break the bank. Survive the night.';
   document.querySelectorAll('#modePick .mode').forEach(b => { const on = b.dataset.mode === S.gameMode; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
 }
 document.querySelectorAll('#modePick .mode').forEach(b => { b.onclick = () => setMode(b.dataset.mode); });
 setMode(S.gameMode);
-function enterGame() {
-  S.screen = 'game'; S.view = null; S.tips = 0; S.peekT = 0; S.stamina = CFG.stamina; S.sprinting = false; marks.clear(); S.me.pitch = 0; S.wasSeated = false; S.me.posVer = -1; S.lastMode = null; S.overShown = false; S.paused = false; S.disp = {}; S.acc = 0;
-  only(); show('hud', true); closeTable(); resetMeeting(); audio.setMood('lounge'); clearGameUI();
+function enterGame(skipBriefing = false) {
+  S.overToken = null; S.deathKey = null; S.deathUntil = 0;
+  audio.resetSceneCues();
+  S.screen = 'game'; S.view = null; S.tips = 0; S.peekT = 0; S.peekButton = false; S.stamina = CFG.stamina; S.sprinting = false; marks.clear(); S.me.pitch = 0; S.wasSeated = false; S.me.posVer = -1; S.lastMode = null; S.overShown = false; S.paused = false; S.disp = {}; S.acc = 0;
+  only(); show('hud', true); closeAllTables(); resetMeeting(); audio.setMood('lounge'); clearGameUI();
+  if (!skipBriefing) beginBriefing();
 }
 
 // ---------- Solo ----------
-function startSolo(opts) {
+function startSolo(opts, skipBriefing = false) {
   S.role = 'solo'; S.opts = opts; S.myId = 0;
+  resetTableLuck();
   S.sim = createGame({ humans: [{ name: myName(), key: 'me', death: myDeath() }], pick: 'solo', ...opts });
   audio.setRecs(myRec() ? { 0: myRec() } : {});
-  enterGame();
+  enterGame(skipBriefing);
 }
 
 // ---------- Hosting ----------
@@ -208,9 +234,13 @@ function hostStart() {
   const guests = [...S.guests.entries()];
   const humans = [{ name: myName(), key: 'host', death: myDeath() }, ...guests.map(([conn, g]) => ({ name: g.name, key: conn.peer, death: g.death }))];
   const players = Math.max(opts.players, humans.length);
+  resetTableLuck();
   S.sim = createGame({ humans, players, killers: opts.killers, difficulty: opts.difficulty, mode: opts.mode, pick: 'timed' }); // the killers pick their edges first
   S.myId = 0;
   guests.forEach(([conn, g], i) => { g.id = i + 1; g.wire = {}; S.room.send(conn, { t: 'start', id: g.id }); });
+  // Guests need their own initial view to prepare the level while the host is
+  // still reading the controls. Regular snapshots wait for the host to Continue.
+  if (guests.length) sendSnapshots(S.sim.pubView());
   const recs = {}; if (myRec()) recs[0] = myRec(); for (const [, g] of guests) if (g.rec) recs[g.id] = g.rec; // everyone's own death sound, once
   audio.setRecs(recs); // one recording per message: 32 of them at up to 90 KB each would pass a data channel's message limit together
   for (const [conn] of guests) { S.room.send(conn, { t: 'recs', recs: {} }); for (const [id, url] of Object.entries(recs)) S.room.send(conn, { t: 'recs', recs: { [id]: url }, add: true }); }
@@ -219,7 +249,7 @@ function hostStart() {
 function hostBackToLobby() {
   S.sim = null; S.view = null;
   for (const g of S.guests.values()) g.id = null;
-  closeTable(); show('hud', false); openSetup('host'); broadcastLobby(); clearGameUI(); audio.setMood('menu');
+  closeAllTables(); show('hud', false); openSetup('host'); broadcastLobby(); clearGameUI(); audio.setMood('menu');
 }
 
 // ---------- Joining ----------
@@ -237,11 +267,11 @@ function startJoin(code) {
 }
 function guestData(msg) {
   if (!msg || typeof msg !== 'object') return;
-  if (msg.t === 'lobby') { if (S.screen !== 'lobby') { closeTable(); show('hud', false); openSetup('guest'); clearGameUI(); audio.setMood('menu'); } renderLobby(msg.names, msg.code); $('setupTitle').textContent = 'Joined room' + (MODE_NAME[msg.mode] ? ' · ' + MODE_NAME[msg.mode] : ''); }
+  if (msg.t === 'lobby') { if (S.screen !== 'lobby') { closeAllTables(); show('hud', false); openSetup('guest'); clearGameUI(); audio.setMood('menu'); } renderLobby(msg.names, msg.code); $('setupTitle').textContent = 'Joined room' + (MODE_NAME[msg.mode] ? ' · ' + MODE_NAME[msg.mode] : ''); }
   else if (msg.t === 'busy') toMenu(msg.why);
   else if (msg.t === 'start') { S.myId = msg.id; resetWire(); enterGame(); }
   else if (msg.t === 'recs') audio.setRecs(msg.recs && typeof msg.recs === 'object' ? msg.recs : {}, !!msg.add);
-  else if (msg.t === 'snap') { const v = unpackSnap(msg); if (v && S.screen === 'game') { S.view = v; inbox(v.priv.inbox); } } // (wire.js)
+  else if (msg.t === 'snap') { const v = unpackSnap(msg); if (v && (S.screen === 'game' || S.screen === 'briefing')) { S.view = v; inbox(v.priv.inbox); } } // (wire.js)
   else if (msg.t === 'vroster') { V.roster = Array.isArray(msg.list) ? msg.list : []; if (V.voice) V.voice.setRoster(V.roster); }
   else if (msg.t === 'dlink') linkNews(msg);
 }
@@ -270,7 +300,7 @@ function voiceOff() {
 // The host: everyone with voice on, by character id once the game is on.
 function hostVoiceRoster() {
   if (S.role !== 'host' || !S.room || !S.room.peer.id) return;
-  const game = S.screen === 'game', list = [];
+  const game = S.screen === 'game' || S.screen === 'briefing', list = [];
   if (V.on.get(S.room.peer.id)) list.push({ peerId: S.room.peer.id, id: game ? 0 : null });
   for (const [conn, g] of S.guests) if (V.on.get(conn.peer)) list.push({ peerId: conn.peer, id: game ? g.id : null });
   V.roster = list; S.room.broadcast({ t: 'vroster', list });
@@ -357,7 +387,7 @@ function act(k, arg) {
   const p = S.view && S.view.priv;
   if (k === 'use' && arg === undefined && p && p.ctx === 'Talk to the bartender') { openMixer(); return; } // the mixer (bar.js)
   if (k === 'use' && arg === undefined && p && p.ctx === 'Talk to the shady guy') { openShop(); return; }
-  if (k === 'use' && arg === undefined && p && p.staffAt !== null && p.staffAt !== undefined && p.ctx && p.ctx.startsWith('Take the staff')) { staffPicker(STAFF_DOORS, p.staffAt); return; } // pick where to come out
+  if (arg === undefined && p && p.staffAt !== null && p.staffAt !== undefined && (k === 'staff' || (k === 'use' && p.ctx && p.ctx.startsWith('Take the staff')))) { staffPicker(STAFF_DOORS, p.staffAt); return; } // pick where to come out
   if (S.sim) S.sim.action(S.myId, k, arg);
   else if (S.role === 'guest' && S.room) S.room.send({ t: 'act', k, arg });
 }
@@ -378,7 +408,7 @@ function inbox(items) {
   for (const m of items || []) {
     if (m.phone) phoneBuzz(m.phone, m.text);
     else if (m.text) toast(m.text, m.bad);
-    if (m.sfx === 'death') audio.death(m.voice, m.vol, m.muffle, m.who); else if (m.sfx) audio.sfx(m.sfx, m.vol ?? 1, !!m.muffle); // a death: its victim's sound, as loud as the host says
+    if (m.sfx === 'death') audio.death(m.voice, m.vol, m.muffle, m.who, {at: m.at, distant: m.distant, event: m.event}); else if (m.sfx) audio.sfx(m.sfx, m.vol ?? 1, !!m.muffle);
     if (HAND_SFX.has(m.sfx)) playHand(m.sfx === 'pour' ? 'click' : m.sfx);
     if (m.sfx === 'gun' && m.mine) playHand('shoot'); // (your own shot: the revolver in your hand)
     if (m.sfx === 'poison' && S.view && S.view.priv.isKiller && /on its way|You rigged/.test(m.text || '')) playHand('poison');
@@ -393,6 +423,7 @@ function lookBy(dx, dy) {
   const c = settings().controls, k = SENS * (c.sens || 1);
   S.me.look += dx * k;
   S.me.pitch = clamp(S.me.pitch - dy * k * (c.invertY ? -1 : 1), -1.25, 1.25);
+  tableLook(S.me.look);
 }
 function moveMe(dt) {
   const v = S.view; if (!v) return;
@@ -402,18 +433,20 @@ function moveMe(dt) {
   if (p.posVer !== me.posVer) {
     me.x = p.x; me.y = p.y; me.posVer = p.posVer; S.standReq = false;
     if (sitting) { me.look = p.seat.face; me.pitch = SIT[p.seat.game]; } else if (S.wasSeated) me.pitch = 0;
-    else { const c = v.pub.chars[p.me]; if (c) me.look = c.look; me.pitch = 0; }
+    else if (!p.seat) { const c = v.pub.chars[p.me]; if (c) me.look = c.look; me.pitch = 0; }
     S.wasSeated = sitting;
   }
   const sid = p.seat ? p.seat.id : null;
-  if (sid !== S.seatId) { S.seatId = sid; S.standReq = false; if (sid !== null) S.atGameT = performance.now(); } // the how-to line shows for a few seconds
+  if (sid !== S.seatId) { S.seatId = sid; S.standReq = false; if (sid !== null) { S.atGameT = performance.now(); if (p.seat.game === 'bj' && !locked()) me.pitch = -0.66; } } // the how-to line shows for a few seconds
   me.moving = false; S.sprinting = false;
-  // a killer's over-the-shoulder camera (hold V): eases out behind you, and you walk slower while it is up
-  const peek = !!(keys.v && p.perk === 'peek' && p.alive && !p.seat && v.pub.mode === 'play' && !v.pub.over && !S.paused);
+  // A killer's over-the-shoulder camera (hold E) eases out behind you and slows your walk.
+  const peek = !!((keys.e || S.peekButton) && p.perk === 'peek' && p.alive && !p.monster && !p.seat && v.pub.mode === 'play' && !v.pub.over && !S.paused && !pickerOpen());
   S.peekT = clamp(S.peekT + (peek ? dt : -dt) * 4, 0, 1);
-  if (v.pub.mode !== 'play' || v.pub.over || S.paused) return;
+  if (v.pub.mode !== 'play' || v.pub.over || S.paused || pickerOpen() || p.cameraFeed || deathPlaying()) return;
+  if (padInput.lookX || padInput.lookY) { me.look += padInput.lookX * dt * 2.1; me.pitch = clamp(me.pitch - padInput.lookY * dt * 1.7, -1.25, 1.25); }
   let f = (keys.w || keys.arrowup ? 1 : 0) - (keys.s || keys.arrowdown ? 1 : 0);
   let r = (keys.d || keys.arrowright ? 1 : 0) - (keys.a || keys.arrowleft ? 1 : 0);
+  r += padInput.x; f -= padInput.y;
   if (stick.active && Math.hypot(stick.x, stick.y) > 0.2) { r += stick.x; f -= stick.y; }
   if (sitting) {
     me.x = p.seat.x; me.y = p.seat.y;
@@ -459,7 +492,8 @@ function markAim() {
 // The real seats and how far the camera tilts down when you sit in one.
 const SIT = { cams: -0.25, vip: -0.2 };
 const seatedPlay = () => S.screen === 'game' && !S.paused && S.view && S.view.priv.seat && S.view.pub.mode === 'play' && !S.view.pub.over;
-const playing = () => S.screen === 'game' && !S.paused && S.view && S.view.pub.mode === 'play' && !S.view.pub.over; // (ghosts play the games too)
+const deathPlaying = () => performance.now() < (S.deathUntil || 0) || sceneDeathPlaying();
+const playing = () => S.screen === 'game' && !deathPlaying() && !S.paused && S.view && S.view.pub.mode === 'play' && !S.view.pub.over; // (ghosts play the games too)
 // At a game you stand where you like and play it with the crosshair, free to look round and walk off. Phones play it
 // the same way (Steve, 2026-10-15): no table camera or table bar, a tap on the felt is a click at that point, and the
 // chip buttons by the chip stand in for the scroll wheel. (The table camera mode is off everywhere.)
@@ -469,6 +503,7 @@ const tableMode = () => false;
 let aim = null, tapShow = null;
 function pressAtNdc(nx, ny, alt, near) {
   if (!seatedPlay() || !tableGame()) return false;
+  if (!alt && pressHudAt((nx + 1) * innerWidth / 2, (1 - ny) * innerHeight / 2)) return true;
   const h = pick(nx, ny) || (near ? pickNear(nx, ny, near) : null);
   if (!h) return false;
   audio.unlock(); pressAt = { x: nx, y: ny };
@@ -484,7 +519,7 @@ const lockOK = () => !navigator.webdriver && !S.noLock && !touchMode;
 const locked = () => document.pointerLockElement === view;
 function wantLock() {
   const v = S.view;
-  return S.screen === 'game' && !S.paused && !!v && v.pub.mode === 'play' && !v.pub.over && !pickerOpen() && !(v.priv.seat && v.priv.seat.game === 'cams'); // the security desk's card wants the mouse
+  return S.screen === 'game' && !S.paused && !!v && v.pub.mode === 'play' && !v.pub.over && !deathPlaying() && !pickerOpen() && !v.priv.cameraFeed && !(v.priv.seat && v.priv.seat.game === 'cams');
 }
 function requestLock(force) {
   if (!lockOK() || locked() || !(force ? S.screen === 'game' && !S.paused : wantLock())) return;
@@ -499,22 +534,27 @@ document.addEventListener('pointerlockchange', () => {
 let drag = null;
 view.addEventListener('mousedown', e => {
   audio.unlock();
+  if (deathPlaying()) return;
   if (touchMode) return;
   mouse.x = e.clientX; mouse.y = e.clientY;
   if (tableMode() && !locked()) { if (e.button === 0 || e.button === 2) pressAtNdc(...ndcOf(e.clientX, e.clientY), e.button === 2); return; } // click the felt
   if (locked()) {
     if (seatedPlay() && (e.button === 0 || e.button === 2) && pressAtNdc(0, 0, e.button === 2)) return; // at a game: click presses what the crosshair is on
+    if (!S.paused && mouseMove(e.button)) return;
     if (e.button === 0 && S.view && S.view.priv.ctx) act('use'); return;
   }
   if (wantLock() && lockOK()) { requestLock(); return; }
   drag = { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, b: e.button }; // no pointer lock: drag to look, click to press
 });
 addEventListener('mouseup', e => {
-  if (drag && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 6 && seatedPlay()) pressAtNdc(...ndcOf(e.clientX, e.clientY), drag.b === 2);
+  if (drag && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 6) {
+    if (seatedPlay()) pressAtNdc(...ndcOf(e.clientX, e.clientY), drag.b === 2);
+    else if (!S.paused && !mouseMove(drag.b) && drag.b === 0 && S.view && S.view.priv.ctx) act('use'); // (left click interacts here too)
+  }
   drag = null;
 });
 view.addEventListener('contextmenu', e => e.preventDefault());
-view.addEventListener('wheel', e => { if (playing()) { e.preventDefault(); cycleChip(e.deltaY > 0 ? -1 : 1, S.view.pub.maxBet); } }, { passive: false }); // the wheel changes your chip, at a game or on the way to one
+view.addEventListener('wheel', e => { inputMode = 'keyboard'; if (playing()) { e.preventDefault(); cycleChip(e.deltaY > 0 ? -1 : 1, S.view.pub.maxBet); } }, { passive: false }); // the wheel changes your chip, at a game or on the way to one
 // The table bar's buttons and chips.
 $('tableBar').addEventListener('click', e => {
   const b = e.target.closest('[data-p]'); if (!b || !tableMode()) return;
@@ -522,16 +562,21 @@ $('tableBar').addEventListener('click', e => {
 });
 $('tableBar').addEventListener('contextmenu', e => e.preventDefault());
 addEventListener('mousemove', e => {
+  inputMode = 'keyboard';
   mouse.x = e.clientX; mouse.y = e.clientY;
   if (locked()) { lookBy(e.movementX, e.movementY); return; }
   if (drag && S.screen === 'game') { lookBy(e.clientX - drag.x, e.clientY - drag.y); drag.x = e.clientX; drag.y = e.clientY; }
 });
 
-const KEYMAP = { e: 'use', f: 'sip', r: 'inspect', x: 'pour' };
+const KEYMAP = { u: 'use', f: 'sip', r: 'inspect', x: 'pour' }; // (left click interacts; E is the killer's ability)
 const MOVE_KEYS = new Set(['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright']);
 addEventListener('keydown', e => {
+  if (!padDispatch) inputMode = 'keyboard';
   const k = e.key.toLowerCase();
+  if (S.screen === 'boot' || S.screen === 'briefing') return;
+  if (k === 'escape' && S.screen === 'menu' && menuPanel) { const from = menuPanel; closeMenuPanel(); $(from === 'joinPanel' ? 'joinToggle' : 'profileBtn').focus(); return; }
   if (e.target && e.target.tagName === 'INPUT' && k !== 'tab') { if (k === 'escape') e.target.blur(); return; }
+  if (deathPlaying() && k !== 'escape') return;
   if (settingsOpen()) { if (k === 'escape') closeSettings(); return; } // (Esc there goes back to the menu or the pause screen)
   if (k === 'tab' && S.screen === 'game') { e.preventDefault(); if (!e.repeat) setPhone(!S.phone); return; } // the phone (the meeting)
   if (k === 'escape' && S.phone) { setPhone(false); return; }
@@ -541,29 +586,29 @@ addEventListener('keydown', e => {
     const seated = S.screen === 'game' && S.view && S.view.priv.seat && S.view.pub.mode === 'play', sitting = seated && !!SIT[S.view.priv.seat.game];
     const picking = S.screen === 'game' && S.view && S.view.pub.mode === 'pick';
     if (picking) { const p = PERKS['1234567'.indexOf(k)]; if (p && S.view.priv.isKiller) act('perk', p.id); else if (S.role === 'solo' && !S.view.priv.isKiller && (k === 'enter' || k === ' ' || k === 'e')) act('ready'); } // 1-7 pick an edge (solo gamblers: Enter starts the night)
+    else if (S.screen === 'game' && !S.paused && tableGame() === 'bj' && ['h','j','k'].includes(k)) { pressPart({ h: 'btn:hit', j: 'btn:stand', k: 'btn:double' }[k]); }
     else if (S.screen === 'game' && !S.paused && keyMove(k)) { /* a v4 move or the name picker took it */ }
     else if (k === 'escape' && S.screen === 'game') { if (performance.now() - (S.unlockAt || 0) > 400) togglePause(); }
-    else if (k === ' ' && S.screen === 'game' && !S.paused) markAim();
-    else if (k === 'e' && seated && !sitting && !S.paused && !tableMode() && aim) pressAtNdc(0, 0, false); // at a game E presses what you aim at
+    else if (k === ' ' && S.screen === 'game' && !S.paused) { if (seatedPlay() && tableGame() && !pickerOpen()) { e.preventDefault(); spaceTable(); } else markAim(); }
     else if (k === 'f' && S.screen === 'game' && !S.paused && S.view && S.view.pub.blackout && S.view.priv.alive && !S.view.priv.isKiller) act('flash'); // in a blackout F is your flashlight
-    else if (S.screen === 'game' && KEYMAP[k] && !S.paused) { act(KEYMAP[k]); if (k === 'e' && sitting) requestLock(true); }
+    else if (S.screen === 'game' && KEYMAP[k] && !S.paused) { act(KEYMAP[k]); if (KEYMAP[k] === 'use' && sitting) requestLock(true); }
     if (MOVE_KEYS.has(k) && S.screen === 'game' && !S.paused) {
       if (sitting && !S.standReq) { S.standReq = true; act('leave'); requestLock(true); } else requestLock();
     }
   }
   keys[k] = true;
 });
-addEventListener('keyup', e => { const k = e.key.toLowerCase(); keys[k] = false; if (k === settings().voice.pttKey) setTalk(false); });
-addEventListener('blur', () => { for (const k in keys) keys[k] = false; drag = null; setTalk(false); });
+addEventListener('keyup', e => { const k = e.key.toLowerCase(); keys[k] = false; if (k === ' ') releaseTable(!playing()); if (k === settings().voice.pttKey) setTalk(false); });
+addEventListener('blur', () => { releaseTable(true); for (const k in keys) keys[k] = false; S.peekButton = false; drag = null; setTalk(false); });
 // The side mouse buttons: push to talk if picked, and never the browser's Back in a game (it would leave the room).
 const SIDE = { 3: 'mouse4', 4: 'mouse5' };
 addEventListener('mousedown', e => { if (SIDE[e.button] && S.screen === 'game') { e.preventDefault(); if (settings().voice.pttKey === SIDE[e.button]) setTalk(true); } });
 addEventListener('mouseup', e => { if (SIDE[e.button] && S.screen === 'game') { e.preventDefault(); if (settings().voice.pttKey === SIDE[e.button]) setTalk(false); } });
-addEventListener('pagehide', () => { closeTable(); voiceOff(); if (S.room) S.room.close(); }); // settles an open round, then tells the other side now instead of after the heartbeat gives up
-addEventListener('pointerdown', () => { audio.unlock(); if (V.voice) V.voice.unlock(); }, { passive: true });
+addEventListener('pagehide', () => { closeAllTables(); voiceOff(); if (S.room) S.room.close(); }); // settles an open round, then tells the other side now instead of after the heartbeat gives up
+addEventListener('pointerdown', () => { inputMode = 'keyboard'; audio.unlock(); if (V.voice) V.voice.unlock(); }, { passive: true });
 
 // Touch: left thumb walks, right thumb drags to look, buttons on the right edge.
-function setTouch() { if (!touchMode) { touchMode = true; document.body.classList.add('touch'); } }
+function setTouch() { inputMode = 'touch'; if (!touchMode) { touchMode = true; document.body.classList.add('touch'); } }
 addEventListener('touchstart', setTouch, { passive: true });
 addEventListener('pointerdown', e => { if (e.pointerType === 'mouse' && touchMode) { touchMode = false; document.body.classList.remove('touch'); } }, { passive: true, capture: true });
 const looks = new Map();
@@ -609,7 +654,7 @@ for (const [id, dir] of [['chipDn', -1], ['chipUp', 1]]) {
   b.addEventListener('touchend', e => e.preventDefault());
   b.addEventListener('click', go);
 }
-initMoves({ act: (k, arg) => act(k, arg), unlock: releaseLock, relock: () => requestLock() });
+initMoves({ act: (k, arg) => act(k, arg), unlock: releaseLock, relock: () => requestLock(), peek: on => { S.peekButton = on; } });
 
 // ---------- Buttons ----------
 $('soloBtn').onclick = () => { audio.unlock(); openSetup('solo'); };
@@ -618,7 +663,6 @@ $('joinBtn').onclick = () => { audio.unlock(); startJoin($('codeIn').value); };
 $('codeIn').addEventListener('keydown', e => { if (e.key === 'Enter') $('joinBtn').click(); });
 $('howBtn').onclick = () => show('how', true);
 $('howClose').onclick = () => show('how', false);
-$('musicBtn').onclick = $('pMusic').onclick = toggleMusic;
 $('sfxBtn').onclick = $('pSfx').onclick = toggleSfx;
 $('startBtn').onclick = () => {
   if (S.role === 'host') { if (!S.code) return; hostStart(); }
@@ -633,6 +677,7 @@ $('shareBtn').onclick = async () => {
 };
 function togglePause() {
   S.paused = !S.paused;
+  if (S.paused) releaseTable(true);
   if (S.paused) releaseLock(); else { requestLock(); show('how', false); }
   show('pause', S.paused);
   document.querySelector('#pause h2').textContent = S.role === 'solo' ? 'Paused' : 'Menu (the game keeps going)';
@@ -659,6 +704,14 @@ function smooth(pub, dt) {
     return { ...c, x: d.x, y: d.y };
   }) };
 }
+function sendSnapshots(pub) {
+  // Pack shared state once, retaining an independent delta/private cache per guest.
+  let base = null;
+  for (const [conn, g] of S.guests) if (g.id !== null) {
+    base = base || packPub(pub);
+    S.room.send(conn, { t: 'snap', ...packFor(base, S.sim.view(g.id, pub).priv, g.wire || (g.wire = {}), S.sim.G.meeting) });
+  }
+}
 function simStep(dt) {
   if (!S.sim || S.screen !== 'game') return;
   if (S.view) S.sim.setInput(S.myId, inputPayload());
@@ -674,19 +727,15 @@ function simStep(dt) {
     if (S.sendT >= 1 / CFG.netHz) {
       S.sendT = Math.min(S.sendT - 1 / CFG.netHz, 1 / CFG.netHz); // (carried over: a 30 fps host still sends CFG.netHz a second)
       // packed (wire.js): at 32 players the plain views were 10-14 KB each, 40-50 Mbit/s up for 31 guests
-      let base = null;
-      for (const [conn, g] of S.guests) if (g.id !== null) {
-        base = base || packPub(pub);
-        S.room.send(conn, { t: 'snap', ...packFor(base, S.sim.view(g.id, pub).priv, g.wire || (g.wire = {}), S.sim.G.meeting) });
-      }
+      sendSnapshots(pub);
     }
   }
 }
 const TIPS = [
   // two per role, merged from eight (Steve, 2026-10-15: "too many pop ups")
   [6, 'Tip: walk up to a game to play it, scroll for your chip. R checks a game or a drink first: killers rig and poison them.', 'g'],
-  [6, 'Tip: 1 poison at the bar, 2 rig an empty game, 3 knife from behind, 4 accident, 5 disguise, 6 blackout. Anyone who sees you act will say so.', 'k'],
-  [40, 'Tip: Space marks whoever you aim at as a suspect. Found a body? E reports it.', 'g'],
+  [6, 'Tip: left-click murders from behind, right-click disguises. Q transforms during a blackout, Shift leaps as the monster. E uses your selected ability.', 'k'],
+  [40, 'Tip: Space marks whoever you aim at as a suspect. Found a body? Left click reports it.', 'g'],
   [40, 'Tip: your suggested target is just above your moves.', 'k'],
 ];
 function frameGame(dt) {
@@ -695,8 +744,13 @@ function frameGame(dt) {
   else if (S.role === 'guest' && S.room) { S.sendT += dt; if (S.sendT >= 0.05) { S.sendT = 0; S.room.send({ t: 'in', ...inputPayload() }); } }
   const v = S.view; if (!v) { drawDemo(dt); return; }
   const { pub, priv } = v;
+  const deathKey = priv.deathScene && !priv.alive ? `${priv.me}:${priv.deathScene.t}` : null;
+  if (deathKey !== S.deathKey) { S.deathKey = deathKey; S.deathUntil = deathKey ? performance.now() + DEATH_SECONDS * 1000 : 0; if (deathKey) { S.paused = false; only(); releaseLock(); setPhone(false); } }
+  const deathActive = deathPlaying();
   if (priv.seat && priv.seat.game !== 'cams' && pub.mode === 'play' && !pub.over && tableSeat() !== priv.seat.id) { closeTable(); openTable(priv.seat, act, v); } // the security desk has its own card
-  if ((!priv.seat || pub.mode !== 'play' || pub.over) && tableGame()) closeTable();
+  if (pub.mode !== 'play' || pub.over || (S.wasAlive && !priv.alive)) closeAllTables(); // (games left running settle too)
+  else if (!priv.seat && tableGame()) closeTable(); // walked off: a spin keeps going in the background, a hand settles
+  S.wasAlive = priv.alive;
   if (pub.mode !== S.lastMode) {
     if (pub.mode === 'pick') { releaseLock(); only('pick'); }
     else if (S.lastMode === 'pick') { only(); S.paused = false; }
@@ -714,22 +768,32 @@ function frameGame(dt) {
     const st = store.get('lc.stats', { games: 0, wins: 0, killerGames: 0, killerWins: 0 });
     st.games++; if (priv.won) st.wins++; if (priv.isKiller) { st.killerGames++; if (priv.won) st.killerWins++; }
     store.set('lc.stats', st);
-    setTimeout(() => { if (S.screen === 'game') { only('over'); renderOver(v, S.role === 'host', S.role === 'solo'); } }, 900);
+    const token = S.overToken = {};
+    const finish = () => {
+      if (S.screen !== 'game' || S.overToken !== token) return;
+      if (deathPlaying()) { setTimeout(finish, 120); return; }
+      only('over'); renderOver(v, S.role === 'host', S.role === 'solo');
+    };
+    setTimeout(finish, Math.max(900, (S.deathUntil || 0) - performance.now() + 120));
   }
   // a tip waits for a quiet screen: no message for 10 s (they used to stack four deep over the top of the screen)
   // (phones get none: they name keys, and phones had too many pop-ups, Steve 2026-10-15)
   if (!touchMode && S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0] && !$('toasts').children.length && performance.now() - lastToastAt > 10000) {
     const tip = TIPS[S.tips++]; if (store.get('lc.stats', { games: 0 }).games < 3 && (!tip[2] || priv.isKiller === (tip[2] === 'k'))) toast(tip[1], false, true);
   }
-  updateHud(v); updateMoves(v); tableTick(v);
+  updateHud(v); updateMoves(v); tableTick(v); tableLook(effLook());
   const fp = pub.mode === 'play' && !pub.over;
-  show('cross', fp && !touchMode);
+  show('cross', fp && !deathActive && !touchMode && !cameraView());
+  if (cameraView() && locked()) releaseLock();
   show('lockHint', fp && !touchMode && lockOK() && !locked() && wantLock());
   const tm = tableMode();
   if (tm && locked()) releaseLock();
   document.body.classList.toggle('tablecam', tm);
-  draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit', my: tableView(), zoom: touchMode && seatedPlay() && !tm && innerWidth > innerHeight ? 0.74 : 1,
-    table: tm, safe: tm ? hudSafe() : null, marks, peek: S.peekT * S.peekT * (3 - 2 * S.peekT), talking: V.talking });
+  draw({ pub: smooth(pub, dt), priv, me: { ...S.me, look: effLook() }, mode: fp ? 'fp' : 'orbit', my: tableView(), bg: tableViews(), zoom: touchMode && seatedPlay() && !tm && innerWidth > innerHeight ? 0.74 : 1,
+    table: tm, safe: tm ? hudSafe() : null, cameraFeed: cameraView(), marks, peek: S.peekT * S.peekT * (3 - 2 * S.peekT), talking: V.talking });
+  // The timer covers the first frame; the rendered cinematic owns completion.
+  // Its final frame must release input even if the two clocks differ slightly.
+  if (S.deathUntil && !sceneDeathPlaying()) S.deathUntil = 0;
   updateNeeds(v, dt);
   seatedHud();
 }
@@ -744,7 +808,8 @@ function updateNeeds(v) {
 // and its verdict.
 function worldSounds(v) {
   const { pub, priv } = v, room = pub.mode === 'play' && !pub.over ? roomOf(S.me) : null, was = S.heard || (S.heard = {});
-  audio.setRoom(room);
+  audio.setRoom(room); audio.setListener(S.me.x, S.me.y, S.me.look);
+  audio.sceneCues(v, !!room && !S.paused && !deathPlaying() && !cameraView() && !pub.meeting && !document.hidden);
   const C = pub.crash, R = pub.race;
   if (C && C.phase !== was.crash) { if (room === 'arcade' && was.crash) audio.sfx(C.phase === 'fly' ? 'rocket' : C.phase === 'boom' ? 'boom' : null); was.crash = C.phase; }
   if (R && R.phase !== was.race) { if (room === 'race' && was.race) audio.sfx(R.phase === 'run' ? 'gun' : R.phase === 'show' ? 'splash' : null); was.race = R.phase; }
@@ -770,19 +835,57 @@ function hudSafe() {
 function seatedHud() {
   const seated = seatedPlay() && tableGame(), tm = tableMode();
   document.body.classList.toggle('seated', !!seated);
+  drawGameControls(seated && !S.paused && !pickerOpen() && !S.view.priv.cameraFeed ? tableBar() : null);
   const overBar = tm && !touchMode && document.elementFromPoint(mouse.x, mouse.y) !== view;
   aim = seated && !touchMode && !overBar ? (tm ? pick(...ndcOf(mouse.x, mouse.y)) : pick(0, 0)) : null;
   const tap = touchMode && tapShow && performance.now() - tapShow.t < 900 ? tapShow.h : null;
   const h = aim || tap; setHover(seated ? h : null);
-  const info = seated && h ? partInfo(h.part, h.uv) : null;
-  const al = $('aim'), qn = seated ? quietNote() : ''; al.textContent = qn ? qn : !info ? '' : touchMode ? info.label.replace('RIGHT-CLICK', 'HOLD').replace(/\bCLICK/g, 'TAP') : info.label; al.className = (info && !info.on ? 'off' : '') + (tm && !touchMode ? ' follow' : '');
+  const info = seated && h && !(tableGame() === 'bj' && h.part.startsWith('btn:')) ? partInfo(h.part, h.uv) : null;
+  const al = $('aim'), qn = seated ? quietNote() : '', aimText = qn ? qn : !info ? '' : touchMode ? info.label.replace('RIGHT-CLICK', 'HOLD').replace(/\bCLICK/g, 'TAP') : info.label;
+  const aimClass = (info && !info.on ? 'off' : '') + (tm && !touchMode ? ' follow' : '');
+  if (al.textContent !== aimText) al.textContent = aimText; if (al.className !== aimClass) al.className = aimClass;
   if (tm && !touchMode) { al.style.left = Math.min(mouse.x + 18, innerWidth - al.offsetWidth - 8) + 'px'; al.style.top = mouse.y + 20 + 'px'; } else al.style.left = al.style.top = '';
   view.style.cursor = tm && !touchMode ? (h ? 'pointer' : 'default') : '';
-  if (info || tm || qn) $('hint').textContent = ''; // (a quiet answer at a game shows in the aim line)
-  else if (seated && !touchMode && performance.now() - (S.atGameT || 0) < 7000) $('hint').textContent = 'Click the felt to put your chip down · scroll changes the chip · walk away to leave';
+  // Betting and round actions already have their own contextual prompts.
+  // Walking up to a machine must not advertise another game's controls.
+  if (seated) $('hint').textContent = '';
   drawBar(tm ? tableBar() : null);
   drawChip(tm ? null : seated ? chipHud() : playing() && !touchMode ? chipHud(S.view.pub.maxBet) : null); // (the chip in hand shows on the way to a game too)
   $('chipHud').classList.toggle('walk', !seated); // (walking: just the coin, small)
+}
+const gameControls = document.createElement('div'); gameControls.id = 'gameControls'; gameControls.className = 'hidden'; $('bottom').prepend(gameControls);
+for (const panel of [gameControls]) panel.addEventListener('click', e => {
+  const button = e.target.closest('button[data-play]'); if (!button || button.disabled || !seatedPlay() || S.paused || pickerOpen()) return;
+  if (performance.now() < (panel.skeeClickUntil || 0)) return;
+  audio.unlock(); pressPart(button.dataset.play);
+});
+for (const panel of [gameControls]) {
+  panel.addEventListener('pointerdown', e => { const b = e.target.closest('button[data-play]'); if (tableGame() !== 'skee' || b?.dataset.play !== 'btn:roll' || b.disabled || !playing()) return; e.preventDefault(); panel.skeePointer = e.pointerId; panel.setPointerCapture(e.pointerId); spaceTable(); });
+  panel.addEventListener('pointerup', e => { if (panel.skeePointer !== e.pointerId) return; panel.skeePointer = null; panel.skeeClickUntil = performance.now() + 400; releaseTable(!playing()); });
+  panel.addEventListener('pointercancel', () => { panel.skeePointer = null; panel.skeeClickUntil = performance.now() + 400; releaseTable(true); });
+}
+function pressHudAt(x, y) {
+  for (const button of document.querySelectorAll('#gameControls:not(.hidden) button')) {
+    const r = button.getBoundingClientRect();
+    if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) { if (!button.disabled) pressPart(button.dataset.play); return true; }
+  }
+  return false;
+}
+function drawGameControls(bar) {
+  const start = bar ? tableStart() : null;
+  const extras = bar ? bar.acts.filter(a => bar.game !== 'bj' && a.id !== start?.id && !['btn:spin','btn:roll','btn:deal','btn:drop','btn:start','btn:lever','btn:flip','btn:cash','btn:bet'].includes(a.id)) : [];
+  const update = (panel, actions) => {
+    const key = actions.map(a => a.id).join('|');
+    if (panel.dataset.actions !== key) { panel.dataset.actions = key; panel.replaceChildren(...actions.map(a => { const b = document.createElement('button'); b.dataset.play = a.id; return b; })); }
+    [...panel.children].forEach((button, i) => { const a = actions[i]; if (button.disabled !== !a.on) button.disabled = !a.on; const tip = a.tip || a.label; if (button.title !== tip) button.title = tip; button.classList.toggle('selected', !!a.sel); const key = inputMode === 'gamepad' ? 'A' : inputMode === 'touch' ? '' : 'SPACE'; const label = a.space ? '◈  ' + (key ? key + ' · ' : '') + a.label : a.label; if (button.textContent !== label) button.textContent = label; });
+    panel.classList.toggle('hidden', !actions.length);
+  };
+  update(gameControls, bar ? [...(start?.on ? [{ ...start, space: true }] : []), ...(bar.game === 'bj' ? [] : extras)] : []);
+  for (const panel of [gameControls]) for (const button of panel.children) {
+    let aimed = false;
+    if (!button.disabled && locked() && !panel.classList.contains('hidden')) { const r = button.getBoundingClientRect(); aimed = r.left <= innerWidth / 2 && r.right >= innerWidth / 2 && r.top <= innerHeight / 2 && r.bottom >= innerHeight / 2; }
+    button.classList.toggle('aimed', aimed);
+  }
 }
 // The chip in hand at the bottom of the screen (the scroll wheel changes it), what is down, and the game's status line.
 const chipKey = { k: '' };
@@ -839,6 +942,15 @@ function drawDemo(dt) {
   while (S.demoAcc >= 1 / 30) { S.demo.tick(1 / 30); S.demoAcc -= 1 / 30; }
   draw({ pub: S.demo.pubView(), priv: null, mode: 'orbit' });
 }
+let padInput = { x: 0, y: 0, lookX: 0, lookY: 0 };
+const gamepad = createGamepad({
+  key: (key, down) => { padDispatch = true; try { window.dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { key })); } finally { padDispatch = false; } },
+  onUse: () => { inputMode = 'gamepad'; },
+  onDisconnect: () => { if (inputMode === 'gamepad') inputMode = touchMode ? 'touch' : 'keyboard'; },
+  click: alt => { if (!playing()) return; audio.unlock(); if (seatedPlay() && pressAtNdc(0, 0, alt)) return; mouseMove(alt ? 2 : 0); },
+  chip: dir => { if (playing()) cycleChip(dir, S.view.pub.maxBet); },
+  context: () => ({ menu: S.screen !== 'game' || S.paused || pickerOpen() || !!S.view?.priv?.cameraFeed || S.view?.priv?.seat?.game === 'cams' || S.view?.pub.mode !== 'play', killer: !!(S.view?.priv?.isKiller && S.view?.priv?.alive), dead: !!S.view && !S.view.priv.alive, table: !!tableGame(), skee: tableGame() === 'skee', blackjack: tableGame() === 'bj', start: !!tableStart() }),
+});
 let last = performance.now(), due = 0;
 const fpsN = { n: 0, t: 0 };
 function frame(now) {
@@ -847,7 +959,8 @@ function frame(now) {
   const cap = settings().gfx.fpsCap;
   if (cap) { const iv = 1000 / cap; if (now < due - 1) return; due = Math.max(due + iv, now - iv); } else due = now;
   const dt = Math.min(0.1, (now - last) / 1000); last = now;
-  if (S.screen === 'game') frameGame(dt); else drawDemo(dt);
+  padInput = gamepad.poll(now);
+  if (S.screen === 'game') frameGame(dt);
   voiceFrame(); micHud();
   if ((fpsN.v = (fpsN.v || 0) + 1) % 30 === 0) showVoiceLine();
   fpsCount(now);
@@ -869,17 +982,19 @@ requestAnimationFrame(frame);
 function hiddenTick() {
   if (!document.hidden || S.screen !== 'game') return;
   if (S.role === 'host') { const now = performance.now(); simStep(Math.min(1.5, (now - last) / 1000)); last = now; }
-  const v = S.view; if (!v || !tableGame()) return;
-  if (!v.priv.seat || v.pub.mode !== 'play' || v.pub.over) closeTable(); else tableTick(v);
+  const v = S.view; if (!v || !tablesBusy()) return;
+  if (v.pub.mode !== 'play' || v.pub.over || (S.wasAlive && !v.priv.alive)) closeAllTables(); else { if (!v.priv.seat && tableGame()) closeTable(); tableTick(v); }
+  S.wasAlive = v.priv.alive;
 }
 try { const w = new Worker(URL.createObjectURL(new Blob(['setInterval(() => postMessage(0), 50);'], { type: 'text/javascript' }))); w.onmessage = hiddenTick; }
 catch (e) { setInterval(hiddenTick, 50); }
 
 // Test hook for automation: drive a solo game without the screen.
 window.__lastCall = {
+  cues: () => audio.cueInfo(),
   audio: () => audio.audioInfo(),
   // extra.perk gives a human killer that edge with no pick screen; extra.pick: 'solo' shows the pick screen
-  start(role, extra) { startSolo({ players: 6, killers: 1, difficulty: 'normal', forceRole: role || 'random', pick: null, ...(extra || {}) }); },
+  start(role, extra) { startSolo({ players: 6, killers: 1, difficulty: 'normal', forceRole: role || 'random', pick: null, ...(extra || {}) }, true); },
   step(seconds) { for (let i = 0; i < seconds * 60 && S.sim; i++) { S.sim.tick(1 / 60); } if (S.sim) { S.view = S.sim.view(S.myId); } },
   render() { if (S.screen === 'game') frameGame(0); else drawDemo(0); },
   // The test pane can be hidden, where the canvas may not repaint: copy the frame into an <img> the screenshot sees.
@@ -899,7 +1014,7 @@ window.__lastCall = {
   demo(seconds) { drawDemo(seconds || 0); },
   // Tables: press a part by name (as if aimed at and clicked), aim the crosshair at it, list what is on screen.
   press(part, alt) {
-    const c = partsOnScreen().find(q => q.part === part); if (!c) return 'no part ' + part;
+    const c = partsOnScreen().find(q => q.part === part); if (!c) return part.startsWith('btn:') && (tableBar()?.acts.some(a => a.id === part) || tableStart()?.id === part) ? pressPart(part, null, alt) : 'no part ' + part;
     pressAt = { x: c.x / innerWidth * 2 - 1, y: -(c.y / innerHeight) * 2 + 1 }; const ok = pressPart(part, null, alt); pressAt = null; return ok;
   },
   pressScreen(x, y) { const p = screenPointOf(x, y); if (!p) return 'no screen'; return pressAtNdc(...ndcOf(p.x, p.y), false) ? 'ok' : 'missed'; },
@@ -912,8 +1027,60 @@ window.__lastCall = {
   },
   // the betting console: aim the crosshair at a point on it (0..1 from the top left), or at a button by id; click() presses what the crosshair is on
   aimCon(x, y) { const p = consolePointOf(x, y), cam = camPos(); if (!p || !cam) return false; const d = p.map((v, i) => v - cam[i]); S.me.look = Math.atan2(d[2], d[0]); S.me.pitch = Math.atan2(d[1], Math.hypot(d[0], d[2])); return true; },
-  aimBtn(id) { const L = tableView() && tableView().con, b = L && L.btns.find(b => b.id === id); return b ? this.aimCon(b.x + b.w / 2, b.y + b.h / 2) : false; },
+  aimBtn(id) {
+    for (let i = 0; i < 12; i++) {
+      this.render(); if (partsOnScreen().some(p => p.part === id)) return this.aimAt(id);
+      const b = [...document.querySelectorAll('#gameControls button')].find(b => b.dataset.play === id);
+      if (!b || b.closest('.hidden')) return false;
+      const r = b.getBoundingClientRect(), camera = debugScene().camera, tan = Math.tan(camera.fov * Math.PI / 360);
+      const x = (r.left + r.width / 2 - innerWidth / 2) / (innerWidth / 2), y = (r.top + r.height / 2 - innerHeight / 2) / (innerHeight / 2);
+      if (Math.abs(x) < .005 && Math.abs(y) < .005) return true;
+      S.me.look += Math.atan(x * tan * camera.aspect); S.me.pitch = clamp(S.me.pitch - Math.atan(y * tan), -1.25, 1.25);
+    }
+    this.render(); return true;
+  },
   click() { this.render(); return pressAtNdc(0, 0, false); },
-  parts: () => partsOnScreen(), screenPoint: (x, y) => screenPointOf(x, y), table: () => tableView(), hud: () => tableBar(), bar: () => tableBar(), aim: () => aim && aim.part,
+  parts: () => partsOnScreen(), screenPoint: (x, y) => screenPointOf(x, y), table: () => tableView(), tables: () => tableViews(), hud: () => tableBar(), bar: () => tableBar(), aim: () => aim && aim.part,
   place(x, y) { S.me.x = x; S.me.y = y; if (S.sim) { S.me.posVer = S.sim.G.chars[S.myId].posVer; S.sim.setInput(S.myId, inputPayload()); S.view = S.sim.view(S.myId); } },
 };
+
+// ---------- Prepared arrivals ----------
+async function beginBriefing() {
+  const token = S.briefingToken = {}; S.screen = 'briefing'; S.paused = false;
+  releaseLock(); show('hud', false); showBriefing();
+  try {
+    while (!S.view && !S.sim && S.screen === 'briefing' && S.briefingToken === token) await new Promise(ok => setTimeout(ok, 50));
+    if (S.briefingToken !== token || S.screen !== 'briefing') return;
+    const v = S.view || S.sim.view(S.myId); S.view = v;
+    S.me.x = v.priv.x; S.me.y = v.priv.y; S.me.look = v.pub.chars[v.priv.me].look; S.me.posVer = v.priv.posVer;
+    await warmup({ pub: v.pub, priv: v.priv, me: { ...S.me, pitch: 0 }, mode: 'fp' }, (n, text) => loadingProgress(n, text, true), () => S.briefingToken === token && S.screen === 'briefing');
+    if (S.briefingToken === token && S.screen === 'briefing') briefingReady();
+  } catch (e) {
+    if (S.briefingToken !== token || S.screen !== 'briefing') return;
+    $('levelStatus').textContent = 'Scene preparation failed. Return to the menu and try again.'; show('levelBack', true); console.error(e);
+  }
+}
+$('levelBack').onclick = () => toMenu();
+$('levelContinue').onclick = () => {
+  if (S.screen !== 'briefing' || $('levelContinue').disabled) return;
+  audio.unlock(); show('levelLoading', false); S.screen = 'game'; S.acc = 0; last = performance.now();
+  show('hud', true); frameGame(0); requestLock();
+};
+async function boot() {
+  const began = performance.now(); S.boot = { started: began, ready: false }; const failures = [];
+  // GLTF subresources report through Three's manager; image and audio stages also reject explicitly.
+  try {
+    loadingProgress(.02, 'Loading art and sound');
+    await Promise.all([
+      preloadAssets(lowPower, (n, label) => loadingProgress(.05 + n * .55, label)),
+      preloadInterface(), audio.preloadAudio(),
+    ]);
+    loadingProgress(.65, 'Building the casino'); await new Promise(ok => requestAnimationFrame(() => requestAnimationFrame(ok)));
+    await init3d($('view'), { lowPower, progress: (n, label) => loadingProgress(.65 + n * .03, label) }); applyGfx(settings().gfx);
+    const demo = createGame({ humans: [], players: 32, killers: 2, difficulty: 'normal' });
+    await warmup({ pub: demo.pubView(), priv: null, mode: 'orbit' }, (n, label) => loadingProgress(.68 + n * .32, label));
+    S.ready = true; S.screen = 'menu'; S.boot = { started: began, ready: true, ms: performance.now() - began, failures };
+    show('bootLoading', false); document.body.classList.remove('booting'); only('menu');
+  } catch (e) { S.boot.error = e.message; loadingProgress(0, 'Unable to prepare the casino. ' + e.message); show('bootRetry', true); console.error(e); }
+}
+boot();

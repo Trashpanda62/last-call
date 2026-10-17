@@ -1,0 +1,98 @@
+{
+  "at": "2026-10-16T14:41:35.813Z",
+  "device": "ml350 P100 Vulkan Chromium, High, 1280x720",
+  "runs": [
+    {
+      "mode": "double",
+      "file": "2026-10-16-yield-double-1.json",
+      "readyMs": 12230.5,
+      "longestTaskMs": 262,
+      "maxFrameGapMs": 233.39999999999964,
+      "p95FrameGapMs": 66.70000000000073,
+      "programLinks": 75
+    },
+    {
+      "mode": "double",
+      "file": "2026-10-16-yield-double-2.json",
+      "readyMs": 12491.099999964237,
+      "longestTaskMs": 286,
+      "maxFrameGapMs": 233.4000000000001,
+      "p95FrameGapMs": 83.29999999999927,
+      "programLinks": 75
+    },
+    {
+      "mode": "double",
+      "file": "2026-10-16-yield-double-3.json",
+      "readyMs": 12358.800000011921,
+      "longestTaskMs": 330,
+      "maxFrameGapMs": 250,
+      "p95FrameGapMs": 66.69999999999982,
+      "programLinks": 75
+    },
+    {
+      "mode": "single",
+      "file": "2026-10-16-yield-single-1.json",
+      "readyMs": 9278,
+      "longestTaskMs": 236,
+      "maxFrameGapMs": 316.60000000000014,
+      "p95FrameGapMs": 100,
+      "programLinks": 75
+    },
+    {
+      "mode": "single",
+      "file": "2026-10-16-yield-single-2.json",
+      "readyMs": 9191.600000023842,
+      "longestTaskMs": 289,
+      "maxFrameGapMs": 316.5999999999999,
+      "p95FrameGapMs": 100,
+      "programLinks": 75
+    },
+    {
+      "mode": "single",
+      "file": "2026-10-16-yield-single-3.json",
+      "readyMs": 9310.100000023842,
+      "longestTaskMs": 279,
+      "maxFrameGapMs": 300,
+      "p95FrameGapMs": 83.39999999999964,
+      "programLinks": 75
+    },
+    {
+      "mode": "after",
+      "file": "2026-10-16-yield-after-1.json",
+      "readyMs": 9521.699999988079,
+      "longestTaskMs": 277,
+      "maxFrameGapMs": 250,
+      "p95FrameGapMs": 100,
+      "programLinks": 75
+    },
+    {
+      "mode": "after",
+      "file": "2026-10-16-yield-after-2.json",
+      "readyMs": 9088.200000047684,
+      "longestTaskMs": 245,
+      "maxFrameGapMs": 233.30000000000018,
+      "p95FrameGapMs": 83.39999999999964,
+      "programLinks": 75
+    },
+    {
+      "mode": "after",
+      "file": "2026-10-16-yield-after-3.json",
+      "readyMs": 9248.800000011921,
+      "longestTaskMs": 310,
+      "maxFrameGapMs": 233.20000000000027,
+      "p95FrameGapMs": 100,
+      "programLinks": 75
+    }
+  ],
+  "notes": [
+    "Upload rows are slow calls over 1 ms only, not all textures.",
+    "No cross-device startup or FPS claim. Removing idle frames changes frame-gap distributions."
+  ],
+  "medians": {
+    "double": 12358.800000011921,
+    "single": 9278,
+    "after": 9248.800000011921
+  },
+  "selected": "after",
+  "medianReductionPercent": 25.164255429305438
+}

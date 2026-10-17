@@ -6,8 +6,8 @@
 // dressing was solid in the sim a wallpapered pillar or wall stub stands instead (so nothing invisible blocks you).
 // Built once per casino build (a list of mesh -> material swaps and meshes to hide), then switched in one frame both ways:
 // render3d.js calls update() at the blackout snap, so it swaps in the frame the power comes back. Nothing walks the scene
-// per frame. The textures are Sorceress art (assets/backrooms, tools/backrooms_art.py); canvas paint stands in until they
-// load.
+// per frame. The textures are Sorceress art (assets/backrooms, tools/backrooms_art.py); canvas paint stands in when an
+// image cannot load.
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import * as T from './textures.js';
@@ -27,7 +27,7 @@ const PILLARS = new Set(['hightop', 'booth', 'jukebox', 'crates', 'ottoman', 'po
 const PAPER_TINT = 0xffe892, CARPET_TINT = 0xf2dca0; // (the tone mapping greys yellows: pushed back a little)
 const DOOR_COLOR = 0x3a4a3e; // the STAFF ONLY doors (world.js staffDoors): plain doors stay
 
-// Canvas stand-ins, the same layout as the Sorceress art, until it loads (or for ?nomats).
+// Canvas stand-ins, the same layout as the Sorceress art, when unavailable (or for ?nomats).
 function standIn(kind) {
   const [c, g] = T.canvas(256, 256);
   const fleck = (n, a, col) => { for (let i = 0; i < n; i++) { g.fillStyle = `rgba(${col},${Math.random() * a})`; g.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 1 + Math.random() * 2); } };
@@ -54,6 +54,25 @@ function stainTex() {
   return T.tex(c, false);
 }
 
+const materialTasks = new Map();
+export function preloadBackrooms(lowPower = false) {
+  const key = !!lowPower;
+  if (materialTasks.has(key)) return materialTasks.get(key);
+  if (/[?&](toy|nomats)\b/.test(location.search)) return Promise.resolve({});
+  // These optional textures retain their painted fallback on failure. Their own
+  // manager keeps that behavior separate from required character/art failures.
+  const loader = new THREE.TextureLoader(new THREE.LoadingManager()), loaded = {};
+  const files = [['wall', 'wallpaper-color.webp', true], ['floor', 'carpet-color.webp', true],
+    ['ceil', 'ceiling-color.webp', true], ['glow', 'ceiling-glow.webp', false],
+    ...(lowPower ? [] : [['wallNormal', 'wallpaper-normal.webp', false], ['floorNormal', 'carpet-normal.webp', false], ['ceilNormal', 'ceiling-normal.webp', false]])];
+  const task = Promise.all(files.map(([name, file, srgb]) => new Promise(ok => loader.load('assets/backrooms/' + file, t => {
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+    loaded[name] = t; ok();
+  }, undefined, () => ok())))).then(() => loaded);
+  materialTasks.set(key, task); return task;
+}
+
 export class Backrooms {
   // R: render3d's state (scene, renderer, camera, the lights and the pooled point lights)
   constructor(R) {
@@ -62,12 +81,12 @@ export class Backrooms {
     this.adds = new THREE.Group(); this.adds.visible = false; R.scene.add(this.adds);
     const std = (name, o) => Object.assign(new THREE.MeshStandardMaterial(o), { name: 'br-' + name });
     const W = this.W = {};
-    this.tex = { wall: standIn('wall'), floor: standIn('floor'), ceil: standIn('ceil'), glow: standIn('glow') };
-    W.wall = std('wall', { map: rep(this.tex.wall, 1.2 / PAPER_M), roughness: 0.92, color: PAPER_TINT });           // walls are mapped at 1.2 m
-    W.pillar = std('wall', { map: rep(this.tex.wall, 1 / PAPER_M), roughness: 0.92, color: PAPER_TINT });          // the new pillars, in metres
+    this.tex = {};
+    W.wall = std('wall', { roughness: 0.92, color: PAPER_TINT }); // walls are mapped at 1.2 m
+    W.pillar = std('wall', { roughness: 0.92, color: PAPER_TINT }); // the new pillars, in metres
     W.floor = {};
-    for (const k in roomMats) W.floor[k] = std('floor', { map: rep(this.tex.floor, roomMats[k].tile / CARPET_M), roughness: 0.97, color: CARPET_TINT });
-    W.ceil = std('ceil', { map: rep(this.tex.ceil, 1 / CEIL_M), emissive: 0xeef6cf, emissiveMap: rep(this.tex.glow, 1 / CEIL_M), emissiveIntensity: 2.2, roughness: 0.95 });
+    for (const k in roomMats) W.floor[k] = std('floor', { roughness: 0.97, color: CARPET_TINT });
+    W.ceil = std('ceil', { emissive: 0xeef6cf, emissiveIntensity: 2.2, roughness: 0.95 });
     W.base = std('base', { color: 0x4a3c22, roughness: 0.75 }); // the thin dark baseboard
     W.stain = Object.assign(new THREE.MeshBasicMaterial({ map: stainTex(), color: 0x3a2a0c, transparent: true, opacity: 0.4, fog: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }), { name: 'br-stain' });
     this.build();
@@ -111,24 +130,19 @@ export class Backrooms {
     this.adds.updateMatrixWorld(true);
   }
 
-  // The Sorceress textures replace the stand-ins as they load; then the new shaders are compiled ahead of the switch.
+  // Use preloaded art directly, painting only missing images. Warmup waits for
+  // these material assignments before scanning/compiling either scene variant.
   load(lowPower) {
-    if (/[?&](toy|nomats)\b/.test(location.search)) return Promise.resolve();
-    const L = new THREE.TextureLoader();
-    const get = (f, srgb) => new Promise(ok => L.load('assets/backrooms/' + f, t => { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = T.aniso(); if (srgb) t.colorSpace = THREE.SRGBColorSpace; ok(t); }, undefined, () => ok(null)));
     const W = this.W, floors = Object.entries(W.floor), walls = [[W.wall, 1.2], [W.pillar, 1]];
     const put = (mat, key, t, r = 1) => { if (!t) return; mat[key] = rep(t, r); mat.needsUpdate = true; };
-    return Promise.all([
-      get('wallpaper-color.webp', true).then(t => { for (const [m, k] of walls) put(m, 'map', t, k / PAPER_M); }),
-      get('carpet-color.webp', true).then(t => { for (const [k, m] of floors) put(m, 'map', t, roomMats[k].tile / CARPET_M); }),
-      get('ceiling-color.webp', true).then(t => put(W.ceil, 'map', t, 1 / CEIL_M)),
-      get('ceiling-glow.webp', false).then(t => put(W.ceil, 'emissiveMap', t, 1 / CEIL_M)),
-      ...(lowPower ? [] : [
-        get('wallpaper-normal.webp', false).then(t => { for (const [m, k] of walls) { put(m, 'normalMap', t, k / PAPER_M); m.normalScale.set(0.35, 0.35); } }),
-        get('carpet-normal.webp', false).then(t => { for (const [k, m] of floors) { put(m, 'normalMap', t, roomMats[k].tile / CARPET_M); m.normalScale.set(0.7, 0.7); } }),
-        get('ceiling-normal.webp', false).then(t => { put(W.ceil, 'normalMap', t, 1 / CEIL_M); W.ceil.normalScale.set(0.6, 0.6); }),
-      ]),
-    ]).then(() => { this.ready = true; });
+    return preloadBackrooms(lowPower).then(loaded => {
+      for (const kind of ['wall', 'floor', 'ceil', 'glow']) this.tex[kind] = loaded[kind] || standIn(kind);
+      for (const [m, k] of walls) { put(m, 'map', this.tex.wall, k / PAPER_M); put(m, 'normalMap', loaded.wallNormal, k / PAPER_M); m.normalScale.set(0.35, 0.35); }
+      for (const [k, m] of floors) { put(m, 'map', this.tex.floor, roomMats[k].tile / CARPET_M); put(m, 'normalMap', loaded.floorNormal, roomMats[k].tile / CARPET_M); m.normalScale.set(0.7, 0.7); }
+      put(W.ceil, 'map', this.tex.ceil, 1 / CEIL_M); put(W.ceil, 'emissiveMap', this.tex.glow, 1 / CEIL_M);
+      put(W.ceil, 'normalMap', loaded.ceilNormal, 1 / CEIL_M); W.ceil.normalScale.set(0.6, 0.6);
+      this.ready = true;
+    });
   }
 
   // The drop ceiling over the whole map, with a well cut up into it over anything taller than CEIL_H (the prize wheel,
@@ -187,6 +201,7 @@ export class Backrooms {
   // Walk a casino build once: what each mesh becomes, and what goes.
   scan(world) {
     this.world = world; this.swaps = []; this.hides = [];
+    this.warmed = null; // a rebuilt world's materials need preparation again
     this.ceiling(world);
     const glows = new Set(GLOWS.map(e => e.m)), mk = world.machineKids || new Set(), beams = new Set(BEAMS.map(b => b.m));
     const rooms = new Map(); for (const k in roomMats) { const r = roomMats[k]; rooms.set(r.wall, this.W.wall); rooms.set(r.floor, this.W.floor[k]); if (r.ceil) rooms.set(r.ceil, HIDE); }
@@ -251,7 +266,6 @@ export class Backrooms {
   // Every frame, at the blackout snap (render3d.js): on is the snapshot's pub.backrooms. Switches in this frame.
   update(on, world) {
     if (world !== this.world) { if (this.on) this.unapply(); this.scan(world); if (this.on) this.apply(); }
-    if (!this.warmed && this.ready && !this.on) this.warm();
     if (on === this.on) return;
     this.on = on; this.flips++;
     const R = this.R;
@@ -291,23 +305,14 @@ export class Backrooms {
   // after the pooled point lights are placed: weak, and all the same tired white
   pool() { for (const L of this.R.pool) { L.intensity *= 0.2; L.color.setHex(0xf6f4cc); } }
 
-  // Compile the backrooms' shaders and upload its textures now, so the switch itself costs one ordinary frame.
-  warm() {
-    this.warmed = true;
-    const R = this.R;
-    try {
-      this.apply();
-      const p = R.renderer.extensions.has('KHR_parallel_shader_compile') ? R.renderer.compileAsync(R.scene, R.camera) : (R.renderer.compile(R.scene, R.camera), null);
-      if (p) p.catch(() => {});
-    } catch (e) { /* first sight compiles it instead */ } finally { this.unapply(); }
-    const W = this.W;
-    for (const m of [W.wall, W.pillar, W.ceil, ...Object.values(W.floor)]) for (const k of ['map', 'normalMap', 'emissiveMap']) if (m[k]) R.renderer.initTexture(m[k]);
-  }
+  // Texture uploads and both material variants are prepared by render3d.warmup,
+  // with the same render target and frame budget as the ordinary casino.
+  materials() { return [this.W.wall, this.W.pillar, ...Object.values(this.W.floor), this.W.ceil, this.W.base, this.W.stain, ...this.dulled.values()]; }
   info() { return { on: this.on, flips: this.flips, swaps: this.swaps.length, hides: this.hides.length, ready: !!this.ready, warmed: this.warmed, wells: (this.wells || []).map(w => [+w.x0.toFixed(1), +w.z0.toFixed(1), +w.x1.toFixed(1), +w.z1.toFixed(1), +w.top.toFixed(2)]) }; }
 }
 
 // A texture repeated r times over the same UVs (a clone: the image is shared).
-function rep(t, r) { const c = t.clone(); c.repeat.set(r, r); c.needsUpdate = true; return c; }
+function rep(t, r) { const c = t.clone(); c.repeat.set(r, r); c.anisotropy = T.aniso(); c.needsUpdate = true; return c; }
 // The tubes: steady, with a stutter now and then (every 7 to 8 s, about a fifth of a second).
 function flicker(t) {
   const ph = t % 7.7;

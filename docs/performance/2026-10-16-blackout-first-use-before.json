@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-16T12:50:19.858Z",
+  "rows": [
+    {
+      "name": "ready",
+      "ms": 13.699999988079071,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "calls": 518,
+      "blackout": false,
+      "monster": false
+    },
+    {
+      "name": "blackout",
+      "ms": 48.39999997615814,
+      "links": [
+        [
+          [
+            "#define SHADER_TYPE MeshBasicMaterial",
+            "#define SHADER_NAME ",
+            "#define USE_FOG",
+            "#define USE_SHADOWMAP"
+          ],
+          [
+            "#define SHADER_TYPE MeshBasicMaterial",
+            "#define SHADER_NAME ",
+            "#define USE_FOG",
+            "#define USE_SHADOWMAP"
+          ]
+        ]
+      ],
+      "buffers": 4,
+      "bytes": 1464,
+      "calls": 521,
+      "blackout": true,
+      "monster": false
+    },
+    {
+      "name": "blackout repeat",
+      "ms": 11.5,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "calls": 521,
+      "blackout": true,
+      "monster": false
+    },
+    {
+      "name": "transform",
+      "ms": 24.599999964237213,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "calls": 507,
+      "blackout": true,
+      "monster": true
+    },
+    {
+      "name": "monster repeat",
+      "ms": 11.5,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "calls": 507,
+      "blackout": true,
+      "monster": true
+    }
+  ],
+  "errors": []
+}

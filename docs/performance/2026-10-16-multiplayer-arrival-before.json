@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-16T16:55:34.389Z",
+  "lobby": {
+    "connections": 1,
+    "guests": 1
+  },
+  "before": {
+    "host": {
+      "role": "host",
+      "screen": "briefing",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "status": "Ready when you are. Read the controls, then continue."
+    },
+    "guest": {
+      "role": "guest",
+      "screen": "briefing",
+      "hasView": false,
+      "ready": false,
+      "status": "Preparing your table…"
+    }
+  },
+  "afterHostContinue": {
+    "host": {
+      "role": "host",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "status": "Ready when you are. Read the controls, then continue."
+    },
+    "guest": {
+      "role": "guest",
+      "screen": "briefing",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "status": "Ready when you are. Read the controls, then continue."
+    }
+  },
+  "afterBoth": {
+    "host": {
+      "role": "host",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "status": "Ready when you are. Read the controls, then continue."
+    },
+    "guest": {
+      "role": "guest",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "status": "Ready when you are. Read the controls, then continue."
+    }
+  },
+  "errors": []
+}

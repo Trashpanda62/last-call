@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-16T13:08:17.164Z",
+  "rows": [
+    {
+      "stage": "Preparing the casino",
+      "prepareOnly": true,
+      "parts": {
+        "resize": 16.399999976158142,
+        "backrooms update": 54,
+        "bean lookup/create": 46.90000003576279,
+        "death update": 0.19999998807907104,
+        "hands update": 0.3999999761581421,
+        "room culling": 0.5,
+        "blackout update": 0.8999999761581421,
+        "light placement": 0.19999998807907104,
+        "world update": 2,
+        "items update": 6.400000035762787,
+        "hazards update": 0.5,
+        "visible matrices": 2.800000011920929,
+        "labels": 0.5
+      },
+      "ms": 144.0999999642372
+    },
+    {
+      "stage": "Finishing the scene",
+      "prepareOnly": false,
+      "parts": {
+        "resize": 0,
+        "backrooms update": 0,
+        "bean lookup/create": 0,
+        "gestures": 0.30000001192092896,
+        "death update": 0,
+        "hands update": 0,
+        "room culling": 0.30000001192092896,
+        "blackout update": 0.10000002384185791,
+        "light placement": 0.09999996423721313,
+        "world update": 1,
+        "items update": 0.19999998807907104,
+        "hazards update": 0,
+        "visible matrices": 3.799999952316284,
+        "labels": 0.30000001192092896,
+        "render targets": 0.19999998807907104,
+        "direct draws": 39.10000020265579,
+        "shadows": 12.800000011920929,
+        "renderer render": 112.10000002384186,
+        "pass scene": 105.39999997615814,
+        "pass gtao": 7.100000023841858,
+        "pass handPass": 0.10000002384185791,
+        "pass output": 0.30000001192092896,
+        "composer": 113.40000003576279
+      },
+      "ms": 123.60000002384186
+    }
+  ],
+  "readyMs": 10523.800000011921,
+  "errors": []
+}

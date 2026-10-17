@@ -1,0 +1,494 @@
+{
+  "at": "2026-10-16T15:45:44.838Z",
+  "rows": [
+    {
+      "fallback": false,
+      "fixtures": [
+        {
+          "kind": 0,
+          "angle": 0,
+          "before": 3,
+          "after": 1,
+          "trianglesBefore": 7896,
+          "trianglesAfter": 7896,
+          "changed": 22,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.00011189778645833333
+        },
+        {
+          "kind": 0,
+          "angle": 1,
+          "before": 3,
+          "after": 1,
+          "trianglesBefore": 7896,
+          "trianglesAfter": 7896,
+          "changed": 25,
+          "aboveOne": 1,
+          "maxChannel": 2,
+          "meanMaxChannel": 0.00013224283854166666
+        },
+        {
+          "kind": 0,
+          "angle": 2,
+          "before": 3,
+          "after": 1,
+          "trianglesBefore": 7896,
+          "trianglesAfter": 7896,
+          "changed": 22,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.00011189778645833333
+        },
+        {
+          "kind": 0,
+          "angle": 3,
+          "before": 3,
+          "after": 1,
+          "trianglesBefore": 7896,
+          "trianglesAfter": 7896,
+          "changed": 25,
+          "aboveOne": 1,
+          "maxChannel": 2,
+          "meanMaxChannel": 0.00013224283854166666
+        },
+        {
+          "kind": 1,
+          "angle": 0,
+          "before": 3,
+          "after": 1,
+          "trianglesBefore": 8112,
+          "trianglesAfter": 8112,
+          "changed": 16,
+          "aboveOne": 2,
+          "maxChannel": 20,
+          "meanMaxChannel": 0.00018819173177083334
+        },
+        {
+          "kind": 1,
+          "angle": 1,
+          "before": 3,
+          "after": 1,
+          "trianglesBefore": 8112,
+          "trianglesAfter": 8112,
+          "changed": 27,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.0001373291015625
+        },
+        {
+          "kind": 1,
+          "angle": 2,
+          "before": 3,
+          "after": 1,
+          "trianglesBefore": 8112,
+          "trianglesAfter": 8112,
+          "changed": 29,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.00014750162760416666
+        },
+        {
+          "kind": 1,
+          "angle": 3,
+          "before": 3,
+          "after": 1,
+          "trianglesBefore": 8112,
+          "trianglesAfter": 8112,
+          "changed": 30,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.000152587890625
+        },
+        {
+          "kind": 2,
+          "angle": 0,
+          "before": 12,
+          "after": 4,
+          "trianglesBefore": 5184,
+          "trianglesAfter": 5184,
+          "changed": 3,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.0000152587890625
+        },
+        {
+          "kind": 2,
+          "angle": 1,
+          "before": 12,
+          "after": 4,
+          "trianglesBefore": 5184,
+          "trianglesAfter": 5184,
+          "changed": 8,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.000040690104166666664
+        },
+        {
+          "kind": 2,
+          "angle": 2,
+          "before": 12,
+          "after": 4,
+          "trianglesBefore": 5184,
+          "trianglesAfter": 5184,
+          "changed": 8,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.000040690104166666664
+        },
+        {
+          "kind": 2,
+          "angle": 3,
+          "before": 12,
+          "after": 4,
+          "trianglesBefore": 5184,
+          "trianglesAfter": 5184,
+          "changed": 7,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.000035603841145833336
+        }
+      ],
+      "maxMatrixError": 5.7538350528574256e-8,
+      "allShared": true,
+      "allFlags": true,
+      "shared": [
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        }
+      ],
+      "rebuilds": [
+        {
+          "disposed": 12,
+          "expectedDisposals": 12,
+          "geos": 487,
+          "textures": 371
+        },
+        {
+          "disposed": 12,
+          "expectedDisposals": 12,
+          "geos": 487,
+          "textures": 371
+        },
+        {
+          "disposed": 12,
+          "expectedDisposals": 12,
+          "geos": 487,
+          "textures": 371
+        },
+        {
+          "disposed": 12,
+          "expectedDisposals": 12,
+          "geos": 487,
+          "textures": 371
+        },
+        {
+          "disposed": 12,
+          "expectedDisposals": 12,
+          "geos": 487,
+          "textures": 371
+        },
+        {
+          "disposed": 12,
+          "expectedDisposals": 12,
+          "geos": 487,
+          "textures": 371
+        },
+        {
+          "disposed": 12,
+          "expectedDisposals": 12,
+          "geos": 487,
+          "textures": 371
+        },
+        {
+          "disposed": 12,
+          "expectedDisposals": 12,
+          "geos": 487,
+          "textures": 371
+        }
+      ]
+    },
+    {
+      "fallback": true,
+      "fixtures": [
+        {
+          "kind": 0,
+          "angle": 0,
+          "before": 66,
+          "after": 22,
+          "trianglesBefore": 6000,
+          "trianglesAfter": 6000,
+          "changed": 5,
+          "aboveOne": 1,
+          "maxChannel": 182,
+          "meanMaxChannel": 0.000946044921875
+        },
+        {
+          "kind": 0,
+          "angle": 1,
+          "before": 66,
+          "after": 22,
+          "trianglesBefore": 6000,
+          "trianglesAfter": 6000,
+          "changed": 3,
+          "aboveOne": 1,
+          "maxChannel": 28,
+          "meanMaxChannel": 0.000152587890625
+        },
+        {
+          "kind": 0,
+          "angle": 2,
+          "before": 66,
+          "after": 22,
+          "trianglesBefore": 6000,
+          "trianglesAfter": 6000,
+          "changed": 14,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.00007120768229166667
+        },
+        {
+          "kind": 0,
+          "angle": 3,
+          "before": 66,
+          "after": 22,
+          "trianglesBefore": 6000,
+          "trianglesAfter": 6000,
+          "changed": 7,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.000035603841145833336
+        },
+        {
+          "kind": 1,
+          "angle": 0,
+          "before": 63,
+          "after": 21,
+          "trianglesBefore": 4968,
+          "trianglesAfter": 4968,
+          "changed": 41,
+          "aboveOne": 36,
+          "maxChannel": 37,
+          "meanMaxChannel": 0.0028177897135416665
+        },
+        {
+          "kind": 1,
+          "angle": 1,
+          "before": 63,
+          "after": 21,
+          "trianglesBefore": 4968,
+          "trianglesAfter": 4968,
+          "changed": 59,
+          "aboveOne": 52,
+          "maxChannel": 29,
+          "meanMaxChannel": 0.0028788248697916665
+        },
+        {
+          "kind": 1,
+          "angle": 2,
+          "before": 63,
+          "after": 21,
+          "trianglesBefore": 4968,
+          "trianglesAfter": 4968,
+          "changed": 64,
+          "aboveOne": 61,
+          "maxChannel": 64,
+          "meanMaxChannel": 0.008082071940104166
+        },
+        {
+          "kind": 1,
+          "angle": 3,
+          "before": 63,
+          "after": 21,
+          "trianglesBefore": 4968,
+          "trianglesAfter": 4968,
+          "changed": 81,
+          "aboveOne": 79,
+          "maxChannel": 34,
+          "meanMaxChannel": 0.005544026692708333
+        },
+        {
+          "kind": 2,
+          "angle": 0,
+          "before": 12,
+          "after": 4,
+          "trianglesBefore": 5184,
+          "trianglesAfter": 5184,
+          "changed": 3,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.0000152587890625
+        },
+        {
+          "kind": 2,
+          "angle": 1,
+          "before": 12,
+          "after": 4,
+          "trianglesBefore": 5184,
+          "trianglesAfter": 5184,
+          "changed": 8,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.000040690104166666664
+        },
+        {
+          "kind": 2,
+          "angle": 2,
+          "before": 12,
+          "after": 4,
+          "trianglesBefore": 5184,
+          "trianglesAfter": 5184,
+          "changed": 8,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.000040690104166666664
+        },
+        {
+          "kind": 2,
+          "angle": 3,
+          "before": 12,
+          "after": 4,
+          "trianglesBefore": 5184,
+          "trianglesAfter": 5184,
+          "changed": 7,
+          "aboveOne": 0,
+          "maxChannel": 1,
+          "meanMaxChannel": 0.000035603841145833336
+        }
+      ],
+      "maxMatrixError": 5.7538350528574256e-8,
+      "allShared": true,
+      "allFlags": true,
+      "shared": [
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        },
+        {
+          "dishes": 1,
+          "materials": 1,
+          "glows": 1
+        }
+      ],
+      "rebuilds": [
+        {
+          "disposed": 94,
+          "expectedDisposals": 94,
+          "geos": 766,
+          "textures": 318
+        },
+        {
+          "disposed": 94,
+          "expectedDisposals": 94,
+          "geos": 766,
+          "textures": 318
+        },
+        {
+          "disposed": 94,
+          "expectedDisposals": 94,
+          "geos": 766,
+          "textures": 318
+        },
+        {
+          "disposed": 94,
+          "expectedDisposals": 94,
+          "geos": 766,
+          "textures": 318
+        },
+        {
+          "disposed": 94,
+          "expectedDisposals": 94,
+          "geos": 766,
+          "textures": 318
+        },
+        {
+          "disposed": 94,
+          "expectedDisposals": 94,
+          "geos": 766,
+          "textures": 318
+        },
+        {
+          "disposed": 94,
+          "expectedDisposals": 94,
+          "geos": 766,
+          "textures": 318
+        },
+        {
+          "disposed": 94,
+          "expectedDisposals": 94,
+          "geos": 766,
+          "textures": 318
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

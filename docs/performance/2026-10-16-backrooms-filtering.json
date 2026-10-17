@@ -1,0 +1,378 @@
+{
+  "at": "2026-10-16T13:58:09.642Z",
+  "constructed": 4510.399999976158,
+  "paints": [],
+  "readyMs": 10220.799999952316,
+  "retainedCanvases": 0,
+  "resources": [
+    {
+      "file": "wallpaper-color.webp",
+      "start": 745.8000000119209,
+      "end": 1095.6000000238419,
+      "ms": 349.80000001192093
+    },
+    {
+      "file": "ceiling-color.webp",
+      "start": 746,
+      "end": 1100.1000000238419,
+      "ms": 354.10000002384186
+    },
+    {
+      "file": "carpet-color.webp",
+      "start": 746,
+      "end": 1100.3999999761581,
+      "ms": 354.39999997615814
+    },
+    {
+      "file": "ceiling-glow.webp",
+      "start": 746.1999999880791,
+      "end": 1097.300000011921,
+      "ms": 351.10000002384186
+    },
+    {
+      "file": "wallpaper-normal.webp",
+      "start": 746.3000000119209,
+      "end": 1099.8999999761581,
+      "ms": 353.5999999642372
+    },
+    {
+      "file": "carpet-normal.webp",
+      "start": 746.5,
+      "end": 1103.699999988079,
+      "ms": 357.19999998807907
+    },
+    {
+      "file": "ceiling-normal.webp",
+      "start": 746.6999999880791,
+      "end": 1104,
+      "ms": 357.30000001192093
+    }
+  ],
+  "maps": [
+    {
+      "material": "br-wall",
+      "key": "map",
+      "image": "wallpaper-color.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.35,
+        0.35
+      ]
+    },
+    {
+      "material": "br-wall",
+      "key": "normalMap",
+      "image": "wallpaper-normal.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.35,
+        0.35
+      ]
+    },
+    {
+      "material": "br-wall",
+      "key": "map",
+      "image": "wallpaper-color.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.4166666666666667,
+        0.4166666666666667
+      ],
+      "normal": [
+        0.35,
+        0.35
+      ]
+    },
+    {
+      "material": "br-wall",
+      "key": "normalMap",
+      "image": "wallpaper-normal.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.4166666666666667,
+        0.4166666666666667
+      ],
+      "normal": [
+        0.35,
+        0.35
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "carpet-color.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "normalMap",
+      "image": "carpet-normal.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "carpet-color.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.7499999999999999,
+        0.7499999999999999
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "normalMap",
+      "image": "carpet-normal.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.7499999999999999,
+        0.7499999999999999
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "carpet-color.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.37499999999999994,
+        0.37499999999999994
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "normalMap",
+      "image": "carpet-normal.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.37499999999999994,
+        0.37499999999999994
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "carpet-color.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.6875,
+        0.6875
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "normalMap",
+      "image": "carpet-normal.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.6875,
+        0.6875
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "carpet-color.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.43749999999999994,
+        0.43749999999999994
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "normalMap",
+      "image": "carpet-normal.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.43749999999999994,
+        0.43749999999999994
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "carpet-color.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "normalMap",
+      "image": "carpet-normal.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "map",
+      "image": "carpet-color.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-floor",
+      "key": "normalMap",
+      "image": "carpet-normal.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.5,
+        0.5
+      ],
+      "normal": [
+        0.7,
+        0.7
+      ]
+    },
+    {
+      "material": "br-ceil",
+      "key": "map",
+      "image": "ceiling-color.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.4166666666666667,
+        0.4166666666666667
+      ],
+      "normal": [
+        0.6,
+        0.6
+      ]
+    },
+    {
+      "material": "br-ceil",
+      "key": "normalMap",
+      "image": "ceiling-normal.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.4166666666666667,
+        0.4166666666666667
+      ],
+      "normal": [
+        0.6,
+        0.6
+      ]
+    },
+    {
+      "material": "br-ceil",
+      "key": "emissiveMap",
+      "image": "ceiling-glow.webp",
+      "anisotropy": 8,
+      "repeat": [
+        0.4166666666666667,
+        0.4166666666666667
+      ],
+      "normal": [
+        0.6,
+        0.6
+      ]
+    }
+  ],
+  "filtering": [
+    {
+      "requested": 2,
+      "expected": 2,
+      "hidden": true,
+      "textures": 52,
+      "correct": true
+    },
+    {
+      "requested": 4,
+      "expected": 4,
+      "hidden": true,
+      "textures": 52,
+      "correct": true
+    },
+    {
+      "requested": 16,
+      "expected": 16,
+      "hidden": true,
+      "textures": 52,
+      "correct": true
+    },
+    {
+      "requested": 8,
+      "expected": 8,
+      "hidden": true,
+      "textures": 52,
+      "correct": true
+    }
+  ],
+  "errors": []
+}

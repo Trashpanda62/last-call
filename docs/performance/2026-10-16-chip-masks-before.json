@@ -1,0 +1,1746 @@
+{
+  "at": "2026-10-16T18:21:20.427Z",
+  "rows": [
+    {
+      "fallback": false,
+      "levers": 10,
+      "geometryCounts": [
+        1,
+        1
+      ],
+      "reference": [
+        "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+        "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+      ],
+      "hashes": [
+        {
+          "id": "16",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "17",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "18",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "19",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "20",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "21",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "22",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "23",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "24",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "25",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        }
+      ],
+      "uploads": [
+        {
+          "bytes": 624,
+          "at": 6658.699999988079
+        },
+        {
+          "bytes": 624,
+          "at": 6658.899999976158
+        },
+        {
+          "bytes": 416,
+          "at": 6658.899999976158
+        },
+        {
+          "bytes": 1560,
+          "at": 6658.899999976158
+        },
+        {
+          "bytes": 1560,
+          "at": 6658.899999976158
+        },
+        {
+          "bytes": 1040,
+          "at": 6658.899999976158
+        },
+        {
+          "bytes": 192,
+          "at": 6659.800000011921
+        },
+        {
+          "bytes": 1152,
+          "at": 6659.800000011921
+        }
+      ],
+      "pulls": [
+        {
+          "id": 16,
+          "active": 16,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.6363961030678911,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678922,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "active": 17,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "active": 18,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "active": 19,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "active": 20,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "active": 21,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "active": 22,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 23,
+          "active": 23,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 24,
+          "active": 24,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "active": 25,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        }
+      ],
+      "preparedMasks": [],
+      "lateMaskUploads": [
+        {
+          "index": 0,
+          "at": 7892.699999988079,
+          "bytes": 8192
+        },
+        {
+          "index": 1,
+          "at": 7892.699999988079,
+          "bytes": 65536
+        }
+      ],
+      "lateLeverUploads": [],
+      "lateLinks": 0,
+      "cycles": [
+        {
+          "previous": 2,
+          "retired": 2,
+          "current": 2,
+          "reusedOld": false,
+          "retiredMasks": 0,
+          "gfx": {
+            "frames": 853,
+            "calls": 95,
+            "tris": 401153,
+            "geos": 457,
+            "tex": 378,
+            "cam": [
+              14.33,
+              1.42,
+              29.71,
+              -0.35,
+              -3.14
+            ],
+            "gestures": {
+              "thinking": 1,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "previous": 2,
+          "retired": 2,
+          "current": 2,
+          "reusedOld": false,
+          "retiredMasks": 0,
+          "gfx": {
+            "frames": 890,
+            "calls": 94,
+            "tris": 401009,
+            "geos": 457,
+            "tex": 380,
+            "cam": [
+              14.33,
+              1.42,
+              29.71,
+              -0.35,
+              -3.14
+            ],
+            "gestures": {
+              "thinking": 1,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "previous": 2,
+          "retired": 2,
+          "current": 2,
+          "reusedOld": false,
+          "retiredMasks": 0,
+          "gfx": {
+            "frames": 927,
+            "calls": 94,
+            "tris": 401009,
+            "geos": 457,
+            "tex": 382,
+            "cam": [
+              14.33,
+              1.42,
+              29.71,
+              -0.35,
+              -3.14
+            ],
+            "gestures": {
+              "thinking": 1,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          }
+        }
+      ],
+      "gfx": {
+        "frames": 927,
+        "calls": 94,
+        "tris": 401009,
+        "geos": 457,
+        "tex": 382,
+        "cam": [
+          14.33,
+          1.42,
+          29.71,
+          -0.35,
+          -3.14
+        ],
+        "gestures": {
+          "thinking": 1,
+          "wave": 1
+        },
+        "props": 31,
+        "rebuildPending": false,
+        "rooms": [
+          "slots"
+        ],
+        "actorWork": {
+          "posed": 1,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "fallback": true,
+      "levers": 10,
+      "geometryCounts": [
+        1,
+        1
+      ],
+      "reference": [
+        "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+        "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+      ],
+      "hashes": [
+        {
+          "id": "16",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "17",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "18",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "19",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "20",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "21",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "22",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "23",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "24",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        },
+        {
+          "id": "25",
+          "hashes": [
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"7d839210f3048b16c28909243a4e1d2f468ab19f82799cddeec0eff605cc447a\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"0e607835a9f23d731bf7675c1ef7f71ce3cade463a138ac03fd0f623048e65a0\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"cde7cec871099154597e8fb4bd957b0d5377e52821b98f4ef633ae7bea61b66b\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"950584f6409a7f4ed763b12b4c85d2157265b271a0823deb0ff61232fe31cdab\"}],\"groups\":[{\"start\":0,\"count\":48,\"materialIndex\":0},{\"start\":48,\"count\":24,\"materialIndex\":1},{\"start\":72,\"count\":24,\"materialIndex\":2}],\"range\":[0,\"Infinity\"]}",
+            "{\"attrs\":[{\"key\":\"position\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"f0d350a82e12a9753f5d0b4f5dc7d9ff5954c542b60ebcd5e3ce2d59d8077ec2\"},{\"key\":\"normal\",\"type\":\"Float32Array\",\"itemSize\":3,\"normalized\":false,\"hash\":\"b4279da92136c3a4c0e363a677480e60cd05f2b20b16618a554c1c0cf50086fe\"},{\"key\":\"uv\",\"type\":\"Float32Array\",\"itemSize\":2,\"normalized\":false,\"hash\":\"6fe54599b193c83e5c170098a690a6580ea1e7d51488d8e88e37f0ad772c827a\"},{\"key\":\"index\",\"type\":\"Uint16Array\",\"itemSize\":1,\"normalized\":false,\"hash\":\"0061575eaf07485ad18a8addc4979883ecf4632a47dd7d626de18a1573f80b8f\"}],\"groups\":[],\"range\":[0,\"Infinity\"]}"
+          ],
+          "positions": [
+            [
+              0,
+              0.25,
+              0
+            ],
+            [
+              0,
+              0.52,
+              0
+            ]
+          ],
+          "casts": [
+            false,
+            true
+          ]
+        }
+      ],
+      "uploads": [
+        {
+          "bytes": 624,
+          "at": 4874.599999964237
+        },
+        {
+          "bytes": 624,
+          "at": 4874.599999964237
+        },
+        {
+          "bytes": 416,
+          "at": 4874.599999964237
+        },
+        {
+          "bytes": 1560,
+          "at": 4874.599999964237
+        },
+        {
+          "bytes": 1560,
+          "at": 4874.599999964237
+        },
+        {
+          "bytes": 1040,
+          "at": 4874.599999964237
+        },
+        {
+          "bytes": 192,
+          "at": 4875.699999988079
+        },
+        {
+          "bytes": 1152,
+          "at": 4875.800000011921
+        }
+      ],
+      "pulls": [
+        {
+          "id": 16,
+          "active": 16,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678922,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "active": 17,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678922,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "active": 18,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678922,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "active": 19,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "active": 20,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "active": 21,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "active": 22,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 23,
+          "active": 23,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 24,
+          "active": 24,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "active": 25,
+          "placed": true,
+          "started": true,
+          "samples": [
+            {
+              "age": 0,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.15,
+              "actual": 0.636396103067894,
+              "expected": 0.6363961030678927,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.3,
+              "actual": 0.9,
+              "expected": 0.9,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.45,
+              "actual": 0.6363961030678952,
+              "expected": 0.6363961030678928,
+              "otherMoved": 0
+            },
+            {
+              "age": 0.61,
+              "actual": 0,
+              "expected": 0,
+              "otherMoved": 0
+            }
+          ]
+        }
+      ],
+      "preparedMasks": [],
+      "lateMaskUploads": [
+        {
+          "index": 0,
+          "at": 6303.099999964237,
+          "bytes": 8192
+        },
+        {
+          "index": 1,
+          "at": 6303.099999964237,
+          "bytes": 65536
+        }
+      ],
+      "lateLeverUploads": [],
+      "lateLinks": 0,
+      "cycles": [
+        {
+          "previous": 2,
+          "retired": 2,
+          "current": 2,
+          "reusedOld": false,
+          "retiredMasks": 0,
+          "gfx": {
+            "frames": 877,
+            "calls": 120,
+            "tris": 352779,
+            "geos": 748,
+            "tex": 323,
+            "cam": [
+              14.33,
+              1.42,
+              29.71,
+              -0.35,
+              -3.14
+            ],
+            "gestures": {
+              "wave": 1,
+              "pour": 1
+            },
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "previous": 2,
+          "retired": 2,
+          "current": 2,
+          "reusedOld": false,
+          "retiredMasks": 0,
+          "gfx": {
+            "frames": 921,
+            "calls": 119,
+            "tris": 352635,
+            "geos": 748,
+            "tex": 325,
+            "cam": [
+              14.33,
+              1.42,
+              29.71,
+              -0.35,
+              -3.14
+            ],
+            "gestures": {
+              "wave": 1,
+              "pour": 1
+            },
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "previous": 2,
+          "retired": 2,
+          "current": 2,
+          "reusedOld": false,
+          "retiredMasks": 0,
+          "gfx": {
+            "frames": 965,
+            "calls": 119,
+            "tris": 352635,
+            "geos": 748,
+            "tex": 327,
+            "cam": [
+              14.33,
+              1.42,
+              29.71,
+              -0.35,
+              -3.14
+            ],
+            "gestures": {
+              "wave": 1,
+              "pour": 1
+            },
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          }
+        }
+      ],
+      "gfx": {
+        "frames": 965,
+        "calls": 119,
+        "tris": 352635,
+        "geos": 748,
+        "tex": 327,
+        "cam": [
+          14.33,
+          1.42,
+          29.71,
+          -0.35,
+          -3.14
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1
+        },
+        "props": 0,
+        "rebuildPending": false,
+        "rooms": [
+          "slots"
+        ],
+        "actorWork": {
+          "posed": 1,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    }
+  ],
+  "errors": []
+}

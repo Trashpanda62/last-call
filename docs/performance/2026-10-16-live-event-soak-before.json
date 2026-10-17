@@ -1,0 +1,4877 @@
+{
+  "at": "2026-10-16T16:39:20.570Z",
+  "rows": [
+    {
+      "mode": "classic",
+      "seed": 42,
+      "simulatedSeconds": 600.1,
+      "over": null,
+      "events": {
+        "bodies": [
+          "2:trap"
+        ],
+        "drinks": [
+          "whiskey",
+          "beer",
+          "mojito",
+          "martini",
+          "cosmo"
+        ],
+        "snacks": [
+          2,
+          1,
+          0
+        ],
+        "effects": [
+          "chips",
+          "crumbs",
+          "sparks"
+        ],
+        "haunts": [],
+        "meetings": [
+          "Body reportedClover found Biscuit's body."
+        ],
+        "blackout": 0,
+        "backrooms": 0
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "t": 0.43,
+          "gfx": {
+            "frames": 114,
+            "calls": 484,
+            "tris": 2310957,
+            "geos": 488,
+            "tex": 372,
+            "cam": [
+              21.67,
+              1.12,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {},
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 34,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 90,
+          "t": 30.43,
+          "gfx": {
+            "frames": 898,
+            "calls": 139,
+            "tris": 676211,
+            "geos": 488,
+            "tex": 383,
+            "cam": [
+              5.83,
+              1.12,
+              6.79,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 16,
+              "push": 6,
+              "cheer": 1,
+              "clap": 1,
+              "facepalm": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "bar"
+            ],
+            "actorWork": {
+              "posed": 4,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 180,
+          "t": 60.43,
+          "gfx": {
+            "frames": 1674,
+            "calls": 169,
+            "tris": 520263,
+            "geos": 488,
+            "tex": 372,
+            "cam": [
+              42.17,
+              1.12,
+              7.29,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 18,
+              "push": 7,
+              "cheer": 1,
+              "clap": 2,
+              "facepalm": 2,
+              "sip": 49
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 4,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 270,
+          "t": 90.43,
+          "gfx": {
+            "frames": 2458,
+            "calls": 622,
+            "tris": 1906379,
+            "geos": 488,
+            "tex": 399,
+            "cam": [
+              36.45,
+              1.12,
+              16,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 21,
+              "push": 9,
+              "cheer": 33,
+              "clap": 22,
+              "facepalm": 49,
+              "sip": 96,
+              "lever": 1,
+              "shrug": 31,
+              "bow": 34
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "floor",
+              "bar",
+              "rest",
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 8,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 360,
+          "t": 120.43,
+          "gfx": {
+            "frames": 3234,
+            "calls": 115,
+            "tris": 480188,
+            "geos": 488,
+            "tex": 387,
+            "cam": [
+              41.67,
+              1.39,
+              24.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 21,
+              "push": 9,
+              "cheer": 44,
+              "clap": 42,
+              "facepalm": 69,
+              "sip": 101,
+              "lever": 1,
+              "shrug": 58,
+              "bow": 54,
+              "tap": 1,
+              "pour": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 450,
+          "t": 150.43,
+          "gfx": {
+            "frames": 4018,
+            "calls": 506,
+            "tris": 1948660,
+            "geos": 488,
+            "tex": 396,
+            "cam": [
+              21.67,
+              1.12,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 22,
+              "push": 9,
+              "cheer": 59,
+              "clap": 58,
+              "facepalm": 100,
+              "sip": 143,
+              "lever": 1,
+              "shrug": 83,
+              "bow": 62,
+              "tap": 1,
+              "pour": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 22,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 540,
+          "t": 180.43,
+          "gfx": {
+            "frames": 4794,
+            "calls": 166,
+            "tris": 351527,
+            "geos": 488,
+            "tex": 389,
+            "cam": [
+              5.62,
+              1.12,
+              16.67,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 22,
+              "push": 9,
+              "cheer": 76,
+              "clap": 74,
+              "facepalm": 127,
+              "sip": 175,
+              "lever": 1,
+              "shrug": 103,
+              "bow": 76,
+              "tap": 1,
+              "pour": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "rest"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 630,
+          "t": 210.43,
+          "gfx": {
+            "frames": 5578,
+            "calls": 183,
+            "tris": 510996,
+            "geos": 488,
+            "tex": 377,
+            "cam": [
+              42.17,
+              1.12,
+              7.29,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 22,
+              "push": 9,
+              "cheer": 87,
+              "clap": 89,
+              "facepalm": 140,
+              "sip": 199,
+              "lever": 2,
+              "shrug": 126,
+              "bow": 86,
+              "tap": 1,
+              "pour": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 3,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 720,
+          "t": 240.43,
+          "gfx": {
+            "frames": 6354,
+            "calls": 142,
+            "tris": 658875,
+            "geos": 488,
+            "tex": 414,
+            "cam": [
+              21.67,
+              1.12,
+              24.55,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 22,
+              "push": 9,
+              "cheer": 94,
+              "clap": 99,
+              "facepalm": 162,
+              "sip": 227,
+              "lever": 2,
+              "shrug": 146,
+              "bow": 100,
+              "tap": 1,
+              "pour": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 8,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 810,
+          "t": 270.43,
+          "gfx": {
+            "frames": 7138,
+            "calls": 126,
+            "tris": 472301,
+            "geos": 488,
+            "tex": 378,
+            "cam": [
+              41.67,
+              1.12,
+              24.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 22,
+              "push": 9,
+              "cheer": 112,
+              "clap": 108,
+              "facepalm": 181,
+              "sip": 258,
+              "lever": 2,
+              "shrug": 165,
+              "bow": 106,
+              "tap": 1,
+              "pour": 1,
+              "lookaround": 4,
+              "nervous": 2,
+              "cry": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 1
+        },
+        {
+          "frame": 900,
+          "t": 300.43,
+          "gfx": {
+            "frames": 7914,
+            "calls": 181,
+            "tris": 808572,
+            "geos": 488,
+            "tex": 400,
+            "cam": [
+              5.83,
+              1.12,
+              6.79,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 22,
+              "push": 9,
+              "cheer": 125,
+              "clap": 131,
+              "facepalm": 204,
+              "sip": 288,
+              "lever": 2,
+              "shrug": 187,
+              "bow": 116,
+              "tap": 1,
+              "pour": 1,
+              "lookaround": 5,
+              "nervous": 6,
+              "cry": 1,
+              "thinking": 1,
+              "gasp": 4,
+              "point": 2
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "bar"
+            ],
+            "actorWork": {
+              "posed": 5,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 1
+        },
+        {
+          "frame": 990,
+          "t": 330.43,
+          "gfx": {
+            "frames": 8698,
+            "calls": 146,
+            "tris": 300797,
+            "geos": 488,
+            "tex": 375,
+            "cam": [
+              5.62,
+              1.12,
+              16.67,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 22,
+              "push": 9,
+              "cheer": 136,
+              "clap": 146,
+              "facepalm": 222,
+              "sip": 314,
+              "lever": 2,
+              "shrug": 206,
+              "bow": 127,
+              "tap": 1,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 1,
+              "thinking": 7,
+              "gasp": 5,
+              "point": 5
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "rest"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 1
+        },
+        {
+          "frame": 1080,
+          "t": 360.43,
+          "gfx": {
+            "frames": 9474,
+            "calls": 688,
+            "tris": 2211928,
+            "geos": 488,
+            "tex": 377,
+            "cam": [
+              36.45,
+              1.12,
+              16,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 25,
+              "push": 11,
+              "cheer": 147,
+              "clap": 153,
+              "facepalm": 232,
+              "sip": 342,
+              "lever": 2,
+              "shrug": 227,
+              "bow": 131,
+              "tap": 1,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 8,
+              "gasp": 5,
+              "point": 6
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "floor",
+              "bar",
+              "rest",
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 14,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1170,
+          "t": 390.43,
+          "gfx": {
+            "frames": 10258,
+            "calls": 134,
+            "tris": 656742,
+            "geos": 488,
+            "tex": 404,
+            "cam": [
+              21.67,
+              1.34,
+              24.55,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 28,
+              "push": 13,
+              "cheer": 158,
+              "clap": 160,
+              "facepalm": 253,
+              "sip": 377,
+              "lever": 2,
+              "shrug": 241,
+              "bow": 137,
+              "tap": 1,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 8,
+              "gasp": 5,
+              "point": 6
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 8,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1260,
+          "t": 420.43,
+          "gfx": {
+            "frames": 11034,
+            "calls": 495,
+            "tris": 2020159,
+            "geos": 488,
+            "tex": 376,
+            "cam": [
+              21.67,
+              1.14,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 31,
+              "push": 14,
+              "cheer": 165,
+              "clap": 166,
+              "facepalm": 258,
+              "sip": 398,
+              "lever": 2,
+              "shrug": 259,
+              "bow": 142,
+              "tap": 1,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 8,
+              "gasp": 5,
+              "point": 6
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 21,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1350,
+          "t": 450.43,
+          "gfx": {
+            "frames": 11818,
+            "calls": 154,
+            "tris": 712551,
+            "geos": 488,
+            "tex": 390,
+            "cam": [
+              5.83,
+              1.12,
+              6.79,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 35,
+              "push": 16,
+              "cheer": 175,
+              "clap": 176,
+              "facepalm": 273,
+              "sip": 428,
+              "lever": 2,
+              "shrug": 284,
+              "bow": 147,
+              "tap": 1,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 8,
+              "gasp": 5,
+              "point": 6
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "bar"
+            ],
+            "actorWork": {
+              "posed": 4,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1440,
+          "t": 480.43,
+          "gfx": {
+            "frames": 12594,
+            "calls": 202,
+            "tris": 737622,
+            "geos": 488,
+            "tex": 376,
+            "cam": [
+              42.17,
+              1.12,
+              7.29,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 37,
+              "push": 16,
+              "cheer": 191,
+              "clap": 186,
+              "facepalm": 302,
+              "sip": 458,
+              "lever": 2,
+              "shrug": 315,
+              "bow": 166,
+              "tap": 1,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 8,
+              "gasp": 5,
+              "point": 6
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 9,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1530,
+          "t": 510.43,
+          "gfx": {
+            "frames": 13378,
+            "calls": 632,
+            "tris": 2047543,
+            "geos": 488,
+            "tex": 408,
+            "cam": [
+              36.45,
+              1.12,
+              16,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 41,
+              "push": 16,
+              "cheer": 215,
+              "clap": 197,
+              "facepalm": 320,
+              "sip": 485,
+              "lever": 2,
+              "shrug": 341,
+              "bow": 180,
+              "tap": 1,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 8,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "floor",
+              "bar",
+              "rest",
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 13,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1620,
+          "t": 540.43,
+          "gfx": {
+            "frames": 14154,
+            "calls": 123,
+            "tris": 483348,
+            "geos": 488,
+            "tex": 401,
+            "cam": [
+              41.67,
+              1.39,
+              24.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 43,
+              "push": 16,
+              "cheer": 225,
+              "clap": 204,
+              "facepalm": 334,
+              "sip": 517,
+              "lever": 2,
+              "shrug": 353,
+              "bow": 191,
+              "tap": 1,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 9,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1710,
+          "t": 570.43,
+          "gfx": {
+            "frames": 14938,
+            "calls": 524,
+            "tris": 2027207,
+            "geos": 488,
+            "tex": 392,
+            "cam": [
+              21.67,
+              1.12,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 44,
+              "push": 16,
+              "cheer": 237,
+              "clap": 214,
+              "facepalm": 359,
+              "sip": 548,
+              "lever": 2,
+              "shrug": 372,
+              "bow": 203,
+              "tap": 2,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 10,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 21,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        }
+      ],
+      "links": [
+        {
+          "stage": "classic-42",
+          "tick": 100.43,
+          "current": {
+            "type": "Mesh",
+            "name": "player-bet-chips",
+            "material": "MeshDepthMaterial",
+            "geometry": "CylinderGeometry",
+            "instanced": true,
+            "skin": false
+          },
+          "defines": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "classic-42",
+          "tick": 100.43,
+          "current": {
+            "type": "Mesh",
+            "name": "",
+            "material": "MeshDepthMaterial",
+            "geometry": "CylinderGeometry",
+            "instanced": false,
+            "skin": false
+          },
+          "defines": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        }
+      ],
+      "buffers": [],
+      "final": {
+        "frames": 15706,
+        "calls": 136,
+        "tris": 581035,
+        "geos": 488,
+        "tex": 383,
+        "cam": [
+          5.83,
+          1.12,
+          6.79,
+          -0.05,
+          0
+        ],
+        "gestures": {
+          "chips": 45,
+          "push": 16,
+          "cheer": 251,
+          "clap": 220,
+          "facepalm": 380,
+          "sip": 581,
+          "lever": 2,
+          "shrug": 395,
+          "bow": 218,
+          "tap": 2,
+          "pour": 1,
+          "lookaround": 11,
+          "nervous": 7,
+          "cry": 2,
+          "thinking": 10,
+          "gasp": 5,
+          "point": 6,
+          "wave": 1
+        },
+        "props": 31,
+        "rebuildPending": false,
+        "rooms": [
+          "bar"
+        ],
+        "actorWork": {
+          "posed": 2,
+          "total": 36
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "mode": "classic",
+      "seed": 947,
+      "simulatedSeconds": 600.1,
+      "over": null,
+      "events": {
+        "bodies": [
+          "14:trap"
+        ],
+        "drinks": [
+          "mojito",
+          "whiskey",
+          "martini",
+          "cosmo",
+          "beer"
+        ],
+        "snacks": [
+          1,
+          2,
+          0
+        ],
+        "effects": [
+          "crumbs",
+          "chips",
+          "sparks"
+        ],
+        "haunts": [],
+        "meetings": [
+          "Body reportedBrick found Ink's body."
+        ],
+        "blackout": 0,
+        "backrooms": 0
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "t": 0.43,
+          "gfx": {
+            "frames": 15754,
+            "calls": 482,
+            "tris": 2294957,
+            "geos": 488,
+            "tex": 385,
+            "cam": [
+              21.67,
+              1.12,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 45,
+              "push": 16,
+              "cheer": 253,
+              "clap": 222,
+              "facepalm": 383,
+              "sip": 581,
+              "lever": 2,
+              "shrug": 398,
+              "bow": 218,
+              "tap": 2,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 10,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 34,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 90,
+          "t": 30.43,
+          "gfx": {
+            "frames": 16538,
+            "calls": 139,
+            "tris": 652360,
+            "geos": 488,
+            "tex": 391,
+            "cam": [
+              5.83,
+              1.12,
+              6.79,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 46,
+              "push": 16,
+              "cheer": 264,
+              "clap": 234,
+              "facepalm": 406,
+              "sip": 581,
+              "lever": 2,
+              "shrug": 421,
+              "bow": 225,
+              "tap": 2,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 10,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "bar"
+            ],
+            "actorWork": {
+              "posed": 3,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 180,
+          "t": 60.43,
+          "gfx": {
+            "frames": 17314,
+            "calls": 154,
+            "tris": 363894,
+            "geos": 488,
+            "tex": 376,
+            "cam": [
+              42.17,
+              1.12,
+              7.29,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 47,
+              "push": 16,
+              "cheer": 266,
+              "clap": 240,
+              "facepalm": 415,
+              "sip": 622,
+              "lever": 2,
+              "shrug": 431,
+              "bow": 229,
+              "tap": 3,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 10,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 270,
+          "t": 90.43,
+          "gfx": {
+            "frames": 18098,
+            "calls": 605,
+            "tris": 1922656,
+            "geos": 488,
+            "tex": 403,
+            "cam": [
+              36.45,
+              1.12,
+              16,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 48,
+              "push": 16,
+              "cheer": 282,
+              "clap": 250,
+              "facepalm": 434,
+              "sip": 675,
+              "lever": 2,
+              "shrug": 454,
+              "bow": 242,
+              "tap": 3,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 10,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "floor",
+              "bar",
+              "rest",
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 8,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 360,
+          "t": 120.43,
+          "gfx": {
+            "frames": 18874,
+            "calls": 121,
+            "tris": 498983,
+            "geos": 488,
+            "tex": 384,
+            "cam": [
+              41.67,
+              1.38,
+              24.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 50,
+              "push": 17,
+              "cheer": 292,
+              "clap": 264,
+              "facepalm": 473,
+              "sip": 682,
+              "lever": 2,
+              "shrug": 480,
+              "bow": 259,
+              "tap": 3,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 10,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 2,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 450,
+          "t": 150.43,
+          "gfx": {
+            "frames": 19658,
+            "calls": 553,
+            "tris": 1977393,
+            "geos": 488,
+            "tex": 399,
+            "cam": [
+              21.67,
+              1.12,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 51,
+              "push": 17,
+              "cheer": 300,
+              "clap": 272,
+              "facepalm": 482,
+              "sip": 713,
+              "lever": 2,
+              "shrug": 497,
+              "bow": 268,
+              "tap": 3,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 10,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 21,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 540,
+          "t": 180.43,
+          "gfx": {
+            "frames": 20434,
+            "calls": 143,
+            "tris": 276408,
+            "geos": 488,
+            "tex": 393,
+            "cam": [
+              5.62,
+              1.12,
+              16.67,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 52,
+              "push": 19,
+              "cheer": 313,
+              "clap": 284,
+              "facepalm": 499,
+              "sip": 757,
+              "lever": 2,
+              "shrug": 517,
+              "bow": 278,
+              "tap": 3,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 10,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "rest"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 630,
+          "t": 210.43,
+          "gfx": {
+            "frames": 21218,
+            "calls": 173,
+            "tris": 544040,
+            "geos": 488,
+            "tex": 382,
+            "cam": [
+              42.17,
+              1.12,
+              7.29,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 53,
+              "push": 19,
+              "cheer": 325,
+              "clap": 300,
+              "facepalm": 508,
+              "sip": 783,
+              "lever": 2,
+              "shrug": 539,
+              "bow": 286,
+              "tap": 3,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 10,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 3,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 720,
+          "t": 240.43,
+          "gfx": {
+            "frames": 21994,
+            "calls": 125,
+            "tris": 510334,
+            "geos": 488,
+            "tex": 405,
+            "cam": [
+              21.67,
+              1.12,
+              24.55,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 57,
+              "push": 20,
+              "cheer": 334,
+              "clap": 306,
+              "facepalm": 518,
+              "sip": 818,
+              "lever": 2,
+              "shrug": 555,
+              "bow": 299,
+              "tap": 4,
+              "pour": 1,
+              "lookaround": 11,
+              "nervous": 7,
+              "cry": 2,
+              "thinking": 10,
+              "gasp": 5,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 5,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 810,
+          "t": 270.43,
+          "gfx": {
+            "frames": 22778,
+            "calls": 120,
+            "tris": 456497,
+            "geos": 488,
+            "tex": 375,
+            "cam": [
+              41.67,
+              1.12,
+              24.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 58,
+              "push": 21,
+              "cheer": 340,
+              "clap": 312,
+              "facepalm": 541,
+              "sip": 847,
+              "lever": 2,
+              "shrug": 583,
+              "bow": 309,
+              "tap": 4,
+              "pour": 1,
+              "lookaround": 12,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 12,
+              "gasp": 7,
+              "point": 6,
+              "wave": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 1
+        },
+        {
+          "frame": 900,
+          "t": 300.43,
+          "gfx": {
+            "frames": 23554,
+            "calls": 188,
+            "tris": 880003,
+            "geos": 488,
+            "tex": 408,
+            "cam": [
+              5.83,
+              1.12,
+              6.79,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 58,
+              "push": 21,
+              "cheer": 355,
+              "clap": 321,
+              "facepalm": 556,
+              "sip": 876,
+              "lever": 2,
+              "shrug": 601,
+              "bow": 326,
+              "tap": 4,
+              "pour": 1,
+              "lookaround": 17,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 8,
+              "point": 7,
+              "wave": 1,
+              "despair": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "bar"
+            ],
+            "actorWork": {
+              "posed": 6,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 1
+        },
+        {
+          "frame": 990,
+          "t": 330.43,
+          "gfx": {
+            "frames": 24338,
+            "calls": 151,
+            "tris": 382623,
+            "geos": 488,
+            "tex": 376,
+            "cam": [
+              5.62,
+              1.12,
+              16.67,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 58,
+              "push": 21,
+              "cheer": 369,
+              "clap": 336,
+              "facepalm": 591,
+              "sip": 910,
+              "lever": 2,
+              "shrug": 630,
+              "bow": 338,
+              "tap": 4,
+              "pour": 1,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 9,
+              "point": 8,
+              "wave": 1,
+              "despair": 2
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "rest"
+            ],
+            "actorWork": {
+              "posed": 2,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 1
+        },
+        {
+          "frame": 1080,
+          "t": 360.43,
+          "gfx": {
+            "frames": 25114,
+            "calls": 669,
+            "tris": 2195329,
+            "geos": 488,
+            "tex": 381,
+            "cam": [
+              36.45,
+              1.12,
+              16,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 62,
+              "push": 25,
+              "cheer": 373,
+              "clap": 348,
+              "facepalm": 601,
+              "sip": 935,
+              "lever": 2,
+              "shrug": 641,
+              "bow": 346,
+              "tap": 4,
+              "pour": 1,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "floor",
+              "bar",
+              "rest",
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 15,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1170,
+          "t": 390.43,
+          "gfx": {
+            "frames": 25898,
+            "calls": 148,
+            "tris": 778719,
+            "geos": 488,
+            "tex": 401,
+            "cam": [
+              21.67,
+              1.33,
+              24.55,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 63,
+              "push": 26,
+              "cheer": 385,
+              "clap": 352,
+              "facepalm": 606,
+              "sip": 967,
+              "lever": 2,
+              "shrug": 651,
+              "bow": 357,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 8,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1260,
+          "t": 420.43,
+          "gfx": {
+            "frames": 26674,
+            "calls": 470,
+            "tris": 1660616,
+            "geos": 488,
+            "tex": 376,
+            "cam": [
+              21.67,
+              1.16,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 63,
+              "push": 26,
+              "cheer": 392,
+              "clap": 365,
+              "facepalm": 626,
+              "sip": 997,
+              "lever": 2,
+              "shrug": 665,
+              "bow": 366,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 15,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1350,
+          "t": 450.43,
+          "gfx": {
+            "frames": 27458,
+            "calls": 148,
+            "tris": 654280,
+            "geos": 488,
+            "tex": 388,
+            "cam": [
+              5.83,
+              1.12,
+              6.79,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 63,
+              "push": 26,
+              "cheer": 409,
+              "clap": 387,
+              "facepalm": 654,
+              "sip": 1026,
+              "lever": 2,
+              "shrug": 701,
+              "bow": 388,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "bar"
+            ],
+            "actorWork": {
+              "posed": 3,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1440,
+          "t": 480.43,
+          "gfx": {
+            "frames": 28234,
+            "calls": 200,
+            "tris": 658334,
+            "geos": 488,
+            "tex": 374,
+            "cam": [
+              42.17,
+              1.12,
+              7.29,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 63,
+              "push": 27,
+              "cheer": 417,
+              "clap": 393,
+              "facepalm": 670,
+              "sip": 1054,
+              "lever": 2,
+              "shrug": 720,
+              "bow": 398,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 7,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1530,
+          "t": 510.43,
+          "gfx": {
+            "frames": 29018,
+            "calls": 697,
+            "tris": 2175550,
+            "geos": 488,
+            "tex": 399,
+            "cam": [
+              36.45,
+              1.12,
+              16,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 64,
+              "push": 27,
+              "cheer": 427,
+              "clap": 414,
+              "facepalm": 690,
+              "sip": 1085,
+              "lever": 2,
+              "shrug": 748,
+              "bow": 416,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "floor",
+              "bar",
+              "rest",
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 14,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1620,
+          "t": 540.43,
+          "gfx": {
+            "frames": 29794,
+            "calls": 117,
+            "tris": 471852,
+            "geos": 488,
+            "tex": 387,
+            "cam": [
+              41.67,
+              1.38,
+              24.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 66,
+              "push": 27,
+              "cheer": 442,
+              "clap": 424,
+              "facepalm": 709,
+              "sip": 1109,
+              "lever": 2,
+              "shrug": 760,
+              "bow": 429,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        },
+        {
+          "frame": 1710,
+          "t": 570.43,
+          "gfx": {
+            "frames": 30578,
+            "calls": 475,
+            "tris": 1627155,
+            "geos": 488,
+            "tex": 385,
+            "cam": [
+              21.67,
+              1.13,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 67,
+              "push": 27,
+              "cheer": 454,
+              "clap": 433,
+              "facepalm": 725,
+              "sip": 1128,
+              "lever": 2,
+              "shrug": 784,
+              "bow": 439,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 17,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 0
+        }
+      ],
+      "links": [],
+      "buffers": [],
+      "final": {
+        "frames": 31346,
+        "calls": 144,
+        "tris": 655168,
+        "geos": 488,
+        "tex": 378,
+        "cam": [
+          5.83,
+          1.12,
+          6.79,
+          -0.05,
+          0
+        ],
+        "gestures": {
+          "chips": 69,
+          "push": 32,
+          "cheer": 465,
+          "clap": 437,
+          "facepalm": 746,
+          "sip": 1163,
+          "lever": 2,
+          "shrug": 805,
+          "bow": 446,
+          "tap": 5,
+          "pour": 2,
+          "lookaround": 19,
+          "nervous": 9,
+          "cry": 2,
+          "thinking": 15,
+          "gasp": 9,
+          "point": 9,
+          "wave": 1,
+          "despair": 2,
+          "laugh": 1
+        },
+        "props": 31,
+        "rebuildPending": false,
+        "rooms": [
+          "bar"
+        ],
+        "actorWork": {
+          "posed": 3,
+          "total": 36
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "mode": "escape",
+      "seed": 72,
+      "simulatedSeconds": 396.77,
+      "over": {
+        "killersWin": false,
+        "text": "Mint, Biscuit, Lola, Duke, Coco, Ozzie, Snow, Moss, Ruby, Sky, Peach, Ink, Lime, Navy, Fudge, Plum, Diva, Goldie, Scoop, Lilac, Dash, Rusty, Brick, Drizzle and Mittens got out (25 of 31). Pip was the killer.",
+        "escape": true,
+        "out": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          20,
+          21,
+          22,
+          23,
+          24,
+          26,
+          27,
+          29,
+          30
+        ],
+        "killers": [
+          5
+        ],
+        "edges": [],
+        "t": 396.7499999999678,
+        "stats": {
+          "poisonings": 0,
+          "stabs": 0,
+          "meetings": 0,
+          "traps": 1,
+          "accidents": 0,
+          "trap": 1,
+          "monster": 4
+        }
+      },
+      "events": {
+        "bodies": [
+          "8:trap",
+          "25:monster",
+          "28:monster",
+          "19:monster",
+          "31:monster"
+        ],
+        "drinks": [
+          "mojito",
+          "whiskey",
+          "cosmo",
+          "martini",
+          "beer"
+        ],
+        "snacks": [
+          1,
+          0,
+          2
+        ],
+        "effects": [
+          "crumbs",
+          "chips",
+          "sparks",
+          "splat"
+        ],
+        "haunts": [],
+        "meetings": [],
+        "blackout": 291,
+        "backrooms": 0
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "t": 0.43,
+          "gfx": {
+            "frames": 31362,
+            "calls": 482,
+            "tris": 2278375,
+            "geos": 488,
+            "tex": 379,
+            "cam": [
+              21.67,
+              1.12,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 69,
+              "push": 32,
+              "cheer": 465,
+              "clap": 437,
+              "facepalm": 746,
+              "sip": 1163,
+              "lever": 2,
+              "shrug": 805,
+              "bow": 446,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 15,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 34,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 90,
+          "t": 30.43,
+          "gfx": {
+            "frames": 32146,
+            "calls": 137,
+            "tris": 580391,
+            "geos": 488,
+            "tex": 387,
+            "cam": [
+              5.83,
+              1.12,
+              6.79,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 71,
+              "push": 32,
+              "cheer": 478,
+              "clap": 443,
+              "facepalm": 780,
+              "sip": 1163,
+              "lever": 2,
+              "shrug": 823,
+              "bow": 455,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 17,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "bar"
+            ],
+            "actorWork": {
+              "posed": 2,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 180,
+          "t": 60.43,
+          "gfx": {
+            "frames": 32922,
+            "calls": 153,
+            "tris": 412220,
+            "geos": 488,
+            "tex": 376,
+            "cam": [
+              42.17,
+              1.12,
+              7.29,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 71,
+              "push": 32,
+              "cheer": 483,
+              "clap": 446,
+              "facepalm": 795,
+              "sip": 1197,
+              "lever": 2,
+              "shrug": 838,
+              "bow": 463,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 17,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 3,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 270,
+          "t": 90.43,
+          "gfx": {
+            "frames": 33706,
+            "calls": 600,
+            "tris": 1795700,
+            "geos": 488,
+            "tex": 403,
+            "cam": [
+              36.45,
+              1.12,
+              16,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 76,
+              "push": 33,
+              "cheer": 496,
+              "clap": 459,
+              "facepalm": 813,
+              "sip": 1260,
+              "lever": 2,
+              "shrug": 858,
+              "bow": 474,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 17,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "floor",
+              "bar",
+              "rest",
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 7,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 360,
+          "t": 120.43,
+          "gfx": {
+            "frames": 34482,
+            "calls": 130,
+            "tris": 590218,
+            "geos": 488,
+            "tex": 395,
+            "cam": [
+              41.67,
+              1.38,
+              24.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 76,
+              "push": 33,
+              "cheer": 511,
+              "clap": 478,
+              "facepalm": 832,
+              "sip": 1271,
+              "lever": 2,
+              "shrug": 883,
+              "bow": 484,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 17,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 3,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 450,
+          "t": 150.43,
+          "gfx": {
+            "frames": 35266,
+            "calls": 491,
+            "tris": 1923707,
+            "geos": 488,
+            "tex": 391,
+            "cam": [
+              21.67,
+              1.13,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 76,
+              "push": 34,
+              "cheer": 517,
+              "clap": 488,
+              "facepalm": 848,
+              "sip": 1305,
+              "lever": 2,
+              "shrug": 896,
+              "bow": 489,
+              "tap": 5,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 18,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 22,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 540,
+          "t": 180.43,
+          "gfx": {
+            "frames": 36042,
+            "calls": 151,
+            "tris": 407904,
+            "geos": 488,
+            "tex": 382,
+            "cam": [
+              5.62,
+              1.12,
+              16.67,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 78,
+              "push": 34,
+              "cheer": 531,
+              "clap": 498,
+              "facepalm": 878,
+              "sip": 1338,
+              "lever": 2,
+              "shrug": 928,
+              "bow": 512,
+              "tap": 6,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 18,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "rest"
+            ],
+            "actorWork": {
+              "posed": 4,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 630,
+          "t": 210.43,
+          "gfx": {
+            "frames": 36826,
+            "calls": 168,
+            "tris": 486367,
+            "geos": 488,
+            "tex": 380,
+            "cam": [
+              42.17,
+              1.12,
+              7.29,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 80,
+              "push": 34,
+              "cheer": 541,
+              "clap": 502,
+              "facepalm": 890,
+              "sip": 1368,
+              "lever": 2,
+              "shrug": 938,
+              "bow": 525,
+              "tap": 6,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 18,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 2,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 720,
+          "t": 240.43,
+          "gfx": {
+            "frames": 37602,
+            "calls": 161,
+            "tris": 749742,
+            "geos": 488,
+            "tex": 412,
+            "cam": [
+              21.67,
+              1.12,
+              24.55,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 83,
+              "push": 34,
+              "cheer": 554,
+              "clap": 518,
+              "facepalm": 898,
+              "sip": 1394,
+              "lever": 2,
+              "shrug": 952,
+              "bow": 538,
+              "tap": 6,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 18,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 11,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 810,
+          "t": 270.43,
+          "gfx": {
+            "frames": 38386,
+            "calls": 117,
+            "tris": 457297,
+            "geos": 488,
+            "tex": 379,
+            "cam": [
+              41.67,
+              1.12,
+              24.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 84,
+              "push": 34,
+              "cheer": 568,
+              "clap": 533,
+              "facepalm": 913,
+              "sip": 1420,
+              "lever": 2,
+              "shrug": 974,
+              "bow": 553,
+              "tap": 7,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 9,
+              "cry": 2,
+              "thinking": 18,
+              "gasp": 9,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 900,
+          "t": 300.43,
+          "gfx": {
+            "frames": 39162,
+            "calls": 149,
+            "tris": 652942,
+            "geos": 488,
+            "tex": 396,
+            "cam": [
+              5.83,
+              1.12,
+              6.79,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 86,
+              "push": 36,
+              "cheer": 582,
+              "clap": 542,
+              "facepalm": 931,
+              "sip": 1466,
+              "lever": 2,
+              "shrug": 992,
+              "bow": 566,
+              "tap": 8,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 10,
+              "cry": 2,
+              "thinking": 18,
+              "gasp": 10,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "bar"
+            ],
+            "actorWork": {
+              "posed": 3,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 1
+        },
+        {
+          "frame": 990,
+          "t": 330.43,
+          "gfx": {
+            "frames": 39946,
+            "calls": 148,
+            "tris": 382826,
+            "geos": 488,
+            "tex": 339,
+            "cam": [
+              5.62,
+              1.12,
+              16.67,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 86,
+              "push": 36,
+              "cheer": 583,
+              "clap": 544,
+              "facepalm": 932,
+              "sip": 1466,
+              "lever": 2,
+              "shrug": 993,
+              "bow": 568,
+              "tap": 8,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 10,
+              "cry": 2,
+              "thinking": 18,
+              "gasp": 11,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "rest"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 6
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 2,
+          "bodies": 5
+        },
+        {
+          "frame": 1080,
+          "t": 360.43,
+          "gfx": {
+            "frames": 40722,
+            "calls": 624,
+            "tris": 1798896,
+            "geos": 488,
+            "tex": 342,
+            "cam": [
+              36.45,
+              1.12,
+              16,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 86,
+              "push": 36,
+              "cheer": 583,
+              "clap": 544,
+              "facepalm": 932,
+              "sip": 1466,
+              "lever": 2,
+              "shrug": 993,
+              "bow": 568,
+              "tap": 8,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 18,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "floor",
+              "bar",
+              "rest",
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 6
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 2,
+          "bodies": 5
+        },
+        {
+          "frame": 1170,
+          "t": 390.43,
+          "gfx": {
+            "frames": 41506,
+            "calls": 116,
+            "tris": 533730,
+            "geos": 488,
+            "tex": 342,
+            "cam": [
+              21.67,
+              1.27,
+              24.55,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 86,
+              "push": 36,
+              "cheer": 583,
+              "clap": 544,
+              "facepalm": 932,
+              "sip": 1466,
+              "lever": 2,
+              "shrug": 993,
+              "bow": 568,
+              "tap": 8,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 18,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 6
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 2,
+          "bodies": 5
+        }
+      ],
+      "links": [],
+      "buffers": [],
+      "final": {
+        "frames": 41674,
+        "calls": 407,
+        "tris": 1383334,
+        "geos": 488,
+        "tex": 340,
+        "cam": [
+          16.68,
+          2.5,
+          13.33,
+          -0.13,
+          -0.53
+        ],
+        "gestures": {
+          "chips": 86,
+          "push": 36,
+          "cheer": 583,
+          "clap": 544,
+          "facepalm": 932,
+          "sip": 1466,
+          "lever": 2,
+          "shrug": 993,
+          "bow": 568,
+          "tap": 8,
+          "pour": 2,
+          "lookaround": 19,
+          "nervous": 11,
+          "cry": 2,
+          "thinking": 18,
+          "gasp": 14,
+          "point": 9,
+          "wave": 1,
+          "despair": 2,
+          "laugh": 1,
+          "snatched": 4
+        },
+        "props": 31,
+        "rebuildPending": false,
+        "rooms": null,
+        "actorWork": {
+          "posed": 7,
+          "total": 7
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "mode": "escape",
+      "seed": 311,
+      "simulatedSeconds": 344.77,
+      "over": {
+        "killersWin": false,
+        "text": "Biscuit, Lola, Duke, Pip, Teal, Snow, Moss, Ruby, Sky, Peach, Ink, Lime, Navy, Fudge, Plum, Fern, Diva, Goldie, Lilac, Dash, Clover, Brick, Presto, Drizzle, Mittens and Sunny got out (26 of 31). Scoop was the killer.",
+        "escape": true,
+        "out": [
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          23,
+          24,
+          25,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "killers": [
+          22
+        ],
+        "edges": [],
+        "t": 344.6500000000152,
+        "stats": {
+          "poisonings": 0,
+          "stabs": 0,
+          "meetings": 0,
+          "traps": 1,
+          "accidents": 0,
+          "trap": 1,
+          "monster": 4
+        }
+      },
+      "events": {
+        "bodies": [
+          "7:trap",
+          "26:monster",
+          "6:monster",
+          "1:monster",
+          "0:monster"
+        ],
+        "drinks": [
+          "cosmo",
+          "mojito",
+          "whiskey",
+          "martini",
+          "beer"
+        ],
+        "snacks": [
+          2,
+          0,
+          1
+        ],
+        "effects": [
+          "chips",
+          "crumbs",
+          "sparks",
+          "splat"
+        ],
+        "haunts": [],
+        "meetings": [],
+        "blackout": 135,
+        "backrooms": 0
+      },
+      "samples": [
+        {
+          "frame": 0,
+          "t": 0.43,
+          "gfx": {
+            "frames": 41706,
+            "calls": 481,
+            "tris": 2294955,
+            "geos": 488,
+            "tex": 387,
+            "cam": [
+              21.67,
+              1.24,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 86,
+              "push": 36,
+              "cheer": 583,
+              "clap": 544,
+              "facepalm": 932,
+              "sip": 1466,
+              "lever": 2,
+              "shrug": 993,
+              "bow": 568,
+              "tap": 8,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 18,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 34,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 90,
+          "t": 30.43,
+          "gfx": {
+            "frames": 42490,
+            "calls": 151,
+            "tris": 792209,
+            "geos": 488,
+            "tex": 386,
+            "cam": [
+              5.83,
+              1.12,
+              6.79,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 92,
+              "push": 36,
+              "cheer": 590,
+              "clap": 552,
+              "facepalm": 946,
+              "sip": 1467,
+              "lever": 2,
+              "shrug": 1011,
+              "bow": 581,
+              "tap": 8,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 19,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 1,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "bar"
+            ],
+            "actorWork": {
+              "posed": 6,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 180,
+          "t": 60.43,
+          "gfx": {
+            "frames": 43266,
+            "calls": 162,
+            "tris": 423119,
+            "geos": 488,
+            "tex": 374,
+            "cam": [
+              42.17,
+              1.12,
+              7.29,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 92,
+              "push": 38,
+              "cheer": 592,
+              "clap": 552,
+              "facepalm": 958,
+              "sip": 1511,
+              "lever": 2,
+              "shrug": 1021,
+              "bow": 583,
+              "tap": 8,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 19,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 2,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 2,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 270,
+          "t": 90.43,
+          "gfx": {
+            "frames": 44050,
+            "calls": 652,
+            "tris": 2088283,
+            "geos": 488,
+            "tex": 407,
+            "cam": [
+              36.45,
+              1.12,
+              16,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 95,
+              "push": 40,
+              "cheer": 605,
+              "clap": 561,
+              "facepalm": 977,
+              "sip": 1559,
+              "lever": 2,
+              "shrug": 1044,
+              "bow": 601,
+              "tap": 8,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 20,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 2,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "floor",
+              "bar",
+              "rest",
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 12,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 360,
+          "t": 120.43,
+          "gfx": {
+            "frames": 44826,
+            "calls": 123,
+            "tris": 460889,
+            "geos": 488,
+            "tex": 391,
+            "cam": [
+              41.67,
+              1.38,
+              24.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 95,
+              "push": 40,
+              "cheer": 621,
+              "clap": 573,
+              "facepalm": 997,
+              "sip": 1574,
+              "lever": 2,
+              "shrug": 1065,
+              "bow": 614,
+              "tap": 8,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 20,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 2,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 450,
+          "t": 150.43,
+          "gfx": {
+            "frames": 45610,
+            "calls": 522,
+            "tris": 1934527,
+            "geos": 488,
+            "tex": 390,
+            "cam": [
+              21.67,
+              1.12,
+              9.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 96,
+              "push": 40,
+              "cheer": 628,
+              "clap": 585,
+              "facepalm": 1023,
+              "sip": 1610,
+              "lever": 2,
+              "shrug": 1083,
+              "bow": 625,
+              "tap": 9,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 20,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 2,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 23,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 540,
+          "t": 180.43,
+          "gfx": {
+            "frames": 46386,
+            "calls": 145,
+            "tris": 276508,
+            "geos": 488,
+            "tex": 379,
+            "cam": [
+              5.62,
+              1.12,
+              16.67,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 98,
+              "push": 41,
+              "cheer": 652,
+              "clap": 606,
+              "facepalm": 1048,
+              "sip": 1655,
+              "lever": 2,
+              "shrug": 1114,
+              "bow": 640,
+              "tap": 9,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 20,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 2,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "rest"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 630,
+          "t": 210.43,
+          "gfx": {
+            "frames": 47170,
+            "calls": 192,
+            "tris": 619005,
+            "geos": 488,
+            "tex": 381,
+            "cam": [
+              42.17,
+              1.12,
+              7.29,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 101,
+              "push": 41,
+              "cheer": 663,
+              "clap": 621,
+              "facepalm": 1065,
+              "sip": 1672,
+              "lever": 2,
+              "shrug": 1125,
+              "bow": 648,
+              "tap": 9,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 20,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 2,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 6,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 720,
+          "t": 240.43,
+          "gfx": {
+            "frames": 47946,
+            "calls": 131,
+            "tris": 558812,
+            "geos": 488,
+            "tex": 420,
+            "cam": [
+              21.67,
+              1.14,
+              24.55,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 101,
+              "push": 41,
+              "cheer": 677,
+              "clap": 633,
+              "facepalm": 1085,
+              "sip": 1705,
+              "lever": 2,
+              "shrug": 1140,
+              "bow": 666,
+              "tap": 9,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 21,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 2,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 5,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 810,
+          "t": 270.43,
+          "gfx": {
+            "frames": 48730,
+            "calls": 122,
+            "tris": 512382,
+            "geos": 488,
+            "tex": 378,
+            "cam": [
+              41.67,
+              1.21,
+              24.88,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {
+              "chips": 103,
+              "push": 42,
+              "cheer": 687,
+              "clap": 644,
+              "facepalm": 1110,
+              "sip": 1740,
+              "lever": 2,
+              "shrug": 1172,
+              "bow": 676,
+              "tap": 10,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 21,
+              "gasp": 14,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 2,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 37
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 32,
+          "bodies": 0
+        },
+        {
+          "frame": 900,
+          "t": 300.43,
+          "gfx": {
+            "frames": 49506,
+            "calls": 171,
+            "tris": 929264,
+            "geos": 488,
+            "tex": 389,
+            "cam": [
+              5.83,
+              1.12,
+              6.79,
+              -0.05,
+              0
+            ],
+            "gestures": {
+              "chips": 104,
+              "push": 42,
+              "cheer": 694,
+              "clap": 659,
+              "facepalm": 1131,
+              "sip": 1757,
+              "lever": 2,
+              "shrug": 1197,
+              "bow": 694,
+              "tap": 10,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 11,
+              "cry": 2,
+              "thinking": 21,
+              "gasp": 15,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 2,
+              "snatched": 4
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "bar"
+            ],
+            "actorWork": {
+              "posed": 7,
+              "total": 36
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 31,
+          "bodies": 1
+        },
+        {
+          "frame": 990,
+          "t": 330.43,
+          "gfx": {
+            "frames": 50290,
+            "calls": 147,
+            "tris": 349788,
+            "geos": 488,
+            "tex": 354,
+            "cam": [
+              5.62,
+              1.12,
+              16.67,
+              -0.05,
+              -4.71
+            ],
+            "gestures": {
+              "chips": 104,
+              "push": 42,
+              "cheer": 694,
+              "clap": 659,
+              "facepalm": 1131,
+              "sip": 1757,
+              "lever": 2,
+              "shrug": 1197,
+              "bow": 696,
+              "tap": 10,
+              "pour": 2,
+              "lookaround": 19,
+              "nervous": 12,
+              "cry": 2,
+              "thinking": 21,
+              "gasp": 15,
+              "point": 9,
+              "wave": 1,
+              "despair": 2,
+              "laugh": 2,
+              "snatched": 7
+            },
+            "props": 31,
+            "rebuildPending": false,
+            "rooms": [
+              "rest"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 18
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1280,
+              720
+            ],
+            "out": [
+              1280,
+              720
+            ],
+            "pr": 1
+          },
+          "alive": 14,
+          "bodies": 4
+        }
+      ],
+      "links": [],
+      "buffers": [],
+      "final": {
+        "frames": 50666,
+        "calls": 873,
+        "tris": 2720282,
+        "geos": 488,
+        "tex": 333,
+        "cam": [
+          44.2,
+          1.47,
+          6.5,
+          -0.3,
+          1.83
+        ],
+        "gestures": {
+          "chips": 104,
+          "push": 42,
+          "cheer": 694,
+          "clap": 659,
+          "facepalm": 1131,
+          "sip": 1757,
+          "lever": 2,
+          "shrug": 1197,
+          "bow": 696,
+          "tap": 10,
+          "pour": 2,
+          "lookaround": 19,
+          "nervous": 13,
+          "cry": 2,
+          "thinking": 21,
+          "gasp": 15,
+          "point": 9,
+          "wave": 1,
+          "despair": 2,
+          "laugh": 2,
+          "snatched": 8
+        },
+        "props": 31,
+        "rebuildPending": false,
+        "rooms": null,
+        "actorWork": {
+          "posed": 6,
+          "total": 6
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    }
+  ],
+  "errors": []
+}

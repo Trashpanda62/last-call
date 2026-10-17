@@ -1,0 +1,65 @@
+{
+  "approvedCredits": 60,
+  "actualCredits": 60,
+  "assets": [
+    {
+      "asset": "cabinet",
+      "provider": "sorceress",
+      "tool": "model_generate",
+      "model": "hunyuan3d-3.1",
+      "jobId": "0c05425e-9dd9-4628-a855-f9163752d87b",
+      "date": "2026-10-16",
+      "creditsCharged": 30,
+      "rawSource": "runs/sorceress/skee-model/assets/01-url-acf81d3a.glb",
+      "sourceBytes": 87708316,
+      "sourceSha256": "a26b6fc727c411c0faf4e4ee8288145aaa497a27178f3074cf08efec872af5a2",
+      "input": "design/sorceress-skee-model.json",
+      "rights": "Generated through Steve's Sorceress account from the approved original design image; retain provider terms and receipt.",
+      "status": "Integrated in two playable lanes. Rules, actual normal/fallback controls, compact screen, three-client network, Retry and 19-scenario/restart checks pass. User visual acceptance and physical controller hardware remain open.",
+      "stagingAsset": "design/models/skee-cabinet-v1.glb",
+      "triangles": 19000,
+      "materials": 1,
+      "stagingBytes": 1773372,
+      "preview": "design/previews/skee-ball-cabinet-3d-v1.png",
+      "runtimeAsset": "assets/props/skeeCabinet.glb",
+      "runtimeBytes": 1556088,
+      "runtimeSha256": "4991985285ea3d1e8e8e574a9204fa18737d202adcaf304393a4ae5397701a4a",
+      "runtimeTriangles": 13559,
+      "localProcessing": [
+        "tools/generated-pilot-fit.py",
+        "tools/prepare-skee-cabinet.py"
+      ],
+      "runtimePreview": "design/previews/skee-controls-v1.png"
+    },
+    {
+      "asset": "glove",
+      "provider": "sorceress",
+      "tool": "model_generate",
+      "model": "hunyuan3d-3.1",
+      "jobId": "6555d13c-98f9-49ec-9ad7-6c28ec261073",
+      "date": "2026-10-16",
+      "creditsCharged": 30,
+      "rawSource": "runs/sorceress/glove-model/assets/01-url-5da598ff.glb",
+      "sourceBytes": 74229628,
+      "sourceSha256": "7f8a7ef1ca194cb670367830980c189dbdcd1ea3e8e6293b2c61d3aef64451e0",
+      "input": "design/sorceress-glove-model.json",
+      "rights": "Generated through Steve's Sorceress account from the approved original design image; retain provider terms and receipt.",
+      "status": "Integrated by default. Corrected palm/mirror orientation and removed the forced forearm bend after user feedback. All 22 actual states pass neutral wrist axes, orientation and sleeve containment; 280 desktop/compact blackjack states and inventory preparation/lifetime pass. User visual acceptance remains open.",
+      "runtimeAsset": "assets/hands/casino-glove.glb",
+      "runtimeBytes": 872024,
+      "runtimeSha256": "b4d685e86312c235c68444407bce98fd7053bda5a71cfabccfe5a5874350e433",
+      "triangles": 5832,
+      "bones": 17,
+      "fingerChains": 5,
+      "materials": 1,
+      "poseClips": 7,
+      "localProcessing": [
+        "tools/generated-pilot-fit.py",
+        "tools/rig-casino-glove.py"
+      ],
+      "editableSource": "runs/sorceress/glove-model/casino-glove-rig-v1.blend",
+      "preview": "design/previews/hands-neutral-gameplay.png",
+      "runtimeChecks": "docs/performance/2026-10-16-hands-neutral-wrist.json"
+    }
+  ]
+}

@@ -6,6 +6,10 @@ import { ROOMS, TAP, BELL, SHADY, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES,
 import { PERKS, PERK } from './perks.js';
 import * as Gm from './games.js';
 import { makeTalk } from './talk.js';
+import { createLuck } from './luck.js';
+import { createInsuranceBook } from './insurance.js';
+import { createFootsteps } from './character-foley.js';
+import { SKEE, skeeNew, skeeLaunch, skeeTick, skeeView, skeeMultiplier } from './skee.js';
 
 // "Red", "Red and Mint", "Red, Mint and Pip"
 export const nameList = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
@@ -40,7 +44,7 @@ const atBar = p => rectDist(p, COUNTER) < CFG.barReach;
 const KILLS = ['order', 'rig', 'blade', 'accident'];
 // What a killer actually tampers with at each kind of seat.
 const RIG_LABEL = {
-  bj: 'the blackjack chips', roulette: 'the roulette chips', slots: "the slot machine's lever", plinko: "the Plinko cabinet's button", mines: 'the Mines console',
+  bj: 'the blackjack chips', roulette: 'the roulette chips', slots: "the slot machine's lever", plinko: 'the Plinko cabinet', skee: 'the skee-ball return', mines: 'the Mines console',
   tower: 'the Dragon Tower console', coin: 'the coin podium', wheel: "the prize wheel's handle", dice: 'the dice', crash: 'the Crash desk', race: 'the duck race betting desk',
 };
 
@@ -60,7 +64,7 @@ export function createGame(opts) {
     t: 0, mode: 'play', pickT: 0, pickEarly: false, pickReady: false, lure: null, bank: CFG.startBank, target: Gm.roundGoal(CFG.startBank * CFG.targets[n] * CFG.killerBank[nk]),
     diff: Object.hasOwn(DIFF, opts.difficulty) ? DIFF[opts.difficulty] : DIFF.normal, bankLog: [{ t: 0, bank: CFG.startBank }],
     chars: [], drinks: [], bodies: [], floats: [], fx: [], lightsT: 0, blackout: null, afterDark: null, backrooms: !!opts.backrooms, backroomsChance: opts.backroomsChance ?? CFG.backroomsChance, escape: opts.mode === 'escape', exits: null, nextId: 1, obsT: 0, pending: null, meetEnd: 0, big: n > CFG.bigRoom, meeting: null, over: null,
-    seats: makeSeats(), bowls: BOWL_SPOTS.map((p, i) => ({ id: i, x: p.x, y: p.y })), deaths: 0, traps: [],
+    skee: [null, null], skeeSeq: 0, seats: makeSeats(), held: new Map(), bowls: BOWL_SPOTS.map((p, i) => ({ id: i, x: p.x, y: p.y })), deaths: 0, traps: [],
     chandeliers: CHANDELIERS.map(([x, y], i) => ({ id: i, x, y, state: 'up', t: 0, by: null })).filter(ch => !['race', 'arcade'].includes(roomOf(ch))), guard: null, guardSaw: null, haunts: [],
     // (the pond and arcade have plain lamps, nothing to drop)
     antidotes: CFG.antidotes, security: { cams: false, feed: 'floor', feedT: 0 },
@@ -97,9 +101,31 @@ export function createGame(opts) {
 }
 
 function makeApi(G) {
+  const footsteps = createFootsteps(roomOf);
+  const sharedLuck = new Map();
+  const luckFor = c => {
+    if (!sharedLuck.has(c.id)) sharedLuck.set(c.id, createLuck());
+    return sharedLuck.get(c.id);
+  };
+
+  const policyBooks = new Map();
+  const policyFor = c => {
+    if (!policyBooks.has(c.id)) policyBooks.set(c.id, createInsuranceBook({
+      owns: () => c.items.has('insurance'), consume: () => c.items.delete('insurance'), comp: CFG.comp,
+      refund: amount => {
+        if (G.over) return;
+        G.bank += amount; c.won += amount; logBank();
+        G.floats.push({ x: c.x, y: c.y - 30, text: '+' + money(amount), color: '#9ccea9', t: 1.6 });
+        tell(c, `Insurance returned ${money(amount)}.`, false, 'coin'); checkOver();
+      },
+    }));
+    return policyBooks.get(c.id);
+  };
   const D = () => G.diff;
   const chars = () => G.chars;
   const byId = id => G.chars[id];
+  // A machine a player left running (tables.js bg: a slot on AUTO, a wheel still spinning) stays theirs while they live.
+  const heldOff = (s, c) => { const h = G.held.get(s.id), o = h === undefined ? null : byId(h); return !!(o && o !== c && o.alive); };
   const humans = () => G.chars.filter(c => c.isHuman);
   const gamblersAlive = () => G.chars.filter(c => c.alive && !c.isKiller);
   const killersAlive = () => G.chars.filter(c => c.alive && c.isKiller);
@@ -174,8 +200,8 @@ function makeApi(G) {
     if (d.sips <= 0) removeDrink(d);
   }
   function eatSnack(c, b) {
-    c.lucky = CFG.luckyTime; c.hunger = Math.min(100, c.hunger + CFG.snackGain); sfxTo(c, 'crunch');
-    tell(c, `Pretzels. That hits the spot, and they're lucky: your table wins pay ${Math.round(CFG.luckyBonus * 100)}% more for ${CFG.luckyTime}s.`);
+    c.eatAt = G.t; c.snack = b.id % 3; c.lucky = CFG.luckyTime; c.hunger = Math.min(100, c.hunger + CFG.snackGain); sfxTo(c, 'crunch');
+    tell(c, `${['Doughnuts', 'Pretzels', 'Hot dogs'][c.snack]}. That hits the spot, and they're lucky: your table wins pay ${Math.round(CFG.luckyBonus * 100)}% more for ${CFG.luckyTime}s.`);
     const trap = trapAt('bowl', b.id);
     if (trap && !c.isKiller) { poisonChar(c, trap.by, 'bowl' + b.id, 'pretzels'); removeTrap(trap); }
     G.fx.push({ kind: 'crumbs', x: b.x, y: b.y, t: 0.8 });
@@ -383,7 +409,7 @@ function makeApi(G) {
     return true;
   }
   // 6. Lights out: the blackout (Steve, 2026-10-15). The lights stay out until the crew resets the lit breakers, by
-  // flashlight. While they're out a killer can turn into a giant monster (T: transform) that kills anyone it catches; it
+  // flashlight. While they're out a killer can turn into a giant monster (Q: transform) that kills anyone it catches; it
   // turns back into its own body in the same tick the power comes on (render3d.js swaps both from the one snapshot).
   // forced: escape mode's own blackout (CFG.escapeDarkAt), whatever the cooldowns.
   function doLights(k, forced) {
@@ -401,12 +427,12 @@ function makeApi(G) {
     for (const c of G.chars) { c.flash = c.alive && !c.isKiller; c.tfAt = null; }
     const where = nameList(br.map(b => ROOMS[b.room].name));
     for (const h of humans()) {
-      if (h.isKiller) tell(h, `The power is out. Press T to turn into the monster${killersAlive().length > 1 ? ' (one of you can)' : ''}. Breakers: ${where}.`, true, 'lights');
+      if (h.isKiller) tell(h, `The power is out. Press Q to turn into the monster${killersAlive().length > 1 ? ' (one of you can)' : ''}. Breakers: ${where}.`, true, 'lights');
       else tell(h, `The power is out. Reset the breakers in ${where}${G.escape ? ' and the exits open' : ''}. F: flashlight.`, true, 'lights');
     }
     return true;
   }
-  // T: the killer turns into the monster (Steve, 2026-10-15: a button, not by itself), any time the power is out. One
+  // Q: the killer turns into the monster (Steve, 2026-10-15: a button, not by itself), any time the power is out. One
   // monster at a time.
   function transform(k) {
     const B = G.blackout;
@@ -417,7 +443,7 @@ function makeApi(G) {
     B.by = k.id;
     k.monster = true; k.mCd = 0; k.hunt = null; k.mHunt = null; k.path = []; k.state = 'monster'; k.inspect = null; k.flash = false;
     for (const h of humans()) {
-      if (h === k) tell(h, 'You are the monster. Catch anyone you find (press 3) before the power comes back on.', true, 'roar');
+      if (h === k) tell(h, 'You are the monster. Left-click to grab, Shift to leap. Catch them before the power comes back on.', true, 'roar');
       else if (h.isKiller) tell(h, 'Your partner is the monster. Stay out of its way.', true, 'roar');
       else tell(h, 'Something huge is loose in the dark. Hide, or get those breakers reset.', true, 'roar');
     }
@@ -513,7 +539,7 @@ function makeApi(G) {
     for (const c of G.chars) { const lv = c.isHuman ? (c === v ? 1 : hearing(c, v)) : 0; if (lv) c.inbox.push({ sfx: 'maul', vol: +lv.toFixed(2), muffle: roomOf(c) !== roomOf(v) }); }
     return true;
   }
-  // The pounce (E; CFG.leapDist and the rest): toward the nearest gambler it can see within leapCone of where it faces
+  // The pounce (Shift; CFG.leapDist and the rest): toward the nearest gambler it can see within leapCone of where it faces
   // (where they stand now, no leading them: a runner can dodge it), else straight ahead. leapTick flies it there; it can't leap while holding someone or
   // recovering from a kill (mCd).
   const leapable = (m, o) => o.alive && !o.isKiller && o.grabbed === null && los(m, o);
@@ -676,9 +702,11 @@ function makeApi(G) {
   function hearKill(v, cause) {
     const r = roomOf(v), room = ROOMS[r].name;
     for (const c of G.chars) {
-      const lv = c === v ? 0 : hearing(c, v); if (!lv) continue;
-      const near = roomOf(c) === r;
-      if (c.isHuman) c.inbox.push({ sfx: 'death', voice: v.deathSfx, who: v.id, vol: +lv.toFixed(2), muffle: !near });
+      if (c === v) continue;
+      const lv = hearing(c, v), near = roomOf(c) === r, distance = dist(c, v);
+      const volume = lv || (distance < 2200 ? .16 * (1 - distance / 2600) : 0);
+      if (c.isHuman && volume > 0) c.inbox.push({ sfx: 'death', voice: v.deathSfx, who: v.id, vol: +volume.toFixed(3), muffle: !near, at: [v.x, v.y], distant: !near || distance > 540, event: `${v.id}:${G.t}` });
+      if (!lv) continue;
       if (!c.alive || canSee(c, v)) continue;
       if (!c.isHuman) { c.heard.push({ t: G.t, room: r, victim: v.id }); continue; }
       if (!(near && cause === 'chandelier')) tell(c, near ? `A scream from ${room}!` : `A faint scream through the wall, from ${room}.`, near); // (under a chandelier the crash says it)
@@ -698,6 +726,8 @@ function makeApi(G) {
     const knew = by && v.alive && cause !== 'monster' && canSee(v, by); // (nobody knows who the monster is)
     v.alive = false; v.poisonT = 0; v.trapT = 0; v.inspect = null;
     v.killedBy = knew ? appearAs(by).id : null;
+    const seenAttacker = by && ['blade', 'monster', 'shiv', 'shot'].includes(cause) ? appearAs(by) : null;
+    v.deathScene = { t: G.t, x: v.x, y: v.y, face: v.look ?? v.face, cause, killer: by ? {id: by.id, name: by.name} : null, attacker: seenAttacker ? { color: seenAttacker.color, hat: seenAttacker.hat, monster: cause === 'monster' } : null };
     if (by) by.lastVictim = v.id;
     if (v.seat) { v.seat.occ = null; v.seat = null; v.leftSeatT = G.t; v.posVer++; }
     if (v.target && v.target.claim === v.id) v.target.claim = null;
@@ -758,7 +788,7 @@ function makeApi(G) {
   // joinReach, or from one game a free spot nearer than your own. Walking past one sideways doesn't.
   function walkUp(c) {
     if (c.monster || c.grabbed !== null) return;
-    const s = nearest(G.seats.filter(s => !s.occ && s.game !== 'cams' && s.game !== 'vip' && Math.abs(angDiff(c.look, s.face)) < CFG.joinFace), c, c.seat ? Math.min(CFG.joinReach, dist(c, c.seat) - 10) : CFG.joinReach);
+    const s = nearest(G.seats.filter(s => !s.occ && !heldOff(s, c) && s.game !== 'cams' && s.game !== 'vip' && Math.abs(angDiff(c.look, s.face)) < CFG.joinFace), c, c.seat ? Math.min(CFG.joinReach, dist(c, c.seat) - 10) : CFG.joinReach);
     if (s) { standUp(c); sit(c, s, true); }
   }
   function botChoose(c) {
@@ -772,7 +802,7 @@ function makeApi(G) {
     if (r < 0.18 && !c.lucky) { const b = pick(G.bowls); c.state = 'snack'; c.target = b; setGoal(c, { x: b.x, y: b.y }); return; }
     if (r < 0.24) { c.state = 'wander'; setGoal(c, openSpot(ROOMS[busyRoom(c)])); return; }
     // People drift toward the action: a seat counts more for every other gambler in its room.
-    const free = G.seats.filter(s => !s.occ && !s.claim && (s.game !== 'cams' || G.deaths > 0));
+    const free = G.seats.filter(s => !s.occ && !s.claim && !heldOff(s, c) && (s.game !== 'cams' || G.deaths > 0));
     const crowd = roomCrowd(c);
     const seat = free.length ? free[pickIdx(free.map(s => (s.game === 'cams' ? 0.6 : 1) + CFG.social * (crowd[roomOf(s)] || 0)))] : null;
     if (!seat) { c.state = 'wander'; setGoal(c, openSpot(ROOMS[busyRoom(c)])); return; }
@@ -795,6 +825,7 @@ function makeApi(G) {
     c.gameT = every * rand(0.7, 1.3); c.betAt = G.t; // chips on the felt (the 'bet' flag in the view: everyone sees the gesture)
     let b = botBet(), m = 0, units = 1;
     switch (s.game) {
+      case 'skee': { startSkee(c, b); return; }
       case 'bj': { const r = Gm.bjAuto(); m = r.mult; units = r.staked; break; }
       case 'roulette': { const bet = Math.random() < 0.25 ? Math.floor(Math.random() * 37) : pick(Object.keys(Gm.RL_BETS)); m = Gm.rlSpin(bet, Gm.rlLucky()).mult; break; }
       case 'slots': if (s.tier === 'penny') b = Math.max(Gm.SLOT_TIERS.penny.minBet, Math.round(b / 10)); m = Gm.slotSpin(s.tier).mult; break;
@@ -819,9 +850,40 @@ function makeApi(G) {
   // A bet of `staked` came back as `back`. The crew bank takes the difference plus the comp on the bet.
   // A bot wins the crew at most bot.maxWin times its stake, plus bot.comp of it, so the bank climbs steadily through the night
   // instead of one lucky straight up ending it in a minute.
-  function settle(c, staked, back) {
+  // Skee-ball is entirely host-owned: clients send only a bounded aim/power and
+  // the current round/next-ball sequence. A repeated message cannot pay or roll twice.
+  function startSkee(c, bet, after = null) {
+    if (!c.seat || c.seat.game !== 'skee' || !Number.isFinite(bet) || bet < Gm.BET.min) return false;
+    const lane = c.seat.machine, prior = G.skee[lane];
+    if (after !== null && after !== (prior?.id || 0) || prior && prior.phase !== 'done') return false;
+    springTrap(c, c.seat);
+    G.skee[lane] = skeeNew(++G.skeeSeq, c.seat.id, c.id, Gm.clampBet(bet, G.bank), c.isHuman && luckFor(c).next());
+    G.skee[lane].policy = policyFor(c).native('skee:' + G.skee[lane].id);
+    c.betAt = G.t;
+    return true;
+  }
+  function skeeGamesTick(dt) {
+    for (const r of G.skee) {
+      if (!r || r.paid) continue;
+      const c = byId(r.player);
+      if (!c || !c.seat || c.seat.id !== r.seat || (!c.alive && !c.isHuman)) r.abandoned = true;
+      if (r.phase === 'aim' && c && !c.isHuman && !r.abandoned) {
+        r.wait += dt;
+        if (r.wait > .65) skeeLaunch(r, rand(-.8, .8), rand(.08, .68), r.launched + 1);
+      }
+      skeeTick(r, dt);
+      if (r.phase === 'done' && !r.paid) {
+        r.paid = true;
+        const back = r.bet * skeeMultiplier(r.score);
+        settle(c, r.bet, back, r.policy);
+        if (c?.isHuman) { luckFor(c).settle(r.bet, back); tell(c, `${r.score} points · ${skeeMultiplier(r.score)}x return`, back < r.bet, back > r.bet ? 'coin' : back < r.bet ? 'lose' : 'click'); }
+      }
+    }
+  }
+  function settle(c, staked, back, policy = null) {
     if (c && !c.isHuman) back = Math.min(back, staked * (1 + CFG.bot.maxWin)) + staked * CFG.bot.comp;
-    addBank(back - staked, c, staked);
+    const net = addBank(back - staked, c, staked);
+    if (c && policy) policyFor(c).settle(policy, staked, net);
   }
   function addBank(delta, c, staked = 0, lucky = !!(c && c.lucky > 0)) {
     if (G.over) return; // the verdict is final: a payout later in the same crash or race loop can't move the bank
@@ -829,12 +891,12 @@ function makeApi(G) {
     let net = Math.round(delta + staked * CFG.comp);
     if (c && c.isHuman && c.isKiller && (net = pitBoss(c, net)) === null) return;
     const x = c ? c.x : BELL.x, y = c ? c.y - 30 : BELL.y;
-    if (!net) { G.floats.push({ x, y, text: 'push', color: '#b9ab90', t: 1.6 }); return; }
+    if (!net) { G.floats.push({ x, y, text: 'push', color: '#b9ab90', t: 1.6 }); return 0; }
     G.bank = Math.max(0, G.bank + net); logBank();
     if (c) c.won += net; // the leaderboard: what each gambler has won (or lost) the crew
     G.floats.push({ x, y, text: (net > 0 ? '+' : '') + money(net), color: net > 0 ? '#e8c46a' : '#e8443a', t: 1.6, big: Math.abs(net) > G.bank * 0.1 });
     if (net > 0) G.fx.push({ kind: 'chips', x, y: y + 20, t: 1 });
-    checkOver();
+    checkOver(); return net;
   }
   // The bank as it stood at real time t within the last cutoffTime: G.bankLog keeps each change, the oldest that matters first.
   function bankAt(t) { const L = G.bankLog; while (L.length > 1 && L[1].t <= t) L.shift(); return L[0].bank; }
@@ -869,7 +931,7 @@ function makeApi(G) {
 
   // ---------- Shared rounds: one Crash rocket and one duck race for the whole casino ----------
   function newCrash() { return { phase: 'bet', t: 0, point: Gm.crashPoint(), mult: 1, bets: new Map(), round: G.crash ? G.crash.round + 1 : 1 }; }
-  function crashCash(id, b, x) { b.out = x; const c = byId(id); settle(c, b.bet, b.bet * x); if (c.isHuman) tell(c, `Cashed out at ${x.toFixed(2)}x: +${money(b.bet * (x - 1))}`, false, 'coin'); }
+  function crashCash(id, b, x) { b.out = x; const c = byId(id); settle(c, b.bet, b.bet * x, b.policy); if (c.isHuman) { luckFor(c).settle(b.bet, b.bet * x); tell(c, `Cashed out at ${x.toFixed(2)}x: +${money(b.bet * (x - 1))}`, false, 'coin'); } }
   function crashTick(dt) {
     const C = G.crash; C.t += dt;
     if (C.phase === 'bet') {
@@ -879,13 +941,23 @@ function makeApi(G) {
         if (s.game === 'crash' && c && !c.isHuman && c.alive && !C.bets.has(c.id) && C.open > 1 + (c.id % 4)) C.bets.set(c.id, { bet: botBet(), auto: pick([1.3, 1.5, 1.5, 2, 2, 3, 5, 10]), out: 0 });
       }
       if (!C.bets.size) C.t = 0; // the launch countdown waits for the first bet
-      if (C.t >= Gm.CRASH.betTime) { C.phase = 'fly'; C.t = 0; }
+      if (C.t >= Gm.CRASH.betTime) {
+        for (const [id, b] of C.bets) {
+          const c = byId(id);
+          if (c.isHuman && luckFor(c).next()) {
+            C.point = Math.max(C.point, 1.5);
+            b.auto = b.auto ? Math.min(b.auto, 1.5) : 1.5;
+            tell(c, 'The house has your back. Hot-streak cash-out is armed.', false, 'chip');
+          }
+        }
+        C.phase = 'fly'; C.t = 0;
+      }
     } else if (C.phase === 'fly') {
       C.mult = Math.min(Gm.crashAt(C.t), C.point);
       for (const [id, b] of C.bets) if (!b.out && b.auto && b.auto <= C.mult) crashCash(id, b, b.auto);
       if (C.mult >= C.point) {
         C.phase = 'boom'; C.t = 0;
-        for (const [id, b] of C.bets) if (!b.out) { settle(byId(id), b.bet, 0); if (byId(id).isHuman) tell(byId(id), `Crashed at ${C.point.toFixed(2)}x. Lost ${money(b.bet)}.`, true); }
+        for (const [id, b] of C.bets) if (!b.out) { const c = byId(id); settle(c, b.bet, 0, b.policy); if (c.isHuman) { luckFor(c).settle(b.bet, 0); tell(c, `Crashed at ${C.point.toFixed(2)}x. Lost ${money(b.bet)}.`, true); } }
       }
     } else if (C.t >= Gm.CRASH.boomTime) G.crash = newCrash();
   }
@@ -901,14 +973,22 @@ function makeApi(G) {
         }
       }
       if (!R.bets.size) R.t = 0; // the gates wait for the first bet: the first player at the race starts it
-      if (R.t >= Gm.RACE.betTime) { R.phase = 'run'; R.t = 0; }
+      if (R.t >= Gm.RACE.betTime) {
+        for (const [id, b] of R.bets) { const c = byId(id); b.hot = c.isHuman && luckFor(c).next(); }
+        R.phase = 'run'; R.t = 0;
+      }
     } else if (R.phase === 'run') {
       if (R.t >= Gm.RACE.runTime) {
         R.phase = 'show'; R.t = 0;
         for (const [id, b] of R.bets) {
-          const m = Gm.raceBetMult(R.form, b.duck, R.winner), c = byId(id);
-          settle(c, b.bet, b.bet * m);
-          if (c.isHuman) tell(c, m ? `${Gm.DUCKS[b.duck].name} wins! You get ${money(b.bet * m)}.` : `${Gm.DUCKS[R.winner].name} wins. Your duck didn't.`, !m, m ? 'coin' : null);
+          const rolled = Gm.raceBetMult(R.form, b.duck, R.winner), m = b.hot ? Math.max(2, rolled) : rolled, c = byId(id);
+          b.back = b.bet * m;
+          settle(c, b.bet, b.back, b.policy);
+          if (c.isHuman) {
+            luckFor(c).settle(b.bet, b.bet * m);
+            if (b.hot && !rolled) tell(c, `Hot-streak bonus! Your duck pays 2x: +${money(b.bet)}.`, false, 'coin');
+          }
+          if (c.isHuman && !(b.hot && !rolled)) tell(c, m ? `${Gm.DUCKS[b.duck].name} wins! You get ${money(b.bet * m)}.` : `${Gm.DUCKS[R.winner].name} wins. Your duck didn't.`, !m, m ? 'coin' : null);
         }
       }
     } else if (R.t >= Gm.RACE.showTime) G.race = newRace();
@@ -1371,7 +1451,12 @@ function makeApi(G) {
     }
   }
   function contextFor(c) {
-    if (!c.alive || G.mode !== 'play' || G.over) return null;
+    if (G.mode !== 'play' || G.over) return null;
+    if (!c.alive) {
+      if (c.cameraFeed) return { label: 'Close the cameras', act: () => { c.cameraFeed = null; } };
+      const desk = nearest(G.seats.filter(s => s.game === 'cams'), c, CFG.joinReach);
+      return desk ? { label: 'Watch the cameras', act: () => { c.cameraFeed = 'floor'; } } : null;
+    }
     const body = G.bodies.find(b => !b.reported && dist(b, c) < 90 && canSee(c, b));
     if (body && !G.escape) return { label: 'Report body', act: () => callMeeting(c, body, `${c.name} found ${byId(body.id).name}'s body.`) };
     if (c.seat && sitsDown(c, c.seat)) return { label: 'Stand up', act: () => standUp(c) }; // (at a game E presses what you aim at)
@@ -1387,7 +1472,7 @@ function makeApi(G) {
     const seat = nearest(G.seats.filter(s => !s.occ && (s.game === 'cams' || s.game === 'vip')), c, CFG.joinReach);
     if (seat) return { label: seat.game === 'cams' ? 'Sit at the security desk' : 'Sit down', act: () => { standUp(c); sit(c, seat); } };
     const bowl = G.bowls.find(b => dist(b, c) < CFG.reach + 5);
-    if (bowl && (!c.lucky || c.hunger < 90)) return { label: 'Eat some pretzels', act: () => eatSnack(c, bowl) };
+    if (bowl && (!c.lucky || c.hunger < 90)) return { label: 'Eat ' + ['a doughnut', 'a pretzel', 'a hot dog'][bowl.id % 3], act: () => eatSnack(c, bowl) };
     return null;
   }
   // Inspect: the game you play (wherever along it you stand), or a game or snack bowl in reach that you face, comes
@@ -1437,7 +1522,8 @@ function makeApi(G) {
       if (!(o.b <= c.bankAllow * u + 1e-6 || c.bankAllow >= 4 - 1e-9) || (p && p.n < cost - 1e-9)) break;
       c.owed.shift();
       c.bankAllow -= o.b / u; if (p) p.n -= cost;
-      addBank(o.d, c, o.b, o.lucky);
+      const net = addBank(o.d, c, o.b, o.lucky);
+      if (o.receipt) policyFor(c).paid(o.receipt, net);
     }
   }
   // A table's pace: one round's worth comes back every Gm.ROUND_MIN seconds, up to CFG.paceBurst. Plinko's is a max bet
@@ -1451,18 +1537,23 @@ function makeApi(G) {
   // a stake over nothing and within its max (blackjack: four of them, a split with both halves doubled; a dollar or ten
   // over from the MAX button), at most its top payout (and at blackjack only a one-bet hand pays 2 to 1), at a game the
   // player is at or left under 8 s ago (sit keeps the one before). It joins the queue; anything else is dropped.
-  function tableRound(c, d, b) {
+  function tableRound(c, d, b, arg = {}) {
     if (!(b > 0) || !isFinite(b) || !isFinite(d) || d < -b || (c.owed && c.owed.length >= CFG.owedMax)) return false;
+    if (!arg.tickets && policyBooks.get(c.id)?.requiresReceipt()) return false;
+    const receipt = arg.tickets ? policyFor(c).inspect(arg.tickets, b) : null;
+    if (arg.tickets && !receipt) return false;
     const near = c.seat ? c.seat.game : G.t - (c.leftSeatT ?? -99) < 8 ? c.lastGame : null;
-    for (const { game: g, mb: seen } of [{ game: near }, ...(c.gone || []).filter(x => G.t - x.t < 8)]) {
+    // (a receipt names its own game: a round from a machine left running in the background, tables.js bg)
+    for (const { game: g, mb: seen } of [...(receipt ? [{ game: receipt.r.game }] : []), { game: near }, ...(c.gone || []).filter(x => G.t - x.t < 8)]) {
       const mb = Math.max(mbOf(c), seen || 0), m = mb + Gm.BET.min;
+      if (receipt && receipt.r.game !== g) continue;
       if (!Gm.GAME_MAX[g] || b > (g === 'bj' ? 4 : 1) * m || d > (g === 'bj' && b > m ? b : b * (Gm.GAME_MAX[g] - 1))) continue;
-      (c.owed || (c.owed = [])).push({ d, b, g, mb, lucky: c.lucky > 0 });
+      (c.owed || (c.owed = [])).push({ d, b, g, mb, lucky: c.lucky > 0, receipt: receipt ? policyFor(c).accept(receipt, !!arg.last) : null });
       return true;
     }
     return false;
   }
-  const GHOST_PLAYS = new Set(['crash', 'cashout', 'race', 'play']);
+  const GHOST_PLAYS = new Set(['crash', 'cashout', 'race', 'play', 'cameras', 'feed', 'skee']);
   function action(id, k, arg) {
     const c = byId(id); if (!c || !c.isHuman || G.over) return;
     if (G.mode === 'pick') {
@@ -1470,8 +1561,34 @@ function makeApi(G) {
       else if (k === 'ready' && G.pickEarly) G.pickReady = true; // solo: start the night now
       return;
     }
+    if (G.mode === 'play' && k === 'tableBet') { // at your game, or one of yours still running (tableHold)
+      const at = arg && Number.isInteger(arg.seat) ? G.seats[arg.seat] : null, s = at && (at === c.seat || G.held.get(at.id) === c.id) ? at : c.seat;
+      if (s && Gm.GAME_MAX[s.game] && arg) policyFor(c).begin(arg, s.game, mbOf(c) + Gm.BET.min);
+      return;
+    }
+    if (G.mode === 'play' && k === 'tableHold') { // the machines you left running (at most 16), free ones only
+      for (const [id, h] of G.held) if (h === c.id) G.held.delete(id);
+      if (c.alive && arg && Array.isArray(arg.seats)) for (const id of arg.seats.slice(0, 16)) {
+        const s = Number.isInteger(id) ? G.seats[id] : null;
+        if (s && Gm.GAME_MAX[s.game] && (!s.occ || s.occ === c) && !heldOff(s, c)) G.held.set(id, c.id);
+      }
+      return;
+    }
+    if (G.mode === 'play' && k === 'tableStake') {
+      if (arg) policyFor(c).increase(arg.id, arg.b, 4 * (mbOf(c) + Gm.BET.min));
+      return;
+    }
+    if (G.mode === 'play' && k === 'insurance') {
+      const busy = G.crash.bets.has(c.id) && !G.crash.bets.get(c.id).out && G.crash.phase !== 'boom' || G.race.bets.has(c.id) && G.race.phase !== 'show' || G.skee.some(r => r && r.player === c.id && r.phase !== 'done');
+      if (c.alive && !c.monster && c.items.has('insurance')) {
+        if (policyFor(c).view().state === 'armed') return;
+        if (policyFor(c).activate(busy)) tell(c, 'Insurance armed for your next round.', false, 'chip');
+        else tell(c, 'Finish this round before arming insurance.');
+      }
+      return;
+    }
     if (k === 'bank') { // a finished round at a table (also one decided before you died)
-      if (arg && G.mode === 'play') tableRound(c, +arg.d, +arg.b);
+      if (arg && G.mode === 'play') tableRound(c, +arg.d, +arg.b, arg);
       if (G.mode === 'play' && c.seat) c.betAt = G.t; // the chips that ride the next round
       if (c.owed && c.owed.length) payOwed(c);
       return;
@@ -1513,7 +1630,17 @@ function makeApi(G) {
         if (!doMaul(c, v)) tell(c, c.grab ? 'Busy.' : c.leap ? 'Mid-pounce.' : 'Nobody within reach.');
       } else if (k === 'leap') {
         if (!doLeap(c) && !c.leap) tell(c, c.grab ? 'Busy.' : c.leapCd > 0 ? `Pounce ready in ${Math.ceil(c.leapCd)}s.` : 'Not yet.');
-      } else tell(c, "You're the monster. Press 3 to take whoever you catch, E to pounce.");
+      } else tell(c, "You're the monster. Left-click to grab whoever you catch, Shift to leap.");
+      return;
+    }
+    if (k === 'skee' && arg && c.seat?.game === 'skee') {
+      if (arg.kind === 'start' && Number.isSafeInteger(arg.after) && arg.after >= 0) startSkee(c, arg.bet, arg.after);
+      else if (arg.kind === 'roll') {
+        const r = G.skee[c.seat.machine];
+        if (r && r.player === c.id && r.id === arg.round && r.seat === c.seat.id) {
+          if (skeeLaunch(r, arg.aim, arg.power, arg.sequence)) { c.betAt = G.t; sfxTo(c, 'dice'); }
+        }
+      }
       return;
     }
     if (k === 'mix') {
@@ -1532,22 +1659,25 @@ function makeApi(G) {
     } else if (k === 'send') {
       const to = living(arg);
       if (!atBar(c)) tell(c, 'Drinks are sent from the bar.'); else if (!to || to === c) tell(c, 'Pick someone to send a drink to.'); else sendDrink(c, to, false);
-    } else if (k === 'feed' && c.seat && c.seat.game === 'cams' && FEEDS.includes(arg)) {
-      G.security.feed = arg; G.security.feedT = 12;
+    } else if (k === 'cameras' && !c.alive) {
+      c.cameraFeed = c.cameraFeed ? null : 'floor';
+    } else if (k === 'feed' && FEEDS.includes(arg)) {
+      if (!c.alive) c.cameraFeed = arg;
+      else if (c.seat && c.seat.game === 'cams') { G.security.feed = arg; G.security.feedT = 12; }
     } else if (k === 'buy' && arg === 'guard') {
       if (!c.seat || c.seat.game !== 'cams') tell(c, 'The guard is hired at the security desk.'); else buy(c, arg);
     } else if (k === 'crash' && c.seat && c.seat.game === 'crash' && G.crash.phase === 'bet' && arg && isFinite(arg.bet)) {
       // the chips on the felt are the bet: they change until launch, and taking them back withdraws it
-      if (!(arg.bet > 0)) { G.crash.bets.delete(c.id); return; }
+      if (!(arg.bet > 0)) { policyFor(c).cancel(G.crash.bets.get(c.id)?.policy); G.crash.bets.delete(c.id); return; }
       const auto = isFinite(arg.auto) && arg.auto >= 1.01 ? Math.min(arg.auto, Gm.CRASH.cap) : 0, had = G.crash.bets.has(c.id);
       springTrap(c, c.seat);
-      G.crash.bets.set(c.id, { bet: Gm.clampBet(arg.bet, G.bank), auto, out: 0 }); if (!had) sfxTo(c, 'chip');
+      G.crash.bets.set(c.id, { bet: Gm.clampBet(arg.bet, G.bank), auto, out: 0, policy: had ? G.crash.bets.get(c.id).policy : policyFor(c).native('crash:' + G.crash.round) }); if (!had) sfxTo(c, 'chip');
     } else if (k === 'cashout' && G.crash.phase === 'fly') {
       const b = G.crash.bets.get(c.id); if (b && !b.out) crashCash(c.id, b, G.crash.mult);
     } else if (k === 'race' && c.seat && c.seat.game === 'race' && G.race.phase === 'bet' && arg && isFinite(arg.bet) && arg.duck >= 0 && arg.duck < Gm.DUCKS.length) {
-      if (!(arg.bet > 0)) { G.race.bets.delete(c.id); return; } // (as at Crash: the chips on a lane are the bet until the gates)
+      if (!(arg.bet > 0)) { policyFor(c).cancel(G.race.bets.get(c.id)?.policy); G.race.bets.delete(c.id); return; } // (as at Crash: the chips on a lane are the bet until the gates)
       const had = G.race.bets.has(c.id); springTrap(c, c.seat);
-      G.race.bets.set(c.id, { duck: arg.duck | 0, bet: Gm.clampBet(arg.bet, G.bank) }); if (!had) sfxTo(c, 'chip');
+      G.race.bets.set(c.id, { duck: arg.duck | 0, bet: Gm.clampBet(arg.bet, G.bank), policy: had ? G.race.bets.get(c.id).policy : policyFor(c).native('race:' + G.race.round) }); if (!had) sfxTo(c, 'chip');
     } else if (k === 'play') { // the first chip or press at a game: a rigged one goes off now
       if (c.seat && !sitsDown(c, c.seat)) springTrap(c, c.seat);
       if (c.seat) c.betAt = G.t;
@@ -1663,12 +1793,13 @@ function makeApi(G) {
       if (c.drink) { c.drink.x = c.x + Math.cos(c.face + 0.9) * 16; c.drink.y = c.y + Math.sin(c.face + 0.9) * 16; }
     }
     if (G.mode !== 'play' || G.over) return;
+    footsteps(G.t, G.chars);
     for (const ch of G.chandeliers) if (ch.state === 'falling' && (ch.t -= dt) <= 0) { dropChandelier(ch); if (G.over) return; }
     if (G.guard) guardTick(dt);
     if (G.lure && (G.lure.t -= dt) <= 0) G.lure = null;
     for (const h of G.haunts) h.t -= dt;
     G.haunts = G.haunts.filter(h => h.t > 0);
-    crashTick(dt); raceTick(dt);
+    crashTick(dt); raceTick(dt); skeeGamesTick(dt);
     if (G.over) return;
     G.obsT -= dt; if (G.obsT <= 0) { G.obsT = 0.25; observe(); }
     if (G.pending && !G.blackout) { // (held through a blackout)
@@ -1694,7 +1825,7 @@ function makeApi(G) {
       darkT: G.escape && !G.blackout && !G.exits ? Math.max(0, Math.ceil(CFG.escapeDarkAt - G.t)) : null,
       blackout: G.blackout && { t: +G.blackout.t.toFixed(1), br: G.blackout.br.map(b => [b.i, +Math.min(1, b.work / CFG.breakerWork).toFixed(2), b.done ? 1 : 0]) },
       chars: G.chars.map(c => { const a = c.monster ? MONSTER_LOOK : appearAs(c); return { id: c.id, name: a.name, color: a.color, hat: a.hat, x: Math.round(c.x), y: Math.round(c.y), look: +c.look.toFixed(2), face: +c.face.toFixed(2),
-        alive: c.alive, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: sick(c), human: a === c ? c.isHuman : !!a.isHuman, lucky: c.lucky > 0, inspecting: !!c.inspect, bet: G.t - (c.betAt ?? -9) < 1.2,
+        alive: c.alive, eating: Math.max(0, 2.4 - (G.t - (c.eatAt ?? -99))), snack: c.snack || 0, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: sick(c), human: a === c ? c.isHuman : !!a.isHuman, lucky: c.lucky > 0, inspecting: !!c.inspect, bet: G.t - (c.betAt ?? -9) < 1.2,
         monster: c.monster, flash: c.flash, held: c.grabbed !== null, maul: !!c.grab, escaped: !!c.escaped, leap: !!(c.leap && c.leap.miss === null) }; }),
       drinks: G.drinks.map(d => ({ id: d.id, owner: d.owner, holder: d.holder, x: Math.round(d.x), y: Math.round(d.y), sips: d.sips, color: d.color, kind: d.glass })), // (kind: the glass it's in)
       bodies: G.bodies.map(b => ({ id: b.id, x: Math.round(b.x), y: Math.round(b.y), cause: b.cause })),
@@ -1709,8 +1840,9 @@ function makeApi(G) {
       lead: G.chars.filter(c => Math.round(c.won)).sort((a, b) => b.won - a.won).slice(0, 5).map(c => ({ id: c.id, name: c.name, color: c.color, won: Math.round(c.won), alive: c.alive })),
       crash: { phase: G.crash.phase, t: +G.crash.t.toFixed(2), mult: G.crash.mult, point: G.crash.phase === 'boom' ? G.crash.point : null, round: G.crash.round,
         bets: [...G.crash.bets].map(([id, b]) => [id, b.bet, b.out]) },
+      skee: G.skee.map(skeeView),
       race: { phase: G.race.phase, t: +G.race.t.toFixed(2), pays: G.race.form.pays, winner: G.race.phase === 'bet' ? null : G.race.winner, seed: G.race.seed, round: G.race.round,
-        bets: [...G.race.bets].map(([id, b]) => [id, b.duck, b.bet]) },
+        bets: [...G.race.bets].map(([id, b]) => [id, b.duck, b.bet, G.race.phase === 'show' ? b.back : null]) },
       // the last linesMax lines; lineBase is where they start in the whole meeting
       meeting: m && { title: m.title, reason: m.reason, phase: m.phase, lines: m.lines.slice(-CFG.linesMax), lineBase: Math.max(0, m.lines.length - CFG.linesMax), voteT: Math.ceil(m.voteT), result: m.result, tally: m.tally, skips: m.skips,
         ejected: m.ejected ?? null, ejectedKiller: !!m.ejectedKiller, voted: G.chars.filter(c => c.alive && c.voted !== null).map(c => c.id) },
@@ -1724,7 +1856,8 @@ function makeApi(G) {
     const myDrink = c.drink;
     const cd = {}; for (const k in c.cd) cd[k] = Math.ceil(c.cd[k]);
     const priv = {
-      me: c.id, isKiller: c.isKiller, killers: c.isKiller ? G.killerIds.slice() : [], alive: c.alive,
+      me: c.id, isKiller: c.isKiller, killers: c.isKiller ? G.killerIds.slice() : [], alive: c.alive, deathScene: !c.alive ? c.deathScene || null : null, cameraFeed: !c.alive ? c.cameraFeed || null : null,
+      footsteps: c.footsteps?.length ? {seq: c.footstepSeq = (c.footstepSeq || 0) + 1, ids: c.footsteps.splice(0)} : null,
       thirst: Math.round(c.thirst), hunger: Math.round(c.hunger), stamina: +(c.stamina / staMax(c)).toFixed(2), staminaMax: staMax(c), cd,
       perk: c.perk, crew: c.isKiller ? G.killerIds.map(id => ({ id, perk: byId(id).perk, human: byId(id).isHuman })) : [], senseT: +c.senseT.toFixed(1),
       watchers: c.perk === 'eyes' && c.alive && G.mode === 'play' ? witnessesOf(c).length : null,
@@ -1743,6 +1876,7 @@ function makeApi(G) {
       canTransform: c.isKiller && c.alive && !!G.blackout && G.blackout.by === null, exitT: c.exitT > 0 ? +Math.min(1, c.exitT / exitHoldOf(c)).toFixed(2) : 0, gear: [...c.gear], wallet: Math.max(0, Math.round(c.won)),
       // the mixer (at the bar): everyone's thirst and hunger, and how long until your next poisoned pour; the shady guy's wares
       needs: atBar(c) && c.alive ? G.chars.filter(o => o.alive).map(o => [o.id, Math.round(o.thirst), Math.round(o.hunger)]) : null,
+      insurance: c.items.has('insurance') ? policyFor(c).view() : null,
       mixCd: Math.ceil(c.isKiller ? c.cd.order : c.mixCd), items: [...c.items], bullets: c.bullets,
       shop: atShady(c) && c.alive ? shopIds().map(id => ({ id, price: shopPrice(id), have: c.items.has(id) || c.gear.has(id) })) : null,
       breaker: G.blackout ? (G.blackout.br.find(b => !b.done && atBreaker(c, b)) || { i: null }).i : null,

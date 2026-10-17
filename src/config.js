@@ -8,11 +8,11 @@ export const CFG = {
   targets: { 4: 3.18, 5: 4.27, 6: 5.72, 7: 6.46, 8: 8.24, 9: 10.54, 10: 12.18, 11: 13.1, 12: 15.77, 13: 16.1, 14: 18.04, 15: 21.35, 16: 23.4,
     17: 25.34, 18: 28.05, 19: 31.45, 20: 34.07, 21: 35.35, 22: 38.63, 23: 43.94, 24: 48.67, 25: 50.91, 26: 54.56, 27: 58.42, 28: 61.41, 29: 66.17, 30: 71.31, 31: 74.33, 32: 80.02 },
   killerBank: { 1: 1, 2: 0.7, 3: 0.55, 4: 0.45, 5: 0.37, 6: 0.32, 7: 0.28, 8: 0.25 }, // more killers, a smaller target
-  cdScale: { 1: 1, 2: 1.45, 3: 1.85, 4: 2.25, 5: 2.25, 6: 2.25, 7: 2.25, 8: 2.25 }, // cooldowns stretch while several killers are alive (no further past four: a bigger crowd needs the kills)
+  cdScale: { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1 }, // (Steve, 2026-10-16: a kill is ready every 60 s however many killers are alive)
   // about one killer for every four players: 1 at 4-6, 2 at 7+, 3 at 11+, 4 at 13+, 5 at 17+, 6 at 21+, 7 at 25+, 8 at 29+
   maxKillers: n => n >= 29 ? 8 : n >= 25 ? 7 : n >= 21 ? 6 : n >= 17 ? 5 : n >= 13 ? 4 : n >= 11 ? 3 : n >= 7 ? 2 : 1,
   maxPlayers: 32,
-  playerSpeed: 150, ghostSpeed: 230, botSpeed: 118, radius: 15,
+  playerSpeed: 180, ghostSpeed: 260, botSpeed: 142, radius: 15, // (Steve, 2026-10-16: everyone 20% faster)
   viewRange: 380, darkRange: 120, coneHalf: Math.PI / 3, nearSense: 28,
   thirstDrain: 1.1, sipGain: 30, drinkSips: 4, parched: 0.6,
   // Hunger empties in about four minutes; a handful of pretzels at a snack stand fills most of it. Starving slows you down.
@@ -25,9 +25,9 @@ export const CFG = {
   pickTime: 15, senseCd: 90, senseDur: 3, lureCd: 120, lureDur: 10, lurePull: 0.7, staffCd: 12,
   legsStamina: 8, legsRegen: 1.1, peekSlow: 0.6, nightLights: 0.7,
   poisonDelay: 15, sickAfter: 3, luckyTime: 30, luckyBonus: 0.5,
-  // Killer moves (cooldowns in seconds; any kill also holds the others for sharedCd). A kill every few minutes keeps a
-  // night near 15 minutes, meetings included.
-  orderCd: 520, rigCd: 520, bladeCd: 520, accidentCd: 520, disguiseCd: 80, disguiseDur: 30, lightsCd: 280, lightsDur: 10, startCd: 200, sharedCd: 420,
+  // Killer moves (cooldowns in seconds; any kill also holds the others for sharedCd). Steve, 2026-10-16: a kill is
+  // ready every 60 s (it was 520 s, stretched further with several killers).
+  orderCd: 60, rigCd: 60, bladeCd: 60, accidentCd: 60, disguiseCd: 80, disguiseDur: 30, lightsCd: 280, lightsDur: 10, startCd: 60, sharedCd: 60,
   // The blackout (Steve, 2026-10-15): the killer who cuts the power turns into a giant monster that kills anyone it
   // catches, until the crew resets the lit breakers (breakerWork seconds standing at each, facing it; each extra pair of
   // hands adds half again), finding their way by flashlight. blackoutMax: the power company resets it if nobody does.
@@ -49,7 +49,7 @@ export const CFG = {
   },
   sneakers: 1.15, crowbarHold: 2,
   escapeDarkAt: 300, escapeBreakers: 3, escapeBlackoutMax: 210, exitOpen: 90, exits: 1, exitHold: 5, monsterGuard: 0.6,
-  breakers: 2, breakerWork: 6, blackoutMax: 150, monsterSpeed: 1.15, monsterReach: 52, monsterHold: 2.2, monsterSight: 560, monsterNear: 130, monsterCd: 4, fixers: 2,
+  breakers: 2, breakerWork: 6, blackoutMax: 150, monsterSpeed: 1.5, monsterReach: 52, monsterHold: 2.2, monsterSight: 560, monsterNear: 130, monsterCd: 4, fixers: 2,
   // The monster kills as often as it catches someone (no limit; monsterCd after each). Its pounce (E, Steve 2026-10-15):
   // leapDist in leapTime toward the nearest gambler within leapCone of where it faces (else straight ahead), stopped by
   // walls; it takes whoever it lands within monsterReach of. A miss winds it for leapMiss; leapCd between pounces. A
@@ -67,14 +67,16 @@ export const CFG = {
   shop: {
     dice: { name: 'Loaded dice', frac: 0.01, tip: 'You are lucky at the tables for 90 seconds: wins pay 50% more.' },
     antidote: { name: 'Pocket antidote', frac: 0.03, tip: 'It cures poison the moment you feel it. Once.' },
+    insurance: { name: 'House Insurance', frac: 0.04, tip: 'Arm before a round to return its net lost stake once. Wins and ties keep it armed. I to arm; right-stick click at a table.' },
     vest: { name: 'Kevlar vest', frac: 0.08, tip: 'It stops one knife or one bullet.' },
     gun: { name: 'Revolver', frac: 0.3, tip: 'One bullet. Q shoots whoever is in your sights.' },
   },
   shadyReach: 95, diceLuck: 90, gunBullets: 1, gunRange: 900, gunWidth: 16, gunStun: 6, gunSus: 110,
   reach: 40, closingTime: 1200, closingWarn: 120,
   // At the games you stand: walking up within joinReach of a free game, facing it (within joinFace radians), puts you at
-  // it, and walking more than leaveReach off leaves it. barReach: how far from the counter the bar still serves you.
-  joinReach: 62, joinFace: 1.25, leaveReach: 130, barReach: 80,
+  // it, and walking more than leaveReach off leaves it (10 ft, Steve 2026-10-16: a hand settles there; a spin keeps going).
+  // barReach: how far from the counter the bar still serves you.
+  joinReach: 62, joinFace: 1.25, leaveReach: 183, barReach: 80,
   // A player's table rounds reach the bank no faster than the table deals them (games.ROUND_MIN), with a burst of
   // paceBurst (a round settled early as you walk off); Plinko counts the stake riding, at least 1/plinkoBalls a ball.
   // Rounds over that wait their turn; owedMax caps the queue (far over what a night of the fastest real play builds).
@@ -85,7 +87,7 @@ export const CFG = {
   // Bots bet frac of the bank (counted up to ceil starting banks), every so many seconds per game, on the same game math as
   // players. One bot result pays back at most maxWin times the stake, plus a comp of comp: the bank climbs steadily instead
   // of a lucky straight up ending the night in a minute.
-  bot: { frac: 0.02, ceil: 1, maxWin: 1, comp: 0.4, every: { bj: 5, roulette: 7, slots: 2.5, plinko: 2.5, mines: 5, tower: 5, coin: 4, wheel: 5, dice: 6 } },
+  bot: { frac: 0.02, ceil: 1, maxWin: 1, comp: 0.4, every: { bj: 5, roulette: 7, slots: 2.5, skee: 18, plinko: 2.5, mines: 5, tower: 5, coin: 4, wheel: 5, dice: 6 } },
   talkGap: 0.9, voteTime: 30, resultTime: 4, voteThreshold: 38, voteThresholdPer: 4,
   chatMax: 25, linesMax: 200, // meeting chat lines one player may send, and the lines a snapshot carries
   // Pacing for rooms of more than bigRoom players (17-32), off: a bot that finds a body or foils a plot would wait until

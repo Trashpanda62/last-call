@@ -1,0 +1,298 @@
+{
+  "at": "2026-10-16T14:15:12.416Z",
+  "result": {
+    "rows": [
+      {
+        "kind": "growl",
+        "counts": [
+          {
+            "name": "steady",
+            "calls": 120,
+            "events": 1
+          },
+          {
+            "name": "moving",
+            "calls": 24,
+            "events": 14
+          },
+          {
+            "name": "silent",
+            "calls": 120,
+            "events": 1
+          },
+          {
+            "name": "restart",
+            "calls": 60,
+            "events": 1
+          },
+          {
+            "name": "silent-again",
+            "calls": 120,
+            "events": 1
+          }
+        ],
+        "nodes": [
+          {
+            "born": 0,
+            "stop": 2.8,
+            "events": [
+              {
+                "value": 0.25,
+                "time": 0,
+                "tau": 0.08
+              },
+              {
+                "value": 0.4,
+                "time": 2.0166666666666666,
+                "tau": 0.08
+              },
+              {
+                "value": 0.7,
+                "time": 2.05,
+                "tau": 0.08
+              },
+              {
+                "value": 1,
+                "time": 2.066666666666667,
+                "tau": 0.08
+              },
+              {
+                "value": 0.6,
+                "time": 2.1166666666666667,
+                "tau": 0.08
+              },
+              {
+                "value": 0.25,
+                "time": 2.1333333333333333,
+                "tau": 0.08
+              },
+              {
+                "value": 0.4,
+                "time": 2.15,
+                "tau": 0.08
+              },
+              {
+                "value": 0.7,
+                "time": 2.183333333333333,
+                "tau": 0.08
+              },
+              {
+                "value": 1,
+                "time": 2.2,
+                "tau": 0.08
+              },
+              {
+                "value": 0.6,
+                "time": 2.25,
+                "tau": 0.08
+              },
+              {
+                "value": 0.25,
+                "time": 2.2666666666666666,
+                "tau": 0.08
+              },
+              {
+                "value": 0.4,
+                "time": 2.283333333333333,
+                "tau": 0.08
+              },
+              {
+                "value": 0.7,
+                "time": 2.316666666666667,
+                "tau": 0.08
+              },
+              {
+                "value": 1,
+                "time": 2.3333333333333335,
+                "tau": 0.08
+              },
+              {
+                "value": 0.6,
+                "time": 2.3833333333333333,
+                "tau": 0.08
+              },
+              {
+                "value": 0,
+                "time": 2.4,
+                "tau": 0.08
+              }
+            ]
+          },
+          {
+            "born": 4.4,
+            "stop": 5.800000000000001,
+            "events": [
+              {
+                "value": 0.25,
+                "time": 4.4,
+                "tau": 0.08
+              },
+              {
+                "value": 0,
+                "time": 5.4,
+                "tau": 0.08
+              }
+            ]
+          }
+        ],
+        "maxSampleError": 0.00022733211517333984,
+        "rmsError": 0.00003770717432849656,
+        "sampleTolerance": 0.0005208333333333333,
+        "samples": 379200
+      },
+      {
+        "kind": "hum",
+        "counts": [
+          {
+            "name": "steady",
+            "calls": 120,
+            "events": 1
+          },
+          {
+            "name": "moving",
+            "calls": 24,
+            "events": 14
+          },
+          {
+            "name": "silent",
+            "calls": 120,
+            "events": 1
+          },
+          {
+            "name": "restart",
+            "calls": 60,
+            "events": 1
+          },
+          {
+            "name": "silent-again",
+            "calls": 120,
+            "events": 1
+          }
+        ],
+        "nodes": [
+          {
+            "born": 0,
+            "stop": 3.2,
+            "events": [
+              {
+                "value": 0.04,
+                "time": 0,
+                "tau": 0.15
+              },
+              {
+                "value": 0.064,
+                "time": 2.0166666666666666,
+                "tau": 0.15
+              },
+              {
+                "value": 0.11199999999999999,
+                "time": 2.05,
+                "tau": 0.15
+              },
+              {
+                "value": 0.16,
+                "time": 2.066666666666667,
+                "tau": 0.15
+              },
+              {
+                "value": 0.096,
+                "time": 2.1166666666666667,
+                "tau": 0.15
+              },
+              {
+                "value": 0.04,
+                "time": 2.1333333333333333,
+                "tau": 0.15
+              },
+              {
+                "value": 0.064,
+                "time": 2.15,
+                "tau": 0.15
+              },
+              {
+                "value": 0.11199999999999999,
+                "time": 2.183333333333333,
+                "tau": 0.15
+              },
+              {
+                "value": 0.16,
+                "time": 2.2,
+                "tau": 0.15
+              },
+              {
+                "value": 0.096,
+                "time": 2.25,
+                "tau": 0.15
+              },
+              {
+                "value": 0.04,
+                "time": 2.2666666666666666,
+                "tau": 0.15
+              },
+              {
+                "value": 0.064,
+                "time": 2.283333333333333,
+                "tau": 0.15
+              },
+              {
+                "value": 0.11199999999999999,
+                "time": 2.316666666666667,
+                "tau": 0.15
+              },
+              {
+                "value": 0.16,
+                "time": 2.3333333333333335,
+                "tau": 0.15
+              },
+              {
+                "value": 0.096,
+                "time": 2.3833333333333333,
+                "tau": 0.15
+              },
+              {
+                "value": 0,
+                "time": 2.4,
+                "tau": 0.15
+              }
+            ]
+          },
+          {
+            "born": 4.4,
+            "stop": 6.2,
+            "events": [
+              {
+                "value": 0.04,
+                "time": 4.4,
+                "tau": 0.15
+              },
+              {
+                "value": 0,
+                "time": 5.4,
+                "tau": 0.15
+              }
+            ]
+          }
+        ],
+        "maxSampleError": 0.00002788752317428589,
+        "rmsError": 0.0000052671449187186325,
+        "sampleTolerance": 0.000044444444444444447,
+        "samples": 398401
+      }
+    ],
+    "audio": {
+      "ctx": "running",
+      "lib": true,
+      "sfx": 100,
+      "mood": "over",
+      "room": null,
+      "deaths": [],
+      "music": "",
+      "amb": "",
+      "hum": false,
+      "tableBed": "tables",
+      "scoreChoice": 0,
+      "jukebox": null
+    }
+  },
+  "errors": []
+}

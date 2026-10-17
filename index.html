@@ -7,10 +7,43 @@
 <meta name="description" content="A casino full of gamblers. Some of them are killers. Watch your drink.">
 <title>Last Call</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6 4h20l-8 12v9h5v3H9v-3h5v-9z' fill='%23e8c46a'/%3E%3Ccircle cx='16' cy='9' r='2.5' fill='%237dff5a'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/cinzel.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="booting">
 <canvas id="view"></canvas>
+<div id="bootLoading" class="loading-screen boot-screen" role="status" aria-live="polite">
+  <div class="loading-brand">LAST CALL <span>THE HOUSE IS GETTING READY</span></div>
+  <div class="loading-bottom"><p id="bootStatus">Opening the casino…</p><div id="bootProgress" class="load-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="bootFill"></div></div><p class="loading-note">Preparing the art, sound and casino before you arrive.</p><button id="bootRetry" class="hidden" onclick="location.reload()">Retry loading</button></div>
+</div>
+<div id="levelLoading" class="loading-screen briefing-screen hidden" aria-labelledby="briefingTitle">
+  <div class="briefing-content"><p class="menu-eyebrow">BEFORE YOU ENTER</p><h1 id="briefingTitle">Know your way around.</h1><p class="briefing-intro">Watch the table. Watch your drink. Watch your back.</p>
+    <div class="control-devices">
+      <section class="control-device" aria-labelledby="keyboardTitle"><h2 id="keyboardTitle"><span>01</span> Keyboard + mouse</h2><div id="keyboardDiagram"></div>
+        <dl class="device-bindings">
+          <div><dt><kbd>W A S D</kbd></dt><dd>Move</dd></div><div><dt>Mouse</dt><dd>Look around</dd></div>
+          <div><dt><kbd>Left click</kbd></dt><dd>Interact</dd></div><div><dt><kbd>Shift</kbd></dt><dd>Sprint / monster leap</dd></div>
+          <div><dt><kbd>Q</kbd></dt><dd>Transform</dd></div><div><dt><kbd>E</kbd></dt><dd>Selected ability</dd></div>
+          <div><dt><kbd>LMB</kbd></dt><dd>Murder / place chips</dd></div><div><dt><kbd>RMB</kbd></dt><dd>Disguise / take chips back</dd></div>
+        </dl>
+      </section>
+      <section class="control-device" aria-labelledby="controllerTitle"><h2 id="controllerTitle"><span>02</span> Controller</h2><div id="controllerDiagram"></div>
+        <dl class="device-bindings">
+          <div><dt><kbd>LS</kbd> / <kbd>RS</kbd></dt><dd>Move / look around</dd></div><div><dt><kbd>A</kbd></dt><dd>Interact / start at table</dd></div>
+          <div><dt><kbd>LB</kbd> / <kbd>LS click</kbd></dt><dd>Leap / sprint</dd></div><div><dt><kbd>RB</kbd></dt><dd>Selected ability</dd></div>
+          <div><dt><kbd>Y</kbd></dt><dd>Transform</dd></div><div><dt><kbd>RT</kbd></dt><dd>Murder / place chips</dd></div>
+          <div><dt><kbd>LT</kbd></dt><dd>Disguise / take chips back</dd></div><div><dt><kbd>Menu</kbd></dt><dd>Pause</dd></div>
+        </dl>
+      </section>
+    </div>
+    <div class="table-control-tip"><span class="table-tip-mark" aria-hidden="true">♠</span><p><strong>At the table</strong>Place your chips, then click the game itself to start: <b>Hit</b>, the lever, the wheel, the dice, the coin, the chute.<span>Blackjack: <kbd>H</kbd> hit (deals a new hand) · <kbd>J</kbd> stand · <kbd>K</kbd> double <i>/</i> <kbd>X</kbd> · <kbd>Y</kbd> · <kbd>B</kbd> on controller.</span></p></div>
+    <button id="controlsToggle" class="controls-toggle" aria-expanded="false" aria-controls="allControls">All controls <span aria-hidden="true">+</span></button>
+    <div id="allControls" class="hidden"><div class="control-head"><span>Action</span><span>Keyboard + mouse</span><span>Controller</span></div><div id="controlsRows"></div>
+      <p class="controller-note">Xbox button names · PlayStation equivalent positions supported. At tables, scroll or D-pad left/right changes your chip. Revolver: Q for gamblers, J for killers / right stick click. F or X toggles the flashlight in a blackout.</p>
+    </div>
+  </div>
+  <div class="briefing-footer"><div><p id="levelStatus" role="status">Preparing your table…</p><div id="levelProgress" class="load-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="levelFill"></div></div></div><button id="levelBack" class="hidden">Return to menu</button><button id="levelContinue" disabled>Continue <span>→</span></button></div>
+</div>
 
 <!-- In-game HUD -->
 <div id="hud" class="hidden">
@@ -26,7 +59,7 @@
     <div id="tbPlaced"></div>
     <div class="tb-top"><span><span class="tb-k">ON TABLE</span> <b id="tbTotal"></b></span><span id="tbStatus"></span><span id="tbMax"></span></div>
     <div class="tb-row"><div id="tbChips"></div><div id="tbTools"></div><div id="tbActs"></div></div>
-    <div class="tb-foot"><span class="kb">walk away to leave · wheel changes your chip · right-click takes chips back · hold Space to look behind you</span><span class="tb">Tap the felt to bet · Use stands you up</span></div>
+    <div class="tb-foot"><span class="kb">walk away to leave · wheel changes your chip · right-click takes chips back · click the game to start · H hit / J stand / K double</span><span class="tb">Tap the felt to bet · Use stands you up</span></div>
   </div>
   <div id="lockHint" class="hidden">Click to look around</div>
   <div id="micHud" class="hidden"></div>
@@ -42,7 +75,7 @@
     <button id="menuBtn" aria-label="Menu">II</button>
   </div>
   <div id="bottom">
-    <div id="chipHud" class="hidden"><div id="chipNote"></div><div id="chipStatus"></div><div class="chipRow"><button id="chipDn" class="chipBtn" aria-label="Smaller chip">&minus;</button><div class="chipCoin"><span id="chipVal"></span></div><button id="chipUp" class="chipBtn" aria-label="Bigger chip">+</button><div class="chipSide"><b>YOUR CHIP</b><span class="kb">SCROLL TO CHANGE</span><span id="chipDown"></span></div></div></div>
+    <div id="chipHud" class="hidden"><div id="chipNote"></div><div id="chipStatus"></div><div class="chipRow"><button id="chipDn" class="chipBtn" aria-label="Smaller chip">&minus;</button><div class="chipCoin"><span id="chipVal"></span></div><button id="chipUp" class="chipBtn" aria-label="Bigger chip">+</button><div class="chipSide"><b>YOUR CHIP</b><span id="chipDown"></span></div></div></div>
     <div id="prey" class="hidden"></div>
     <div id="edge" class="hidden"></div>
     <div id="killerBar" class="hidden"></div>
@@ -52,6 +85,7 @@
     <div id="thirst"><span class="nk nt" title="Thirst"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.5C6 5 3.5 7.6 3.5 10.4a4.5 4.5 0 0 0 9 0C12.5 7.6 10 5 8 1.5Z" fill="currentColor"/></svg><em>Thirsty</em></span><div class="bar"><div id="thirstFill"></div></div><span class="nk nh" title="Hunger"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 14.5C4 12.5 1.5 10 1.5 6.8 1.5 4.6 3 3 5 3c1.6 0 2.6 1 3 2.2C8.4 4 9.4 3 11 3c2 0 3.5 1.6 3.5 3.8 0 3.2-2.5 5.7-6.5 7.7Z" fill="none" stroke="currentColor" stroke-width="2"/></svg><em>Hungry</em></span><div class="bar"><div id="hungerFill"></div></div><span id="lucky"></span></div>
     <div id="drinkInfo"></div>
     <div id="gunHud" class="hidden"></div>
+    <button id="insuranceBtn" class="hidden" title="Arm insurance before your next round (I)"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2 21 6v6c0 5-9 10-9 10S3 17 3 12V6Z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8 12 3 3 5-6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg><span>I · Insure</span></button>
   </div>
   <div id="toasts"></div>
   <div id="stick"><div id="knob"></div></div>
@@ -70,31 +104,43 @@
 <div id="splash" class="hidden"><div id="splashText"></div></div>
 
 <!-- Main menu -->
-<div id="menu" class="overlay">
-  <div class="card">
-    <h1>Last Call</h1>
-    <p class="tag">A casino full of gamblers. Some of them are killers. Watch your drink.</p>
+<div id="menu" class="overlay title-screen hidden" data-mode="classic">
+  <div class="menu-art menu-art-mystery" aria-hidden="true"></div>
+  <div class="menu-art menu-art-escape" aria-hidden="true"></div>
+  <div class="menu-shade" aria-hidden="true"></div>
+  <header class="menu-masthead"><span class="house-mark" aria-hidden="true">LC</span><span>THE HOUSE IS WAITING</span><button id="profileBtn" aria-controls="profilePanel" aria-expanded="false"><span class="profile-dot"></span><span id="profileName">Guest</span><span aria-hidden="true"> / </span>Player</button></header>
+  <main class="menu-main">
+    <div class="menu-eyebrow">A game of chance. A night of suspicion.</div>
+    <h1 class="game-title"><span>LAST</span><span>CALL</span></h1>
+    <p class="menu-tagline">Watch the table.<br>Watch your drink. Watch your back.</p>
     <div id="modePick" class="modes" role="radiogroup" aria-label="Game mode">
-      <button type="button" class="mode" data-mode="classic" role="radio"><b>Murder Mystery</b><span>Find the killers among the gamblers. Report the bodies, talk it out on your phone, vote them out, or break the bank first.</span></button>
-      <button type="button" class="mode" data-mode="escape" role="radio"><b>Escape</b><span>No meetings, no votes. The power goes out and the killers turn into monsters. Get the lights back on and get out the doors before they get you all.</span></button>
+      <button type="button" class="mode" data-mode="classic" role="radio"><b>Murder Mystery</b></button>
+      <button type="button" class="mode" data-mode="escape" role="radio"><b>Escape</b></button>
     </div>
-    <label class="field">Your name <input id="nameIn" maxlength="12" autocomplete="off" spellcheck="false"></label>
-    <div class="field">Your death sound <span class="deathPick"><button id="deathRec" type="button" title="Record your own: 2.5 seconds from your microphone">&#9679; Record</button><select id="deathIn" aria-label="Your death sound"></select><button id="deathPlay" type="button" title="Hear it" aria-label="Hear it">&#9654;</button></span></div>
-    <p id="deathNote" class="muted small">Record your own scream: everyone hears it when you die.</p>
-    <div class="col">
-      <button class="big" id="soloBtn">Play solo with bots</button>
-      <button class="big alt" id="hostBtn">Host an online room</button>
-      <div class="joinRow"><input id="codeIn" maxlength="4" placeholder="CODE" autocomplete="off" spellcheck="false"><button id="joinBtn">Join room</button></div>
-    </div>
-    <div class="row small-row">
-      <button id="howBtn">How to play</button>
-      <button id="setBtn">Settings</button>
-      <button id="musicBtn"></button>
-      <button id="sfxBtn"></button>
-    </div>
+    <p id="modeDescription" class="mode-description">Find the killers. Break the bank. Survive the night.</p>
+    <nav class="menu-play" aria-label="Play">
+      <button id="soloBtn" class="menu-primary"><span>PLAY SOLO</span><span class="menu-action-detail">WITH BOTS</span><span aria-hidden="true">↗</span></button>
+      <button id="hostBtn"><span>HOST A ROOM</span><span class="menu-action-detail">INVITE FRIENDS</span><span aria-hidden="true">+</span></button>
+      <button id="joinToggle" aria-controls="joinPanel" aria-expanded="false"><span>JOIN A ROOM</span><span class="menu-action-detail">ENTER A CODE</span><span aria-hidden="true">→</span></button>
+    </nav>
+    <div class="menu-utility"><button id="howBtn">How to play</button><span aria-hidden="true">/</span><button id="setBtn">Settings</button><span aria-hidden="true">/</span><button id="sfxBtn"></button></div>
+    <p id="menuErr" class="err" role="alert"></p>
+  </main>
+  <aside id="joinPanel" class="menu-panel hidden" aria-labelledby="joinTitle">
+    <button class="menu-panel-close" data-close-panel aria-label="Close join room">×</button>
+    <span class="menu-eyebrow">YOUR SEAT IS RESERVED</span><h2 id="joinTitle">Join the table.</h2><p>Get the four-letter room code from your host.</p>
+    <label for="codeIn">ROOM CODE</label><div class="joinRow"><input id="codeIn" maxlength="4" placeholder="ABCD" autocomplete="off" spellcheck="false"><button id="joinBtn">Join room <span aria-hidden="true">→</span></button></div>
+  </aside>
+  <aside id="profilePanel" class="menu-panel hidden" aria-labelledby="profileTitle">
+    <button class="menu-panel-close" data-close-panel aria-label="Close player profile">×</button>
+    <span class="menu-eyebrow">THE GUESTBOOK</span><h2 id="profileTitle">Leave your mark.</h2>
+    <label class="field" for="nameIn">Your name <input id="nameIn" maxlength="12" autocomplete="off" spellcheck="false"></label>
+    <div class="field">Your death sound <span class="deathPick"><select id="deathIn" aria-label="Your death sound"></select><button id="deathPlay" type="button" title="Hear it" aria-label="Preview death sound">▶</button></span></div>
+    <button id="deathRec" type="button" title="Record your own: 2.5 seconds from your microphone">● Record your own scream</button>
+    <p id="deathNote" class="muted small">Everyone hears it when you die.</p>
     <p id="statsLine" class="muted"></p>
-    <p id="menuErr" class="err"></p>
-  </div>
+  </aside>
+  <footer class="menu-footer"><span class="menu-footer-rule"></span><span>A CASINO FULL OF GAMBLERS. SOME OF THEM ARE KILLERS.</span><span class="menu-footer-end">2 MODES <i>·</i> UP TO 32 PLAYERS</span></footer>
 </div>
 
 <!-- Game setup (solo) and lobby (online) share the options block -->
@@ -131,15 +177,15 @@
       <div class="hcard"><b>The setup</b><p>Up to thirty-two gamblers walk into a casino. One to eight of them are killers. Nobody knows who.</p></div>
       <div class="hcard"><b>Gamblers</b><p>Twelve games, one crew bank. Blackjack, roulette, slots, Crash, Plinko, Mines, Dragon Tower, the duck race, street dice, the prize wheel and the coin flip. Pick your bet; the max grows with the bank. Hit the target and the house is broken. Or vote every killer out.</p></div>
       <div class="hcard"><b>The killer</b><p>Mix a poisoned drink at the bar and send it to anyone, rig an empty machine or the snack bowl, knife someone from behind, shove them into the duck pond or drop a chandelier on a table. Then wear your victim's face for a while. Do it when nobody is looking.</p></div>
-      <div class="hcard"><b>The blackout</b><p>A killer can cut the power (6), then press T to turn into a giant mutated potato monster. It kills everyone it catches, as many as it can catch, until the crew resets the breakers by flashlight: 3 grabs whoever is in reach, E pounces a few metres at whoever is ahead (a miss leaves it winded). Sprint, hide, keep your flashlight off.</p></div>
+      <div class="hcard"><b>The blackout</b><p>A killer can cut the power (6), then press Q to turn into a giant mutated potato monster. It kills everyone it catches, as many as it can catch, until the crew resets the breakers by flashlight: left-click grabs whoever is in reach, Shift leaps a few metres at whoever is ahead (a miss leaves it winded). Sprint, hide, keep your flashlight off.</p></div>
       <div class="hcard"><b>Stay alive</b><p>You only see what you are looking at, and knives come from behind. Free drinks might be poisoned, and anyone can poison one: sniff before you sip. The shady guy in the bar's corner sells for your winnings, up to a revolver. Check a game before you play it. Poisoned? You have a few seconds to reach the antidote at the bar. A killing is heard all over its room, and only faintly by someone right against its walls.</p></div>
-      <div class="hcard"><b>Thirst and hunger</b><p>Get thirsty or hungry and you slow down, so drink at the bar and eat at the SNACKS stands (six around the casino). Pretzels also make your wins pay more for a while, if they're clean.</p></div>
+      <div class="hcard"><b>Thirst and hunger</b><p>Get thirsty or hungry and you slow down, so drink at the bar and eat at the SNACKS stands (six around the casino). Snacks also make your wins pay more for a while, if they're clean.</p></div>
       <div class="hcard"><b>Security and ghosts</b><p>Sit at the security desk and the cameras come on: watch any room from there. The crew can also hire a guard who reports what they see. The dead can haunt one person a round; the bots near them get a bad feeling.</p></div>
       <div class="hcard"><b>Killer edges</b><p>Before the night starts each killer picks one edge: a witness meter, a camera over the shoulder, a sense that shows gamblers through walls, the STAFF ONLY doors, light feet, night eyes or a jackpot siren that pulls the crowd. Gamblers see the list too.</p></div>
       <div class="hcard"><b>Meetings</b><p>Find a body or ring the pit bell. Everyone says what they saw (the killers lie), then votes. Your notes remember what you saw.</p></div>
     </div>
-    <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, E or click to use, F sip, R check (a drink, machine or snack bowl), X pour, G the mixer (at the bar), Q fire the revolver, Shift sprint (5 seconds), Space marks whoever you aim at as a suspect (again: trusted), 1-6 killer moves, T turn into the monster in a blackout (then 3 grab, E pounce), 7 and hold V for some killer edges, H haunt (as a ghost), Esc menu.
-      <b>At a game</b> you just walk up and stand there, free to look round and move: scroll the mouse wheel to pick your chip (it shows at the bottom), click a glowing spot on the felt to put chips there, right-click to take them back. Roulette, blackjack, dice, the coin flip and the wheel then start by themselves after a short countdown (the game's big button starts one at once), and your chips ride each round until you take them back; at the duck race and Crash your chips are your bet for the next race or rocket. Walk away to leave; a round you leave is played out for you.
+    <p class="muted"><b>Keys:</b> mouse to look, WASD to walk, left click to use, F sip, R check (a drink, machine or snack bowl), X pour, G the mixer (at the bar), Q fire the revolver (J for killers), Shift sprint (5 seconds), Space marks whoever you aim at as a suspect (again: trusted), killer left-click murder, right-click disguise, Q transform in a blackout, Shift leap as the monster, E selected ability (hold to peek, or at a STAFF ONLY door for vents), U interact, 1-6 alternate killer moves, H haunt and C cameras (as a ghost), Esc menu.
+      <b>At a game</b> you just walk up and stand there, free to look round and move: scroll the mouse wheel to pick your chip (it shows at the bottom), click a glowing spot on the felt to put chips there, right-click to take them back. Then click the game's own control to play: Hit deals at blackjack, pull a slot's lever, click the roulette or prize wheel, the dice, the coin, Plinko's chute, or the first tile or egg. Blackjack’s Hit, Stand and Double controls sit directly below your betting circle (or press H, J and K). At the duck race your chips on a duck are the bet; at Crash press Space to commit them for each rocket. Walk away to leave: a spin, a drop or a slot on AUTO keeps going without you, so you can set a row of slots spinning; a hand of blackjack, a Mines board, a Tower climb, a coin pot or a dice point settles once you are 10 ft away.
       <b>The screen</b> stays quiet: one message at a time at the top, thirst and hunger in the bottom-left corner (they turn red and grow when low), and a killer's moves at the bottom, folded to their key while they wait. <b>On a phone</b> the left thumb walks, the right drags to look, and the buttons by the right thumb are the ones you can use right now: Use always, Sip, Check and Pour with a drink in hand (Check at a game too), Light in a blackout, Shoot with a loaded revolver, Moves for a killer's moves and Pounce for the monster.</p>
     <button class="big" id="howClose">Got it</button>
   </div>
@@ -180,7 +226,6 @@
     <h2>Paused</h2>
     <div class="col">
       <button class="big" id="resumeBtn">Resume</button>
-      <button id="pMusic"></button>
       <button id="pSfx"></button>
       <button id="pHow">How to play</button>
       <button id="pSet">Settings</button>

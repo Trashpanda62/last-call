@@ -2,7 +2,7 @@
 import { money, esc, clamp } from './util.js';
 import { CAST } from './config.js';
 import { BREAKERS, ROOMS, STAFF_DOORS, roomOf } from './map.js';
-import { PERKS, PERK } from './perks.js';
+import { PERKS, PERK, PERK_ICONS } from './perks.js';
 
 export const $ = id => document.getElementById(id);
 // Your marks on other players (Space while walking), by how they look: colour -> 'sus' | 'ok'.
@@ -95,7 +95,7 @@ export function updateHud(v) {
   // thirst and hunger: two small icons that grow and name themselves only when low (Steve, 2026-10-15: "more things to keep track of")
   cls('thirst', 'lowT', priv.thirst < 30); cls('thirst', 'lowH', priv.hunger < 30);
   txt('lucky', priv.lucky > 0 ? `Lucky ${priv.lucky}s` : '');
-  // the drink line: the drink in your hand, or where to go when it is urgent; nothing otherwise (the E prompt covers the bar)
+  // the drink line: the drink in your hand, or where to go when it is urgent; nothing otherwise (the click prompt covers the bar)
   const d = priv.drink;
   txt('drinkInfo', !priv.alive ? ''
     : priv.hunger <= 0 ? 'Starving: pretzels at a SNACKS stand'
@@ -116,8 +116,8 @@ export function updateHud(v) {
     const at = priv.breaker !== null && priv.breaker !== undefined ? B.br.find(r => r[0] === priv.breaker) : null;
     const me = !priv.alive ? '<div class="me">You are a ghost. Watch the dark.</div>'
       : priv.held ? '<div class="me held">THE MONSTER HAS YOU</div>'
-      : priv.monster ? `<div class="me mon">YOU ARE THE MONSTER · 3 takes anyone you catch, no limit · ${document.body.classList.contains('touch') ? 'the Pounce button leaps' : 'E pounces'}${priv.leap ? '' : priv.leapCd > 0 ? ` (${priv.leapCd}s)` : ' (ready)'} · lit flashlights give them away</div>`
-      : priv.canTransform ? '<div class="me mon big">PRESS T TO TURN INTO THE MONSTER</div>'
+      : priv.monster ? `<div class="me mon">YOU ARE THE MONSTER · ${document.body.classList.contains('touch') ? 'Murder grabs anyone in reach · Pounce leaps' : 'Left-click grabs anyone in reach · Shift leaps'}${priv.leap ? '' : priv.leapCd > 0 ? ` (${priv.leapCd}s)` : ' (ready)'} · lit flashlights give them away</div>`
+      : priv.canTransform ? '<div class="me mon big">PRESS Q TO TURN INTO THE MONSTER</div>'
       : priv.isKiller ? '<div class="me">Your partner is the monster. Stay out of its way. Nobody can see you either.</div>'
       : at ? `<div class="me big">RESETTING THE BREAKER ${Math.round(at[1] * 100)}%</div>`
       : `<div class="me">F flashlight: <b>${priv.flash ? 'ON' : 'OFF'}</b> · ${priv.flash ? 'the monster sees a lit flashlight from far away' : 'hidden in the dark, but you can barely see'} · reset a breaker: stand at it, facing it</div>`;
@@ -137,7 +137,7 @@ export function updateHud(v) {
   }
   if (bh !== hudLast.get('blk')) { hudLast.set('blk', bh); $('blackoutHud').innerHTML = bh; show('blackoutHud', !!bh); $('blackoutHud').classList.toggle('exits', !!X); document.body.classList.toggle('blackout', !!bh); document.body.classList.toggle('tallHud', !!(B && X)); }
   // a killer's suggested target
-  const pr = priv.prey && pub.mode === 'play' && !pub.over ? `<b>TARGET</b> ${esc(priv.prey.name)} · ${esc(priv.prey.room)} · ${esc(priv.prey.why)}` : '';
+  const pr = priv.prey && !priv.seat && pub.mode === 'play' && !pub.over ? `<b>TARGET</b> ${esc(priv.prey.name)} · ${esc(priv.prey.room)} · ${esc(priv.prey.why)}` : '';
   if (pr !== hudLast.get('prey')) { hudLast.set('prey', pr); $('prey').innerHTML = pr; show('prey', !!pr); }
   // a killer's edge: the witness meter by the crosshair, and a reminder of the edge over the killer bar
   const play = pub.mode === 'play' && !pub.over, w = play && priv.alive ? priv.watchers : null, seen = w === null || w === undefined ? null : w > 0;
@@ -146,7 +146,7 @@ export function updateHud(v) {
   // (the edge is named on the role card now, one line fewer over the killer bar)
   const pk = priv.isKiller && priv.alive && play && priv.perk ? PERK[priv.perk] : null;
   if (hudLast.get('edge') !== '') { hudLast.set('edge', ''); $('edge').innerHTML = ''; show('edge', false); }
-  txt('hint', quietNote() || (priv.inspectT > 0 ? 'Checking... hold still' : priv.ctx ? 'E · ' + priv.ctx : '')); // (at a game, what you aim at takes over: main.js seatedHud)
+  txt('hint', quietNote() || (priv.inspectT > 0 ? 'Checking... hold still' : priv.ctx ? 'CLICK · ' + priv.ctx : '')); // at a game, what you aim at takes over: main.js seatedHud
   txt('useBtn', priv.ctx ? shortCtx(priv.ctx) : 'Use');
   cls('useBtn', 'ready', !!priv.ctx);
   const roleKey = priv.isKiller + ':' + pub.nk + ':' + pub.target + ':' + priv.killers.join() + ':' + !!pub.escape + ':' + (pk ? pk.name : '');
@@ -157,7 +157,7 @@ export function updateHud(v) {
       r.className = 'killer';
       const mates = pub.chars.filter(c => priv.killers.includes(c.id) && c.id !== priv.me).map(c => c.name);
       r.innerHTML = `<b>You are ${mates.length ? 'a KILLER' : 'the KILLER'}.</b> <span class="rl-more">${mates.length ? `Your partner${mates.length > 1 ? 's' : ''}: ${esc(andList(mates))}. ` : ''}` + (pub.escape
-        ? 'Get them all before they get out. Cut the power (6), then T turns you into the monster.'
+        ? 'Get them all before they get out. Cut the power (6), then Q turns you into the monster.'
         : "Poison orders, rigged machines, a knife from behind, accidents. Don't get seen.") + '</span>'
         + (pk ? ` <span class="rl-edge">Edge: ${esc(pk.name)}${pk.key ? ' (' + esc(pk.key) + ')' : ''}</span>` : '');
     } else { r.className = ''; r.innerHTML = pub.escape
@@ -166,7 +166,7 @@ export function updateHud(v) {
     r.classList.toggle('brief', brief);
   }
   // the role card says it all for the first 15 s of the night, then shrinks to one line (the menu's How to play has the rest)
-  const rb = play && pub.t > 15; if (rb !== $('role').classList.contains('brief')) $('role').classList.toggle('brief', rb);
+  const rb = play && (pub.t > 15 || !!priv.seat); if (rb !== $('role').classList.contains('brief')) $('role').classList.toggle('brief', rb);
 }
 function shortCtx(s) {
   if (s.startsWith('Report')) return 'Report'; if (s.startsWith('Sit')) return 'Sit'; if (s.startsWith('Play')) return 'Play'; if (s.startsWith('Stand') || s.startsWith('Step')) return 'Leave';
@@ -246,7 +246,8 @@ export function renderMeeting(v, act, multi) {
     }
     if (m.phase === 'result') requestAnimationFrame(() => $('mTimer').scrollIntoView({ block: 'nearest', behavior: 'smooth' })); // phones: the verdict is below the fold
   }
-  $('mTimer').innerHTML = m.phase === 'talk' ? 'Everyone is talking...' : m.phase === 'vote' ? (priv.alive ? (priv.voted === null ? `Vote now: ${m.voteT}s` : `You voted. ${m.voteT}s left.`) : `Votes close in ${m.voteT}s`) : `<b>${esc(m.result)}</b>`;
+  const timer = m.phase === 'talk' ? 'Everyone is talking...' : m.phase === 'vote' ? (priv.alive ? (priv.voted === null ? `Vote now: ${m.voteT}s` : `You voted. ${m.voteT}s left.`) : `Votes close in ${m.voteT}s`) : `<b>${esc(m.result)}</b>`;
+  if ($('mTimer').innerHTML !== timer) $('mTimer').innerHTML = timer;
 }
 
 // ---------- The pick screen ----------
@@ -264,7 +265,7 @@ export function renderPick(v, act, solo) {
   $('pkSub').innerHTML = k ? `You are ${mates.length ? `a <b>KILLER</b>, with ${esc(andList(mates))}` : 'the <b>KILLER</b>'}. Pick one edge for tonight (click it, or press 1-7).`
     : `You are a <b>GAMBLER</b>. Each killer picks one of these. Watch for them.`;
   $('pkList').innerHTML = PERKS.map((p, i) => `<button data-perk="${p.id}" class="pk-card${priv.perk === p.id ? ' sel' : ''}${k ? '' : ' ro'}"${k ? '' : ' tabindex="-1"'}>
-    <span class="pk-n">${i + 1}</span><b>${esc(p.name)}</b>${p.key ? `<span class="pk-key">${esc(p.key)}</span>` : ''}<span class="pk-t">${esc(p.text)}</span></button>`).join('');
+    <em class="ability-icon" data-icon="${PERK_ICONS[p.id]}" aria-hidden="true"></em><span class="pk-n">${i + 1}</span><b>${esc(p.name)}</b>${p.key ? `<span class="pk-key">${esc(p.key)}</span>` : ''}<span class="pk-t">${esc(p.text)}</span></button>`).join('');
   if (k) $('pkList').querySelectorAll('[data-perk]').forEach(b => { b.onclick = () => act('perk', b.dataset.perk); });
   $('pkCrew').innerHTML = crew.map(c => `${esc(pub.chars[c.id].name)}: ${c.perk ? esc(PERK[c.perk].name) : c.human ? 'still picking' : 'a bot, no edge'}`).join(' · ');
   $('pkTimer').textContent = pub.pickT !== null && pub.pickT !== undefined ? `The night starts in ${pub.pickT}s${k && !priv.perk ? ' (no pick: a random edge)' : ''}` : solo && k ? 'The night starts when you pick.' : '';

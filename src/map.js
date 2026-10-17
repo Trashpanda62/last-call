@@ -49,9 +49,15 @@ export const DOORS = [
 
 // ---------- Furniture ----------
 export const BJ_TABLES = [{ x: 960, y: 230 }, { x: 1680, y: 230 }];          // flat edge north at y, felt curves south
+export const BJ_SEAT_RING = { x: 145, y: 128 }; // bodies 0.4–0.5 m from the rail, within reach of cards/chips
 export const RL_TABLE = { x: 1170, y: 860, w: 300, h: 120 };                  // wheel at the east end
 export const CRASH_SCREEN = { x0: 2240, x1: 2760 };                          // on the arcade's north wall
-export const PLINKO_YS = [260, 380, 500];                                    // cabinets on the arcade's east wall
+// First measured arcade construction: consolidated Plinko pair frees the east bays for two real lanes.
+export const PLINKO_STATIONS = [2115, 2217].map(x => ({ x, y: 213, baseX: x, baseY: 129, face: -Math.PI / 2 }));
+export const SKEE_LANES = [2754, 2862].map((x, machine) => ({ x, y: 222, w: 84, h: 276, playerY: 396, machine }));
+// The plush rocket statue: walk-through decor in the dead corner behind the first Plinko cabinet (it stood inside the
+// relocated cabinet and hid half its board). r is its footprint radius, h its height in metres.
+export const ARCADE_ROCKET = { x: 2045, y: 52, r: 24, h: 1.6 };
 export const MINES_XS = [2100, 2210, 2320], TOWER_XS = [2660, 2770, 2880];  // consoles on the arcade's south wall
 export const POND = { x: 2140, y: 900, w: 780, h: 170 };                     // the duck race channel, ducks swim east
 export const RACE_XS = [2180, 2290, 2400, 2600, 2710, 2820];                // betting desks along the north side
@@ -73,7 +79,8 @@ export const OBSTACLES = [
   ...BJ_TABLES.map(t => ({ x: t.x - 120, y: t.y, w: 240, h: 100, kind: 'bj' })),
   { ...RL_TABLE, kind: 'roulette' },
   ...[0, 1, 2, 3].map(i => ({ x: 2320 + i * 120 - 25, y: 196, w: 50, h: 26, kind: 'crashDesk' })),
-  ...PLINKO_YS.map(y => ({ x: 2900, y: y - 45, w: 80, h: 90, kind: 'plinko' })),
+  ...PLINKO_STATIONS.map(p => ({ x: p.x - 45, y: 84, w: 90, h: 107, kind: 'plinko' })),
+  ...SKEE_LANES.map(p => ({ x: p.x - p.w / 2, y: p.y - p.h / 2, w: p.w, h: p.h, kind: 'skee' })),
   ...MINES_XS.map(x => ({ x: x - 25, y: 652, w: 50, h: 48, kind: 'mines' })),
   ...TOWER_XS.map(x => ({ x: x - 25, y: 652, w: 50, h: 48, kind: 'tower' })),
   { ...POND, kind: 'pond' },
@@ -101,7 +108,7 @@ export const CHANDELIERS = [
   [320, 330], [320, 950], [2300, 380], [2700, 380], [2500, 1060], [300, 1450], [700, 1650], [2500, 1540],
   [1300, 1330], [1760, 1560], // the slot hall's east end (by the dice), the VIP lounge's west end (the coin flip and the wheel)
 ];
-export const PLANTS = [[760, 1590], [695, 70], [1940, 80], [690, 1125], [1950, 1130], [560, 75], [2905, 440], [2915, 165], [2080, 1795], [2925, 1250], [950, 1255], [80, 1820], [1945, 1830], [1072, 1770], [2925, 1800]];
+export const PLANTS = [[760, 1590], [695, 70], [1940, 80], [690, 1125], [1950, 1130], [560, 75], [2935, 510], [2935, 620], [2080, 1795], [2925, 1250], [950, 1255], [80, 1820], [1945, 1830], [1072, 1770], [2925, 1800]];
 // STAFF ONLY doors, one per room but the duck pond: [room, x, y] on a wall's inner face and the way the door faces into
 // the room. A killer with the staff-passage edge steps in one and out of another (at the stand spot, 38 px out).
 export const STAFF_DOORS = [['bar', 20, 640, 0], ['rest', 110, 1180, -Math.PI / 2], ['floor', 780, 20, Math.PI / 2], ['arcade', 2880, 20, Math.PI / 2],
@@ -110,10 +117,10 @@ export const STAFF_DOORS = [['bar', 20, 640, 0], ['rest', 110, 1180, -Math.PI / 
 export const TAP = { x: 260, y: 145 };
 export const BELL = { x: 1320, y: 600 };
 export const REST_SPOTS = [{ x: 110, y: 820 }, { x: 110, y: 980 }, { x: 320, y: 1120 }, { x: 440, y: 1120 }, { x: 560, y: 1120 }];
-export const BOWL_SPOTS = [{ x: 530, y: 160 }, { x: 2900, y: 1300 }, { x: 2120, y: 140 }, { x: 1520, y: 1280 }, { x: 1900, y: 1100 }, { x: 880, y: 1260 }]; // bar, VIP, arcade, slot hall (east, by the dice), casino floor, slot hall
+export const BOWL_SPOTS = [{ x: 530, y: 160 }, { x: 2900, y: 1300 }, { x: 2070, y: 480 }, { x: 1520, y: 1280 }, { x: 1900, y: 1100 }, { x: 880, y: 1260 }]; // bar, VIP, arcade, slot hall (east, by the dice), casino floor, slot hall
 export const GAME_NAMES = {
   bj: 'blackjack', roulette: 'roulette', race: 'the duck race', vip: 'the VIP lounge', slots: 'the slots', crash: 'Crash',
-  plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice', cams: 'the security desk',
+  skee: 'skee-ball', plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice', cams: 'the security desk',
 };
 
 export function makeSeats() {
@@ -124,7 +131,7 @@ export function makeSeats() {
     seats.push({ id: seats.length, game, x, y, face, drink: { x: x + dx, y: y + dy }, approach: { x: x + dx * 1.45, y: y + dy * 1.45 }, occ: null, claim: null, ...extra });
   };
   for (const [ti, t] of BJ_TABLES.entries()) for (const deg of [30, 60, 90, 120, 150]) {
-    const a = deg * Math.PI / 180, x = t.x + Math.cos(a) * 168, y = t.y + Math.sin(a) * 152;
+    const a = deg * Math.PI / 180, x = t.x + Math.cos(a) * BJ_SEAT_RING.x, y = t.y + Math.sin(a) * BJ_SEAT_RING.y;
     add('bj', Math.round(x), Math.round(y), Math.atan2(t.y + 30 - y, t.x - x), { table: ti });
   }
   for (const x of [1210, 1290, 1370]) { add('roulette', x, RL_TABLE.y - 40, Math.PI / 2); add('roulette', x, RL_TABLE.y + RL_TABLE.h + 40, -Math.PI / 2); }
@@ -132,7 +139,7 @@ export function makeSeats() {
   SLOT_SOUTH_XS.forEach((x, i) => add('slots', x, 1790, Math.PI / 2, { tier: i === 0 ? 'penny' : 'high', machine: 5 + i }));
   RACE_XS.forEach(x => add('race', x, 800, Math.PI / 2));
   [0, 1, 2, 3].forEach(i => add('crash', 2320 + i * 120, 262, -Math.PI / 2));
-  PLINKO_YS.forEach((y, i) => add('plinko', 2858, y, 0, { machine: i }));
+  PLINKO_STATIONS.forEach((p, i) => add('plinko', p.x, p.y, p.face, { machine: i }));
   MINES_XS.forEach((x, i) => add('mines', x, 612, Math.PI / 2, { machine: i }));
   TOWER_XS.forEach((x, i) => add('tower', x, 612, Math.PI / 2, { machine: i }));
   [-60, 60].forEach((dx, i) => add('wheel', WHEEL_X + dx, 1762, Math.PI / 2, { machine: i }));
@@ -141,11 +148,13 @@ export function makeSeats() {
   add('cams', SECURITY.x + SECURITY.w + 38, SECURITY.y + SECURITY.h / 2, Math.PI);
   add('vip', COFFEE.x - 70, COFFEE.y + 35, 0); add('vip', COFFEE.x + COFFEE.w + 70, COFFEE.y + 35, Math.PI);
   add('vip', COFFEE.x + 80, COFFEE.y - 65, Math.PI / 2); add('vip', COFFEE.x + 80, COFFEE.y + COFFEE.h + 65, -Math.PI / 2);
+  SKEE_LANES.forEach(p => add('skee', p.x, p.playerY, -Math.PI / 2, { machine: p.machine }));
   return seats;
 }
 
 // ---------- Geometry ----------
 export function segRect(x1, y1, x2, y2, r) {
+  if ((x1 < r.x && x2 < r.x) || (x1 > r.x + r.w && x2 > r.x + r.w) || (y1 < r.y && y2 < r.y) || (y1 > r.y + r.h && y2 > r.y + r.h)) return false;
   let t0 = 0, t1 = 1; const dx = x2 - x1, dy = y2 - y1;
   const p = [-dx, dx, -dy, dy], q = [x1 - r.x, r.x + r.w - x1, y1 - r.y, r.y + r.h - y1];
   for (let i = 0; i < 4; i++) {
@@ -160,6 +169,9 @@ export const SOLIDS = WALLS.concat(OBSTACLES);
 export function collide(c) {
   const R = CFG.radius;
   for (const r of SOLIDS) {
+    // Most furniture is far away. Keep the sequential solver for nearby
+    // rectangles, including pushes that bring the character into later ones.
+    if (c.x < r.x - R || c.x > r.x + r.w + R || c.y < r.y - R || c.y > r.y + r.h + R) continue;
     const nx = clamp(c.x, r.x, r.x + r.w), ny = clamp(c.y, r.y, r.y + r.h);
     const dx = c.x - nx, dy = c.y - ny, d2 = dx * dx + dy * dy;
     if (d2 >= R * R) continue;
@@ -233,10 +245,24 @@ export function openSpot(room, rnd = Math.random) {
   return best || mid;
 }
 // The corners round every piece of furniture that a character can stand on, and which of them see each other
-// (built once, on the first detour).
-let CORNERS = null;
+// (prepared during loading, with a synchronous fallback for standalone simulation).
+let CORNERS = null, cornerBuild = null;
 function corners() {
   if (CORNERS) return CORNERS;
+  const steps = prepareNavigation(); let step;
+  while (!(step = steps.next()).done) { /* standalone callers finish the shared build */ }
+  return step.value;
+}
+export function* prepareNavigation() {
+  if (!CORNERS && !cornerBuild) cornerBuild = buildCorners();
+  while (!CORNERS) {
+    const step = cornerBuild.next();
+    if (step.done) { CORNERS = step.value; cornerBuild = null; }
+    else yield step.value;
+  }
+  return CORNERS;
+}
+function* buildCorners() {
   const pts = [];
   const roomy = p => ![...IN_ROOM, ...WALLS].some(o => inside(p, inflate(o, CFG.radius + 1)));
   for (const o of IN_ROOM) for (const [sx, sy] of [[0, 0], [1, 0], [1, 1], [0, 1]]) {
@@ -245,11 +271,14 @@ function corners() {
     if (p) pts.push(p);
   }
   const adj = pts.map(() => []);
-  for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
-    if (!free(pts[i], pts[j])) continue;
-    const d = dist(pts[i], pts[j]); adj[i].push([j, d]); adj[j].push([i, d]);
+  for (let i = 0; i < pts.length; i++) {
+    for (let j = i + 1; j < pts.length; j++) {
+      if (!free(pts[i], pts[j])) continue;
+      const d = dist(pts[i], pts[j]); adj[i].push([j, d]); adj[j].push([i, d]);
+    }
+    yield i;
   }
-  return (CORNERS = { pts, adj });
+  return { pts, adj };
 }
 // The shortest way from a to b round the furniture (Dijkstra over the corners); [b] when nothing is in the way or
 // no way round exists.

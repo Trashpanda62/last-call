@@ -24,7 +24,8 @@ for f in Dockerfile .dockerignore discord-adapter.js package.json package-lock.j
   if [ ! -f "$STAMP" ] || [ "$BOT/$f" -nt "$STAMP" ]; then botchg=1; fi
 done
 if [ "$botchg" = 1 ]; then (cd "$BOT" && tar czf - Dockerfile .dockerignore discord-adapter.js package.json package-lock.json rooms.js server.js discord.env.example) | ssh truenas37 "tar xzf - -C $DST"; fi
-if [ -f "$BOT/discord.env" ] && [ "$(md5sum < "$BOT/discord.env")" != "$(ssh truenas37 "md5sum < $DST/discord.env")" ]; then
+# Compare binary file hashes only: Windows stdin/newline formatting can otherwise look like a changed token file.
+if [ -f "$BOT/discord.env" ] && [ "$(sha256sum --binary "$BOT/discord.env" | cut -d ' ' -f 1)" != "$(ssh truenas37 "sha256sum --binary $DST/discord.env" | cut -d ' ' -f 1)" ]; then
   scp -q "$BOT/discord.env" "truenas37:$DST/discord.env" && ssh truenas37 "chmod 600 $DST/discord.env"; botchg=1; echo "sync-truenas: new discord.env"
 fi
 if [ "$botchg" = 1 ]; then ssh truenas37 "cd /mnt/apps/last-call-dev && docker compose up -d --build discord >/dev/null 2>&1 && sleep 3 && docker logs --tail 3 last-call-discord-voice 2>&1"; fi

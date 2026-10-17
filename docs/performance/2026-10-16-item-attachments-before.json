@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-16T13:15:06.724Z",
+  "rows": [
+    {
+      "name": "crowd snacks",
+      "ms": 0.7999999523162842,
+      "counts": {
+        "visible/getWorldQuaternion": 62,
+        "visible/updateWorldMatrix": 744,
+        "visible/updateMatrix": 744,
+        "visible/getWorldScale": 31
+      },
+      "snacks": 31,
+      "visible": 31
+    },
+    {
+      "name": "hidden snacks",
+      "ms": 0.800000011920929,
+      "counts": {
+        "hidden/getWorldQuaternion": 62,
+        "hidden/updateWorldMatrix": 651,
+        "visible/updateWorldMatrix": 93,
+        "visible/updateMatrix": 93,
+        "hidden/updateMatrix": 651,
+        "hidden/getWorldScale": 31
+      },
+      "snacks": 31,
+      "visible": 0
+    },
+    {
+      "name": "crowd drinks",
+      "ms": 0.699999988079071,
+      "counts": {
+        "visible/getWorldQuaternion": 62,
+        "visible/updateWorldMatrix": 744,
+        "visible/updateMatrix": 744,
+        "visible/getWorldScale": 31
+      },
+      "snacks": 0,
+      "visible": 31
+    },
+    {
+      "name": "hidden drinks",
+      "ms": 0,
+      "counts": {},
+      "snacks": 0,
+      "visible": 0
+    }
+  ],
+  "appearance": {
+    "movedParent": false,
+    "attachedToScene": false
+  },
+  "errors": []
+}

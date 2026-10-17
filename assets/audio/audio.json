@@ -198,20 +198,23 @@
   ],
   "wheelSpin": [
    "sfx/wheelSpin-1.mp3"
+  ],
+  "cough": [
+   "sfx/cough.mp3"
   ]
  },
  "amb": {
   "alley": [
-   "amb/alley-1.mp3"
+   "amb/casino-eerie.mp3"
   ],
   "arcade": [
-   "amb/arcade-1.mp3"
+   "amb/casino-eerie.mp3"
   ],
   "bar": [
    "amb/bar-1.mp3"
   ],
   "floor": [
-   "amb/floor-1.mp3"
+   "amb/floor-mixed-tables.mp3"
   ],
   "race": [
    "amb/race-1.mp3"
@@ -223,61 +226,26 @@
    "amb/slots-1.mp3"
   ],
   "vip": [
-   "amb/vip-1.mp3"
+   "amb/casino-eerie.mp3"
+  ],
+  "tables": [
+   "amb/floor-mixed-tables.mp3"
+  ],
+  "blackjack": [
+   "amb/floor-card-room.mp3"
+  ],
+  "roulette": [
+   "amb/floor-roulette-room.mp3"
   ]
  },
  "music": {
-  "alley": [
-   "music/alley-1.mp3",
-   "music/alley-2.mp3"
+  "casino": [
+   "music/house-after-hours.mp3",
+   "music/house-empty-chairs.mp3",
+   "music/house-last-wager.mp3"
   ],
-  "arcade": [
-   "music/arcade-1.mp3",
-   "music/arcade-2.mp3"
-  ],
-  "bar": [
-   "music/bar-1.mp3",
-   "music/bar-2.mp3"
-  ],
-  "eject": [
-   "music/eject-1.mp3",
-   "music/eject-2.mp3"
-  ],
-  "floor": [
-   "music/floor-1.mp3",
-   "music/floor-2.mp3"
-  ],
-  "gamblersWin": [
-   "music/gamblersWin-1.mp3",
-   "music/gamblersWin-2.mp3"
-  ],
-  "killersWin": [
-   "music/killersWin-1.mp3",
-   "music/killersWin-2.mp3"
-  ],
-  "lose": [
-   "music/lose-1.mp3",
-   "music/lose-2.mp3"
-  ],
-  "meeting": [
-   "music/meeting-1.mp3",
-   "music/meeting-2.mp3"
-  ],
-  "menu": [
-   "music/menu-1.mp3",
-   "music/menu-2.mp3"
-  ],
-  "race": [
-   "music/race-1.mp3",
-   "music/race-2.mp3"
-  ],
-  "vip": [
-   "music/vip-1.mp3",
-   "music/vip-2.mp3"
-  ],
-  "win": [
-   "music/win-1.mp3",
-   "music/win-2.mp3"
+  "jukebox": [
+   "music/menu-1.mp3"
   ]
  },
  "death": {
@@ -301,5 +269,41 @@
   "maul": "monster/maul.mp3",
   "breaker": "monster/breaker.mp3",
   "powerup": "monster/powerup.mp3"
+ },
+ "cues": {
+  "breathBehind": [
+   "cues/breath-behind-a.mp3",
+   "cues/breath-behind-b.mp3",
+   "cues/breath-behind-c.mp3"
+  ],
+  "distantDeath": [
+   "cues/death-yell-a.mp3",
+   "cues/death-yell-b.mp3",
+   "cues/death-yell-c.mp3"
+  ],
+  "potatoStepCarpet": [
+   "cues/potato-step-carpet-a.mp3",
+   "cues/potato-step-carpet-b.mp3"
+  ],
+  "potatoStepTile": [
+   "cues/potato-step-tile-a.mp3",
+   "cues/potato-step-tile-b.mp3"
+  ],
+  "potatoMutter": [
+   "cues/potato-mutter-a.mp3",
+   "cues/potato-mutter-b.mp3"
+  ],
+  "potatoChuckle": [
+   "cues/potato-chuckle.mp3"
+  ],
+  "potatoSigh": [
+   "cues/potato-sigh.mp3"
+  ],
+  "ventKnock": [
+   "cues/vent-knock.mp3"
+  ],
+  "whisperBehind": [
+   "cues/whisper-behind.mp3"
+  ]
  }
 }

@@ -1,10 +1,10 @@
 // Headless check that table rounds reach the crew bank: node tools/settle-check.mjs [trials]
 // Drives the real table code (src/tables.js) against the real sim, the way main.js wires them, in three cases:
-//   meeting  - a roulette spin or a slot pull is in the air when a meeting starts; the table stays open (the meeting is on the phone) and the round settles when you walk off;
+//   meeting  - a roulette spin or a slot pull is in the air when a meeting starts; the table stays open (the meeting is on the phone) and the round settles as it lands after you walk off;
 //              a Crash flight keeps flying through a meeting
 //   standup  - a round left open (blackjack, coin pot, dice point, mines, tower) when you walk off is played out and settled
 //   death    - a round decided before you die still settles
-//   autoslots- leaving during auto spin never starts a round that can't pay; a four-max-bet blackjack loss settles in full
+//   autoslots- auto spin keeps going after you walk off (Steve, 2026-10-16), and every spin it starts reaches the bank; a four-max-bet blackjack loss settles in full
 //   over     - once the verdict is in, no settlement (direct, flushed from a closing table, or later in a crash loop)
 //              may move the bank
 // Exits 1 if any trial fails. The DOM is stubbed; nothing here opens a browser.
@@ -18,17 +18,23 @@ const T = await import('../src/tables.js');
 const Gm = await import('../src/games.js');
 
 const trials = +(process.argv[2] || 25);
+if (!Number.isInteger(trials) || trials < 1) throw new Error('Usage: node tools/settle-check.mjs [positive trial count]');
 
+let starts = 0; // rounds the table began (tableBet), here and in the background
+const land = (g, c, s) => { for (let t = 0; t < s; t += 0.25) { clock += 0.25; g.G.rt = (g.G.rt || 0) + 0.25; T.tableTick(g.view(c.id)); } }; // time for rounds in the air
 // A game with the one human at a free spot of `game`, joined the way a player does: walking up to it, facing it.
 function seated(game) {
+  T.resetTableLuck();
   const g = createGame({ humans: [{ name: 'Me', key: 'me' }], players: 6, killers: 1, difficulty: 'normal', forceRole: 'gambler' });
   const c = g.G.chars.find(o => o.isHuman), seat = g.G.seats.find(s => s.game === game && !s.occ);
   c.lucky = 0;
   g.setInput(c.id, { x: seat.x, y: seat.y, look: seat.face, posVer: c.posVer });
   if (c.seat !== seat) throw new Error('could not sit at ' + game);
   const calls = [];
-  const act = (k, arg) => { if (k === 'bank') calls.push({ ...arg, mode: g.G.mode, over: !!g.G.over }); g.action(c.id, k, arg); };
+  const act = (k, arg) => { if (k === 'tableBet') starts++; if (k === 'bank') calls.push({ ...arg, mode: g.G.mode, over: !!g.G.over }); g.action(c.id, k, arg); };
   T.openTable(seat, act, g.view(c.id));
+  // The player now explicitly places their stake before starting any round.
+  if (['bj', 'slots', 'mines', 'tower'].includes(game)) T.press('spot:main');
   return { g, c, seat, calls };
 }
 // What the sim adds for an accepted settlement { d, b } (no lucky pretzels).
@@ -47,7 +53,7 @@ function run(name, fn) {
   for (let i = 0; i < trials; i++) {
     try { const why = fn(); if (why) { r.fail++; if (r.examples.length < 3) r.examples.push(why); } else r.pass++; }
     catch (e) { r.errors++; if (r.examples.length < 3) r.examples.push('error: ' + e.message); }
-    T.closeTable();
+    T.closeAllTables();
   }
   out[name] = r;
 }
@@ -61,7 +67,7 @@ for (const [game, start] of [['roulette', () => { T.press('spot:red'); T.press('
     const bank0 = g.G.bank;
     meeting(g, c);
     if (calls.length) return 'the meeting settled the round (it runs on the phone; the table stays open)';
-    T.closeTable(); // walking off afterwards settles it
+    T.closeTable(); land(g, c, 6); // walking off, it carries on and settles as it lands
     if (calls.length !== 1) return `expected 1 settlement, got ${calls.length}`;
     const want = bank0 + expectNet(calls[0]);
     return g.G.bank === want ? null : `bank ${g.G.bank}, want ${want} (d ${calls[0].d}, b ${calls[0].b}, in ${calls[0].mode})`;
@@ -72,7 +78,11 @@ for (const [game, start] of [['roulette', () => { T.press('spot:red'); T.press('
 run('standup:bj', () => {
   const { g, c, calls } = seated('bj');
   let live = false;
-  for (let i = 0; i < 20 && !live; i++) { T.press('btn:deal'); live = !!T.tableView().view?.hide; }
+  for (let i = 0; i < 20 && !live; i++) {
+    T.press('btn:deal'); live = !!T.tableView().view?.hide;
+    // Naturals settle immediately, but the host still paces each complete hand.
+    clock += 0.2; g.G.rt = (g.G.rt || 0) + 0.2;
+  }
   if (!live) return 'no live hand in 20 deals';
   const n0 = calls.length, bank0 = g.G.bank;
   g.action(c.id, 'leave'); // walk off (Q; walking away does the same)
@@ -119,7 +129,7 @@ run('death:roulette', () => {
   if (c.alive || c.seat) return 'the poison did not kill';
   if (g.G.over) return 'the game ended on one death';
   const bank0 = g.G.bank, n0 = calls.length;
-  T.closeTable(); // main.js closes the table when the seat goes
+  T.closeAllTables(); // main.js settles every game when you die
   if (calls.length !== n0 + 1) return `expected 1 settlement after death, got ${calls.length - n0}`;
   const want = bank0 + expectNet(calls[n0]);
   return g.G.bank === want ? null : `bank ${g.G.bank}, want ${want} (d ${calls[n0].d}, b ${calls[n0].b})`;
@@ -132,11 +142,14 @@ T.setHandHook(k => { if (k === 'pull') pulls++; });
 for (const gap of [0.5, 1.8, 2.2]) {
   run('autoslots:' + gap, () => {
     const { g, c, calls } = seated('slots');
-    pulls = 0;
+    starts = 0;
     T.press('btn:auto');
     wait(g, c, gap); // 0.5: reels turning; 1.8 and 2.2: paid, the next auto spin queued
     g.action(c.id, 'leave'); T.closeTable();
-    return calls.length === pulls ? null : `${pulls} spins started, ${calls.length} settled`;
+    land(g, c, 8); // away from it, auto keeps spinning
+    const away = starts; T.closeAllTables();
+    if (away < 3) return `auto stopped when you walked off (${away} spins)`;
+    return calls.length === starts ? null : `${starts} spins started, ${calls.length} settled`;
   });
 }
 
@@ -272,7 +285,7 @@ run('over:bank', () => {
   if (!g.G.over) return 'the winning settlement did not end the game';
   const bank0 = g.G.bank, verdict = g.G.over;
   T.press('spot:red'); T.press('btn:spin');
-  T.closeTable();                                // the table closes on the verdict, flushing the spin
+  T.closeAllTables();                            // every table closes on the verdict, flushing the spin
   g.action(c.id, 'bank', { d: 50000, b: 50000 });
   g.action(c.id, 'bank', { d: -50000, b: 50000 });
   for (let i = 0; i < 600; i++) g.tick(1 / 60);

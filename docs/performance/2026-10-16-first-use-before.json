@@ -1,0 +1,163 @@
+{
+  "at": "2026-10-16T12:32:33.924Z",
+  "rows": [
+    {
+      "name": "ready gameplay",
+      "ms": 15.699999988079071,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poison",
+      "ms": 11.899999976158142,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "stab",
+      "ms": 9.699999988079071,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "shoot",
+      "ms": 12.700000047683716,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "snack 0",
+      "ms": 40.19999998807907,
+      "links": [
+        [
+          [
+            "#define SHADER_TYPE MeshStandardMaterial",
+            "#define SHADER_NAME tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+            "#define USE_MAP",
+            "#define USE_ENVMAP",
+            "#define USE_NORMALMAP",
+            "#define USE_NORMALMAP_TANGENTSPACE",
+            "#define USE_ROUGHNESSMAP",
+            "#define USE_METALNESSMAP"
+          ],
+          [
+            "#define SHADER_TYPE MeshStandardMaterial",
+            "#define SHADER_NAME tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+            "#define USE_MAP",
+            "#define USE_ENVMAP",
+            "#define USE_NORMALMAP",
+            "#define USE_NORMALMAP_TANGENTSPACE",
+            "#define USE_ROUGHNESSMAP",
+            "#define USE_METALNESSMAP",
+            "#define OPAQUE"
+          ]
+        ]
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "snack 1",
+      "ms": 10.699999988079071,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "snack 2",
+      "ms": 10.399999976158142,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "drink martini",
+      "ms": 11.699999988079071,
+      "links": [],
+      "buffers": 16,
+      "bytes": 19136,
+      "uploads": []
+    },
+    {
+      "name": "drink cosmo",
+      "ms": 10.800000011920929,
+      "links": [],
+      "buffers": 4,
+      "bytes": 2496,
+      "uploads": []
+    },
+    {
+      "name": "drink beer",
+      "ms": 19.100000023841858,
+      "links": [],
+      "buffers": 20,
+      "bytes": 24752,
+      "uploads": [
+        [
+          "HTMLCanvasElement",
+          512,
+          320
+        ]
+      ]
+    },
+    {
+      "name": "drink whiskey",
+      "ms": 12.399999976158142,
+      "links": [],
+      "buffers": 20,
+      "bytes": 18048,
+      "uploads": []
+    },
+    {
+      "name": "drink mojito",
+      "ms": 10.399999976158142,
+      "links": [],
+      "buffers": 28,
+      "bytes": 21368,
+      "uploads": []
+    },
+    {
+      "name": "free ghost",
+      "ms": 31.5,
+      "links": [
+        [
+          [
+            "#define SHADER_TYPE MeshPhysicalMaterial",
+            "#define SHADER_NAME ",
+            "#define USE_ENVMAP"
+          ],
+          [
+            "#define SHADER_TYPE MeshPhysicalMaterial",
+            "#define SHADER_NAME ",
+            "#define USE_ENVMAP",
+            "#define USE_CLEARCOAT",
+            "#define USE_SHEEN"
+          ]
+        ]
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "ghost repeat",
+      "ms": 9.899999976158142,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,548 @@
+{
+  "at": "2026-10-16T10:17:04.340Z",
+  "readyMs": 9035.300000011921,
+  "longTasks": [
+    {
+      "at": 133.89999997615814,
+      "ms": 281
+    },
+    {
+      "at": 505.80000001192093,
+      "ms": 257
+    },
+    {
+      "at": 1350.800000011921,
+      "ms": 73
+    },
+    {
+      "at": 2637.300000011921,
+      "ms": 1540
+    },
+    {
+      "at": 4177.800000011921,
+      "ms": 109
+    },
+    {
+      "at": 4320.5,
+      "ms": 3299
+    },
+    {
+      "at": 7642.800000011921,
+      "ms": 107
+    },
+    {
+      "at": 7753.699999988079,
+      "ms": 83
+    },
+    {
+      "at": 8087.099999964237,
+      "ms": 104
+    },
+    {
+      "at": 8270.5,
+      "ms": 132
+    },
+    {
+      "at": 8453.800000011921,
+      "ms": 53
+    },
+    {
+      "at": 8520.399999976158,
+      "ms": 198
+    },
+    {
+      "at": 8720.399999976158,
+      "ms": 307
+    },
+    {
+      "at": 9037,
+      "ms": 189
+    },
+    {
+      "at": 9437,
+      "ms": 83
+    },
+    {
+      "at": 9586.899999976158,
+      "ms": 147
+    }
+  ],
+  "stages": [
+    {
+      "at": 39.5,
+      "text": "Opening the casino…"
+    },
+    {
+      "at": 750,
+      "text": "Loading art and sound"
+    },
+    {
+      "at": 1080.8999999761581,
+      "text": "Cards and table art"
+    },
+    {
+      "at": 1085.3999999761581,
+      "text": "Room materials"
+    },
+    {
+      "at": 1198.699999988079,
+      "text": "Monster"
+    },
+    {
+      "at": 2128.599999964237,
+      "text": "Characters and animation"
+    },
+    {
+      "at": 2615.399999976158,
+      "text": "Casino models"
+    },
+    {
+      "at": 2615.5,
+      "text": "Building the casino"
+    },
+    {
+      "at": 4300.099999964237,
+      "text": "Preparing the casino"
+    },
+    {
+      "at": 7749,
+      "text": "Uploading textures"
+    },
+    {
+      "at": 9413.699999988079,
+      "text": "Preparing shaders"
+    },
+    {
+      "at": 9585.099999964237,
+      "text": "Finishing the scene"
+    },
+    {
+      "at": 9737.399999976158,
+      "text": "Ready"
+    }
+  ],
+  "self": [
+    {
+      "ms": 1300,
+      "fn": "texSubImage2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 10646
+    },
+    {
+      "ms": 1211,
+      "fn": "(program)",
+      "url": "",
+      "line": 0
+    },
+    {
+      "ms": 1011,
+      "fn": "texSubImage2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 10646
+    },
+    {
+      "ms": 809,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 275,
+      "fn": "",
+      "url": "https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js",
+      "line": 7
+    },
+    {
+      "ms": 187,
+      "fn": "(garbage collector)",
+      "url": "",
+      "line": 0
+    },
+    {
+      "ms": 183,
+      "fn": "texSubImage2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 10646
+    },
+    {
+      "ms": 175,
+      "fn": "applyBoneTransform",
+      "url": "vendor/three/build/three.core.js",
+      "line": 24095
+    },
+    {
+      "ms": 152,
+      "fn": "",
+      "url": "vendor/three/addons/loaders/GLTFLoader.js",
+      "line": 3310
+    },
+    {
+      "ms": 134,
+      "fn": "texSubImage2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 10646
+    },
+    {
+      "ms": 105,
+      "fn": "feltBase",
+      "url": "src/3d/rig.js",
+      "line": 99
+    },
+    {
+      "ms": 90,
+      "fn": "feltFill",
+      "url": "src/3d/textures.js",
+      "line": 178
+    },
+    {
+      "ms": 81,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 77,
+      "fn": "texSubImage2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 10646
+    },
+    {
+      "ms": 73,
+      "fn": "",
+      "url": "vendor/three/build/three.core.js",
+      "line": 44668
+    },
+    {
+      "ms": 59,
+      "fn": "multiplyMatrices",
+      "url": "vendor/three/build/three.core.js",
+      "line": 10407
+    },
+    {
+      "ms": 58,
+      "fn": "feltFill",
+      "url": "src/3d/textures.js",
+      "line": 178
+    },
+    {
+      "ms": 57,
+      "fn": "paintBj",
+      "url": "src/3d/textures.js",
+      "line": 194
+    },
+    {
+      "ms": 56,
+      "fn": "paintBj",
+      "url": "src/3d/textures.js",
+      "line": 194
+    },
+    {
+      "ms": 56,
+      "fn": "feltFill",
+      "url": "src/3d/textures.js",
+      "line": 178
+    },
+    {
+      "ms": 55,
+      "fn": "crestImage",
+      "url": "src/3d/textures.js",
+      "line": 416
+    },
+    {
+      "ms": 55,
+      "fn": "paintBj",
+      "url": "src/3d/textures.js",
+      "line": 194
+    },
+    {
+      "ms": 54,
+      "fn": "smoothNormals",
+      "url": "src/3d/plush.js",
+      "line": 87
+    },
+    {
+      "ms": 45,
+      "fn": "feltBase",
+      "url": "src/3d/rig.js",
+      "line": 99
+    },
+    {
+      "ms": 45,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 39,
+      "fn": "unlock",
+      "url": "src/audio.js",
+      "line": 11
+    },
+    {
+      "ms": 37,
+      "fn": "feltFill",
+      "url": "src/3d/textures.js",
+      "line": 178
+    },
+    {
+      "ms": 35,
+      "fn": "",
+      "url": "src/util.js",
+      "line": 1
+    },
+    {
+      "ms": 35,
+      "fn": "GLTFBinaryExtension",
+      "url": "vendor/three/addons/loaders/GLTFLoader.js",
+      "line": 1840
+    },
+    {
+      "ms": 35,
+      "fn": "",
+      "url": "vendor/three/addons/loaders/GLTFLoader.js",
+      "line": 3054
+    },
+    {
+      "ms": 35,
+      "fn": "",
+      "url": "vendor/three/build/three.core.js",
+      "line": 6030
+    },
+    {
+      "ms": 34,
+      "fn": "applyMatrix4",
+      "url": "vendor/three/build/three.core.js",
+      "line": 8471
+    },
+    {
+      "ms": 32,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 30,
+      "fn": "WebGLRenderer.setSize",
+      "url": "vendor/three/build/three.module.js",
+      "line": 16653
+    },
+    {
+      "ms": 30,
+      "fn": "WebGLShader",
+      "url": "vendor/three/build/three.module.js",
+      "line": 6233
+    }
+  ],
+  "inclusive": [
+    {
+      "ms": 4834,
+      "fn": "warmup",
+      "url": "src/3d/render3d.js",
+      "line": 760
+    },
+    {
+      "ms": 3399,
+      "fn": "draw",
+      "url": "src/3d/render3d.js",
+      "line": 496
+    },
+    {
+      "ms": 2608,
+      "fn": "render",
+      "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+      "line": 214
+    },
+    {
+      "ms": 2484,
+      "fn": "WebGLRenderer.render",
+      "url": "vendor/three/build/three.module.js",
+      "line": 17603
+    },
+    {
+      "ms": 2484,
+      "fn": "render",
+      "url": "vendor/three/addons/postprocessing/RenderPass.js",
+      "line": 121
+    },
+    {
+      "ms": 2035,
+      "fn": "renderScene",
+      "url": "vendor/three/build/three.module.js",
+      "line": 17943
+    },
+    {
+      "ms": 2034,
+      "fn": "renderObject",
+      "url": "vendor/three/build/three.module.js",
+      "line": 18118
+    },
+    {
+      "ms": 2034,
+      "fn": "renderObjects",
+      "url": "vendor/three/build/three.module.js",
+      "line": 18091
+    },
+    {
+      "ms": 2030,
+      "fn": "WebGLRenderer.renderBufferDirect",
+      "url": "vendor/three/build/three.module.js",
+      "line": 17178
+    },
+    {
+      "ms": 2013,
+      "fn": "setProgram",
+      "url": "vendor/three/build/three.module.js",
+      "line": 18328
+    },
+    {
+      "ms": 1496,
+      "fn": "boot",
+      "url": "src/main.js",
+      "line": 1035
+    },
+    {
+      "ms": 1489,
+      "fn": "init",
+      "url": "src/3d/render3d.js",
+      "line": 49
+    },
+    {
+      "ms": 1310,
+      "fn": "WebGLRenderer.initTexture",
+      "url": "vendor/three/build/three.module.js",
+      "line": 19523
+    },
+    {
+      "ms": 1309,
+      "fn": "setTexture2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 11558
+    },
+    {
+      "ms": 1308,
+      "fn": "uploadTexture",
+      "url": "vendor/three/build/three.module.js",
+      "line": 11905
+    },
+    {
+      "ms": 1300,
+      "fn": "texSubImage2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 10646
+    },
+    {
+      "ms": 1211,
+      "fn": "(program)",
+      "url": "",
+      "line": 0
+    },
+    {
+      "ms": 1090,
+      "fn": "buildWorld",
+      "url": "src/3d/world.js",
+      "line": 154
+    },
+    {
+      "ms": 1038,
+      "fn": "upload",
+      "url": "vendor/three/build/three.module.js",
+      "line": 6198
+    },
+    {
+      "ms": 1023,
+      "fn": "setValueT1",
+      "url": "vendor/three/build/three.module.js",
+      "line": 5589
+    },
+    {
+      "ms": 1022,
+      "fn": "uploadTexture",
+      "url": "vendor/three/build/three.module.js",
+      "line": 11905
+    },
+    {
+      "ms": 1022,
+      "fn": "setTexture2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 11558
+    },
+    {
+      "ms": 1011,
+      "fn": "texSubImage2D",
+      "url": "vendor/three/build/three.module.js",
+      "line": 10646
+    },
+    {
+      "ms": 894,
+      "fn": "buildMachines",
+      "url": "src/3d/machines.js",
+      "line": 34
+    },
+    {
+      "ms": 823,
+      "fn": "onFirstUse",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7094
+    },
+    {
+      "ms": 823,
+      "fn": "WebGLProgram.getUniforms",
+      "url": "vendor/three/build/three.module.js",
+      "line": 7193
+    },
+    {
+      "ms": 521,
+      "fn": "",
+      "url": "src/3d/machines.js",
+      "line": 74
+    },
+    {
+      "ms": 481,
+      "fn": "",
+      "url": "src/3d/textures.js",
+      "line": 188
+    },
+    {
+      "ms": 481,
+      "fn": "once",
+      "url": "src/3d/textures.js",
+      "line": 17
+    },
+    {
+      "ms": 481,
+      "fn": "bjFelt",
+      "url": "src/3d/textures.js",
+      "line": 188
+    },
+    {
+      "ms": 421,
+      "fn": "beanFor",
+      "url": "src/3d/render3d.js",
+      "line": 347
+    },
+    {
+      "ms": 420,
+      "fn": "PlushBean",
+      "url": "src/3d/plush.js",
+      "line": 576
+    },
+    {
+      "ms": 420,
+      "fn": "makeBean",
+      "url": "src/3d/plush.js",
+      "line": 740
+    },
+    {
+      "ms": 417,
+      "fn": "WebGLShadowMap.render",
+      "url": "vendor/three/build/three.module.js",
+      "line": 9141
+    },
+    {
+      "ms": 415,
+      "fn": "renderObject",
+      "url": "vendor/three/build/three.module.js",
+      "line": 9556
+    }
+  ]
+}

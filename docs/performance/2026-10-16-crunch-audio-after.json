@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-16T19:33:22.023Z",
+  "baseline": false,
+  "rows": [
+    {
+      "rate": 44100,
+      "bites": 8,
+      "starts": 8,
+      "uniqueBiteBuffers": 1,
+      "allocated": 0,
+      "samePreview": true,
+      "active": [
+        "generated/eating-crunch",
+        "generated/eating-crunch",
+        "generated/eating-crunch"
+      ],
+      "afterMute": [],
+      "stopped": 3,
+      "mutedStarts": 0,
+      "waveform": {
+        "maxError": 0,
+        "samples": 9702,
+        "actualHash": "6029ffb254208e5024ef603806d6f08ca95caf08d8e9c10be26728d96f3a2e28",
+        "expectedHash": "6029ffb254208e5024ef603806d6f08ca95caf08d8e9c10be26728d96f3a2e28"
+      }
+    },
+    {
+      "rate": 48000,
+      "bites": 8,
+      "starts": 8,
+      "uniqueBiteBuffers": 1,
+      "allocated": 0,
+      "samePreview": true,
+      "active": [
+        "generated/eating-crunch",
+        "generated/eating-crunch",
+        "generated/eating-crunch"
+      ],
+      "afterMute": [],
+      "stopped": 3,
+      "mutedStarts": 0,
+      "waveform": {
+        "maxError": 0,
+        "samples": 10560,
+        "actualHash": "3be5fcd38cc3b9d12339b7a083385663a0e4524699dd296edabd9f99b4a6f9a2",
+        "expectedHash": "3be5fcd38cc3b9d12339b7a083385663a0e4524699dd296edabd9f99b4a6f9a2"
+      }
+    }
+  ],
+  "errors": []
+}

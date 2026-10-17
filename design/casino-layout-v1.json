@@ -1,0 +1,1624 @@
+{
+  "status": "measured design \u2014 all 64 player approaches, retained furniture, ten doors and six staff exits pass the clearance audit; construction and in-engine verification pending",
+  "units": "metres; origin northwest, x east, z south",
+  "shell": [
+    50,
+    31.6667
+  ],
+  "mainAisleTarget": 1.5,
+  "objects": [
+    {
+      "id": "bj-a",
+      "name": "Blackjack",
+      "x": 13.75,
+      "z": 3.7,
+      "w": 4.5,
+      "d": 2.3,
+      "kind": "retain",
+      "detail": "Card cluster. Preserve five seat approaches; coordinate cards and chips with the felt.",
+      "seats": [
+        {
+          "x": 18.0929,
+          "z": 4.7667,
+          "face": -2.877175,
+          "approach": [
+            19.0774,
+            5.0332
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 17.2083,
+          "z": 5.5475,
+          "face": -2.30179,
+          "approach": [
+            17.8893,
+            6.3069
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 16.0,
+          "z": 5.8333,
+          "face": -1.570796,
+          "approach": [
+            16.0,
+            6.8533
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 14.7917,
+          "z": 5.5475,
+          "face": -0.839803,
+          "approach": [
+            14.1107,
+            6.3069
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 13.9071,
+          "z": 4.7667,
+          "face": -0.264418,
+          "approach": [
+            12.9226,
+            5.0332
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 17.6929,
+          "z": 4.3667,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 16.808300000000003,
+          "z": 5.1475,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 15.6,
+          "z": 5.4333,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 14.3917,
+          "z": 5.1475,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 13.5071,
+          "z": 4.3667,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ],
+      "solids": [
+        {
+          "x": 14.0,
+          "z": 3.7,
+          "w": 4,
+          "d": 1.6666666666666667
+        }
+      ]
+    },
+    {
+      "id": "bj-b",
+      "name": "High blackjack",
+      "x": 25.75,
+      "z": 3.7,
+      "w": 4.5,
+      "d": 2.3,
+      "kind": "retain",
+      "detail": "Second card table. Keep dealer and north-wall sign visible.",
+      "seats": [
+        {
+          "x": 30.0929,
+          "z": 4.7667,
+          "face": -2.877175,
+          "approach": [
+            31.0774,
+            5.0332
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 29.2083,
+          "z": 5.5475,
+          "face": -2.30179,
+          "approach": [
+            29.8893,
+            6.3069
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 28.0,
+          "z": 5.8333,
+          "face": -1.570796,
+          "approach": [
+            28.0,
+            6.8533
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 26.7917,
+          "z": 5.5475,
+          "face": -0.839803,
+          "approach": [
+            26.1107,
+            6.3069
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 25.9071,
+          "z": 4.7667,
+          "face": -0.264418,
+          "approach": [
+            24.9226,
+            5.0332
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 29.6929,
+          "z": 4.3667,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 28.808300000000003,
+          "z": 5.1475,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 27.6,
+          "z": 5.4333,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 26.3917,
+          "z": 5.1475,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 25.5071,
+          "z": 4.3667,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ],
+      "solids": [
+        {
+          "x": 26.0,
+          "z": 3.7,
+          "w": 4,
+          "d": 1.6666666666666667
+        }
+      ]
+    },
+    {
+      "id": "roulette",
+      "name": "Roulette pit",
+      "x": 19.0,
+      "z": 10.8,
+      "w": 5.3,
+      "d": 2.3,
+      "kind": "move",
+      "detail": "Central destination; north and south betting approaches. Rules on clear south-wall bay.",
+      "seats": [
+        {
+          "x": 20.166,
+          "z": 10.1,
+          "face": 1.570796,
+          "approach": [
+            20.166,
+            9.08
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 20.166,
+          "z": 13.8,
+          "face": -1.570796,
+          "approach": [
+            20.166,
+            14.82
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 21.597,
+          "z": 10.1,
+          "face": 1.570796,
+          "approach": [
+            21.597,
+            9.08
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 21.597,
+          "z": 13.8,
+          "face": -1.570796,
+          "approach": [
+            21.597,
+            14.82
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 23.028,
+          "z": 10.1,
+          "face": 1.570796,
+          "approach": [
+            23.028,
+            9.08
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 23.028,
+          "z": 13.8,
+          "face": -1.570796,
+          "approach": [
+            23.028,
+            14.82
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 19.766000000000002,
+          "z": 9.7,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 19.766000000000002,
+          "z": 13.4,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 21.197000000000003,
+          "z": 9.7,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 21.197000000000003,
+          "z": 13.4,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 22.628,
+          "z": 9.7,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 22.628,
+          "z": 13.4,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "dice",
+      "name": "Dice",
+      "x": 26.2,
+      "z": 13.8,
+      "w": 5.5,
+      "d": 2.8,
+      "kind": "move",
+      "detail": "Move dice from slot hall to a main-floor social cluster. Check both long-side seat envelopes.",
+      "seats": [
+        {
+          "x": 27.85,
+          "z": 13.1,
+          "face": 1.570796,
+          "approach": [
+            27.85,
+            12.08
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 27.85,
+          "z": 17.3,
+          "face": -1.570796,
+          "approach": [
+            27.85,
+            18.32
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 30.05,
+          "z": 13.1,
+          "face": 1.570796,
+          "approach": [
+            30.05,
+            12.08
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 30.05,
+          "z": 17.3,
+          "face": -1.570796,
+          "approach": [
+            30.05,
+            18.32
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 27.450000000000003,
+          "z": 12.7,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 27.450000000000003,
+          "z": 16.900000000000002,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 29.650000000000002,
+          "z": 12.7,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 29.650000000000002,
+          "z": 16.900000000000002,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "social",
+      "name": "Low social island",
+      "x": 13.2,
+      "z": 12.0,
+      "w": 2.4,
+      "d": 2.0,
+      "kind": "new",
+      "detail": "Low snack/standing island, not a tall sightline blocker. Keep security approach clear.",
+      "seats": [],
+      "bays": [
+        {
+          "x": 13.2,
+          "z": 14.3,
+          "w": 2.4,
+          "d": 1,
+          "label": "Standing snack bay"
+        }
+      ]
+    },
+    {
+      "id": "rocket",
+      "name": "Rocket viewing",
+      "x": 37.3,
+      "z": 0.4,
+      "w": 7.5,
+      "d": 3.3,
+      "kind": "retain",
+      "detail": "North-wall display with four retained betting stations below. Desk/player envelopes included; keep the east route to staff access free.",
+      "solids": [
+        {
+          "x": 37.3,
+          "z": 0.4,
+          "w": 7.5,
+          "d": 0.4
+        },
+        {
+          "x": 38.25,
+          "z": 2.7,
+          "w": 0.84,
+          "d": 0.44
+        },
+        {
+          "x": 40.25,
+          "z": 2.7,
+          "w": 0.84,
+          "d": 0.44
+        },
+        {
+          "x": 42.25,
+          "z": 2.7,
+          "w": 0.84,
+          "d": 0.44
+        },
+        {
+          "x": 44.25,
+          "z": 2.7,
+          "w": 0.84,
+          "d": 0.44
+        }
+      ],
+      "seats": [
+        {
+          "x": 38.67,
+          "z": 4.37,
+          "face": -1.570796,
+          "approach": [
+            38.67,
+            5.39
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 40.67,
+          "z": 4.37,
+          "face": -1.570796,
+          "approach": [
+            40.67,
+            5.39
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 42.67,
+          "z": 4.37,
+          "face": -1.570796,
+          "approach": [
+            42.67,
+            5.39
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 44.67,
+          "z": 4.37,
+          "face": -1.570796,
+          "approach": [
+            44.67,
+            5.39
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 38.27,
+          "z": 3.97,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 40.27,
+          "z": 3.97,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 42.27,
+          "z": 3.97,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 44.27,
+          "z": 3.97,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "skee-a",
+      "name": "Skee-ball 01",
+      "x": 45.2,
+      "z": 1.4,
+      "w": 1.4,
+      "d": 4.6,
+      "kind": "new",
+      "detail": "Physical target rings at north end, roll at south end. Reserve 1.2 m player bay beyond the lane.",
+      "seats": [
+        {
+          "x": 45.9,
+          "z": 6.6,
+          "face": -1.570796,
+          "approach": [
+            45.9,
+            7.62
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 45.2,
+          "z": 6.0,
+          "w": 1.4,
+          "d": 1.2,
+          "label": "Roller bay"
+        },
+        {
+          "x": 45.2,
+          "z": 7.45,
+          "w": 1.4,
+          "d": 0.65,
+          "label": "Spectator bay"
+        }
+      ]
+    },
+    {
+      "id": "skee-b",
+      "name": "Skee-ball 02",
+      "x": 47.0,
+      "z": 1.4,
+      "w": 1.4,
+      "d": 4.6,
+      "kind": "new",
+      "detail": "Second lane allows side-by-side play and a shared round scoreboard. Identical static art shared.",
+      "seats": [
+        {
+          "x": 47.7,
+          "z": 6.6,
+          "face": -1.570796,
+          "approach": [
+            47.7,
+            7.62
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 47.0,
+          "z": 6.0,
+          "w": 1.4,
+          "d": 1.2,
+          "label": "Roller bay"
+        },
+        {
+          "x": 47.0,
+          "z": 7.45,
+          "w": 1.4,
+          "d": 0.65,
+          "label": "Spectator bay"
+        }
+      ]
+    },
+    {
+      "id": "plinko",
+      "name": "Plinko pair",
+      "x": 34.4,
+      "z": 1.4,
+      "w": 3.4,
+      "d": 1.5,
+      "kind": "move",
+      "detail": "Two 1.5 m physical cabinets with a 0.4 m separation, on the northwest arcade wall. Front-facing play bays clear the four rocket desks and the west entrance.",
+      "seats": [
+        {
+          "x": 35.24999999999999,
+          "z": 3.5500000000000003,
+          "face": -1.570796,
+          "approach": [
+            35.24999999999999,
+            4.57
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 36.949999999999996,
+          "z": 3.5500000000000003,
+          "face": -1.570796,
+          "approach": [
+            36.949999999999996,
+            4.57
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 34.849999999999994,
+          "z": 3.1500000000000004,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 36.55,
+          "z": 3.1500000000000004,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "pusher",
+      "name": "Coin-pusher",
+      "x": 39.5,
+      "z": 6,
+      "w": 1.7,
+      "d": 1.5,
+      "kind": "new",
+      "detail": "Timed coin drop and physical pushing shelf, distinct from a pure heads/tails wager.",
+      "seats": [
+        {
+          "x": 41.85,
+          "z": 6.75,
+          "face": 3.141593,
+          "approach": [
+            42.87,
+            6.75
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 41.45,
+          "z": 6.35,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "claw",
+      "name": "Prize claw",
+      "x": 39.5,
+      "z": 8.2,
+      "w": 1.7,
+      "d": 1.6,
+      "kind": "new",
+      "detail": "Timing/positioning game with visible prizes and bounded plays. Original art and deterministic outcomes.",
+      "seats": [
+        {
+          "x": 41.85,
+          "z": 9.0,
+          "face": 3.141593,
+          "approach": [
+            42.87,
+            9.0
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 41.45,
+          "z": 8.6,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "mines",
+      "name": "Mines",
+      "x": 35.0,
+      "z": 10.0,
+      "w": 1.6,
+      "d": 1.0,
+      "kind": "move",
+      "detail": "Retain one premium console instead of three copies. Room for a spectator beside the player.",
+      "seats": [
+        {
+          "x": 35.8,
+          "z": 9.3,
+          "face": 1.570796,
+          "approach": [
+            35.8,
+            8.28
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 35.4,
+          "z": 8.9,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "tower",
+      "name": "Tower",
+      "x": 37.4,
+      "z": 10.0,
+      "w": 1.6,
+      "d": 1.0,
+      "kind": "move",
+      "detail": "Match Mines cabinet family; keep distinct live gameplay and readable scoring.",
+      "seats": [
+        {
+          "x": 38.2,
+          "z": 9.3,
+          "face": 1.570796,
+          "approach": [
+            38.2,
+            8.28
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 37.800000000000004,
+          "z": 8.9,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "race",
+      "name": "Duck derby",
+      "x": 35.67,
+      "z": 15.0,
+      "w": 13.0,
+      "d": 2.83,
+      "kind": "retain",
+      "detail": "Retain pond. Place wall guide on west viewing bay, clear of finish structure.",
+      "seats": [
+        {
+          "x": 36.71,
+          "z": 13.5,
+          "face": 1.570796,
+          "approach": [
+            36.71,
+            12.48
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 38.53,
+          "z": 13.5,
+          "face": 1.570796,
+          "approach": [
+            38.53,
+            12.48
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 40.35,
+          "z": 13.5,
+          "face": 1.570796,
+          "approach": [
+            40.35,
+            12.48
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 43.47,
+          "z": 13.5,
+          "face": 1.570796,
+          "approach": [
+            43.47,
+            12.48
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 45.29,
+          "z": 13.5,
+          "face": 1.570796,
+          "approach": [
+            45.29,
+            12.48
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 47.11,
+          "z": 13.5,
+          "face": 1.570796,
+          "approach": [
+            47.11,
+            12.48
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 36.31,
+          "z": 13.1,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 38.13,
+          "z": 13.1,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 39.95,
+          "z": 13.1,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 43.07,
+          "z": 13.1,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 44.89,
+          "z": 13.1,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 46.71,
+          "z": 13.1,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ],
+      "solids": [
+        {
+          "x": 35.67,
+          "z": 15.0,
+          "w": 13.0,
+          "d": 2.83
+        },
+        {
+          "x": 36.13,
+          "z": 13.97,
+          "w": 1.16,
+          "d": 0.37
+        },
+        {
+          "x": 37.95,
+          "z": 13.97,
+          "w": 1.16,
+          "d": 0.37
+        },
+        {
+          "x": 39.77,
+          "z": 13.97,
+          "w": 1.16,
+          "d": 0.37
+        },
+        {
+          "x": 42.89,
+          "z": 13.97,
+          "w": 1.16,
+          "d": 0.37
+        },
+        {
+          "x": 44.71,
+          "z": 13.97,
+          "w": 1.16,
+          "d": 0.37
+        },
+        {
+          "x": 46.53,
+          "z": 13.97,
+          "w": 1.16,
+          "d": 0.37
+        }
+      ]
+    },
+    {
+      "id": "slots-a",
+      "name": "Slot bank A",
+      "x": 3.0,
+      "z": 22.3,
+      "w": 4.2,
+      "d": 1.3,
+      "kind": "move",
+      "detail": "Back-to-back island bank; approaches on both long sides, not scattered along an otherwise vacant wall.",
+      "seats": [
+        {
+          "x": 3.7,
+          "z": 21.6,
+          "face": 1.570796,
+          "approach": [
+            3.7,
+            20.58
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 3.7,
+          "z": 24.3,
+          "face": -1.570796,
+          "approach": [
+            3.7,
+            25.32
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 5.1,
+          "z": 21.6,
+          "face": 1.570796,
+          "approach": [
+            5.1,
+            20.58
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 5.1,
+          "z": 24.3,
+          "face": -1.570796,
+          "approach": [
+            5.1,
+            25.32
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 6.5,
+          "z": 21.6,
+          "face": 1.570796,
+          "approach": [
+            6.5,
+            20.58
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 6.5,
+          "z": 24.3,
+          "face": -1.570796,
+          "approach": [
+            6.5,
+            25.32
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 3.3000000000000003,
+          "z": 21.200000000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 3.3000000000000003,
+          "z": 23.900000000000002,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 4.699999999999999,
+          "z": 21.200000000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 4.699999999999999,
+          "z": 23.900000000000002,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 6.1,
+          "z": 21.200000000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 6.1,
+          "z": 23.900000000000002,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "slots-b",
+      "name": "Slot bank B",
+      "x": 12.0,
+      "z": 22.3,
+      "w": 4.2,
+      "d": 1.3,
+      "kind": "move",
+      "detail": "Second bank. Retain a continuous route from floor to VIP and between banks.",
+      "seats": [
+        {
+          "x": 12.7,
+          "z": 21.6,
+          "face": 1.570796,
+          "approach": [
+            12.7,
+            20.58
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 12.7,
+          "z": 24.3,
+          "face": -1.570796,
+          "approach": [
+            12.7,
+            25.32
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 14.1,
+          "z": 21.6,
+          "face": 1.570796,
+          "approach": [
+            14.1,
+            20.58
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 14.1,
+          "z": 24.3,
+          "face": -1.570796,
+          "approach": [
+            14.1,
+            25.32
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 15.5,
+          "z": 21.6,
+          "face": 1.570796,
+          "approach": [
+            15.5,
+            20.58
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 15.5,
+          "z": 24.3,
+          "face": -1.570796,
+          "approach": [
+            15.5,
+            25.32
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 12.299999999999999,
+          "z": 21.200000000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 12.299999999999999,
+          "z": 23.900000000000002,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 13.7,
+          "z": 21.200000000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 13.7,
+          "z": 23.900000000000002,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 15.1,
+          "z": 21.200000000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 15.1,
+          "z": 23.900000000000002,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "jackpot",
+      "name": "Jackpot",
+      "x": 7.9,
+      "z": 24.0,
+      "w": 1.5,
+      "d": 1.5,
+      "kind": "retain",
+      "detail": "Lit centerpiece remains a landmark; keep full walkaround clearance.",
+      "seats": [
+        {
+          "x": 8.65,
+          "z": 26.2,
+          "face": -1.570796,
+          "approach": [
+            8.65,
+            27.22
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 8.25,
+          "z": 25.8,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "high-slots",
+      "name": "High-limit bank",
+      "x": 18.1,
+      "z": 27.8,
+      "w": 5.8,
+      "d": 1.2,
+      "kind": "move",
+      "detail": "Use vacated dice zone for high-limit play, within slot hall, with coherent signs and light.",
+      "seats": [
+        {
+          "x": 18.825,
+          "z": 27.1,
+          "face": 1.570796,
+          "approach": [
+            18.825,
+            26.08
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 20.275,
+          "z": 27.1,
+          "face": 1.570796,
+          "approach": [
+            20.275,
+            26.08
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 21.725,
+          "z": 27.1,
+          "face": 1.570796,
+          "approach": [
+            21.725,
+            26.08
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 23.175,
+          "z": 27.1,
+          "face": 1.570796,
+          "approach": [
+            23.175,
+            26.08
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 18.425,
+          "z": 26.700000000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 19.875,
+          "z": 26.700000000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 21.325000000000003,
+          "z": 26.700000000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 22.775000000000002,
+          "z": 26.700000000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "vip-coin",
+      "name": "Giant coin",
+      "x": 28.5,
+      "z": 23.0,
+      "w": 2.8,
+      "d": 2.1,
+      "kind": "move",
+      "detail": "Visible sculptural coin game with clear calls and a social viewing edge.",
+      "seats": [
+        {
+          "x": 29.2,
+          "z": 25.8,
+          "face": -1.570796,
+          "approach": [
+            29.2,
+            26.82
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 30.6,
+          "z": 25.8,
+          "face": -1.570796,
+          "approach": [
+            30.6,
+            26.82
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 28.8,
+          "z": 25.400000000000002,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 30.200000000000003,
+          "z": 25.400000000000002,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "vip-wheel",
+      "name": "Prize wheel",
+      "x": 28.0,
+      "z": 28.4,
+      "w": 3.0,
+      "d": 1.2,
+      "kind": "retain",
+      "detail": "Keep wall-mounted wheel as lounge landmark. Avoid door-to-wheel through traffic.",
+      "seats": [
+        {
+          "x": 28.75,
+          "z": 27.7,
+          "face": 1.570796,
+          "approach": [
+            28.75,
+            26.68
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 30.25,
+          "z": 27.7,
+          "face": 1.570796,
+          "approach": [
+            30.25,
+            26.68
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 28.35,
+          "z": 27.3,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 29.85,
+          "z": 27.3,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "vip-shop",
+      "name": "Shady alcove",
+      "x": 45.5,
+      "z": 27.1,
+      "w": 2.3,
+      "d": 1.8,
+      "kind": "move",
+      "detail": "Recognizable shop alcove and the loss-shield item, away from primary doorway sightline.",
+      "seats": [
+        {
+          "x": 44.85,
+          "z": 28.0,
+          "face": 0,
+          "approach": [
+            43.83,
+            28.0
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 44.45,
+          "z": 27.6,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    },
+    {
+      "id": "vip-social",
+      "name": "Lounge seating",
+      "x": 38.8,
+      "z": 23.8,
+      "w": 5.1,
+      "d": 4.7,
+      "kind": "retain",
+      "detail": "Rebuild the existing coffee seating as one deliberate lounge. Preserve all four coffee seats, drink stands and approaches; add low dressing inside this reserved cluster instead of a second overlapping island.",
+      "retainedKinds": [
+        "coffee"
+      ],
+      "solids": [
+        {
+          "x": 40,
+          "z": 25.083333333333332,
+          "w": 2.6666666666666665,
+          "d": 1.1666666666666667
+        }
+      ],
+      "seats": [
+        {
+          "x": 38.8333,
+          "z": 25.6667,
+          "face": 0,
+          "approach": [
+            37.8133,
+            25.6667
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 43.8333,
+          "z": 25.6667,
+          "face": 3.141593,
+          "approach": [
+            44.8533,
+            25.6667
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 41.3333,
+          "z": 24.0,
+          "face": 1.570796,
+          "approach": [
+            41.3333,
+            22.98
+          ],
+          "radius": 0.3
+        },
+        {
+          "x": 41.3333,
+          "z": 27.3333,
+          "face": -1.570796,
+          "approach": [
+            41.3333,
+            28.3533
+          ],
+          "radius": 0.3
+        }
+      ],
+      "bays": [
+        {
+          "x": 38.4333,
+          "z": 25.2667,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 43.4333,
+          "z": 25.2667,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 40.9333,
+          "z": 23.6,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        },
+        {
+          "x": 40.9333,
+          "z": 26.933300000000003,
+          "w": 0.8,
+          "d": 0.8,
+          "label": "Occupied player"
+        }
+      ]
+    }
+  ],
+  "aisles": [
+    {
+      "x": 42.8,
+      "z": 5,
+      "w": 1.6,
+      "d": 6,
+      "label": "Arcade promenade"
+    },
+    {
+      "x": 9.8,
+      "z": 21.0,
+      "w": 1.6,
+      "d": 8.8,
+      "label": "Slot loop"
+    },
+    {
+      "x": 17.0,
+      "z": 7.4,
+      "w": 14.8,
+      "d": 1.6,
+      "label": "Card-floor cross aisle"
+    }
+  ],
+  "sightlines": [
+    {
+      "from": [
+        21.8,
+        14.2
+      ],
+      "to": [
+        21.8,
+        19.55
+      ],
+      "label": "Roulette guide: keep post-free bay"
+    },
+    {
+      "from": [
+        36.7,
+        13.4
+      ],
+      "to": [
+        33.8,
+        13.4
+      ],
+      "label": "Derby guide: outside finish banner"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "pit-bell",
+      "x": 24.9,
+      "z": 9.6,
+      "w": 0.45,
+      "d": 0.45,
+      "relocates": "BELL",
+      "detail": "Bell relocated from roulette north player approach."
+    }
+  ],
+  "reservedKinds": [
+    "counter",
+    "hightop",
+    "sinks",
+    "security",
+    "couch",
+    "booth",
+    "jukebox",
+    "crates",
+    "ottoman",
+    "pool",
+    "champagne",
+    "piano"
+  ],
+  "plantMoves": {
+    "6": [
+      48.916666666666664,
+      8.5
+    ],
+    "7": [
+      48.916666666666664,
+      10.333333333333334
+    ],
+    "10": [
+      24.333333333333332,
+      20.666666666666668
+    ],
+    "0": [
+      17,
+      25.8
+    ]
+  },
+  "validationNotes": [
+    "Blackjack uses the actual five seated poses. Their bodies may project under their own curved tabletop; rectangular navigation proxies do not describe that 3D contact. Approaches and other objects are checked independently.",
+    "The narrow paired-lane gap is not a walkway. Both lanes are entered from their full-width south player bays; the staff exit routes around their east side."
+  ]
+}

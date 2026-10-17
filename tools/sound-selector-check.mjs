@@ -1,0 +1,72 @@
+// Real settings controls, every prepared preview, persistent decisions and gameplay suppression.
+import fs from 'node:fs'; import assert from 'node:assert/strict'; import {createRequire} from 'node:module';
+const {chromium}=createRequire(import.meta.url)(process.env.PW||'playwright');
+const browser=await chromium.launch({headless:true,args:['--use-angle=vulkan','--enable-features=Vulkan','--ignore-gpu-blocklist','--autoplay-policy=no-user-gesture-required'],ignoreDefaultArgs:['--disable-gpu']});
+const out='shots/sound-selector';fs.mkdirSync(out,{recursive:true});
+try {
+ const p=await browser.newPage({ignoreHTTPSErrors:true,viewport:{width:1280,height:900}}), errors=[], failed=[], late=[];let ready=false;
+ p.on('pageerror',e=>errors.push(e.stack||e.message));p.on('response',r=>{if(!r.ok())failed.push([r.status(),r.url()]);});
+ p.on('request',r=>{if(ready&&/\/assets\/.*\.(mp3|json)/.test(r.url()))late.push(r.url());});
+ await p.addInitScript(()=>{window.__starts=[];const start=AudioBufferSourceNode.prototype.start;AudioBufferSourceNode.prototype.start=function(...args){__starts.push(this.buffer);return start.apply(this,args);};});
+ await p.goto('https://10.42.0.37:3161/');await p.waitForFunction(()=>window.__lastCall?.S.ready,null,{timeout:120000});ready=true;
+ await p.locator('#setBtn').click();await p.locator('#setTabs [data-tab=sound]').click();
+ const catalog=await p.evaluate(async()=>{const a=await import('./src/audio.js');a.restoreSounds();return a.soundList();});
+ assert.equal(new Set(catalog.map(s=>s.file)).size,catalog.length);
+ assert.equal(await p.locator('.sound-row').count(),catalog.length);
+ await p.getByRole('searchbox',{name:'Search sounds'}).fill('breath');assert.equal(await p.locator('.sound-row').count(),3);
+ const first=p.locator('[data-sound="cues/breath-behind-a.mp3"]');
+ await first.getByRole('button',{name:/Keep/}).click();assert.equal(await first.getByRole('button',{name:/Keep/}).getAttribute('aria-pressed'),'false');
+ await first.getByRole('button',{name:/Preview/}).click();
+ await p.waitForFunction(async()=>{const a=await import('./src/audio.js');return a.soundPreviewState().file==='cues/breath-behind-a.mp3'&&!a.soundPreviewState().loading;});
+ assert.equal(await first.getByRole('button',{name:/Preview/}).textContent(),'Stop');
+ await p.screenshot({path:`${out}/breathing-muted-preview.png`});
+ await p.getByRole('button',{name:'Stop preview',exact:true}).click();
+ await p.getByRole('searchbox',{name:'Search sounds'}).fill('');await p.getByRole('combobox',{name:'Sound category'}).selectOption('cues');
+ assert.equal(await p.locator('.sound-row').count(),16);await p.getByLabel('Muted only',{exact:true}).check();assert.equal(await p.locator('.sound-row').count(),1);
+ await p.getByLabel('Muted only',{exact:true}).uncheck();await p.getByRole('combobox',{name:'Sound category'}).selectOption('all');
+ const previews=await p.evaluate(async()=>{
+  const a=await import('./src/audio.js'), rows=[];
+  for(const s of a.soundList()){await a.previewSound(s.file);const state=a.soundPreviewState();rows.push({file:s.file,...state});a.stopSoundPreview();}
+  return rows;
+ });
+ assert.equal(previews.length,catalog.length);assert.ok(previews.every(s=>s.file&&!s.loading&&!s.error));
+ const suppression=await p.evaluate(async()=>{
+  const a=await import('./src/audio.js');a.setMood('over');a.stopSoundPreview();
+  const card=a.soundList().filter(s=>s.kind==='card');card.forEach(s=>a.setSoundKept(s.file,false));__starts.length=0;a.sfx('card');const none=__starts.length;
+  a.setSoundKept(card[1].file,true);await a.previewSound(card[1].file);const expected=__starts.at(-1);a.stopSoundPreview();
+  __starts.length=0;a.sfx('card');const onlyKept=__starts.length===1&&__starts[0]===expected;
+  const activeBefore=a.audioInfo().activeEffects;a.setSoundKept(card[1].file,false);const activeAfter=a.audioInfo().activeEffects;
+  a.setMood('lounge');a.setRoom('floor');const chosen=a.soundscape().music,file=a.soundList().filter(s=>s.kind==='casino')[+chosen].file;
+  a.setSoundKept(file,false);const scoreMuted=a.audioInfo().music==='';a.setSoundKept(file,true);const scoreRestored=a.audioInfo().music.endsWith(file);
+  a.setRoom('bar');a.setSoundKept('music/menu-1.mp3',false);const boxMuted=!a.audioInfo().jukebox.active;
+  a.setSoundKept('music/menu-1.mp3',true);const boxRestored=a.audioInfo().jukebox.active;
+  return{none,onlyKept,activeBefore,activeAfter,scoreMuted,scoreRestored,boxMuted,boxRestored,saved:JSON.parse(localStorage.getItem('lc.mutedSounds'))};
+ });
+ assert.equal(suppression.none,0,'muting every take must not invoke synth fallback');assert.ok(suppression.onlyKept);
+ assert.ok(suppression.activeBefore.includes('sfx/card-2.mp3'));assert.ok(!suppression.activeAfter.includes('sfx/card-2.mp3'));
+ assert.ok(suppression.scoreMuted&&suppression.scoreRestored&&suppression.boxMuted&&suppression.boxRestored);
+ await p.evaluate(async()=>{const a=await import('./src/audio.js');await a.previewSound('music/house-after-hours.mp3');});
+ await p.locator('#setTabs [data-tab=gfx]').click();assert.equal(await p.evaluate(async()=>(await import('./src/audio.js')).soundPreviewState().file),null);
+ await p.locator('#setClose').click();
+ ready=false;await p.reload();await p.waitForFunction(()=>window.__lastCall?.S.ready,null,{timeout:120000});ready=true;
+ const persisted=await p.evaluate(async()=>(await import('./src/audio.js')).soundList().filter(s=>!s.kept).map(s=>s.file));assert.deepEqual(persisted.sort(),suppression.saved.sort());
+ await p.evaluate(async()=>{const L=__lastCall;L.noLock();L.start('killer',{players:6});L.step(.1);L.S.paused=true;document.getElementById('pause').classList.remove('hidden');(await import('./src/settings-ui.js')).openSettings('sound');});
+ await p.getByRole('searchbox',{name:'Search sounds'}).fill('death yell');
+ await p.screenshot({path:`${out}/in-game-death-cries.png`});
+ await p.setViewportSize({width:390,height:844});
+ await p.getByRole('button',{name:'Browse 142 sounds',exact:true}).click();
+ assert.ok(await p.locator('.sound-browser').evaluate(e=>e.getBoundingClientRect().top<220));
+ assert.ok(await p.locator('.set-card').evaluate(e=>e.scrollWidth<=e.clientWidth));
+ assert.ok(await p.locator('#setBody').evaluate(e=>e.scrollWidth<=e.clientWidth));
+ await p.screenshot({path:`${out}/phone.png`});
+ await p.getByRole('searchbox',{name:'Search sounds'}).fill('');await p.getByRole('button',{name:'Keep all',exact:true}).click();
+ assert.deepEqual(await p.evaluate(()=>JSON.parse(localStorage.getItem('lc.mutedSounds'))),[]);
+ await p.locator('#setClose').click();assert.equal(await p.evaluate(async()=>(await import('./src/audio.js')).soundPreviewState().file),null);
+ await p.evaluate(async()=>{(await import('./src/settings-ui.js')).openSettings('sound');await (await import('./src/audio.js')).previewSound('cues/breath-behind-a.mp3');});
+ await p.evaluate(()=>__lastCall.start('gambler',{players:6}));
+ assert.equal(await p.evaluate(async()=>(await import('./src/audio.js')).soundPreviewState().file),null,'scene transitions must stop the settings preview');
+ const report={at:new Date().toISOString(),catalog:catalog.length,previews,suppression,persisted,late,failed,errors};
+ fs.writeFileSync(`${out}/report.json`,JSON.stringify(report,null,2));
+ assert.deepEqual(late,[],'all previews must reuse prepared audio');assert.deepEqual(failed,[]);assert.deepEqual(errors,[]);
+ console.log('PASS: every sound previews without fetching, per-take muting affects real gameplay and current sources, scores/jukebox stop and restore, choices persist, in-game and phone settings fit.',catalog.length);
+}finally{await browser.close();}

@@ -1,0 +1,217 @@
+{
+  "at": "2026-10-16T09:50:54.032Z",
+  "readyMs": 9209,
+  "readyAt": 9210.5,
+  "menu": {
+    "frames": 181,
+    "renderFrames": 0,
+    "medianMs": 16.69999999999891,
+    "p95Ms": 16.700000000000728,
+    "gfx": {
+      "frames": 50,
+      "calls": 569,
+      "tris": 3020518,
+      "geos": 232,
+      "tex": 327,
+      "cam": [
+        16.68,
+        2.5,
+        13.33,
+        -0.13,
+        -0.53
+      ],
+      "gestures": {},
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": null,
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1
+    }
+  },
+  "firstPlay": {
+    "frames": 175,
+    "renderFrames": 1408,
+    "medianMs": 16.69999999999891,
+    "p95Ms": 16.799999999999272,
+    "gfx": {
+      "frames": 1474,
+      "calls": 502,
+      "tris": 1577296,
+      "geos": 336,
+      "tex": 301,
+      "cam": [
+        24.29,
+        1.12,
+        10,
+        0,
+        -4.71
+      ],
+      "gestures": {
+        "tap": 1
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "bar",
+        "rest",
+        "slots"
+      ],
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1
+    }
+  },
+  "later": {
+    "frames": 179,
+    "renderFrames": 1440,
+    "medianMs": 16.69999999999891,
+    "p95Ms": 16.799999999999272,
+    "gfx": {
+      "frames": 2922,
+      "calls": 500,
+      "tris": 1561296,
+      "geos": 336,
+      "tex": 303,
+      "cam": [
+        24.29,
+        1.12,
+        10,
+        0,
+        -4.71
+      ],
+      "gestures": {
+        "tap": 1,
+        "chips": 2,
+        "clap": 1,
+        "facepalm": 1
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "bar",
+        "rest",
+        "slots"
+      ],
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1
+    }
+  },
+  "resources": {
+    "bytes": 34705607,
+    "requests": 250,
+    "longTasks": [
+      {
+        "at": 134,
+        "ms": 314
+      },
+      {
+        "at": 609.1000000238419,
+        "ms": 251
+      },
+      {
+        "at": 1499.199999988079,
+        "ms": 67
+      },
+      {
+        "at": 1568.300000011921,
+        "ms": 55
+      },
+      {
+        "at": 2767.800000011921,
+        "ms": 1347
+      },
+      {
+        "at": 4115.100000023842,
+        "ms": 111
+      },
+      {
+        "at": 4267.600000023842,
+        "ms": 2927
+      },
+      {
+        "at": 7218.699999988079,
+        "ms": 117
+      },
+      {
+        "at": 7350.899999976158,
+        "ms": 61
+      },
+      {
+        "at": 7651,
+        "ms": 85
+      },
+      {
+        "at": 7817.5,
+        "ms": 127
+      },
+      {
+        "at": 8034.199999988079,
+        "ms": 189
+      },
+      {
+        "at": 8234.199999988079,
+        "ms": 283
+      },
+      {
+        "at": 8517.899999976158,
+        "ms": 140
+      },
+      {
+        "at": 8900.899999976158,
+        "ms": 91
+      },
+      {
+        "at": 9051.800000011921,
+        "ms": 121
+      },
+      {
+        "at": 12555.800000011921,
+        "ms": 53
+      }
+    ],
+    "lateAssets": []
+  }
+}

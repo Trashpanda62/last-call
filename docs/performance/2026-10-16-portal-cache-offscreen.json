@@ -1,0 +1,100 @@
+{
+  "at": "2026-10-16T22:07:25.534Z",
+  "rows": [
+    {
+      "name": "stationary floor",
+      "calls": 30,
+      "doors": 0,
+      "props": 0,
+      "actors": 30,
+      "mismatches": 0,
+      "decisions": 4920
+    },
+    {
+      "name": "moving actors",
+      "calls": 30,
+      "doors": 0,
+      "props": 0,
+      "actors": 1110,
+      "mismatches": 0,
+      "decisions": 4920
+    },
+    {
+      "name": "rotating camera",
+      "calls": 24,
+      "doors": 215,
+      "props": 864,
+      "actors": 24,
+      "mismatches": 0,
+      "decisions": 3936
+    },
+    {
+      "name": "room transitions",
+      "calls": 14,
+      "doors": 31,
+      "props": 86,
+      "actors": 76,
+      "mismatches": 0,
+      "decisions": 2296
+    },
+    {
+      "name": "projection changes",
+      "calls": 12,
+      "doors": 61,
+      "props": 212,
+      "actors": 12,
+      "mismatches": 0,
+      "decisions": 1968
+    },
+    {
+      "name": "stationary return",
+      "calls": 30,
+      "doors": 0,
+      "props": 0,
+      "actors": 30,
+      "mismatches": 0,
+      "decisions": 4920
+    },
+    {
+      "name": "Backrooms and return",
+      "calls": 4,
+      "doors": 0,
+      "props": 0,
+      "actors": 4,
+      "mismatches": 0,
+      "decisions": 656
+    },
+    {
+      "name": "actor removed and revived",
+      "calls": 4,
+      "doors": 0,
+      "props": 0,
+      "actors": 4,
+      "mismatches": 0,
+      "decisions": 654
+    },
+    {
+      "name": "world identity replacement",
+      "calls": 4,
+      "doors": 18,
+      "props": 52,
+      "actors": 4,
+      "mismatches": 0,
+      "decisions": 656
+    },
+    {
+      "name": "orbit visibility and return",
+      "calls": 4,
+      "doors": 18,
+      "props": 52,
+      "actors": 2,
+      "mismatches": 0,
+      "decisions": 656
+    }
+  ],
+  "motionVisibility": [
+    false,
+    true
+  ],
+  "errors": []
+}

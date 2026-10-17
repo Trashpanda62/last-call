@@ -1,0 +1,999 @@
+{
+  "at": "2026-10-16T23:21:28.984Z",
+  "variants": [
+    {
+      "fallback": false,
+      "rows": [
+        {
+          "game": "bj",
+          "before": {
+            "game": "bj",
+            "status": "PLACE A CHIP",
+            "actions": []
+          },
+          "placed": {
+            "game": "bj",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:deal",
+                "text": "◈  SPACE · Deal",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "roulette",
+          "before": {
+            "game": "roulette",
+            "status": "CHOOSE A BET",
+            "actions": []
+          },
+          "placed": {
+            "game": "roulette",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:spin",
+                "text": "◈  SPACE · Spin",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "slots",
+          "before": {
+            "game": "slots",
+            "status": "PLACE A CHIP",
+            "actions": [
+              {
+                "id": "btn:auto",
+                "text": "AUTO",
+                "disabled": false
+              }
+            ]
+          },
+          "placed": {
+            "game": "slots",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:lever",
+                "text": "◈  SPACE · Spin",
+                "disabled": false
+              },
+              {
+                "id": "btn:auto",
+                "text": "AUTO",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "plinko",
+          "before": {
+            "game": "plinko",
+            "status": "PLACE A CHIP",
+            "actions": [
+              {
+                "id": "btn:risk:low",
+                "text": "LOW",
+                "disabled": false
+              },
+              {
+                "id": "btn:risk:medium",
+                "text": "MED",
+                "disabled": false
+              },
+              {
+                "id": "btn:risk:high",
+                "text": "HIGH",
+                "disabled": false
+              }
+            ]
+          },
+          "placed": {
+            "game": "plinko",
+            "status": "MEDIUM RISK · EDGES 110×",
+            "actions": [
+              {
+                "id": "btn:drop",
+                "text": "◈  SPACE · Drop",
+                "disabled": false
+              },
+              {
+                "id": "btn:risk:low",
+                "text": "LOW",
+                "disabled": false
+              },
+              {
+                "id": "btn:risk:medium",
+                "text": "MED",
+                "disabled": false
+              },
+              {
+                "id": "btn:risk:high",
+                "text": "HIGH",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "mines",
+          "before": {
+            "game": "mines",
+            "status": "PLACE A CHIP",
+            "actions": []
+          },
+          "placed": {
+            "game": "mines",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:start",
+                "text": "◈  SPACE · Start",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "tower",
+          "before": {
+            "game": "tower",
+            "status": "PLACE A CHIP",
+            "actions": []
+          },
+          "placed": {
+            "game": "tower",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:start",
+                "text": "◈  SPACE · Climb",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "coin",
+          "before": {
+            "game": "coin",
+            "status": "CHOOSE A BET",
+            "actions": [
+              {
+                "id": "btn:take",
+                "text": "TAKE",
+                "disabled": true
+              }
+            ]
+          },
+          "placed": {
+            "game": "coin",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:flip",
+                "text": "◈  SPACE · Flip",
+                "disabled": false
+              },
+              {
+                "id": "btn:take",
+                "text": "TAKE",
+                "disabled": true
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "wheel",
+          "before": {
+            "game": "wheel",
+            "status": "PLACE A CHIP",
+            "actions": []
+          },
+          "placed": {
+            "game": "wheel",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:spin",
+                "text": "◈  SPACE · Spin",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "dice",
+          "before": {
+            "game": "dice",
+            "status": "CHOOSE A BET",
+            "actions": []
+          },
+          "placed": {
+            "game": "dice",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:roll",
+                "text": "◈  SPACE · Roll",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "crash",
+          "before": {
+            "game": "crash",
+            "status": "PLACE A CHIP",
+            "actions": [
+              {
+                "id": "btn:autonext",
+                "text": "AUTO 2x",
+                "disabled": false
+              }
+            ]
+          },
+          "placed": {
+            "game": "crash",
+            "status": "PLACE A CHIP",
+            "actions": [
+              {
+                "id": "btn:bet",
+                "text": "◈  SPACE · Place bet",
+                "disabled": false
+              },
+              {
+                "id": "btn:autonext",
+                "text": "AUTO 2x",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "race",
+          "before": {
+            "game": "race",
+            "status": "CHOOSE A DUCK",
+            "actions": []
+          },
+          "placed": {
+            "game": "race",
+            "status": "CHOOSE A DUCK",
+            "actions": [
+              {
+                "id": "btn:bet",
+                "text": "◈  SPACE · Place bet",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "skee",
+          "before": {
+            "game": "skee",
+            "status": "PLACE A CHIP",
+            "actions": []
+          },
+          "placed": {
+            "game": "skee",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:start",
+                "text": "◈  SPACE · Start round",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        }
+      ],
+      "devices": {
+        "padLabel": "◈  A · Hold to roll",
+        "touchLabel": "◈  Hold to roll",
+        "controllerRoll": true,
+        "disconnect": true,
+        "idleAndDrift": true,
+        "keyboardAndMouseReturn": true,
+        "compact": {
+          "x": 10,
+          "y": 290,
+          "width": 112.234375,
+          "height": 44
+        },
+        "physicalController": "untested"
+      }
+    },
+    {
+      "fallback": true,
+      "rows": [
+        {
+          "game": "bj",
+          "before": {
+            "game": "bj",
+            "status": "PLACE A CHIP",
+            "actions": []
+          },
+          "placed": {
+            "game": "bj",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:deal",
+                "text": "◈  SPACE · Deal",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "roulette",
+          "before": {
+            "game": "roulette",
+            "status": "CHOOSE A BET",
+            "actions": []
+          },
+          "placed": {
+            "game": "roulette",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:spin",
+                "text": "◈  SPACE · Spin",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "slots",
+          "before": {
+            "game": "slots",
+            "status": "PLACE A CHIP",
+            "actions": [
+              {
+                "id": "btn:auto",
+                "text": "AUTO",
+                "disabled": false
+              }
+            ]
+          },
+          "placed": {
+            "game": "slots",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:lever",
+                "text": "◈  SPACE · Spin",
+                "disabled": false
+              },
+              {
+                "id": "btn:auto",
+                "text": "AUTO",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "plinko",
+          "before": {
+            "game": "plinko",
+            "status": "PLACE A CHIP",
+            "actions": [
+              {
+                "id": "btn:risk:low",
+                "text": "LOW",
+                "disabled": false
+              },
+              {
+                "id": "btn:risk:medium",
+                "text": "MED",
+                "disabled": false
+              },
+              {
+                "id": "btn:risk:high",
+                "text": "HIGH",
+                "disabled": false
+              }
+            ]
+          },
+          "placed": {
+            "game": "plinko",
+            "status": "MEDIUM RISK · EDGES 110×",
+            "actions": [
+              {
+                "id": "btn:drop",
+                "text": "◈  SPACE · Drop",
+                "disabled": false
+              },
+              {
+                "id": "btn:risk:low",
+                "text": "LOW",
+                "disabled": false
+              },
+              {
+                "id": "btn:risk:medium",
+                "text": "MED",
+                "disabled": false
+              },
+              {
+                "id": "btn:risk:high",
+                "text": "HIGH",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "mines",
+          "before": {
+            "game": "mines",
+            "status": "PLACE A CHIP",
+            "actions": []
+          },
+          "placed": {
+            "game": "mines",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:start",
+                "text": "◈  SPACE · Start",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "tower",
+          "before": {
+            "game": "tower",
+            "status": "PLACE A CHIP",
+            "actions": []
+          },
+          "placed": {
+            "game": "tower",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:start",
+                "text": "◈  SPACE · Climb",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "coin",
+          "before": {
+            "game": "coin",
+            "status": "CHOOSE A BET",
+            "actions": [
+              {
+                "id": "btn:take",
+                "text": "TAKE",
+                "disabled": true
+              }
+            ]
+          },
+          "placed": {
+            "game": "coin",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:flip",
+                "text": "◈  SPACE · Flip",
+                "disabled": false
+              },
+              {
+                "id": "btn:take",
+                "text": "TAKE",
+                "disabled": true
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "wheel",
+          "before": {
+            "game": "wheel",
+            "status": "PLACE A CHIP",
+            "actions": []
+          },
+          "placed": {
+            "game": "wheel",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:spin",
+                "text": "◈  SPACE · Spin",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "dice",
+          "before": {
+            "game": "dice",
+            "status": "CHOOSE A BET",
+            "actions": []
+          },
+          "placed": {
+            "game": "dice",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:roll",
+                "text": "◈  SPACE · Roll",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "crash",
+          "before": {
+            "game": "crash",
+            "status": "PLACE A CHIP",
+            "actions": [
+              {
+                "id": "btn:autonext",
+                "text": "AUTO 2x",
+                "disabled": false
+              }
+            ]
+          },
+          "placed": {
+            "game": "crash",
+            "status": "PLACE A CHIP",
+            "actions": [
+              {
+                "id": "btn:bet",
+                "text": "◈  SPACE · Place bet",
+                "disabled": false
+              },
+              {
+                "id": "btn:autonext",
+                "text": "AUTO 2x",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "race",
+          "before": {
+            "game": "race",
+            "status": "CHOOSE A DUCK",
+            "actions": []
+          },
+          "placed": {
+            "game": "race",
+            "status": "CHOOSE A DUCK",
+            "actions": [
+              {
+                "id": "btn:bet",
+                "text": "◈  SPACE · Place bet",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        },
+        {
+          "game": "skee",
+          "before": {
+            "game": "skee",
+            "status": "PLACE A CHIP",
+            "actions": []
+          },
+          "placed": {
+            "game": "skee",
+            "status": "",
+            "actions": [
+              {
+                "id": "btn:start",
+                "text": "◈  SPACE · Start round",
+                "disabled": false
+              }
+            ]
+          },
+          "hint": "",
+          "legacy": 0
+        }
+      ],
+      "devices": {
+        "padLabel": "◈  A · Hold to roll",
+        "touchLabel": "◈  Hold to roll",
+        "controllerRoll": true,
+        "disconnect": true,
+        "idleAndDrift": true,
+        "keyboardAndMouseReturn": true,
+        "compact": {
+          "x": 10,
+          "y": 290,
+          "width": 112.234375,
+          "height": 44
+        },
+        "physicalController": "untested"
+      }
+    }
+  ],
+  "errors": [],
+  "current": {
+    "fallback": true,
+    "rows": [
+      {
+        "game": "bj",
+        "before": {
+          "game": "bj",
+          "status": "PLACE A CHIP",
+          "actions": []
+        },
+        "placed": {
+          "game": "bj",
+          "status": "",
+          "actions": [
+            {
+              "id": "btn:deal",
+              "text": "◈  SPACE · Deal",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "roulette",
+        "before": {
+          "game": "roulette",
+          "status": "CHOOSE A BET",
+          "actions": []
+        },
+        "placed": {
+          "game": "roulette",
+          "status": "",
+          "actions": [
+            {
+              "id": "btn:spin",
+              "text": "◈  SPACE · Spin",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "slots",
+        "before": {
+          "game": "slots",
+          "status": "PLACE A CHIP",
+          "actions": [
+            {
+              "id": "btn:auto",
+              "text": "AUTO",
+              "disabled": false
+            }
+          ]
+        },
+        "placed": {
+          "game": "slots",
+          "status": "",
+          "actions": [
+            {
+              "id": "btn:lever",
+              "text": "◈  SPACE · Spin",
+              "disabled": false
+            },
+            {
+              "id": "btn:auto",
+              "text": "AUTO",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "plinko",
+        "before": {
+          "game": "plinko",
+          "status": "PLACE A CHIP",
+          "actions": [
+            {
+              "id": "btn:risk:low",
+              "text": "LOW",
+              "disabled": false
+            },
+            {
+              "id": "btn:risk:medium",
+              "text": "MED",
+              "disabled": false
+            },
+            {
+              "id": "btn:risk:high",
+              "text": "HIGH",
+              "disabled": false
+            }
+          ]
+        },
+        "placed": {
+          "game": "plinko",
+          "status": "MEDIUM RISK · EDGES 110×",
+          "actions": [
+            {
+              "id": "btn:drop",
+              "text": "◈  SPACE · Drop",
+              "disabled": false
+            },
+            {
+              "id": "btn:risk:low",
+              "text": "LOW",
+              "disabled": false
+            },
+            {
+              "id": "btn:risk:medium",
+              "text": "MED",
+              "disabled": false
+            },
+            {
+              "id": "btn:risk:high",
+              "text": "HIGH",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "mines",
+        "before": {
+          "game": "mines",
+          "status": "PLACE A CHIP",
+          "actions": []
+        },
+        "placed": {
+          "game": "mines",
+          "status": "",
+          "actions": [
+            {
+              "id": "btn:start",
+              "text": "◈  SPACE · Start",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "tower",
+        "before": {
+          "game": "tower",
+          "status": "PLACE A CHIP",
+          "actions": []
+        },
+        "placed": {
+          "game": "tower",
+          "status": "",
+          "actions": [
+            {
+              "id": "btn:start",
+              "text": "◈  SPACE · Climb",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "coin",
+        "before": {
+          "game": "coin",
+          "status": "CHOOSE A BET",
+          "actions": [
+            {
+              "id": "btn:take",
+              "text": "TAKE",
+              "disabled": true
+            }
+          ]
+        },
+        "placed": {
+          "game": "coin",
+          "status": "",
+          "actions": [
+            {
+              "id": "btn:flip",
+              "text": "◈  SPACE · Flip",
+              "disabled": false
+            },
+            {
+              "id": "btn:take",
+              "text": "TAKE",
+              "disabled": true
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "wheel",
+        "before": {
+          "game": "wheel",
+          "status": "PLACE A CHIP",
+          "actions": []
+        },
+        "placed": {
+          "game": "wheel",
+          "status": "",
+          "actions": [
+            {
+              "id": "btn:spin",
+              "text": "◈  SPACE · Spin",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "dice",
+        "before": {
+          "game": "dice",
+          "status": "CHOOSE A BET",
+          "actions": []
+        },
+        "placed": {
+          "game": "dice",
+          "status": "",
+          "actions": [
+            {
+              "id": "btn:roll",
+              "text": "◈  SPACE · Roll",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "crash",
+        "before": {
+          "game": "crash",
+          "status": "PLACE A CHIP",
+          "actions": [
+            {
+              "id": "btn:autonext",
+              "text": "AUTO 2x",
+              "disabled": false
+            }
+          ]
+        },
+        "placed": {
+          "game": "crash",
+          "status": "PLACE A CHIP",
+          "actions": [
+            {
+              "id": "btn:bet",
+              "text": "◈  SPACE · Place bet",
+              "disabled": false
+            },
+            {
+              "id": "btn:autonext",
+              "text": "AUTO 2x",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "race",
+        "before": {
+          "game": "race",
+          "status": "CHOOSE A DUCK",
+          "actions": []
+        },
+        "placed": {
+          "game": "race",
+          "status": "CHOOSE A DUCK",
+          "actions": [
+            {
+              "id": "btn:bet",
+              "text": "◈  SPACE · Place bet",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      },
+      {
+        "game": "skee",
+        "before": {
+          "game": "skee",
+          "status": "PLACE A CHIP",
+          "actions": []
+        },
+        "placed": {
+          "game": "skee",
+          "status": "",
+          "actions": [
+            {
+              "id": "btn:start",
+              "text": "◈  SPACE · Start round",
+              "disabled": false
+            }
+          ]
+        },
+        "hint": "",
+        "legacy": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "hostSteps": true,
+  "silentPerk": true,
+  "distanceCulling": true,
+  "cadence": true,
+  "stationarySilence": true,
+  "onePrivatePacket": true,
+  "realPoisonEvent": {
+    "near": {
+      "sfx": "death",
+      "voice": "slots",
+      "who": 1,
+      "vol": 0.987,
+      "muffle": false,
+      "at": [
+        1360,
+        600
+      ],
+      "distant": false,
+      "event": "1:0.02"
+    },
+    "far": {
+      "sfx": "death",
+      "voice": "slots",
+      "who": 1,
+      "vol": 0.062,
+      "muffle": true,
+      "at": [
+        1360,
+        600
+      ],
+      "distant": true,
+      "event": "1:0.02"
+    }
+  },
+  "victimOnlyKiller": true
+}

@@ -1,0 +1,349 @@
+{
+  "previews": [
+    {
+      "src": "breath-behind-a.mp3",
+      "duration": 5,
+      "time": 0.009685,
+      "error": null
+    },
+    {
+      "src": "breath-behind-b.mp3",
+      "duration": 5,
+      "time": 0.003947,
+      "error": null
+    },
+    {
+      "src": "breath-behind-c.mp3",
+      "duration": 5,
+      "time": 0.010596,
+      "error": null
+    },
+    {
+      "src": "death-yell-a.mp3",
+      "duration": 4,
+      "time": 0.010651,
+      "error": null
+    },
+    {
+      "src": "death-yell-b.mp3",
+      "duration": 4,
+      "time": 0.00968,
+      "error": null
+    },
+    {
+      "src": "death-yell-c.mp3",
+      "duration": 4,
+      "time": 0.010358,
+      "error": null
+    },
+    {
+      "src": "potato-step-carpet-a.mp3",
+      "duration": 1,
+      "time": 0.009457,
+      "error": null
+    },
+    {
+      "src": "potato-step-carpet-b.mp3",
+      "duration": 1,
+      "time": 0.010083,
+      "error": null
+    },
+    {
+      "src": "potato-step-tile-a.mp3",
+      "duration": 1,
+      "time": 0.010414,
+      "error": null
+    },
+    {
+      "src": "potato-step-tile-b.mp3",
+      "duration": 1,
+      "time": 0.010416,
+      "error": null
+    },
+    {
+      "src": "potato-mutter-a.mp3",
+      "duration": 3,
+      "time": 0.009589,
+      "error": null
+    },
+    {
+      "src": "potato-mutter-b.mp3",
+      "duration": 3,
+      "time": 0.003403,
+      "error": null
+    },
+    {
+      "src": "potato-chuckle.mp3",
+      "duration": 3,
+      "time": 0.009929,
+      "error": null
+    },
+    {
+      "src": "potato-sigh.mp3",
+      "duration": 3,
+      "time": 0.010527,
+      "error": null
+    },
+    {
+      "src": "vent-knock.mp3",
+      "duration": 4,
+      "time": 0.010574,
+      "error": null
+    },
+    {
+      "src": "whisper-behind.mp3",
+      "duration": 5,
+      "time": 0.010099,
+      "error": null
+    }
+  ],
+  "proposed": 22,
+  "current": 27,
+  "atReady": 16,
+  "requests": 16,
+  "loaded": {
+    "breathBehind": 3,
+    "distantDeath": 3,
+    "potatoStepCarpet": 2,
+    "potatoStepTile": 2,
+    "potatoMutter": 2,
+    "potatoChuckle": 1,
+    "potatoSigh": 1,
+    "ventKnock": 1,
+    "whisperBehind": 1
+  },
+  "saved": {
+    "music": "2",
+    "floor": "blackjack"
+  },
+  "behind": {
+    "actors": 0,
+    "nextScare": 224,
+    "nextVoice": 110,
+    "active": true,
+    "voices": 1,
+    "loaded": {
+      "breathBehind": 3,
+      "distantDeath": 3,
+      "potatoStepCarpet": 2,
+      "potatoStepTile": 2,
+      "potatoMutter": 2,
+      "potatoChuckle": 1,
+      "potatoSigh": 1,
+      "ventKnock": 1,
+      "whisperBehind": 1
+    },
+    "recent": [
+      {
+        "kind": "breathBehind",
+        "at": 154,
+        "x": 1242,
+        "y": 625,
+        "volume": 0.28,
+        "muffle": false
+      }
+    ]
+  },
+  "fixed": {
+    "kind": "breathBehind",
+    "at": 154,
+    "x": 1242,
+    "y": 625,
+    "volume": 0.28,
+    "muffle": false
+  },
+  "listener": {
+    "x": 6.123234262925839e-17,
+    "z": 1
+  },
+  "rms": 0.0029032307676183007,
+  "paused": {
+    "actors": 0,
+    "nextScare": 224,
+    "nextVoice": 110,
+    "active": false,
+    "voices": 0,
+    "loaded": {
+      "breathBehind": 3,
+      "distantDeath": 3,
+      "potatoStepCarpet": 2,
+      "potatoStepTile": 2,
+      "potatoMutter": 2,
+      "potatoChuckle": 1,
+      "potatoSigh": 1,
+      "ventKnock": 1,
+      "whisperBehind": 1
+    },
+    "recent": [
+      {
+        "kind": "breathBehind",
+        "at": 154,
+        "x": 1242,
+        "y": 625,
+        "volume": 0.28,
+        "muffle": false
+      }
+    ]
+  },
+  "walking": {
+    "actors": 1,
+    "nextScare": 252.5,
+    "nextVoice": 210,
+    "active": true,
+    "voices": 1,
+    "loaded": {
+      "breathBehind": 3,
+      "distantDeath": 3,
+      "potatoStepCarpet": 2,
+      "potatoStepTile": 2,
+      "potatoMutter": 2,
+      "potatoChuckle": 1,
+      "potatoSigh": 1,
+      "ventKnock": 1,
+      "whisperBehind": 1
+    },
+    "recent": [
+      {
+        "kind": "potatoStepCarpet",
+        "at": 201,
+        "x": 1380,
+        "y": 620,
+        "volume": 0.32,
+        "muffle": false
+      }
+    ]
+  },
+  "still": {
+    "actors": 1,
+    "nextScare": 252.5,
+    "nextVoice": 210,
+    "active": true,
+    "voices": 1,
+    "loaded": {
+      "breathBehind": 3,
+      "distantDeath": 3,
+      "potatoStepCarpet": 2,
+      "potatoStepTile": 2,
+      "potatoMutter": 2,
+      "potatoChuckle": 1,
+      "potatoSigh": 1,
+      "ventKnock": 1,
+      "whisperBehind": 1
+    },
+    "recent": [
+      {
+        "kind": "potatoStepCarpet",
+        "at": 201,
+        "x": 1380,
+        "y": 620,
+        "volume": 0.32,
+        "muffle": false
+      }
+    ]
+  },
+  "muted": {
+    "actors": 1,
+    "nextScare": 252.5,
+    "nextVoice": 210,
+    "active": true,
+    "voices": 0,
+    "loaded": {
+      "breathBehind": 3,
+      "distantDeath": 3,
+      "potatoStepCarpet": 2,
+      "potatoStepTile": 2,
+      "potatoMutter": 2,
+      "potatoChuckle": 1,
+      "potatoSigh": 1,
+      "ventKnock": 1,
+      "whisperBehind": 1
+    },
+    "recent": [
+      {
+        "kind": "potatoStepCarpet",
+        "at": 201,
+        "x": 1380,
+        "y": 620,
+        "volume": 0.32,
+        "muffle": false
+      }
+    ]
+  },
+  "afterMute": {
+    "actors": 1,
+    "nextScare": 252.5,
+    "nextVoice": 210,
+    "active": false,
+    "voices": 0,
+    "loaded": {
+      "breathBehind": 3,
+      "distantDeath": 3,
+      "potatoStepCarpet": 2,
+      "potatoStepTile": 2,
+      "potatoMutter": 2,
+      "potatoChuckle": 1,
+      "potatoSigh": 1,
+      "ventKnock": 1,
+      "whisperBehind": 1
+    },
+    "recent": [
+      {
+        "kind": "potatoStepCarpet",
+        "at": 201,
+        "x": 1380,
+        "y": 620,
+        "volume": 0.32,
+        "muffle": false
+      }
+    ]
+  },
+  "distant": {
+    "actors": 0,
+    "nextScare": 0,
+    "nextVoice": 0,
+    "active": false,
+    "voices": 1,
+    "loaded": {
+      "breathBehind": 3,
+      "distantDeath": 3,
+      "potatoStepCarpet": 2,
+      "potatoStepTile": 2,
+      "potatoMutter": 2,
+      "potatoChuckle": 1,
+      "potatoSigh": 1,
+      "ventKnock": 1,
+      "whisperBehind": 1
+    },
+    "recent": [
+      {
+        "kind": "distantDeath",
+        "at": 300,
+        "x": 1800,
+        "y": 1200,
+        "volume": 0.3,
+        "muffle": true
+      }
+    ]
+  },
+  "reset": {
+    "actors": 0,
+    "nextScare": 0,
+    "nextVoice": 0,
+    "active": false,
+    "voices": 0,
+    "loaded": {
+      "breathBehind": 3,
+      "distantDeath": 3,
+      "potatoStepCarpet": 2,
+      "potatoStepTile": 2,
+      "potatoMutter": 2,
+      "potatoChuckle": 1,
+      "potatoSigh": 1,
+      "ventKnock": 1,
+      "whisperBehind": 1
+    },
+    "recent": []
+  },
+  "failed": [],
+  "errors": []
+}

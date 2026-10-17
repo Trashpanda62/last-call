@@ -1,0 +1,2394 @@
+{
+  "at": "2026-10-16T20:17:48.482Z",
+  "rows": [
+    {
+      "name": "ready gameplay",
+      "ms": 16.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poison",
+      "ms": 11.599999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 3,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "stab",
+      "ms": 9.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 2,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "shoot",
+      "ms": 10.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 2,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "snack 0",
+      "ms": 9.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 1,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "snack 1",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 1,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "tripo_material_d2df04bf-58de-4fa2-822f-31ad37038094",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "snack 2",
+      "ms": 8.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 3,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack 0 0",
+      "ms": 9.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 2,
+      "snackSelections": 1,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": true
+        },
+        {
+          "type": "SpriteMaterial",
+          "name": "",
+          "object": "Sprite",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 0 0",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 0 0",
+      "ms": 9.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack discard",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack 0 1",
+      "ms": 8.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 1,
+      "snackSelections": 1,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "tripo_material_d2df04bf-58de-4fa2-822f-31ad37038094",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": true
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 0 1",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 0 1",
+      "ms": 8.299999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack discard",
+      "ms": 8.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack 0 2",
+      "ms": 17.30000001192093,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 3,
+      "snackSelections": 3,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": true
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": true
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": true
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": [
+        [
+          "HTMLCanvasElement",
+          512,
+          320
+        ]
+      ]
+    },
+    {
+      "name": "other snack repeat 0 2",
+      "ms": 8.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 0 2",
+      "ms": 8.200000047683716,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 1,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshBasicMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack discard",
+      "ms": 7.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack 1 0",
+      "ms": 8.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 1 0",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 1 0",
+      "ms": 8,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack discard",
+      "ms": 8,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack 1 1",
+      "ms": 7.900000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 1 1",
+      "ms": 8,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 1 1",
+      "ms": 8.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack discard",
+      "ms": 7.799999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack 1 2",
+      "ms": 8.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 1 2",
+      "ms": 8,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack repeat 1 2",
+      "ms": 8.299999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "other snack discard",
+      "ms": 8.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "drink martini",
+      "ms": 9.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 4,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "drink cosmo",
+      "ms": 9.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 1,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "drink beer",
+      "ms": 11.900000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 1,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "drink whiskey",
+      "ms": 8.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 1,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "drink mojito",
+      "ms": 8.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 2,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 0 martini",
+      "ms": 7.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 6,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshBasicMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 0 cosmo",
+      "ms": 6.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 1,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 0 beer",
+      "ms": 6,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 1,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.299999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 0 whiskey",
+      "ms": 5.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 1,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 0 mojito",
+      "ms": 5.900000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 2,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshStandardMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 1 martini",
+      "ms": 5.599999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 1 cosmo",
+      "ms": 5.900000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 1 beer",
+      "ms": 5.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 1 whiskey",
+      "ms": 5.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 1 mojito",
+      "ms": 5.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "free ghost",
+      "ms": 9.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 2,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshPhysicalMaterial",
+          "name": "GlovePBR",
+          "object": "SkinnedMesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshPhysicalMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "ghost repeat",
+      "ms": 8.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 martini",
+      "ms": 9.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 2,
+      "snackSelections": 0,
+      "selectionMaterials": [
+        {
+          "type": "MeshPhysicalMaterial",
+          "name": "",
+          "object": "Mesh",
+          "instanced": false,
+          "snack": false
+        },
+        {
+          "type": "MeshPhysicalMaterial",
+          "name": "GlovePBR",
+          "object": "SkinnedMesh",
+          "instanced": false,
+          "snack": false
+        }
+      ],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 discard",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 cosmo",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 discard",
+      "ms": 8.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 beer",
+      "ms": 8.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 discard",
+      "ms": 8.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 whiskey",
+      "ms": 8.299999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 discard",
+      "ms": 8.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 mojito",
+      "ms": 8.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 discard",
+      "ms": 8.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 martini",
+      "ms": 9.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 discard",
+      "ms": 7.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 cosmo",
+      "ms": 8.299999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 discard",
+      "ms": 8,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 beer",
+      "ms": 8.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 discard",
+      "ms": 8,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 whiskey",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 discard",
+      "ms": 8,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 mojito",
+      "ms": 10.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 discard",
+      "ms": 8.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 martini",
+      "ms": 8.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 discard",
+      "ms": 8,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 cosmo",
+      "ms": 8.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 discard",
+      "ms": 7.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 beer",
+      "ms": 8.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 discard",
+      "ms": 8.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 whiskey",
+      "ms": 7.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 discard",
+      "ms": 7.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 mojito",
+      "ms": 8.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 discard",
+      "ms": 7.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 martini",
+      "ms": 7.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 discard",
+      "ms": 7.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 cosmo",
+      "ms": 7.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 discard",
+      "ms": 7.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 beer",
+      "ms": 7.799999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 discard",
+      "ms": 7.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 whiskey",
+      "ms": 7.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 discard",
+      "ms": 7.799999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 mojito",
+      "ms": 7,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 discard",
+      "ms": 6.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 martini",
+      "ms": 6.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 discard",
+      "ms": 6.299999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 cosmo",
+      "ms": 6.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 discard",
+      "ms": 6.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 beer",
+      "ms": 6.599999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 discard",
+      "ms": 6,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 whiskey",
+      "ms": 6.299999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 discard",
+      "ms": 6.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 mojito",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 discard",
+      "ms": 6.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 martini",
+      "ms": 6.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 discard",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 cosmo",
+      "ms": 6.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 discard",
+      "ms": 6.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 beer",
+      "ms": 6.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 discard",
+      "ms": 6.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 whiskey",
+      "ms": 6.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 discard",
+      "ms": 5.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 mojito",
+      "ms": 6.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 discard",
+      "ms": 6,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 martini",
+      "ms": 6.200000047683716,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 discard",
+      "ms": 6.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 cosmo",
+      "ms": 6.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 discard",
+      "ms": 6.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 beer",
+      "ms": 7,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 discard",
+      "ms": 6.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 whiskey",
+      "ms": 6.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 discard",
+      "ms": 6.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 mojito",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 discard",
+      "ms": 6,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 martini",
+      "ms": 6.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 discard",
+      "ms": 5.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 cosmo",
+      "ms": 6.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 discard",
+      "ms": 6,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 beer",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 discard",
+      "ms": 6,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 whiskey",
+      "ms": 6.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 discard",
+      "ms": 6.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 mojito",
+      "ms": 6.200000047683716,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 discard",
+      "ms": 5.900000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "selections": 0,
+      "snackSelections": 0,
+      "selectionMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    }
+  ],
+  "memory": [
+    {
+      "geometries": 454,
+      "textures": 373,
+      "programs": 70
+    },
+    {
+      "geometries": 454,
+      "textures": 373,
+      "programs": 70
+    },
+    {
+      "geometries": 454,
+      "textures": 373,
+      "programs": 70
+    },
+    {
+      "geometries": 454,
+      "textures": 373,
+      "programs": 70
+    },
+    {
+      "geometries": 454,
+      "textures": 373,
+      "programs": 70
+    },
+    {
+      "geometries": 454,
+      "textures": 373,
+      "programs": 70
+    },
+    {
+      "geometries": 454,
+      "textures": 373,
+      "programs": 70
+    },
+    {
+      "geometries": 454,
+      "textures": 373,
+      "programs": 70
+    }
+  ],
+  "pixels": [
+    {
+      "name": "snack 0",
+      "maxChannel": 0,
+      "coverage": 53067
+    },
+    {
+      "name": "snack 1",
+      "maxChannel": 0,
+      "coverage": 47438
+    },
+    {
+      "name": "snack 2",
+      "maxChannel": 0,
+      "coverage": 54409
+    },
+    {
+      "name": "martini",
+      "maxChannel": 0,
+      "coverage": 12517
+    },
+    {
+      "name": "cosmo",
+      "maxChannel": 0,
+      "coverage": 12517
+    },
+    {
+      "name": "beer",
+      "maxChannel": 0,
+      "coverage": 13442
+    },
+    {
+      "name": "whiskey",
+      "maxChannel": 0,
+      "coverage": 12190
+    },
+    {
+      "name": "mojito",
+      "maxChannel": 0,
+      "coverage": 13052
+    },
+    {
+      "name": "ghost",
+      "maxChannel": 0,
+      "coverage": 10395
+    }
+  ],
+  "markerPixels": [
+    {
+      "kind": "martini",
+      "t": 0,
+      "maxChannel": 0,
+      "coverage": 16510
+    },
+    {
+      "kind": "martini",
+      "t": 0.2,
+      "maxChannel": 0,
+      "coverage": 16595
+    },
+    {
+      "kind": "martini",
+      "t": 0.7,
+      "maxChannel": 0,
+      "coverage": 16360
+    },
+    {
+      "kind": "cosmo",
+      "t": 0,
+      "maxChannel": 0,
+      "coverage": 16510
+    },
+    {
+      "kind": "cosmo",
+      "t": 0.2,
+      "maxChannel": 0,
+      "coverage": 16595
+    },
+    {
+      "kind": "cosmo",
+      "t": 0.7,
+      "maxChannel": 0,
+      "coverage": 16360
+    },
+    {
+      "kind": "beer",
+      "t": 0,
+      "maxChannel": 0,
+      "coverage": 16521
+    },
+    {
+      "kind": "beer",
+      "t": 0.2,
+      "maxChannel": 0,
+      "coverage": 16631
+    },
+    {
+      "kind": "beer",
+      "t": 0.7,
+      "maxChannel": 0,
+      "coverage": 16393
+    },
+    {
+      "kind": "whiskey",
+      "t": 0,
+      "maxChannel": 0,
+      "coverage": 14890
+    },
+    {
+      "kind": "whiskey",
+      "t": 0.2,
+      "maxChannel": 0,
+      "coverage": 15013
+    },
+    {
+      "kind": "whiskey",
+      "t": 0.7,
+      "maxChannel": 0,
+      "coverage": 14709
+    },
+    {
+      "kind": "mojito",
+      "t": 0,
+      "maxChannel": 0,
+      "coverage": 16393
+    },
+    {
+      "kind": "mojito",
+      "t": 0.2,
+      "maxChannel": 0,
+      "coverage": 16485
+    },
+    {
+      "kind": "mojito",
+      "t": 0.7,
+      "maxChannel": 0,
+      "coverage": 16222
+    }
+  ],
+  "snackPixels": [
+    {
+      "kind": 0,
+      "eating": 2.4,
+      "maxChannel": 0,
+      "coverage": 14293,
+      "sharedMaps": true,
+      "sharedGeometry": true,
+      "hooks": true
+    },
+    {
+      "kind": 0,
+      "eating": 1.5,
+      "maxChannel": 0,
+      "coverage": 9049,
+      "sharedMaps": true,
+      "sharedGeometry": true,
+      "hooks": true
+    },
+    {
+      "kind": 0,
+      "eating": 0.3,
+      "maxChannel": 0,
+      "coverage": 2408,
+      "sharedMaps": true,
+      "sharedGeometry": true,
+      "hooks": true
+    },
+    {
+      "kind": 1,
+      "eating": 2.4,
+      "maxChannel": 0,
+      "coverage": 14382,
+      "sharedMaps": true,
+      "sharedGeometry": true,
+      "hooks": true
+    },
+    {
+      "kind": 1,
+      "eating": 1.5,
+      "maxChannel": 0,
+      "coverage": 9159,
+      "sharedMaps": true,
+      "sharedGeometry": true,
+      "hooks": true
+    },
+    {
+      "kind": 1,
+      "eating": 0.3,
+      "maxChannel": 0,
+      "coverage": 2450,
+      "sharedMaps": true,
+      "sharedGeometry": true,
+      "hooks": true
+    },
+    {
+      "kind": 2,
+      "eating": 2.4,
+      "maxChannel": 0,
+      "coverage": 10295,
+      "sharedMaps": true,
+      "sharedGeometry": true,
+      "hooks": true
+    },
+    {
+      "kind": 2,
+      "eating": 1.5,
+      "maxChannel": 0,
+      "coverage": 6643,
+      "sharedMaps": true,
+      "sharedGeometry": true,
+      "hooks": true
+    },
+    {
+      "kind": 2,
+      "eating": 0.3,
+      "maxChannel": 0,
+      "coverage": 1826,
+      "sharedMaps": true,
+      "sharedGeometry": true,
+      "hooks": true
+    }
+  ],
+  "sharedMarkerGeometries": 1,
+  "errors": []
+}

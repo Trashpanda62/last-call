@@ -1,0 +1,75 @@
+{
+  "at": "2026-10-16T14:26:18.698Z",
+  "result": {
+    "controls": [],
+    "games": [
+      {
+        "game": "crash",
+        "seated": "crash",
+        "placed": true,
+        "prompt": {
+          "text": "◈  SPACE · Start game",
+          "enabled": true
+        },
+        "started": true,
+        "parts": [
+          "spot:main"
+        ]
+      },
+      {
+        "game": "wheel",
+        "seated": "wheel",
+        "placed": true,
+        "prompt": {
+          "text": "◈  SPACE · Start game",
+          "enabled": true
+        },
+        "started": true,
+        "parts": [
+          "spot:main"
+        ]
+      }
+    ],
+    "gfx": {
+      "frames": 139,
+      "calls": 93,
+      "tris": 266901,
+      "geos": 493,
+      "tex": 323,
+      "cam": [
+        28,
+        1.3,
+        28.75,
+        -0.3,
+        -3.14
+      ],
+      "gestures": {},
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "vip"
+      ],
+      "actorWork": {
+        "posed": 0,
+        "total": 11
+      },
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,84 @@
+{
+  "at": "2026-10-16T15:21:38.926Z",
+  "result": {
+    "rows": [
+      {
+        "name": "different ages",
+        "opacityError": 0.8,
+        "transformError": 0,
+        "changed": 1472,
+        "maxChannel": 204,
+        "covered": 1078
+      },
+      {
+        "name": "different distances",
+        "opacityError": 0.8162589713432122,
+        "transformError": 0,
+        "changed": 4035,
+        "maxChannel": 208,
+        "covered": 1569
+      },
+      {
+        "name": "big and small",
+        "opacityError": 0,
+        "transformError": 0,
+        "changed": 0,
+        "maxChannel": 0,
+        "covered": 2143
+      },
+      {
+        "name": "resize same pool",
+        "opacityError": 0,
+        "transformError": 4.440892098500626e-16,
+        "changed": 0,
+        "maxChannel": 0,
+        "covered": 2111
+      },
+      {
+        "name": "loss and color",
+        "opacityError": 0,
+        "transformError": 4.440892098500626e-16,
+        "changed": 0,
+        "maxChannel": 0,
+        "covered": 942
+      },
+      {
+        "name": "hide near camera",
+        "opacityError": 1,
+        "transformError": 0,
+        "changed": 0,
+        "maxChannel": 0,
+        "covered": 519
+      },
+      {
+        "name": "return visible",
+        "opacityError": 1,
+        "transformError": 0,
+        "changed": 1472,
+        "maxChannel": 255,
+        "covered": 511
+      }
+    ],
+    "sharing": {
+      "paints": 2,
+      "sameMap": false,
+      "separateMaterials": true
+    },
+    "cache": {
+      "max": 81,
+      "final": 81,
+      "disposed": 166,
+      "repeatedPaints": 0,
+      "pooled": 2
+    },
+    "retiredPoolMaps": 11,
+    "saturation": {
+      "active": 100,
+      "cache": 100,
+      "maps": 100,
+      "afterEmpty": 100
+    },
+    "mapsRetained": 0
+  },
+  "errors": []
+}

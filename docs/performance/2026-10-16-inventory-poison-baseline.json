@@ -1,0 +1,1346 @@
+{
+  "at": "2026-10-16T16:09:52.161Z",
+  "rows": [
+    {
+      "name": "ready gameplay",
+      "ms": 14.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poison",
+      "ms": 11.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "stab",
+      "ms": 9.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "shoot",
+      "ms": 8.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "snack 0",
+      "ms": 9.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "snack 1",
+      "ms": 9.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "snack 2",
+      "ms": 8.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "drink martini",
+      "ms": 9.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "drink cosmo",
+      "ms": 9.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "drink beer",
+      "ms": 18.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": [
+        [
+          "HTMLCanvasElement",
+          512,
+          320
+        ]
+      ]
+    },
+    {
+      "name": "drink whiskey",
+      "ms": 9.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "drink mojito",
+      "ms": 12.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 0 martini",
+      "ms": 16.400000035762787,
+      "matrixError": 0,
+      "links": 1,
+      "linkedMaterials": [
+        {
+          "material": "MeshStandardMaterial",
+          "name": "",
+          "color": "d0a050",
+          "object": "Mesh",
+          "geometry": "ConeGeometry",
+          "defines": [
+            "#define attribute in\n#define varying out\n#define texture2D texture\n#define HIGH_PRECISION\n#define SHADER_TYPE MeshStandardMaterial\n#define SHADER_NAME \n#define STANDARD \n#define USE_FOG\n#define USE_ENVMAP\n#define ENVMAP_MODE_REFLECTION\n#define HAS_NORMAL\n#define USE_SHADOWMAP\n#define SHADOWMAP_TYPE_PCF\n#define STANDARD\n#define PI 3.141592653589793\n#define PI2 6.283185307179586\n#define PI_HALF 1.5707963267948966\n#define RECIPROCAL_PI 0.3183098861837907\n#define RECIPROCAL_PI2 0.15915494309189535\n#define EPSILON 1e-6\n#define saturate( a ) clamp( a, 0.0, 1.0 )\n#define whiteComplement( a ) ( 1.0 - saturate( a ) )\n#define inverseTransformDirection transformDirectionByInverseViewMatrix",
+            "#define varying in\n#define gl_FragColor pc_fragColor\n#define gl_FragDepthEXT gl_FragDepth\n#define texture2D texture\n#define textureCube texture\n#define texture2DProj textureProj\n#define texture2DLodEXT textureLod\n#define texture2DProjLodEXT textureProjLod\n#define textureCubeLodEXT textureLod\n#define texture2DGradEXT textureGrad\n#define texture2DProjGradEXT textureProjGrad\n#define textureCubeGradEXT textureGrad\n#define HIGH_PRECISION\n#define SHADER_TYPE MeshStandardMaterial\n#define SHADER_NAME \n#define STANDARD \n#define USE_FOG\n#define USE_ENVMAP\n#define ENVMAP_TYPE_CUBE_UV\n#define ENVMAP_MODE_REFLECTION\n#define ENVMAP_BLENDING_NONE\n#define CUBEUV_TEXEL_WIDTH 0.0013020833333333333\n#define CUBEUV_TEXEL_HEIGHT 0.0009765625\n#define CUBEUV_MAX_MIP 8.0\n#define USE_SHADOWMAP\n#define SHADOWMAP_TYPE_PCF\n#define STANDARD\n#define PI 3.141592653589793\n#define PI2 6.283185307179586\n#define PI_HALF 1.5707963267948966\n#define RECIPROCAL_PI 0.3183098861837907\n#define RECIPROCAL_PI2 0.15915494309189535\n#define EPSILON 1e-6\n#define saturate( a ) clamp( a, 0.0, 1.0 )\n#define whiteComplement( a ) ( 1.0 - saturate( a ) )\n#define inverseTransformDirection transformDirectionByInverseViewMatrix\n#define RE_Direct\t\t\t\tRE_Direct_Physical\n#define RE_Direct_RectArea\t\tRE_Direct_RectArea_Physical\n#define RE_IndirectDiffuse\t\tRE_IndirectDiffuse_Physical\n#define RE_IndirectSpecular\t\tRE_IndirectSpecular_Physical"
+          ]
+        }
+      ],
+      "buffers": 4,
+      "bytes": 140,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 6,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 0 cosmo",
+      "ms": 6.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 4,
+      "bytes": 140,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 0 beer",
+      "ms": 6.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 4,
+      "bytes": 140,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 6.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 0 whiskey",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 4,
+      "bytes": 140,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 0 mojito",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 4,
+      "bytes": 140,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 1 martini",
+      "ms": 6.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 4,
+      "bytes": 140,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 6,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 1 cosmo",
+      "ms": 5.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 4,
+      "bytes": 140,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 1 beer",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 4,
+      "bytes": 140,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 1 whiskey",
+      "ms": 5.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 4,
+      "bytes": 140,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "poisoned placed 1 mojito",
+      "ms": 5.700000047683716,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 4,
+      "bytes": 140,
+      "uploads": []
+    },
+    {
+      "name": "poisoned discard",
+      "ms": 5.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "free ghost",
+      "ms": 10.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "ghost repeat",
+      "ms": 8.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 martini",
+      "ms": 10.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 discard",
+      "ms": 9.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 cosmo",
+      "ms": 8.299999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 discard",
+      "ms": 8.200000047683716,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 beer",
+      "ms": 8.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 discard",
+      "ms": 8.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 whiskey",
+      "ms": 8.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 discard",
+      "ms": 8.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 mojito",
+      "ms": 8.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 0 discard",
+      "ms": 8.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 martini",
+      "ms": 10.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 discard",
+      "ms": 8.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 cosmo",
+      "ms": 8.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 discard",
+      "ms": 10,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 beer",
+      "ms": 8.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 discard",
+      "ms": 8.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 whiskey",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 discard",
+      "ms": 8.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 mojito",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 1 discard",
+      "ms": 8.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 martini",
+      "ms": 8.200000047683716,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 discard",
+      "ms": 8.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 cosmo",
+      "ms": 8.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 discard",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 beer",
+      "ms": 8.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 discard",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 whiskey",
+      "ms": 8.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 discard",
+      "ms": 7.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 mojito",
+      "ms": 9.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 2 discard",
+      "ms": 8.200000047683716,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 martini",
+      "ms": 8.599999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 discard",
+      "ms": 8.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 cosmo",
+      "ms": 8.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 discard",
+      "ms": 7.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 beer",
+      "ms": 8,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 discard",
+      "ms": 8.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 whiskey",
+      "ms": 7.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 discard",
+      "ms": 7.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 mojito",
+      "ms": 7.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 3 discard",
+      "ms": 7.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 martini",
+      "ms": 7.799999952316284,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 discard",
+      "ms": 7.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 cosmo",
+      "ms": 7.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 discard",
+      "ms": 7.900000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 beer",
+      "ms": 7.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 discard",
+      "ms": 6.599999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 whiskey",
+      "ms": 7.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 discard",
+      "ms": 6.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 mojito",
+      "ms": 7,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 4 discard",
+      "ms": 6.599999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 martini",
+      "ms": 6.899999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 discard",
+      "ms": 6.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 cosmo",
+      "ms": 6.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 discard",
+      "ms": 6.699999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 beer",
+      "ms": 7,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 discard",
+      "ms": 8.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 whiskey",
+      "ms": 6.800000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 discard",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 mojito",
+      "ms": 6.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 5 discard",
+      "ms": 6.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 martini",
+      "ms": 6.600000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 discard",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 cosmo",
+      "ms": 6.300000011920929,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 discard",
+      "ms": 6.900000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 beer",
+      "ms": 8,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 discard",
+      "ms": 6.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 whiskey",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 discard",
+      "ms": 6.099999964237213,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 mojito",
+      "ms": 6.400000035762787,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 6 discard",
+      "ms": 6.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 martini",
+      "ms": 6.399999976158142,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 discard",
+      "ms": 6,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 cosmo",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 discard",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 beer",
+      "ms": 6.100000023841858,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 discard",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 whiskey",
+      "ms": 6.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 discard",
+      "ms": 6,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 mojito",
+      "ms": 6.5,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    },
+    {
+      "name": "cycle 7 discard",
+      "ms": 6.199999988079071,
+      "matrixError": 0,
+      "links": 0,
+      "linkedMaterials": [],
+      "buffers": 0,
+      "bytes": 0,
+      "uploads": []
+    }
+  ],
+  "memory": [
+    {
+      "geometries": 487,
+      "textures": 370,
+      "programs": 62
+    },
+    {
+      "geometries": 487,
+      "textures": 370,
+      "programs": 62
+    },
+    {
+      "geometries": 487,
+      "textures": 370,
+      "programs": 62
+    },
+    {
+      "geometries": 487,
+      "textures": 370,
+      "programs": 62
+    },
+    {
+      "geometries": 487,
+      "textures": 370,
+      "programs": 62
+    },
+    {
+      "geometries": 487,
+      "textures": 370,
+      "programs": 62
+    },
+    {
+      "geometries": 487,
+      "textures": 370,
+      "programs": 62
+    },
+    {
+      "geometries": 487,
+      "textures": 370,
+      "programs": 62
+    }
+  ],
+  "pixels": [
+    {
+      "name": "snack 0",
+      "maxChannel": 0,
+      "coverage": 52680
+    },
+    {
+      "name": "snack 1",
+      "maxChannel": 0,
+      "coverage": 47371
+    },
+    {
+      "name": "snack 2",
+      "maxChannel": 0,
+      "coverage": 47431
+    },
+    {
+      "name": "martini",
+      "maxChannel": 0,
+      "coverage": 10929
+    },
+    {
+      "name": "cosmo",
+      "maxChannel": 0,
+      "coverage": 10929
+    },
+    {
+      "name": "beer",
+      "maxChannel": 0,
+      "coverage": 11203
+    },
+    {
+      "name": "whiskey",
+      "maxChannel": 0,
+      "coverage": 10065
+    },
+    {
+      "name": "mojito",
+      "maxChannel": 0,
+      "coverage": 11031
+    },
+    {
+      "name": "ghost",
+      "maxChannel": 0,
+      "coverage": 7108
+    }
+  ],
+  "markerPixels": [
+    {
+      "kind": "martini",
+      "t": 0,
+      "maxChannel": 0,
+      "coverage": 16510
+    },
+    {
+      "kind": "martini",
+      "t": 0.2,
+      "maxChannel": 0,
+      "coverage": 16595
+    },
+    {
+      "kind": "martini",
+      "t": 0.7,
+      "maxChannel": 0,
+      "coverage": 16360
+    },
+    {
+      "kind": "cosmo",
+      "t": 0,
+      "maxChannel": 0,
+      "coverage": 16510
+    },
+    {
+      "kind": "cosmo",
+      "t": 0.2,
+      "maxChannel": 0,
+      "coverage": 16595
+    },
+    {
+      "kind": "cosmo",
+      "t": 0.7,
+      "maxChannel": 0,
+      "coverage": 16360
+    },
+    {
+      "kind": "beer",
+      "t": 0,
+      "maxChannel": 0,
+      "coverage": 16521
+    },
+    {
+      "kind": "beer",
+      "t": 0.2,
+      "maxChannel": 0,
+      "coverage": 16631
+    },
+    {
+      "kind": "beer",
+      "t": 0.7,
+      "maxChannel": 0,
+      "coverage": 16393
+    },
+    {
+      "kind": "whiskey",
+      "t": 0,
+      "maxChannel": 0,
+      "coverage": 14890
+    },
+    {
+      "kind": "whiskey",
+      "t": 0.2,
+      "maxChannel": 0,
+      "coverage": 15013
+    },
+    {
+      "kind": "whiskey",
+      "t": 0.7,
+      "maxChannel": 0,
+      "coverage": 14709
+    },
+    {
+      "kind": "mojito",
+      "t": 0,
+      "maxChannel": 0,
+      "coverage": 16393
+    },
+    {
+      "kind": "mojito",
+      "t": 0.2,
+      "maxChannel": 0,
+      "coverage": 16485
+    },
+    {
+      "kind": "mojito",
+      "t": 0.7,
+      "maxChannel": 0,
+      "coverage": 16222
+    }
+  ],
+  "sharedMarkerGeometries": 15,
+  "errors": []
+}

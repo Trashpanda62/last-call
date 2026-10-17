@@ -1,0 +1,5344 @@
+{
+  "at": "2026-10-16T14:03:27.236Z",
+  "rows": [
+    {
+      "preset": "low",
+      "warmupMs": 5096.199999988079,
+      "threeFramesMs": 44.700000047683716,
+      "links": [
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SIZEATTENUATION"
+            ],
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_CLEARCOAT",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_CLEARCOAT",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_TRANSMISSION"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_TRANSMISSION",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHEEN",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_COLOR",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_METALNESSMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_METALNESSMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_SKINNING"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP"
+            ],
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_MAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHEEN",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME flashlight-beam",
+              "#define USE_FOG"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME flashlight-beam",
+              "#define USE_FOG"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME br-ceil",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_EMISSIVEMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME br-ceil",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_EMISSIVEMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHEEN",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SKINNING"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME FXAAShader"
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME FXAAShader",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE RawShaderMaterial",
+              "#define SHADER_NAME FSR_EASU"
+            ],
+            [
+              "#define SHADER_TYPE RawShaderMaterial",
+              "#define SHADER_NAME FSR_EASU"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE RawShaderMaterial",
+              "#define SHADER_NAME FSR_RCAS"
+            ],
+            [
+              "#define SHADER_TYPE RawShaderMaterial",
+              "#define SHADER_NAME FSR_RCAS"
+            ]
+          ]
+        }
+      ],
+      "selections": {
+        "MeshStandardMaterial": 41,
+        "MeshPhysicalMaterial": 14,
+        "MeshBasicMaterial": 16,
+        "SpriteMaterial": 9
+      },
+      "selectionFrames": [
+        {
+          "MeshStandardMaterial": 41,
+          "MeshPhysicalMaterial": 14,
+          "MeshBasicMaterial": 16,
+          "SpriteMaterial": 9
+        },
+        {},
+        {}
+      ],
+      "selectionObjects": [
+        {
+          "material": 28,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "static-floor",
+          "path": "Scene/Group/Group/static-floor",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 43,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "roulette-ball",
+          "path": "Scene/Group/roulette-ball",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 69,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "static-vip",
+          "path": "Scene/Group/static-vip",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 70,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "static-vip",
+          "path": "Scene/Group/static-vip",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 71,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "static-vip",
+          "path": "Scene/Group/static-vip",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 99,
+          "name": "Material_0",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 129,
+          "name": "Material_0",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 253,
+          "name": "Material_0",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 279,
+          "name": "tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/snack-tray-3/snackDonut/Mesh",
+          "version": 6,
+          "transparent": false
+        },
+        {
+          "material": 281,
+          "name": "tripo_material_d2df04bf-58de-4fa2-822f-31ad37038094",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/snack-tray-4/snackPretzel/Mesh",
+          "version": 6,
+          "transparent": false
+        },
+        {
+          "material": 287,
+          "name": "Material_0",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Group/Mesh",
+          "version": 7,
+          "transparent": false
+        },
+        {
+          "material": 309,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "static-vip",
+          "path": "Scene/Group/static-vip",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 334,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 346,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 347,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 348,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 367,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 368,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 369,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 370,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 375,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 380,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 422,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 423,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/roulette-rotor/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 424,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/Group/Group/Mesh",
+          "version": 11,
+          "transparent": false
+        },
+        {
+          "material": 428,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 429,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 430,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 431,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 432,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 433,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 434,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 435,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 4,
+          "transparent": false
+        },
+        {
+          "material": 494,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 495,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "street-die-0",
+          "path": "Scene/Group/street-die-0",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 497,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 498,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 499,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "static-vip",
+          "path": "Scene/Group/Group/static-vip",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 500,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 501,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 503,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 504,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "coin-flip-hero",
+          "path": "Scene/Group/coin-flip-hero",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 505,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "coin-flip-hero",
+          "path": "Scene/Group/coin-flip-hero",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 506,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "coin-flip-sign",
+          "path": "Scene/Group/coin-flip-sign",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 507,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 508,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 510,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 571,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "Mesh_0",
+          "path": "Scene/Group/Scene/Bean/Mesh_0",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 594,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Group/Mesh",
+          "version": 7,
+          "transparent": false
+        },
+        {
+          "material": 595,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Group/Mesh",
+          "version": 7,
+          "transparent": false
+        },
+        {
+          "material": 598,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 600,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 702,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 705,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "Mesh_0",
+          "path": "Scene/Group/Scene/Bean/Mesh_0",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 708,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 716,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 723,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 734,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 740,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 747,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 917,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/snack-tray-3/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 918,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/snack-tray-4/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 919,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/snack-tray-5/Mesh",
+          "version": 1,
+          "transparent": false
+        },
+        {
+          "material": 537,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 386,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 388,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 539,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 538,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 540,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 536,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 387,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 709,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 741,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 717,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 724,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 735,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 703,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 1,
+          "transparent": true
+        },
+        {
+          "material": 555,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Group/Mesh",
+          "version": 16,
+          "transparent": false
+        },
+        {
+          "material": 556,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Mesh",
+          "version": 8,
+          "transparent": false
+        },
+        {
+          "material": 557,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Mesh",
+          "version": 8,
+          "transparent": false
+        }
+      ],
+      "gfx": {
+        "frames": 115,
+        "calls": 212,
+        "tris": 654955,
+        "geos": 501,
+        "tex": 375,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          0,
+          -3.14
+        ],
+        "gestures": {
+          "lookaround": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": false,
+        "passes": [
+          "RenderPass",
+          "RenderPass",
+          "OutputPass",
+          "FXAAPass",
+          "fsr"
+        ],
+        "internal": [
+          755,
+          425
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "state": {
+        "internal": [
+          755,
+          425
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "scale": 0.59,
+        "dyn": 1,
+        "fsr": true,
+        "ao": false,
+        "aoDropped": false,
+        "maxSamples": 8,
+        "maxAniso": 16,
+        "passes": [
+          "RenderPass",
+          "RenderPass",
+          "OutputPass",
+          "FXAAPass",
+          "fsr"
+        ]
+      }
+    },
+    {
+      "preset": "medium",
+      "warmupMs": 4703.100000023842,
+      "threeFramesMs": 52.69999998807907,
+      "links": [
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define USE_SIZEATTENUATION"
+            ],
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_CLEARCOAT",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_CLEARCOAT",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_TRANSMISSION",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_TRANSMISSION",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHEEN",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_METALNESSMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_METALNESSMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_SKINNING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHEEN",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME flashlight-beam",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME flashlight-beam",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME br-ceil",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME br-ceil",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHEEN",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SKINNING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SKINNING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SKINNING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        }
+      ],
+      "selections": {
+        "MeshStandardMaterial": 41,
+        "MeshPhysicalMaterial": 14,
+        "MeshBasicMaterial": 16,
+        "SpriteMaterial": 9
+      },
+      "selectionFrames": [
+        {
+          "MeshStandardMaterial": 41,
+          "MeshPhysicalMaterial": 14,
+          "MeshBasicMaterial": 16,
+          "SpriteMaterial": 9
+        },
+        {},
+        {}
+      ],
+      "selectionObjects": [
+        {
+          "material": 28,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "static-floor",
+          "path": "Scene/Group/Group/static-floor",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 43,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "roulette-ball",
+          "path": "Scene/Group/roulette-ball",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 69,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "static-vip",
+          "path": "Scene/Group/static-vip",
+          "version": 4,
+          "transparent": false
+        },
+        {
+          "material": 70,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "static-vip",
+          "path": "Scene/Group/static-vip",
+          "version": 4,
+          "transparent": false
+        },
+        {
+          "material": 71,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "static-vip",
+          "path": "Scene/Group/static-vip",
+          "version": 4,
+          "transparent": false
+        },
+        {
+          "material": 99,
+          "name": "Material_0",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 129,
+          "name": "Material_0",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 253,
+          "name": "Material_0",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 4,
+          "transparent": false
+        },
+        {
+          "material": 279,
+          "name": "tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/snack-tray-3/snackDonut/Mesh",
+          "version": 12,
+          "transparent": false
+        },
+        {
+          "material": 281,
+          "name": "tripo_material_d2df04bf-58de-4fa2-822f-31ad37038094",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/snack-tray-4/snackPretzel/Mesh",
+          "version": 12,
+          "transparent": false
+        },
+        {
+          "material": 287,
+          "name": "Material_0",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Group/Mesh",
+          "version": 14,
+          "transparent": false
+        },
+        {
+          "material": 309,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "static-vip",
+          "path": "Scene/Group/static-vip",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 334,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 346,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 347,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 348,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 367,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 368,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 369,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 370,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 375,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 380,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 422,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 423,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/roulette-rotor/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 424,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/Group/Group/Mesh",
+          "version": 21,
+          "transparent": false
+        },
+        {
+          "material": 428,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 429,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 430,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 431,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 432,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 433,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 434,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 435,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 8,
+          "transparent": false
+        },
+        {
+          "material": 494,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 495,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "street-die-0",
+          "path": "Scene/Group/street-die-0",
+          "version": 4,
+          "transparent": false
+        },
+        {
+          "material": 497,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 498,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 499,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "static-vip",
+          "path": "Scene/Group/Group/static-vip",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 500,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 501,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 503,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 504,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "coin-flip-hero",
+          "path": "Scene/Group/coin-flip-hero",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 505,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "coin-flip-hero",
+          "path": "Scene/Group/coin-flip-hero",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 506,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "coin-flip-sign",
+          "path": "Scene/Group/coin-flip-sign",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 507,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 508,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 510,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 571,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "Mesh_0",
+          "path": "Scene/Group/Scene/Bean/Mesh_0",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 594,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Group/Mesh",
+          "version": 14,
+          "transparent": false
+        },
+        {
+          "material": 595,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/Group/Mesh",
+          "version": 14,
+          "transparent": false
+        },
+        {
+          "material": 598,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 600,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 702,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 705,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "Mesh_0",
+          "path": "Scene/Group/Scene/Bean/Mesh_0",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 708,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 716,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 723,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 734,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 740,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 747,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "node_0",
+          "path": "Scene/Group/Scene/Bean/Hips/Spine/Spine1/Head/Group/Scene/node_0",
+          "version": 3,
+          "transparent": false
+        },
+        {
+          "material": 917,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/snack-tray-3/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 918,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/snack-tray-4/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 919,
+          "name": "",
+          "type": "MeshStandardMaterial",
+          "object": "",
+          "path": "Scene/Group/snack-tray-5/Mesh",
+          "version": 2,
+          "transparent": false
+        },
+        {
+          "material": 537,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 386,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 388,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 539,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 538,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 540,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 536,
+          "name": "",
+          "type": "MeshBasicMaterial",
+          "object": "",
+          "path": "Scene/Group/Mesh",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 387,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 709,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 741,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 717,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 724,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 735,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 703,
+          "name": "",
+          "type": "SpriteMaterial",
+          "object": "",
+          "path": "Scene/Group/Sprite",
+          "version": 2,
+          "transparent": true
+        },
+        {
+          "material": 555,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Group/Mesh",
+          "version": 28,
+          "transparent": false
+        },
+        {
+          "material": 556,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Mesh",
+          "version": 12,
+          "transparent": false
+        },
+        {
+          "material": 557,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Mesh",
+          "version": 12,
+          "transparent": false
+        }
+      ],
+      "gfx": {
+        "frames": 147,
+        "calls": 351,
+        "tris": 1643331,
+        "geos": 501,
+        "tex": 379,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          0,
+          -3.14
+        ],
+        "gestures": {
+          "lookaround": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": false,
+        "passes": [
+          "RenderPass",
+          "RenderPass",
+          "OutputPass",
+          "SMAAPass",
+          "fsr"
+        ],
+        "internal": [
+          986,
+          554
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "state": {
+        "internal": [
+          986,
+          554
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "scale": 0.77,
+        "dyn": 1,
+        "fsr": true,
+        "ao": false,
+        "aoDropped": false,
+        "maxSamples": 8,
+        "maxAniso": 16,
+        "passes": [
+          "RenderPass",
+          "RenderPass",
+          "OutputPass",
+          "SMAAPass",
+          "fsr"
+        ]
+      }
+    },
+    {
+      "preset": "high",
+      "warmupMs": 4642.800000011921,
+      "threeFramesMs": 51.69999998807907,
+      "links": [
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        }
+      ],
+      "selections": {
+        "MeshPhysicalMaterial": 3
+      },
+      "selectionFrames": [
+        {
+          "MeshPhysicalMaterial": 3
+        },
+        {},
+        {}
+      ],
+      "selectionObjects": [
+        {
+          "material": 555,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Group/Mesh",
+          "version": 30,
+          "transparent": false
+        },
+        {
+          "material": 556,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Mesh",
+          "version": 14,
+          "transparent": false
+        },
+        {
+          "material": 557,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Mesh",
+          "version": 14,
+          "transparent": false
+        }
+      ],
+      "gfx": {
+        "frames": 179,
+        "calls": 520,
+        "tris": 2295273,
+        "geos": 501,
+        "tex": 379,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          0,
+          -3.14
+        ],
+        "gestures": {
+          "lookaround": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "state": {
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "scale": 1,
+        "dyn": 1,
+        "fsr": false,
+        "ao": true,
+        "aoDropped": false,
+        "maxSamples": 8,
+        "maxAniso": 16,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ]
+      }
+    },
+    {
+      "preset": "ultra",
+      "warmupMs": 5496.400000035763,
+      "threeFramesMs": 78.89999997615814,
+      "links": [
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define USE_SIZEATTENUATION"
+            ],
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_CLEARCOAT",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_CLEARCOAT",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_UV ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_TRANSMISSION",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_TRANSMISSION",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHEEN",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_ALPHAMAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_METALNESSMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME tripo_material_023eea74-5b13-4795-9817-1964782d6a79",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_METALNESSMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_SKINNING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_ROUGHNESSMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE SpriteMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_ENVMAP",
+              "#define USE_SHEEN",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME flashlight-beam",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME flashlight-beam",
+              "#define USE_FOG",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME br-ceil",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME br-ceil",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_NORMALMAP",
+              "#define USE_NORMALMAP_TANGENTSPACE",
+              "#define USE_EMISSIVEMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshPhysicalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHEEN",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shaders",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SKINNING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshStandardMaterial",
+              "#define SHADER_NAME Material_0",
+              "#define USE_FOG",
+              "#define USE_MAP",
+              "#define USE_ENVMAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing ambient occlusion",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshNormalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshNormalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing ambient occlusion",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshNormalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshNormalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing ambient occlusion",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshNormalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshNormalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing ambient occlusion",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshNormalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SKINNING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshNormalMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing reflections",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing reflections",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing reflections",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing reflections",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SKINNING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshBasicMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SKINNING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SKINNING",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        }
+      ],
+      "selections": {
+        "MeshPhysicalMaterial": 3
+      },
+      "selectionFrames": [
+        {
+          "MeshPhysicalMaterial": 3
+        },
+        {},
+        {}
+      ],
+      "selectionObjects": [
+        {
+          "material": 555,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Group/Mesh",
+          "version": 32,
+          "transparent": false
+        },
+        {
+          "material": 556,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Mesh",
+          "version": 16,
+          "transparent": false
+        },
+        {
+          "material": 557,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Mesh",
+          "version": 16,
+          "transparent": false
+        }
+      ],
+      "gfx": {
+        "frames": 251,
+        "calls": 866,
+        "tris": 3599167,
+        "geos": 501,
+        "tex": 386,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          0,
+          -3.14
+        ],
+        "gestures": {
+          "lookaround": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "SSRPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass",
+          "SMAAPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "state": {
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "scale": 1,
+        "dyn": 1,
+        "fsr": false,
+        "ao": true,
+        "aoDropped": false,
+        "maxSamples": 8,
+        "maxAniso": 16,
+        "passes": [
+          "SSRPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass",
+          "SMAAPass"
+        ]
+      }
+    },
+    {
+      "preset": "bloom",
+      "warmupMs": 4665.399999976158,
+      "threeFramesMs": 45.19999998807907,
+      "links": [
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_MAP",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing shadows",
+          "flags": [
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_INSTANCING",
+              "#define USE_INSTANCING_COLOR",
+              "#define USE_SHADOWMAP"
+            ],
+            [
+              "#define SHADER_TYPE MeshDepthMaterial",
+              "#define SHADER_NAME ",
+              "#define USE_COLOR",
+              "#define USE_SHADOWMAP",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME ",
+              "#define OPAQUE"
+            ]
+          ]
+        },
+        {
+          "stage": "Preparing screen effects",
+          "flags": [
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ],
+            [
+              "#define SHADER_TYPE ShaderMaterial",
+              "#define SHADER_NAME "
+            ]
+          ]
+        }
+      ],
+      "selections": {
+        "MeshPhysicalMaterial": 3
+      },
+      "selectionFrames": [
+        {
+          "MeshPhysicalMaterial": 3
+        },
+        {},
+        {}
+      ],
+      "selectionObjects": [
+        {
+          "material": 555,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Group/Mesh",
+          "version": 34,
+          "transparent": false
+        },
+        {
+          "material": 556,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Mesh",
+          "version": 18,
+          "transparent": false
+        },
+        {
+          "material": 557,
+          "name": "",
+          "type": "MeshPhysicalMaterial",
+          "object": "",
+          "path": "Scene/PerspectiveCamera/Group/Group/Mesh",
+          "version": 18,
+          "transparent": false
+        }
+      ],
+      "gfx": {
+        "frames": 347,
+        "calls": 536,
+        "tris": 2295289,
+        "geos": 501,
+        "tex": 397,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          0,
+          -3.14
+        ],
+        "gestures": {
+          "lookaround": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "UnrealBloomPass",
+          "OutputPass",
+          "SMAAPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "state": {
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "scale": 1,
+        "dyn": 1,
+        "fsr": false,
+        "ao": true,
+        "aoDropped": false,
+        "maxSamples": 8,
+        "maxAniso": 16,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "UnrealBloomPass",
+          "OutputPass",
+          "SMAAPass"
+        ]
+      }
+    }
+  ],
+  "errors": []
+}

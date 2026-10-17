@@ -1,0 +1,4631 @@
+{
+  "at": "2026-10-16T10:53:33.731Z",
+  "url": "https://10.42.0.37:3161/",
+  "viewport": [
+    1280,
+    720
+  ],
+  "preset": "high",
+  "seed": 42,
+  "scenarios": [
+    {
+      "name": "floor",
+      "frames": 1168,
+      "medianMs": 16.69999999999891,
+      "p95Ms": 16.799999999999272,
+      "gfx": {
+        "frames": 1434,
+        "calls": 602,
+        "tris": 2298173,
+        "geos": 317,
+        "tex": 327,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.75291,
+        "TaskDuration": 2.07244
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 305.7,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 57,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 49.8,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 42.3,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 42.2,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 36.3,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 35.4,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 34.5,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 31,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 28.2,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 24.2,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 23.3,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 23,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 21.2,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 20.9,
+            "fn": "setValueV3f",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5234
+          },
+          {
+            "ms": 20,
+            "fn": "texSubImage2D",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 18.8,
+            "fn": "getProgramCacheKey",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7771
+          },
+          {
+            "ms": 17.8,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 16.6,
+            "fn": "copyArray",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5153
+          },
+          {
+            "ms": 16.6,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 15.6,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 13.4,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 13.3,
+            "fn": "refreshUniformsCommon",
+            "url": "vendor/three/build/three.module.js",
+            "line": 15103
+          },
+          {
+            "ms": 12.8,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1726,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1704.5,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1628.3,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 1410.6,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 1061.9,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 1060.8,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 525.1,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 516.2,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 516.2,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 512.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 480.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 447.1,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 444.9,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 442.7,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 433.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 415.8,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 342.7,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 342.1,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 305.7,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 269.9,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 266.5,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 226.7,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 198.9,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 192.1,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          }
+        ]
+      }
+    },
+    {
+      "name": "bar",
+      "frames": 1168,
+      "medianMs": 16.69999999999891,
+      "p95Ms": 16.700000000000728,
+      "gfx": {
+        "frames": 2922,
+        "calls": 151,
+        "tris": 585675,
+        "geos": 330,
+        "tex": 328,
+        "cam": [
+          5.83,
+          1.12,
+          6.79,
+          -0.05,
+          0
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "bar"
+        ],
+        "actorWork": {
+          "posed": 2,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.18357,
+        "TaskDuration": 1.39426
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 184.5,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 33.1,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 32.3,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 32.2,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 30.9,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 28.6,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 24.2,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 21,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 16.6,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 16.6,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 16.2,
+            "fn": "rot",
+            "url": "src/3d/plush.js",
+            "line": 671
+          },
+          {
+            "ms": 15.4,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 15.3,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 14.4,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 14.3,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 13.5,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 13.4,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          },
+          {
+            "ms": 12.2,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 12.1,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 11.9,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 11.1,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 11.1,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6182
+          },
+          {
+            "ms": 11,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          },
+          {
+            "ms": 11,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1122.9,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1119.7,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1084,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 797.1,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 512.8,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 510.6,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 274.4,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 273.3,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 272.2,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 270,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 263.3,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 205.6,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 184.5,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 174.5,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 171.6,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 168.3,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 164.8,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 155.7,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 152.3,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 151.2,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 147.1,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 145.6,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 107.3,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 107.2,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          }
+        ]
+      }
+    },
+    {
+      "name": "rest",
+      "frames": 1168,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.700000000000728,
+      "gfx": {
+        "frames": 4394,
+        "calls": 168,
+        "tris": 278206,
+        "geos": 351,
+        "tex": 328,
+        "cam": [
+          5.62,
+          1.12,
+          16.67,
+          -0.05,
+          -4.71
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1,
+          "tap": 1,
+          "laugh": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "rest"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.15317,
+        "TaskDuration": 1.34841
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 172.7,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 42.2,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 38.7,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 27.8,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 23.4,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 23.4,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 23.3,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 21.1,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 19.8,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          },
+          {
+            "ms": 19.7,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 19,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 16.7,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 15.4,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 14.7,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 14.6,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 13.5,
+            "fn": "setValueV3f",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5234
+          },
+          {
+            "ms": 13.5,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 13.4,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 13.3,
+            "fn": "multiplyMatrices",
+            "url": "vendor/three/build/three.core.js",
+            "line": 10407
+          },
+          {
+            "ms": 12.3,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 11.2,
+            "fn": "copyArray",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5153
+          },
+          {
+            "ms": 11.2,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 10.7,
+            "fn": "",
+            "url": "src/sim.js",
+            "line": 1731
+          },
+          {
+            "ms": 10.1,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1116.8,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1102.6,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1015.3,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 778,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 468.7,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 464.3,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 300.4,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 244.7,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 240.2,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 239.1,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 230.3,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 187.6,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 181,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 178.5,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 172.7,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 172.2,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 168.8,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 142.3,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 122.8,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 121.7,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 118.4,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 112.8,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 93.4,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 92.6,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          }
+        ]
+      }
+    },
+    {
+      "name": "arcade",
+      "frames": 1176,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.700000000000728,
+      "gfx": {
+        "frames": 5866,
+        "calls": 187,
+        "tris": 342143,
+        "geos": 358,
+        "tex": 328,
+        "cam": [
+          42.17,
+          1.12,
+          7.29,
+          -0.05,
+          0
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1,
+          "tap": 1,
+          "laugh": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "arcade"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.13485,
+        "TaskDuration": 1.35591
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 219.3,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 37.3,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 35.4,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 25.9,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 23.5,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 22,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 21.2,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 18.9,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 18,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 16.7,
+            "fn": "multiplyMatrices",
+            "url": "vendor/three/build/three.core.js",
+            "line": 10407
+          },
+          {
+            "ms": 16.7,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 14.4,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 14.4,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 13.4,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 13.3,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 12.4,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 12.4,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 12.3,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 12.3,
+            "fn": "texSubImage2D",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 12.3,
+            "fn": "setValueV3f",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5234
+          },
+          {
+            "ms": 12.1,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          },
+          {
+            "ms": 11.7,
+            "fn": "setListener",
+            "url": "src/audio.js",
+            "line": 152
+          },
+          {
+            "ms": 11.2,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          },
+          {
+            "ms": 11.1,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1088.9,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1077,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1009.3,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 779.4,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 476.5,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 469.8,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 297.5,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 247.2,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 242.8,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 237.2,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 227.1,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 219.3,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 178.6,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 176.8,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 173,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 172.3,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 165.8,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 140.4,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 130.7,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 122.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 122.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 116.1,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 109.1,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 108,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          }
+        ]
+      }
+    },
+    {
+      "name": "race",
+      "frames": 1168,
+      "medianMs": 16.700000000000728,
+      "p95Ms": 16.700000000000728,
+      "gfx": {
+        "frames": 7322,
+        "calls": 386,
+        "tris": 538615,
+        "geos": 376,
+        "tex": 328,
+        "cam": [
+          42,
+          1.12,
+          16.79,
+          -0.05,
+          0
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1,
+          "tap": 1,
+          "laugh": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "race",
+          "arcade"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.61834,
+        "TaskDuration": 1.78521
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 156.7,
+            "fn": "texSubImage2D",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 146.5,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 51.6,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 46.3,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 43.1,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 38.2,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 32.1,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 31.1,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 28.9,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 28.7,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 23.9,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 23.2,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 23.2,
+            "fn": "setValueV3f",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5234
+          },
+          {
+            "ms": 19.9,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 18.8,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          },
+          {
+            "ms": 16.7,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 16.7,
+            "fn": "refreshUniformsCommon",
+            "url": "vendor/three/build/three.module.js",
+            "line": 15103
+          },
+          {
+            "ms": 16.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 15.6,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 15.4,
+            "fn": "flatten",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5104
+          },
+          {
+            "ms": 15.4,
+            "fn": "setValueM4",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5359
+          },
+          {
+            "ms": 14.3,
+            "fn": "copyArray",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5153
+          },
+          {
+            "ms": 13.2,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 12.2,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1573,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1567.6,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1507.5,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 1284.1,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 927.9,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 922.4,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 684.3,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 680.9,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 673.3,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 650.1,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 535.7,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 351.8,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 339.1,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 252.7,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 246,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 179.5,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 178.4,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 177.3,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 168.8,
+            "fn": "setTexture2D",
+            "url": "vendor/three/build/three.module.js",
+            "line": 11558
+          },
+          {
+            "ms": 168.8,
+            "fn": "setValueT1",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5589
+          },
+          {
+            "ms": 165.1,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 164,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 156.7,
+            "fn": "texSubImage2D",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 156.7,
+            "fn": "texSubImage2D",
+            "url": "vendor/three/build/three.module.js",
+            "line": 10646
+          }
+        ]
+      }
+    },
+    {
+      "name": "slots",
+      "frames": 1168,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.700000000000728,
+      "gfx": {
+        "frames": 8786,
+        "calls": 176,
+        "tris": 486147,
+        "geos": 380,
+        "tex": 332,
+        "cam": [
+          21.67,
+          1.42,
+          24.55,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1,
+          "tap": 2,
+          "laugh": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "slots"
+        ],
+        "actorWork": {
+          "posed": 1,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.3101,
+        "TaskDuration": 1.50072
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 153.6,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 34.3,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 28.8,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 27.5,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 26.6,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 25.6,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 25.4,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 24.7,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 24.3,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 23.2,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 21,
+            "fn": "bufferSubData",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 20.3,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 18.7,
+            "fn": "setValueV3f",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5234
+          },
+          {
+            "ms": 17.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 16.7,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 15.5,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 15.5,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 15.4,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 15.1,
+            "fn": "updateMoves",
+            "url": "src/moves.js",
+            "line": 159
+          },
+          {
+            "ms": 14.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 14.5,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 12.3,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          },
+          {
+            "ms": 12.2,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 12.1,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1283.9,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1277.5,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1165.6,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 957,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 655.7,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 653.5,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 325.3,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 323.1,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 320.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 310.9,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 294.5,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 258.8,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 197.2,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 188.9,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 187.2,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 179,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 179,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 167.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 158.1,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 153.6,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 148,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 141.5,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 125,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 123.4,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          }
+        ]
+      }
+    },
+    {
+      "name": "vip",
+      "frames": 1168,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.700000000000728,
+      "gfx": {
+        "frames": 10250,
+        "calls": 125,
+        "tris": 457285,
+        "geos": 385,
+        "tex": 332,
+        "cam": [
+          41.67,
+          1.12,
+          24.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1,
+          "tap": 2,
+          "laugh": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.04057,
+        "TaskDuration": 1.26815
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 208.6,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 49.1,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 31.8,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 28.4,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 23.1,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 19.9,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 17.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 16.4,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 15.4,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 14.6,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 13.3,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 13.1,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 12.1,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 12.1,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 12,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          },
+          {
+            "ms": 11.9,
+            "fn": "multiplyMatrices",
+            "url": "vendor/three/build/three.core.js",
+            "line": 10407
+          },
+          {
+            "ms": 11.7,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 11.7,
+            "fn": "",
+            "url": "src/sim.js",
+            "line": 1731
+          },
+          {
+            "ms": 11,
+            "fn": "setValueV3f",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5234
+          },
+          {
+            "ms": 11,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          },
+          {
+            "ms": 10.9,
+            "fn": "",
+            "url": "src/3d/render3d.js",
+            "line": 170
+          },
+          {
+            "ms": 10.7,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 10.6,
+            "fn": "setListener",
+            "url": "src/audio.js",
+            "line": 152
+          },
+          {
+            "ms": 9.9,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1019.1,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1008.4,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 933.7,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 711.7,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 441.6,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 438.4,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 267.9,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 208.6,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 199.8,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 196.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 196.5,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 186.9,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 185.5,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 176.1,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 148,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 145.3,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 144.3,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 138.7,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 136.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 131.1,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 128.8,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 126.7,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 89.7,
+            "fn": "traverse",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12805
+          },
+          {
+            "ms": 89.7,
+            "fn": "gtao._overrideVisibility",
+            "url": "src/3d/render3d.js",
+            "line": 168
+          }
+        ]
+      }
+    },
+    {
+      "name": "floor-north",
+      "frames": 1168,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.799999999995634,
+      "gfx": {
+        "frames": 11706,
+        "calls": 766,
+        "tris": 3193475,
+        "geos": 401,
+        "tex": 332,
+        "cam": [
+          18.5,
+          1.12,
+          4.93,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1,
+          "tap": 2,
+          "laugh": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "rest",
+          "race",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.74369,
+        "TaskDuration": 1.88244
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 126.7,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 89.3,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 58.3,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 52.9,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 42.9,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 40.8,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 36.5,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 36.2,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 35.4,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 34.5,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 34.1,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 31.9,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 28.6,
+            "fn": "copyArray",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5153
+          },
+          {
+            "ms": 25.3,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 23,
+            "fn": "setValueV3f",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5234
+          },
+          {
+            "ms": 20.8,
+            "fn": "refreshUniformsCommon",
+            "url": "vendor/three/build/three.module.js",
+            "line": 15103
+          },
+          {
+            "ms": 18,
+            "fn": "setFromRotationMatrix",
+            "url": "vendor/three/build/three.core.js",
+            "line": 11367
+          },
+          {
+            "ms": 17.7,
+            "fn": "flatten",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5104
+          },
+          {
+            "ms": 16.6,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 15,
+            "fn": "rot",
+            "url": "src/3d/plush.js",
+            "line": 671
+          },
+          {
+            "ms": 14.3,
+            "fn": "getProgramCacheKey",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7771
+          },
+          {
+            "ms": 13.8,
+            "fn": "setFromRotationMatrix",
+            "url": "vendor/three/build/three.core.js",
+            "line": 11367
+          },
+          {
+            "ms": 13.3,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 13.2,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1690.6,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1689.6,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1656.4,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 1488.1,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 1065.8,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 1065.8,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 555.1,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 554,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 548.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 528.7,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 418.9,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 417.5,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 396.4,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 394.3,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 394.3,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 391,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 362.2,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 361.6,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 361.6,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 350.1,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 301,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 301,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 296.6,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 282.3,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          }
+        ]
+      }
+    },
+    {
+      "name": "lights-cooldown",
+      "frames": 1168,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.700000000004366,
+      "gfx": {
+        "frames": 13170,
+        "calls": 605,
+        "tris": 2338755,
+        "geos": 401,
+        "tex": 332,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1,
+          "tap": 3,
+          "laugh": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.7118,
+        "TaskDuration": 1.8991
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 182.8,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 50.7,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 49.8,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 45.3,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 36.3,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 34.1,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 33.2,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 33.1,
+            "fn": "copyArray",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5153
+          },
+          {
+            "ms": 33,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 31.2,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 27.7,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 23.1,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 21,
+            "fn": "getProgramCacheKey",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7771
+          },
+          {
+            "ms": 20.9,
+            "fn": "setValueV3f",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5234
+          },
+          {
+            "ms": 20.9,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 19.8,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 18.6,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 18.5,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 17.7,
+            "fn": "multiplyMatrices",
+            "url": "vendor/three/build/three.core.js",
+            "line": 10407
+          },
+          {
+            "ms": 17.7,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 17.6,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 16.7,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 16.3,
+            "fn": "updateMatrixWorld",
+            "url": "vendor/three/build/three.core.js",
+            "line": 12900
+          },
+          {
+            "ms": 16,
+            "fn": "update",
+            "url": "src/3d/plush.js",
+            "line": 678
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1664.5,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1657,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1617.4,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 1421.5,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 1080,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 1078.9,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 519.2,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 516,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 516,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 509,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 461.2,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 450.7,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 443,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 439.7,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 436.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 416.6,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 339.3,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 329.3,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 279.7,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 279.7,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 213.1,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 206.4,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 204.2,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 199.8,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          }
+        ]
+      }
+    },
+    {
+      "name": "backrooms",
+      "frames": 1168,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.700000000004366,
+      "gfx": {
+        "frames": 14626,
+        "calls": 462,
+        "tris": 1662575,
+        "geos": 407,
+        "tex": 332,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1,
+          "tap": 3,
+          "laugh": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.66608,
+        "TaskDuration": 1.84228
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 169.3,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 57,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 46.6,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 45.4,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 38,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 37.8,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 34.1,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 30.2,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 30,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 28.7,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 26.7,
+            "fn": "texSubImage2D",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 26,
+            "fn": "rot",
+            "url": "src/3d/plush.js",
+            "line": 671
+          },
+          {
+            "ms": 23.3,
+            "fn": "setFromRotationMatrix",
+            "url": "vendor/three/build/three.core.js",
+            "line": 11367
+          },
+          {
+            "ms": 20.9,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 20.9,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 20,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 20,
+            "fn": "copyArray",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5153
+          },
+          {
+            "ms": 18.9,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 18.2,
+            "fn": "update",
+            "url": "src/3d/plush.js",
+            "line": 678
+          },
+          {
+            "ms": 17.8,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 16.7,
+            "fn": "getProgramCacheKey",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7771
+          },
+          {
+            "ms": 16.7,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 16.7,
+            "fn": "multiplyMatrices",
+            "url": "vendor/three/build/three.core.js",
+            "line": 10407
+          },
+          {
+            "ms": 16.6,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1601.2,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1598.1,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1587.3,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 1376.1,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 1057,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 1057,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 560.2,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 555.7,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 554.6,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 546.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 515.1,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 500.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 382.9,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 382.9,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 381.8,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 371.9,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 312.5,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 282.2,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 246.9,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 246.9,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 234.3,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 221.6,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 215.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 212.6,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          }
+        ]
+      }
+    },
+    {
+      "name": "ghost-camera",
+      "frames": 1168,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.700000000004366,
+      "gfx": {
+        "frames": 16082,
+        "calls": 999,
+        "tris": 3954807,
+        "geos": 432,
+        "tex": 333,
+        "cam": [
+          11.33,
+          3.25,
+          1,
+          -0.18,
+          -2.32
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1,
+          "tap": 4,
+          "laugh": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "bar",
+          "rest",
+          "arcade",
+          "race",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 35,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [],
+      "metrics": {
+        "LayoutCount": 0,
+        "RecalcStyleCount": 0,
+        "LayoutDuration": 0,
+        "RecalcStyleDuration": 0,
+        "ScriptDuration": 1.93328,
+        "TaskDuration": 2.12775
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 189.9,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 95.2,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 62.1,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 59.4,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 47.4,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 45.3,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 41.2,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 37.4,
+            "fn": "copyArray",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5153
+          },
+          {
+            "ms": 33.2,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 32.2,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 32,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 30.7,
+            "fn": "setValueV3f",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5234
+          },
+          {
+            "ms": 29.9,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 29.8,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 25.9,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 24.3,
+            "fn": "refreshUniformsCommon",
+            "url": "vendor/three/build/three.module.js",
+            "line": 15103
+          },
+          {
+            "ms": 23.5,
+            "fn": "bindVertexArray",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 23.3,
+            "fn": "copyArray",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5153
+          },
+          {
+            "ms": 22.2,
+            "fn": "getProgramCacheKey",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7771
+          },
+          {
+            "ms": 22.2,
+            "fn": "flatten",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5104
+          },
+          {
+            "ms": 21,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 19.9,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6182
+          },
+          {
+            "ms": 19.8,
+            "fn": "uniformMatrix4fv",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 18.8,
+            "fn": "setValueM4",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5359
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1884.3,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1883.2,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1854.1,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 1686.7,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 1135.6,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 1134.5,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 706.7,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 705.6,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 697.7,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 674.6,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 547.7,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 522.4,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 489.2,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 487,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 416.7,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 413.4,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 404.6,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 391.4,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 331,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 329.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 329.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 328.7,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 310.3,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 283.2,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          }
+        ]
+      }
+    },
+    {
+      "name": "crowd-running",
+      "frames": 1168,
+      "medianMs": 16.69999999999709,
+      "p95Ms": 16.80000000000291,
+      "gfx": {
+        "frames": 17546,
+        "calls": 626,
+        "tris": 2428251,
+        "geos": 433,
+        "tex": 332,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {
+          "wave": 1,
+          "pour": 1,
+          "tap": 4,
+          "laugh": 1,
+          "chips": 1
+        },
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 32,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "mutations": [
+        [
+          "killerBar:childList",
+          18
+        ],
+        [
+          "closeT:childList",
+          3
+        ],
+        [
+          "thirstFill:attributes",
+          3
+        ],
+        [
+          "hungerFill:attributes",
+          1
+        ],
+        [
+          "bankAmt:childList",
+          1
+        ],
+        [
+          "bankDelta:childList",
+          1
+        ],
+        [
+          "bankDelta:attributes",
+          1
+        ],
+        [
+          "bankFill:attributes",
+          1
+        ],
+        [
+          "lead:childList",
+          1
+        ]
+      ],
+      "metrics": {
+        "LayoutCount": 4,
+        "RecalcStyleCount": 25,
+        "LayoutDuration": 0.00522,
+        "RecalcStyleDuration": 0.00144,
+        "ScriptDuration": 1.73655,
+        "TaskDuration": 1.9383
+      },
+      "profile": {
+        "self": [
+          {
+            "ms": 181.2,
+            "fn": "(program)",
+            "url": "",
+            "line": 0
+          },
+          {
+            "ms": 56.1,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 49.6,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 48.9,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 37.8,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 35.7,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 34.2,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 31.1,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 30.9,
+            "fn": "copyArray",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5153
+          },
+          {
+            "ms": 27.4,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 26.2,
+            "fn": "rot",
+            "url": "src/3d/plush.js",
+            "line": 671
+          },
+          {
+            "ms": 25.6,
+            "fn": "setValueV3f",
+            "url": "vendor/three/build/three.module.js",
+            "line": 5234
+          },
+          {
+            "ms": 24.1,
+            "fn": "getParameters",
+            "url": "vendor/three/build/three.module.js",
+            "line": 7429
+          },
+          {
+            "ms": 22.1,
+            "fn": "projectObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17825
+          },
+          {
+            "ms": 22,
+            "fn": "upload",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6198
+          },
+          {
+            "ms": 21.3,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 21.1,
+            "fn": "getProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18149
+          },
+          {
+            "ms": 20.2,
+            "fn": "setFromRotationMatrix",
+            "url": "vendor/three/build/three.core.js",
+            "line": 11367
+          },
+          {
+            "ms": 19.5,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 18.9,
+            "fn": "setValue",
+            "url": "vendor/three/build/three.module.js",
+            "line": 6047
+          },
+          {
+            "ms": 18.3,
+            "fn": "setFromRotationMatrix",
+            "url": "vendor/three/build/three.core.js",
+            "line": 11367
+          },
+          {
+            "ms": 16.8,
+            "fn": "update",
+            "url": "src/3d/plush.js",
+            "line": 678
+          },
+          {
+            "ms": 16.6,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 14,
+            "fn": "refreshUniformsCommon",
+            "url": "vendor/three/build/three.module.js",
+            "line": 15103
+          }
+        ],
+        "inclusive": [
+          {
+            "ms": 1664.2,
+            "fn": "frame",
+            "url": "src/main.js",
+            "line": 934
+          },
+          {
+            "ms": 1662,
+            "fn": "frameGame",
+            "url": "src/main.js",
+            "line": 730
+          },
+          {
+            "ms": 1616,
+            "fn": "draw",
+            "url": "src/3d/render3d.js",
+            "line": 496
+          },
+          {
+            "ms": 1386.5,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/EffectComposer.js",
+            "line": 214
+          },
+          {
+            "ms": 1043.3,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/RenderPass.js",
+            "line": 121
+          },
+          {
+            "ms": 1040,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 484.5,
+            "fn": "WebGLShadowMap.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9141
+          },
+          {
+            "ms": 481.2,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 480,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 477.6,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 468.7,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 467.6,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 458.7,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 445.4,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          },
+          {
+            "ms": 405,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 375.8,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 9556
+          },
+          {
+            "ms": 348.1,
+            "fn": "setProgram",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18328
+          },
+          {
+            "ms": 341,
+            "fn": "render",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 498
+          },
+          {
+            "ms": 308.8,
+            "fn": "WebGLRenderer.render",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17603
+          },
+          {
+            "ms": 308.8,
+            "fn": "_renderOverride",
+            "url": "vendor/three/addons/postprocessing/GTAOPass.js",
+            "line": 621
+          },
+          {
+            "ms": 229.6,
+            "fn": "renderScene",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17943
+          },
+          {
+            "ms": 227.4,
+            "fn": "renderObjects",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18091
+          },
+          {
+            "ms": 221.9,
+            "fn": "renderObject",
+            "url": "vendor/three/build/three.module.js",
+            "line": 18118
+          },
+          {
+            "ms": 211.9,
+            "fn": "WebGLRenderer.renderBufferDirect",
+            "url": "vendor/three/build/three.module.js",
+            "line": 17178
+          }
+        ]
+      }
+    }
+  ],
+  "restartMemory": [
+    {
+      "frames": 17674,
+      "calls": 604,
+      "tris": 2314173,
+      "geos": 433,
+      "tex": 308,
+      "cam": [
+        21.67,
+        1.12,
+        9.88,
+        0,
+        -3.14
+      ],
+      "gestures": {
+        "wave": 1,
+        "pour": 1,
+        "tap": 4,
+        "laugh": 1,
+        "chips": 1
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "slots",
+        "vip"
+      ],
+      "actorWork": {
+        "posed": 34,
+        "total": 37
+      },
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1,
+      "heap": 64000000
+    },
+    {
+      "frames": 17786,
+      "calls": 602,
+      "tris": 2298173,
+      "geos": 433,
+      "tex": 308,
+      "cam": [
+        21.67,
+        1.12,
+        9.88,
+        0,
+        -3.14
+      ],
+      "gestures": {
+        "wave": 1,
+        "pour": 1,
+        "tap": 4,
+        "laugh": 1,
+        "chips": 1
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "slots",
+        "vip"
+      ],
+      "actorWork": {
+        "posed": 34,
+        "total": 37
+      },
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1,
+      "heap": 64000000
+    },
+    {
+      "frames": 17898,
+      "calls": 602,
+      "tris": 2298173,
+      "geos": 433,
+      "tex": 308,
+      "cam": [
+        21.67,
+        1.12,
+        9.88,
+        0,
+        -3.14
+      ],
+      "gestures": {
+        "wave": 1,
+        "pour": 1,
+        "tap": 4,
+        "laugh": 1,
+        "chips": 1
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "slots",
+        "vip"
+      ],
+      "actorWork": {
+        "posed": 34,
+        "total": 37
+      },
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1,
+      "heap": 64000000
+    },
+    {
+      "frames": 18010,
+      "calls": 604,
+      "tris": 2314173,
+      "geos": 433,
+      "tex": 308,
+      "cam": [
+        21.67,
+        1.12,
+        9.88,
+        0,
+        -3.14
+      ],
+      "gestures": {
+        "wave": 1,
+        "pour": 1,
+        "tap": 4,
+        "laugh": 1,
+        "chips": 1
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "slots",
+        "vip"
+      ],
+      "actorWork": {
+        "posed": 34,
+        "total": 37
+      },
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1,
+      "heap": 64000000
+    },
+    {
+      "frames": 18122,
+      "calls": 600,
+      "tris": 2298169,
+      "geos": 433,
+      "tex": 307,
+      "cam": [
+        21.67,
+        1.12,
+        9.88,
+        0,
+        -3.14
+      ],
+      "gestures": {
+        "wave": 1,
+        "pour": 1,
+        "tap": 4,
+        "laugh": 1,
+        "chips": 1
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "slots",
+        "vip"
+      ],
+      "actorWork": {
+        "posed": 34,
+        "total": 37
+      },
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1,
+      "heap": 64000000
+    },
+    {
+      "frames": 18226,
+      "calls": 604,
+      "tris": 2314173,
+      "geos": 433,
+      "tex": 308,
+      "cam": [
+        21.67,
+        1.12,
+        9.88,
+        0,
+        -3.14
+      ],
+      "gestures": {
+        "wave": 1,
+        "pour": 1,
+        "tap": 4,
+        "laugh": 1,
+        "chips": 1,
+        "shrug": 1
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "slots",
+        "vip"
+      ],
+      "actorWork": {
+        "posed": 34,
+        "total": 37
+      },
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1,
+      "heap": 64000000
+    }
+  ],
+  "resources": {
+    "requests": 250,
+    "repeated": [
+      [
+        "/assets/art2/loading-arrival-v1.webp",
+        [
+          {
+            "bytes": 235218,
+            "at": 23.100000023841858
+          },
+          {
+            "bytes": 235218,
+            "at": 825.2000000476837
+          }
+        ]
+      ]
+    ],
+    "bytes": 34486425
+  },
+  "errors": [],
+  "setupCorrections": "Original blackjack position was a floor view without a joined seat, now named floor-north. Original blackout action was still on cooldown, now named lights-cooldown. Actual joined blackjack, meeting and blackout are covered by the final report."
+}

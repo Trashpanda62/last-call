@@ -1,0 +1,1800 @@
+{
+  "at": "2026-10-16T12:25:01.319Z",
+  "rows": [
+    {
+      "name": "floor",
+      "available": true,
+      "valid": true,
+      "device": "ANGLE (NVIDIA, Vulkan 1.4.312 (NVIDIA Tesla P100-PCIE-16GB (0x000015F8)), NVIDIA)",
+      "gfx": {
+        "frames": 348,
+        "calls": 525,
+        "tris": 2295445,
+        "geos": 522,
+        "tex": 372,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "cpuMedianMs": 10.100000023841858,
+      "gpu": [
+        {
+          "key": "passes/scene-and-shadow",
+          "samples": 8,
+          "medianMs": 2.661472,
+          "totalMs": 21.462048
+        },
+        {
+          "key": "passes/ao-normal",
+          "samples": 8,
+          "medianMs": 0.262016,
+          "totalMs": 4.279456000000001
+        },
+        {
+          "key": "passes/post",
+          "samples": 40,
+          "medianMs": 0.095392,
+          "totalMs": 3.680384
+        },
+        {
+          "key": "passes/hands",
+          "samples": 8,
+          "medianMs": 0.106496,
+          "totalMs": 52.55712
+        },
+        {
+          "key": "shadow/shadow",
+          "samples": 8,
+          "medianMs": 0.344192,
+          "totalMs": 2.748768
+        }
+      ],
+      "frames": [
+        {
+          "mode": "passes",
+          "frame": 1,
+          "cpuMs": 13.700000047683716
+        },
+        {
+          "mode": "passes",
+          "frame": 2,
+          "cpuMs": 10.100000023841858
+        },
+        {
+          "mode": "passes",
+          "frame": 3,
+          "cpuMs": 9.5
+        },
+        {
+          "mode": "passes",
+          "frame": 4,
+          "cpuMs": 9.899999976158142
+        },
+        {
+          "mode": "passes",
+          "frame": 5,
+          "cpuMs": 9.700000047683716
+        },
+        {
+          "mode": "passes",
+          "frame": 6,
+          "cpuMs": 11.400000035762787
+        },
+        {
+          "mode": "passes",
+          "frame": 7,
+          "cpuMs": 11.800000011920929
+        },
+        {
+          "mode": "passes",
+          "frame": 8,
+          "cpuMs": 9.5
+        },
+        {
+          "mode": "shadow",
+          "frame": 9,
+          "cpuMs": 8.400000035762787
+        },
+        {
+          "mode": "shadow",
+          "frame": 10,
+          "cpuMs": 8.199999988079071
+        },
+        {
+          "mode": "shadow",
+          "frame": 11,
+          "cpuMs": 8.199999988079071
+        },
+        {
+          "mode": "shadow",
+          "frame": 12,
+          "cpuMs": 8.299999952316284
+        },
+        {
+          "mode": "shadow",
+          "frame": 13,
+          "cpuMs": 8.699999988079071
+        },
+        {
+          "mode": "shadow",
+          "frame": 14,
+          "cpuMs": 8.5
+        },
+        {
+          "mode": "shadow",
+          "frame": 15,
+          "cpuMs": 10.199999988079071
+        },
+        {
+          "mode": "shadow",
+          "frame": 16,
+          "cpuMs": 9.199999988079071
+        }
+      ],
+      "queries": [
+        {
+          "kind": "scene-and-shadow",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 2.648384
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 1.400256
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.139136
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.085696
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.103648
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.096704
+        },
+        {
+          "kind": "hands",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.107008
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.038048
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 2.650496
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 1.184096
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.139808
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.085472
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.101568
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.096096
+        },
+        {
+          "kind": "hands",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 13.1568
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.039072
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 2.864352
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.262016
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.1368
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.084416
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.101504
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.094976
+        },
+        {
+          "kind": "hands",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.104672
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.038144
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 2.66432
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.242592
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.13968
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.084736
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.101248
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.09504
+        },
+        {
+          "kind": "hands",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.105088
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.036704
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 2.644224
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.48256
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.137696
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.086432
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.101792
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.09552
+        },
+        {
+          "kind": "hands",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 38.766144
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.0376
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 2.668448
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.2256
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.138944
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.084032
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.100928
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.095392
+        },
+        {
+          "kind": "hands",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.105248
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.03808
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 2.661472
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.240512
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.143712
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.092928
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.101216
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.094912
+        },
+        {
+          "kind": "hands",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.106496
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.0368
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 2.660352
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.241824
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.1376
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.084576
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.100832
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.094496
+        },
+        {
+          "kind": "hands",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.105664
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.0384
+        },
+        {
+          "kind": "shadow",
+          "frame": 9,
+          "mode": "shadow",
+          "ms": 0.344192
+        },
+        {
+          "kind": "shadow",
+          "frame": 10,
+          "mode": "shadow",
+          "ms": 0.344704
+        },
+        {
+          "kind": "shadow",
+          "frame": 11,
+          "mode": "shadow",
+          "ms": 0.345216
+        },
+        {
+          "kind": "shadow",
+          "frame": 12,
+          "mode": "shadow",
+          "ms": 0.34576
+        },
+        {
+          "kind": "shadow",
+          "frame": 13,
+          "mode": "shadow",
+          "ms": 0.342848
+        },
+        {
+          "kind": "shadow",
+          "frame": 14,
+          "mode": "shadow",
+          "ms": 0.343008
+        },
+        {
+          "kind": "shadow",
+          "frame": 15,
+          "mode": "shadow",
+          "ms": 0.342016
+        },
+        {
+          "kind": "shadow",
+          "frame": 16,
+          "mode": "shadow",
+          "ms": 0.341024
+        }
+      ]
+    },
+    {
+      "name": "bar",
+      "available": true,
+      "valid": true,
+      "device": "ANGLE (NVIDIA, Vulkan 1.4.312 (NVIDIA Tesla P100-PCIE-16GB (0x000015F8)), NVIDIA)",
+      "gfx": {
+        "frames": 636,
+        "calls": 131,
+        "tris": 578579,
+        "geos": 522,
+        "tex": 372,
+        "cam": [
+          5.83,
+          1.12,
+          6.79,
+          -0.05,
+          0
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "bar"
+        ],
+        "actorWork": {
+          "posed": 2,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "cpuMedianMs": 3.199999988079071,
+      "gpu": [
+        {
+          "key": "passes/scene-and-shadow",
+          "samples": 8,
+          "medianMs": 1.536448,
+          "totalMs": 12.284319999999997
+        },
+        {
+          "key": "passes/ao-normal",
+          "samples": 8,
+          "medianMs": 0.097792,
+          "totalMs": 1.263072
+        },
+        {
+          "key": "passes/post",
+          "samples": 40,
+          "medianMs": 0.095776,
+          "totalMs": 3.6396479999999998
+        },
+        {
+          "key": "passes/hands",
+          "samples": 8,
+          "medianMs": 0.104608,
+          "totalMs": 0.8508800000000001
+        },
+        {
+          "key": "shadow/shadow",
+          "samples": 8,
+          "medianMs": 0.081856,
+          "totalMs": 0.6553279999999999
+        }
+      ],
+      "frames": [
+        {
+          "mode": "passes",
+          "frame": 1,
+          "cpuMs": 3.199999988079071
+        },
+        {
+          "mode": "passes",
+          "frame": 2,
+          "cpuMs": 3.100000023841858
+        },
+        {
+          "mode": "passes",
+          "frame": 3,
+          "cpuMs": 4
+        },
+        {
+          "mode": "passes",
+          "frame": 4,
+          "cpuMs": 3.100000023841858
+        },
+        {
+          "mode": "passes",
+          "frame": 5,
+          "cpuMs": 3.099999964237213
+        },
+        {
+          "mode": "passes",
+          "frame": 6,
+          "cpuMs": 3.100000023841858
+        },
+        {
+          "mode": "passes",
+          "frame": 7,
+          "cpuMs": 3.200000047683716
+        },
+        {
+          "mode": "passes",
+          "frame": 8,
+          "cpuMs": 3.400000035762787
+        },
+        {
+          "mode": "shadow",
+          "frame": 9,
+          "cpuMs": 3.400000035762787
+        },
+        {
+          "mode": "shadow",
+          "frame": 10,
+          "cpuMs": 3.800000011920929
+        },
+        {
+          "mode": "shadow",
+          "frame": 11,
+          "cpuMs": 4
+        },
+        {
+          "mode": "shadow",
+          "frame": 12,
+          "cpuMs": 4.199999988079071
+        },
+        {
+          "mode": "shadow",
+          "frame": 13,
+          "cpuMs": 4.599999964237213
+        },
+        {
+          "mode": "shadow",
+          "frame": 14,
+          "cpuMs": 7.699999988079071
+        },
+        {
+          "mode": "shadow",
+          "frame": 15,
+          "cpuMs": 4.600000023841858
+        },
+        {
+          "mode": "shadow",
+          "frame": 16,
+          "cpuMs": 4.599999964237213
+        }
+      ],
+      "queries": [
+        {
+          "kind": "scene-and-shadow",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 1.534016
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.598688
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.138464
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.08384
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.10016
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.095808
+        },
+        {
+          "kind": "hands",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.104416
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.0368
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 1.544352
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.097376
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.13808
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.085472
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.100256
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.094464
+        },
+        {
+          "kind": "hands",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.105504
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.038112
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 1.5352
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.096736
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.136384
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.085536
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.099456
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.095776
+        },
+        {
+          "kind": "hands",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.104352
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.0376
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 1.530784
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.098784
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.137312
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.084736
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.100128
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.096256
+        },
+        {
+          "kind": "hands",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.104032
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.038176
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 1.536448
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.09568
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.135936
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.08544
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.099808
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.095104
+        },
+        {
+          "kind": "hands",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.104192
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.036704
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 1.537664
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.097792
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.138752
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.084416
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.100768
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.09552
+        },
+        {
+          "kind": "hands",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.10496
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.0368
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 1.527776
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.099616
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.136
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.0856
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.101376
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.096096
+        },
+        {
+          "kind": "hands",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.118816
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.037088
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 1.53808
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.0784
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.134528
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.08512
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.100128
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.095008
+        },
+        {
+          "kind": "hands",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.104608
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.03664
+        },
+        {
+          "kind": "shadow",
+          "frame": 9,
+          "mode": "shadow",
+          "ms": 0.083904
+        },
+        {
+          "kind": "shadow",
+          "frame": 10,
+          "mode": "shadow",
+          "ms": 0.081696
+        },
+        {
+          "kind": "shadow",
+          "frame": 11,
+          "mode": "shadow",
+          "ms": 0.081952
+        },
+        {
+          "kind": "shadow",
+          "frame": 12,
+          "mode": "shadow",
+          "ms": 0.080608
+        },
+        {
+          "kind": "shadow",
+          "frame": 13,
+          "mode": "shadow",
+          "ms": 0.081856
+        },
+        {
+          "kind": "shadow",
+          "frame": 14,
+          "mode": "shadow",
+          "ms": 0.081408
+        },
+        {
+          "kind": "shadow",
+          "frame": 15,
+          "mode": "shadow",
+          "ms": 0.082208
+        },
+        {
+          "kind": "shadow",
+          "frame": 16,
+          "mode": "shadow",
+          "ms": 0.081696
+        }
+      ]
+    },
+    {
+      "name": "ghost",
+      "available": true,
+      "valid": true,
+      "device": "ANGLE (NVIDIA, Vulkan 1.4.312 (NVIDIA Tesla P100-PCIE-16GB (0x000015F8)), NVIDIA)",
+      "gfx": {
+        "frames": 916,
+        "calls": 900,
+        "tris": 3942779,
+        "geos": 522,
+        "tex": 373,
+        "cam": [
+          11.33,
+          3.25,
+          1,
+          -0.18,
+          -2.32
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "bar",
+          "rest",
+          "arcade",
+          "race",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 35,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      },
+      "cpuMedianMs": 13.300000011920929,
+      "gpu": [
+        {
+          "key": "passes/scene-and-shadow",
+          "samples": 8,
+          "medianMs": 3.66,
+          "totalMs": 30.143072
+        },
+        {
+          "key": "passes/ao-normal",
+          "samples": 8,
+          "medianMs": 0.522016,
+          "totalMs": 5.272735999999999
+        },
+        {
+          "key": "passes/post",
+          "samples": 40,
+          "medianMs": 0.096224,
+          "totalMs": 3.7305600000000005
+        },
+        {
+          "key": "passes/hands",
+          "samples": 8,
+          "medianMs": 0.066496,
+          "totalMs": 0.53072
+        },
+        {
+          "key": "shadow/shadow",
+          "samples": 8,
+          "medianMs": 0.277376,
+          "totalMs": 2.21936
+        }
+      ],
+      "frames": [
+        {
+          "mode": "passes",
+          "frame": 1,
+          "cpuMs": 27.200000047683716
+        },
+        {
+          "mode": "passes",
+          "frame": 2,
+          "cpuMs": 13.300000011920929
+        },
+        {
+          "mode": "passes",
+          "frame": 3,
+          "cpuMs": 14
+        },
+        {
+          "mode": "passes",
+          "frame": 4,
+          "cpuMs": 13
+        },
+        {
+          "mode": "passes",
+          "frame": 5,
+          "cpuMs": 11.899999976158142
+        },
+        {
+          "mode": "passes",
+          "frame": 6,
+          "cpuMs": 13.400000035762787
+        },
+        {
+          "mode": "passes",
+          "frame": 7,
+          "cpuMs": 11.699999988079071
+        },
+        {
+          "mode": "passes",
+          "frame": 8,
+          "cpuMs": 11.900000035762787
+        },
+        {
+          "mode": "shadow",
+          "frame": 9,
+          "cpuMs": 12.099999964237213
+        },
+        {
+          "mode": "shadow",
+          "frame": 10,
+          "cpuMs": 11.400000035762787
+        },
+        {
+          "mode": "shadow",
+          "frame": 11,
+          "cpuMs": 11.5
+        },
+        {
+          "mode": "shadow",
+          "frame": 12,
+          "cpuMs": 12.5
+        },
+        {
+          "mode": "shadow",
+          "frame": 13,
+          "cpuMs": 11.800000011920929
+        },
+        {
+          "mode": "shadow",
+          "frame": 14,
+          "cpuMs": 11.200000047683716
+        },
+        {
+          "mode": "shadow",
+          "frame": 15,
+          "cpuMs": 11.300000011920929
+        },
+        {
+          "mode": "shadow",
+          "frame": 16,
+          "cpuMs": 11.199999988079071
+        }
+      ],
+      "queries": [
+        {
+          "kind": "scene-and-shadow",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 4.16256
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 1.624096
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.144416
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.084928
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.10144
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.09648
+        },
+        {
+          "kind": "hands",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.066848
+        },
+        {
+          "kind": "post",
+          "frame": 1,
+          "mode": "passes",
+          "ms": 0.038496
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 3.63776
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.523104
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.14384
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.085344
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.101632
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.096224
+        },
+        {
+          "kind": "hands",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.065952
+        },
+        {
+          "kind": "post",
+          "frame": 2,
+          "mode": "passes",
+          "ms": 0.037152
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 3.831232
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.522016
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.14768
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.09088
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.102784
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.095776
+        },
+        {
+          "kind": "hands",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.06656
+        },
+        {
+          "kind": "post",
+          "frame": 3,
+          "mode": "passes",
+          "ms": 0.03712
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 3.66
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.520064
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.146272
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.084288
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.101728
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.096672
+        },
+        {
+          "kind": "hands",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.066112
+        },
+        {
+          "kind": "post",
+          "frame": 4,
+          "mode": "passes",
+          "ms": 0.037312
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 3.6312
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.520416
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.144896
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.085984
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.1008
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.096448
+        },
+        {
+          "kind": "hands",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.065792
+        },
+        {
+          "kind": "post",
+          "frame": 5,
+          "mode": "passes",
+          "ms": 0.0376
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 4.010368
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.524352
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.144224
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.085376
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.103008
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.094816
+        },
+        {
+          "kind": "hands",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.066656
+        },
+        {
+          "kind": "post",
+          "frame": 6,
+          "mode": "passes",
+          "ms": 0.037024
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 3.601728
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.51744
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.144512
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.085312
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.101792
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.096064
+        },
+        {
+          "kind": "hands",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.066496
+        },
+        {
+          "kind": "post",
+          "frame": 7,
+          "mode": "passes",
+          "ms": 0.036896
+        },
+        {
+          "kind": "scene-and-shadow",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 3.608224
+        },
+        {
+          "kind": "ao-normal",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.521248
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.14624
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.08448
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.101472
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.095936
+        },
+        {
+          "kind": "hands",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.066304
+        },
+        {
+          "kind": "post",
+          "frame": 8,
+          "mode": "passes",
+          "ms": 0.037216
+        },
+        {
+          "kind": "shadow",
+          "frame": 9,
+          "mode": "shadow",
+          "ms": 0.277216
+        },
+        {
+          "kind": "shadow",
+          "frame": 10,
+          "mode": "shadow",
+          "ms": 0.277376
+        },
+        {
+          "kind": "shadow",
+          "frame": 11,
+          "mode": "shadow",
+          "ms": 0.276704
+        },
+        {
+          "kind": "shadow",
+          "frame": 12,
+          "mode": "shadow",
+          "ms": 0.276576
+        },
+        {
+          "kind": "shadow",
+          "frame": 13,
+          "mode": "shadow",
+          "ms": 0.277152
+        },
+        {
+          "kind": "shadow",
+          "frame": 14,
+          "mode": "shadow",
+          "ms": 0.278688
+        },
+        {
+          "kind": "shadow",
+          "frame": 15,
+          "mode": "shadow",
+          "ms": 0.27744
+        },
+        {
+          "kind": "shadow",
+          "frame": 16,
+          "mode": "shadow",
+          "ms": 0.278208
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "note": "GPU elapsed queries can include CPU submission gaps; these samples do not alone identify an exclusive GPU bottleneck."
+}

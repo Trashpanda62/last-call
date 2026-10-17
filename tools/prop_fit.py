@@ -101,9 +101,19 @@ if high:
     high.data.update()
 size = [round(ext[0] * s[0], 3), round(ext[2] * s[2], 3), round(ext[1] * s[1], 3)]
 
-# Smooth normals that keep the hard edges Meshy baked in.
+# Smooth by angle, flat parts weighted flat. The seam weld above also welds the hard edges Meshy split, and the
+# decimation rounds each bevel into a sliver or two, so plain smooth shading averaged every corner of a flat panel with
+# its edges (light streaks and gradients across the sink doors, slot screens, the bar front). Edges sharper than SHARP
+# degrees stay hard (the glTF export splits them) and every other corner takes its faces' normals weighted by area, so
+# a big flat panel keeps its own normal and the curved parts stay smooth. 2026-10-15: 35 was the widest angle that kept
+# the sink doors clean; 45 and up let a diagonal streak back in, 30 only adds vertices.
+SHARP = 35
 for p in mesh.data.polygons:
     p.use_smooth = True
+mesh.data.set_sharp_from_angle(angle=math.radians(SHARP))
+bpy.ops.object.select_all(action='DESELECT'); mesh.select_set(True); bpy.context.view_layer.objects.active = mesh
+wn = mesh.modifiers.new('wn', 'WEIGHTED_NORMAL'); wn.mode = 'FACE_AREA'; wn.keep_sharp = True
+bpy.ops.object.modifier_apply(modifier='wn')
 # The top surface at the middle (a table's felt): the first hit straight down through the centre.
 bpy.context.view_layer.update()
 # A few rays near the centre, the highest wins (a tufted seat can have a hole right at its button).

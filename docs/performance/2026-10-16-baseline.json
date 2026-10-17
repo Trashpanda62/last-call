@@ -1,0 +1,216 @@
+{
+  "at": "2026-10-16T09:22:48.360Z",
+  "readyMs": 9464,
+  "menu": {
+    "frames": 170,
+    "medianMs": 16.69999999999891,
+    "p95Ms": 16.799999999999272,
+    "gfx": {
+      "calls": 316,
+      "tris": 1410376,
+      "geos": 528,
+      "tex": 287,
+      "cam": [
+        23.07,
+        2.5,
+        13.33,
+        -0.15,
+        0.12
+      ],
+      "gestures": {
+        "wave": 1,
+        "laugh": 1,
+        "chips": 1,
+        "push": 1
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": null,
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1
+    }
+  },
+  "firstPlay": {
+    "frames": 181,
+    "medianMs": 16.69999999999891,
+    "p95Ms": 16.700000000000728,
+    "gfx": {
+      "calls": 533,
+      "tris": 1995613,
+      "geos": 641,
+      "tex": 281,
+      "cam": [
+        24.29,
+        1.12,
+        10,
+        0,
+        -4.71
+      ],
+      "gestures": {
+        "wave": 1,
+        "laugh": 1,
+        "chips": 1,
+        "push": 1,
+        "clap": 1
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "bar",
+        "rest",
+        "slots"
+      ],
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1
+    }
+  },
+  "later": {
+    "frames": 180,
+    "medianMs": 16.69999999999891,
+    "p95Ms": 16.700000000000728,
+    "gfx": {
+      "calls": 546,
+      "tris": 1995639,
+      "geos": 641,
+      "tex": 281,
+      "cam": [
+        24.29,
+        1.12,
+        10,
+        0,
+        -4.71
+      ],
+      "gestures": {
+        "wave": 2,
+        "laugh": 1,
+        "chips": 1,
+        "push": 1,
+        "clap": 1,
+        "tap": 2
+      },
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "floor",
+        "bar",
+        "rest",
+        "slots"
+      ],
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1
+    }
+  },
+  "resources": {
+    "bytes": 63857613,
+    "requests": 250,
+    "longTasks": [
+      {
+        "at": 115.5,
+        "ms": 318
+      },
+      {
+        "at": 675.3000000119209,
+        "ms": 1127
+      },
+      {
+        "at": 2018.199999988079,
+        "ms": 999
+      },
+      {
+        "at": 3047.899999976158,
+        "ms": 63
+      },
+      {
+        "at": 3213.899999976158,
+        "ms": 69
+      },
+      {
+        "at": 3539.099999964237,
+        "ms": 155
+      },
+      {
+        "at": 3875.5,
+        "ms": 98
+      },
+      {
+        "at": 4111.800000011921,
+        "ms": 478
+      },
+      {
+        "at": 4680.5,
+        "ms": 543
+      },
+      {
+        "at": 5826,
+        "ms": 53
+      },
+      {
+        "at": 6058.399999976158,
+        "ms": 111
+      },
+      {
+        "at": 6173.099999964237,
+        "ms": 669
+      },
+      {
+        "at": 7110.399999976158,
+        "ms": 97
+      },
+      {
+        "at": 7230,
+        "ms": 2227
+      },
+      {
+        "at": 11546.199999988079,
+        "ms": 59
+      },
+      {
+        "at": 11979.5,
+        "ms": 148
+      }
+    ]
+  }
+}

@@ -1,0 +1,848 @@
+{
+  "at": "2026-10-16T21:44:46.852Z",
+  "rows": [
+    {
+      "fallback": false,
+      "input": [
+        {
+          "kind": "mouse",
+          "id": "hit",
+          "point": [
+            541.8157144588554,
+            546.2072774295972
+          ],
+          "state": {
+            "over": false,
+            "total": 16,
+            "hands": 1,
+            "on": {
+              "deal": false,
+              "hit": true,
+              "stand": true,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "hit",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "mouse",
+          "id": "stand",
+          "point": [
+            640,
+            546.2072774295972
+          ],
+          "state": {
+            "over": true,
+            "total": 7,
+            "hands": 1,
+            "staked": 1,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "stand",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "mouse",
+          "id": "double",
+          "point": [
+            738.1842855411435,
+            546.2072774295972
+          ],
+          "state": {
+            "over": true,
+            "total": 16,
+            "hands": 1,
+            "staked": 2,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "double",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "mouse",
+          "id": "split",
+          "point": [
+            836.3685710822892,
+            546.2072774295972
+          ],
+          "state": {
+            "over": false,
+            "total": 17,
+            "hands": 2,
+            "on": {
+              "deal": false,
+              "hit": true,
+              "stand": true,
+              "double": true,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "split",
+                "hand": 0,
+                "before": 16
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "keyboard",
+          "id": "hit",
+          "key": "h",
+          "state": {
+            "over": false,
+            "total": 16,
+            "hands": 1,
+            "on": {
+              "deal": false,
+              "hit": true,
+              "stand": true,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "hit",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "keyboard",
+          "id": "stand",
+          "key": "j",
+          "state": {
+            "over": true,
+            "total": 7,
+            "hands": 1,
+            "staked": 1,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "stand",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "keyboard",
+          "id": "double",
+          "key": "k",
+          "state": {
+            "over": true,
+            "total": 16,
+            "hands": 1,
+            "staked": 2,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "double",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "standard-controller",
+          "id": "hit",
+          "index": 2,
+          "state": {
+            "over": false,
+            "total": 16,
+            "hands": 1,
+            "on": {
+              "deal": false,
+              "hit": true,
+              "stand": true,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "hit",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "standard-controller",
+          "id": "stand",
+          "index": 3,
+          "state": {
+            "over": true,
+            "total": 7,
+            "hands": 1,
+            "staked": 1,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "stand",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "standard-controller",
+          "id": "double",
+          "index": 1,
+          "state": {
+            "over": true,
+            "total": 16,
+            "hands": 1,
+            "staked": 2,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "double",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "controller-trigger",
+          "id": "stand",
+          "state": {
+            "over": true,
+            "total": 7,
+            "hands": 1,
+            "staked": 1,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "stand",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        }
+      ],
+      "compact": {
+        "parts": [
+          {
+            "part": "spot:main",
+            "x": 370,
+            "y": 224.3151261916859,
+            "on": true,
+            "p": [
+              16,
+              0.695,
+              5.307630208333333
+            ]
+          },
+          {
+            "part": "btn:hit",
+            "x": 324.18066674746586,
+            "y": 254.89672946714535,
+            "on": true,
+            "p": [
+              15.85,
+              0.6980000000000001,
+              5.457630208333334
+            ]
+          },
+          {
+            "part": "btn:stand",
+            "x": 370,
+            "y": 254.89672946714535,
+            "on": true,
+            "p": [
+              16,
+              0.6980000000000001,
+              5.457630208333334
+            ]
+          },
+          {
+            "part": "btn:double",
+            "x": 415.8193332525336,
+            "y": 254.89672946714535,
+            "on": true,
+            "p": [
+              16.15,
+              0.6980000000000001,
+              5.457630208333334
+            ]
+          }
+        ],
+        "overflow": false,
+        "panel": false,
+        "actions": [],
+        "aim": ""
+      },
+      "elsewhere": {
+        "game": "roulette",
+        "keys": false,
+        "parts": [
+          "spot:n0",
+          "spot:n3",
+          "spot:n2",
+          "spot:n1",
+          "spot:n6",
+          "spot:n5",
+          "spot:n4",
+          "spot:n9",
+          "spot:n8",
+          "spot:n7",
+          "spot:n12",
+          "spot:n11",
+          "spot:n10",
+          "spot:n15",
+          "spot:n14",
+          "spot:n13",
+          "spot:n18",
+          "spot:n17",
+          "spot:n16",
+          "spot:n21",
+          "spot:n20",
+          "spot:n19",
+          "spot:n24",
+          "spot:n23",
+          "spot:n22",
+          "spot:n27",
+          "spot:n26",
+          "spot:n25",
+          "spot:n30",
+          "spot:n29",
+          "spot:n28",
+          "spot:n33",
+          "spot:n32",
+          "spot:n31",
+          "spot:n36",
+          "spot:n35",
+          "spot:n34",
+          "spot:c3",
+          "spot:c2",
+          "spot:c1",
+          "spot:d1",
+          "spot:d2",
+          "spot:d3",
+          "spot:low",
+          "spot:even",
+          "spot:red",
+          "spot:black",
+          "spot:odd",
+          "spot:high"
+        ],
+        "gpu": {
+          "links": 0,
+          "staticBuffers": 0
+        }
+      },
+      "controllerHardware": "simulated standard controller; physical hardware untested"
+    },
+    {
+      "fallback": true,
+      "input": [
+        {
+          "kind": "mouse",
+          "id": "hit",
+          "point": [
+            541.8157144588554,
+            546.2072774295972
+          ],
+          "state": {
+            "over": false,
+            "total": 16,
+            "hands": 1,
+            "on": {
+              "deal": false,
+              "hit": true,
+              "stand": true,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "hit",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "mouse",
+          "id": "stand",
+          "point": [
+            640,
+            546.2072774295972
+          ],
+          "state": {
+            "over": true,
+            "total": 7,
+            "hands": 1,
+            "staked": 1,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "stand",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "mouse",
+          "id": "double",
+          "point": [
+            738.1842855411435,
+            546.2072774295972
+          ],
+          "state": {
+            "over": true,
+            "total": 16,
+            "hands": 1,
+            "staked": 2,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "double",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "mouse",
+          "id": "split",
+          "point": [
+            836.3685710822892,
+            546.2072774295972
+          ],
+          "state": {
+            "over": false,
+            "total": 17,
+            "hands": 2,
+            "on": {
+              "deal": false,
+              "hit": true,
+              "stand": true,
+              "double": true,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "split",
+                "hand": 0,
+                "before": 16
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "keyboard",
+          "id": "hit",
+          "key": "h",
+          "state": {
+            "over": false,
+            "total": 16,
+            "hands": 1,
+            "on": {
+              "deal": false,
+              "hit": true,
+              "stand": true,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "hit",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "keyboard",
+          "id": "stand",
+          "key": "j",
+          "state": {
+            "over": true,
+            "total": 7,
+            "hands": 1,
+            "staked": 1,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "stand",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "keyboard",
+          "id": "double",
+          "key": "k",
+          "state": {
+            "over": true,
+            "total": 16,
+            "hands": 1,
+            "staked": 2,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "double",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "standard-controller",
+          "id": "hit",
+          "index": 2,
+          "state": {
+            "over": false,
+            "total": 16,
+            "hands": 1,
+            "on": {
+              "deal": false,
+              "hit": true,
+              "stand": true,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "hit",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "standard-controller",
+          "id": "stand",
+          "index": 3,
+          "state": {
+            "over": true,
+            "total": 7,
+            "hands": 1,
+            "staked": 1,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "stand",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "standard-controller",
+          "id": "double",
+          "index": 1,
+          "state": {
+            "over": true,
+            "total": 16,
+            "hands": 1,
+            "staked": 2,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "double",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        },
+        {
+          "kind": "controller-trigger",
+          "id": "stand",
+          "state": {
+            "over": true,
+            "total": 7,
+            "hands": 1,
+            "staked": 1,
+            "on": {
+              "deal": true,
+              "hit": false,
+              "stand": false,
+              "double": false,
+              "split": false
+            },
+            "actions": [
+              {
+                "action": "stand",
+                "hand": 0,
+                "before": 7
+              }
+            ],
+            "screen": "game",
+            "paused": false
+          }
+        }
+      ],
+      "compact": {
+        "parts": [
+          {
+            "part": "spot:main",
+            "x": 370,
+            "y": 224.3151261916859,
+            "on": true,
+            "p": [
+              16,
+              0.695,
+              5.307630208333333
+            ]
+          },
+          {
+            "part": "btn:hit",
+            "x": 324.18066674746586,
+            "y": 254.89672946714535,
+            "on": true,
+            "p": [
+              15.85,
+              0.6980000000000001,
+              5.457630208333334
+            ]
+          },
+          {
+            "part": "btn:stand",
+            "x": 370,
+            "y": 254.89672946714535,
+            "on": true,
+            "p": [
+              16,
+              0.6980000000000001,
+              5.457630208333334
+            ]
+          },
+          {
+            "part": "btn:double",
+            "x": 415.8193332525336,
+            "y": 254.89672946714535,
+            "on": true,
+            "p": [
+              16.15,
+              0.6980000000000001,
+              5.457630208333334
+            ]
+          }
+        ],
+        "overflow": false,
+        "panel": false,
+        "actions": [],
+        "aim": ""
+      },
+      "elsewhere": {
+        "game": "roulette",
+        "keys": false,
+        "parts": [
+          "spot:n0",
+          "spot:n3",
+          "spot:n2",
+          "spot:n1",
+          "spot:n6",
+          "spot:n5",
+          "spot:n4",
+          "spot:n9",
+          "spot:n8",
+          "spot:n7",
+          "spot:n12",
+          "spot:n11",
+          "spot:n10",
+          "spot:n15",
+          "spot:n14",
+          "spot:n13",
+          "spot:n18",
+          "spot:n17",
+          "spot:n16",
+          "spot:n21",
+          "spot:n20",
+          "spot:n19",
+          "spot:n24",
+          "spot:n23",
+          "spot:n22",
+          "spot:n27",
+          "spot:n26",
+          "spot:n25",
+          "spot:n30",
+          "spot:n29",
+          "spot:n28",
+          "spot:n33",
+          "spot:n32",
+          "spot:n31",
+          "spot:n36",
+          "spot:n35",
+          "spot:n34",
+          "spot:c3",
+          "spot:c2",
+          "spot:c1",
+          "spot:d1",
+          "spot:d2",
+          "spot:d3",
+          "spot:low",
+          "spot:even",
+          "spot:red",
+          "spot:black",
+          "spot:odd",
+          "spot:high"
+        ],
+        "gpu": {
+          "links": 0,
+          "staticBuffers": 0
+        }
+      },
+      "controllerHardware": "simulated standard controller; physical hardware untested"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,191 @@
+{
+  "rows": [
+    {
+      "kind": "knife",
+      "cause": "blade",
+      "monster": false,
+      "accepted": true,
+      "seated": false,
+      "alive": false,
+      "age": 0,
+      "killer": "Duke",
+      "sceneKiller": {
+        "id": 4,
+        "name": "Duke"
+      },
+      "privateIdentity": true,
+      "over": false,
+      "first": {
+        "active": true,
+        "phase": "reveal",
+        "age": 0.1,
+        "paused": false,
+        "pauseVisible": false,
+        "caption": "Killed by DukeKnife attack"
+      },
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "finished": true,
+      "deadline": -12243.5
+    },
+    {
+      "kind": "seated-paused",
+      "cause": "blade",
+      "monster": false,
+      "accepted": true,
+      "seated": true,
+      "alive": false,
+      "age": 0,
+      "killer": "Pip",
+      "sceneKiller": {
+        "id": 5,
+        "name": "Pip"
+      },
+      "privateIdentity": true,
+      "over": false,
+      "first": {
+        "active": true,
+        "phase": "reveal",
+        "age": 0.1,
+        "paused": false,
+        "pauseVisible": false,
+        "caption": "Killed by PipKnife attack"
+      },
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "finished": true,
+      "deadline": -16143.5
+    },
+    {
+      "kind": "delayed-poison",
+      "cause": "poison",
+      "monster": false,
+      "accepted": true,
+      "seated": false,
+      "alive": false,
+      "age": 4.0166666666666675,
+      "killer": "Biscuit",
+      "sceneKiller": {
+        "id": 2,
+        "name": "Biscuit"
+      },
+      "privateIdentity": true,
+      "over": false,
+      "first": {
+        "active": true,
+        "phase": "reveal",
+        "age": 0.1,
+        "paused": false,
+        "pauseVisible": false,
+        "caption": "Killed by BiscuitPoisoned"
+      },
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "finished": true,
+      "deadline": -20043.5
+    },
+    {
+      "kind": "rigged-game",
+      "cause": "trap",
+      "monster": false,
+      "accepted": true,
+      "seated": false,
+      "alive": false,
+      "age": 0.08333333333333304,
+      "killer": "Biscuit",
+      "sceneKiller": {
+        "id": 2,
+        "name": "Biscuit"
+      },
+      "privateIdentity": true,
+      "over": false,
+      "first": {
+        "active": true,
+        "phase": "reveal",
+        "age": 0.1,
+        "paused": false,
+        "pauseVisible": false,
+        "caption": "Killed by BiscuitRigged machine"
+      },
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "finished": true,
+      "deadline": -23943.5
+    },
+    {
+      "kind": "monster",
+      "cause": "monster",
+      "monster": true,
+      "accepted": true,
+      "seated": false,
+      "alive": false,
+      "age": 0.09999999999999964,
+      "killer": "Pip",
+      "sceneKiller": {
+        "id": 5,
+        "name": "Pip"
+      },
+      "privateIdentity": true,
+      "over": false,
+      "first": {
+        "active": true,
+        "phase": "reveal",
+        "age": 0.1,
+        "paused": false,
+        "pauseVisible": false,
+        "caption": "Killed by PipMonster attack"
+      },
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "finished": true,
+      "deadline": -27843.5
+    },
+    {
+      "kind": "last-player",
+      "cause": "blade",
+      "monster": false,
+      "accepted": true,
+      "seated": false,
+      "alive": false,
+      "age": 0,
+      "killer": "Lola",
+      "sceneKiller": {
+        "id": 3,
+        "name": "Lola"
+      },
+      "privateIdentity": true,
+      "over": true,
+      "first": {
+        "active": true,
+        "phase": "reveal",
+        "age": 0.1,
+        "paused": false,
+        "pauseVisible": false,
+        "caption": "Killed by LolaKnife attack"
+      },
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "finished": true,
+      "deadline": -31743.5
+    }
+  ],
+  "errors": []
+}

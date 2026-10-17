@@ -1,14 +1,12 @@
-// The table games. You walk up to a game and click its parts in 3D (src/3d/rig.js): the felt, the betting pads, the
-// touch screens and the game's own buttons built into the table (consoleLayout()). Your bet is the chip in hand: the scroll
-// wheel changes it and the chip icon at the bottom of the screen shows it (chipHud()). Phones also get the table bar
-// (main.js, from tableBar()). Everything sends presses here (press(id, uv)); the machine screens, the buttons and the
-// chips on the felt read tableView().
-// DOM-free. Every odd comes from games.js, the same maths the bots use; finished rounds go to the sim as
-// act('bank', { d, b }) and the shared rounds as act('crash' | 'cashout' | 'race').
+// Table rules and bets. Click the 3D felt to place chips; Space starts the round.
+// Main.js presents the contextual start HUD; rig.js mounts physical blackjack hand actions below the chip circle.
+// DOM-free. Every odd comes from games.js, the same maths the bots use; local rounds go to the sim as
+// act('bank', { d, b }); shared crash/race and skee-ball use host-owned rounds.
+import { createLuck } from './luck.js';
 import * as Gm from './games.js';
 import * as P from './paint.js';
 import { money } from './util.js';
-import { sfx } from './audio.js';
+import { sfx as sfxNow } from './audio.js';
 
 const now = () => performance.now() / 1000;
 const S = n => P.short(n);
@@ -18,33 +16,71 @@ export const chipLabel = c => c >= 1e6 ? c / 1e6 + 'M' : c >= 1e3 ? c / 1e3 + 'K
 export const CRASH_AUTOS = [0, 1.5, 2, 3, 5, 10, 100];
 const RL_RED = Gm.RL_RED;
 export const RL_SPOTS = new Set([...Array(37).keys()].map(n => 'n' + n).concat(Object.keys(Gm.RL_BETS), Object.keys(Gm.RL_COLS)));
-// The dealer games start themselves (Steve, 2026-10-14: "place my chips before the next game starts. if you are the first
-// player at the table you start the game"): your first chips there start a countdown of this many seconds, the round
-// starts at zero, and while your chips stay down the next one follows. The game's own button starts it at once.
-const AUTO = { roulette: ['spin', 6, 'SPINS'], bj: ['deal', 4, 'DEALS'], dice: ['roll', 4, 'ROLLS'], coin: ['flip', 4, 'FLIPS'], wheel: ['spin', 4, 'SPINS'] };
+// Chips stay on the felt until you press Space to start a round.
+const START_LABEL = { roulette: 'Spin', bj: 'Deal', dice: 'Roll', coin: 'Flip', wheel: 'Spin', slots: 'Spin', plinko: 'Drop', mines: 'Start', tower: 'Climb', skee: 'Start round' };
+const START_HINT = { bj: 'PRESS HIT TO DEAL', roulette: 'CLICK THE WHEEL TO SPIN', dice: 'CLICK THE DICE TO ROLL', coin: 'CLICK THE COIN TO FLIP', wheel: 'CLICK THE WHEEL TO SPIN', slots: 'PULL THE LEVER', plinko: 'CLICK THE CHUTE TO DROP', mines: 'PICK A TILE TO START', tower: 'PICK AN EGG TO START' };
+const START = { roulette: 'spin', bj: 'deal', dice: 'roll', coin: 'flip', wheel: 'spin', slots: 'lever', plinko: 'drop', mines: 'start', tower: 'start', skee: 'start' };
 
+const runs = new Map();
+const hotRound = () => tb.luck.next();
+export function resetTableLuck() { runs.clear(); }
+let receiptSeq = 0; // monotonic for this client; the host rejects replayed accepted-stake IDs
 let tb = null;            // the table I'm at
 let chip = 1000;          // the chip in hand, remembered between tables
 let crashAuto = 2;        // auto cash-out, remembered
 const rlHist = [];        // the last roulette numbers you saw land, newest first
-let hand = () => {};      // first-person hand animation hook: hand(kind)
-export function setHandHook(fn) { hand = fn; }
+let handHook = () => {};  // first-person hand animation hook: hand(kind)
+export function setHandHook(fn) { handHook = fn; }
+// Tables you walk away from keep going (Steve, 2026-10-16: "I should be able to run and have a row of slot machines all
+// spinning at once"): a roulette spin, a slot spin, a Plinko drop or a wheel spin in flight lands and pays, and a slot on
+// AUTO keeps spinning. They run in the background (bg, by seat), quietly: no hands, and only a big win is heard. A game
+// that waits on you (blackjack, Mines, Tower, the coin's pot, a dice point) still settles its hand when you walk off
+// (CFG.leaveReach, 10 ft). Shared rounds (Crash, the duck race, skee-ball) stay with the host as before.
+const bg = new Map();
+const KEEPS = new Set(['roulette', 'slots', 'plinko', 'wheel']);
+const LOUD = new Set(['win', 'jackpot']);
+let away = false, holdAct = null, holdKey = '';
+const hand = k => { if (!away) handHook(k); };
+const sfx = k => { if (!away || LOUD.has(k)) sfxNow(k); };
+function withTb(t, fn) { const was = tb, wasAway = away; tb = t; away = true; try { return fn(); } finally { tb = was; away = wasAway; } }
+// something still going: a round in flight (a job queued), AUTO, or a hand/board/climb/point/pot left open
+const keeps = t => KEEPS.has(t.game) && (t.jobs.length > 0 || !!t.auto || !!(t.g.locked && t.g.locked()) || !!(t.balls && t.balls.length));
+function sendHolds() { // the host keeps these games for you while they run (no bot or player takes them)
+  const key = [...bg.keys()].sort((a, b) => a - b).join(',');
+  if (key !== holdKey && holdAct) { holdKey = key; holdAct('tableHold', { seats: [...bg.keys()] }); }
+}
 export const tableGame = () => tb && tb.game;
 export const tableSeat = () => tb ? tb.seat : -1;
 
 // ---------- Open, close, tick ----------
 export function openTable(seat, act, v) {
-  tb = { game: seat.game, seat: seat.id, tier: seat.tier || 'penny', act, me: v.priv.me, view: null, jobs: [], maxBet: v.pub.maxBet || Gm.maxBet(v.pub.bank),
+  holdAct = act;
+  const kept = bg.get(seat.id);
+  if (kept) { bg.delete(seat.id); tb = kept; tb.act = act; tb.liveView = v; tb.idleT = null; if (tb.g.live) tb.g.live(v); sendHolds(); return; } // back at a game still going
+  tb = { face: seat.face, game: seat.game, seat: seat.id, tier: seat.tier || 'penny', act, me: v.priv.me, view: null, jobs: [], maxBet: v.pub.maxBet || Gm.maxBet(v.pub.bank),
     bets: {}, adds: {}, undo: [], last: null, res: { text: '', cls: '' }, fx: null, pressed: null, flash: null, placed: null,
     armed: false, used: false, goAt: null }; // armed: you have put chips down or pressed something here (walking up alone does neither)
+  if (!runs.has(tb.me)) runs.set(tb.me, createLuck());
+  tb.luck = runs.get(tb.me);
   tb.g = GAMES[tb.game] || GAMES.vip;
   // a big chip from the last table steps down here, so a first click doesn't put most of the max down
   if (chip > tb.maxBet / 4) chip = CHIPS.filter(v => v <= tb.maxBet / 4).pop() || CHIPS[0];
   if (tb.g.init) tb.g.init();
-  if (tb.g.main) { tb.bets.main = Math.max(minBet(), Math.min(tb.maxBet, chipNow())); tb.last = 'main'; } // a one-spot game starts on the chip in hand
-  if (tb.g.live) tb.g.live(v);
+  tb.liveView = v; if (tb.g.live) tb.g.live(v);
 }
+// Walking away: a game still going carries on in the background; anything else closes (as closeAllTables does).
 export function closeTable() {
+  if (tb && keeps(tb)) { tb.idleT = null; tb.flash = null; bg.set(tb.seat, tb); tb = null; sendHolds(); return; }
+  finish();
+}
+// The night is over, you died, or you left: every game, here and in the background, settles now.
+export function closeAllTables() {
+  finish();
+  for (const t of [...bg.values()]) withTb(t, finish);
+  bg.clear(); sendHolds();
+}
+export const tablesBusy = () => !!tb || bg.size > 0;
+function finish() {
   if (tb) {
     tb.closing = true; // nothing new starts now (an auto spin waiting in the queue stays put)
     // rounds already decided still pay out, including a payment a flushed job queues on its way
@@ -54,21 +90,58 @@ export function closeTable() {
   tb = null;
 }
 export function tableTick(v) {
-  if (!tb) return;
   const t = now();
+  for (const [seat, k] of bg) withTb(k, () => {
+    for (let i = 0; i < k.jobs.length; i++) if (k.jobs[i].at <= t) { const j = k.jobs.splice(i--, 1)[0]; j.fn(); }
+    k.liveView = v; if (k.g.live) k.g.live(v);
+    if (k.fx && t - k.fx.t0 > 2.6) k.fx = null;
+    if (keeps(k)) k.idleT = null; else if (k.idleT === null || k.idleT === undefined) k.idleT = t; else if (t - k.idleT > 4) bg.delete(seat); // (the last result stays up a moment)
+  });
+  sendHolds();
+  if (!tb) return;
   for (let i = 0; i < tb.jobs.length; i++) if (tb.jobs[i].at <= t) { const j = tb.jobs.splice(i--, 1)[0]; j.fn(); if (!tb) return; }
   const mb = v.pub.maxBet || Gm.maxBet(v.pub.bank);
   if (mb !== tb.maxBet || stake() > mb) { tb.maxBet = mb; fit(); } // also trims bets that were locked when the max fell
-  if (tb.g.live) tb.g.live(v);
-  autoGo();
+  tb.liveView = v; if (tb.g.live) tb.g.live(v);
   if (tb && tb.fx && t - tb.fx.t0 > 2.6) tb.fx = null;
 }
-function autoGo() {
-  const a = AUTO[tb.game]; if (!a || tb.closing) return;
-  if (!(tb.armed && tb.g.on(a[0]) && !(tb.game === 'coin' && tb.pot > 0))) { tb.goAt = null; return; } // (a coin pot riding is your call)
-  if (tb.goAt === null) tb.goAt = now() + a[1];
-  else if (now() >= tb.goAt) { tb.goAt = null; tb.g.press(a[0]); }
+// The same action drives the keyboard and the accessible HUD prompt.
+export function tableStart() {
+  if (!tb || tb.game === 'vip') return null;
+  const g = tb.g, game = tb.game;
+  // Games with a physical starter (Hit, the lever, the wheel, the dice, the coin, the chute, the first tile or egg)
+  // have no SPACE prompt; the duck race takes the chips on a duck as the bet (Steve, 2026-10-16: redo it like the rest);
+  // only Crash's shared rocket and the skee roll keep one.
+  if (!['crash', 'skee'].includes(game)) return null;
+  if (game === 'crash') {
+    const round = tb.cr.C, mine = tb.cr.mine;
+    if (!round) return null;
+    if (game === 'crash' && round.phase === 'fly' && mine && !mine[2]) return { id: 'btn:cash', label: 'Cash out', on: true };
+    return { id: 'btn:bet', label: mine ? 'Bet placed' : 'Place bet', on: round.phase === 'bet' && !mine && stake() >= minBet() };
+  }
+  if (game === 'skee') {
+    const r = tb.round;
+    if (r && r.phase !== 'done') return { id: 'btn:roll', label: r.phase === 'aim' ? tb.charging !== null ? 'Release · ' + Math.round(skeePower() * 100) + '%' : 'Hold to roll' : 'Ball in play', on: r.phase === 'aim' && !tb.pending };
+  }
+  const id = (game === 'mines' || game === 'tower') && tb.s && !tb.s.over ? 'cash' : START[game];
+  if (!id) return null;
+  return { id: 'btn:' + id, label: id === 'cash' ? 'Cash out' : START_LABEL[game], on: stake() >= minBet() && (!g.on || !!g.on(id)) };
 }
+export function spaceTable() {
+  const start = tableStart(); if (!start) return false;
+  if (!start.on) { if (!stake()) need(); return true; }
+  if (tb.game === 'skee' && start.id === 'btn:roll') { if (tb.charging === null) tb.charging = now(); return true; }
+  return press(start.id);
+}
+const skeePower = () => Math.min(1, Math.max(0, (now() - tb.charging) / 1.4));
+export function releaseTable(cancel = false) {
+  if (!tb || tb.game !== 'skee' || tb.charging === null) return false;
+  const power = skeePower(); tb.charging = null;
+  if (!cancel && tb.round?.phase === 'aim' && !tb.pending) tb.g.roll(power);
+  return true;
+}
+// Aiming follows the player's free mouse/controller look; it never takes over the camera.
+export function tableLook(yaw) { if (tb?.game === 'skee' && Number.isFinite(yaw)) tb.aim = Math.max(-1, Math.min(1, Math.atan2(Math.sin(yaw - tb.face), Math.cos(yaw - tb.face)) / .13)); }
 
 // ---------- Bets ----------
 const minBet = () => tb.game === 'slots' ? Math.max(Gm.BET.min, Gm.SLOT_TIERS[tb.tier].minBet) : Gm.BET.min;
@@ -93,8 +166,13 @@ function result(text, cls = '') { tb.res = { text, cls }; }
 function later(sec, fn) { tb.jobs.push({ at: now() + sec, fn }); }
 // A finished round: `st` went in, `back` came out. The sim adds the comp and checks the numbers.
 // per: { spot: { stake, back } } drives the chips: losers get swept, winners get paid beside their stack.
-function pay(st, back, line, per) {
-  tb.act('bank', { d: back - st, b: st });
+function commitBet(b, group = null) {
+  const id = ++receiptSeq; tb.act('tableBet', { id, group: group ?? id, b, seat: tb.seat }); return id;
+}
+function beginRound(b) { tb.receipt = commitBet(b); return tb.receipt; }
+function pay(st, back, line, per, tickets = [tb.receipt], last = true) {
+  tb.luck.settle(st, back);
+  tb.act('bank', { d: back - st, b: st, tickets, last });
   const net = back - st;
   result((line ? line + ' ' : '') + (net > 0 ? '+' + money(net) : net < 0 ? '−' + money(-net) : 'Even.'), net > 0 ? 'win' : net < 0 ? 'lose' : '');
   sfx(net > 0 ? (back >= st * 5 ? 'win' : 'coin') : net < 0 ? 'lose' : 'click');
@@ -154,7 +232,7 @@ export function press(id, uv, alt) {
   else if (kind === 'con' && uv) { const b = consoleHit(uv.x, 1 - uv.y); if (b) { if (b.on === false) flash(b.off || 'Not now'); else press(b.id); } }
   else if (kind === 'spot') { if (alt) takeBack(arg); else dropChip(arg); }
   else if (kind === 'rail') rail(arg);
-  else if (kind === 'btn') { if (tb.g.press) tb.g.press(arg); }
+  else if (kind === 'btn') { if (arg === 'bet' && (tb.game === 'crash' || tb.game === 'race')) { const start = tableStart(); if (start && start.on) { tb.commitRound = (tb.game === 'crash' ? tb.cr.C : tb.rc.R).round; tb.g.live(tb.liveView); hand('press'); } } else if (tb.g.press) tb.g.press(arg); }
   else if (kind === 'scr' && uv) screenTap(uv.x, 1 - uv.y);
   else return false;
   return true;
@@ -175,6 +253,7 @@ export function partInfo(id, uv) {
   if (kind === 'con' && uv) { const b = consoleHit(uv.x, 1 - uv.y); return b ? partInfo(b.id) || { label: b.label, on: b.on !== false } : null; }
   if (kind === 'spot') {
     const a = (g.show ? g.show() : tb.bets)[arg], lk = locked(arg);
+    if (tb.game === 'bj') return { label: lk ? '' : a ? 'BET · ' + S(a) : 'CLICK TO BET ' + S(chipNow()), on: !lk };
     return { label: (g.spotLabel ? g.spotLabel(arg) : 'BET') + (a ? ' · ' + S(a) + ' ON IT · CLICK ADDS ' + S(chipNow()) + ' · RIGHT-CLICK TAKES IT BACK' : ' · CLICK TO BET ' + S(chipNow())) + (lk ? ' · NO MORE BETS' : ''), on: !lk };
   }
   if (kind === 'rail') return { label: { undo: 'UNDO · YOUR LAST CHIP', clear: 'CLEAR · TAKE YOUR CHIPS BACK', half: '½ · HALVE YOUR BETS', dbl: '×2 · DOUBLE YOUR BETS', max: 'MAX · ' + S(tb.maxBet) }[arg], on: true };
@@ -194,7 +273,7 @@ export function cycleChip(dir, maxBet) {
   if (tb && tb.g.noChips) return;
   const mb = tb ? tb.maxBet : maxBet || Gm.BET.min, ok = CHIPS.filter(v => v <= mb), i = ok.indexOf(chipAt(mb));
   const v = ok[Math.max(0, Math.min(ok.length - 1, i + dir))];
-  if (v !== undefined && v !== chip) { chip = v; sfx('chip'); if (tb && tb.g.main && !locked('main')) tb.bets.main = Math.max(minBet(), Math.min(tb.maxBet, chip)); } // a one-spot game's bet follows it
+  if (v !== undefined && v !== chip) { chip = v; sfx('chip'); if (tb && tb.g.main && tb.bets.main !== undefined && !locked('main')) tb.bets.main = Math.max(minBet(), Math.min(tb.maxBet, chip)); } // a one-spot game's bet follows it
 }
 // The table bar's buttons: [label, tone]. Tones: go (green), red, blue, violet, gold, plain.
 const BTN = { deal: ['DEAL', 'go'], hit: ['HIT', 'go'], stand: ['STAND', 'red'], double: ['DOUBLE', 'blue'], split: ['SPLIT', 'violet'], spin: ['SPIN', 'go'],
@@ -212,10 +291,8 @@ export function tableBar() {
   });
   const anyLocked = Object.keys(sh).some(k => locked(k)) || (g.locked && g.locked());
   const go = acts.find(a => a.tone === 'go');
-  const a = AUTO[tb.game], cd = tb.goAt !== null ? Math.max(0, Math.ceil(tb.goAt - t)) : null, own = g.status && g.status();
-  const status = cd !== null ? (own ? `${own} · ${a[2]} IN ${cd}` : `${a[2]} IN ${cd} · CLICK TO ADD CHIPS · ${go ? go.label : 'GO'} STARTS IT NOW`) : own ||
-    (anyLocked ? 'NO MORE BETS' : a && !tb.armed ? (g.main ? 'CLICK THE BET CIRCLE TO PLAY' : 'CLICK THE LAYOUT TO PLACE YOUR CHIPS')
-      : stake() >= minBet() ? 'BET READY · PRESS ' + (go ? go.label : 'PLAY') : g.main ? 'CLICK THE BET CIRCLE TO PUT CHIPS DOWN' : 'CLICK THE LAYOUT TO PLACE YOUR CHIPS');
+  const own = g.status && g.status();
+  const status = own || (anyLocked ? 'NO MORE BETS' : stake() >= minBet() ? START_HINT[tb.game] || 'BET READY' : g.main ? 'PLACE A CHIP' : 'CHOOSE A BET');
   return { game: tb.game, total: S(tot), max: S(tb.maxBet), status, acts, res: tb.res, flash: tb.flash && t - tb.flash.t < 1.8 ? tb.flash.text : '',
     chips: g.noChips ? null : CHIPS.map((v, i) => ({ v, i, label: chipLabel(v), on: v <= tb.maxBet, sel: v === cn })),
     tools: g.noChips ? null : [['rail:undo', 'UNDO', 'blue'], ['rail:clear', 'CLEAR', 'red'], ['rail:dbl', '×2', 'plain'], ['rail:max', 'MAX', 'plain']].map(([id, label, tone]) => ({ id, label, tone,
@@ -224,6 +301,8 @@ export function tableBar() {
     hist: tb.game === 'roulette' ? rlHist.slice(0, 10) : null };
 }
 
+// The games running in the background, as tableView() shows them (their machines keep spinning in the world).
+export function tableViews() { return [...bg.values()].map(t => withTb(t, tableView)); }
 // What the 3D table shows: the screens' painter state (view), the chips on the felt, the buttons' lights.
 export function tableView() {
   if (!tb) return null;
@@ -231,7 +310,7 @@ export function tableView() {
   for (const b of g.btns || []) on[b] = g.on ? !!g.on(b) : true;
   const sh = g.show ? g.show() : tb.bets; let down = 0; for (const k in sh) down += sh[k];
   return { game: tb.game, seat: tb.seat, tier: tb.tier, view: tb.view, chip: chipNow(), maxBet: tb.maxBet, on, stacks: stacks(), hist: rlHist,
-    ui: g.ui ? g.ui() : null, extra: g.extra ? g.extra() : null, pressed: tb.pressed, idle: !down && !(g.locked && g.locked()), con: tb.game === 'vip' ? null : consoleLayout() };
+    ui: g.ui ? g.ui() : null, extra: g.extra ? g.extra() : null, pressed: tb.pressed, idle: !down && !(g.locked && g.locked()) };
 }
 const k01 = x => Math.max(0, Math.min(1, x));
 // Chip stacks: { spot, amount, slot (0 on the spot, 1 the payout beside it), anim: '' | 'sweep' | 'collect' | 'drop', u, add }
@@ -281,7 +360,7 @@ export function chipHud(maxBet) {
   if (!tb && maxBet) { const c = chipAt(maxBet); return { chip: c, label: chipLabel(c), i: CHIPS.indexOf(c), down: '', max: S(maxBet), status: '', note: null }; }
   if (!tb || tb.game === 'vip') return null;
   const b = tableBar(), c = chipNow(), sh = tb.g.show ? tb.g.show() : tb.bets; let down = 0; for (const k in sh) down += sh[k];
-  return { chip: c, label: chipLabel(c), i: CHIPS.indexOf(c), down: down ? S(down) : '', max: S(tb.maxBet), status: b.status,
+  return { chip: c, label: chipLabel(c), i: CHIPS.indexOf(c), down: down ? S(down) : '', max: S(tb.maxBet), status: tb.game === 'bj' && tb.s?.over || b.status.startsWith('BET READY') ? '' : b.status,
     note: b.flash ? ['flash', b.flash] : b.res.text ? [b.res.cls, b.res.text] : null };
 }
 
@@ -292,41 +371,74 @@ export function chipHud(maxBet) {
 const GAMES = {
   vip: { btns: [] },
 
+  skee: {
+    main: 'main', btns: ['start', 'roll'], needs: 'Put chips in the circle first',
+    init() { tb.round = null; tb.laneRound = null; tb.charging = null; tb.aim = 0; tb.pending = false; tb.seenResult = 0; },
+    live(v) {
+      const r = (v.pub.skee || []).find(r => r?.seat === tb.seat);
+      tb.laneRound = r || null;
+      if (tb.pending && now() > tb.pendingUntil) tb.pending = false;
+      if (r && r.player === tb.me) {
+        if (tb.round?.id !== r.id || r.launched !== tb.round?.launched || r.phase !== tb.round?.phase) tb.pending = false;
+        tb.round = r;
+        if (r.phase !== 'aim') tb.charging = null;
+        const key = r.id + ':' + r.launched;
+        if (r.last !== null && r.phase === 'result' && tb.seenResult !== key) { tb.seenResult = key; sfx(r.last ? 'peg' : 'ballDrop'); }
+        if (r.phase === 'done') result(r.score + ' points · ' + r.mult + 'x return', r.mult > 1 ? 'win' : r.mult < 1 ? 'lose' : '');
+      } else tb.round = null;
+    },
+    locked() { return !!(tb.pending || tb.laneRound && tb.laneRound.phase !== 'done'); },
+    on(id) { return id === 'start' ? !this.locked() && stake() >= minBet() : !!(tb.round?.phase === 'aim' && !tb.pending); },
+    press(id) {
+      if (!this.on(id)) return;
+      if (id === 'start') { tb.pending = true; tb.pendingUntil = now() + 2.5; tb.act('skee', { kind: 'start', after: tb.laneRound?.id || 0, bet: stake() }); result(''); hand('press'); }
+      else this.roll(.42);
+    },
+    roll(power) { if (!this.on('roll')) return; const r = tb.round; tb.pending = true; tb.pendingUntil = now() + 2.5; tb.act('skee', { kind: 'roll', round: r.id, sequence: r.launched + 1, aim: tb.aim, power }); hand('throw'); },
+    show() { return this.locked() && tb.round ? { main: tb.round.bet } : tb.bets; },
+    extra() { return { aim: tb.aim, power: tb.charging === null ? null : skeePower() }; },
+    status() { return tb.round && tb.round.phase !== 'done' ? (9 - tb.round.launched) + ' BALLS LEFT · ' + tb.round.score + ' POINTS' : null; },
+  },
+
   bj: {
     main: 'main', btns: ['deal', 'hit', 'stand', 'double', 'split'], needs: 'Put chips in your betting circle first',
     init() { tb.s = null; },
     locked() { return !!(tb.s && !tb.s.over); },
     spotLabel: () => 'BETTING CIRCLE',
-    on(id) { const s = tb.s; if (id === 'deal') return !(s && !s.over) && stake() >= minBet(); return !!(s && Gm.bjCan(s)[id]); },
+    on(id) { const s = tb.s; if (id === 'deal' || (id === 'hit' && !(s && !s.over))) return !(s && !s.over) && stake() >= minBet(); return !!(s && Gm.bjCan(s)[id]); }, // between hands HIT deals
     label(id) {
       const s = tb.s, live = s && !s.over;
       if (id === 'deal') return live ? 'DEAL · HAND IN PLAY' : 'DEAL · ' + S(stake());
-      if (!live) return id.toUpperCase();
+      if (!live) return id === 'hit' ? 'HIT · DEAL ' + S(stake()) : id.toUpperCase();
       const tip = Gm.bjAdvice(s) === id ? ' · THE BOOK SAYS SO' : '', t = Gm.bjTotal(s.hands[s.i].cards).t;
       return id.toUpperCase() + (id === 'double' ? ' · ' + S(tb.bet) + ' MORE' : id === 'split' ? ' · ' + S(tb.bet) + ' MORE' : ' · YOU HAVE ' + t) + tip;
     },
     press(id) {
       const s = tb.s;
-      if (id === 'deal') {
+      if (id === 'deal' || (id === 'hit' && !(s && !s.over))) {
         if (!this.on('deal')) return s && !s.over ? flash('Finish this hand first') : need();
-        tb.bet = stake(); tb.s = Gm.bjDeal(tb.bet); hand('press'); sfx('card'); later(0.14, () => sfx('card')); later(0.28, () => sfx('flip')); result(''); this.sync(); if (tb.s.over) this.finish(); return;
+        tb.bet = stake(); beginRound(tb.bet); tb.s = Gm.bjDeal(tb.bet, undefined, hotRound()); hand('press'); sfx('card'); later(0.14, () => sfx('card')); later(0.28, () => sfx('flip')); result(''); this.sync(); if (tb.s.over) this.finish(); return;
       }
       if (!s || s.over) return flash('Deal first');
       if (!this.on(id)) return flash("Can't " + id + ' now');
-      Gm.bjAct(s, id); hand('press'); sfx(id === 'double' || id === 'split' ? 'chips' : id === 'hit' ? 'card' : 'click'); if (id === 'double' || id === 'split') later(0.15, () => sfx('card')); this.sync(); if (s.over) this.finish();
+      Gm.bjAct(s, id);
+      if (id === 'double' || id === 'split') tb.act('tableStake', { id: tb.receipt, b: tb.bet * s.hands.reduce((n, h) => n + h.bet, 0) });
+      hand('press'); sfx(id === 'double' || id === 'split' ? 'chips' : id === 'hit' ? 'card' : 'click'); if (id === 'double' || id === 'split') later(0.15, () => sfx('card')); this.sync(); if (s.over) this.finish();
     },
-    sync() { const s = tb.s; tb.view = s ? { dealer: s.dealer, hide: !s.over, hands: s.hands.map((h, i) => ({ cards: h.cards, active: !s.over && i === s.i, bet: h.bet })) } : null; },
+    sync() { const s = tb.s; tb.view = s ? { dealer: s.dealer, dealerTotal: s.over ? Gm.bjTotal(s.dealer).t : null, hide: !s.over, actions: s.actions, hands: s.hands.map((h, i) => ({ cards: h.cards, total: Gm.bjTotal(h.cards).t, active: !s.over && i === s.i, bet: h.bet })) } : null; },
     abandon() {
       const s = tb.s; if (!s || s.over) return;
       for (let i = 0; i < 40 && !s.over; i++) { const a = Gm.bjAdvice(s); Gm.bjAct(s, Gm.bjCan(s)[a] ? a : 'stand'); }
       this.finish();
     },
-    finish() { const s = tb.s, b = tb.bet; this.sync(); pay(b * s.staked, b * s.mult, s.lines.join(' '), { main: { stake: b * s.staked, back: b * s.mult } }); },
+    finish() { const s = tb.s, b = tb.bet; tb.act('tableStake', { id: tb.receipt, b: b * s.staked }); this.sync(); pay(b * s.staked, b * s.mult, s.lines.join(' '), { main: { stake: b * s.staked, back: b * s.mult } }); },
     show() { const s = tb.s; return s && !s.over ? { main: tb.bet * s.hands.reduce((a, h) => a + h.bet, 0) } : tb.bets; }, // doubles and splits add units
     status() {
-      const s = tb.s; if (!s || s.over) return null;
-      const h = Gm.bjTotal(s.hands[s.i].cards), up = s.dealer[0];
-      return `YOU HAVE ${h.soft && h.t < 21 ? 'SOFT ' : ''}${h.t}${s.hands.length > 1 ? ' (HAND ' + (s.i + 1) + ')' : ''} · DEALER SHOWS ${up.rank === 'A' ? 'AN ACE' : Gm.bjTotal([up]).t}`;
+      const s = tb.s; if (!s) return null;
+      const cards = hand => hand.map(c => c.rank + c.suit).join(' ');
+      if (s.over) return s.hands.map((h, i) => `${s.hands.length > 1 ? 'HAND ' + (i + 1) : 'YOU'} ${cards(h.cards)} = ${Gm.bjTotal(h.cards).t}`).join(' · ') + ` · DEALER ${cards(s.dealer)} = ${Gm.bjTotal(s.dealer).t} · HIT FOR NEXT HAND`;
+      const active = s.hands[s.i], h = Gm.bjTotal(active.cards), up = s.dealer[0];
+      return `${s.hands.length > 1 ? 'HAND ' + (s.i + 1) : 'YOU'} ${cards(active.cards)} = ${h.soft && h.t < 21 ? 'SOFT ' : ''}${h.t} · DEALER ${up.rank}${up.suit} + ?`;
     },
   },
 
@@ -345,7 +457,21 @@ const GAMES = {
       if (!this.on()) return tb.spinning ? flash('No more bets') : need();
       const snap = { ...tb.bets }, bets = {};
       for (const k in snap) bets[k[0] === 'n' ? k.slice(1) : k] = snap[k];
-      const lucky = Gm.rlLucky(), n = Gm.rlBall(), st = stake();
+      const st = stake(); beginRound(st);
+      const lucky = Gm.rlLucky(), hot = hotRound();
+      let n = Gm.rlBall();
+      if (hot) {
+        // Pick a genuinely paying pocket for this layout, including hedged bets.
+        const outcomes = Array.from({ length: 37 }, (_, i) => ({ n: i, back: Gm.rlSettle(bets, i, lucky) }));
+        let wins = outcomes.filter(o => o.back > st);
+        if (!wins.length) {
+          const best = outcomes.map(o => ({ ...o, back: Gm.rlSettle(bets, o.n, [{ n: o.n, x: 500 }]) })).reduce((a, b) => b.back > a.back ? b : a);
+          const L = lucky.find(l => l.n === best.n);
+          if (L) L.x = 500; else lucky.push({ n: best.n, x: 500 });
+          wins = outcomes.filter(o => Gm.rlSettle(bets, o.n, lucky) > st);
+        }
+        n = wins[Math.floor(Math.random() * wins.length)].n;
+      }
       tb.view = { spin: { t0: now(), dur: 4, n, lucky } }; tb.spinning = true; hand('press'); sfx('rouletteSpin'); later(3.2, () => sfx('ballDrop'));
       result('No more bets. Lucky: ' + lucky.map(l => `${l.n} (${l.x}x)`).join(', '));
       later(4, () => {
@@ -359,13 +485,13 @@ const GAMES = {
       });
     },
     extra() { const sp = tb.view && tb.view.spin; return sp ? { lucky: sp.lucky, n: now() - sp.t0 >= sp.dur ? sp.n : null } : null; },
-    status() { return tb.spinning ? 'NO MORE BETS · THE BALL IS ROLLING' : stake() < Gm.BET.min ? 'CLICK THE LAYOUT TO BET · LUCKY NUMBERS PAY UP TO 500x' : null; },
+    status() { return tb.spinning ? 'NO MORE BETS' : stake() < Gm.BET.min ? 'CHOOSE A BET' : null; },
   },
 
   slots: {
     main: 'main', btns: ['lever', 'auto'], bar: ['auto', 'lever'],
     short(id) { return id === 'auto' ? (tb.auto ? 'AUTO ON' : 'AUTO') : null; },
-    status() { return tb.busy ? 'GOOD LUCK' : `BET ${S(stake())} · PULL THE LEVER OR PRESS SPIN · SCROLL TO CHANGE THE BET`; },
+    status() { return tb.busy ? (tb.auto ? 'AUTO · SPINNING' : 'SPINNING') : tb.auto ? 'AUTO PLAY' : null; },
     init() { tb.auto = false; tb.busy = false; tb.view = { tier: tb.tier }; },
     locked() { return tb.busy; },
     on(id) { return id === 'auto' ? true : !tb.busy; },
@@ -377,7 +503,8 @@ const GAMES = {
     spin() {
       if (!tb || tb.game !== 'slots' || tb.busy || tb.closing) return;
       const bet = stake(); if (bet < minBet()) return need();
-      const r = Gm.slotSpin(tb.tier);
+      beginRound(bet);
+      const r = Gm.slotSpin(tb.tier, undefined, hotRound());
       tb.view = { tier: tb.tier, reels: r.reels, spin: { t0: now() }, win: null, bet }; tb.busy = true; hand('pull'); sfx('lever'); sfx('reels');
       for (let i = 0; i < 3; i++) later(0.9 + i * 0.35, () => sfx('reelStop'));
       later(1.75, () => {
@@ -399,22 +526,24 @@ const GAMES = {
     on(id) { if (id.startsWith('risk:')) return !this.busy() || tb.risk === id.slice(5); return stake() >= minBet() && this.riding() + stake() <= tb.maxBet; },
     sel(id) { return id === 'risk:' + tb.risk; },
     short(id) { return id.startsWith('risk:') ? { low: 'LOW', medium: 'MED', high: 'HIGH' }[id.slice(5)] : null; },
-    label(id) { if (id.startsWith('risk:')) { const k = id.slice(5); return cap(k) + ' risk · edges pay ' + Gm.PLINKO[k][0] + 'x'; } return 'DROP A BALL · ' + S(stake()); },
+    label(id) { if (id.startsWith('risk:')) { const k = id.slice(5); return cap(k) + ' risk · ' + (Gm.PLINKO_GATE[k] * 2 + 1) + ' channels · top pays ' + Math.max(...Gm.PLINKO[k]) + 'x'; } return 'DROP A BALL · ' + S(stake()); },
     press(id) {
       if (id.startsWith('risk:')) { if (this.busy() && tb.risk !== id.slice(5)) return flash('Wait for the balls to land'); tb.risk = id.slice(5); tb.view.risk = tb.risk; sfx('click'); return; }
+      if (stake() < minBet() && !this.riding()) dropChip('main'); // the chute with nothing down puts the chip in hand on (Steve: "plinko doesn't work")
       const bet = stake(); if (bet < minBet()) return need();
       if (this.riding() + bet > tb.maxBet) return flash('Table max ' + S(tb.maxBet) + ': wait for a ball to land');
-      const r = Gm.plinkoDrop(tb.risk), b = { path: r.path, t0: now(), bet };
+      const ticket = commitBet(bet, this.busy() ? tb.ballGroup : null); if (!this.busy()) tb.ballGroup = ticket;
+      const r = Gm.plinkoDrop(tb.risk, undefined, hotRound()), b = { path: r.path, t0: now(), bet, ticket };
       tb.balls.push(b); hand('press'); sfx('click');
       for (let i = 1; i <= Gm.PLINKO_ROWS; i++) later(i * P.PLINKO_ROW_T, () => sfx('peg'));
       later(Gm.PLINKO_ROWS * P.PLINKO_ROW_T + 0.05, () => {
         tb.hist.unshift(P.xfmt(r.mult)); tb.hist.length = Math.min(tb.hist.length, 6); b.done = true;
-        pay(bet, bet * r.mult, P.xfmt(r.mult) + '.');
-        later(0.6, () => { const i = tb.balls.indexOf(b); if (i >= 0) tb.balls.splice(i, 1); });
+        pay(bet, bet * r.mult, P.xfmt(r.mult) + '.', undefined, [b.ticket], !this.busy());
+        later(1.6, () => { const i = tb.balls.indexOf(b); if (i >= 0) tb.balls.splice(i, 1); }); // (it sits in its pocket a moment)
       });
     },
     extra() { return { risk: tb.risk, hist: tb.hist }; },
-    status() { return stake() >= minBet() ? `${tb.risk.toUpperCase()} RISK · EDGES PAY ${Gm.PLINKO[tb.risk][0]}x · DROP AS MANY BALLS AS YOU LIKE` : null; },
+    status() { return stake() >= minBet() ? `CLICK THE CHUTE · ${tb.risk.toUpperCase()} RISK · TOP ${Math.max(...Gm.PLINKO[tb.risk])}×` : null; },
   },
 
   mines: {
@@ -430,7 +559,7 @@ const GAMES = {
     },
     press(id) {
       const s = tb.s, live = s && !s.over;
-      if (id === 'start') { if (live) return flash('Tap the tiles on the screen'); if (stake() < minBet()) return need(); tb.bet = stake(); tb.s = Gm.minesNew(tb.m); hand('press'); sfx('click'); result(''); this.sync(); return; }
+      if (id === 'start') { if (live) return flash('Tap the tiles on the screen'); if (stake() < minBet()) return need(); tb.bet = stake(); beginRound(tb.bet); tb.s = Gm.minesNew(tb.m, undefined, hotRound()); hand('press'); sfx('click'); result(''); this.sync(); return; }
       if (!live || !s.open.length) return flash('Find a gem first');
       Gm.minesCash(s); hand('press'); pay(tb.bet, tb.bet * s.mult, `Cashed out at ${P.xfmt(s.mult)}.`, { main: { stake: tb.bet, back: tb.bet * s.mult } }); this.sync();
     },
@@ -448,14 +577,14 @@ const GAMES = {
       const cx = Math.floor((x * w - x0) / sz), cy = Math.floor((y * h - y0) / sz);
       return cx >= 0 && cx < 5 && cy >= 0 && cy < 5 ? cy * 5 + cx : -1;
     },
-    tap(x, y) { const i = this.tile(x, y); if (i >= 0) { if (tb.s && !tb.s.over) this.pick(i); else flash('Press START first'); } },
+    tap(x, y) { const i = this.tile(x, y); if (i < 0) return; if (!(tb.s && !tb.s.over)) { if (stake() < minBet()) return need(); this.press('start'); } if (tb.s && !tb.s.over) this.pick(i); }, // the first tile starts the board
     tapLabel(x, y) {
       const i = this.tile(x, y); if (i < 0) return null;
       const live = tb.s && !tb.s.over;
-      return { label: live ? (tb.s.open.includes(i) ? 'OPEN' : `TILE ${i + 1} · NEXT GEM ${P.xfmt(Gm.minesMult(tb.m, tb.s.open.length + 1))}`) : 'PRESS START FIRST', on: !!live && !tb.s.open.includes(i) };
+      return { label: live ? (tb.s.open.includes(i) ? 'OPEN' : `TILE ${i + 1} · NEXT GEM ${P.xfmt(Gm.minesMult(tb.m, tb.s.open.length + 1))}`) : (stake() >= minBet() ? `TILE ${i + 1} · STARTS ${S(stake())} · ${tb.m} MINE${tb.m > 1 ? 'S' : ''}` : 'PLACE A CHIP FIRST'), on: live ? !tb.s.open.includes(i) : stake() >= minBet() };
     },
     ui() {
-      if (tb.s && !tb.s.over) return [{ id: 'rand', x: 0.71, y: 0.79, w: 0.27, h: 0.17, label: 'RANDOM', tip: 'A RANDOM TILE' }];
+      if (tb.s && !tb.s.over) return [{ id: 'cash', x: 0.71, y: 0.58, w: 0.27, h: 0.17, label: 'CASH OUT', tip: this.label('cash'), on: !!tb.s.open.length, off: 'Find a gem first' }, { id: 'rand', x: 0.71, y: 0.79, w: 0.27, h: 0.17, label: 'RANDOM', tip: 'A RANDOM TILE' }];
       // in the side panel, clear of the board so the last round's mines stay visible
       return [1, 3, 5, 10, 20, 24].map((n, i) => ({ id: 'm:' + n, x: 0.7 + (i % 3) * 0.097, y: 0.66 + Math.floor(i / 3) * 0.165, w: 0.088, h: 0.145, label: String(n), sel: tb.m === n,
         tip: `${n} MINE${n > 1 ? 'S' : ''} · FIRST GEM ${P.xfmt(Gm.minesMult(n, 1))} · UP TO ${P.xfmt(Gm.minesMult(n, Math.min(25 - n, 24)))}` }));
@@ -467,6 +596,7 @@ const GAMES = {
     },
     status() { const s = tb.s; return s && !s.over ? (s.open.length ? `NEXT GEM ${P.xfmt(Gm.minesMult(tb.m, s.open.length + 1))} · OR CASH OUT ${S(tb.bet * Gm.minesMult(tb.m, s.open.length))}` : 'PICK A TILE ON THE SCREEN') : null; },
     tapUI(id) {
+      if (id === 'cash') return this.press('cash');
       if (id === 'rand') { const free = [...Array(25).keys()].filter(i => !tb.s.open.includes(i)); return this.pick(free[Math.floor(Math.random() * free.length)]); }
       tb.m = +id.split(':')[1];
       tb.view = { m: tb.m, open: [], mines: null, over: false, dead: false, mult: 1, next: Gm.minesMult(tb.m, 1) }; // a fresh board for the new count
@@ -486,22 +616,23 @@ const GAMES = {
     },
     press(id) {
       const s = tb.s, live = s && !s.over;
-      if (id === 'start') { if (live) return flash('Tap an egg on the screen'); if (stake() < minBet()) return need(); tb.bet = stake(); tb.s = Gm.towerNew(tb.mode); hand('press'); sfx('click'); result(''); this.sync(); return; }
+      if (id === 'start') { if (live) return flash('Tap an egg on the screen'); if (stake() < minBet()) return need(); tb.bet = stake(); beginRound(tb.bet); tb.s = Gm.towerNew(tb.mode, undefined, hotRound()); hand('press'); sfx('click'); result(''); this.sync(); return; }
       if (!live || !s.row) return flash('Climb a floor first');
       Gm.towerCash(s); hand('press'); pay(tb.bet, tb.bet * s.mult, `Cashed out at ${P.xfmt(s.mult)}.`, { main: { stake: tb.bet, back: tb.bet * s.mult } }); this.sync();
     },
     egg(x) { const s = tb.s, eggs = s ? s.eggs : Gm.TOWER.modes[tb.mode].eggs, e = Math.floor((x - 0.04) / (0.6 / eggs)); return x >= 0.04 && e >= 0 && e < eggs ? e : -1; },
     // Any tap in an egg's column picks that egg on the floor you are on (the rows are thin on a phone).
     tap(x) {
-      const s = tb.s; if (!s || s.over) return flash('Press CLIMB first');
       const e = this.egg(x); if (e < 0) return;
+      if (!tb.s || tb.s.over) { if (stake() < minBet()) return need(); this.press('start'); } // the first egg starts the climb
+      const s = tb.s; if (!s || s.over) return;
       Gm.towerPick(s, e); hand('press');
       if (s.dead) { sfx('boom'); pay(tb.bet, 0, 'A dragon!', { main: { stake: tb.bet, back: 0 } }); }
       else if (s.over) pay(tb.bet, tb.bet * s.mult, 'Top of the tower!', { main: { stake: tb.bet, back: tb.bet * s.mult } });
       else sfx('step');
       this.sync();
     },
-    tapLabel(x) { const e = this.egg(x); if (e < 0) return null; const live = tb.s && !tb.s.over; return { label: live ? `EGG ${e + 1} · FLOOR ${tb.s.row + 1} PAYS ${P.xfmt(Gm.towerMult(tb.mode, tb.s.row + 1))}` : 'PRESS CLIMB FIRST', on: !!live }; },
+    tapLabel(x) { const e = this.egg(x); if (e < 0) return null; const live = tb.s && !tb.s.over; return { label: live ? `EGG ${e + 1} · FLOOR ${tb.s.row + 1} PAYS ${P.xfmt(Gm.towerMult(tb.mode, tb.s.row + 1))}` : (stake() >= minBet() ? `EGG ${e + 1} · STARTS ${S(stake())}` : 'PLACE A CHIP FIRST'), on: live || stake() >= minBet() }; },
     sync() { const s = tb.s; tb.view = s ? { mode: tb.mode, eggs: s.eggs, row: s.row, picks: s.picks, rows: s.rows, over: s.over, dead: s.dead, mult: s.mult } : null; },
     short(id) { return id === 'start' ? 'CLIMB' : null; },
     abandon() { // a climb you walk away from: one random egg if you haven't climbed yet, then cash out
@@ -511,11 +642,12 @@ const GAMES = {
     },
     status() { const s = tb.s; return s && !s.over ? `FLOOR ${s.row + 1} PAYS ${P.xfmt(Gm.towerMult(tb.mode, s.row + 1))} · PICK AN EGG` + (s.row ? ` OR CASH OUT ${S(tb.bet * Gm.towerMult(tb.mode, s.row))}` : '') : null; },
     ui() {
-      if (tb.s && !tb.s.over) return [];
+      if (tb.s && !tb.s.over) return tb.s.row ? [{ id: 'cash', x: 0.775, y: 0.56, w: 0.21, h: 0.12, label: 'CASH OUT', tip: this.label('cash') }] : [];
       return Object.entries(Gm.TOWER.modes).map(([k, M], i) => ({ id: 'mode:' + k, x: 0.775, y: 0.56 + i * 0.086, w: 0.21, h: 0.076, label: M.label.toUpperCase(), sel: tb.mode === k,
         tip: `${M.label.toUpperCase()} · ${M.eggs} EGGS, ${M.dragons} DRAGON${M.dragons > 1 ? 'S' : ''} · TOP PAYS ${P.xfmt(Gm.towerMult(k, Gm.TOWER.rows))}` }));
     },
     tapUI(id) { // a fresh tower for the new mode, its multipliers up the side
+      if (id === 'cash') return this.press('cash');
       tb.mode = id.split(':')[1];
       tb.view = { mode: tb.mode, eggs: Gm.TOWER.modes[tb.mode].eggs, row: 0, picks: [], rows: null, over: true, dead: false, mult: 1 };
     },
@@ -539,8 +671,8 @@ const GAMES = {
       if (id === 'take') return this.take();
       if (!this.on('flip')) return tb.flying ? null : need();
       const call = this.side();
-      if (!tb.pot) { tb.bet = stake(); tb.side = call; result(''); }
-      const r = Gm.coinFlip(call); tb.flying = true;
+      if (!tb.pot) { tb.bet = stake(); beginRound(tb.bet); tb.side = call; tb.hot = hotRound(); result(''); }
+      const r = Gm.coinFlip(call, undefined, tb.hot); tb.flying = true;
       tb.view = { flip: { t0: now(), side: r.side } }; hand('press'); sfx('coinFlip');
       later(1.25, () => {
         tb.flying = false;
@@ -563,7 +695,8 @@ const GAMES = {
     label() { return tb.busy ? 'SPINNING' : 'SPIN THE WHEEL · ' + S(stake()); },
     press() {
       if (!this.on()) return tb.busy ? null : need();
-      const bet = stake(), r = Gm.wheelSpin(), t = now(), a = P.wheelAngle(tb.view, t), TAU = Math.PI * 2;
+      const bet = stake(); beginRound(bet);
+      const r = Gm.wheelSpin(undefined, hotRound()), t = now(), a = P.wheelAngle(tb.view, t), TAU = Math.PI * 2;
       tb.view = { spin: { t0: t, from: ((a % TAU) + TAU) % TAU, to: r.i, dur: 5 } }; tb.busy = true; hand('pull'); sfx('wheelSpin'); result('');
       later(5, () => { tb.busy = false; pay(bet, bet * r.mult, r.mult ? P.xfmt(r.mult) + '!' : 'Blank.', { main: { stake: bet, back: bet * r.mult } }); });
     },
@@ -580,9 +713,14 @@ const GAMES = {
     press() {
       if (!this.on()) return tb.rolling ? null : need();
       const live = !!(tb.s && !tb.s.over), passB = live ? tb.passBet : tb.bets.pass || 0, fieldB = tb.bets.field || 0;
+      if (!live) tb.diceGroup = null;
+      if (!live && passB) { tb.passReceipt = commitBet(passB); tb.diceGroup = tb.passReceipt; }
+      const fieldReceipt = fieldB ? commitBet(fieldB, tb.diceGroup) : null;
+      if (!tb.diceGroup && fieldReceipt) tb.diceGroup = fieldReceipt;
+      const hot = live ? tb.hot : (tb.hot = hotRound());
       let d;
-      if (live || passB) { if (!live) { tb.s = Gm.passNew(); tb.passBet = passB; } Gm.passRoll(tb.s); d = tb.s.rolls[tb.s.rolls.length - 1]; }
-      else d = Gm.roll2();
+      if (live || passB) { if (!live) { tb.s = Gm.passNew(); tb.passBet = passB; } Gm.passRoll(tb.s, undefined, hot); d = tb.s.rolls[tb.s.rolls.length - 1]; }
+      else d = hot ? [5, 6] : Gm.roll2();
       const tot = d[0] + d[1], s = live || passB ? tb.s : null;
       tb.rolling = true; tb.view = { roll: { t0: now(), dice: d } }; hand('throw'); sfx('diceRoll');
       later(0.95, () => {
@@ -591,15 +729,15 @@ const GAMES = {
         if (fieldB) { const m = Gm.fieldMult(tot); st += fieldB; back += fieldB * m; per.field = { stake: fieldB, back: fieldB * m }; }
         if (s && s.over) { st += tb.passBet; back += tb.passBet * s.mult; per.pass = { stake: tb.passBet, back: tb.passBet * s.mult }; }
         const line = s ? s.line : tot + '.';
-        if (st) pay(st, back, (fieldB && !(s && s.over) ? tot + (Gm.fieldMult(tot) ? ' on the field.' : ', the field loses.') + ' ' : '') + line, per); else result(line);
+        if (st) pay(st, back, (fieldB && !(s && s.over) ? tot + (Gm.fieldMult(tot) ? ' on the field.' : ', the field loses.') + ' ' : '') + line, per, [fieldReceipt, s && s.over ? tb.passReceipt : null].filter(Boolean), !s || s.over); else result(line);
       });
     },
     show() { return tb.s && !tb.s.over ? { ...tb.bets, pass: tb.passBet } : tb.bets; },
     extra() { return { point: tb.s && !tb.s.over ? tb.s.point : 0 }; },
     abandon() { // a pass-line point still open rolls out
       const s = tb.s; if (!s || s.over) return;
-      for (let i = 0; i < 400 && !s.over; i++) Gm.passRoll(s);
-      pay(tb.passBet, tb.passBet * s.mult, s.line, { pass: { stake: tb.passBet, back: tb.passBet * s.mult } });
+      for (let i = 0; i < 400 && !s.over; i++) Gm.passRoll(s, undefined, tb.hot);
+      pay(tb.passBet, tb.passBet * s.mult, s.line, { pass: { stake: tb.passBet, back: tb.passBet * s.mult } }, [tb.passReceipt], true);
     },
     status() { return tb.rolling ? 'DICE ARE ROLLING' : tb.s && !tb.s.over ? `THE POINT IS ${tb.s.point} · ROLL IT AGAIN BEFORE A 7` : null; },
   },
@@ -609,7 +747,7 @@ const GAMES = {
     short(id) { return id === 'autonext' ? 'AUTO ' + (crashAuto ? crashAuto + 'x' : 'OFF') : null; },
     status() {
       const C = tb.cr.C, m = tb.cr.mine; if (!C) return null;
-      if (C.phase === 'bet') return m ? `IN FOR ${S(m[1])} · LAUNCH IN ${Math.max(0, Math.ceil(Gm.CRASH.betTime - C.t))}s` : C.bets.length ? `BETS OPEN · ${Math.max(0, Math.ceil(Gm.CRASH.betTime - C.t))}s · CLICK THE BET CIRCLE` : 'CLICK THE BET CIRCLE · YOUR BET LAUNCHES THE ROCKET';
+      if (C.phase === 'bet') return m ? `IN FOR ${S(m[1])} · LAUNCH IN ${Math.max(0, Math.ceil(Gm.CRASH.betTime - C.t))}s` : C.bets.length ? `BETS OPEN · ${Math.max(0, Math.ceil(Gm.CRASH.betTime - C.t))}s` : 'PLACE A CHIP';
       const out = m && m[2] ? `YOU CASHED OUT AT ${P.xfmt(m[2])} (+${S(m[1] * (m[2] - 1))}) · ` : '';
       if (C.phase === 'fly') return m && !m[2] ? `${P.xfmt(C.mult)} · CASH OUT ${S(m[1] * C.mult)}` : `${out}ROCKET AT ${P.xfmt(C.mult)}` + (out ? '' : ' · NEXT ONE SOON');
       return `${out}CRASHED AT ${P.xfmt(C.point)} · NEXT ROCKET SOON`;
@@ -619,7 +757,7 @@ const GAMES = {
       const C = v.pub.crash, mine = C.bets.find(b => b[0] === tb.me) || null, cr = tb.cr;
       cr.C = C; cr.mine = mine;
       // the chips in the circle ride the next rocket: they go in while bets are open (no button), and again each rocket
-      if (C.phase === 'bet' && tb.armed && !tb.closing) {
+      if (C.phase === 'bet' && tb.commitRound === C.round && !tb.closing) {
         const want = stake() >= minBet() ? stake() : 0, key = want + ':' + crashAuto + '@' + C.round;
         if ((want !== (mine ? mine[1] : 0) || (mine && cr.auto !== crashAuto)) && key !== cr.sent) {
           cr.sent = key; cr.auto = crashAuto; tb.act('crash', { bet: want, auto: crashAuto });
@@ -663,8 +801,8 @@ const GAMES = {
     live(v) {
       const R = v.pub.race, mine = R.bets.find(b => b[0] === tb.me) || null, rc = tb.rc;
       rc.R = R; rc.mine = mine;
-      // the chips on a lane are your bet: they go in while betting is open (no button), and ride the next race too
-      if (R.phase === 'bet' && tb.armed && !tb.closing) {
+      // the chips on a duck are your bet: they go in while betting is open (no button), and ride each race after it
+      if (R.phase === 'bet' && !tb.closing) {
         const lane = Object.keys(tb.bets).find(k => tb.bets[k] > 0), want = lane ? lane.slice(4) + ':' + stake() : '', have = mine ? mine[1] + ':' + mine[2] : '';
         if (want !== have && want + '@' + R.round !== rc.sent) {
           rc.sent = want + '@' + R.round;
@@ -675,8 +813,8 @@ const GAMES = {
       const key = R.round + ':' + R.phase + ':' + (mine ? 1 : 0);
       if (key === rc.key) return; rc.key = key;
       if (mine && R.phase === 'show') {
-        const won = R.winner === mine[1], back = won ? mine[2] * R.pays[mine[1]] : 0;
-        result(won ? `${Gm.DUCKS[mine[1]].name} wins! +${money(back - mine[2])}` : `${Gm.DUCKS[R.winner].name} wins. Not this time.`, won ? 'win' : 'lose');
+        const first = R.winner === mine[1], back = mine[3] ?? (first ? mine[2] * R.pays[mine[1]] : 0), won = back > mine[2];
+        result(won ? `${first ? Gm.DUCKS[mine[1]].name + ' wins!' : 'Hot-streak bonus!'} +${money(back - mine[2])}` : `${Gm.DUCKS[R.winner].name} wins. Not this time.`, won ? 'win' : 'lose');
         tb.fx = { t0: now(), per: { ['duck' + mine[1]]: { stake: mine[2], back } } };
       } else if (mine && R.phase === 'run') result("They're off!");
     },
@@ -687,8 +825,8 @@ const GAMES = {
     status() {
       const R = tb.rc.R, m = tb.rc.mine; if (!R) return null;
       const gates = Math.max(0, Math.ceil(Gm.RACE.betTime - R.t));
-      if (R.phase === 'bet') return m ? `IN ON ${Gm.DUCKS[m[1]].name.toUpperCase()} · GATES IN ${gates}s` : R.bets.length ? `BETS OPEN · GATES IN ${gates}s · CLICK A DUCK LANE` : 'CLICK A DUCK LANE · YOUR BET STARTS THE RACE';
-      return R.phase === 'run' ? "THEY'RE OFF!" : `${Gm.DUCKS[R.winner].name.toUpperCase()} WINS · CHIPS ON A LANE RIDE THE NEXT RACE`;
+      if (R.phase === 'bet') return m ? `IN ON ${Gm.DUCKS[m[1]].name.toUpperCase()} · GATES IN ${gates}s` : R.bets.length ? `PICK A DUCK · GATES IN ${gates}s` : 'PICK A DUCK: YOUR CHIPS ON IT ARE THE BET';
+      return R.phase === 'run' ? "THEY'RE OFF!" : m && m[1] !== R.winner && m[3] > m[2] ? `HOT-STREAK BONUS · +${money(m[3] - m[2])}` : `${Gm.DUCKS[R.winner].name.toUpperCase()} WINS`;
     },
   },
 };

@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-16T13:00:56.603Z",
+  "rows": [
+    {
+      "name": "normal",
+      "counts": {
+        "other/visible/updateMatrixWorld": 15,
+        "other/visible/updateMatrix": 16,
+        "world/visible/updateMatrixWorld": 35,
+        "world/visible/updateMatrix": 1316,
+        "world/visible/updateWorldMatrix": 1336,
+        "other/visible/updateWorldMatrix": 1,
+        "hands/visible/updateMatrixWorld": 34,
+        "hands/visible/updateMatrix": 34,
+        "hands/hidden/updateMatrixWorld": 53,
+        "hands/hidden/updateMatrix": 53
+      },
+      "matrixError": 0
+    },
+    {
+      "name": "hidden hands",
+      "counts": {
+        "other/visible/updateWorldMatrix": 2,
+        "other/visible/updateMatrix": 17,
+        "other/visible/updateMatrixWorld": 15,
+        "world/visible/updateMatrixWorld": 36,
+        "world/visible/updateMatrix": 1351,
+        "world/visible/updateWorldMatrix": 1404,
+        "hands/visible/updateMatrixWorld": 5,
+        "hands/visible/updateMatrix": 5,
+        "hands/hidden/updateMatrixWorld": 82,
+        "hands/hidden/updateMatrix": 82
+      },
+      "matrixError": 0
+    }
+  ],
+  "errors": []
+}

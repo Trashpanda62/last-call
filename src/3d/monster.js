@@ -44,6 +44,12 @@ export function preloadMonster(base = 'assets/monster/') {
       const m = o.material; // MeshStandard from the GLB: rough felt that flashlight beams pick out
       m.roughness = 0.9; m.metalness = 0; m.envMapIntensity = 0.25;
     });
+    // Rendering sorts skinned meshes by their bounds even with frustum culling
+    // disabled. Retain the source rest-pose bounds for every monster clone.
+    if (!/[?&]legacyBoundsWarmup\b/.test(location.search)) {
+      g.scene.updateMatrixWorld(true);
+      g.scene.traverse(o => { if (o.isSkinnedMesh && !o.boundingSphere) o.computeBoundingSphere(); });
+    }
     SRC = g.scene; CLIPS = clips; return true;
   }).catch(e => { console.warn('Monster did not load; keeping the fallback.', e); loading = null; return false; });
   return loading;
@@ -120,6 +126,7 @@ export function makeMonster(opts = {}) { // opts.kill: 'slam' plays the alternat
     head(out = new THREE.Vector3()) { obj.updateMatrixWorld(true); return bones.Head.getWorldPosition(out); },
     dispose() {
       mixer.stopAllAction(); mixer.uncacheRoot(model);
+      const skeletons = new Set(); model.traverse(o => { if (o.skeleton) skeletons.add(o.skeleton); }); skeletons.forEach(s => s.dispose());
       obj.removeFromParent();
     },
   };

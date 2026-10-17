@@ -2,6 +2,7 @@
 // bodies found, a knife in the back, chips put down at a game, sips, meeting lines, idle moments and the staff at work. Read from the view each
 // frame; purely visual, the sim never knows.
 import { los, makeSeats } from '../map.js';
+import { prepareClips } from './plush.js';
 
 export const GESTURES = ['cheer', 'despair', 'gasp', 'point', 'shrug', 'cry', 'laugh', 'stab', 'pour', 'sip', 'wave', 'dance', 'lever', 'tap',
   'clap', 'facepalm', 'nervous', 'lookaround', 'thinking', 'bow', 'chips', 'push'];
@@ -11,7 +12,15 @@ const MOOD = { anger: ['point', 'point', 'facepalm'], fear: ['nervous', 'gasp', 
 const SEATED = { slots: ['lever', 'lever', 'tap'], bj: ['tap', 'thinking'], roulette: ['tap', 'thinking', 'clap'], dice: ['tap', 'clap'],
   vip: ['laugh', 'tap'], race: ['clap', 'cheer'], crash: ['thinking', 'nervous'] };
 const STANDING = ['lookaround', 'wave', 'laugh', 'dance', 'thinking', 'shrug'];
+const DEALER_GESTURES = ['tap', 'tap', 'wave', 'thinking'];
+const BARTENDER_GESTURES = ['pour', 'pour', 'wave', 'laugh'];
 const pickOf = a => a[Math.floor(Math.random() * a.length)];
+
+export function* prepareGestures() {
+  yield* prepareClips([...GESTURES, 'snatched'], ['bean', 'round']);
+  yield* prepareClips(DEALER_GESTURES, ['croupier']);
+  yield* prepareClips(BARTENDER_GESTURES, ['bartender']);
+}
 
 export class Gestures {
   constructor() { this.floats = new Map(); this.bodies = new Set(); this.sips = new Map(); this.meet = ''; this.lines = 0; this.queue = []; this.next = new Map(); this.staffT = 3; this.started = false; this.bets = new Map(); }
@@ -88,8 +97,8 @@ export class Gestures {
     if (this.staffT < 0 && staff) {
       this.staffT = 3 + Math.random() * 5;
       const d = staff.dealers && pickOf(staff.dealers);
-      if (d && d.play && !d.busy) d.play(pickOf(['tap', 'tap', 'wave', 'thinking']), true);
-      if (staff.bartender && Math.random() < 0.5 && !staff.bartender.busy) staff.bartender.play(pickOf(['pour', 'pour', 'wave', 'laugh']), true);
+      if (d && d.play && !d.busy) d.play(pickOf(DEALER_GESTURES), true);
+      if (staff.bartender && Math.random() < 0.5 && !staff.bartender.busy) staff.bartender.play(pickOf(BARTENDER_GESTURES), true);
     }
     // due gestures; an event wins over an idle gesture already playing
     for (let i = this.queue.length - 1; i >= 0; i--) {

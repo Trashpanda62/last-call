@@ -1,9 +1,17 @@
 // Canvas-painted textures for the plush Art Deco casino. Painted here; the table felts paint on the generated felt weave.
 import * as THREE from 'three';
 import { ART as ART2 } from '../paint.js';
+import { PLINKO, PLINKO_ROWS } from '../games.js';
+import { BJ_LAYOUT, BJ_SPOTS } from './blackjack-layout.js';
 
+const cache = {};
 let maxAniso = 4;
-export function setAniso(n) { maxAniso = n; }
+export function setAniso(n) {
+  maxAniso = n;
+  // Prepared cards may not currently be attached to a visible mesh. Keep their
+  // filtering in sync with the rest of the scene when graphics settings change.
+  for (const t of Object.values(cache)) if (t.isTexture && t.generateMipmaps && !t.isRenderTargetTexture && t.anisotropy !== n) { t.anisotropy = n; t.needsUpdate = true; }
+}
 export const aniso = () => maxAniso;
 
 export function canvas(w, h) { const c = document.createElement('canvas'); c.width = w; c.height = h; return [c, c.getContext('2d')]; }
@@ -13,7 +21,6 @@ export function tex(c, repeat = true) {
   if (repeat) t.wrapS = t.wrapT = THREE.RepeatWrapping;
   return t;
 }
-const cache = {};
 const once = (k, f) => cache[k] || (cache[k] = f());
 // Seeded random so a texture paints the same way every load.
 function srand(seed) { let s = seed >>> 0 || 1; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
@@ -166,13 +173,16 @@ export const ceiling = (base = '#2a1418') => once('ceil' + base, () => {
 // their own green, blue or red, and repaint once it has loaded. Until then (or with ?toy or ?nomats) a flat colour.
 const FELTS = {}, feltWaiters = [];
 let feltsDone = false;
+let loadFeltsTask;
 export function loadFelts() {
-  if (/[?&](toy|nomats)\b/.test(location.search)) return;
-  let n = 0;
-  const done = () => { if (++n < 3) return; feltsDone = true; feltWaiters.splice(0).forEach(f => f()); };
-  for (const k of ['Green', 'Blue', 'Red']) { const im = new Image(); im.onload = () => { FELTS[k] = im; done(); }; im.onerror = done; im.src = `assets/mats/felt${k}-color.jpg`; }
+  if (loadFeltsTask) return loadFeltsTask;
+  if (/[?&](toy|nomats)\b/.test(location.search)) { feltsDone = true; return Promise.resolve(); }
+  return loadFeltsTask = Promise.all((['Green', 'Blue', 'Red']).map(k => new Promise((done, reject) => {
+    const im = new Image(); im.onload = () => { FELTS[k] = im; done(); }; im.onerror = () => reject(new Error('Felt failed: ' + k)); im.src = `assets/mats/felt${k}-color.jpg`;
+  }))).then(() => { feltsDone = true; feltWaiters.splice(0).forEach(f => f()); });
 }
-export function onFelts(f) { if (!feltsDone) feltWaiters.push(f); }
+export const feltsReady = () => feltsDone;
+export function onFelts(f) { if (feltsDone) f(); else feltWaiters.push(f); }
 export function feltFill(g, w, h, color, scale = 0.5) {
   g.fillStyle = color; g.fillRect(0, 0, w, h);
   const hsl = new THREE.Color(color).getHSL({}), k = hsl.h > 0.2 && hsl.h < 0.5 ? 'Green' : hsl.h >= 0.5 && hsl.h < 0.8 ? 'Blue' : 'Red', im = FELTS[k];
@@ -186,7 +196,7 @@ export function feltFill(g, w, h, color, scale = 0.5) {
 export const bjFelt = (color = '#1b6a40') => once('bj' + color, () => {
   const [c, g] = canvas(1024, 512);
   const t = tex(c, false), paint = () => { paintBj(g, color); t.needsUpdate = true; };
-  paint(); onFelts(paint); onArt(paint);
+  paint(); if (!feltsDone) onFelts(paint); if (!artDone) onArt(paint);
   return t;
 });
 function paintBj(g, color) {
@@ -205,9 +215,8 @@ function paintBj(g, color) {
   g.font = `italic 24px ${FONT}`; g.fillText('Ties pay half · Dealer stands on 17', 512, 160);
   g.font = `bold 20px ${FONT}`; g.fillText('INSURANCE IS FOR QUITTERS', 512, 200);
   g.strokeStyle = 'rgba(255,255,255,0.75)'; g.lineWidth = 3;
-  for (let i = 0; i < 5; i++) {
-    const a = Math.PI * (1 / 6 + i / 6), x = 512 + Math.cos(a) * 430, y = Math.sin(a) * 400;
-    g.save(); g.translate(x, y); g.rotate(a - Math.PI / 2); g.strokeRect(-36, -26, 72, 52); g.beginPath(); g.arc(0, 52, 18, 0, 7); g.stroke(); g.restore();
+  for (const s of BJ_SPOTS) {
+    g.save(); g.translate(s.card.x, s.card.y); g.rotate(s.turn); g.strokeRect(-36, -26, 72, 52); g.beginPath(); g.arc(0, 52, BJ_LAYOUT.betRadius, 0, 7); g.stroke(); g.restore();
   }
 }
 export const rouletteFelt = () => once('rl', () => {
@@ -294,7 +303,7 @@ export const prizeWheel = (segs) => once('prize', () => {
   return tex(c, false);
 });
 export const coinFace = (heads) => once('coin' + heads, () => {
-  const [c, g] = canvas(256, 256);
+  const [c, g] = canvas(512, 512); g.scale(2, 2); g.translate(128, 128); g.rotate(Math.PI / 2); g.translate(-128, -128);
   const rg = g.createRadialGradient(110, 100, 10, 128, 128, 128); rg.addColorStop(0, '#fff3c0'); rg.addColorStop(0.6, '#e8b440'); rg.addColorStop(1, '#8a5a20');
   g.fillStyle = rg; g.beginPath(); g.arc(128, 128, 128, 0, 7); g.fill();
   g.strokeStyle = '#8a5a20'; g.lineWidth = 8; g.beginPath(); g.arc(128, 128, 110, 0, 7); g.stroke();
@@ -336,10 +345,15 @@ export function plaque(text, { w = 512, h = 128, bg = '#1a0a10', ink = '#e8c46a'
   return tex(c, false);
 }
 // Animated canvases repaint a few times a second; paint(g, w, h, time, state).
-export function liveCanvas(w, h, paint) {
+// An optional key describes the painted frame; undefined keeps animation live.
+export function liveCanvas(w, h, paint, frameKey) {
   const [c, g] = canvas(w, h);
-  const t = tex(c, false);
-  return { tex: t, canvas: c, g, update(time, state) { paint(g, w, h, time, state); t.needsUpdate = true; } };
+  const t = tex(c, false); let lastKey;
+  return { tex: t, canvas: c, g, update(time, state) {
+    const key = frameKey?.(time, state);
+    if (key !== undefined && key === lastKey) return;
+    paint(g, w, h, time, state); lastKey = key; t.needsUpdate = true;
+  } };
 }
 
 // Soft round blob for contact shadows and glows.
@@ -369,19 +383,21 @@ export const beam = () => once('beam', () => {
 const ART = {}, artWaiters = [];
 let artDone = false;
 export const ART_NAMES = ['chip0', 'chip1', 'chip2', 'chip3', 'chip4', 'chip5', 'king', 'queen', 'jack', 'cardBack', 'crest'];
+let loadArtTask;
 export function loadArt() {
-  if (/[?&](toy|noart)\b/.test(location.search)) return;
-  let n = 0;
-  const done = () => { if (++n < ART_NAMES.length) return; artDone = true; artWaiters.splice(0).forEach(f => f()); };
-  for (const k of ART_NAMES) { const im = new Image(); im.onload = () => { ART[k] = im; done(); }; im.onerror = done; im.src = `assets/art/${k}.webp`; }
+  if (loadArtTask) return loadArtTask;
+  if (/[?&](toy|noart)\b/.test(location.search)) { artDone = true; return Promise.resolve(); }
+  return loadArtTask = Promise.all((ART_NAMES).map(k => new Promise((done, reject) => {
+    const im = new Image(); im.onload = () => { ART[k] = im; done(); }; im.onerror = () => reject(new Error('Card art failed: ' + k)); im.src = `assets/art/${k}.webp`;
+  }))).then(() => { artDone = true; artWaiters.splice(0).forEach(f => f()); });
 }
 export const artImage = k => ART[k] || null;
-export function onArt(f) { if (!artDone) artWaiters.push(f); }
+export function onArt(f) { if (artDone) f(); else artWaiters.push(f); }
 // a canvas texture painted now and again once the art has loaded
 function artTex(w, h, paint) {
   const [c, g] = canvas(w, h), t = tex(c, false);
   const draw = () => { g.clearRect(0, 0, w, h); paint(g, w, h); t.needsUpdate = true; };
-  draw(); onArt(draw);
+  draw(); if (!artDone) onArt(draw);
   return t;
 }
 const COURT = { J: 'jack', Q: 'queen', K: 'king' };
@@ -407,6 +423,60 @@ export const cardBack = () => once('cardback', () => artTex(256, 360, (g, W, H) 
   }
   g.restore();
 }));
+// Warm the complete deck in bounded loading work. A first deal/hit should only
+// select an existing full-resolution face, without painting or uploading it.
+export function* prepareCardTextures() {
+  yield cardBack();
+  for (const suit of ['♠', '♥', '♦', '♣']) for (const rank of ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']) yield cardTex(rank + suit, suit === '♥' || suit === '♦');
+}
+// Payout strips depend only on risk. Cabinets keep independent materials and
+// select these immutable maps instead of repainting/uploading an identical one.
+// Each channel: ivory value on near-black green, filling the cell width (1000 reads 1K; the × lives on the readout),
+// over a heat bar that runs gold in the middle to red at the edges. digitShare: the smallest digit cap height as a
+// share of the strip height (tools/plinko-face-shots.mjs measures it on screen).
+export const plinkoValue = m => m >= 1000 ? m / 1000 + 'K' : m >= 1 ? String(m) : String(m).replace(/^0/, '');
+export const plinkoBuckets = risk => once('plinkoBuckets/' + risk, () => {
+  const [c, bg] = canvas(1024, 96), rows = PLINKO_ROWS, cw = 1024 / 17;
+  bg.clearRect(0, 0, 1024, 96);
+  bg.textAlign = 'center'; bg.textBaseline = 'alphabetic';
+  let least = 99;
+  PLINKO[risk].forEach((m, j) => {
+    const hot = Math.abs(j - rows / 2) / (rows / 2), x = j * cw;
+    if (!m) { // a channel the risk's gates close: a brass-edged shutter, no payout
+      bg.fillStyle = '#0b0f0e'; bg.beginPath(); bg.roundRect(x + 2, 2, cw - 4, 92, 6); bg.fill();
+      bg.strokeStyle = '#8a6a2e'; bg.lineWidth = 5; bg.beginPath(); bg.moveTo(x + 12, 14); bg.lineTo(x + cw - 12, 82); bg.moveTo(x + cw - 12, 14); bg.lineTo(x + 12, 82); bg.stroke();
+      return;
+    }
+    bg.fillStyle = '#142d28'; bg.beginPath(); bg.roundRect(x + 2, 2, cw - 4, 92, 6); bg.fill();
+    bg.fillStyle = `hsl(${46 - hot * 46},85%,${44 + hot * 8}%)`; bg.beginPath(); bg.roundRect(x + 5, 78, cw - 10, 12, 4); bg.fill();
+    const label = plinkoValue(m); let px = 46;
+    bg.font = `bold ${px}px Arial, sans-serif`;
+    const fit = (cw - 8) / bg.measureText(label).width; if (fit < 1) { px = Math.floor(px * fit); bg.font = `bold ${px}px Arial, sans-serif`; }
+    least = Math.min(least, px);
+    bg.fillStyle = '#f8edc9'; bg.fillText(label, x + cw / 2, 50 + px * 0.36);
+  });
+  const t = tex(c, false); t.userData.digitShare = least * 0.72 / 96;
+  return t;
+});
+// The cabinet readout: the landed multiplier, or the risk being played, one 256 × 128 cell each in a single atlas, so
+// a landing only moves the readout's texture coordinates (nothing repaints or uploads during play).
+export const PLINKO_READOUT = { cols: 4, rows: 8, keys: ['LOW', 'MED', 'HIGH', ...[...new Set(Object.values(PLINKO).flat())].filter(v => v > 0).sort((a, b) => a - b)] };
+export const plinkoReadout = () => once('plinkoReadout', () => {
+  const { cols, rows, keys } = PLINKO_READOUT, [c, g] = canvas(cols * 256, rows * 128);
+  g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+  keys.forEach((k, i) => {
+    const x = (i % cols) * 256, y = Math.floor(i / cols) * 128;
+    g.fillStyle = '#142d28'; g.fillRect(x, y, 256, 128);
+    g.strokeStyle = '#c8963a'; g.lineWidth = 6; g.beginPath(); g.roundRect(x + 5, y + 5, 246, 118, 14); g.stroke();
+    const label = typeof k === 'string' ? k + ' RISK' : k + '×';
+    let px = typeof k === 'string' ? 50 : 84; g.font = `bold ${px}px Arial, sans-serif`;
+    const fit = 224 / g.measureText(label).width; if (fit < 1) { px = Math.floor(px * fit); g.font = `bold ${px}px Arial, sans-serif`; }
+    g.fillStyle = '#f8edc9'; g.fillText(label, x + 128, y + 64 + px * 0.36);
+  });
+  const t = tex(c, false); t.userData.digitShare = 84 * 0.72 / 128;
+  return t;
+});
+export function* preparePlinkoTextures() { for (const risk of Object.keys(PLINKO)) yield plinkoBuckets(risk); yield plinkoReadout(); }
 // The gold of the embroidered crest on a transparent ground, for drawing onto any felt.
 let crestCut = null;
 export function crestImage() {
@@ -420,19 +490,19 @@ export function crestImage() {
 
 // Sorceress art for phases 7, 8 and 10 (assets/art2): slot symbols and game-screen backdrops (paint.js draws them),
 // neon signs, paintings, posters, key art and effect sprites. World pieces are rebuilt once it is in.
-export const ART2_NAMES = ['sym-diamond', 'sym-seven', 'sym-bar', 'sym-bell', 'sym-cherry', 'sym-lemon',
-  ...['mines', 'tower', 'crash', 'plinko', 'wheel', 'coin'].map(k => 'screen-' + k),
-  ...['lastcall', 'bar', 'vip', 'restrooms', 'duckrace', 'slots', 'highlimit', 'dice', 'spintowin', 'flip', 'crash', 'plinko', 'mines', 'dragontower'].map(k => 'sign-' + k),
-  ...Array.from({ length: 12 }, (_, i) => 'paint-' + String(i).padStart(2, '0')),
-  ...['derby', 'jackpot', 'cocktails', 'rocket', 'roulette', 'missing', 'wash', 'lounge'].map(k => 'poster-' + k),
-  ...['smoke', 'sparks', 'confetti', 'fizz', 'boom', 'stars', 'ghost'].map(k => 'fx-' + k)];
+export const ART2_NAMES = ['jukebox-marquee-v2', 'portrait-gambler', 'portrait-queen', 'portrait-bartender', 'sym-diamond', 'sym-seven', 'sym-bar', 'sym-bell', 'sym-cherry', 'sym-lemon',
+  ...['mines', 'tower'].map(k => 'screen-' + k),
+  ...['lastcall', 'bar', 'vip', 'restrooms', 'duckrace', 'slots', 'highlimit', 'dice', 'spintowin', 'plinko', 'mines', 'dragontower'].map(k => 'sign-' + k),
+  ...['smoke', 'sparks', 'confetti', 'fizz', 'stars', 'ghost'].map(k => 'fx-' + k)];
 const art2Waiters = [];
 let art2Done = false;
+let loadArt2Task;
 export function loadArt2() {
-  if (/[?&](toy|noart)\b/.test(location.search)) return;
-  let n = 0;
-  const done = () => { if (++n < ART2_NAMES.length) return; art2Done = true; art2Waiters.splice(0).forEach(f => f()); };
-  for (const k of ART2_NAMES) { const im = new Image(); im.onload = () => { ART2[k] = im; done(); }; im.onerror = done; im.src = `assets/art2/${k}.webp`; }
+  if (loadArt2Task) return loadArt2Task;
+  if (/[?&](toy|noart)\b/.test(location.search)) { art2Done = true; return Promise.resolve(); }
+  return loadArt2Task = Promise.all((ART2_NAMES).map(k => new Promise((done, reject) => {
+    const im = new Image(); im.onload = () => { ART2[k] = im; done(); }; im.onerror = () => reject(new Error('Casino art failed: ' + k)); im.src = `assets/art2/${k}.webp`;
+  }))).then(() => { art2Done = true; art2Waiters.splice(0).forEach(f => f()); });
 }
 export const art2 = k => ART2[k] || null;
 export const art2Ready = () => art2Done;

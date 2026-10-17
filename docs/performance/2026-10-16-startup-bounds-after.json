@@ -1,0 +1,4401 @@
+{
+  "at": "2026-10-16T13:11:16.376Z",
+  "rows": [
+    {
+      "stage": "Preparing the casino",
+      "prepareOnly": true,
+      "parts": {
+        "resize": 18.19999998807907,
+        "backrooms update": 57.90000003576279,
+        "bean lookup/create": 51.59999996423721,
+        "death update": 0.40000003576278687,
+        "hands update": 0.3999999761581421,
+        "room culling": 0.699999988079071,
+        "blackout update": 1,
+        "light placement": 0.30000001192092896,
+        "world update": 2.300000011920929,
+        "items update": 6.900000035762787,
+        "hazards update": 0.5,
+        "visible matrices": 3.199999988079071,
+        "labels": 0.6000000238418579
+      },
+      "ms": 154.19999998807907
+    },
+    {
+      "stage": "Finishing the scene",
+      "prepareOnly": false,
+      "parts": {
+        "resize": 0,
+        "backrooms update": 0,
+        "bean lookup/create": 0.09999996423721313,
+        "gestures": 0.09999996423721313,
+        "death update": 0,
+        "hands update": 0,
+        "room culling": 0.19999998807907104,
+        "blackout update": 0,
+        "light placement": 0,
+        "world update": 0.699999988079071,
+        "items update": 0.10000002384185791,
+        "hazards update": 0,
+        "visible matrices": 2.099999964237213,
+        "labels": 0.10000002384185791,
+        "render targets": 0.40000003576278687,
+        "direct draws": 37.70000022649765,
+        "shadows": 10.5,
+        "renderer render": 47.30000019073486,
+        "pass scene": 39.90000003576279,
+        "pass gtao": 8,
+        "pass handPass": 0.2999999523162842,
+        "pass output": 0.20000004768371582,
+        "composer": 48.80000001192093
+      },
+      "ms": 54.200000047683716
+    }
+  ],
+  "bounds": [
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "Mesh_0",
+      "parent": "Bean",
+      "vertices": 15698,
+      "instances": 1,
+      "ms": 19.799999952316284
+    },
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "monster",
+      "parent": "MonsterRig",
+      "vertices": 18226,
+      "instances": 1,
+      "ms": 14.5
+    },
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "Mesh_0",
+      "parent": "Bean",
+      "vertices": 17717,
+      "instances": 1,
+      "ms": 11.400000035762787
+    },
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "Mesh_0",
+      "parent": "Bean",
+      "vertices": 21676,
+      "instances": 1,
+      "ms": 13.600000023841858
+    },
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "Mesh_0",
+      "parent": "Bean",
+      "vertices": 19641,
+      "instances": 1,
+      "ms": 10.700000047683716
+    },
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "Mesh_0",
+      "parent": "Bean",
+      "vertices": 18567,
+      "instances": 1,
+      "ms": 12.099999964237213
+    },
+    {
+      "stage": "",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0.5
+    },
+    {
+      "stage": "",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "parent": "RoomEnvironment",
+      "vertices": 24,
+      "instances": 6,
+      "ms": 0.40000003576278687
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 6635,
+      "instances": 3,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8803,
+      "instances": 5,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 13080,
+      "instances": 3,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 11185,
+      "instances": 4,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 4806,
+      "instances": 3,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8397,
+      "instances": 2,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8397,
+      "instances": 2,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 26297,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 6715,
+      "instances": 2,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 6715,
+      "instances": 2,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 5653,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9427,
+      "instances": 1,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9201,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 5048,
+      "instances": 1,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 4263,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 5601,
+      "instances": 4,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9188,
+      "instances": 4,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9188,
+      "instances": 4,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9188,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9188,
+      "instances": 2,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9188,
+      "instances": 4,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 5486,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9429,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9429,
+      "instances": 1,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 12630,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8531,
+      "instances": 6,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9455,
+      "instances": 4,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 12388,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8496,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8496,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8496,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 7089,
+      "instances": 6,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 15733,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8159,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 50,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "RingGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 30,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 30,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 441,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 66,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "RingGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "ShapeGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 58,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 100,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "ShapeGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 58,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 100,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 76,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "LatheGeometry",
+      "name": "",
+      "vertices": 85,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 40,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 40,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 40,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 40,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 81,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 165,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "RoundedBoxGeometry",
+      "name": "",
+      "vertices": 900,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 58,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 100,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 98,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 1067,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "ConeGeometry",
+      "name": "",
+      "vertices": 15,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 58,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 100,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 292,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 585,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 585,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 58,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 100,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 148,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 325,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "RoundedBoxGeometry",
+      "name": "",
+      "vertices": 900,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 247,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 148,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 172,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1800,
+      "ms": 0.20000004768371582
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3600,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2016,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3696,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3024,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2352,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 4032,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3360,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 576,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2160,
+      "ms": 0.5
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 5448,
+      "ms": 0.7999999523162842
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 8460,
+      "ms": 1.100000023841858
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3600,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 360,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 5400,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 5400,
+      "ms": 0.5
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3600,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 96,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2700,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 81,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2304,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1716,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1440,
+      "ms": 0.20000004768371582
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 60,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 216,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 216,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 216,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 54,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 19536,
+      "ms": 1.199999988079071
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2124,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1224,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 4572,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 5184,
+      "ms": 0.5999999642372131
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6180,
+      "ms": 0.5
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2808,
+      "ms": 0.20000004768371582
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1452,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 108,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 900,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 120,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1800,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 72,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 312,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 216,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "OctahedronGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 88,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 63,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 35,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "LatheGeometry",
+      "name": "",
+      "vertices": 198,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CapsuleGeometry",
+      "name": "",
+      "vertices": 238,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CapsuleGeometry",
+      "name": "",
+      "vertices": 238,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CapsuleGeometry",
+      "name": "",
+      "vertices": 238,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TubeGeometry",
+      "name": "",
+      "vertices": 287,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 936,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3600,
+      "ms": 0.40000003576278687
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 288,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 63,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 63,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "OctahedronGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 63,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 34,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "ConeGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 336,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 336,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "ShapeGeometry",
+      "name": "",
+      "vertices": 56,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 208,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 112,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 275,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 221,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CapsuleGeometry",
+      "name": "",
+      "vertices": 90,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CapsuleGeometry",
+      "name": "",
+      "vertices": 90,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 76,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 63,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "ConeGeometry",
+      "name": "",
+      "vertices": 19,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "ConeGeometry",
+      "name": "",
+      "vertices": 83,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "LatheGeometry",
+      "name": "",
+      "vertices": 126,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 203,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 63,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 112,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "LatheGeometry",
+      "name": "",
+      "vertices": 84,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 203,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 105,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "LatheGeometry",
+      "name": "",
+      "vertices": 84,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 203,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 112,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "LatheGeometry",
+      "name": "",
+      "vertices": 84,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 203,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 35,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 40,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 63,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 28,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 28,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 28,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 28,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 28,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 28,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 8,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 8,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 8,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 8,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 8,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 8,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 8,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 81,
+      "instances": 168,
+      "ms": 0.6000000238418579
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 81,
+      "instances": 168,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 81,
+      "instances": 168,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 105,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 81,
+      "instances": 308,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 88,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 63,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 35,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 24,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 24,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 63,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 24,
+      "instances": 0,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 63,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Preparing scene bounds",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 4,
+      "instances": 60,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3,
+      "ms": 0.10000002384185791
+    }
+  ],
+  "readyMs": 10853.799999952316,
+  "self": [
+    {
+      "ms": 277.057,
+      "functionName": "(program)",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 10.975,
+      "functionName": "(idle)",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 2.405,
+      "functionName": "setProgram",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 18327,
+      "columnNumber": 21
+    },
+    {
+      "ms": 1.897,
+      "functionName": "getParameters",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 7428,
+      "columnNumber": 23
+    },
+    {
+      "ms": 1.729,
+      "functionName": "getProgram",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 18148,
+      "columnNumber": 21
+    },
+    {
+      "ms": 1.443,
+      "functionName": "WebGLRenderer.renderBufferDirect",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 17177,
+      "columnNumber": 37
+    },
+    {
+      "ms": 1.27,
+      "functionName": "setProgram",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 18327,
+      "columnNumber": 21
+    },
+    {
+      "ms": 1.121,
+      "functionName": "getProgramCacheKey",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 7770,
+      "columnNumber": 28
+    },
+    {
+      "ms": 1.091,
+      "functionName": "createVertexArray",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 0.815,
+      "functionName": "computeBoneTexture",
+      "scriptId": "76",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 24498,
+      "columnNumber": 19
+    },
+    {
+      "ms": 0.806,
+      "functionName": "setValue",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 6181,
+      "columnNumber": 9
+    },
+    {
+      "ms": 0.802,
+      "functionName": "hiddenTick",
+      "scriptId": "19",
+      "url": "https://10.42.0.37:3161/src/main.js",
+      "lineNumber": 959,
+      "columnNumber": 19
+    },
+    {
+      "ms": 0.798,
+      "functionName": "releaseMaterialProgramReferences",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 17153,
+      "columnNumber": 43
+    },
+    {
+      "ms": 0.75,
+      "functionName": "releaseStatesOfProgram",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 2146,
+      "columnNumber": 32
+    },
+    {
+      "ms": 0.652,
+      "functionName": "copy",
+      "scriptId": "76",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 4145,
+      "columnNumber": 5
+    },
+    {
+      "ms": 0.648,
+      "functionName": "setValueV3f",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 5233,
+      "columnNumber": 20
+    },
+    {
+      "ms": 0.62,
+      "functionName": "probeCall",
+      "scriptId": "37",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1138,
+      "columnNumber": 18
+    },
+    {
+      "ms": 0.579,
+      "functionName": "renderObject",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 9555,
+      "columnNumber": 22
+    },
+    {
+      "ms": 0.555,
+      "functionName": "WebGLShadowMap.render",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 9140,
+      "columnNumber": 24
+    },
+    {
+      "ms": 0.528,
+      "functionName": "upload",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 6197,
+      "columnNumber": 14
+    },
+    {
+      "ms": 0.511,
+      "functionName": "needsUpdate",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 1741,
+      "columnNumber": 21
+    },
+    {
+      "ms": 0.503,
+      "functionName": "createVertexArray",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 0.491,
+      "functionName": "bindTexture",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 0.486,
+      "functionName": "probeCall",
+      "scriptId": "37",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1138,
+      "columnNumber": 18
+    },
+    {
+      "ms": 0.486,
+      "functionName": "flatten",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 5103,
+      "columnNumber": 16
+    },
+    {
+      "ms": 0.486,
+      "functionName": "setupVertexAttributes",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 1907,
+      "columnNumber": 31
+    },
+    {
+      "ms": 0.485,
+      "functionName": "seqWithValue",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 6215,
+      "columnNumber": 20
+    },
+    {
+      "ms": 0.484,
+      "functionName": "refreshMaterialUniforms",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 15006,
+      "columnNumber": 33
+    },
+    {
+      "ms": 0.482,
+      "functionName": "probeCall",
+      "scriptId": "37",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1138,
+      "columnNumber": 18
+    },
+    {
+      "ms": 0.48,
+      "functionName": "createVertexArrayObject",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 1644,
+      "columnNumber": 33
+    },
+    {
+      "ms": 0.479,
+      "functionName": "projectObject",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 17824,
+      "columnNumber": 24
+    },
+    {
+      "ms": 0.448,
+      "functionName": "renderObjects",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 18090,
+      "columnNumber": 24
+    },
+    {
+      "ms": 0.399,
+      "functionName": "setValue",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 6046,
+      "columnNumber": 9
+    },
+    {
+      "ms": 0.327,
+      "functionName": "vertexAttribPointer",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 0.327,
+      "functionName": "getProgram",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 18148,
+      "columnNumber": 21
+    },
+    {
+      "ms": 0.325,
+      "functionName": "update",
+      "scriptId": "43",
+      "url": "https://10.42.0.37:3161/src/3d/plush.js",
+      "lineNumber": 677,
+      "columnNumber": 8
+    },
+    {
+      "ms": 0.325,
+      "functionName": "setup",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 1605,
+      "columnNumber": 15
+    },
+    {
+      "ms": 0.325,
+      "functionName": "setup",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 1605,
+      "columnNumber": 15
+    },
+    {
+      "ms": 0.324,
+      "functionName": "setValueV1f",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 5192,
+      "columnNumber": 20
+    },
+    {
+      "ms": 0.324,
+      "functionName": "bindBuffer",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 0.324,
+      "functionName": "probeCall",
+      "scriptId": "37",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1138,
+      "columnNumber": 18
+    },
+    {
+      "ms": 0.323,
+      "functionName": "uniform1i",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 0.323,
+      "functionName": "refreshTransformUniform",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 14977,
+      "columnNumber": 33
+    },
+    {
+      "ms": 0.323,
+      "functionName": "setupVertexAttributes",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 1907,
+      "columnNumber": 31
+    },
+    {
+      "ms": 0.322,
+      "functionName": "sort",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 8272,
+      "columnNumber": 14
+    }
+  ],
+  "errors": []
+}

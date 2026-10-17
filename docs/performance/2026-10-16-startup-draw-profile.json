@@ -1,0 +1,419 @@
+{
+  "at": "2026-10-16T13:08:59.420Z",
+  "rows": [
+    {
+      "stage": "Preparing the casino",
+      "prepareOnly": true,
+      "parts": {
+        "resize": 16.100000023841858,
+        "backrooms update": 63.39999997615814,
+        "bean lookup/create": 50.59999990463257,
+        "death update": 0.3999999761581421,
+        "hands update": 0.3999999761581421,
+        "room culling": 0.7000000476837158,
+        "blackout update": 0.800000011920929,
+        "light placement": 0.2999999523162842,
+        "world update": 2.199999988079071,
+        "items update": 7.900000035762787,
+        "hazards update": 0.5999999642372131,
+        "visible matrices": 4.5,
+        "labels": 0.5999999642372131
+      },
+      "ms": 159.39999997615814
+    },
+    {
+      "stage": "Finishing the scene",
+      "prepareOnly": false,
+      "parts": {
+        "resize": 0.10000002384185791,
+        "backrooms update": 0,
+        "bean lookup/create": 0.09999996423721313,
+        "gestures": 0,
+        "death update": 0,
+        "hands update": 0,
+        "room culling": 0.10000002384185791,
+        "blackout update": 0,
+        "light placement": 0.10000002384185791,
+        "world update": 0.5999999642372131,
+        "items update": 0,
+        "hazards update": 0,
+        "visible matrices": 2.100000023841858,
+        "labels": 0.10000002384185791,
+        "render targets": 0.6000000834465027,
+        "direct draws": 38.999999940395355,
+        "shadows": 12.100000023841858,
+        "renderer render": 88.30000001192093,
+        "pass scene": 81,
+        "pass gtao": 8.199999988079071,
+        "pass handPass": 0.19999998807907104,
+        "pass output": 0.30000001192092896,
+        "composer": 90.19999998807907
+      },
+      "ms": 95.79999995231628
+    }
+  ],
+  "readyMs": 10871.700000047684,
+  "self": [
+    {
+      "ms": 272.118,
+      "functionName": "(program)",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 11.151,
+      "functionName": "(idle)",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 8.033,
+      "functionName": "applyBoneTransform",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 24094,
+      "columnNumber": 19
+    },
+    {
+      "ms": 4.118,
+      "functionName": "getVertexPosition",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 23988,
+      "columnNumber": 18
+    },
+    {
+      "ms": 3.7,
+      "functionName": "(garbage collector)",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 3.105,
+      "functionName": "multiplyMatrices",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 10406,
+      "columnNumber": 17
+    },
+    {
+      "ms": 2.994,
+      "functionName": "getProgram",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 18148,
+      "columnNumber": 21
+    },
+    {
+      "ms": 2.463,
+      "functionName": "",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 6029,
+      "columnNumber": 21
+    },
+    {
+      "ms": 2.28,
+      "functionName": "setFromBufferAttribute",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 15802,
+      "columnNumber": 23
+    },
+    {
+      "ms": 1.836,
+      "functionName": "getParameters",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 7428,
+      "columnNumber": 23
+    },
+    {
+      "ms": 1.727,
+      "functionName": "setProgram",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 18327,
+      "columnNumber": 21
+    },
+    {
+      "ms": 1.467,
+      "functionName": "computeBoundingSphere",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 18891,
+      "columnNumber": 22
+    },
+    {
+      "ms": 1.436,
+      "functionName": "setFromBufferAttribute",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 15802,
+      "columnNumber": 23
+    },
+    {
+      "ms": 1.432,
+      "functionName": "fromBufferAttribute",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 5982,
+      "columnNumber": 20
+    },
+    {
+      "ms": 1.376,
+      "functionName": "computeBoundingSphere",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 18891,
+      "columnNumber": 22
+    },
+    {
+      "ms": 1.329,
+      "functionName": "getProgramCacheKey",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 7770,
+      "columnNumber": 28
+    },
+    {
+      "ms": 1.328,
+      "functionName": "getProgramCacheKeyBooleans",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 7863,
+      "columnNumber": 36
+    },
+    {
+      "ms": 1.169,
+      "functionName": "refreshMaterialUniforms",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 15006,
+      "columnNumber": 33
+    },
+    {
+      "ms": 1.168,
+      "functionName": "setup",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 1605,
+      "columnNumber": 15
+    },
+    {
+      "ms": 1.163,
+      "functionName": "frame",
+      "scriptId": "19",
+      "url": "https://10.42.0.37:3161/src/main.js",
+      "lineNumber": 933,
+      "columnNumber": 14
+    },
+    {
+      "ms": 1.119,
+      "functionName": "fromBufferAttribute",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 5982,
+      "columnNumber": 20
+    },
+    {
+      "ms": 1.096,
+      "functionName": "distanceToSquared",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 5746,
+      "columnNumber": 18
+    },
+    {
+      "ms": 1.086,
+      "functionName": "getMaxScaleOnAxis",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 10659,
+      "columnNumber": 18
+    },
+    {
+      "ms": 1.002,
+      "functionName": "setValueV3f",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 5233,
+      "columnNumber": 20
+    },
+    {
+      "ms": 1.002,
+      "functionName": "releaseStatesOfProgram",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 2146,
+      "columnNumber": 32
+    },
+    {
+      "ms": 1.001,
+      "functionName": "createVertexArray",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 0.996,
+      "functionName": "probeCall",
+      "scriptId": "26",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1114,
+      "columnNumber": 18
+    },
+    {
+      "ms": 0.954,
+      "functionName": "getComponent",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 8266,
+      "columnNumber": 13
+    },
+    {
+      "ms": 0.822,
+      "functionName": "copy",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 8297,
+      "columnNumber": 5
+    },
+    {
+      "ms": 0.819,
+      "functionName": "getTextureCacheKey",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 11532,
+      "columnNumber": 28
+    },
+    {
+      "ms": 0.699,
+      "functionName": "getX",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 17146,
+      "columnNumber": 5
+    },
+    {
+      "ms": 0.67,
+      "functionName": "refreshUniformsCommon",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 15102,
+      "columnNumber": 31
+    },
+    {
+      "ms": 0.67,
+      "functionName": "getProgramCacheKeyParameters",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 7810,
+      "columnNumber": 38
+    },
+    {
+      "ms": 0.67,
+      "functionName": "releaseMaterialProgramReferences",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 17153,
+      "columnNumber": 43
+    },
+    {
+      "ms": 0.665,
+      "functionName": "probeCall",
+      "scriptId": "26",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1114,
+      "columnNumber": 18
+    },
+    {
+      "ms": 0.663,
+      "functionName": "WebGLRenderer.renderBufferDirect",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 17177,
+      "columnNumber": 37
+    },
+    {
+      "ms": 0.662,
+      "functionName": "applyMatrix4",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 8470,
+      "columnNumber": 13
+    },
+    {
+      "ms": 0.647,
+      "functionName": "intersectsObject",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 25608,
+      "columnNumber": 17
+    },
+    {
+      "ms": 0.638,
+      "functionName": "draw",
+      "scriptId": "26",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 601,
+      "columnNumber": 20
+    },
+    {
+      "ms": 0.522,
+      "functionName": "createBindingState",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 1709,
+      "columnNumber": 28
+    },
+    {
+      "ms": 0.516,
+      "functionName": "renderObject",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 9555,
+      "columnNumber": 22
+    },
+    {
+      "ms": 0.514,
+      "functionName": "bindBuffer",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 0.503,
+      "functionName": "copyArray",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 5152,
+      "columnNumber": 18
+    },
+    {
+      "ms": 0.501,
+      "functionName": "renderObjects",
+      "scriptId": "46",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 18090,
+      "columnNumber": 24
+    },
+    {
+      "ms": 0.5,
+      "functionName": "getW",
+      "scriptId": "81",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 17245,
+      "columnNumber": 5
+    }
+  ],
+  "errors": []
+}

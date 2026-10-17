@@ -11,8 +11,8 @@ import { DRINKS } from './config.js';
 const KINDS = DRINKS.map(d => d.kind); // the glasses (a drink's colour is its mix's: mix.js)
 const FLAGS = ['alive', 'ejected', 'moving', 'pale', 'human', 'lucky', 'inspecting', 'bet', 'monster', 'flash', 'held', 'maul', 'escaped', 'leap']; // bet: chips just went on the felt (a gesture); the rest: the blackout (leap: the monster mid-pounce)
 const CH_STATE = ['up', 'falling', 'down'];
-const STICKY = ['bowls', 'chandeliers', 'seatsOcc', 'lead', 'security', 'haunts', 'bodies', 'crash', 'race', 'guard', 'lure']; // sent when changed
-const PSTICKY = ['notes', 'cd', 'crew', 'seat', 'prey', 'spiked', 'rigged', 'killers', 'disguise', 'shop', 'items'];
+const STICKY = ['bowls', 'chandeliers', 'seatsOcc', 'lead', 'security', 'haunts', 'bodies', 'crash', 'race', 'skee', 'guard', 'lure']; // sent when changed
+const PSTICKY = ['notes', 'cd', 'crew', 'seat', 'prey', 'spiked', 'rigged', 'killers', 'disguise', 'shop', 'items', 'insurance'];
 
 // The host, once a tick: the parts every guest shares.
 export function packPub(pub) {
@@ -21,7 +21,7 @@ export function packPub(pub) {
     const k = c.name + '\n' + c.color + '\n' + c.hat;
     let j = at.get(k); if (j === undefined) { at.set(k, j = looks.length); looks.push([c.name, c.color, c.hat]); }
     let f = 0; FLAGS.forEach((n, i) => { if (c[n]) f |= 1 << i; });
-    return [c.id, j, c.x, c.y, c.look, c.face, c.seat, f];
+    return [c.id, j, c.x, c.y, c.look, c.face, c.seat, f, c.eating || 0, c.snack || 0];
   });
   const w = { ...pub, chars, drinks: pub.drinks.map(d => [d.id, d.owner, d.holder, d.x, d.y, d.sips, KINDS.indexOf(d.kind), d.color]),
     chandeliers: pub.chandeliers.map(ch => [ch.id, ch.x, ch.y, CH_STATE.indexOf(ch.state), ch.t]) };
@@ -62,8 +62,8 @@ export function unpackSnap(msg, mine = MINE) {
   const L = mine.looks; if (!L) return null;
   const pub = { ...w }; delete pub.looks;
   const rows = w.chars.map((r, i) => r === 0 ? mine.rows[i] : r); mine.rows = rows;
-  pub.chars = rows.map(([id, j, x, y, look, face, seat, f]) => {
-    const c = { id, name: L[j][0], color: L[j][1], hat: L[j][2], x, y, look, face, alive: false, ejected: false, seat, moving: false, pale: false, human: false, lucky: false, inspecting: false, bet: false, monster: false, flash: false, held: false, maul: false };
+  pub.chars = rows.map(([id, j, x, y, look, face, seat, f, eating = 0, snack = 0]) => {
+    const c = { id, eating, snack, name: L[j][0], color: L[j][1], hat: L[j][2], x, y, look, face, alive: false, ejected: false, seat, moving: false, pale: false, human: false, lucky: false, inspecting: false, bet: false, monster: false, flash: false, held: false, maul: false };
     FLAGS.forEach((n, i) => { c[n] = !!(f & (1 << i)); });
     return c;
   });

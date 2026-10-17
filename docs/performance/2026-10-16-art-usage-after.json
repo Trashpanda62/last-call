@@ -1,0 +1,518 @@
+{
+  "at": "2026-10-16T14:18:15.190Z",
+  "loaded": [
+    {
+      "name": "jukebox-marquee-v2",
+      "width": 2172,
+      "height": 724,
+      "read": true
+    },
+    {
+      "name": "portrait-gambler",
+      "width": 848,
+      "height": 1264,
+      "read": true
+    },
+    {
+      "name": "portrait-queen",
+      "width": 848,
+      "height": 1264,
+      "read": true
+    },
+    {
+      "name": "portrait-bartender",
+      "width": 848,
+      "height": 1264,
+      "read": true
+    },
+    {
+      "name": "sym-diamond",
+      "width": 256,
+      "height": 256,
+      "read": true
+    },
+    {
+      "name": "sym-seven",
+      "width": 256,
+      "height": 256,
+      "read": true
+    },
+    {
+      "name": "sym-bar",
+      "width": 256,
+      "height": 256,
+      "read": true
+    },
+    {
+      "name": "sym-bell",
+      "width": 256,
+      "height": 256,
+      "read": true
+    },
+    {
+      "name": "sym-cherry",
+      "width": 256,
+      "height": 256,
+      "read": true
+    },
+    {
+      "name": "sym-lemon",
+      "width": 256,
+      "height": 256,
+      "read": true
+    },
+    {
+      "name": "screen-mines",
+      "width": 1672,
+      "height": 941,
+      "read": false
+    },
+    {
+      "name": "screen-tower",
+      "width": 1254,
+      "height": 1254,
+      "read": false
+    },
+    {
+      "name": "screen-plinko",
+      "width": 1254,
+      "height": 1254,
+      "read": false
+    },
+    {
+      "name": "screen-wheel",
+      "width": 1254,
+      "height": 1254,
+      "read": false
+    },
+    {
+      "name": "screen-coin",
+      "width": 1254,
+      "height": 1254,
+      "read": false
+    },
+    {
+      "name": "sign-lastcall",
+      "width": 1024,
+      "height": 366,
+      "read": true
+    },
+    {
+      "name": "sign-bar",
+      "width": 733,
+      "height": 512,
+      "read": true
+    },
+    {
+      "name": "sign-vip",
+      "width": 842,
+      "height": 512,
+      "read": true
+    },
+    {
+      "name": "sign-restrooms",
+      "width": 1024,
+      "height": 338,
+      "read": true
+    },
+    {
+      "name": "sign-duckrace",
+      "width": 782,
+      "height": 512,
+      "read": true
+    },
+    {
+      "name": "sign-slots",
+      "width": 1024,
+      "height": 396,
+      "read": true
+    },
+    {
+      "name": "sign-highlimit",
+      "width": 1024,
+      "height": 322,
+      "read": true
+    },
+    {
+      "name": "sign-dice",
+      "width": 1024,
+      "height": 486,
+      "read": true
+    },
+    {
+      "name": "sign-spintowin",
+      "width": 1024,
+      "height": 493,
+      "read": true
+    },
+    {
+      "name": "sign-flip",
+      "width": 952,
+      "height": 512,
+      "read": true
+    },
+    {
+      "name": "sign-plinko",
+      "width": 1024,
+      "height": 357,
+      "read": true
+    },
+    {
+      "name": "sign-mines",
+      "width": 1024,
+      "height": 439,
+      "read": true
+    },
+    {
+      "name": "sign-dragontower",
+      "width": 842,
+      "height": 512,
+      "read": true
+    },
+    {
+      "name": "fx-smoke",
+      "width": 1254,
+      "height": 1254,
+      "read": true
+    },
+    {
+      "name": "fx-sparks",
+      "width": 1254,
+      "height": 1254,
+      "read": true
+    },
+    {
+      "name": "fx-confetti",
+      "width": 1254,
+      "height": 1254,
+      "read": true
+    },
+    {
+      "name": "fx-fizz",
+      "width": 1254,
+      "height": 1254,
+      "read": true
+    },
+    {
+      "name": "fx-stars",
+      "width": 1254,
+      "height": 1254,
+      "read": true
+    },
+    {
+      "name": "fx-ghost",
+      "width": 1254,
+      "height": 1254,
+      "read": true
+    }
+  ],
+  "unused": [
+    {
+      "name": "screen-mines",
+      "width": 1672,
+      "height": 941,
+      "read": false
+    },
+    {
+      "name": "screen-tower",
+      "width": 1254,
+      "height": 1254,
+      "read": false
+    },
+    {
+      "name": "screen-plinko",
+      "width": 1254,
+      "height": 1254,
+      "read": false
+    },
+    {
+      "name": "screen-wheel",
+      "width": 1254,
+      "height": 1254,
+      "read": false
+    },
+    {
+      "name": "screen-coin",
+      "width": 1254,
+      "height": 1254,
+      "read": false
+    }
+  ],
+  "resources": [
+    {
+      "name": "/assets/art2/menu-mystery-v2.webp",
+      "bytes": 299762,
+      "start": 678.1999999880791,
+      "end": 946.1999999880791
+    },
+    {
+      "name": "/assets/art2/menu-escape-v2.webp",
+      "bytes": 235414,
+      "start": 678.3999999761581,
+      "end": 954.8000000119209
+    },
+    {
+      "name": "/assets/art2/loading-arrival-v1.webp",
+      "bytes": 235218,
+      "start": 678.6000000238419,
+      "end": 955.3000000119209
+    },
+    {
+      "name": "/assets/art2/loading-controls-v1.webp",
+      "bytes": 135380,
+      "start": 678.6999999880791,
+      "end": 954.3000000119209
+    },
+    {
+      "name": "/assets/art2/ability-icons-v1.webp",
+      "bytes": 329492,
+      "start": 678.8999999761581,
+      "end": 961.8999999761581
+    },
+    {
+      "name": "/assets/art2/jukebox-marquee-v2.webp",
+      "bytes": 245068,
+      "start": 723.6000000238419,
+      "end": 999.6999999880791
+    },
+    {
+      "name": "/assets/art2/portrait-gambler.webp",
+      "bytes": 219356,
+      "start": 723.6999999880791,
+      "end": 1000.1999999880791
+    },
+    {
+      "name": "/assets/art2/portrait-queen.webp",
+      "bytes": 259932,
+      "start": 723.8000000119209,
+      "end": 1000.6999999880791
+    },
+    {
+      "name": "/assets/art2/portrait-bartender.webp",
+      "bytes": 246214,
+      "start": 723.8999999761581,
+      "end": 1002.8000000119209
+    },
+    {
+      "name": "/assets/art2/sym-diamond.webp",
+      "bytes": 16288,
+      "start": 724,
+      "end": 1001.6999999880791
+    },
+    {
+      "name": "/assets/art2/sym-seven.webp",
+      "bytes": 13756,
+      "start": 724.1000000238419,
+      "end": 1003.3000000119209
+    },
+    {
+      "name": "/assets/art2/sym-bar.webp",
+      "bytes": 14176,
+      "start": 724.3000000119209,
+      "end": 1007.3000000119209
+    },
+    {
+      "name": "/assets/art2/sym-bell.webp",
+      "bytes": 17696,
+      "start": 724.3000000119209,
+      "end": 1007.5
+    },
+    {
+      "name": "/assets/art2/sym-cherry.webp",
+      "bytes": 24954,
+      "start": 724.5,
+      "end": 1011.6999999880791
+    },
+    {
+      "name": "/assets/art2/sym-lemon.webp",
+      "bytes": 17464,
+      "start": 724.6000000238419,
+      "end": 1011.8999999761581
+    },
+    {
+      "name": "/assets/art2/screen-mines.webp",
+      "bytes": 166338,
+      "start": 724.6999999880791,
+      "end": 1016.6000000238419
+    },
+    {
+      "name": "/assets/art2/screen-tower.webp",
+      "bytes": 202558,
+      "start": 724.8999999761581,
+      "end": 1021.8000000119209
+    },
+    {
+      "name": "/assets/art2/screen-plinko.webp",
+      "bytes": 252804,
+      "start": 725.1000000238419,
+      "end": 1022.3000000119209
+    },
+    {
+      "name": "/assets/art2/screen-wheel.webp",
+      "bytes": 186776,
+      "start": 725.1999999880791,
+      "end": 1022.6999999880791
+    },
+    {
+      "name": "/assets/art2/screen-coin.webp",
+      "bytes": 194740,
+      "start": 725.3000000119209,
+      "end": 1025.1000000238419
+    },
+    {
+      "name": "/assets/art2/sign-lastcall.webp",
+      "bytes": 32974,
+      "start": 725.3999999761581,
+      "end": 1023
+    },
+    {
+      "name": "/assets/art2/sign-bar.webp",
+      "bytes": 26254,
+      "start": 725.6000000238419,
+      "end": 1025.5
+    },
+    {
+      "name": "/assets/art2/sign-vip.webp",
+      "bytes": 24778,
+      "start": 725.6999999880791,
+      "end": 1028.8999999761581
+    },
+    {
+      "name": "/assets/art2/sign-restrooms.webp",
+      "bytes": 41408,
+      "start": 725.8999999761581,
+      "end": 1032.3999999761581
+    },
+    {
+      "name": "/assets/art2/sign-duckrace.webp",
+      "bytes": 43770,
+      "start": 726,
+      "end": 1032.1000000238419
+    },
+    {
+      "name": "/assets/art2/sign-slots.webp",
+      "bytes": 44186,
+      "start": 726.1999999880791,
+      "end": 1032.199999988079
+    },
+    {
+      "name": "/assets/art2/sign-highlimit.webp",
+      "bytes": 24724,
+      "start": 726.1999999880791,
+      "end": 1035.3999999761581
+    },
+    {
+      "name": "/assets/art2/sign-dice.webp",
+      "bytes": 35244,
+      "start": 726.3999999761581,
+      "end": 1036.5
+    },
+    {
+      "name": "/assets/art2/sign-spintowin.webp",
+      "bytes": 68422,
+      "start": 726.5,
+      "end": 1039
+    },
+    {
+      "name": "/assets/art2/sign-flip.webp",
+      "bytes": 42884,
+      "start": 726.8000000119209,
+      "end": 1040.6000000238419
+    },
+    {
+      "name": "/assets/art2/sign-plinko.webp",
+      "bytes": 35560,
+      "start": 726.8999999761581,
+      "end": 1042.5
+    },
+    {
+      "name": "/assets/art2/sign-mines.webp",
+      "bytes": 28074,
+      "start": 727,
+      "end": 1044.800000011921
+    },
+    {
+      "name": "/assets/art2/sign-dragontower.webp",
+      "bytes": 41844,
+      "start": 727.1999999880791,
+      "end": 1045.300000011921
+    },
+    {
+      "name": "/assets/art2/fx-smoke.webp",
+      "bytes": 24998,
+      "start": 727.3999999761581,
+      "end": 1045.3999999761581
+    },
+    {
+      "name": "/assets/art2/fx-sparks.webp",
+      "bytes": 97800,
+      "start": 727.5,
+      "end": 1053.699999988079
+    },
+    {
+      "name": "/assets/art2/fx-confetti.webp",
+      "bytes": 55486,
+      "start": 727.6999999880791,
+      "end": 1054
+    },
+    {
+      "name": "/assets/art2/fx-fizz.webp",
+      "bytes": 99196,
+      "start": 727.8000000119209,
+      "end": 1054.800000011921
+    },
+    {
+      "name": "/assets/art2/fx-stars.webp",
+      "bytes": 44552,
+      "start": 727.8999999761581,
+      "end": 1054.3999999761581
+    },
+    {
+      "name": "/assets/art2/fx-ghost.webp",
+      "bytes": 20810,
+      "start": 728,
+      "end": 1054.5
+    }
+  ],
+  "gfx": {
+    "frames": 131,
+    "calls": 113,
+    "tris": 454849,
+    "geos": 501,
+    "tex": 376,
+    "cam": [
+      41.67,
+      1.15,
+      24.88,
+      0,
+      -3.14
+    ],
+    "gestures": {},
+    "props": 33,
+    "rebuildPending": false,
+    "rooms": [
+      "vip"
+    ],
+    "actorWork": {
+      "posed": 0,
+      "total": 37
+    },
+    "ao": true,
+    "passes": [
+      "RenderPass",
+      "GTAOPass",
+      "RenderPass",
+      "OutputPass"
+    ],
+    "internal": [
+      1280,
+      720
+    ],
+    "out": [
+      1280,
+      720
+    ],
+    "pr": 1
+  },
+  "errors": []
+}

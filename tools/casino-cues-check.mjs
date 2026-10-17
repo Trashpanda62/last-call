@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createCasinoCues} from '../src/casino-cues.js';
+const calls=[];let time=0;
+const me={id:0,x:100,y:100},a={id:1,x:160,y:100,alive:true,moving:true};
+const cues=createCasinoCues({play:(kind,p,volume,options)=>calls.push({kind,p:{...p},volume,options,time}),roomOf:p=>p.x<1000?'floor':'bar',clearLine:()=>true,vents:[],random:()=>.5});
+const tick=(seconds,extra={})=>{for(let i=0;i<seconds*10;i++){time+=.1;cues.update({time,chars:[me,a],me,look:0,active:true,alive:true,blackout:false,...extra});}};
+tick(10);assert.equal(calls.length,0,'public movement cannot bypass host-authorized footsteps or silent perks');
+a.moving=false;calls.length=0;tick(10);assert.equal(calls.length,0,'stationary characters do not emit footsteps');
+tick(100);const breaths=calls.filter(c=>c.kind==='breathBehind');assert.ok(breaths.length>0);assert.ok(breaths.every(c=>c.p.x<me.x),'breaths originate behind the player');for(let i=1;i<breaths.length;i++)assert.ok(breaths[i].time-breaths[i-1].time>=45);
+const fixed={...breaths[0].p};tick(1,{look:Math.PI});assert.deepEqual(breaths[0].p,fixed,'turning cannot relocate a previously triggered world sound');
+calls.length=0;tick(200,{active:false});assert.equal(calls.length,0);tick(5);assert.equal(calls.length,0,'resume cannot immediately dump overdue scares or voices');
+calls.length=0;a.x=3000;a.moving=true;tick(100,{alive:false});assert.equal(calls.length,0,'distant actors and a ghost do not create false nearby footsteps or breathing');
+a.alive=false;tick(1);assert.equal(cues.info().actors,0,'removed/dead actor schedules retire');cues.reset();assert.equal(cues.info().actors,0);
+const report={at:new Date().toISOString(),hostAuthorizedSteps:true,stationarySilence:true,worldAnchoredBreaths:breaths.length,menuSilence:true,resumeGrace:true,distantActorSilence:true,deadActorCleanup:true};
+const out=process.argv[2];if(out)fs.writeFileSync(out,JSON.stringify(report,null,2));console.log('PASS: client leaves footsteps to private host events; nearby living-actor voices, sparse behind-player cues, world anchoring, menu/resume grace and actor cleanup.');

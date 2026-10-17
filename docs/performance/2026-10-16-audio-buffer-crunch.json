@@ -1,0 +1,99 @@
+{
+  "at": "2026-10-16T19:33:26.354Z",
+  "rows": [
+    {
+      "rate": 44100,
+      "early": false,
+      "samples": 176400,
+      "prepared": 1,
+      "afterUse": 1,
+      "maxError": 0,
+      "actualHash": "916d73ea756ef8600be2c5c6f89b95bd0913aa2e0d47ad355903e4bc93a149c5",
+      "expectedHash": "916d73ea756ef8600be2c5c6f89b95bd0913aa2e0d47ad355903e4bc93a149c5",
+      "preloadMs": 574.7999999523163,
+      "firstUseMs": 0.5999999642372131,
+      "repeatUseMs": 0,
+      "chunks": 87,
+      "batchesMs": [
+        13.5,
+        8,
+        8.200000047683716,
+        9.400000035762787,
+        8.800000011920929,
+        8.799999952316284,
+        8.600000023841858,
+        8.199999988079071,
+        8.200000047683716,
+        8.699999988079071,
+        8.799999952316284,
+        8,
+        1.699999988079071
+      ]
+    },
+    {
+      "rate": 44100,
+      "early": true,
+      "samples": 176400,
+      "prepared": 1,
+      "afterUse": 1,
+      "maxError": 0,
+      "actualHash": "916d73ea756ef8600be2c5c6f89b95bd0913aa2e0d47ad355903e4bc93a149c5",
+      "expectedHash": "916d73ea756ef8600be2c5c6f89b95bd0913aa2e0d47ad355903e4bc93a149c5",
+      "preloadMs": 621.3000000119209,
+      "firstUseMs": 0,
+      "repeatUseMs": 0,
+      "chunks": 3,
+      "batchesMs": [
+        8,
+        0
+      ]
+    },
+    {
+      "rate": 48000,
+      "early": false,
+      "samples": 192000,
+      "prepared": 1,
+      "afterUse": 1,
+      "maxError": 0,
+      "actualHash": "7e49c9063054b839f3f979e8747077b98539dd0f469c9f186f2e8d7ee9655415",
+      "expectedHash": "7e49c9063054b839f3f979e8747077b98539dd0f469c9f186f2e8d7ee9655415",
+      "preloadMs": 627.3999999761581,
+      "firstUseMs": 0.3999999761581421,
+      "repeatUseMs": 0,
+      "chunks": 94,
+      "batchesMs": [
+        8.100000023841858,
+        8.499999940395355,
+        8,
+        8.099999964237213,
+        8.599999964237213,
+        8.5,
+        8.100000023841858,
+        8,
+        8,
+        8,
+        8.299999952316284,
+        3.800000011920929
+      ]
+    },
+    {
+      "rate": 48000,
+      "early": true,
+      "samples": 192000,
+      "prepared": 1,
+      "afterUse": 1,
+      "maxError": 0,
+      "actualHash": "7e49c9063054b839f3f979e8747077b98539dd0f469c9f186f2e8d7ee9655415",
+      "expectedHash": "7e49c9063054b839f3f979e8747077b98539dd0f469c9f186f2e8d7ee9655415",
+      "preloadMs": 657,
+      "firstUseMs": 0,
+      "repeatUseMs": 0,
+      "chunks": 4,
+      "batchesMs": [
+        8.400000035762787,
+        0
+      ]
+    }
+  ],
+  "errors": []
+}

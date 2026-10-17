@@ -1,0 +1,121 @@
+{
+  "rows": [
+    {
+      "kind": "knife",
+      "accepted": true,
+      "seated": false,
+      "alive": false,
+      "age": 0,
+      "killer": "Pip",
+      "sceneKiller": {
+        "id": 5,
+        "name": "Pip"
+      },
+      "privateIdentity": true,
+      "over": false,
+      "first": {
+        "active": true,
+        "phase": "reveal",
+        "age": 0.1,
+        "paused": false,
+        "pauseVisible": false,
+        "caption": "Killed by PipKnife attack"
+      },
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "finished": true,
+      "deadline": -11776.699999988079
+    },
+    {
+      "kind": "seated-paused",
+      "accepted": true,
+      "seated": true,
+      "alive": false,
+      "age": 0,
+      "killer": "Mint",
+      "sceneKiller": {
+        "id": 1,
+        "name": "Mint"
+      },
+      "privateIdentity": true,
+      "over": false,
+      "first": {
+        "active": true,
+        "phase": "reveal",
+        "age": 0.1,
+        "paused": false,
+        "pauseVisible": false,
+        "caption": "Killed by MintKnife attack"
+      },
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "finished": true,
+      "deadline": -15676.699999988079
+    },
+    {
+      "kind": "delayed-poison",
+      "accepted": true,
+      "seated": false,
+      "alive": false,
+      "age": 4.0166666666666675,
+      "killer": "Pip",
+      "sceneKiller": {
+        "id": 5,
+        "name": "Pip"
+      },
+      "privateIdentity": true,
+      "over": false,
+      "first": {
+        "active": true,
+        "phase": "reveal",
+        "age": 0.1,
+        "paused": false,
+        "pauseVisible": false,
+        "caption": "Killed by PipPoisoned"
+      },
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "finished": true,
+      "deadline": -19576.69999998808
+    },
+    {
+      "kind": "last-player",
+      "accepted": true,
+      "seated": false,
+      "alive": false,
+      "age": 0,
+      "killer": "Duke",
+      "sceneKiller": {
+        "id": 4,
+        "name": "Duke"
+      },
+      "privateIdentity": true,
+      "over": true,
+      "first": {
+        "active": true,
+        "phase": "reveal",
+        "age": 0.1,
+        "paused": false,
+        "pauseVisible": false,
+        "caption": "Killed by DukeKnife attack"
+      },
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "finished": true,
+      "deadline": -23476.69999998808
+    }
+  ],
+  "errors": []
+}

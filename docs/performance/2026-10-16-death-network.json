@@ -1,0 +1,230 @@
+{
+  "at": "2026-10-16T23:18:42.371Z",
+  "rows": [
+    {
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "keys": [
+        "1:0.41666666666666663"
+      ],
+      "first": {
+        "phase": "reveal",
+        "caption": "Killed by DeathHostKnife attack",
+        "paused": false,
+        "pauseVisible": false,
+        "age": 0.033333333333333326,
+        "snapshot": {
+          "t": 0.41666666666666663,
+          "x": 1095,
+          "y": 294,
+          "face": -2.88,
+          "cause": "blade",
+          "killer": {
+            "id": 0,
+            "name": "DeathHost"
+          },
+          "attacker": {
+            "color": "#e0a95b",
+            "hat": "cowboy",
+            "monster": false
+          }
+        },
+        "camera": [
+          20.084800662580225,
+          1.4700000000000002,
+          3.595504069047015
+        ]
+      },
+      "overDuring": false,
+      "ended": true,
+      "kind": "knife-paused",
+      "wire": {
+        "recipients": [
+          1
+        ],
+        "pubLeak": false,
+        "held": 0,
+        "released": false,
+        "heldMs": 0,
+        "delivery": "ordinary packed snapshots"
+      },
+      "observer": {
+        "active": false,
+        "snapshot": null,
+        "pubLeak": false
+      },
+      "ghostCamera": true
+    },
+    {
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "keys": [
+        "1:4.3666666666666565"
+      ],
+      "first": {
+        "phase": "reveal",
+        "caption": "Killed by DeathHostRigged machine",
+        "paused": false,
+        "pauseVisible": false,
+        "age": 0.016666666666666607,
+        "snapshot": {
+          "t": 4.3666666666666565,
+          "x": 1095,
+          "y": 294,
+          "face": -2.8771750467616557,
+          "cause": "trap",
+          "killer": {
+            "id": 0,
+            "name": "DeathHost"
+          },
+          "attacker": null
+        },
+        "camera": [
+          20.088484192999115,
+          1.4700000000000002,
+          3.600688453378706
+        ]
+      },
+      "overDuring": false,
+      "ended": true,
+      "kind": "rigged-game",
+      "wire": {
+        "recipients": [
+          1
+        ],
+        "pubLeak": false,
+        "held": 0,
+        "released": false,
+        "heldMs": 0,
+        "delivery": "ordinary packed snapshots"
+      },
+      "observer": {
+        "active": false,
+        "snapshot": null,
+        "pubLeak": false
+      },
+      "ghostCamera": true
+    },
+    {
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "keys": [
+        "1:2.3999999999999964"
+      ],
+      "first": {
+        "phase": "reveal",
+        "caption": "Killed by DeathHostMonster attack",
+        "paused": false,
+        "pauseVisible": false,
+        "age": 0.04999999999999982,
+        "snapshot": {
+          "t": 2.3999999999999964,
+          "x": 1335,
+          "y": 600,
+          "face": 3.141592653589793,
+          "cause": "monster",
+          "killer": {
+            "id": 0,
+            "name": "DeathHost"
+          },
+          "attacker": {
+            "color": "#e8443a",
+            "hat": "fedora",
+            "monster": true
+          }
+        },
+        "camera": [
+          23.68496251148235,
+          1.4700000000000002,
+          8.265428292995571
+        ]
+      },
+      "overDuring": false,
+      "ended": true,
+      "kind": "monster",
+      "wire": {
+        "recipients": [
+          1
+        ],
+        "pubLeak": false,
+        "held": 0,
+        "released": false,
+        "heldMs": 0,
+        "delivery": "ordinary packed snapshots"
+      },
+      "observer": {
+        "active": false,
+        "snapshot": null,
+        "pubLeak": false
+      },
+      "ghostCamera": true
+    },
+    {
+      "phases": [
+        "reveal",
+        "jumpscare",
+        "collapse"
+      ],
+      "keys": [
+        "1:0.16666666666666666"
+      ],
+      "first": {
+        "phase": "reveal",
+        "caption": "Killed by DeathHostKnife attack",
+        "paused": false,
+        "pauseVisible": false,
+        "age": 5.0499999999999865,
+        "snapshot": {
+          "t": 0.16666666666666666,
+          "x": 1320,
+          "y": 600,
+          "face": 0,
+          "cause": "blade",
+          "killer": {
+            "id": 0,
+            "name": "DeathHost"
+          },
+          "attacker": {
+            "color": "#e0a95b",
+            "hat": "cowboy",
+            "monster": false
+          }
+        },
+        "camera": [
+          20.565019640646998,
+          1.4700000000000002,
+          11.734593281373941
+        ]
+      },
+      "overDuring": false,
+      "ended": true,
+      "kind": "delayed-last-player",
+      "wire": {
+        "recipients": [
+          1
+        ],
+        "pubLeak": false,
+        "held": 76,
+        "released": true,
+        "heldMs": 5006.400000035763,
+        "delivery": "fresh complete host snapshot after held deltas"
+      },
+      "observer": {
+        "active": false,
+        "snapshot": null,
+        "pubLeak": false
+      },
+      "overAfter": true
+    }
+  ],
+  "errors": []
+}

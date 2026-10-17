@@ -1,0 +1,228 @@
+{
+ "at": "2026-10-16T23:44:05.516Z",
+ "tag": "after3",
+ "url": "http://127.0.0.1:39907/",
+ "views": [
+  {
+   "name": "after3-normal-1280x720-m0-low",
+   "fallback": false,
+   "size": "1280x720",
+   "machine": 0,
+   "risk": true,
+   "seat": 36,
+   "drops": [
+    true,
+    true
+   ],
+   "stripPx": {
+    "width": 261.3,
+    "height": 24.6
+   },
+   "cellPx": 15.4,
+   "digitPx": 6.6,
+   "readoutDigitPx": 26.3,
+   "status": "LOW RISK · EDGES 16×",
+   "bank": null,
+   "calls": 158
+  },
+  {
+   "name": "after3-normal-1280x720-m0-medium",
+   "fallback": false,
+   "size": "1280x720",
+   "machine": 0,
+   "risk": true,
+   "seat": 36,
+   "drops": [
+    true,
+    true
+   ],
+   "stripPx": {
+    "width": 261.3,
+    "height": 24.6
+   },
+   "cellPx": 15.4,
+   "digitPx": 5.5,
+   "readoutDigitPx": 26.3,
+   "status": "MEDIUM RISK · EDGES 110×",
+   "bank": null,
+   "calls": 158
+  },
+  {
+   "name": "after3-normal-1280x720-m0-high",
+   "fallback": false,
+   "size": "1280x720",
+   "machine": 0,
+   "risk": true,
+   "seat": 36,
+   "drops": [
+    true,
+    true
+   ],
+   "stripPx": {
+    "width": 261.3,
+    "height": 24.6
+   },
+   "cellPx": 15.4,
+   "digitPx": 5.5,
+   "readoutDigitPx": 26.3,
+   "status": "HIGH RISK · EDGES 1000×",
+   "bank": null,
+   "calls": 160
+  },
+  {
+   "name": "after3-normal-1280x720-m1-low",
+   "fallback": false,
+   "size": "1280x720",
+   "machine": 1,
+   "risk": true,
+   "seat": 37,
+   "drops": [
+    true,
+    true
+   ],
+   "stripPx": {
+    "width": 261.3,
+    "height": 24.6
+   },
+   "cellPx": 15.4,
+   "digitPx": 6.6,
+   "readoutDigitPx": 26.3,
+   "status": "LOW RISK · EDGES 16×",
+   "bank": null,
+   "calls": 161
+  },
+  {
+   "name": "after3-normal-1280x720-m1-medium",
+   "fallback": false,
+   "size": "1280x720",
+   "machine": 1,
+   "risk": true,
+   "seat": 37,
+   "drops": [
+    true,
+    true
+   ],
+   "stripPx": {
+    "width": 261.3,
+    "height": 24.6
+   },
+   "cellPx": 15.4,
+   "digitPx": 5.5,
+   "readoutDigitPx": 26.3,
+   "status": "MEDIUM RISK · EDGES 110×",
+   "bank": null,
+   "calls": 163
+  },
+  {
+   "name": "after3-normal-1280x720-m1-high",
+   "fallback": false,
+   "size": "1280x720",
+   "machine": 1,
+   "risk": true,
+   "seat": 37,
+   "drops": [
+    true,
+    true
+   ],
+   "stripPx": {
+    "width": 261.3,
+    "height": 24.6
+   },
+   "cellPx": 15.4,
+   "digitPx": 5.5,
+   "readoutDigitPx": 26.3,
+   "status": "HIGH RISK · EDGES 1000×",
+   "bank": null,
+   "calls": 161
+  },
+  {
+   "name": "after3-fallback-1280x720-m0-high",
+   "fallback": true,
+   "size": "1280x720",
+   "machine": 0,
+   "risk": true,
+   "seat": 36,
+   "drops": [
+    true,
+    true
+   ],
+   "stripPx": {
+    "width": 260.5,
+    "height": 24.5
+   },
+   "cellPx": 15.3,
+   "digitPx": 5.5,
+   "readoutDigitPx": 27.4,
+   "status": "HIGH RISK · EDGES 1000×",
+   "bank": null,
+   "calls": 159
+  },
+  {
+   "name": "after3-fallback-1280x720-m1-high",
+   "fallback": true,
+   "size": "1280x720",
+   "machine": 1,
+   "risk": true,
+   "seat": 37,
+   "drops": [
+    true,
+    true
+   ],
+   "stripPx": {
+    "width": 260.5,
+    "height": 24.5
+   },
+   "cellPx": 15.3,
+   "digitPx": 5.5,
+   "readoutDigitPx": 27.4,
+   "status": "HIGH RISK · EDGES 1000×",
+   "bank": null,
+   "calls": 160
+  },
+  {
+   "name": "after3-normal-740x420-m0-medium",
+   "fallback": false,
+   "size": "740x420",
+   "machine": 0,
+   "risk": true,
+   "seat": 36,
+   "drops": [
+    true,
+    true
+   ],
+   "stripPx": {
+    "width": 152.4,
+    "height": 14.3
+   },
+   "cellPx": 9,
+   "digitPx": 3.2,
+   "readoutDigitPx": 15.3,
+   "status": "MEDIUM RISK · EDGES 110×",
+   "bank": null,
+   "calls": 160
+  },
+  {
+   "name": "after3-normal-740x420-m1-medium",
+   "fallback": false,
+   "size": "740x420",
+   "machine": 1,
+   "risk": true,
+   "seat": 37,
+   "drops": [
+    true,
+    true
+   ],
+   "stripPx": {
+    "width": 152.4,
+    "height": 14.3
+   },
+   "cellPx": 9,
+   "digitPx": 3.2,
+   "readoutDigitPx": 15.3,
+   "status": "MEDIUM RISK · EDGES 110×",
+   "bank": null,
+   "calls": 163
+  }
+ ],
+ "errors": []
+}

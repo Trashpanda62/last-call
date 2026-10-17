@@ -1,0 +1,276 @@
+{
+  "at": "2026-10-16T16:17:31.500Z",
+  "baseline": true,
+  "names": [
+    "bjTable",
+    "rouletteTable",
+    "diceTable",
+    "slot",
+    "slotHigh",
+    "jackpot",
+    "plinko",
+    "console",
+    "prizeWheel",
+    "duck",
+    "barCounter",
+    "backBar",
+    "stool",
+    "chair",
+    "booth",
+    "couch",
+    "armchair",
+    "chandelier",
+    "piano",
+    "poolTable",
+    "jukebox",
+    "champagne",
+    "snackDonut",
+    "snackBowl",
+    "snackPretzel",
+    "palm",
+    "camera",
+    "pitBell",
+    "toilet",
+    "sink",
+    "rocket",
+    "ottoman",
+    "breaker"
+  ],
+  "used": [
+    [
+      "barCounter",
+      3
+    ],
+    [
+      "stool",
+      5
+    ],
+    [
+      "backBar",
+      3
+    ],
+    [
+      "sink",
+      4
+    ],
+    [
+      "toilet",
+      3
+    ],
+    [
+      "couch",
+      4
+    ],
+    [
+      "piano",
+      1
+    ],
+    [
+      "booth",
+      4
+    ],
+    [
+      "ottoman",
+      1
+    ],
+    [
+      "poolTable",
+      1
+    ],
+    [
+      "champagne",
+      1
+    ],
+    [
+      "pitBell",
+      1
+    ],
+    [
+      "chair",
+      1
+    ],
+    [
+      "armchair",
+      4
+    ],
+    [
+      "palm",
+      15
+    ],
+    [
+      "chandelier",
+      13
+    ],
+    [
+      "rocket",
+      1
+    ],
+    [
+      "bjTable",
+      2
+    ],
+    [
+      "rouletteTable",
+      1
+    ],
+    [
+      "slot",
+      6
+    ],
+    [
+      "slotHigh",
+      4
+    ],
+    [
+      "jackpot",
+      1
+    ],
+    [
+      "plinko",
+      3
+    ],
+    [
+      "console",
+      6
+    ],
+    [
+      "duck",
+      6
+    ],
+    [
+      "diceTable",
+      1
+    ],
+    [
+      "prizeWheel",
+      1
+    ],
+    [
+      "camera",
+      7
+    ],
+    [
+      "breaker",
+      7
+    ],
+    [
+      "snackDonut",
+      8
+    ],
+    [
+      "snackPretzel",
+      8
+    ]
+  ],
+  "unused": [
+    {
+      "name": "jukebox",
+      "geometries": 1,
+      "materials": 1,
+      "textures": 1,
+      "images": [
+        [
+          1024,
+          1024
+        ]
+      ],
+      "geometryBytes": 1012596,
+      "decodedImageBytesEstimate": 4194304,
+      "encodedBytes": 1306532
+    },
+    {
+      "name": "snackBowl",
+      "geometries": 1,
+      "materials": 1,
+      "textures": 1,
+      "images": [
+        [
+          512,
+          512
+        ]
+      ],
+      "geometryBytes": 491104,
+      "decodedImageBytesEstimate": 1048576,
+      "encodedBytes": 521876
+    }
+  ],
+  "gfx": {
+    "frames": 82,
+    "calls": 702,
+    "tris": 3673588,
+    "geos": 488,
+    "tex": 371,
+    "cam": [
+      31.82,
+      1.12,
+      10,
+      0,
+      -4.71
+    ],
+    "gestures": {},
+    "props": 33,
+    "rebuildPending": false,
+    "rooms": [
+      "floor",
+      "bar",
+      "rest",
+      "slots"
+    ],
+    "actorWork": {
+      "posed": 34,
+      "total": 37
+    },
+    "ao": true,
+    "passes": [
+      "RenderPass",
+      "GTAOPass",
+      "RenderPass",
+      "OutputPass"
+    ],
+    "internal": [
+      1280,
+      720
+    ],
+    "out": [
+      1280,
+      720
+    ],
+    "pr": 1
+  },
+  "requested": [
+    "/assets/props/bjTable.glb",
+    "/assets/props/rouletteTable.glb",
+    "/assets/props/diceTable.glb",
+    "/assets/props/slot.glb",
+    "/assets/props/slotHigh.glb",
+    "/assets/props/jackpot.glb",
+    "/assets/props/plinko.glb",
+    "/assets/props/console.glb",
+    "/assets/props/prizeWheel.glb",
+    "/assets/props/duck.glb",
+    "/assets/props/barCounter.glb",
+    "/assets/props/backBar.glb",
+    "/assets/props/stool.glb",
+    "/assets/props/chair.glb",
+    "/assets/props/booth.glb",
+    "/assets/props/couch.glb",
+    "/assets/props/armchair.glb",
+    "/assets/props/chandelier.glb",
+    "/assets/props/piano.glb",
+    "/assets/props/poolTable.glb",
+    "/assets/props/jukebox.glb",
+    "/assets/props/champagne.glb",
+    "/assets/props/snackDonut.glb",
+    "/assets/props/snackBowl.glb",
+    "/assets/props/snackPretzel.glb",
+    "/assets/props/palm.glb",
+    "/assets/props/camera.glb",
+    "/assets/props/pitBell.glb",
+    "/assets/props/toilet.glb",
+    "/assets/props/sink.glb",
+    "/assets/props/rocket.glb",
+    "/assets/props/ottoman.glb",
+    "/assets/props/breaker.glb"
+  ],
+  "errors": []
+}

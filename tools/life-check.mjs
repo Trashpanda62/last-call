@@ -23,13 +23,14 @@ const server = URL_ARG ? null : http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': TYPES[path.extname(p)] || 'application/octet-stream' }); fs.createReadStream(p).pipe(res);
 });
 const url = URL_ARG || await new Promise(r => server.listen(0, '127.0.0.1', () => r(`http://127.0.0.1:${server.address().port}/`)));
-const browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--autoplay-policy=no-user-gesture-required'] });
+const gpu = process.env.LC_GPU === 'vulkan' ? ['--use-angle=vulkan', '--enable-features=Vulkan'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
+const browser = await chromium.launch({ headless: true, args: [...gpu, '--autoplay-policy=no-user-gesture-required'] });
 
 // A solo game at roulette with chips on red and the wheel spinning; sim.action logs each 'bank' with the bank
 // either side of it.
 async function spinning(page) {
   await page.goto(url);
-  await page.waitForFunction(() => window.__lastCall);
+  await page.waitForFunction(() => window.__lastCall?.S.ready, null, { timeout: 120000 });
   await page.waitForFunction(() => window.__lastCall.gfx().props >= 30, null, { timeout: 60000 }).catch(() => {});
   const r = await page.evaluate(() => {
     const L = window.__lastCall; L.noLock(); L.start('gambler', { players: 6, killers: 1 }); L.step(1);
@@ -98,7 +99,8 @@ const out = {};
 for (const [name, fn] of Object.entries(CASES)) {
   const r = out[name] = { pass: 0, fail: 0, examples: [] };
   for (let i = 0; i < TRIALS; i++) {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, ignoreHTTPSErrors: !!URL_ARG });
+    await page.addInitScript(() => localStorage.setItem('lc.settings', JSON.stringify({ gfx: { preset: 'low' }, voice: { mode: 'off' } })));
     const errs = []; page.on('pageerror', e => errs.push(String(e.message)));
     let why;
     try { why = await fn(page); } catch (e) { why = 'error: ' + e.message; }

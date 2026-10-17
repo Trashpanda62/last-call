@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-16T13:21:07.550Z",
+  "rows": [
+    {
+      "moving": false,
+      "frames": 30,
+      "calls": 16320,
+      "same": 8654,
+      "eulers": 16320,
+      "multiplies": 48960,
+      "ms": 270.7000000476837,
+      "work": {
+        "posed": 34,
+        "total": 37
+      }
+    },
+    {
+      "moving": true,
+      "frames": 30,
+      "calls": 16320,
+      "same": 8605,
+      "eulers": 16320,
+      "multiplies": 48960,
+      "ms": 197.19999998807907,
+      "work": {
+        "posed": 34,
+        "total": 37
+      }
+    }
+  ],
+  "errors": []
+}

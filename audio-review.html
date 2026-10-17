@@ -24,51 +24,77 @@
 </head>
 <body>
 <h1>Last Call: music and sounds</h1>
-<p>Tap a take to hear it (one plays at a time; tap again to stop). Pick one take of each piece. Picks apply to the game on this phone at once; tap "Copy my picks" and send them so they become the default.</p>
+<p>Preview the ElevenLabs tracks below. One plays at a time. Save a score and floor sound for this browser, then reopen the casino to use them.</p>
+<p id="status" role="status" aria-live="polite"></p>
 <div id="music"></div>
 <h2>Room ambience</h2>
 <div id="amb"></div>
-<h2>Effects</h2>
+<h2>Freaky casino cues</h2>
+<p>Directional breathing, distant death cries and character foley.</p>
+<div id="cues"></div>
+<details><summary>Effects and cough previews</summary>
 <div id="sfx" class="row"></div>
+</details>
 <button id="copy">Copy my picks</button>
+<p><a href="index.html" style="color:var(--gold)">Open the casino</a></p>
 <script>
-const NOTES = { menu: 'Main menu', floor: 'Casino floor and slot hall', bar: 'The bar (and quietly in the restrooms)', vip: 'VIP lounge', arcade: 'Arcade', alley: 'Back alley',
-  race: 'Duck pond', meeting: 'Meetings', eject: 'Someone is thrown out', win: 'A big win at a table', lose: 'A losing hand', gamblersWin: 'Gamblers win the game', killersWin: 'Killers win the game' };
-const PICKS = { alley: 1, bar: 1, eject: 1 }; // Steve's picks, 2026-10-13; the rest take A
+const NOTES = { casino: 'Creepy casino score', jukebox: 'Quiet spatial music from the bar jukebox', floor: 'Main floor', bar: 'Bar', vip: 'VIP lounge', arcade: 'Arcade', alley: 'Eerie room tone', race: 'Duck pond', rest: 'Restrooms', slots: 'Slot hall', tables: 'Mixed tables', blackjack: 'Card room', roulette: 'Roulette pit' };
+const TITLES = { 'music/house-after-hours.mp3': 'After Hours', 'music/house-empty-chairs.mp3': 'Empty Chairs', 'music/house-last-wager.mp3': 'Last Wager', 'music/menu-1.mp3': 'Bar jukebox', 'amb/floor-mixed-tables.mp3': 'Mixed tables', 'amb/floor-card-room.mp3': 'Cards and chips', 'amb/floor-roulette-room.mp3': 'Roulette room', 'amb/casino-eerie.mp3': 'Eerie casino', 'sfx/cough.mp3': 'Distant cough' };
 const store = { get: k => { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* private mode */ } } };
 const player = new Audio(); let playing = null;
 function play(url, btn) {
   if (playing === btn) { player.pause(); btn.classList.remove('on'); playing = null; return; }
   if (playing) playing.classList.remove('on');
-  player.src = url; player.currentTime = 0; player.play(); btn.classList.add('on'); playing = btn;
+  player.src = url; player.currentTime = 0; btn.classList.add('on'); playing = btn;
+  player.play().catch(() => { if (playing === btn) { btn.classList.remove('on'); playing = null; document.getElementById('status').textContent = 'Playback failed. Try this preview again.'; } });
 }
 player.onended = () => { if (playing) playing.classList.remove('on'); playing = null; };
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text) e.textContent = text; return e; };
 fetch('assets/audio/audio.json').then(r => r.json()).then(L => {
   const picks = {};
   for (const [name, takes] of Object.entries(L.music)) {
-    const row = el('div', 'row'); row.append(el('div', 'name', name), el('div', 'note', NOTES[name] || ''));
+    const row = el('div', 'row'); row.append(el('div', 'name', NOTES[name] || name));
     const btns = el('div', 'btns'), pickBtns = [];
-    const s = store.get('lc.take.' + name);
-    picks[name] = s == null ? (PICKS[name] || 0) : +s;
+    const s = store.get(name === 'casino' ? 'lc.score' : 'lc.take.' + name);
+    picks[name] = Math.max(0, Math.min(takes.length - 1, +s || 0));
     takes.forEach((f, i) => {
-      const b = el('button', '', '▶ Take ' + 'AB'[i]); b.onclick = () => play('assets/audio/' + f, b);
-      const p = el('button', '', 'Pick ' + 'AB'[i]); p.onclick = () => { picks[name] = i; store.set('lc.take.' + name, i); pickBtns.forEach((q, j) => q.classList.toggle('pick', j === i)); };
-      p.classList.toggle('pick', picks[name] === i); pickBtns.push(p); btns.append(b, p);
+      const title = TITLES[f] || 'Take ' + (i + 1), b = el('button', '', '▶ ' + title); b.onclick = () => play('assets/audio/' + f, b);
+      btns.append(b);
+      if (name === 'casino') {
+        const p = el('button', '', 'Use ' + title); p.onclick = () => { picks[name] = i; store.set('lc.score', i); pickBtns.forEach((q, j) => { q.classList.toggle('pick', j === i); q.setAttribute('aria-pressed', String(j === i)); }); document.getElementById('status').textContent = title + ' saved for your next casino session.'; };
+        p.classList.toggle('pick', picks[name] === i); p.setAttribute('aria-pressed', String(picks[name] === i)); pickBtns.push(p); btns.append(p);
+      }
     });
     row.append(btns); document.getElementById('music').append(row);
   }
-  for (const [room, files] of Object.entries(L.amb)) {
-    const row = el('div', 'row'); row.append(el('div', 'name', room));
-    const b = el('button', '', '▶ Listen'); b.onclick = () => play('assets/audio/' + files[0], b); row.append(b);
+  const floorPicks = [], floorChoice = store.get('lc.floorBed') || 'auto'; picks.floor = floorChoice;
+  const floorPick = (room, title) => {
+    const b = el('button', '', 'Use ' + title); b.classList.toggle('pick', picks.floor === room); b.setAttribute('aria-pressed', String(picks.floor === room));
+    b.onclick = () => { picks.floor = room; store.set('lc.floorBed', room); for (const [key, q] of floorPicks) { q.classList.toggle('pick', key === room); q.setAttribute('aria-pressed', String(key === room)); } document.getElementById('status').textContent = title + ' saved for your next casino session.'; };
+    floorPicks.push([room, b]); return b;
+  };
+  document.getElementById('amb').append(floorPick('auto', 'nearby table sounds'));
+  const seen = new Set();
+  const rooms = ['tables', 'blackjack', 'roulette', ...Object.keys(L.amb)];
+  for (const room of rooms) {
+    const files = L.amb[room]; if (!files) continue;
+    const fresh = files.filter(f => !seen.has(f)); if (!fresh.length) continue;
+    const row = el('div', 'row'); row.append(el('div', 'name', NOTES[room] || room));
+    for (const f of fresh) { seen.add(f); const b = el('button', '', '▶ ' + (TITLES[f] || 'Listen')); b.onclick = () => play('assets/audio/' + f, b); row.append(b); }
+    if (['tables', 'blackjack', 'roulette'].includes(room)) row.append(floorPick(room, NOTES[room]));
     document.getElementById('amb').append(row);
+  }
+  for (const [kind, files] of Object.entries(L.cues || {})) {
+    const row = el('div', 'row'); row.append(el('div', 'name', kind.replace(/([A-Z])/g, ' $1').replace(/^./, c => c.toUpperCase())));
+    files.forEach((f, i) => { const b = el('button', '', '▶ Listen' + (files.length > 1 ? ' ' + (i + 1) : '')); b.onclick = () => play('assets/audio/' + f, b); row.append(b); });
+    document.getElementById('cues').append(row);
   }
   for (const [kind, files] of Object.entries(L.sfx)) files.forEach((f, i) => {
     const b = el('button', 'fx', kind + (files.length > 1 ? ' ' + (i + 1) : '')); b.onclick = () => play('assets/audio/' + f, b);
     document.getElementById('sfx').append(b);
   });
   document.getElementById('copy').onclick = () => {
-    const text = 'Last Call music picks: ' + Object.entries(picks).map(([k, i]) => k + ' ' + 'AB'[i]).join(', ');
+    const text = 'Last Call audio picks: ' + Object.entries(picks).map(([k, i]) => k + ': ' + (k === 'floor' ? i : TITLES[L.music[k][i]] || 'Take ' + (i + 1))).join(', ');
     (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => { document.getElementById('copy').textContent = 'Copied'; }, () => prompt('Copy this:', text));
   };
 });

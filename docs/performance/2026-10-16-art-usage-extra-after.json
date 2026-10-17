@@ -1,0 +1,574 @@
+{
+  "at": "2026-10-16T17:08:27.029Z",
+  "baseline": false,
+  "names": [
+    "jukebox-marquee-v2",
+    "portrait-gambler",
+    "portrait-queen",
+    "portrait-bartender",
+    "sym-diamond",
+    "sym-seven",
+    "sym-bar",
+    "sym-bell",
+    "sym-cherry",
+    "sym-lemon",
+    "screen-mines",
+    "screen-tower",
+    "sign-lastcall",
+    "sign-bar",
+    "sign-vip",
+    "sign-restrooms",
+    "sign-duckrace",
+    "sign-slots",
+    "sign-highlimit",
+    "sign-dice",
+    "sign-spintowin",
+    "sign-flip",
+    "sign-plinko",
+    "sign-mines",
+    "sign-dragontower",
+    "fx-smoke",
+    "fx-sparks",
+    "fx-confetti",
+    "fx-fizz",
+    "fx-stars",
+    "fx-ghost"
+  ],
+  "used": [
+    [
+      "fx-sparks",
+      3
+    ],
+    [
+      "fx-smoke",
+      3
+    ],
+    [
+      "fx-confetti",
+      3
+    ],
+    [
+      "fx-stars",
+      3
+    ],
+    [
+      "fx-fizz",
+      3
+    ],
+    [
+      "fx-ghost",
+      3
+    ],
+    [
+      "jukebox-marquee-v2",
+      2
+    ],
+    [
+      "portrait-gambler",
+      5
+    ],
+    [
+      "portrait-queen",
+      5
+    ],
+    [
+      "portrait-bartender",
+      4
+    ],
+    [
+      "sign-plinko",
+      2
+    ],
+    [
+      "sign-mines",
+      2
+    ],
+    [
+      "sign-dragontower",
+      2
+    ],
+    [
+      "sign-lastcall",
+      2
+    ],
+    [
+      "sign-bar",
+      2
+    ],
+    [
+      "sign-vip",
+      2
+    ],
+    [
+      "sign-restrooms",
+      2
+    ],
+    [
+      "sign-duckrace",
+      2
+    ],
+    [
+      "sign-slots",
+      2
+    ],
+    [
+      "sign-highlimit",
+      2
+    ],
+    [
+      "sign-dice",
+      2
+    ],
+    [
+      "sign-spintowin",
+      2
+    ],
+    [
+      "sign-flip",
+      2
+    ],
+    [
+      "sym-diamond",
+      15
+    ],
+    [
+      "sym-seven",
+      10
+    ],
+    [
+      "sym-bar",
+      15
+    ],
+    [
+      "sym-bell",
+      10
+    ],
+    [
+      "sym-cherry",
+      15
+    ],
+    [
+      "sym-lemon",
+      10
+    ],
+    [
+      "screen-mines",
+      2
+    ],
+    [
+      "screen-tower",
+      2
+    ]
+  ],
+  "unused": [],
+  "images": [
+    {
+      "name": "jukebox-marquee-v2",
+      "reads": 2,
+      "width": 2172,
+      "height": 724,
+      "encodedBytes": 244768,
+      "decodedImageBytesEstimate": 6290112
+    },
+    {
+      "name": "portrait-gambler",
+      "reads": 5,
+      "width": 848,
+      "height": 1264,
+      "encodedBytes": 219056,
+      "decodedImageBytesEstimate": 4287488
+    },
+    {
+      "name": "portrait-queen",
+      "reads": 5,
+      "width": 848,
+      "height": 1264,
+      "encodedBytes": 259632,
+      "decodedImageBytesEstimate": 4287488
+    },
+    {
+      "name": "portrait-bartender",
+      "reads": 4,
+      "width": 848,
+      "height": 1264,
+      "encodedBytes": 245914,
+      "decodedImageBytesEstimate": 4287488
+    },
+    {
+      "name": "sym-diamond",
+      "reads": 15,
+      "width": 256,
+      "height": 256,
+      "encodedBytes": 15988,
+      "decodedImageBytesEstimate": 262144
+    },
+    {
+      "name": "sym-seven",
+      "reads": 10,
+      "width": 256,
+      "height": 256,
+      "encodedBytes": 13456,
+      "decodedImageBytesEstimate": 262144
+    },
+    {
+      "name": "sym-bar",
+      "reads": 15,
+      "width": 256,
+      "height": 256,
+      "encodedBytes": 13876,
+      "decodedImageBytesEstimate": 262144
+    },
+    {
+      "name": "sym-bell",
+      "reads": 10,
+      "width": 256,
+      "height": 256,
+      "encodedBytes": 17396,
+      "decodedImageBytesEstimate": 262144
+    },
+    {
+      "name": "sym-cherry",
+      "reads": 15,
+      "width": 256,
+      "height": 256,
+      "encodedBytes": 24654,
+      "decodedImageBytesEstimate": 262144
+    },
+    {
+      "name": "sym-lemon",
+      "reads": 10,
+      "width": 256,
+      "height": 256,
+      "encodedBytes": 17164,
+      "decodedImageBytesEstimate": 262144
+    },
+    {
+      "name": "screen-mines",
+      "reads": 2,
+      "width": 1672,
+      "height": 941,
+      "encodedBytes": 166038,
+      "decodedImageBytesEstimate": 6293408
+    },
+    {
+      "name": "screen-tower",
+      "reads": 2,
+      "width": 1254,
+      "height": 1254,
+      "encodedBytes": 202258,
+      "decodedImageBytesEstimate": 6290064
+    },
+    {
+      "name": "sign-lastcall",
+      "reads": 2,
+      "width": 1024,
+      "height": 366,
+      "encodedBytes": 32674,
+      "decodedImageBytesEstimate": 1499136
+    },
+    {
+      "name": "sign-bar",
+      "reads": 2,
+      "width": 733,
+      "height": 512,
+      "encodedBytes": 25954,
+      "decodedImageBytesEstimate": 1501184
+    },
+    {
+      "name": "sign-vip",
+      "reads": 2,
+      "width": 842,
+      "height": 512,
+      "encodedBytes": 24478,
+      "decodedImageBytesEstimate": 1724416
+    },
+    {
+      "name": "sign-restrooms",
+      "reads": 2,
+      "width": 1024,
+      "height": 338,
+      "encodedBytes": 41108,
+      "decodedImageBytesEstimate": 1384448
+    },
+    {
+      "name": "sign-duckrace",
+      "reads": 2,
+      "width": 782,
+      "height": 512,
+      "encodedBytes": 43470,
+      "decodedImageBytesEstimate": 1601536
+    },
+    {
+      "name": "sign-slots",
+      "reads": 2,
+      "width": 1024,
+      "height": 396,
+      "encodedBytes": 43886,
+      "decodedImageBytesEstimate": 1622016
+    },
+    {
+      "name": "sign-highlimit",
+      "reads": 2,
+      "width": 1024,
+      "height": 322,
+      "encodedBytes": 24424,
+      "decodedImageBytesEstimate": 1318912
+    },
+    {
+      "name": "sign-dice",
+      "reads": 2,
+      "width": 1024,
+      "height": 486,
+      "encodedBytes": 34944,
+      "decodedImageBytesEstimate": 1990656
+    },
+    {
+      "name": "sign-spintowin",
+      "reads": 2,
+      "width": 1024,
+      "height": 493,
+      "encodedBytes": 68122,
+      "decodedImageBytesEstimate": 2019328
+    },
+    {
+      "name": "sign-flip",
+      "reads": 2,
+      "width": 952,
+      "height": 512,
+      "encodedBytes": 42584,
+      "decodedImageBytesEstimate": 1949696
+    },
+    {
+      "name": "sign-plinko",
+      "reads": 2,
+      "width": 1024,
+      "height": 357,
+      "encodedBytes": 35260,
+      "decodedImageBytesEstimate": 1462272
+    },
+    {
+      "name": "sign-mines",
+      "reads": 2,
+      "width": 1024,
+      "height": 439,
+      "encodedBytes": 27774,
+      "decodedImageBytesEstimate": 1798144
+    },
+    {
+      "name": "sign-dragontower",
+      "reads": 2,
+      "width": 842,
+      "height": 512,
+      "encodedBytes": 41544,
+      "decodedImageBytesEstimate": 1724416
+    },
+    {
+      "name": "fx-smoke",
+      "reads": 3,
+      "width": 1254,
+      "height": 1254,
+      "encodedBytes": 24698,
+      "decodedImageBytesEstimate": 6290064
+    },
+    {
+      "name": "fx-sparks",
+      "reads": 3,
+      "width": 1254,
+      "height": 1254,
+      "encodedBytes": 97500,
+      "decodedImageBytesEstimate": 6290064
+    },
+    {
+      "name": "fx-confetti",
+      "reads": 3,
+      "width": 1254,
+      "height": 1254,
+      "encodedBytes": 55186,
+      "decodedImageBytesEstimate": 6290064
+    },
+    {
+      "name": "fx-fizz",
+      "reads": 3,
+      "width": 1254,
+      "height": 1254,
+      "encodedBytes": 98896,
+      "decodedImageBytesEstimate": 6290064
+    },
+    {
+      "name": "fx-stars",
+      "reads": 3,
+      "width": 1254,
+      "height": 1254,
+      "encodedBytes": 44252,
+      "decodedImageBytesEstimate": 6290064
+    },
+    {
+      "name": "fx-ghost",
+      "reads": 3,
+      "width": 1254,
+      "height": 1254,
+      "encodedBytes": 20510,
+      "decodedImageBytesEstimate": 6290064
+    }
+  ],
+  "games": [
+    {
+      "game": "slots",
+      "active": "slots",
+      "part": "spot:main",
+      "placed": true
+    },
+    {
+      "game": "bj",
+      "active": "bj",
+      "part": "spot:main",
+      "placed": true
+    },
+    {
+      "game": "roulette",
+      "active": "roulette",
+      "part": "spot:n0",
+      "placed": true
+    },
+    {
+      "game": "dice",
+      "active": "dice",
+      "part": "spot:field",
+      "placed": true
+    },
+    {
+      "game": "plinko",
+      "active": "plinko",
+      "part": "spot:main",
+      "placed": true
+    },
+    {
+      "game": "mines",
+      "active": "mines",
+      "part": "spot:main",
+      "placed": true
+    },
+    {
+      "game": "tower",
+      "active": "tower",
+      "part": "spot:main",
+      "placed": true
+    },
+    {
+      "game": "crash",
+      "active": "crash",
+      "part": "spot:main",
+      "placed": true
+    },
+    {
+      "game": "race",
+      "active": "race",
+      "part": "spot:duck0",
+      "placed": true
+    },
+    {
+      "game": "coin",
+      "active": "coin",
+      "part": "spot:heads",
+      "placed": true
+    },
+    {
+      "game": "wheel",
+      "active": "wheel",
+      "part": "spot:main",
+      "placed": true
+    }
+  ],
+  "views": [
+    "floor",
+    "bar",
+    "rest",
+    "arcade",
+    "race",
+    "slots",
+    "vip",
+    "backrooms"
+  ],
+  "gfx": {
+    "frames": 482,
+    "calls": 372,
+    "tris": 1661079,
+    "geos": 488,
+    "tex": 376,
+    "cam": [
+      21.67,
+      1.27,
+      9.88,
+      -0.05,
+      -3.14
+    ],
+    "gestures": {},
+    "props": 31,
+    "rebuildPending": false,
+    "rooms": [
+      "floor",
+      "slots",
+      "vip"
+    ],
+    "actorWork": {
+      "posed": 34,
+      "total": 37
+    },
+    "ao": true,
+    "passes": [
+      "RenderPass",
+      "GTAOPass",
+      "RenderPass",
+      "OutputPass"
+    ],
+    "internal": [
+      1280,
+      720
+    ],
+    "out": [
+      1280,
+      720
+    ],
+    "pr": 1
+  },
+  "requested": [
+    "/assets/art2/menu-mystery-v2.webp",
+    "/assets/art2/menu-escape-v2.webp",
+    "/assets/art2/loading-arrival-v1.webp",
+    "/assets/art2/loading-controls-v1.webp",
+    "/assets/art2/ability-icons-v1.webp",
+    "/assets/art2/jukebox-marquee-v2.webp",
+    "/assets/art2/portrait-gambler.webp",
+    "/assets/art2/portrait-queen.webp",
+    "/assets/art2/portrait-bartender.webp",
+    "/assets/art2/sym-diamond.webp",
+    "/assets/art2/sym-seven.webp",
+    "/assets/art2/sym-bar.webp",
+    "/assets/art2/sym-bell.webp",
+    "/assets/art2/sym-cherry.webp",
+    "/assets/art2/sym-lemon.webp",
+    "/assets/art2/screen-mines.webp",
+    "/assets/art2/screen-tower.webp",
+    "/assets/art2/sign-lastcall.webp",
+    "/assets/art2/sign-bar.webp",
+    "/assets/art2/sign-vip.webp",
+    "/assets/art2/sign-restrooms.webp",
+    "/assets/art2/sign-duckrace.webp",
+    "/assets/art2/sign-slots.webp",
+    "/assets/art2/sign-highlimit.webp",
+    "/assets/art2/sign-dice.webp",
+    "/assets/art2/sign-spintowin.webp",
+    "/assets/art2/sign-flip.webp",
+    "/assets/art2/sign-plinko.webp",
+    "/assets/art2/sign-mines.webp",
+    "/assets/art2/sign-dragontower.webp",
+    "/assets/art2/fx-smoke.webp",
+    "/assets/art2/fx-sparks.webp",
+    "/assets/art2/fx-confetti.webp",
+    "/assets/art2/fx-fizz.webp",
+    "/assets/art2/fx-stars.webp",
+    "/assets/art2/fx-ghost.webp"
+  ],
+  "repeated": [],
+  "errors": []
+}

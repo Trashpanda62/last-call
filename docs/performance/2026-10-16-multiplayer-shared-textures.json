@@ -1,0 +1,1494 @@
+{
+  "at": "2026-10-16T17:54:06.723Z",
+  "baseline": false,
+  "lobby": [
+    {
+      "role": "host",
+      "screen": "lobby",
+      "hasView": false,
+      "ready": false,
+      "frames": 72,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "lastcall-v1-MTMZ",
+          "mic": "on",
+          "peers": 0,
+          "error": null,
+          "phase": "lobby",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": null,
+              "caller": false,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connecting",
+              "live": false,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": null,
+              "caller": false,
+              "call": null,
+              "state": null,
+              "live": false,
+              "heard": false,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 0 connected",
+        "link": {
+          "off": true
+        },
+        "levels": {
+          "4640ca97-614c-4045-8353-86596f22c2aa": 0,
+          "lastcall-v1-MTMZ": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": null
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": null
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": null
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "lobby",
+      "hasView": false,
+      "ready": false,
+      "frames": 72,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "4640ca97-614c-4045-8353-86596f22c2aa",
+          "mic": "on",
+          "peers": 0,
+          "error": null,
+          "phase": "lobby",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": null,
+              "caller": true,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connecting",
+              "live": false,
+              "heard": false,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": null,
+              "caller": true,
+              "call": "mc_m4d6gx9qmh",
+              "state": "new",
+              "live": false,
+              "heard": false,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 0 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "4640ca97-614c-4045-8353-86596f22c2aa": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": null
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": null
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": null
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "lobby",
+      "hasView": false,
+      "ready": false,
+      "frames": 72,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+          "mic": "asking",
+          "peers": 0,
+          "error": null,
+          "phase": "lobby",
+          "sending": "silent",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": null,
+              "caller": true,
+              "call": "mc_iuy8y2uxla",
+              "state": "new",
+              "live": false,
+              "heard": false,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": null,
+              "caller": false,
+              "call": null,
+              "state": null,
+              "live": false,
+              "heard": false,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Asking for the microphone... · 0 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {},
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": null
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": null
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": null
+          }
+        ]
+      }
+    }
+  ],
+  "beforeHostContinue": [
+    {
+      "role": "host",
+      "screen": "briefing",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "pickT": 15,
+      "mode": "pick",
+      "frames": 78,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "lastcall-v1-MTMZ",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "lobby",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": 2,
+              "caller": false,
+              "call": "mc_iuy8y2uxla",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "off": true
+        },
+        "levels": {
+          "0": 0.7512822768392129,
+          "1": 0.45198657883164267,
+          "2": 0.8534128770061162
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "briefing",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "pickT": 15,
+      "mode": "pick",
+      "frames": 78,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "4640ca97-614c-4045-8353-86596f22c2aa",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "lobby",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": 2,
+              "caller": true,
+              "call": "mc_m4d6gx9qmh",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0,
+          "1": 0.38473963556234564,
+          "2": 0.8857680795337779
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "briefing",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "pickT": 15,
+      "mode": "pick",
+      "frames": 78,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "lobby",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_iuy8y2uxla",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_m4d6gx9qmh",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0.8307115375471744,
+          "1": 0.45581206765179705,
+          "2": 0.7564143807760858
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    }
+  ],
+  "guestFirst": [
+    {
+      "role": "host",
+      "screen": "briefing",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "pickT": 15,
+      "mode": "pick",
+      "frames": 78,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "lastcall-v1-MTMZ",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "lobby",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": 2,
+              "caller": false,
+              "call": "mc_iuy8y2uxla",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "off": true
+        },
+        "levels": {
+          "0": 0.8204016740091497,
+          "1": 0.5323784128376954,
+          "2": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "pickT": 15,
+      "mode": "pick",
+      "frames": 336,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "4640ca97-614c-4045-8353-86596f22c2aa",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "pick",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": 2,
+              "caller": true,
+              "call": "mc_m4d6gx9qmh",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0,
+          "1": 0.407370177536517,
+          "2": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "briefing",
+      "hasView": true,
+      "ready": true,
+      "t": 0,
+      "pickT": 15,
+      "mode": "pick",
+      "frames": 78,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "lobby",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_iuy8y2uxla",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_m4d6gx9qmh",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0.6280749100659659,
+          "1": 0.5709417098252372,
+          "2": 0.8794444847825648
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    }
+  ],
+  "near": [
+    {
+      "role": "host",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 0.7000000000000005,
+      "pickT": 0,
+      "mode": "play",
+      "frames": 366,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "lastcall-v1-MTMZ",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0.0012741223331894625,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": 2,
+              "caller": false,
+              "call": "mc_iuy8y2uxla",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0.0012741223331894627,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "off": true
+        },
+        "levels": {
+          "0": 0.6690112372449939,
+          "1": 0.33271473125766077,
+          "2": 0.8060757256004148
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 0.6666666666666671,
+      "pickT": null,
+      "mode": "play",
+      "frames": 714,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "4640ca97-614c-4045-8353-86596f22c2aa",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": -0.6945716667564902,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": 2,
+              "caller": true,
+              "call": "mc_m4d6gx9qmh",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0.6945716667564902,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0.7566492987044161,
+          "1": 0.2851946955019817,
+          "2": 0.8264462022156791
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 0.6666666666666671,
+      "pickT": null,
+      "mode": "play",
+      "frames": 312,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_iuy8y2uxla",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": -0.6899233817946707,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_m4d6gx9qmh",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": -0.6899233817946707,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0.7476028312069262,
+          "1": 0.379751992001186,
+          "2": 0.7016154219025729
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    }
+  ],
+  "far": [
+    {
+      "role": "host",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 1.1666666666666674,
+      "pickT": 0,
+      "mode": "play",
+      "frames": 534,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "lastcall-v1-MTMZ",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0.0012741223331894625,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": 2,
+              "caller": false,
+              "call": "mc_iuy8y2uxla",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "off": true
+        },
+        "levels": {
+          "0": 0.7308648927312944,
+          "1": 0.4008759175151285,
+          "2": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 1.1333333333333342,
+      "pickT": null,
+      "mode": "play",
+      "frames": 882,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "4640ca97-614c-4045-8353-86596f22c2aa",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": -0.6945716667564902,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": 2,
+              "caller": true,
+              "call": "mc_m4d6gx9qmh",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0.8513690960371119,
+          "1": 0.3548404460338338,
+          "2": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 1.1333333333333342,
+      "pickT": null,
+      "mode": "play",
+      "frames": 480,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_iuy8y2uxla",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_m4d6gx9qmh",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0,
+          "1": 0,
+          "2": 0.7698429756083468
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    }
+  ],
+  "input": {
+    "before": {
+      "x": 1345,
+      "y": 600
+    },
+    "after": {
+      "x": 1307.7858315470485,
+      "y": 534.8839062415789
+    },
+    "distance": 75.00000000000095
+  },
+  "ghost": [
+    {
+      "role": "host",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 2.583333333333329,
+      "pickT": 0,
+      "mode": "play",
+      "frames": 1044,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "lastcall-v1-MTMZ",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0.7917784024000173,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": 2,
+              "caller": false,
+              "call": "mc_iuy8y2uxla",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "off": true
+        },
+        "levels": {
+          "0": 0.786934506106775,
+          "1": 0.596238343648328,
+          "2": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 2.533333333333329,
+      "pickT": null,
+      "mode": "play",
+      "frames": 1392,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "4640ca97-614c-4045-8353-86596f22c2aa",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": -0.4766051694605508,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+              "id": 2,
+              "caller": true,
+              "call": "mc_m4d6gx9qmh",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 0,
+              "pan": 0,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0,
+          "1": 0.5587294745274145,
+          "2": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 2.533333333333329,
+      "pickT": null,
+      "mode": "play",
+      "frames": 984,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+          "mic": "on",
+          "peers": 2,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_iuy8y2uxla",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": -0.6899233817946707,
+              "lowpass": 20000,
+              "tries": 0
+            },
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_m4d6gx9qmh",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": -0.7998424477727073,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 2 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0,
+          "1": 0.652312174964532,
+          "2": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          },
+          {
+            "peerId": "bcb660d9-f78c-40be-abc7-a837cab8f3d0",
+            "id": 2
+          }
+        ]
+      }
+    }
+  ],
+  "afterGuestLeave": [
+    {
+      "role": "host",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 2.8499999999999948,
+      "pickT": 0,
+      "mode": "play",
+      "frames": 1140,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "lastcall-v1-MTMZ",
+          "mic": "on",
+          "peers": 1,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+              "id": 1,
+              "caller": false,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": 0.7917784024000173,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 1 connected",
+        "link": {
+          "off": true
+        },
+        "levels": {
+          "0": 0.2943759843920103,
+          "1": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          }
+        ]
+      }
+    },
+    {
+      "role": "guest",
+      "screen": "game",
+      "hasView": true,
+      "ready": true,
+      "t": 2.799999999999995,
+      "pickT": null,
+      "mode": "play",
+      "frames": 1488,
+      "voice": {
+        "info": {
+          "ctx": "running",
+          "self": "4640ca97-614c-4045-8353-86596f22c2aa",
+          "mic": "on",
+          "peers": 1,
+          "error": null,
+          "phase": "play",
+          "sending": "Fake Default Audio Input",
+          "pending": [],
+          "remotes": [
+            {
+              "peerId": "lastcall-v1-MTMZ",
+              "id": 0,
+              "caller": true,
+              "call": "mc_nmvz3kzcy1f",
+              "state": "connected",
+              "live": true,
+              "heard": true,
+              "gain": 1,
+              "pan": -0.4766051694605508,
+              "lowpass": 20000,
+              "tries": 0
+            }
+          ]
+        },
+        "status": "Mic on · 1 connected",
+        "link": {
+          "t": "dlink",
+          "off": true
+        },
+        "levels": {
+          "0": 0.40505404405397444,
+          "1": 0
+        },
+        "roster": [
+          {
+            "peerId": "lastcall-v1-MTMZ",
+            "id": 0
+          },
+          {
+            "peerId": "4640ca97-614c-4045-8353-86596f22c2aa",
+            "id": 1
+          }
+        ]
+      }
+    },
+    {
+      "role": null,
+      "screen": "menu",
+      "hasView": false,
+      "ready": true,
+      "frames": 1056,
+      "voice": {
+        "info": null,
+        "status": "Voice works in online rooms: host or join one.",
+        "link": null,
+        "levels": null,
+        "roster": []
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "screen": "menu",
+      "voice": null,
+      "room": false,
+      "streams": 1,
+      "tracks": [
+        "ended"
+      ]
+    },
+    {
+      "screen": "menu",
+      "voice": null,
+      "room": false,
+      "streams": 1,
+      "tracks": [
+        "ended"
+      ]
+    },
+    {
+      "screen": "menu",
+      "voice": null,
+      "room": false,
+      "streams": 1,
+      "tracks": [
+        "ended"
+      ]
+    }
+  ],
+  "errors": []
+}

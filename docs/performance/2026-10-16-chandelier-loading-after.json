@@ -1,0 +1,257 @@
+{
+  "at": "2026-10-16T15:33:42.255Z",
+  "rows": [
+    {
+      "fallback": false,
+      "entries": 13,
+      "models": 13,
+      "bulbMeshes": 0,
+      "bulbInstances": 0,
+      "uploads": [],
+      "bytes": 0,
+      "checks": [
+        {
+          "state": "up",
+          "age": 0,
+          "error": 0,
+          "visibleBulbs": 0
+        },
+        {
+          "state": "falling",
+          "age": 1.4,
+          "error": 0,
+          "visibleBulbs": 0
+        },
+        {
+          "state": "falling",
+          "age": 0.8,
+          "error": 0,
+          "visibleBulbs": 0
+        },
+        {
+          "state": "falling",
+          "age": 0.3,
+          "error": 0,
+          "visibleBulbs": 0
+        },
+        {
+          "state": "falling",
+          "age": 0.05,
+          "error": 0,
+          "visibleBulbs": 0
+        },
+        {
+          "state": "down",
+          "age": 0,
+          "error": 0,
+          "visibleBulbs": 0
+        },
+        {
+          "state": "up",
+          "age": 0,
+          "error": 0,
+          "visibleBulbs": 0
+        }
+      ],
+      "gfx": {
+        "frames": 74,
+        "calls": 561,
+        "tris": 3075581,
+        "geos": 492,
+        "tex": 372,
+        "cam": [
+          16.68,
+          2.5,
+          13.33,
+          -0.13,
+          -0.53
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": null,
+        "actorWork": {
+          "posed": 38,
+          "total": 38
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    },
+    {
+      "fallback": true,
+      "entries": 13,
+      "models": 0,
+      "bulbMeshes": 13,
+      "bulbInstances": 224,
+      "uploads": [
+        {
+          "kind": "geometry",
+          "bytes": 1188
+        },
+        {
+          "kind": "geometry",
+          "bytes": 1188
+        },
+        {
+          "kind": "geometry",
+          "bytes": 792
+        },
+        {
+          "kind": "instance",
+          "bytes": 1792
+        },
+        {
+          "kind": "instance",
+          "bytes": 1792
+        },
+        {
+          "kind": "instance",
+          "bytes": 1792
+        },
+        {
+          "kind": "instance",
+          "bytes": 1792
+        },
+        {
+          "kind": "geometry",
+          "bytes": 840
+        },
+        {
+          "kind": "instance",
+          "bytes": 1792
+        },
+        {
+          "kind": "instance",
+          "bytes": 1792
+        },
+        {
+          "kind": "instance",
+          "bytes": 512
+        },
+        {
+          "kind": "instance",
+          "bytes": 512
+        },
+        {
+          "kind": "instance",
+          "bytes": 512
+        },
+        {
+          "kind": "instance",
+          "bytes": 512
+        },
+        {
+          "kind": "instance",
+          "bytes": 512
+        },
+        {
+          "kind": "instance",
+          "bytes": 512
+        },
+        {
+          "kind": "instance",
+          "bytes": 512
+        }
+      ],
+      "bytes": 18344,
+      "checks": [
+        {
+          "state": "up",
+          "age": 0,
+          "error": 0,
+          "visibleBulbs": 13
+        },
+        {
+          "state": "falling",
+          "age": 1.4,
+          "error": 0,
+          "visibleBulbs": 13
+        },
+        {
+          "state": "falling",
+          "age": 0.8,
+          "error": 0,
+          "visibleBulbs": 13
+        },
+        {
+          "state": "falling",
+          "age": 0.3,
+          "error": 0,
+          "visibleBulbs": 13
+        },
+        {
+          "state": "falling",
+          "age": 0.05,
+          "error": 0,
+          "visibleBulbs": 13
+        },
+        {
+          "state": "down",
+          "age": 0,
+          "error": 0,
+          "visibleBulbs": 0
+        },
+        {
+          "state": "up",
+          "age": 0,
+          "error": 0,
+          "visibleBulbs": 13
+        }
+      ],
+      "gfx": {
+        "frames": 92,
+        "calls": 807,
+        "tris": 2270775,
+        "geos": 771,
+        "tex": 319,
+        "cam": [
+          16.68,
+          2.5,
+          13.33,
+          -0.13,
+          -0.53
+        ],
+        "gestures": {},
+        "props": 0,
+        "rebuildPending": false,
+        "rooms": null,
+        "actorWork": {
+          "posed": 38,
+          "total": 38
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1
+      }
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-16T13:48:45.071Z",
+  "panels": 7,
+  "fallbackMeshes": 42,
+  "visibleFallbacks": 0,
+  "allocations": 168,
+  "bytes": 35280,
+  "gfx": {
+    "frames": 78,
+    "calls": 561,
+    "tris": 3075581,
+    "geos": 543,
+    "tex": 373,
+    "cam": [
+      16.68,
+      2.5,
+      13.33,
+      -0.13,
+      -0.53
+    ],
+    "gestures": {
+      "shrug": 1
+    },
+    "props": 33,
+    "rebuildPending": false,
+    "rooms": null,
+    "actorWork": {
+      "posed": 38,
+      "total": 38
+    },
+    "ao": true,
+    "passes": [
+      "RenderPass",
+      "GTAOPass",
+      "RenderPass",
+      "OutputPass"
+    ],
+    "internal": [
+      1280,
+      720
+    ],
+    "out": [
+      1280,
+      720
+    ],
+    "pr": 1
+  },
+  "errors": []
+}

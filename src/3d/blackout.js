@@ -38,7 +38,9 @@ function fitPanel(p) {
   const sc = propScale('breaker', { fit: [0, PANEL_H, 0] }), [w, h, d] = propInfo('breaker').size.map((v, i) => v * [sc.x, sc.y, sc.z][i]);
   const o = propObject('breaker', { cast: false }); o.scale.copy(sc); o.position.set(0, -h / 2, d / 2 - 0.015);
   o.traverse(m => { if (m.isMesh) m.userData.breaker = true; });
-  p.g.add(o); p.hand.forEach(m => { m.visible = false; });
+  p.g.add(o);
+  for (const m of p.hand) { m.removeFromParent(); m.geometry.dispose(); }
+  p.hand.length = 0;
   p.pivot.position.set(w * 0.17, -h / 2 + h * 0.52, d - 0.005);
   p.lamp.position.set(-w * 0.22, -h / 2 + h * 0.85, d - 0.01); p.lamp.scale.setScalar(0.9);
 }
@@ -49,16 +51,19 @@ export class Blackout {
     // breaker panels: a grey box on the wall, a big throw lever, a lamp (red: needs resetting; green: done; dark: not in
     // use). The hand-built box stands in until the Sorceress panel (assets/props/breaker.glb) has loaded; the lever and the
     // lamp stay ours, so they can move and light, set into the model's lever slot and onto its lamp.
-    const box = new THREE.MeshStandardMaterial({ color: 0x6d7076, metalness: 0.6, roughness: 0.5 });
+    const box = hasProp('breaker') ? null : new THREE.MeshStandardMaterial({ color: 0x6d7076, metalness: 0.6, roughness: 0.5 });
     const dark = new THREE.MeshStandardMaterial({ color: 0x24262a, metalness: 0.5, roughness: 0.6 });
     const knobM = new THREE.MeshStandardMaterial({ color: 0xd02018, roughness: 0.4, emissive: 0x400000 }); // (a little glow: it reads by flashlight)
     this.panels = BREAKERS.map(b => {
       const g = new THREE.Group();
       const wx = (b.x + Math.cos(b.face) * 31) * M, wz = (b.y + Math.sin(b.face) * 31) * M;
       g.position.set(wx, 1.35, wz); g.rotation.y = yawOf(b.face + Math.PI); // local +Z faces the room
-      const hand = [new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.66, 0.12), box)];
-      const slot = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.34, 0.02), dark); slot.position.set(0.1, -0.02, 0.07); hand.push(slot);
-      for (let i = 0; i < 4; i++) { const s = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.02, 0.01), dark); s.position.set(-0.11, 0.08 - i * 0.07, 0.065); hand.push(s); }
+      const hand = [];
+      if (box) {
+        hand.push(new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.66, 0.12), box));
+        const slot = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.34, 0.02), dark); slot.position.set(0.1, -0.02, 0.07); hand.push(slot);
+        for (let i = 0; i < 4; i++) { const s = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.02, 0.01), dark); s.position.set(-0.11, 0.08 - i * 0.07, 0.065); hand.push(s); }
+      }
       hand.forEach(m => g.add(m));
       const pivot = new THREE.Group(); pivot.position.set(0.1, -0.02, 0.08); g.add(pivot);
       const lever = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.22, 0.05), dark); lever.position.y = 0.1; pivot.add(lever);
@@ -68,13 +73,16 @@ export class Blackout {
       scene.add(g);
       return { g, hand, pivot, lamp, lampM };
     });
-    onPropsReady(() => { if (hasProp('breaker')) this.panels.forEach(fitPanel); });
+    onPropsReady(() => { if (hasProp('breaker')) { this.panels.forEach(fitPanel); box?.dispose(); } });
     // your flashlight, from the camera; the nearest others' from their hands; everyone's beam as a faint cone
     this.mine = new THREE.SpotLight(0xfff1d6, 0, 22, 0.45, 0.45, 1.6); scene.add(this.mine, this.mine.target);
     this.others = [...Array(OTHER_LIGHTS)].map(() => { const L = new THREE.SpotLight(0xfff1d6, 0, 16, 0.42, 0.5, 1.6); scene.add(L, L.target); return L; });
     const cone = new THREE.ConeGeometry(1.5, BEAM_LEN, 20, 1, true); cone.translate(0, -BEAM_LEN / 2, 0); cone.rotateX(-Math.PI / 2); // apex at the origin, opening along +Z
-    this.beamMat = new THREE.MeshBasicMaterial({ color: 0xfff0c8, transparent: true, opacity: 0.045, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
+    this.beamMat = new THREE.MeshBasicMaterial({ name: 'flashlight-beam', color: 0xfff0c8, transparent: true, opacity: 0.045, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, forceSinglePass: true });
     this.coneGeo = cone; this.beams = new Map(); this.mons = new Map();
+    // Blackout cones otherwise have no mesh until somebody turns a flashlight
+    // on. Include a hidden representative in texture/buffer/shader preparation.
+    this.beamTemplate = new THREE.Mesh(cone, this.beamMat); this.beamTemplate.visible = false; scene.add(this.beamTemplate);
     // escape mode's exits: a staff door standing open on the dark, a green EXIT sign over it and a green glow
     const cv = document.createElement('canvas'); cv.width = 256; cv.height = 96;
     const g2 = cv.getContext('2d'); g2.fillStyle = '#0a3a18'; g2.fillRect(0, 0, 256, 96); g2.fillStyle = '#7dffa8'; g2.font = '900 64px Arial Black, sans-serif'; g2.textAlign = 'center'; g2.textBaseline = 'middle'; g2.fillText('EXIT', 128, 52);

@@ -1,0 +1,2524 @@
+{
+  "at": "2026-10-16T13:41:35.707Z",
+  "startup": {
+    "bakes": [
+      {
+        "kind": "bean",
+        "name": "cheer",
+        "firstTick": 28,
+        "frames": 45,
+        "workMs": 12.199999988079071,
+        "lastTick": 30
+      },
+      {
+        "kind": "bean",
+        "name": "despair",
+        "firstTick": 30,
+        "frames": 38,
+        "workMs": 3,
+        "lastTick": 30
+      },
+      {
+        "kind": "bean",
+        "name": "gasp",
+        "firstTick": 30,
+        "frames": 30,
+        "workMs": 2.399999976158142,
+        "lastTick": 30
+      },
+      {
+        "kind": "bean",
+        "name": "point",
+        "firstTick": 30,
+        "frames": 38,
+        "workMs": 2.800000011920929,
+        "lastTick": 30
+      },
+      {
+        "kind": "bean",
+        "name": "shrug",
+        "firstTick": 30,
+        "frames": 30,
+        "workMs": 2,
+        "lastTick": 30
+      },
+      {
+        "kind": "bean",
+        "name": "cry",
+        "firstTick": 30,
+        "frames": 45,
+        "workMs": 2.200000047683716,
+        "lastTick": 32
+      },
+      {
+        "kind": "bean",
+        "name": "laugh",
+        "firstTick": 32,
+        "frames": 38,
+        "workMs": 2,
+        "lastTick": 32
+      },
+      {
+        "kind": "bean",
+        "name": "stab",
+        "firstTick": 32,
+        "frames": 23,
+        "workMs": 1.5999999642372131,
+        "lastTick": 32
+      },
+      {
+        "kind": "bean",
+        "name": "pour",
+        "firstTick": 32,
+        "frames": 30,
+        "workMs": 1.600000023841858,
+        "lastTick": 32
+      },
+      {
+        "kind": "bean",
+        "name": "sip",
+        "firstTick": 32,
+        "frames": 30,
+        "workMs": 1.699999988079071,
+        "lastTick": 32
+      },
+      {
+        "kind": "bean",
+        "name": "wave",
+        "firstTick": 32,
+        "frames": 30,
+        "workMs": 1.5000000596046448,
+        "lastTick": 32
+      },
+      {
+        "kind": "bean",
+        "name": "dance",
+        "firstTick": 32,
+        "frames": 60,
+        "workMs": 2.8999999165534973,
+        "lastTick": 34
+      },
+      {
+        "kind": "bean",
+        "name": "lever",
+        "firstTick": 34,
+        "frames": 23,
+        "workMs": 1.2000000476837158,
+        "lastTick": 34
+      },
+      {
+        "kind": "bean",
+        "name": "tap",
+        "firstTick": 34,
+        "frames": 30,
+        "workMs": 1.5999999642372131,
+        "lastTick": 34
+      },
+      {
+        "kind": "bean",
+        "name": "clap",
+        "firstTick": 34,
+        "frames": 30,
+        "workMs": 1.300000011920929,
+        "lastTick": 34
+      },
+      {
+        "kind": "bean",
+        "name": "facepalm",
+        "firstTick": 34,
+        "frames": 30,
+        "workMs": 1.1999999284744263,
+        "lastTick": 34
+      },
+      {
+        "kind": "bean",
+        "name": "nervous",
+        "firstTick": 34,
+        "frames": 45,
+        "workMs": 2.5,
+        "lastTick": 34
+      },
+      {
+        "kind": "bean",
+        "name": "lookaround",
+        "firstTick": 34,
+        "frames": 45,
+        "workMs": 2.099999964237213,
+        "lastTick": 34
+      },
+      {
+        "kind": "bean",
+        "name": "thinking",
+        "firstTick": 34,
+        "frames": 38,
+        "workMs": 2.699999988079071,
+        "lastTick": 36
+      },
+      {
+        "kind": "bean",
+        "name": "bow",
+        "firstTick": 36,
+        "frames": 30,
+        "workMs": 2.300000011920929,
+        "lastTick": 36
+      },
+      {
+        "kind": "bean",
+        "name": "chips",
+        "firstTick": 36,
+        "frames": 30,
+        "workMs": 2.800000011920929,
+        "lastTick": 36
+      },
+      {
+        "kind": "bean",
+        "name": "push",
+        "firstTick": 36,
+        "frames": 30,
+        "workMs": 2.5,
+        "lastTick": 36
+      },
+      {
+        "kind": "bean",
+        "name": "snatched",
+        "firstTick": 36,
+        "frames": 33,
+        "workMs": 2.800000011920929,
+        "lastTick": 38
+      },
+      {
+        "kind": "round",
+        "name": "cheer",
+        "firstTick": 38,
+        "frames": 45,
+        "workMs": 4.200000047683716,
+        "lastTick": 38
+      },
+      {
+        "kind": "round",
+        "name": "despair",
+        "firstTick": 38,
+        "frames": 38,
+        "workMs": 3.300000011920929,
+        "lastTick": 38
+      },
+      {
+        "kind": "round",
+        "name": "gasp",
+        "firstTick": 38,
+        "frames": 30,
+        "workMs": 3,
+        "lastTick": 38
+      },
+      {
+        "kind": "round",
+        "name": "point",
+        "firstTick": 38,
+        "frames": 38,
+        "workMs": 3.200000047683716,
+        "lastTick": 40
+      },
+      {
+        "kind": "round",
+        "name": "shrug",
+        "firstTick": 40,
+        "frames": 30,
+        "workMs": 2.699999988079071,
+        "lastTick": 40
+      },
+      {
+        "kind": "round",
+        "name": "cry",
+        "firstTick": 40,
+        "frames": 45,
+        "workMs": 3.8000000715255737,
+        "lastTick": 40
+      },
+      {
+        "kind": "round",
+        "name": "laugh",
+        "firstTick": 40,
+        "frames": 38,
+        "workMs": 3.399999976158142,
+        "lastTick": 42
+      },
+      {
+        "kind": "round",
+        "name": "stab",
+        "firstTick": 42,
+        "frames": 23,
+        "workMs": 2,
+        "lastTick": 42
+      },
+      {
+        "kind": "round",
+        "name": "pour",
+        "firstTick": 42,
+        "frames": 30,
+        "workMs": 2.900000035762787,
+        "lastTick": 42
+      },
+      {
+        "kind": "round",
+        "name": "sip",
+        "firstTick": 42,
+        "frames": 30,
+        "workMs": 2.399999976158142,
+        "lastTick": 42
+      },
+      {
+        "kind": "round",
+        "name": "wave",
+        "firstTick": 42,
+        "frames": 30,
+        "workMs": 2.5000000596046448,
+        "lastTick": 42
+      },
+      {
+        "kind": "round",
+        "name": "dance",
+        "firstTick": 42,
+        "frames": 60,
+        "workMs": 3.2000001072883606,
+        "lastTick": 44
+      },
+      {
+        "kind": "round",
+        "name": "lever",
+        "firstTick": 44,
+        "frames": 23,
+        "workMs": 1.699999988079071,
+        "lastTick": 44
+      },
+      {
+        "kind": "round",
+        "name": "tap",
+        "firstTick": 44,
+        "frames": 30,
+        "workMs": 2,
+        "lastTick": 44
+      },
+      {
+        "kind": "round",
+        "name": "clap",
+        "firstTick": 44,
+        "frames": 30,
+        "workMs": 2,
+        "lastTick": 44
+      },
+      {
+        "kind": "round",
+        "name": "facepalm",
+        "firstTick": 44,
+        "frames": 30,
+        "workMs": 1.899999976158142,
+        "lastTick": 44
+      },
+      {
+        "kind": "round",
+        "name": "nervous",
+        "firstTick": 44,
+        "frames": 45,
+        "workMs": 13.099999964237213,
+        "lastTick": 48
+      },
+      {
+        "kind": "round",
+        "name": "lookaround",
+        "firstTick": 48,
+        "frames": 45,
+        "workMs": 2.9999999403953552,
+        "lastTick": 48
+      },
+      {
+        "kind": "round",
+        "name": "thinking",
+        "firstTick": 48,
+        "frames": 38,
+        "workMs": 2.5,
+        "lastTick": 48
+      },
+      {
+        "kind": "round",
+        "name": "bow",
+        "firstTick": 48,
+        "frames": 30,
+        "workMs": 2.100000023841858,
+        "lastTick": 48
+      },
+      {
+        "kind": "round",
+        "name": "chips",
+        "firstTick": 48,
+        "frames": 30,
+        "workMs": 1.9000000357627869,
+        "lastTick": 48
+      },
+      {
+        "kind": "round",
+        "name": "push",
+        "firstTick": 48,
+        "frames": 30,
+        "workMs": 2.099999964237213,
+        "lastTick": 48
+      },
+      {
+        "kind": "round",
+        "name": "snatched",
+        "firstTick": 48,
+        "frames": 33,
+        "workMs": 2.399999976158142,
+        "lastTick": 50
+      },
+      {
+        "kind": "croupier",
+        "name": "tap",
+        "firstTick": 50,
+        "frames": 30,
+        "workMs": 2.300000011920929,
+        "lastTick": 50
+      },
+      {
+        "kind": "croupier",
+        "name": "wave",
+        "firstTick": 50,
+        "frames": 30,
+        "workMs": 2.300000011920929,
+        "lastTick": 50
+      },
+      {
+        "kind": "croupier",
+        "name": "thinking",
+        "firstTick": 50,
+        "frames": 38,
+        "workMs": 2.4999999403953552,
+        "lastTick": 50
+      },
+      {
+        "kind": "bartender",
+        "name": "pour",
+        "firstTick": 50,
+        "frames": 30,
+        "workMs": 2,
+        "lastTick": 50
+      },
+      {
+        "kind": "bartender",
+        "name": "wave",
+        "firstTick": 50,
+        "frames": 30,
+        "workMs": 1.899999976158142,
+        "lastTick": 52
+      },
+      {
+        "kind": "bartender",
+        "name": "laugh",
+        "firstTick": 52,
+        "frames": 38,
+        "workMs": 2,
+        "lastTick": 52
+      }
+    ],
+    "readyMs": 10768.099999964237
+  },
+  "staged": [
+    "bartender:laugh",
+    "bartender:pour",
+    "bartender:wave",
+    "bean:bow",
+    "bean:cheer",
+    "bean:chips",
+    "bean:clap",
+    "bean:cry",
+    "bean:dance",
+    "bean:despair",
+    "bean:facepalm",
+    "bean:gasp",
+    "bean:laugh",
+    "bean:lever",
+    "bean:lookaround",
+    "bean:nervous",
+    "bean:point",
+    "bean:pour",
+    "bean:push",
+    "bean:shrug",
+    "bean:sip",
+    "bean:snatched",
+    "bean:stab",
+    "bean:tap",
+    "bean:thinking",
+    "bean:wave",
+    "croupier:tap",
+    "croupier:thinking",
+    "croupier:wave",
+    "round:bow",
+    "round:cheer",
+    "round:chips",
+    "round:clap",
+    "round:cry",
+    "round:dance",
+    "round:despair",
+    "round:facepalm",
+    "round:gasp",
+    "round:laugh",
+    "round:lever",
+    "round:lookaround",
+    "round:nervous",
+    "round:point",
+    "round:pour",
+    "round:push",
+    "round:shrug",
+    "round:sip",
+    "round:snatched",
+    "round:stab",
+    "round:tap",
+    "round:thinking",
+    "round:wave"
+  ],
+  "played": [
+    {
+      "key": "bean:bow",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:cheer",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:chips",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:clap",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:cry",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:dance",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:despair",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:facepalm",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:gasp",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:laugh",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:lever",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:lookaround",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:nervous",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:point",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:pour",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:push",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:shrug",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:sip",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:snatched",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:stab",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:tap",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:thinking",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bean:wave",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:bow",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:cheer",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:chips",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:clap",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:cry",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:dance",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:despair",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:facepalm",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:gasp",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:laugh",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:lever",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:lookaround",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:nervous",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:point",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:pour",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:push",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:shrug",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:sip",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:snatched",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:stab",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:tap",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:thinking",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "round:wave",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "croupier:tap",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "croupier:thinking",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "croupier:wave",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bartender:laugh",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bartender:pour",
+      "started": true,
+      "active": true,
+      "finite": true
+    },
+    {
+      "key": "bartender:wave",
+      "started": true,
+      "active": true,
+      "finite": true
+    }
+  ],
+  "firstUseBakes": 0,
+  "repeatFrames": 0,
+  "rows": [
+    {
+      "kind": "bean",
+      "name": "snatched",
+      "frames": 33,
+      "bytes": 8712,
+      "sha256": "35b4a848dd3e7d306f7e357582a782fc1c197013d94792466edcddc7f0376829"
+    },
+    {
+      "kind": "bean",
+      "name": "cheer",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "62f9fbdc512021016c66b57a843ba7c087b3cf52ddcf06285817f2054288522a"
+    },
+    {
+      "kind": "bean",
+      "name": "despair",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "0672fb51055f737c4792459d16b9438657a542348f3f12a171754950d215efe1"
+    },
+    {
+      "kind": "bean",
+      "name": "gasp",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "e20b287bdba18ee29025637a2ff53df6cbf76cb242bd3a30eadb9680a3b8059a"
+    },
+    {
+      "kind": "bean",
+      "name": "point",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "edb67ec290ebff9d883cac8e111ac06a112f44b9b0b2bdf9f01640f11c462087"
+    },
+    {
+      "kind": "bean",
+      "name": "shrug",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "0b14a9a6cc4e611bb6dab82c28a1d30dad6843ef45fab69b81a21bf2697c0dd0"
+    },
+    {
+      "kind": "bean",
+      "name": "cry",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "f7fa984c114e428a6c250c62255d85f9628d334e5be4f78c60690eaf147530cc"
+    },
+    {
+      "kind": "bean",
+      "name": "laugh",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "dd59404bab2640da8446ef16a8fac6a4254a9347d96a019f804376f884450f02"
+    },
+    {
+      "kind": "bean",
+      "name": "stab",
+      "frames": 23,
+      "bytes": 6072,
+      "sha256": "514fa2e1889c2626976a50790716a048f9ba39fc6c84355fdd4214e98b32f36d"
+    },
+    {
+      "kind": "bean",
+      "name": "pour",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "3f552b0f8d33aad1dfac317d5034749cec45e118659a9fbe7a84ce2c8639bcbb"
+    },
+    {
+      "kind": "bean",
+      "name": "sip",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "a766d5c56d1e08bd13cf6b657cfa20b65209e02c09e37246ce8727722818b9f9"
+    },
+    {
+      "kind": "bean",
+      "name": "wave",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "98cf18d001523d6eaf268e284e77866af9b02e70db3f85f15365b513459ddcc4"
+    },
+    {
+      "kind": "bean",
+      "name": "dance",
+      "frames": 60,
+      "bytes": 15840,
+      "sha256": "b099d909123d30128416533af916e3686b8401834baa76bed30b4abe18723b5b"
+    },
+    {
+      "kind": "bean",
+      "name": "lever",
+      "frames": 23,
+      "bytes": 6072,
+      "sha256": "935aeed606435ea42db78aefbad68e5561373f20b8be61eb76c21fb48102a329"
+    },
+    {
+      "kind": "bean",
+      "name": "tap",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "4bf0341d6345cea0f3e9f5b6068469d771cbe1565a5d62ea67d19fbc05ede138"
+    },
+    {
+      "kind": "bean",
+      "name": "clap",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "610f2e8d4746956ab15dd118c653fde167e2f942f53aadf18ebc55180894ce7b"
+    },
+    {
+      "kind": "bean",
+      "name": "facepalm",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "b4986ee7d42dfbba81a1bdfb978f1c50fc80880139d6445acf1a79ef6ed84ed9"
+    },
+    {
+      "kind": "bean",
+      "name": "nervous",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "d182bda835fe7b16313d748a850510027a631a2a05f2b7597f9f445be8ca4e13"
+    },
+    {
+      "kind": "bean",
+      "name": "lookaround",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "256265ebd2774b48613c29df0353832575c7412403a9f7773fa02670212b34cb"
+    },
+    {
+      "kind": "bean",
+      "name": "thinking",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "8ebef109230baab3f44f14f23b93407ed6441d80143020d22b4c0a5114eaa2c4"
+    },
+    {
+      "kind": "bean",
+      "name": "bow",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "136fba9733c9f2e3672f6e373651b77899190eb15e8f157a8edf346c16b6544a"
+    },
+    {
+      "kind": "bean",
+      "name": "chips",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "bc1b8c0fab5f6f17f618ffbf69fab4b2d8b44d2ee9894d93252a046414f98e68"
+    },
+    {
+      "kind": "bean",
+      "name": "push",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "93517dbd2ffb9614d47372358fef9414df29bee2ca9582366882ac22fad202ae"
+    },
+    {
+      "kind": "round",
+      "name": "snatched",
+      "frames": 33,
+      "bytes": 8712,
+      "sha256": "7f25c5556ef249bf87cbe02c6718491aa43116fa5ec17c792e88fe9b0ffabc50"
+    },
+    {
+      "kind": "round",
+      "name": "cheer",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "887850922550c2c818872f9a34b00bcbdf6674f6244f0900112e52159527c4b4"
+    },
+    {
+      "kind": "round",
+      "name": "despair",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "ea3ee4a2e5b9bacfd43c11181c21872e459336bcc4e9d28e60a9a68b31b36e85"
+    },
+    {
+      "kind": "round",
+      "name": "gasp",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "167db106e546ab7dde200fb5821fd12d0e85dac87dc50ffc3c027e82eaabcd05"
+    },
+    {
+      "kind": "round",
+      "name": "point",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "85344ca96e8f666e65f3acda941c5bb47cc8336590477b9ddd19dd7fc85c8d65"
+    },
+    {
+      "kind": "round",
+      "name": "shrug",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "4f47a838c3347b5e34bd74c0238290a6d9c6525ce705d002254937b3fffef697"
+    },
+    {
+      "kind": "round",
+      "name": "cry",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "6cdb95f19ee3e2aafb109101bdafa97d01dbe6679bf2a99dcf46f53c0e4a1a2e"
+    },
+    {
+      "kind": "round",
+      "name": "laugh",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "fe9c3e8874d584de08ab95ffb040ee7778cd1150f24cdb069acd31300e10ac10"
+    },
+    {
+      "kind": "round",
+      "name": "stab",
+      "frames": 23,
+      "bytes": 6072,
+      "sha256": "81ca9789c21d11f9910b74bc319aea6d41a31c4c9169957c368e275c8aabb860"
+    },
+    {
+      "kind": "round",
+      "name": "pour",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "371800a5a3171852d647e751bfc89136348390fcfe434f68346a16fe5413444d"
+    },
+    {
+      "kind": "round",
+      "name": "sip",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "601920a618e99f6f318e038120c743ca4a546cc1618d17da2b41ea6ba4c862b4"
+    },
+    {
+      "kind": "round",
+      "name": "wave",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "66fe1e77f59b186d63976867fb783009856075abf8d3f439d801523e620489ae"
+    },
+    {
+      "kind": "round",
+      "name": "dance",
+      "frames": 60,
+      "bytes": 15840,
+      "sha256": "c859e7e8fd4957ab78edfee4a205f8c93fdc22e298b3f7beda00f2dedfa35dac"
+    },
+    {
+      "kind": "round",
+      "name": "lever",
+      "frames": 23,
+      "bytes": 6072,
+      "sha256": "b378d54182b2b8c59184e5578794e3606b84fa8cbb21e49b7c8d259b84565a32"
+    },
+    {
+      "kind": "round",
+      "name": "tap",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "954bbb24223966b9ab061b502178c7b7f5940ff027f518d3bec2dc635f8ea117"
+    },
+    {
+      "kind": "round",
+      "name": "clap",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "5d08306e2612961ff510b0d4d78f177257d60c46036aef6993bc58d13bb3346c"
+    },
+    {
+      "kind": "round",
+      "name": "facepalm",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "48ec54e13bc27f539be6982ba16dca202aef0d3e7da3c66fe6b5a15bffb1c36a"
+    },
+    {
+      "kind": "round",
+      "name": "nervous",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "71b1237a72bef900d1a4d261ab14d5056da7e2c536968768378cc31e379b951a"
+    },
+    {
+      "kind": "round",
+      "name": "lookaround",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "e3edc8fd8fe5f60439e6c1954d6ce4f35659a001308d97d71da5792cabf290b9"
+    },
+    {
+      "kind": "round",
+      "name": "thinking",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "c1ab42169a968a2854d0e8306bae9bec0585d1c7c3f672d247e32086e254f3e3"
+    },
+    {
+      "kind": "round",
+      "name": "bow",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "032f6e8979e9d01b2fdc8ef394bf075d4c5bfffa59aad15ad3d9985639623730"
+    },
+    {
+      "kind": "round",
+      "name": "chips",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "2f567ddb8ed93e5fbf0ba5af2ece5ea926982efb6e5a2c1aca7298fb063852d9"
+    },
+    {
+      "kind": "round",
+      "name": "push",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "bb05c43dec93f06baedc28241bb5a3446e7a2953d61d6aa52294de717d81b6e4"
+    },
+    {
+      "kind": "croupier",
+      "name": "snatched",
+      "frames": 33,
+      "bytes": 8712,
+      "sha256": "548c4bc39aef487109d83c1fe5861b8cf49e90125031475f092202a986f72137"
+    },
+    {
+      "kind": "croupier",
+      "name": "cheer",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "99ca159191ed1018678c1117c5ad3b32555b7668c804f1b8328ebbc7f645898b"
+    },
+    {
+      "kind": "croupier",
+      "name": "despair",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "66455b57d0a0cf390f862ca4afc74dd784111054bd0071573ad225e60cf35ace"
+    },
+    {
+      "kind": "croupier",
+      "name": "gasp",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "6834419241a2c5609b9ee2619c363e3c29a18d0b053d223c636a54a6a6d00828"
+    },
+    {
+      "kind": "croupier",
+      "name": "point",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "ebbf4405ce533ec79bf45cc8c3562018f548ef5ad88aa1aff8e2fb14a428590f"
+    },
+    {
+      "kind": "croupier",
+      "name": "shrug",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "30dec24bbe8059766ab2460c810c187db6a969eb172c523943e57bb401d82305"
+    },
+    {
+      "kind": "croupier",
+      "name": "cry",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "1352eb8d0abe67df855994330c486e641ef6367c8694c1f327d9e63e832db113"
+    },
+    {
+      "kind": "croupier",
+      "name": "laugh",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "7b6699df85cfa3ca0ede8a0073da6c982127cdc76bf1efeeac2f08fc4305b8dc"
+    },
+    {
+      "kind": "croupier",
+      "name": "stab",
+      "frames": 23,
+      "bytes": 6072,
+      "sha256": "6995c465dec1905c04f0b015b5466367d2d57c7ceb10e71cd9cb3d3f0886963c"
+    },
+    {
+      "kind": "croupier",
+      "name": "pour",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "3f49a47dfefc47053f02cfbbbfe2e151be511e9818727cc175d41b842915a56a"
+    },
+    {
+      "kind": "croupier",
+      "name": "sip",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "e9374cdaa85887512134e9408741efdb94b5397b6b4654c362a2d96bfafed2d7"
+    },
+    {
+      "kind": "croupier",
+      "name": "wave",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "be94e049689e09ff18fde2cb2eb03cd263b12b5a84f6e7d5d63d617d17f8549c"
+    },
+    {
+      "kind": "croupier",
+      "name": "dance",
+      "frames": 60,
+      "bytes": 15840,
+      "sha256": "9d9ea71e7cb7d05dfdb17f53ee74729db118adda4b0db79c8ceb86ed876cc0d9"
+    },
+    {
+      "kind": "croupier",
+      "name": "lever",
+      "frames": 23,
+      "bytes": 6072,
+      "sha256": "ac9fb3e0acdebcf7a966e33f2543e0ba0503e42be62ea1d6b0a0a9d70fc4b933"
+    },
+    {
+      "kind": "croupier",
+      "name": "tap",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "06f6de01aa338120bebb85aae1b64186b2a06ae63b288da416ed8c75c55ba4b8"
+    },
+    {
+      "kind": "croupier",
+      "name": "clap",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "5ddde25c22ddb4537265e552184efef4e37f67b199f572286718fb907dd20f05"
+    },
+    {
+      "kind": "croupier",
+      "name": "facepalm",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "c9054da4323bd5655ecac04cf0d8377b2b297d512de89c9a3d018d5aef513d2b"
+    },
+    {
+      "kind": "croupier",
+      "name": "nervous",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "fe3b00feec5277e9009cab8636c8f2a1e0ea0336598c9b2f17abd9cdfced55cf"
+    },
+    {
+      "kind": "croupier",
+      "name": "lookaround",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "f257cc863e035b5ca2d73eb657b9018da8280696e3acda3556def2bca1b09f41"
+    },
+    {
+      "kind": "croupier",
+      "name": "thinking",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "80a1c407412f81cb491610387b336e27ca7691f491345c52baa8089f8e2c2f26"
+    },
+    {
+      "kind": "croupier",
+      "name": "bow",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "a9e7cbb67530f4d7f9adca8db8921b064d7d2e554660f58c2cc7372ce257abfc"
+    },
+    {
+      "kind": "croupier",
+      "name": "chips",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "4b38c26226cfcef933e5821a0cb98914cc6db07ea396fdbf7622c0e0bc36cf26"
+    },
+    {
+      "kind": "croupier",
+      "name": "push",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "3ee166a5e4f59faba33ff2c53cf7c9079a3a529c6e9b52f2a15ab2b527bb8951"
+    },
+    {
+      "kind": "bartender",
+      "name": "snatched",
+      "frames": 33,
+      "bytes": 8712,
+      "sha256": "ce1b4059c8bc21166fa0609d59f02ff1c04b58444d34b2dc6ea80ff48a191e9f"
+    },
+    {
+      "kind": "bartender",
+      "name": "cheer",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "adf8b610d782bf4e02211dfead7d1ea51753f220c9b2a879863d51cda8d75ef7"
+    },
+    {
+      "kind": "bartender",
+      "name": "despair",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "3b05c7cba48c2921e632f82dc42b94b600db29de0d77cacbebfd3e7095f5ef3f"
+    },
+    {
+      "kind": "bartender",
+      "name": "gasp",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "f6372c067d01874e5423537502322c5248f48cbb05c8d21c6f2d7d57eaa64a97"
+    },
+    {
+      "kind": "bartender",
+      "name": "point",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "f27b1f52acc37282e9b6a7375c66ada52837aa31f73248021f231e79706d7b19"
+    },
+    {
+      "kind": "bartender",
+      "name": "shrug",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "b193adc7a553b0da7edb5beadceaef6c4be15330171d683b03535eea9391b09e"
+    },
+    {
+      "kind": "bartender",
+      "name": "cry",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "73c08fccb0f210318ae5f36f98a12d551d6aee5ce2ea0e9723232b01ea0b291e"
+    },
+    {
+      "kind": "bartender",
+      "name": "laugh",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "d27495e653babe0f883631ce05c352f6619793b622d0a51f78193ca6509dcb0b"
+    },
+    {
+      "kind": "bartender",
+      "name": "stab",
+      "frames": 23,
+      "bytes": 6072,
+      "sha256": "ba9ed2d28736585779a86f14a7188287a190fbf8616e87d5221bf967936ff7e5"
+    },
+    {
+      "kind": "bartender",
+      "name": "pour",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "2e3b96c3b42593784204689710504dc3d52709e2c4d02e48873bc5651886bbba"
+    },
+    {
+      "kind": "bartender",
+      "name": "sip",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "6b8b8ec275e606c7f7ac4e7d9d96f64f4634428c396f8564c4275584b331640e"
+    },
+    {
+      "kind": "bartender",
+      "name": "wave",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "61df80b80e758cf857b6298cba751ecf7abefd15083d268713a0583d1fef9029"
+    },
+    {
+      "kind": "bartender",
+      "name": "dance",
+      "frames": 60,
+      "bytes": 15840,
+      "sha256": "ae8aab4b1d68cdbbb816c637d0495217dd7c71f94c93a4986ee764799f4ea8f7"
+    },
+    {
+      "kind": "bartender",
+      "name": "lever",
+      "frames": 23,
+      "bytes": 6072,
+      "sha256": "b6d6bba0d9bbda5947b617315b076e0bdeb9bbf6822f906cc797eb13111bf442"
+    },
+    {
+      "kind": "bartender",
+      "name": "tap",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "f8ef714f2251c36721d331e91f194f674d0a08fed639d7ca259e885728cc6565"
+    },
+    {
+      "kind": "bartender",
+      "name": "clap",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "e552b67a639b0275e664563c12e9f13edf6709caaa512d19a9309de5082dc8ae"
+    },
+    {
+      "kind": "bartender",
+      "name": "facepalm",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "3fa0ebf36ae23619b9df7d864d7668d0c4187834d0ed7f06c52d459a79db58f0"
+    },
+    {
+      "kind": "bartender",
+      "name": "nervous",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "39bae7d73fce0fc2ae16c2b0f63c69da9a5de918b8f4624808cefde07f6fa4ba"
+    },
+    {
+      "kind": "bartender",
+      "name": "lookaround",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "7a99ec4c40314bc2009a2bd3cec52feb320a5b51abc31d5030431ec979abb07b"
+    },
+    {
+      "kind": "bartender",
+      "name": "thinking",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "8206060393fe17d63b3196ad25570bdba1f44de82c9e43887db262e87b8cd4fc"
+    },
+    {
+      "kind": "bartender",
+      "name": "bow",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "dde26979437064e29801a796bd95ef8f29a92c9a7e002594c14c723436b7c093"
+    },
+    {
+      "kind": "bartender",
+      "name": "chips",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "d835561b5d28e82b794d9723b78dcada60223ecc0f210f9f731659ee71187813"
+    },
+    {
+      "kind": "bartender",
+      "name": "push",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "5f8d479a720696ff5cb016f5d22909566d401f14b4e604bb685750950689a1d2"
+    },
+    {
+      "kind": "guard",
+      "name": "snatched",
+      "frames": 33,
+      "bytes": 8712,
+      "sha256": "874f449e3697d739549d1039a8adc3b6d5cfbf293ee68d65d88063b8d87db021"
+    },
+    {
+      "kind": "guard",
+      "name": "cheer",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "4c46b650325547fca95b92375516dcb86f7cad1d2d6c38c990d96e1b41c35b07"
+    },
+    {
+      "kind": "guard",
+      "name": "despair",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "710e45ae2831d6fb154843ef35ef2801beeb9a57c1cacfc319b578fad1d6adc0"
+    },
+    {
+      "kind": "guard",
+      "name": "gasp",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "c9f581783228537ba83c7463f0d690a9460ef66881cfbc22c22c3464e59da1aa"
+    },
+    {
+      "kind": "guard",
+      "name": "point",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "0edbc26572ceb1fad83c75224314bf045e484b9965466217101e2e43db55f081"
+    },
+    {
+      "kind": "guard",
+      "name": "shrug",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "11ad2fca59f4dec39f31e8829be4b27e00e34530679337884fabd2c77f0f3051"
+    },
+    {
+      "kind": "guard",
+      "name": "cry",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "957a1e3a2d5f03f5c387b385763824a525a22fcb4572f54a1c08b495a6dfe1af"
+    },
+    {
+      "kind": "guard",
+      "name": "laugh",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "60db2f54028c69b6fd0805c63f74756717ee21dc5a80dcc505c873150c3e10e5"
+    },
+    {
+      "kind": "guard",
+      "name": "stab",
+      "frames": 23,
+      "bytes": 6072,
+      "sha256": "f1e7e39fe63b5c8728e494ec576c8c275eefb40b8a0baf30fee79b1fb94c30d1"
+    },
+    {
+      "kind": "guard",
+      "name": "pour",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "3a5fd5856ba304bc1a8d8c64d3dfed41256bab9e019955ccfb0b181cb9092b31"
+    },
+    {
+      "kind": "guard",
+      "name": "sip",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "cdbe68cd431195cabb1745e77423c521d2358104c34468e1181d982c69ca35ca"
+    },
+    {
+      "kind": "guard",
+      "name": "wave",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "5b29022fccea1e633b7fa3a842c7e1f88c425b53f871c543350d635b6715c9f7"
+    },
+    {
+      "kind": "guard",
+      "name": "dance",
+      "frames": 60,
+      "bytes": 15840,
+      "sha256": "1e4f69553dd7a52e64a6375b8673ea0060ab3b1304b750ea4de9f901a5e05156"
+    },
+    {
+      "kind": "guard",
+      "name": "lever",
+      "frames": 23,
+      "bytes": 6072,
+      "sha256": "6f3fdeca932c399aa5459bfda5948119e1b7d6678b3fddd9732cf40b54ed6e28"
+    },
+    {
+      "kind": "guard",
+      "name": "tap",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "451b3bb88bcc78353b476827f5ce2a30f2d31daac0024c038c5af63542122d83"
+    },
+    {
+      "kind": "guard",
+      "name": "clap",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "673baf3200e76172a457b66b6da2ce6c599cf9cfe0fc467fef65e8c53dd64661"
+    },
+    {
+      "kind": "guard",
+      "name": "facepalm",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "238f8a53640abf0e6b938dfdc1640c62c9d80545a2b84792980ddcaf313be311"
+    },
+    {
+      "kind": "guard",
+      "name": "nervous",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "54d756bc074d394de3fb124d959544a529d778708f62d184bd6bf1207b33e135"
+    },
+    {
+      "kind": "guard",
+      "name": "lookaround",
+      "frames": 45,
+      "bytes": 11880,
+      "sha256": "3818cd2685291ad2dedd783865580bbc811bd175951b54aaf29ac25378b49c2f"
+    },
+    {
+      "kind": "guard",
+      "name": "thinking",
+      "frames": 38,
+      "bytes": 10032,
+      "sha256": "c76c45a9d74858c235e4088979dcdde033bc2a7db15507d83a534dc215ac499a"
+    },
+    {
+      "kind": "guard",
+      "name": "bow",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "79231a69cf4fb22f96500359a56cc291e82bf106f8910b821add79f3d0b7db22"
+    },
+    {
+      "kind": "guard",
+      "name": "chips",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "29bb6e16314b52a8ce00541ffcdd82d21b361acd93848442f0d36aa6aa5564ad"
+    },
+    {
+      "kind": "guard",
+      "name": "push",
+      "frames": 30,
+      "bytes": 7920,
+      "sha256": "e57fa733b2523accf7b536249b5a5e946e7f4307c37279bdd34fe260d00a41dd"
+    }
+  ],
+  "bakes": [
+    {
+      "kind": "bean",
+      "name": "cheer",
+      "firstTick": 28,
+      "frames": 45,
+      "workMs": 12.199999988079071,
+      "lastTick": 30
+    },
+    {
+      "kind": "bean",
+      "name": "despair",
+      "firstTick": 30,
+      "frames": 38,
+      "workMs": 3,
+      "lastTick": 30
+    },
+    {
+      "kind": "bean",
+      "name": "gasp",
+      "firstTick": 30,
+      "frames": 30,
+      "workMs": 2.399999976158142,
+      "lastTick": 30
+    },
+    {
+      "kind": "bean",
+      "name": "point",
+      "firstTick": 30,
+      "frames": 38,
+      "workMs": 2.800000011920929,
+      "lastTick": 30
+    },
+    {
+      "kind": "bean",
+      "name": "shrug",
+      "firstTick": 30,
+      "frames": 30,
+      "workMs": 2,
+      "lastTick": 30
+    },
+    {
+      "kind": "bean",
+      "name": "cry",
+      "firstTick": 30,
+      "frames": 45,
+      "workMs": 2.200000047683716,
+      "lastTick": 32
+    },
+    {
+      "kind": "bean",
+      "name": "laugh",
+      "firstTick": 32,
+      "frames": 38,
+      "workMs": 2,
+      "lastTick": 32
+    },
+    {
+      "kind": "bean",
+      "name": "stab",
+      "firstTick": 32,
+      "frames": 23,
+      "workMs": 1.5999999642372131,
+      "lastTick": 32
+    },
+    {
+      "kind": "bean",
+      "name": "pour",
+      "firstTick": 32,
+      "frames": 30,
+      "workMs": 1.600000023841858,
+      "lastTick": 32
+    },
+    {
+      "kind": "bean",
+      "name": "sip",
+      "firstTick": 32,
+      "frames": 30,
+      "workMs": 1.699999988079071,
+      "lastTick": 32
+    },
+    {
+      "kind": "bean",
+      "name": "wave",
+      "firstTick": 32,
+      "frames": 30,
+      "workMs": 1.5000000596046448,
+      "lastTick": 32
+    },
+    {
+      "kind": "bean",
+      "name": "dance",
+      "firstTick": 32,
+      "frames": 60,
+      "workMs": 2.8999999165534973,
+      "lastTick": 34
+    },
+    {
+      "kind": "bean",
+      "name": "lever",
+      "firstTick": 34,
+      "frames": 23,
+      "workMs": 1.2000000476837158,
+      "lastTick": 34
+    },
+    {
+      "kind": "bean",
+      "name": "tap",
+      "firstTick": 34,
+      "frames": 30,
+      "workMs": 1.5999999642372131,
+      "lastTick": 34
+    },
+    {
+      "kind": "bean",
+      "name": "clap",
+      "firstTick": 34,
+      "frames": 30,
+      "workMs": 1.300000011920929,
+      "lastTick": 34
+    },
+    {
+      "kind": "bean",
+      "name": "facepalm",
+      "firstTick": 34,
+      "frames": 30,
+      "workMs": 1.1999999284744263,
+      "lastTick": 34
+    },
+    {
+      "kind": "bean",
+      "name": "nervous",
+      "firstTick": 34,
+      "frames": 45,
+      "workMs": 2.5,
+      "lastTick": 34
+    },
+    {
+      "kind": "bean",
+      "name": "lookaround",
+      "firstTick": 34,
+      "frames": 45,
+      "workMs": 2.099999964237213,
+      "lastTick": 34
+    },
+    {
+      "kind": "bean",
+      "name": "thinking",
+      "firstTick": 34,
+      "frames": 38,
+      "workMs": 2.699999988079071,
+      "lastTick": 36
+    },
+    {
+      "kind": "bean",
+      "name": "bow",
+      "firstTick": 36,
+      "frames": 30,
+      "workMs": 2.300000011920929,
+      "lastTick": 36
+    },
+    {
+      "kind": "bean",
+      "name": "chips",
+      "firstTick": 36,
+      "frames": 30,
+      "workMs": 2.800000011920929,
+      "lastTick": 36
+    },
+    {
+      "kind": "bean",
+      "name": "push",
+      "firstTick": 36,
+      "frames": 30,
+      "workMs": 2.5,
+      "lastTick": 36
+    },
+    {
+      "kind": "bean",
+      "name": "snatched",
+      "firstTick": 36,
+      "frames": 33,
+      "workMs": 2.800000011920929,
+      "lastTick": 38
+    },
+    {
+      "kind": "round",
+      "name": "cheer",
+      "firstTick": 38,
+      "frames": 45,
+      "workMs": 4.200000047683716,
+      "lastTick": 38
+    },
+    {
+      "kind": "round",
+      "name": "despair",
+      "firstTick": 38,
+      "frames": 38,
+      "workMs": 3.300000011920929,
+      "lastTick": 38
+    },
+    {
+      "kind": "round",
+      "name": "gasp",
+      "firstTick": 38,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 38
+    },
+    {
+      "kind": "round",
+      "name": "point",
+      "firstTick": 38,
+      "frames": 38,
+      "workMs": 3.200000047683716,
+      "lastTick": 40
+    },
+    {
+      "kind": "round",
+      "name": "shrug",
+      "firstTick": 40,
+      "frames": 30,
+      "workMs": 2.699999988079071,
+      "lastTick": 40
+    },
+    {
+      "kind": "round",
+      "name": "cry",
+      "firstTick": 40,
+      "frames": 45,
+      "workMs": 3.8000000715255737,
+      "lastTick": 40
+    },
+    {
+      "kind": "round",
+      "name": "laugh",
+      "firstTick": 40,
+      "frames": 38,
+      "workMs": 3.399999976158142,
+      "lastTick": 42
+    },
+    {
+      "kind": "round",
+      "name": "stab",
+      "firstTick": 42,
+      "frames": 23,
+      "workMs": 2,
+      "lastTick": 42
+    },
+    {
+      "kind": "round",
+      "name": "pour",
+      "firstTick": 42,
+      "frames": 30,
+      "workMs": 2.900000035762787,
+      "lastTick": 42
+    },
+    {
+      "kind": "round",
+      "name": "sip",
+      "firstTick": 42,
+      "frames": 30,
+      "workMs": 2.399999976158142,
+      "lastTick": 42
+    },
+    {
+      "kind": "round",
+      "name": "wave",
+      "firstTick": 42,
+      "frames": 30,
+      "workMs": 2.5000000596046448,
+      "lastTick": 42
+    },
+    {
+      "kind": "round",
+      "name": "dance",
+      "firstTick": 42,
+      "frames": 60,
+      "workMs": 3.2000001072883606,
+      "lastTick": 44
+    },
+    {
+      "kind": "round",
+      "name": "lever",
+      "firstTick": 44,
+      "frames": 23,
+      "workMs": 1.699999988079071,
+      "lastTick": 44
+    },
+    {
+      "kind": "round",
+      "name": "tap",
+      "firstTick": 44,
+      "frames": 30,
+      "workMs": 2,
+      "lastTick": 44
+    },
+    {
+      "kind": "round",
+      "name": "clap",
+      "firstTick": 44,
+      "frames": 30,
+      "workMs": 2,
+      "lastTick": 44
+    },
+    {
+      "kind": "round",
+      "name": "facepalm",
+      "firstTick": 44,
+      "frames": 30,
+      "workMs": 1.899999976158142,
+      "lastTick": 44
+    },
+    {
+      "kind": "round",
+      "name": "nervous",
+      "firstTick": 44,
+      "frames": 45,
+      "workMs": 13.099999964237213,
+      "lastTick": 48
+    },
+    {
+      "kind": "round",
+      "name": "lookaround",
+      "firstTick": 48,
+      "frames": 45,
+      "workMs": 2.9999999403953552,
+      "lastTick": 48
+    },
+    {
+      "kind": "round",
+      "name": "thinking",
+      "firstTick": 48,
+      "frames": 38,
+      "workMs": 2.5,
+      "lastTick": 48
+    },
+    {
+      "kind": "round",
+      "name": "bow",
+      "firstTick": 48,
+      "frames": 30,
+      "workMs": 2.100000023841858,
+      "lastTick": 48
+    },
+    {
+      "kind": "round",
+      "name": "chips",
+      "firstTick": 48,
+      "frames": 30,
+      "workMs": 1.9000000357627869,
+      "lastTick": 48
+    },
+    {
+      "kind": "round",
+      "name": "push",
+      "firstTick": 48,
+      "frames": 30,
+      "workMs": 2.099999964237213,
+      "lastTick": 48
+    },
+    {
+      "kind": "round",
+      "name": "snatched",
+      "firstTick": 48,
+      "frames": 33,
+      "workMs": 2.399999976158142,
+      "lastTick": 50
+    },
+    {
+      "kind": "croupier",
+      "name": "tap",
+      "firstTick": 50,
+      "frames": 30,
+      "workMs": 2.300000011920929,
+      "lastTick": 50
+    },
+    {
+      "kind": "croupier",
+      "name": "wave",
+      "firstTick": 50,
+      "frames": 30,
+      "workMs": 2.300000011920929,
+      "lastTick": 50
+    },
+    {
+      "kind": "croupier",
+      "name": "thinking",
+      "firstTick": 50,
+      "frames": 38,
+      "workMs": 2.4999999403953552,
+      "lastTick": 50
+    },
+    {
+      "kind": "bartender",
+      "name": "pour",
+      "firstTick": 50,
+      "frames": 30,
+      "workMs": 2,
+      "lastTick": 50
+    },
+    {
+      "kind": "bartender",
+      "name": "wave",
+      "firstTick": 50,
+      "frames": 30,
+      "workMs": 1.899999976158142,
+      "lastTick": 52
+    },
+    {
+      "kind": "bartender",
+      "name": "laugh",
+      "firstTick": 52,
+      "frames": 38,
+      "workMs": 2,
+      "lastTick": 52
+    },
+    {
+      "kind": "croupier",
+      "name": "snatched",
+      "firstTick": 457,
+      "frames": 33,
+      "workMs": 7.099999964237213,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "cheer",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 7,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "despair",
+      "firstTick": 457,
+      "frames": 38,
+      "workMs": 6.300000011920929,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "gasp",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3.699999988079071,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "point",
+      "firstTick": 457,
+      "frames": 38,
+      "workMs": 4.200000047683716,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "shrug",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3.200000047683716,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "cry",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 4.299999952316284,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "laugh",
+      "firstTick": 457,
+      "frames": 38,
+      "workMs": 3.800000011920929,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "stab",
+      "firstTick": 457,
+      "frames": 23,
+      "workMs": 2.399999976158142,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "pour",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "sip",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "dance",
+      "firstTick": 457,
+      "frames": 60,
+      "workMs": 5.799999952316284,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "lever",
+      "firstTick": 457,
+      "frames": 23,
+      "workMs": 2.399999976158142,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "clap",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "facepalm",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 7.699999988079071,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "nervous",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 4.900000035762787,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "lookaround",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 5,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "bow",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3.099999964237213,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "chips",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3.099999964237213,
+      "lastTick": 457
+    },
+    {
+      "kind": "croupier",
+      "name": "push",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3.099999964237213,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "snatched",
+      "firstTick": 457,
+      "frames": 33,
+      "workMs": 3.300000011920929,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "cheer",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 4.200000047683716,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "despair",
+      "firstTick": 457,
+      "frames": 38,
+      "workMs": 3.699999988079071,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "gasp",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 2.899999976158142,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "point",
+      "firstTick": 457,
+      "frames": 38,
+      "workMs": 3.699999988079071,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "shrug",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "cry",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 4.700000047683716,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "stab",
+      "firstTick": 457,
+      "frames": 23,
+      "workMs": 2.399999976158142,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "sip",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "dance",
+      "firstTick": 457,
+      "frames": 60,
+      "workMs": 5.800000011920929,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "lever",
+      "firstTick": 457,
+      "frames": 23,
+      "workMs": 2.399999976158142,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "tap",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 2.900000035762787,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "clap",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 2.899999976158142,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "facepalm",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "nervous",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 4.300000011920929,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "lookaround",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 4.300000011920929,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "thinking",
+      "firstTick": 457,
+      "frames": 38,
+      "workMs": 3.699999988079071,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "bow",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 2.899999976158142,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "chips",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 2.899999976158142,
+      "lastTick": 457
+    },
+    {
+      "kind": "bartender",
+      "name": "push",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "snatched",
+      "firstTick": 457,
+      "frames": 33,
+      "workMs": 3.199999988079071,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "cheer",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 4.300000071525574,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "despair",
+      "firstTick": 457,
+      "frames": 38,
+      "workMs": 3.699999988079071,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "gasp",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3.100000023841858,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "point",
+      "firstTick": 457,
+      "frames": 38,
+      "workMs": 3.600000023841858,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "shrug",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "cry",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 4.300000011920929,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "laugh",
+      "firstTick": 457,
+      "frames": 38,
+      "workMs": 3.600000023841858,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "stab",
+      "firstTick": 457,
+      "frames": 23,
+      "workMs": 2.299999952316284,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "pour",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 2.899999976158142,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "sip",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "wave",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3.100000023841858,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "dance",
+      "firstTick": 457,
+      "frames": 60,
+      "workMs": 5.600000023841858,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "lever",
+      "firstTick": 457,
+      "frames": 23,
+      "workMs": 2.300000011920929,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "tap",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "clap",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 2.900000035762787,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "facepalm",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 2.899999976158142,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "nervous",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 4.300000011920929,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "lookaround",
+      "firstTick": 457,
+      "frames": 45,
+      "workMs": 4.300000011920929,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "thinking",
+      "firstTick": 457,
+      "frames": 38,
+      "workMs": 3.699999988079071,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "bow",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 2.900000035762787,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "chips",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 2.900000035762787,
+      "lastTick": 457
+    },
+    {
+      "kind": "guard",
+      "name": "push",
+      "firstTick": 457,
+      "frames": 30,
+      "workMs": 3.300000011920929,
+      "lastTick": 457
+    }
+  ],
+  "errors": []
+}

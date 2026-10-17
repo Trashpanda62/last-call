@@ -30,11 +30,21 @@ export function bjTotal(cards) {
 }
 const isBJ = cards => cards.length === 2 && bjTotal(cards).t === 21;
 // A round: { hands: [{cards, bet, done, doubled, fromSplit}], dealer: [up, hole], i, over, mult, lines }
-export function bjDeal(bet, r = rnd) {
-  const s = { bet, hands: [{ cards: [card(r), card(r)], bet: 1, done: false, doubled: false, fromSplit: false }], dealer: [card(r), card(r)], i: 0, over: false, r };
+export function bjDeal(bet, r = rnd, hot = false) {
+  const s = { bet, hands: [{ cards: [card(r), card(r)], bet: 1, done: false, doubled: false, fromSplit: false }], dealer: [card(r), card(r)], i: 0, over: false, r, actions: [] };
+  s.hot = hot;
+  // A lucky hand plays out like any other: one of a few starts with the next cards stacked so hitting, standing or
+  // doubling all win (only one in four is a blackjack; it used to be the same 10-A against 9-8 every time).
+  if (hot) {
+    const [p, d, next] = HOT_HANDS[Math.floor(r() * HOT_HANDS.length)], c = rank => ({ rank, suit: SUITS[Math.floor(r() * 4)] });
+    s.hands[0].cards = p.map(c); s.dealer = d.map(c); s.stack = next.map(c);
+  }
   if (isBJ(s.hands[0].cards) || isBJ(s.dealer)) bjFinish(s);
   return s;
 }
+// [player, dealer, stacked next cards]: hit to 21 or stand, the dealer ends under the player or busts
+const HOT_HANDS = [[['10', 'A'], ['9', '8'], []], [['J', '9'], ['7', '9'], ['2', '10']], [['10', '9'], ['5', '10'], ['2', '9']], [['6', '5'], ['6', 'J'], ['10', '10']]];
+const draw = s => s.stack && s.stack.length ? s.stack.shift() : card(s.r);
 export function bjCan(s) {
   if (s.over) return {};
   const h = s.hands[s.i], two = h.cards.length === 2;
@@ -44,9 +54,10 @@ export function bjAct(s, a) {
   if (s.over) return s;
   const h = s.hands[s.i], can = bjCan(s);
   if (!can[a]) return s;
-  if (a === 'hit') { h.cards.push(card(s.r)); if (bjTotal(h.cards).t >= 21) h.done = true; }
+  s.actions.push({ action: a, hand: s.i, before: bjTotal(h.cards).t });
+  if (a === 'hit') { h.cards.push(draw(s)); if (bjTotal(h.cards).t >= 21) h.done = true; }
   else if (a === 'stand') h.done = true;
-  else if (a === 'double') { h.bet = 2; h.doubled = true; h.cards.push(card(s.r)); h.done = true; }
+  else if (a === 'double') { h.bet = 2; h.doubled = true; h.cards.push(draw(s)); h.done = true; }
   else if (a === 'split') {
     const b = { cards: [h.cards.pop(), card(s.r)], bet: 1, done: false, doubled: false, fromSplit: true };
     h.cards.push(card(s.r)); h.fromSplit = true;
@@ -62,19 +73,20 @@ function bjFinish(s) {
   s.over = true; s.i = Math.min(s.i, s.hands.length - 1);
   const dBJ = isBJ(s.dealer);
   const live = s.hands.some(h => bjTotal(h.cards).t <= 21) && !(s.hands.length === 1 && isBJ(s.hands[0].cards));
-  if (live && !dBJ) while (bjTotal(s.dealer).t < 17) s.dealer.push(card(s.r));
+  if (live && !dBJ) while (bjTotal(s.dealer).t < 17) s.dealer.push(draw(s));
   const d = bjTotal(s.dealer).t;
   let ret = 0; s.lines = [];
   for (const h of s.hands) {
     const p = bjTotal(h.cards).t, natural = isBJ(h.cards) && !h.fromSplit;
     let m;
-    if (natural && !dBJ) { m = BJ.bjPays; s.lines.push('Blackjack!'); }
-    else if (dBJ) { m = natural ? BJ.tiePays : 0; s.lines.push(natural ? 'Both blackjack. Tie pays half.' : 'Dealer blackjack.'); }
-    else if (p > 21) { m = 0; s.lines.push('Bust.'); }
-    else if (d > 21) { m = 2; s.lines.push('Dealer busts!'); }
-    else if (p > d) { m = 2; s.lines.push('You win.'); }
-    else if (p === d) { m = BJ.tiePays; s.lines.push('Tie pays half.'); }
-    else { m = 0; s.lines.push('Dealer wins.'); }
+    const who = s.hands.length > 1 ? `Hand ${s.hands.indexOf(h) + 1}` : 'You';
+    if (natural && !dBJ) { m = BJ.bjPays; s.lines.push(`${who}: blackjack! Dealer checks: ${d}, no blackjack.`); }
+    else if (dBJ) { m = natural ? BJ.tiePays : 0; s.lines.push(natural ? 'Both blackjack. Tie pays half.' : `${who}: ${p}. Dealer blackjack.`); }
+    else if (p > 21) { m = 0; s.lines.push(`${who}: ${p}, bust.`); }
+    else if (d > 21) { m = 2; s.lines.push(`${who}: ${p}. Dealer ${d}, busts!`); }
+    else if (p > d) { m = 2; s.lines.push(`${who}: ${p} beats dealer ${d}.`); }
+    else if (p === d) { m = BJ.tiePays; s.lines.push(`${who}: ${p}, dealer ${d}. Tie pays half.`); }
+    else { m = 0; s.lines.push(`${who}: ${p}. Dealer ${d} wins.`); }
     ret += m * h.bet;
   }
   s.mult = ret; // per unit of the original bet (doubles and splits add units)
@@ -163,9 +175,9 @@ export const SLOT_TIERS = {
   penny: { name: 'Penny slots', minBet: 2, pays: { '💎': 250, '7': 75, BAR: 30, '🔔': 15, '🍒': 8, '🍋': 5 }, two: 2, one: 0.5 },
   high: { name: 'High limit', minBet: 1000, pays: { '💎': 1000, '7': 100, BAR: 30, '🔔': 15, '🍒': 8, '🍋': 5 }, two: 1.5, one: 0.5 },
 };
-export function slotSpin(tier, r = rnd) {
+export function slotSpin(tier, r = rnd, hot = false) {
   const T = Object.hasOwn(SLOT_TIERS, tier) ? SLOT_TIERS[tier] : SLOT_TIERS.penny;
-  const reels = [0, 1, 2].map(() => pickW(SLOT_SYMS, SLOT_W, r));
+  const reels = hot ? Array(3).fill(pickW(['🍋', '🍒', '🔔', 'BAR', '7'], [45, 30, 15, 8, 2], r)) : [0, 1, 2].map(() => pickW(SLOT_SYMS, SLOT_W, r));
   return { reels, ...slotPay(T, reels) };
 }
 function slotPay(T, reels) {
@@ -186,30 +198,50 @@ export function slotRTP(tier) {
 
 // ---------- Plinko (16 rows) ----------
 export const PLINKO_ROWS = 16;
+// Lower risk gates the board (Steve, 2026-10-16: "I want to see spots get gated off for lower risk"): brass gates stand
+// PLINKO_GATE channels either side of the middle, the ball bounces off them, and the channels outside are closed (0).
+// Low plays the middle 9 channels, medium 13, high all 17; each keeps its return (plinkoRTP: about 1.04).
+export const PLINKO_GATE = { low: 4, medium: 6, high: 8 };
 export const PLINKO = {
-  low: [16, 9, 2, 1.5, 1.4, 1.2, 1.1, 1, 0.75, 1, 1.1, 1.2, 1.4, 1.5, 2, 9, 16],
-  medium: [110, 41, 10, 5, 3, 1.6, 1.1, 0.55, 0.3, 0.55, 1.1, 1.6, 3, 5, 10, 41, 110],
+  low: [0, 0, 0, 0, 2.9, 1.5, 1.05, 0.85, 0.5, 0.85, 1.05, 1.5, 2.9, 0, 0, 0, 0],
+  medium: [0, 0, 24, 8, 3.2, 1.5, 0.85, 0.5, 0.3, 0.5, 0.85, 1.5, 3.2, 8, 24, 0, 0],
   high: [1000, 130, 26, 9, 4, 2, 0.4, 0.2, 0.2, 0.2, 0.4, 2, 4, 9, 26, 130, 1000],
 };
-// path: 16 left/right bounces; the bucket is the number of rights.
-export function plinkoDrop(risk, r = rnd) {
-  const path = []; let k = 0;
-  for (let i = 0; i < PLINKO_ROWS; i++) { const right = r() < 0.5; path.push(right ? 1 : 0); k += right ? 1 : 0; }
-  return { path, bucket: k, mult: (Object.hasOwn(PLINKO, risk) ? PLINKO[risk] : PLINKO.low)[k] };
+const gateOf = risk => Object.hasOwn(PLINKO_GATE, risk) ? PLINKO_GATE[risk] : PLINKO_GATE.low;
+// path: 16 left/right bounces (1 = right); the bucket is the number of rights. At a gate the bounce goes back in.
+// The ball sits at x = rights - rows/2 channels from the middle; a gate at g lets it reach |x| <= g.
+export function plinkoDrop(risk, r = rnd, hot = false) {
+  const g = gateOf(risk), pays = Object.hasOwn(PLINKO, risk) ? PLINKO[risk] : PLINKO.low, n = PLINKO_ROWS, path = [];
+  // hot: a modest winner (over 1x, at most 10x), reached by a gated path that still looks random
+  const want = hot ? (w => w[Math.floor(r() * w.length)])(pays.map((x, i) => x > 1 && x <= 10 ? i : -1).filter(i => i >= 0)) : -1;
+  let k = 0;
+  for (let i = 0; i < n; i++) {
+    const x = k - i / 2, left = n - i;
+    let canR = x + 0.5 <= g, canL = x - 0.5 >= -g;
+    if (want >= 0) { const need = want - k; canR = canR && need > 0; canL = canL && need < left; }
+    const right = canR && canL ? r() < 0.5 : canR;
+    path.push(right ? 1 : 0); k += right ? 1 : 0;
+  }
+  return { path, bucket: k, mult: pays[k] };
 }
-export function plinkoRTP(risk) {
-  let ev = 0, c = 1; const n = PLINKO_ROWS;
-  for (let k = 0; k <= n; k++) { if (k > 0) c = c * (n - k + 1) / k; ev += c / 2 ** n * PLINKO[risk][k]; }
-  return ev;
+export function plinkoDist(risk) { // the chance of each channel, the gates included
+  const g = gateOf(risk), n = PLINKO_ROWS; let p = new Array(n + 1).fill(0); p[0] = 1;
+  for (let i = 0; i < n; i++) {
+    const q = new Array(n + 1).fill(0);
+    for (let k = 0; k <= i; k++) if (p[k]) { const x = k - i / 2, R = x + 0.5 <= g, L = x - 0.5 >= -g, w = p[k] / ((R ? 1 : 0) + (L ? 1 : 0)); if (R) q[k + 1] += w; if (L) q[k] += w; }
+    p = q;
+  }
+  return p;
 }
+export function plinkoRTP(risk) { return plinkoDist(risk).reduce((ev, p, k) => ev + p * PLINKO[risk][k], 0); }
 
 // ---------- Mines (5 x 5) ----------
 export const MINES = { tiles: 25, rtp: 1.03, cap: 10000 };
-export function minesNew(m, r = rnd) {
+export function minesNew(m, r = rnd, hot = false) {
   m = Math.max(1, Math.min(24, m | 0));
   const all = [...Array(25).keys()];
   for (let i = all.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [all[i], all[j]] = [all[j], all[i]]; }
-  return { m, mines: new Set(all.slice(0, m)), open: [], dead: false, over: false };
+  return { hot, m, mines: new Set(all.slice(0, m)), open: [], dead: false, over: false };
 }
 export function minesMult(m, k) {
   if (k <= 0) return 1;
@@ -218,6 +250,11 @@ export function minesMult(m, k) {
 }
 export function minesPick(s, tile) {
   if (s.over || !Number.isInteger(tile) || tile < 0 || tile >= MINES.tiles || s.open.includes(tile)) return s;
+  if (s.hot && s.mines.has(tile)) {
+    s.mines.delete(tile);
+    const spare = [...Array(25).keys()].find(i => i !== tile && !s.open.includes(i) && !s.mines.has(i));
+    s.mines.add(spare);
+  }
   s.open.push(tile);
   if (s.mines.has(tile)) { s.dead = true; s.over = true; s.mult = 0; }
   else if (s.open.length >= 25 - s.m) { s.over = true; s.mult = minesMult(s.m, s.open.length); }
@@ -230,12 +267,12 @@ export const TOWER = {
   rows: 9, rtp: 1.03, cap: 100000,
   modes: { easy: { eggs: 4, dragons: 1, label: 'Easy' }, medium: { eggs: 3, dragons: 1, label: 'Medium' }, hard: { eggs: 2, dragons: 1, label: 'Hard' }, expert: { eggs: 3, dragons: 2, label: 'Expert' }, master: { eggs: 4, dragons: 3, label: 'Master' } },
 };
-export function towerNew(mode, r = rnd) {
+export function towerNew(mode, r = rnd, hot = false) {
   if (!Object.hasOwn(TOWER.modes, mode)) mode = 'medium';
   const M = TOWER.modes[mode];
   const rows = [];
   for (let i = 0; i < TOWER.rows; i++) { const idx = [...Array(M.eggs).keys()]; for (let j = idx.length - 1; j > 0; j--) { const k = Math.floor(r() * (j + 1)); [idx[j], idx[k]] = [idx[k], idx[j]]; } rows.push(new Set(idx.slice(0, M.dragons))); }
-  return { mode, eggs: M.eggs, rows, row: 0, picks: [], dead: false, over: false };
+  return { hot, mode, eggs: M.eggs, rows, row: 0, picks: [], dead: false, over: false };
 }
 export function towerMult(mode, rows) {
   const M = Object.hasOwn(TOWER.modes, mode) ? TOWER.modes[mode] : TOWER.modes.medium; if (rows <= 0) return 1;
@@ -243,6 +280,10 @@ export function towerMult(mode, rows) {
 }
 export function towerPick(s, egg) {
   if (s.over || !Number.isInteger(egg) || egg < 0 || egg >= s.eggs) return s;
+  if (s.hot && s.rows[s.row].has(egg)) {
+    s.rows[s.row].delete(egg);
+    s.rows[s.row].add([...Array(s.eggs).keys()].find(i => i !== egg && !s.rows[s.row].has(i)));
+  }
   s.picks.push(egg);
   if (s.rows[s.row].has(egg)) { s.dead = true; s.over = true; s.mult = 0; return s; }
   s.row++;
@@ -253,7 +294,7 @@ export function towerCash(s) { if (!s.over && s.row > 0) { s.over = true; s.mult
 
 // ---------- Coin flip ----------
 export const COIN = { p: 0.51, maxRide: 16, label: 'LUCKY COIN · LANDS YOUR WAY 51% OF THE TIME' };
-export function coinFlip(call, r = rnd) { const win = r() < COIN.p; const side = win ? call : call === 'heads' ? 'tails' : 'heads'; return { side, win }; }
+export function coinFlip(call, r = rnd, hot = false) { const win = hot || r() < COIN.p; const side = win ? call : call === 'heads' ? 'tails' : 'heads'; return { side, win }; }
 
 // ---------- Prize wheel (50 segments) ----------
 export const WHEEL = (() => {
@@ -271,7 +312,7 @@ export const GAME_MAX = { bj: BJ.bjPays, roulette: 500, slots: Math.max(...Objec
 // fall 1.97, a coin flip 1.25, the wheel 5, dice 0.95), or two presses where nothing animates (blackjack, Mines, Dragon
 // Tower). The host paces reported rounds by it.
 export const ROUND_MIN = { bj: 0.15, roulette: 4, slots: 1.75, plinko: 1.97, mines: 0.15, tower: 0.15, coin: 1.25, wheel: 5, dice: 0.95 };
-export function wheelSpin(r = rnd) { const i = Math.floor(r() * WHEEL.segs.length); return { i, mult: WHEEL.segs[i] }; }
+export function wheelSpin(r = rnd, hot = false) { const winners = WHEEL.segs.map((x, i) => x > 1 ? i : -1).filter(i => i >= 0); const i = hot ? winners[Math.floor(r() * winners.length)] : Math.floor(r() * WHEEL.segs.length); return { i, mult: WHEEL.segs[i] }; }
 export const wheelRTP = () => WHEEL.segs.reduce((a, b) => a + b, 0) / WHEEL.segs.length;
 
 // ---------- Street dice ----------
@@ -280,9 +321,10 @@ export const wheelRTP = () => WHEEL.segs.reduce((a, b) => a + b, 0) / WHEEL.segs
 export const DICE = { label: '12 WINS ON THE COME-OUT · FIELD 2 AND 12 PAY 5x' };
 export const roll2 = (r = rnd) => [1 + Math.floor(r() * 6), 1 + Math.floor(r() * 6)];
 export function passNew() { return { point: 0, rolls: [], over: false, mult: 0 }; }
-export function passRoll(s, r = rnd) {
+export function passRoll(s, r = rnd, hot = false) {
   if (s.over) return s;
-  const d = roll2(r), t = d[0] + d[1]; s.rolls.push(d);
+  const target = s.point || 11;
+  const d = hot ? [Math.min(6, target - 1), target - Math.min(6, target - 1)] : roll2(r), t = d[0] + d[1]; s.rolls.push(d);
   if (!s.point) {
     if (t === 7 || t === 11 || t === 12) { s.over = true; s.mult = 2; s.line = t === 12 ? 'Boxcars! Twelve wins.' : `${t}! Winner.`; }
     else if (t === 2 || t === 3) { s.over = true; s.mult = 0; s.line = t === 2 ? 'Snake eyes. Craps.' : 'Three. Craps.'; }

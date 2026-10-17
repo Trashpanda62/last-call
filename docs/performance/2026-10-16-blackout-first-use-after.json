@@ -1,0 +1,56 @@
+{
+  "at": "2026-10-16T12:51:12.550Z",
+  "rows": [
+    {
+      "name": "ready",
+      "ms": 15.600000023841858,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "calls": 524,
+      "blackout": false,
+      "monster": false
+    },
+    {
+      "name": "blackout",
+      "ms": 35.700000047683716,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "calls": 521,
+      "blackout": true,
+      "monster": false
+    },
+    {
+      "name": "blackout repeat",
+      "ms": 12,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "calls": 521,
+      "blackout": true,
+      "monster": false
+    },
+    {
+      "name": "transform",
+      "ms": 26.80000001192093,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "calls": 507,
+      "blackout": true,
+      "monster": true
+    },
+    {
+      "name": "monster repeat",
+      "ms": 10.100000023841858,
+      "links": [],
+      "buffers": 0,
+      "bytes": 0,
+      "calls": 507,
+      "blackout": true,
+      "monster": true
+    }
+  ],
+  "errors": []
+}

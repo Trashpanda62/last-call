@@ -1,0 +1,2452 @@
+{
+  "at": "2026-10-16T23:48:24.483Z",
+  "rows": [
+    {
+      "name": "floor",
+      "before": {
+        "calls": 451,
+        "tris": 2060496,
+        "posed": 34
+      },
+      "after": {
+        "calls": 424,
+        "tris": 2018453,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "north",
+      "before": {
+        "calls": 643,
+        "tris": 3057258,
+        "posed": 34
+      },
+      "after": {
+        "calls": 619,
+        "tris": 3027802,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 11
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "bar",
+      "before": {
+        "calls": 117,
+        "tris": 588919,
+        "posed": 2
+      },
+      "after": {
+        "calls": 108,
+        "tris": 571287,
+        "posed": 2
+      },
+      "work": {
+        "hidden": 19
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "rest",
+      "before": {
+        "calls": 125,
+        "tris": 278482,
+        "posed": 0
+      },
+      "after": {
+        "calls": 119,
+        "tris": 267185,
+        "posed": 0
+      },
+      "work": {
+        "hidden": 19
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "arcade",
+      "before": {
+        "calls": 281,
+        "tris": 573437,
+        "posed": 0
+      },
+      "after": {
+        "calls": 262,
+        "tris": 449497,
+        "posed": 0
+      },
+      "work": {
+        "hidden": 28
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "race",
+      "before": {
+        "calls": 628,
+        "tris": 2565716,
+        "posed": 18
+      },
+      "after": {
+        "calls": 623,
+        "tris": 2560312,
+        "posed": 18
+      },
+      "work": {
+        "hidden": 4
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "slots",
+      "before": {
+        "calls": 111,
+        "tris": 493965,
+        "posed": 1
+      },
+      "after": {
+        "calls": 96,
+        "tris": 412297,
+        "posed": 1
+      },
+      "work": {
+        "hidden": 21
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "vip",
+      "before": {
+        "calls": 104,
+        "tris": 470605,
+        "posed": 0
+      },
+      "after": {
+        "calls": 88,
+        "tris": 421683,
+        "posed": 0
+      },
+      "work": {
+        "hidden": 22
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-0",
+      "before": {
+        "calls": 626,
+        "tris": 2248044,
+        "posed": 34
+      },
+      "after": {
+        "calls": 618,
+        "tris": 2235189,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 12
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-1",
+      "before": {
+        "calls": 674,
+        "tris": 2417771,
+        "posed": 34
+      },
+      "after": {
+        "calls": 647,
+        "tris": 2384640,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-2",
+      "before": {
+        "calls": 656,
+        "tris": 2272284,
+        "posed": 34
+      },
+      "after": {
+        "calls": 627,
+        "tris": 2212241,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 18
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-3",
+      "before": {
+        "calls": 491,
+        "tris": 1950406,
+        "posed": 34
+      },
+      "after": {
+        "calls": 465,
+        "tris": 1908451,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-4",
+      "before": {
+        "calls": 476,
+        "tris": 1902258,
+        "posed": 34
+      },
+      "after": {
+        "calls": 450,
+        "tris": 1860303,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-5",
+      "before": {
+        "calls": 486,
+        "tris": 2336010,
+        "posed": 34
+      },
+      "after": {
+        "calls": 460,
+        "tris": 2294055,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-6",
+      "before": {
+        "calls": 431,
+        "tris": 2113023,
+        "posed": 34
+      },
+      "after": {
+        "calls": 401,
+        "tris": 2070888,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-7",
+      "before": {
+        "calls": 492,
+        "tris": 2105325,
+        "posed": 34
+      },
+      "after": {
+        "calls": 466,
+        "tris": 2063370,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-8",
+      "before": {
+        "calls": 441,
+        "tris": 1951682,
+        "posed": 34
+      },
+      "after": {
+        "calls": 415,
+        "tris": 1909727,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 15
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-9",
+      "before": {
+        "calls": 454,
+        "tris": 1993270,
+        "posed": 34
+      },
+      "after": {
+        "calls": 429,
+        "tris": 1954814,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 15
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-10",
+      "before": {
+        "calls": 506,
+        "tris": 2247715,
+        "posed": 34
+      },
+      "after": {
+        "calls": 477,
+        "tris": 2190451,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-11",
+      "before": {
+        "calls": 524,
+        "tris": 2557010,
+        "posed": 35
+      },
+      "after": {
+        "calls": 499,
+        "tris": 2526834,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-12",
+      "before": {
+        "calls": 493,
+        "tris": 2508342,
+        "posed": 35
+      },
+      "after": {
+        "calls": 483,
+        "tris": 2487506,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 11
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-13",
+      "before": {
+        "calls": 457,
+        "tris": 2246039,
+        "posed": 35
+      },
+      "after": {
+        "calls": 451,
+        "tris": 2228055,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 10
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-14",
+      "before": {
+        "calls": 406,
+        "tris": 2256887,
+        "posed": 35
+      },
+      "after": {
+        "calls": 400,
+        "tris": 2238903,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 11
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-15",
+      "before": {
+        "calls": 348,
+        "tris": 1913280,
+        "posed": 35
+      },
+      "after": {
+        "calls": 341,
+        "tris": 1895208,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 13
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-16",
+      "before": {
+        "calls": 315,
+        "tris": 1873191,
+        "posed": 35
+      },
+      "after": {
+        "calls": 307,
+        "tris": 1851620,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-17",
+      "before": {
+        "calls": 284,
+        "tris": 1848291,
+        "posed": 35
+      },
+      "after": {
+        "calls": 278,
+        "tris": 1835808,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 13
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-18",
+      "before": {
+        "calls": 241,
+        "tris": 1460272,
+        "posed": 34
+      },
+      "after": {
+        "calls": 233,
+        "tris": 1447785,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-19",
+      "before": {
+        "calls": 297,
+        "tris": 1534434,
+        "posed": 34
+      },
+      "after": {
+        "calls": 290,
+        "tris": 1521863,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-20",
+      "before": {
+        "calls": 424,
+        "tris": 1745107,
+        "posed": 34
+      },
+      "after": {
+        "calls": 417,
+        "tris": 1727035,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 15
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-21",
+      "before": {
+        "calls": 454,
+        "tris": 1761205,
+        "posed": 34
+      },
+      "after": {
+        "calls": 448,
+        "tris": 1743221,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 15
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-22",
+      "before": {
+        "calls": 523,
+        "tris": 1926446,
+        "posed": 34
+      },
+      "after": {
+        "calls": 518,
+        "tris": 1908550,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "floor-turn-23",
+      "before": {
+        "calls": 591,
+        "tris": 2198777,
+        "posed": 34
+      },
+      "after": {
+        "calls": 585,
+        "tris": 2180793,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 13
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "low-floor",
+      "before": {
+        "calls": 189,
+        "tris": 666033,
+        "posed": 34
+      },
+      "after": {
+        "calls": 182,
+        "tris": 659273,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "low-north",
+      "before": {
+        "calls": 299,
+        "tris": 1140775,
+        "posed": 34
+      },
+      "after": {
+        "calls": 292,
+        "tris": 1134015,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 12
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "low-bar",
+      "before": {
+        "calls": 46,
+        "tris": 202905,
+        "posed": 2
+      },
+      "after": {
+        "calls": 44,
+        "tris": 191705,
+        "posed": 2
+      },
+      "work": {
+        "hidden": 22
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "low-arcade",
+      "before": {
+        "calls": 117,
+        "tris": 221480,
+        "posed": 0
+      },
+      "after": {
+        "calls": 114,
+        "tris": 184868,
+        "posed": 0
+      },
+      "work": {
+        "hidden": 29
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "ultra-floor",
+      "before": {
+        "calls": 769,
+        "tris": 3368750,
+        "posed": 34
+      },
+      "after": {
+        "calls": 728,
+        "tris": 3313187,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "ultra-north",
+      "before": {
+        "calls": 1131,
+        "tris": 5314896,
+        "posed": 34
+      },
+      "after": {
+        "calls": 1093,
+        "tris": 5271920,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 11
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "ultra-bar",
+      "before": {
+        "calls": 195,
+        "tris": 971005,
+        "posed": 2
+      },
+      "after": {
+        "calls": 186,
+        "tris": 953373,
+        "posed": 2
+      },
+      "work": {
+        "hidden": 19
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "ultra-arcade",
+      "before": {
+        "calls": 501,
+        "tris": 992673,
+        "posed": 0
+      },
+      "after": {
+        "calls": 478,
+        "tris": 795533,
+        "posed": 0
+      },
+      "work": {
+        "hidden": 28
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-55-turn-0",
+      "before": {
+        "calls": 595,
+        "tris": 2096464,
+        "posed": 34
+      },
+      "after": {
+        "calls": 586,
+        "tris": 2074977,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-55-turn-1",
+      "before": {
+        "calls": 477,
+        "tris": 1840721,
+        "posed": 34
+      },
+      "after": {
+        "calls": 450,
+        "tris": 1798678,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 18
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-55-turn-2",
+      "before": {
+        "calls": 408,
+        "tris": 2041996,
+        "posed": 34
+      },
+      "after": {
+        "calls": 380,
+        "tris": 1999865,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 18
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-55-turn-3",
+      "before": {
+        "calls": 415,
+        "tris": 1700957,
+        "posed": 34
+      },
+      "after": {
+        "calls": 387,
+        "tris": 1661777,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-55-turn-4",
+      "before": {
+        "calls": 458,
+        "tris": 2238666,
+        "posed": 35
+      },
+      "after": {
+        "calls": 437,
+        "tris": 2190514,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 15
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-55-turn-5",
+      "before": {
+        "calls": 310,
+        "tris": 1819514,
+        "posed": 35
+      },
+      "after": {
+        "calls": 302,
+        "tris": 1797943,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-55-turn-6",
+      "before": {
+        "calls": 216,
+        "tris": 1273233,
+        "posed": 34
+      },
+      "after": {
+        "calls": 208,
+        "tris": 1260746,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-55-turn-7",
+      "before": {
+        "calls": 404,
+        "tris": 1518820,
+        "posed": 34
+      },
+      "after": {
+        "calls": 398,
+        "tris": 1500836,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 15
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-90-turn-0",
+      "before": {
+        "calls": 660,
+        "tris": 2346024,
+        "posed": 34
+      },
+      "after": {
+        "calls": 655,
+        "tris": 2333261,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 10
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-90-turn-1",
+      "before": {
+        "calls": 564,
+        "tris": 2250288,
+        "posed": 34
+      },
+      "after": {
+        "calls": 538,
+        "tris": 2208333,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-90-turn-2",
+      "before": {
+        "calls": 548,
+        "tris": 2557272,
+        "posed": 34
+      },
+      "after": {
+        "calls": 522,
+        "tris": 2515317,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-90-turn-3",
+      "before": {
+        "calls": 515,
+        "tris": 2166881,
+        "posed": 34
+      },
+      "after": {
+        "calls": 490,
+        "tris": 2128425,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-90-turn-4",
+      "before": {
+        "calls": 537,
+        "tris": 2614944,
+        "posed": 35
+      },
+      "after": {
+        "calls": 526,
+        "tris": 2584536,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 10
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-90-turn-5",
+      "before": {
+        "calls": 375,
+        "tris": 2120353,
+        "posed": 35
+      },
+      "after": {
+        "calls": 369,
+        "tris": 2102369,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 11
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-90-turn-6",
+      "before": {
+        "calls": 287,
+        "tris": 1671797,
+        "posed": 34
+      },
+      "after": {
+        "calls": 281,
+        "tris": 1659314,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 13
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-90-turn-7",
+      "before": {
+        "calls": 483,
+        "tris": 1886487,
+        "posed": 34
+      },
+      "after": {
+        "calls": 478,
+        "tris": 1868591,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-110-turn-0",
+      "before": {
+        "calls": 697,
+        "tris": 2507504,
+        "posed": 34
+      },
+      "after": {
+        "calls": 692,
+        "tris": 2494741,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 10
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-110-turn-1",
+      "before": {
+        "calls": 694,
+        "tris": 2444410,
+        "posed": 34
+      },
+      "after": {
+        "calls": 666,
+        "tris": 2384455,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-110-turn-2",
+      "before": {
+        "calls": 644,
+        "tris": 2887016,
+        "posed": 34
+      },
+      "after": {
+        "calls": 618,
+        "tris": 2845061,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 13
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-110-turn-3",
+      "before": {
+        "calls": 573,
+        "tris": 2586995,
+        "posed": 34
+      },
+      "after": {
+        "calls": 549,
+        "tris": 2557539,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 12
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-110-turn-4",
+      "before": {
+        "calls": 553,
+        "tris": 2647408,
+        "posed": 35
+      },
+      "after": {
+        "calls": 542,
+        "tris": 2617000,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 10
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-110-turn-5",
+      "before": {
+        "calls": 415,
+        "tris": 2363181,
+        "posed": 35
+      },
+      "after": {
+        "calls": 409,
+        "tris": 2345197,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 11
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-110-turn-6",
+      "before": {
+        "calls": 382,
+        "tris": 2200189,
+        "posed": 35
+      },
+      "after": {
+        "calls": 376,
+        "tris": 2187706,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 12
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "fov-110-turn-7",
+      "before": {
+        "calls": 549,
+        "tris": 2104039,
+        "posed": 34
+      },
+      "after": {
+        "calls": 542,
+        "tris": 2068143,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 14
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-0",
+      "before": {
+        "calls": 429,
+        "tris": 2113019,
+        "posed": 34
+      },
+      "after": {
+        "calls": 399,
+        "tris": 2070884,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-1",
+      "before": {
+        "calls": 447,
+        "tris": 2060488,
+        "posed": 34
+      },
+      "after": {
+        "calls": 420,
+        "tris": 2018445,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-2",
+      "before": {
+        "calls": 462,
+        "tris": 2328980,
+        "posed": 34
+      },
+      "after": {
+        "calls": 434,
+        "tris": 2286849,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-3",
+      "before": {
+        "calls": 429,
+        "tris": 2113019,
+        "posed": 34
+      },
+      "after": {
+        "calls": 399,
+        "tris": 2070884,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-4",
+      "before": {
+        "calls": 449,
+        "tris": 2084931,
+        "posed": 34
+      },
+      "after": {
+        "calls": 422,
+        "tris": 2042888,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-5",
+      "before": {
+        "calls": 462,
+        "tris": 2328980,
+        "posed": 34
+      },
+      "after": {
+        "calls": 434,
+        "tris": 2286849,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-6",
+      "before": {
+        "calls": 431,
+        "tris": 2137462,
+        "posed": 34
+      },
+      "after": {
+        "calls": 401,
+        "tris": 2095327,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-7",
+      "before": {
+        "calls": 449,
+        "tris": 2084931,
+        "posed": 34
+      },
+      "after": {
+        "calls": 422,
+        "tris": 2042888,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-8",
+      "before": {
+        "calls": 467,
+        "tris": 2377868,
+        "posed": 34
+      },
+      "after": {
+        "calls": 439,
+        "tris": 2335737,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-9",
+      "before": {
+        "calls": 435,
+        "tris": 2170352,
+        "posed": 34
+      },
+      "after": {
+        "calls": 405,
+        "tris": 2128217,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-10",
+      "before": {
+        "calls": 456,
+        "tris": 2133823,
+        "posed": 34
+      },
+      "after": {
+        "calls": 429,
+        "tris": 2091780,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-11",
+      "before": {
+        "calls": 467,
+        "tris": 2377868,
+        "posed": 34
+      },
+      "after": {
+        "calls": 439,
+        "tris": 2335737,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-12",
+      "before": {
+        "calls": 438,
+        "tris": 2186354,
+        "posed": 34
+      },
+      "after": {
+        "calls": 408,
+        "tris": 2144219,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-13",
+      "before": {
+        "calls": 456,
+        "tris": 2133823,
+        "posed": 34
+      },
+      "after": {
+        "calls": 429,
+        "tris": 2091780,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-14",
+      "before": {
+        "calls": 467,
+        "tris": 2377868,
+        "posed": 34
+      },
+      "after": {
+        "calls": 439,
+        "tris": 2335737,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "moving-boundary-15",
+      "before": {
+        "calls": 438,
+        "tris": 2186354,
+        "posed": 34
+      },
+      "after": {
+        "calls": 408,
+        "tris": 2144219,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 17
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "backrooms",
+      "before": {
+        "calls": 338,
+        "tris": 1431076,
+        "posed": 34
+      },
+      "after": {
+        "calls": 314,
+        "tris": 1389297,
+        "posed": 34
+      },
+      "work": {
+        "hidden": 16
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    },
+    {
+      "name": "ghost-cctv",
+      "before": {
+        "calls": 918,
+        "tris": 3960449,
+        "posed": 35
+      },
+      "after": {
+        "calls": 917,
+        "tris": 3960361,
+        "posed": 35
+      },
+      "work": {
+        "hidden": 3
+      },
+      "hidden": [],
+      "delta": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      },
+      "baselineRepeat": {
+        "changed": 0,
+        "mean": 0,
+        "max": 0
+      }
+    }
+  ],
+  "timings": [
+    {
+      "name": "floor",
+      "framesPerSample": 16,
+      "pairs": [
+        {
+          "baseline": 108.19999998807907,
+          "candidate": 102.39999997615814
+        },
+        {
+          "candidate": 102,
+          "baseline": 101
+        },
+        {
+          "baseline": 100.30000001192093,
+          "candidate": 98.30000001192093
+        },
+        {
+          "candidate": 98.10000002384186,
+          "baseline": 97.39999997615814
+        },
+        {
+          "baseline": 86.39999997615814,
+          "candidate": 87.59999996423721
+        },
+        {
+          "candidate": 85.40000003576279,
+          "baseline": 86.10000002384186
+        },
+        {
+          "baseline": 85.40000003576279,
+          "candidate": 84.70000004768372
+        },
+        {
+          "candidate": 83.89999997615814,
+          "baseline": 84.89999997615814
+        },
+        {
+          "baseline": 85.59999996423721,
+          "candidate": 83.60000002384186
+        },
+        {
+          "candidate": 84.09999996423721,
+          "baseline": 84.80000001192093
+        },
+        {
+          "baseline": 84.60000002384186,
+          "candidate": 84
+        },
+        {
+          "candidate": 83.30000001192093,
+          "baseline": 85.29999995231628
+        },
+        {
+          "baseline": 85.39999997615814,
+          "candidate": 83.59999996423721
+        },
+        {
+          "candidate": 83,
+          "baseline": 78.80000001192093
+        },
+        {
+          "baseline": 78.60000002384186,
+          "candidate": 76.30000001192093
+        },
+        {
+          "candidate": 76.09999996423721,
+          "baseline": 78
+        },
+        {
+          "baseline": 77.69999998807907,
+          "candidate": 80.5
+        }
+      ],
+      "baselineMedianMs": 85.29999995231628,
+      "candidateMedianMs": 83.89999997615814
+    },
+    {
+      "name": "north",
+      "framesPerSample": 16,
+      "pairs": [
+        {
+          "baseline": 100.90000003576279,
+          "candidate": 97.69999998807907
+        },
+        {
+          "candidate": 97.5,
+          "baseline": 99.69999998807907
+        },
+        {
+          "baseline": 99.5,
+          "candidate": 97.59999996423721
+        },
+        {
+          "candidate": 98.09999996423721,
+          "baseline": 98.80000001192093
+        },
+        {
+          "baseline": 100,
+          "candidate": 97.10000002384186
+        },
+        {
+          "candidate": 97.10000002384186,
+          "baseline": 99.09999996423721
+        },
+        {
+          "baseline": 99.5,
+          "candidate": 98.20000004768372
+        },
+        {
+          "candidate": 99.60000002384186,
+          "baseline": 99.69999998807907
+        },
+        {
+          "baseline": 98.59999996423721,
+          "candidate": 98.40000003576279
+        },
+        {
+          "candidate": 97.5,
+          "baseline": 99.89999997615814
+        },
+        {
+          "baseline": 98.80000001192093,
+          "candidate": 97.60000002384186
+        },
+        {
+          "candidate": 97,
+          "baseline": 99.69999998807907
+        },
+        {
+          "baseline": 99.29999995231628,
+          "candidate": 98.70000004768372
+        },
+        {
+          "candidate": 97.40000003576279,
+          "baseline": 99.09999996423721
+        },
+        {
+          "baseline": 99.10000002384186,
+          "candidate": 97.59999996423721
+        },
+        {
+          "candidate": 97.5,
+          "baseline": 100
+        },
+        {
+          "baseline": 98.89999997615814,
+          "candidate": 98
+        }
+      ],
+      "baselineMedianMs": 99.29999995231628,
+      "candidateMedianMs": 97.59999996423721
+    },
+    {
+      "name": "bar",
+      "framesPerSample": 16,
+      "pairs": [
+        {
+          "baseline": 31.399999976158142,
+          "candidate": 31
+        },
+        {
+          "candidate": 30.899999976158142,
+          "baseline": 33.09999996423721
+        },
+        {
+          "baseline": 31.899999976158142,
+          "candidate": 32.19999998807907
+        },
+        {
+          "candidate": 31.80000001192093,
+          "baseline": 32.10000002384186
+        },
+        {
+          "baseline": 31.899999976158142,
+          "candidate": 30.69999998807907
+        },
+        {
+          "candidate": 31.69999998807907,
+          "baseline": 31
+        },
+        {
+          "baseline": 30.899999976158142,
+          "candidate": 30.69999998807907
+        },
+        {
+          "candidate": 31.30000001192093,
+          "baseline": 31
+        },
+        {
+          "baseline": 31.100000023841858,
+          "candidate": 30.600000023841858
+        },
+        {
+          "candidate": 31.19999998807907,
+          "baseline": 31.099999964237213
+        },
+        {
+          "baseline": 31.30000001192093,
+          "candidate": 30.80000001192093
+        },
+        {
+          "candidate": 31.799999952316284,
+          "baseline": 31.5
+        },
+        {
+          "baseline": 31.5,
+          "candidate": 30.600000023841858
+        },
+        {
+          "candidate": 30.69999998807907,
+          "baseline": 32.10000002384186
+        },
+        {
+          "baseline": 31.30000001192093,
+          "candidate": 31.30000001192093
+        },
+        {
+          "candidate": 30.69999998807907,
+          "baseline": 31.19999998807907
+        },
+        {
+          "baseline": 31.80000001192093,
+          "candidate": 32.30000001192093
+        }
+      ],
+      "baselineMedianMs": 31.30000001192093,
+      "candidateMedianMs": 31.19999998807907
+    }
+  ],
+  "width": 1280,
+  "height": 720,
+  "errors": []
+}

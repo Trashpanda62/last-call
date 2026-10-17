@@ -1,0 +1,856 @@
+{
+  "at": "2026-10-16T12:52:33.768Z",
+  "authored": [
+    {
+      "kind": "table",
+      "single": true,
+      "additive": true,
+      "side": 2,
+      "depthWrite": false,
+      "transparent": true,
+      "tris": 56
+    },
+    {
+      "kind": "table",
+      "single": true,
+      "additive": true,
+      "side": 2,
+      "depthWrite": false,
+      "transparent": true,
+      "tris": 56
+    },
+    {
+      "kind": "table",
+      "single": true,
+      "additive": true,
+      "side": 2,
+      "depthWrite": false,
+      "transparent": true,
+      "tris": 56
+    },
+    {
+      "kind": "table",
+      "single": true,
+      "additive": true,
+      "side": 2,
+      "depthWrite": false,
+      "transparent": true,
+      "tris": 56
+    },
+    {
+      "kind": "table",
+      "single": true,
+      "additive": true,
+      "side": 2,
+      "depthWrite": false,
+      "transparent": true,
+      "tris": 56
+    },
+    {
+      "kind": "flashlight",
+      "single": true,
+      "additive": true,
+      "side": 2,
+      "depthWrite": false,
+      "transparent": true,
+      "tris": 20
+    }
+  ],
+  "rows": [
+    {
+      "name": "floor",
+      "before": {
+        "frames": 166,
+        "calls": 530,
+        "tris": 2311613,
+        "geos": 543,
+        "tex": 373,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 3,
+        "coneTris": 168,
+        "coneEnergy": 0.9902726726511227
+      },
+      "after": {
+        "frames": 462,
+        "calls": 527,
+        "tris": 2311445,
+        "geos": 543,
+        "tex": 373,
+        "cam": [
+          21.67,
+          1.12,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 3,
+        "coneTris": 168,
+        "coneEnergy": 0.9902726726511227
+      },
+      "pixels": {
+        "changedFraction": 0,
+        "maxChannel": 1,
+        "meanMaxChannel": 0.000007595486111111111
+      }
+    },
+    {
+      "name": "north",
+      "before": {
+        "frames": 878,
+        "calls": 710,
+        "tris": 3189451,
+        "geos": 543,
+        "tex": 373,
+        "cam": [
+          18.5,
+          1.12,
+          4.93,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "rest",
+          "race",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 4,
+        "coneTris": 224,
+        "coneEnergy": 0.9089787122004332
+      },
+      "after": {
+        "frames": 1134,
+        "calls": 706,
+        "tris": 3189227,
+        "geos": 543,
+        "tex": 373,
+        "cam": [
+          18.5,
+          1.12,
+          4.93,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "rest",
+          "race",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 4,
+        "coneTris": 224,
+        "coneEnergy": 0.9089787122004332
+      },
+      "pixels": {
+        "changedFraction": 0,
+        "maxChannel": 0,
+        "meanMaxChannel": 0
+      }
+    },
+    {
+      "name": "blackjack-cone",
+      "before": {
+        "frames": 1558,
+        "calls": 769,
+        "tris": 3453183,
+        "geos": 543,
+        "tex": 373,
+        "cam": [
+          18.5,
+          1.12,
+          2.71,
+          0.25,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "rest",
+          "race",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 4,
+        "coneTris": 224,
+        "coneEnergy": 0.9643102658134756
+      },
+      "after": {
+        "frames": 1822,
+        "calls": 765,
+        "tris": 3452959,
+        "geos": 543,
+        "tex": 373,
+        "cam": [
+          18.5,
+          1.12,
+          2.71,
+          0.25,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "rest",
+          "race",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 4,
+        "coneTris": 224,
+        "coneEnergy": 0.9643102658134756
+      },
+      "pixels": {
+        "changedFraction": 0,
+        "maxChannel": 1,
+        "meanMaxChannel": 0.001745876736111111
+      }
+    },
+    {
+      "name": "dice-cone",
+      "before": {
+        "frames": 2222,
+        "calls": 132,
+        "tris": 484127,
+        "geos": 543,
+        "tex": 377,
+        "cam": [
+          20.67,
+          1.12,
+          23.71,
+          0.3,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "slots"
+        ],
+        "actorWork": {
+          "posed": 1,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 1,
+        "coneTris": 56,
+        "coneEnergy": 0.7723168880811413
+      },
+      "after": {
+        "frames": 2486,
+        "calls": 131,
+        "tris": 484071,
+        "geos": 543,
+        "tex": 377,
+        "cam": [
+          20.67,
+          1.12,
+          23.71,
+          0.3,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "slots"
+        ],
+        "actorWork": {
+          "posed": 1,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 1,
+        "coneTris": 56,
+        "coneEnergy": 0.7723168880811413
+      },
+      "pixels": {
+        "changedFraction": 0,
+        "maxChannel": 0,
+        "meanMaxChannel": 0
+      }
+    },
+    {
+      "name": "coin-cone",
+      "before": {
+        "frames": 2878,
+        "calls": 161,
+        "tris": 436595,
+        "geos": 543,
+        "tex": 377,
+        "cam": [
+          30.92,
+          1.12,
+          22.21,
+          0.3,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "vip",
+          "slots"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 2,
+        "coneTris": 112,
+        "coneEnergy": 0.8422543323170042
+      },
+      "after": {
+        "frames": 3022,
+        "calls": 159,
+        "tris": 436483,
+        "geos": 543,
+        "tex": 377,
+        "cam": [
+          30.92,
+          1.12,
+          22.21,
+          0.3,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "vip",
+          "slots"
+        ],
+        "actorWork": {
+          "posed": 0,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 2,
+        "coneTris": 112,
+        "coneEnergy": 0.8422543323170042
+      },
+      "pixels": {
+        "changedFraction": 0,
+        "maxChannel": 0,
+        "meanMaxChannel": 0
+      }
+    },
+    {
+      "name": "ghost",
+      "before": {
+        "frames": 3254,
+        "calls": 905,
+        "tris": 3943059,
+        "geos": 543,
+        "tex": 377,
+        "cam": [
+          11.33,
+          3.25,
+          1,
+          -0.18,
+          -2.32
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "bar",
+          "rest",
+          "arcade",
+          "race",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 35,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 5,
+        "coneTris": 280,
+        "coneEnergy": 0.9902726726511227
+      },
+      "after": {
+        "frames": 3510,
+        "calls": 900,
+        "tris": 3942779,
+        "geos": 543,
+        "tex": 377,
+        "cam": [
+          11.33,
+          3.25,
+          1,
+          -0.18,
+          -2.32
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "bar",
+          "rest",
+          "arcade",
+          "race",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 35,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 5,
+        "coneTris": 280,
+        "coneEnergy": 0.9902726726511227
+      },
+      "pixels": {
+        "changedFraction": 0,
+        "maxChannel": 1,
+        "meanMaxChannel": 0.00001953125
+      }
+    },
+    {
+      "name": "backrooms",
+      "before": {
+        "frames": 3894,
+        "calls": 411,
+        "tris": 1658899,
+        "geos": 543,
+        "tex": 377,
+        "cam": [
+          21.67,
+          1.6,
+          10,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 0,
+        "coneTris": 0,
+        "coneEnergy": 0.9902726726511227
+      },
+      "after": {
+        "frames": 4166,
+        "calls": 411,
+        "tris": 1658899,
+        "geos": 543,
+        "tex": 377,
+        "cam": [
+          21.67,
+          1.6,
+          10,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 0,
+        "coneTris": 0,
+        "coneEnergy": 0.9902726726511227
+      },
+      "pixels": {
+        "changedFraction": 0,
+        "maxChannel": 0,
+        "meanMaxChannel": 0
+      }
+    },
+    {
+      "name": "flashlights",
+      "before": {
+        "frames": 4574,
+        "calls": 565,
+        "tris": 2474405,
+        "geos": 543,
+        "tex": 377,
+        "cam": [
+          21.67,
+          1.6,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 14,
+        "coneTris": 388,
+        "coneEnergy": 32.304717249190354
+      },
+      "after": {
+        "frames": 4838,
+        "calls": 551,
+        "tris": 2474017,
+        "geos": 543,
+        "tex": 377,
+        "cam": [
+          21.67,
+          1.6,
+          9.88,
+          -0.05,
+          -3.14
+        ],
+        "gestures": {},
+        "props": 33,
+        "rebuildPending": false,
+        "rooms": [
+          "floor",
+          "slots",
+          "vip"
+        ],
+        "actorWork": {
+          "posed": 34,
+          "total": 37
+        },
+        "ao": true,
+        "passes": [
+          "RenderPass",
+          "GTAOPass",
+          "RenderPass",
+          "OutputPass"
+        ],
+        "internal": [
+          1280,
+          720
+        ],
+        "out": [
+          1280,
+          720
+        ],
+        "pr": 1,
+        "coneCalls": 14,
+        "coneTris": 388,
+        "coneEnergy": 32.304717249190354
+      },
+      "pixels": {
+        "changedFraction": 0,
+        "maxChannel": 1,
+        "meanMaxChannel": 0.0009244791666666667
+      }
+    }
+  ],
+  "errors": []
+}

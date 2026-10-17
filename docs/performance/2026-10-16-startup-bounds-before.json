@@ -1,0 +1,3407 @@
+{
+  "at": "2026-10-16T13:09:58.773Z",
+  "rows": [
+    {
+      "stage": "Preparing the casino",
+      "prepareOnly": true,
+      "parts": {
+        "resize": 14.899999976158142,
+        "backrooms update": 44.40000003576279,
+        "bean lookup/create": 45.10000026226044,
+        "death update": 0.30000001192092896,
+        "hands update": 0.19999998807907104,
+        "room culling": 0.5,
+        "blackout update": 0.800000011920929,
+        "light placement": 0.19999998807907104,
+        "world update": 1.9000000357627869,
+        "items update": 4.599999964237213,
+        "hazards update": 0.5,
+        "visible matrices": 2.300000011920929,
+        "labels": 0.3999999761581421
+      },
+      "ms": 125.09999996423721
+    },
+    {
+      "stage": "Finishing the scene",
+      "prepareOnly": false,
+      "parts": {
+        "resize": 0.10000002384185791,
+        "backrooms update": 0,
+        "bean lookup/create": 0.10000002384185791,
+        "gestures": 0.10000002384185791,
+        "death update": 0,
+        "hands update": 0,
+        "room culling": 0,
+        "blackout update": 0,
+        "light placement": 0.10000002384185791,
+        "world update": 0.5,
+        "items update": 0.09999996423721313,
+        "hazards update": 0.10000002384185791,
+        "visible matrices": 1.699999988079071,
+        "labels": 0.10000002384185791,
+        "render targets": 0.6000000238418579,
+        "direct draws": 38.59999996423721,
+        "shadows": 11.599999964237213,
+        "renderer render": 89.49999988079071,
+        "pass scene": 82.40000003576279,
+        "pass gtao": 8.199999988079071,
+        "pass handPass": 0.19999998807907104,
+        "pass output": 0.19999998807907104,
+        "composer": 91.39999997615814
+      },
+      "ms": 96.89999997615814
+    }
+  ],
+  "bounds": [
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "Mesh_0",
+      "parent": "Bean",
+      "vertices": 19641,
+      "instances": 1,
+      "ms": 21.600000023841858
+    },
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "Mesh_0",
+      "parent": "Bean",
+      "vertices": 17717,
+      "instances": 1,
+      "ms": 14.199999988079071
+    },
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "Mesh_0",
+      "parent": "Bean",
+      "vertices": 21676,
+      "instances": 1,
+      "ms": 11.399999976158142
+    },
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "Mesh_0",
+      "parent": "Bean",
+      "vertices": 15698,
+      "instances": 1,
+      "ms": 9.399999976158142
+    },
+    {
+      "stage": "",
+      "type": "SkinnedMesh",
+      "name": "Mesh_0",
+      "parent": "Bean",
+      "vertices": 18567,
+      "instances": 1,
+      "ms": 10.5
+    },
+    {
+      "stage": "",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0.40000003576278687
+    },
+    {
+      "stage": "",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "parent": "RoomEnvironment",
+      "vertices": 24,
+      "instances": 6,
+      "ms": 0.2999999523162842
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 6635,
+      "instances": 3,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8803,
+      "instances": 5,
+      "ms": 0.20000004768371582
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 13080,
+      "instances": 3,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 11185,
+      "instances": 4,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 4806,
+      "instances": 3,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8397,
+      "instances": 2,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8397,
+      "instances": 2,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 26297,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 6715,
+      "instances": 2,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 6715,
+      "instances": 2,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 5653,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9427,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9201,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 5048,
+      "instances": 1,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 4263,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 5601,
+      "instances": 4,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9188,
+      "instances": 4,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9188,
+      "instances": 4,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9188,
+      "instances": 1,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9188,
+      "instances": 2,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9188,
+      "instances": 4,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 5486,
+      "instances": 1,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9429,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9429,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 12630,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8531,
+      "instances": 6,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 9455,
+      "instances": 4,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 12388,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8496,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8496,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8496,
+      "instances": 1,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 7089,
+      "instances": 6,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 15733,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "",
+      "type": "Mesh",
+      "name": "",
+      "vertices": 8159,
+      "instances": 1,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 50,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "RingGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 30,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 30,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 441,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 64,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 66,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "RingGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 264,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "ShapeGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 58,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 100,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "ShapeGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 58,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 100,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 76,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "LatheGeometry",
+      "name": "",
+      "vertices": 85,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 40,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 40,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 40,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 40,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 52,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 81,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 81,
+      "instances": 168,
+      "ms": 0.40000003576278687
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 165,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 81,
+      "instances": 168,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 81,
+      "instances": 168,
+      "ms": 1.2999999523162842
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 99,
+      "instances": 105,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "RoundedBoxGeometry",
+      "name": "",
+      "vertices": 900,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 58,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 100,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CircleGeometry",
+      "name": "",
+      "vertices": 98,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 1067,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "ConeGeometry",
+      "name": "",
+      "vertices": 15,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 124,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 58,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 100,
+      "ms": 0.3999999761581421
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 292,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 585,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "TorusGeometry",
+      "name": "",
+      "vertices": 585,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 58,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 100,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1800,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3600,
+      "ms": 0.20000004768371582
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2016,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3696,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3024,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2352,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 4032,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3360,
+      "ms": 0.20000004768371582
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 576,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2160,
+      "ms": 0.40000003576278687
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 5448,
+      "ms": 1.0999999642372131
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 8460,
+      "ms": 1.4000000357627869
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3600,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 360,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 5400,
+      "ms": 0.2999999523162842
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 5400,
+      "ms": 1.2000000476837158
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3600,
+      "ms": 0.2999999523162842
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 96,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2700,
+      "ms": 0.20000004768371582
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 81,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 81,
+      "instances": 308,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2304,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1716,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1440,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 60,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 216,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 216,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 216,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 42,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 54,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 144,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 19536,
+      "ms": 1.4000000357627869
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2124,
+      "ms": 0.20000004768371582
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1224,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 4572,
+      "ms": 0.30000001192092896
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 5184,
+      "ms": 0.3999999761581421
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 6180,
+      "ms": 0.3999999761581421
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 2808,
+      "ms": 0.20000004768371582
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1452,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 108,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 900,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 120,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 1800,
+      "ms": 0.20000004768371582
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 36,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 72,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 312,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 216,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 88,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 88,
+      "instances": 0,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 63,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 63,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 35,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 35,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 24,
+      "instances": 0,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "LatheGeometry",
+      "name": "",
+      "vertices": 198,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CapsuleGeometry",
+      "name": "",
+      "vertices": 238,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CapsuleGeometry",
+      "name": "",
+      "vertices": 238,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CapsuleGeometry",
+      "name": "",
+      "vertices": 238,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "TubeGeometry",
+      "name": "",
+      "vertices": 287,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 936,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3600,
+      "ms": 0.19999998807907104
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 288,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 24,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 63,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 63,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "OctahedronGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 24,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 63,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "Mesh",
+      "name": "",
+      "parent": "",
+      "vertices": 63,
+      "instances": 0,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "PlaneGeometry",
+      "name": "",
+      "vertices": 4,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "CylinderGeometry",
+      "name": "",
+      "vertices": 34,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0.09999996423721313
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0.10000002384185791
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BoxGeometry",
+      "name": "",
+      "vertices": 24,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 130,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SkinnedMesh",
+      "name": "monster",
+      "parent": "MonsterRig",
+      "vertices": 18226,
+      "instances": 1,
+      "ms": 23
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "SphereGeometry",
+      "name": "",
+      "vertices": 99,
+      "ms": 0
+    },
+    {
+      "stage": "Finishing the scene",
+      "type": "BufferGeometry",
+      "name": "",
+      "vertices": 3,
+      "ms": 0.09999996423721313
+    }
+  ],
+  "readyMs": 10168.200000047684,
+  "self": [
+    {
+      "ms": 265.133,
+      "functionName": "(program)",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 8.633,
+      "functionName": "applyBoneTransform",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 24094,
+      "columnNumber": 19
+    },
+    {
+      "ms": 3.165,
+      "functionName": "getParameters",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 7428,
+      "columnNumber": 23
+    },
+    {
+      "ms": 3.003,
+      "functionName": "multiplyMatrices",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 10406,
+      "columnNumber": 17
+    },
+    {
+      "ms": 2.99,
+      "functionName": "(garbage collector)",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 2.87,
+      "functionName": "fromBufferAttribute",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 5982,
+      "columnNumber": 20
+    },
+    {
+      "ms": 2.5,
+      "functionName": "getVertexPosition",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 23988,
+      "columnNumber": 18
+    },
+    {
+      "ms": 2.499,
+      "functionName": "(idle)",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 2.426,
+      "functionName": "setFromBufferAttribute",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 15802,
+      "columnNumber": 23
+    },
+    {
+      "ms": 2.076,
+      "functionName": "computeBoundingSphere",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 18891,
+      "columnNumber": 22
+    },
+    {
+      "ms": 2.021,
+      "functionName": "setFromBufferAttribute",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 15802,
+      "columnNumber": 23
+    },
+    {
+      "ms": 2.003,
+      "functionName": "setProgram",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 18327,
+      "columnNumber": 21
+    },
+    {
+      "ms": 1.559,
+      "functionName": "",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 6029,
+      "columnNumber": 21
+    },
+    {
+      "ms": 1.549,
+      "functionName": "WebGLRenderer.renderBufferDirect",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 17177,
+      "columnNumber": 37
+    },
+    {
+      "ms": 1.411,
+      "functionName": "fromBufferAttribute",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 5982,
+      "columnNumber": 20
+    },
+    {
+      "ms": 1.397,
+      "functionName": "cls.computeBoundingSphere",
+      "scriptId": "34",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1114,
+      "columnNumber": 168
+    },
+    {
+      "ms": 1.269,
+      "functionName": "distanceToSquared",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 5746,
+      "columnNumber": 18
+    },
+    {
+      "ms": 1.252,
+      "functionName": "getProgram",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 18148,
+      "columnNumber": 21
+    },
+    {
+      "ms": 1.155,
+      "functionName": "probeCall",
+      "scriptId": "34",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1115,
+      "columnNumber": 18
+    },
+    {
+      "ms": 1.151,
+      "functionName": "getComponent",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 8266,
+      "columnNumber": 13
+    },
+    {
+      "ms": 1.058,
+      "functionName": "computeBoundingSphere",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 18891,
+      "columnNumber": 22
+    },
+    {
+      "ms": 1.033,
+      "functionName": "rot",
+      "scriptId": "43",
+      "url": "https://10.42.0.37:3161/src/3d/plush.js",
+      "lineNumber": 670,
+      "columnNumber": 5
+    },
+    {
+      "ms": 1,
+      "functionName": "refreshUniformsCommon",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 15102,
+      "columnNumber": 31
+    },
+    {
+      "ms": 0.998,
+      "functionName": "stop",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 53844,
+      "columnNumber": 5
+    },
+    {
+      "ms": 0.991,
+      "functionName": "releaseStatesOfProgram",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 2146,
+      "columnNumber": 32
+    },
+    {
+      "ms": 0.914,
+      "functionName": "set",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 8151,
+      "columnNumber": 4
+    },
+    {
+      "ms": 0.846,
+      "functionName": "createVertexArray",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 0.835,
+      "functionName": "probeCall",
+      "scriptId": "34",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1115,
+      "columnNumber": 18
+    },
+    {
+      "ms": 0.832,
+      "functionName": "createVertexArray",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    },
+    {
+      "ms": 0.829,
+      "functionName": "getProgramCacheKey",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 7770,
+      "columnNumber": 28
+    },
+    {
+      "ms": 0.827,
+      "functionName": "refreshMaterialUniforms",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 15006,
+      "columnNumber": 33
+    },
+    {
+      "ms": 0.804,
+      "functionName": "lengthSq",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 5537,
+      "columnNumber": 9
+    },
+    {
+      "ms": 0.804,
+      "functionName": "applyMatrix4",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 8470,
+      "columnNumber": 13
+    },
+    {
+      "ms": 0.798,
+      "functionName": "projectObject",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 17824,
+      "columnNumber": 24
+    },
+    {
+      "ms": 0.798,
+      "functionName": "fromBufferAttribute",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 5982,
+      "columnNumber": 20
+    },
+    {
+      "ms": 0.682,
+      "functionName": "cls.computeBoundingSphere",
+      "scriptId": "34",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1114,
+      "columnNumber": 168
+    },
+    {
+      "ms": 0.671,
+      "functionName": "setValue",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 6046,
+      "columnNumber": 9
+    },
+    {
+      "ms": 0.671,
+      "functionName": "releaseMaterialProgramReferences",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 17153,
+      "columnNumber": 43
+    },
+    {
+      "ms": 0.665,
+      "functionName": "flatten",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 5103,
+      "columnNumber": 16
+    },
+    {
+      "ms": 0.663,
+      "functionName": "WebGLRenderer.renderBufferDirect",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 17177,
+      "columnNumber": 37
+    },
+    {
+      "ms": 0.661,
+      "functionName": "setup",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 1605,
+      "columnNumber": 15
+    },
+    {
+      "ms": 0.659,
+      "functionName": "probeCall",
+      "scriptId": "34",
+      "url": "https://10.42.0.37:3161/src/3d/render3d.js",
+      "lineNumber": 1115,
+      "columnNumber": 18
+    },
+    {
+      "ms": 0.605,
+      "functionName": "copy",
+      "scriptId": "74",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.core.js",
+      "lineNumber": 8297,
+      "columnNumber": 5
+    },
+    {
+      "ms": 0.553,
+      "functionName": "upload",
+      "scriptId": "42",
+      "url": "https://10.42.0.37:3161/vendor/three/build/three.module.js",
+      "lineNumber": 6197,
+      "columnNumber": 14
+    },
+    {
+      "ms": 0.507,
+      "functionName": "createVertexArray",
+      "scriptId": "0",
+      "url": "",
+      "lineNumber": -1,
+      "columnNumber": -1
+    }
+  ],
+  "errors": []
+}

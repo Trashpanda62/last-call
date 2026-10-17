@@ -1,14 +1,14 @@
 // Hero props (plan-v4 phase 4, look A): Sorceress/Meshy models fitted in Blender (tools/prop_fit.py: +Y up, the front
 // facing +Z, centred on x/z, the bottom at y=0, sizes in metres, extras.prop = { size: [w, h, d], top }). They load in
-// the background; world.js builds with whatever has arrived and render3d rebuilds the world once they all have. A prop
-// that fails to load keeps its hand-built stand-in.
+// a bounded queue before the casino is built. Startup waits for the models; procedural stand-ins remain available
+// for the toy/noprops comparison modes.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { roomOf } from '../map.js';
 
 export const PROP_NAMES = ['bjTable', 'rouletteTable', 'diceTable', 'slot', 'slotHigh', 'jackpot', 'plinko', 'console', 'prizeWheel', 'duck',
-  'barCounter', 'backBar', 'stool', 'chair', 'booth', 'couch', 'armchair', 'chandelier', 'piano', 'poolTable', 'jukebox', 'champagne',
-  'snackBowl', 'palm', 'camera', 'pitBell', 'toilet', 'sink', 'rocket', 'ottoman', 'breaker']; // coinPodium: its fluting decimated into red streaks; hightop: its column decimated away; crates: decimated into shards. The hand-built ones stay (the dumpster and street lamp went with the back alley)
+  'barCounter', 'backBar', 'stool', 'chair', 'booth', 'couch', 'armchair', 'chandelier', 'piano', 'poolTable', 'champagne',
+  'skeeCabinet', 'snackDonut', 'snackPretzel', 'palm', 'camera', 'pitBell', 'toilet', 'sink', 'rocket', 'ottoman', 'breaker']; // Jukebox and snack trays use their own meshes. coinPodium: its fluting decimated into red streaks; hightop: its column decimated away; crates: decimated into shards. The hand-built ones stay (the dumpster and street lamp went with the back alley)
 const SRC = {};
 let ready = false;
 const waiters = [];
@@ -21,7 +21,10 @@ export const propsLoaded = () => Object.keys(SRC);
 export function loadProps(base = 'assets/props/') {
   if (/[?&](toy|noprops)\b/.test(location.search)) return Promise.resolve(); // the hand-built casino (comparisons)
   const loader = new GLTFLoader();
-  return Promise.all(PROP_NAMES.map(n => loader.loadAsync(base + n + '.glb').then(g => { SRC[n] = prep(g.scene); }).catch(() => null)))
+  let next = 0;
+  return Promise.all(Array.from({ length: 4 }, async () => {
+    while (next < PROP_NAMES.length) { const n = PROP_NAMES[next++]; try { const g = await loader.loadAsync(base + n + '.glb'); SRC[n] = prep(g.scene); } catch (error) { if (n === 'skeeCabinet') throw new Error('Skee-ball model failed to load. Retry preparation.', { cause: error }); /* optional legacy prop fallback */ } }
+  }))
     .then(() => { if (!Object.keys(SRC).length) return; ready = true; waiters.splice(0).forEach(f => f()); });
 }
 
@@ -30,14 +33,14 @@ function prep(scene) {
   const parts = [];
   scene.updateMatrixWorld(true);
   scene.traverse(o => {
-    if (o.userData && o.userData.prop) info = JSON.parse(o.userData.prop);
+    if (o.userData && o.userData.prop) info = typeof o.userData.prop === 'string' ? JSON.parse(o.userData.prop) : { ...o.userData.prop };
     if (o.isMesh) {
       const ms = Array.isArray(o.material) ? o.material : [o.material];
       for (const m of ms) { m.envMapIntensity = 0.5; if (m.map) m.map.anisotropy = 4; }
       parts.push({ geometry: o.geometry, material: o.material, matrix: o.matrixWorld.clone() });
     }
   });
-  if (!info) { const b = new THREE.Box3().setFromObject(scene), s = b.getSize(new THREE.Vector3()); info = { size: [s.x, s.y, s.z] }; }
+  if (!info) { const b = new THREE.Box3().setFromObject(scene), s = b.getSize(new THREE.Vector3()); info = { size: [s.x, s.y, s.z] }; const shift = new THREE.Matrix4().makeTranslation(-(b.min.x + b.max.x) / 2, -b.min.y, -(b.min.z + b.max.z) / 2); for (const p of parts) p.matrix.premultiply(shift); }
   return { info, parts };
 }
 
@@ -93,12 +96,7 @@ export function placeProps(group, name, list, { cast = true } = {}) {
   for (const [room, some] of rooms) for (const p of SRC[name].parts) {
     const im = new THREE.InstancedMesh(p.geometry, p.material, some.length);
     some.forEach((o, i) => im.setMatrixAt(i, matOf(name, o).multiply(p.matrix)));
-    im.castShadow = cast; im.receiveShadow = true; im.userData.prop = true; im.userData.propName = name; im.userData.room = room; im.computeBoundingSphere(); group.add(im); out.push(im);
+    im.castShadow = cast; im.receiveShadow = true; im.userData.prop = true; im.userData.fixedScenery = true; im.userData.propName = name; im.userData.room = room; im.computeBoundingSphere(); im.computeBoundingBox(); group.add(im); out.push(im);
   }
   return out;
 }
-
-// The snack stand: a pedestal bowl of pretzels about waist high. Its top is where the crumbs fly from (the hand-built
-// stand's dish sits at 0.95 m).
-export const SNACK_FIT = [0.7, 0, 0.7];
-export const snackTop = () => hasProp('snackBowl') ? propScale('snackBowl', { fit: SNACK_FIT }).y * (SRC.snackBowl.info.top || SRC.snackBowl.info.size[1]) : 0.95;

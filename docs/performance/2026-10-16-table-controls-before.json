@@ -1,0 +1,124 @@
+{
+  "at": "2026-10-16T14:25:14.148Z",
+  "result": {
+    "controls": [
+      {
+        "kind": "decor",
+        "visible": true,
+        "geometry": "CylinderGeometry",
+        "vertices": 124
+      },
+      {
+        "kind": "decor",
+        "visible": true,
+        "geometry": "CylinderGeometry",
+        "vertices": 124
+      },
+      {
+        "kind": "dormant",
+        "visible": false,
+        "geometry": "CylinderGeometry",
+        "vertices": 148
+      },
+      {
+        "kind": "dormant",
+        "visible": false,
+        "geometry": "SphereGeometry",
+        "vertices": 325
+      },
+      {
+        "kind": "dormant",
+        "visible": false,
+        "geometry": "PlaneGeometry",
+        "vertices": 4
+      },
+      {
+        "kind": "dormant",
+        "visible": false,
+        "geometry": "RoundedBoxGeometry",
+        "vertices": 900
+      },
+      {
+        "kind": "dormant",
+        "visible": false,
+        "geometry": "CylinderGeometry",
+        "vertices": 64
+      },
+      {
+        "kind": "dormant",
+        "visible": false,
+        "geometry": "SphereGeometry",
+        "vertices": 247
+      }
+    ],
+    "games": [
+      {
+        "game": "crash",
+        "seated": "crash",
+        "placed": true,
+        "prompt": {
+          "text": "◈  SPACE · Start game",
+          "enabled": true
+        },
+        "started": true,
+        "parts": [
+          "spot:main"
+        ]
+      },
+      {
+        "game": "wheel",
+        "seated": "wheel",
+        "placed": true,
+        "prompt": {
+          "text": "◈  SPACE · Start game",
+          "enabled": true
+        },
+        "started": true,
+        "parts": [
+          "spot:main"
+        ]
+      }
+    ],
+    "gfx": {
+      "frames": 139,
+      "calls": 95,
+      "tris": 267061,
+      "geos": 501,
+      "tex": 324,
+      "cam": [
+        28,
+        1.32,
+        28.75,
+        -0.3,
+        -3.14
+      ],
+      "gestures": {},
+      "props": 33,
+      "rebuildPending": false,
+      "rooms": [
+        "vip"
+      ],
+      "actorWork": {
+        "posed": 0,
+        "total": 11
+      },
+      "ao": true,
+      "passes": [
+        "RenderPass",
+        "GTAOPass",
+        "RenderPass",
+        "OutputPass"
+      ],
+      "internal": [
+        1280,
+        720
+      ],
+      "out": [
+        1280,
+        720
+      ],
+      "pr": 1
+    }
+  },
+  "errors": []
+}

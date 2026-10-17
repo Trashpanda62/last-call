@@ -1,0 +1,87 @@
+{
+  "at": "2026-10-16T21:32:48.349Z",
+  "price": 120000,
+  "purchased": [
+    {
+      "bank": 380000,
+      "policy": null,
+      "items": []
+    },
+    {
+      "bank": 380000,
+      "policy": {
+        "state": "armed"
+      },
+      "items": [
+        "insurance"
+      ]
+    },
+    {
+      "bank": 380000,
+      "policy": null,
+      "items": []
+    }
+  ],
+  "hand": {
+    "dealer": [
+      {
+        "rank": "10",
+        "suit": "♠"
+      },
+      {
+        "rank": "10",
+        "suit": "♠"
+      }
+    ],
+    "dealerTotal": null,
+    "hide": true,
+    "actions": [],
+    "hands": [
+      {
+        "cards": [
+          {
+            "rank": "10",
+            "suit": "♠"
+          },
+          {
+            "rank": "7",
+            "suit": "♠"
+          }
+        ],
+        "total": 17,
+        "active": true,
+        "bet": 1
+      }
+    ]
+  },
+  "settled": [
+    {
+      "bank": 380100,
+      "policy": null,
+      "items": []
+    },
+    {
+      "bank": 380100,
+      "policy": null,
+      "items": []
+    },
+    {
+      "bank": 380100,
+      "policy": null,
+      "items": []
+    }
+  ],
+  "controls": {
+    "mouse": "real purchase, policy shield and physical Stand cap",
+    "keyboard": "I arms host policy",
+    "controller": "standard right-stick click arms guest policy at a table",
+    "compact": {
+      "x": 12,
+      "y": 368,
+      "width": 78.21875,
+      "height": 40
+    },
+    "physicalController": "untested"
+  },
+  "errors": []
+}

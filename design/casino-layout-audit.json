@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-17T00:32:25.750Z",
+  "status": "full proposed design clearances pass; see arcade-route-check for the partly implemented production map",
+  "objects": 22,
+  "seats": 64,
+  "retained": 16,
+  "plants": 15,
+  "doors": 10,
+  "staffExits": 6,
+  "notes": [
+    "Blackjack uses the actual five seated poses. Their bodies may project under their own curved tabletop; rectangular navigation proxies do not describe that 3D contact. Approaches and other objects are checked independently.",
+    "The narrow paired-lane gap is not a walkway. Both lanes are entered from their full-width south player bays; the staff exit routes around their east side."
+  ],
+  "grid": {
+    "metres": 0.1,
+    "reachableCells": 106991
+  },
+  "issues": []
+}

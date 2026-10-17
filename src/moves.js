@@ -1,4 +1,4 @@
-// The HUD for the v4 moves: the killer bar (6 moves and 7 for a pressed edge), the name picker for drinks and haunts, the security desk card,
+// The killer controls, the name picker for drinks and haunts, the security desk card,
 // the ghost's haunt button and the poison warning. Everything goes to the sim through act().
 import { money, esc, secs } from './util.js';
 import { CFG } from './config.js';
@@ -8,25 +8,43 @@ import { ROOMS } from './map.js';
 import { initBar, openMixer, barOpen, barKey, updateBar, resetBar } from './bar.js';
 
 const KILL_KEYS = ['order', 'rig', 'blade', 'accident', 'disguise', 'lights'];
-const LABELS = { order: 'Poison', rig: 'Rig', blade: 'Knife', accident: 'Accident', disguise: 'Disguise', lights: 'Blackout' };
+const LABELS = { order: 'Poison', rig: 'Rig', blade: 'Murder', accident: 'Accident', disguise: 'Disguise', lights: 'Blackout' };
+const ICONS = { order: 0, rig: 1, blade: 2, accident: 3, disguise: 4, lights: 5, transform: 6, leap: 7, eyes: 8, peek: 9, sense: 10, staff: 11, legs: 12, night: 13, lure: 14, haunt: 15 };
+const icon = k => `<em class="ability-icon" data-icon="${ICONS[k] ?? 10}" aria-hidden="true"></em>`;
+const KILL_HINTS = ['1', '2', 'LMB', '4', 'RMB', '6'];
 const TIPS = {
   order: 'At the bar: mix a poisoned drink and send it to anyone.',
   rig: 'Next to a game nobody is playing, or a snack bowl: the next gambler to use it dies.',
   blade: 'Right behind someone: they scream, and anyone nearby hears it.',
   accident: 'Shove someone by the duck pond in, or loosen a chandelier with people under it.',
   disguise: 'Look like your last victim for 30 seconds.',
-  lights: 'Cut the power. While it is out, T turns you into a giant monster that kills everyone it catches, no limit, until they reset the breakers: 3 grabs whoever is within reach, E pounces.',
+  lights: 'Cut the power. While it is out, Q turns you into a giant monster until they reset the breakers: left-click grabs whoever is within reach, Shift leaps.',
 };
 const FEEDS = [['floor', 'Floor'], ['bar', 'Bar'], ['arcade', 'Arcade'], ['race', 'Pond'], ['slots', 'Slots'], ['vip', 'VIP']];
 
-let act = () => {}, unlock = () => {}, relock = () => {}, picker = null, last = null;
+let act = () => {}, unlock = () => {}, relock = () => {}, picker = null, last = null, ventPreview = null;
+const controls = new Map();
+const control = selector => {
+  if (!controls.has(selector)) controls.set(selector, document.querySelector(selector));
+  return controls.get(selector);
+};
+const text = (el, value) => { if (el.textContent !== value) el.textContent = value; };
+const disabled = (el, on) => { if (el.disabled !== !!on) el.disabled = !!on; };
+const title = (el, value) => { if (el.title !== value) el.title = value; };
+export const cameraView = () => ventPreview ? ventPreview.room : last && last.priv.cameraFeed || null;
 
 export function initMoves(opts) {
   ({ act, unlock, relock } = opts);
   const bar = $('killerBar');
-  bar.innerHTML = KILL_KEYS.map((k, i) => `<button data-move="${k}" title="${esc(TIPS[k])}"><b>${i + 1}</b><span> ${LABELS[k]}</span><i></i></button>`).join('') +
-    '<button data-move="perk" class="edge hidden"><b>7</b> <span></span><i></i></button><span class="kb-wait hidden"></span>'; // (the moves that wait, folded into one chip)
+  bar.innerHTML = KILL_KEYS.map((k, i) => `<button data-move="${k}" title="${esc(TIPS[k])}">${icon(k)}<b>${KILL_HINTS[i]}</b><span> ${LABELS[k]}</span><i></i></button>`).join('') +
+    '<button data-move="perk" class="edge hidden"><em class="ability-icon" data-icon="10" aria-hidden="true"></em><b>E</b> <span></span><i></i></button>' +
+    '<button data-move="transform" class="hidden"><em class="ability-icon" data-icon="6" aria-hidden="true"></em><b>Q</b> <span>Transform</span><i></i></button>' +
+    '<button data-move="leap" class="hidden"><em class="ability-icon" data-icon="7" aria-hidden="true"></em><b>Shift</b> <span>Leap</span><i></i></button><span class="kb-wait hidden"></span>';
   bar.querySelectorAll('[data-move]').forEach(b => { b.onclick = () => { move(b.dataset.move); if (document.body.classList.contains('touch')) movesFan(false); }; });
+  const edge = bar.querySelector('[data-move=perk]');
+  edge.addEventListener('pointerdown', () => { if (last && last.priv.perk === 'peek') opts.peek(true); });
+  addEventListener('pointerup', () => opts.peek(false));
+  addEventListener('pointercancel', () => opts.peek(false));
   // phones: the killer bar folds into one Moves button by the thumb; a tap fans the moves out above it
   const mb = $('movesBtn');
   mb.addEventListener('touchstart', e => { e.preventDefault(); movesFan(!document.body.classList.contains('movesOpen')); }, { passive: false });
@@ -36,26 +54,55 @@ export function initMoves(opts) {
   el('picker', 'hidden', '<div class="pk-title"></div><div class="pk-list"></div><button class="pk-x">Cancel</button>');
   $('picker').querySelector('.pk-x').onclick = closePicker;
   el('secCard', 'hidden');
-  el('ghostBar', 'hidden', '<button id="hauntBtn">H · Haunt someone</button>');
+  el('ghostBar', 'hidden', '<button id="ghostCamsBtn">C · Cameras</button><button id="hauntBtn">H · Haunt someone</button>');
+  $('ghostCamsBtn').onclick = () => act('cameras');
+  $('hauntBtn').innerHTML = icon('haunt') + '<span>H · Haunt</span>';
   $('hauntBtn').onclick = () => move('haunt');
   el('sickBar', 'hidden');
+  $('insuranceBtn').onclick = () => act('insurance');
   initBar({ act, unlock, relock });
 }
 
-// Keys 1-7, G and H. Returns true when the key was ours.
+// Mouse actions are kept off menus, camera previews and the table's controls.
+export function mouseMove(button) {
+  if (!last || pickerOpen() || cameraView() || last.priv.seat || !last.priv.alive || !last.priv.isKiller || last.pub.mode !== 'play' || last.pub.over) return false;
+  if (button !== 0 && button !== 2) return false;
+  // Left click is also the interact button: with something to use in reach (the bartender, a snack, a body...), it
+  // stabs only a gambler right in front of the crosshair, so a drink order never knifes the person beside you.
+  if (button === 0 && last.priv.ctx && !bladeAimed()) return false;
+  move(button === 0 ? 'blade' : 'disguise'); return true;
+}
+function bladeAimed() {
+  const me = last.pub.chars.find(c => c.id === last.priv.me); if (!me) return false;
+  return last.pub.chars.some(c => {
+    if (!c.alive || c.id === me.id || last.priv.killers.includes(c.id)) return false;
+    const d = Math.hypot(c.x - me.x, c.y - me.y); if (d > CFG.reach + 5) return false;
+    const a = Math.atan2(c.y - me.y, c.x - me.x) - me.look; return Math.abs(Math.atan2(Math.sin(a), Math.cos(a))) < Math.max(0.25, 30 / Math.max(d, 1));
+  });
+}
+
+// Returns true when the key was ours. Number keys remain alternate bindings.
 export function keyMove(k) {
   if (barKey(k)) return true;
+  if (last && !last.priv.alive && (k === 'c' || (k === 'escape' && last.priv.cameraFeed))) { act('cameras'); return true; }
   if (picker && k === 'escape') { closePicker(); return true; }
   if (picker && /^[0-9]$/.test(k)) { const b = $('picker').querySelectorAll('.pk-list button')[(+k + 9) % 10]; if (b) b.click(); return true; }
+  if (picker && ['q', 'e', 'shift'].includes(k)) return true;
+  const killer = last && last.priv.isKiller && last.priv.alive && last.pub.mode === 'play' && !last.pub.over;
+  if (k === 'q') { move(killer ? 'transform' : 'shoot'); return true; }
+  if (k === 'j') { move('shoot'); return true; } // the killer's revolver, since Q transforms
+  if (k === 'shift' && killer && last.priv.monster) { move('leap'); return true; }
+  if (k === 'e' && killer && !last.priv.seat) {
+    if (ACTIVE.has(last.priv.perk) || last.priv.perk === 'staff') { move('perk'); return true; }
+    if (last.priv.perk === 'peek' && !last.priv.monster) return true; // held in main.js
+  }
   const i = '123456'.indexOf(k);
   if (i >= 0) { move(KILL_KEYS[i]); return true; }
   if (k === '7') { move('perk'); return true; }
   if (k === 'g') { move('send'); return true; } // the mixer, at the bar
-  if (k === 'q') { move('shoot'); return true; } // the revolver
   if (k === 'h') { move('haunt'); return true; }
+  if (k === 'i') { act('insurance'); return true; }
   if (k === 'b') { move('gear'); return true; } // escape mode: spend your winnings on gear
-  if (k === 't') { move('transform'); return true; } // in a blackout, the killer turns into the monster
-  if (k === 'e' && last && last.priv.monster) { move('leap'); return true; } // the monster's pounce (E; the monster has nothing else to use)
   return false;
 }
 
@@ -68,8 +115,10 @@ function move(k) {
     openMixer(k === 'order' ? { poison: 1 } : null); // (the bartender's mixer: bar.js)
   } else if (k === 'shoot') {
     if (priv.alive && priv.bullets > 0) act('shoot');
-  } else if (k === 'perk') { // the edge on key 7: killer sense, or the jackpot lure (pick a room)
-    if (!priv.isKiller || !priv.alive || !ACTIVE.has(priv.perk)) return;
+  } else if (k === 'perk') { // E: killer sense, or the jackpot lure (pick a room)
+    if (!priv.isKiller || !priv.alive) return;
+    if (priv.perk === 'staff') { act('staff'); return; }
+    if (!ACTIVE.has(priv.perk)) return;
     if (priv.perk === 'lure' && !(priv.cd.lure > 0) && !priv.seat) openPicker('Set off a jackpot siren in...', Object.entries(ROOMS).map(([id, r]) => ({ id, name: cap(r.name), color: '#e8c46a' })), id => act('lure', id));
     else act(priv.perk);
   } else if (k === 'haunt') {
@@ -87,7 +136,19 @@ function move(k) {
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 // The staff passages: E at a STAFF ONLY door picks the door to come out of.
 export function staffPicker(doors, here) {
-  openPicker('Come out in...', doors.filter(d => d.id !== here).map(d => ({ id: d.id, name: cap(ROOMS[d.room].name), color: '#c8b890' })), id => act('staff', id));
+  const options = doors.filter(d => d.id !== here);
+  openPicker('Choose a room to preview', options.map(d => ({ id: d.id, name: cap(ROOMS[d.room].name), color: '#c8b890' })), () => {});
+  picker.kind = 'vent'; picker.here = here;
+  $('picker').classList.add('vent-picker');
+  $('picker').querySelectorAll('.pk-list button').forEach((b, i) => {
+    const destination = options[i];
+    b.onclick = () => {
+      if (ventPreview && ventPreview.id === destination.id) { closePicker(); act('staff', destination.id); return; }
+      ventPreview = destination;
+      $('picker').querySelector('.pk-title').textContent = cap(ROOMS[destination.room].name) + ' · click this room again to enter';
+      $('picker').querySelectorAll('.pk-list button').forEach(button => { button.classList.toggle('on', button === b); button.setAttribute('aria-pressed', button === b ? 'true' : 'false'); });
+    };
+  });
 }
 function openPicker(title, chars, pick) {
   const p = $('picker');
@@ -102,84 +163,108 @@ function openPicker(title, chars, pick) {
   });
   p.classList.remove('hidden'); picker = { pick }; unlock();
 }
-function closePicker() { if (!picker) return; picker = null; $('picker').classList.add('hidden'); relock(); }
+function closePicker() { if (!picker) return; picker = null; ventPreview = null; $('picker').classList.remove('vent-picker'); $('picker').classList.add('hidden'); relock(); }
 export const pickerOpen = () => !!picker || barOpen();
 function movesFan(on) { document.body.classList.toggle('movesOpen', !!on); $('movesBtn').setAttribute('aria-expanded', on ? 'true' : 'false'); }
 // Leaving a game: nothing it opened stays on screen.
-export function resetMoves() { resetBar(); picker = null; last = null; $('picker').classList.add('hidden'); document.body.classList.remove('sick', 'ghost'); movesFan(false); }
+export function resetMoves() { resetBar(); picker = null; last = null; ventPreview = null; $('picker').classList.remove('vent-picker'); $('picker').classList.add('hidden'); document.body.classList.remove('sick', 'ghost', 'cctv'); movesFan(false); }
 
 export function updateMoves(v) {
   last = v;
   const { pub, priv } = v;
   const play = pub.mode === 'play' && !pub.over;
   if (!play && picker) closePicker();
+  if (picker && picker.kind === 'vent' && (!priv.alive || priv.perk !== 'staff' || priv.staffAt !== picker.here)) closePicker();
   // killer bar
-  $('killerBar').classList.toggle('hidden', !(priv.isKiller && priv.alive));
+  $('killerBar').classList.toggle('hidden', !(play && priv.isKiller && priv.alive && !priv.seat));
   if (priv.isKiller && priv.alive) for (const k of KILL_KEYS) {
-    const b = document.querySelector(`#killerBar [data-move=${k}]`), cd = priv.cd[k] || 0;
+    const b = control(`#killerBar [data-move=${k}]`), cd = priv.cd[k] || 0;
     const noVictim = k === 'disguise' && !priv.disguise && !priv.canDisguise; // a disguise is your last victim's look
-    const mon = priv.monster && k === 'blade'; // (the monster's grab: 3, never on the knife's cooldown)
-    b.disabled = (cd > 0 && !mon) || noVictim; b.title = noVictim ? 'Needs a victim first' : '';
-    b.querySelector('i').textContent = mon ? '' : k === 'disguise' && priv.disguise ? ` ${priv.disguise.t}s on` : cd > 0 ? ' ' + secs(cd) : noVictim ? ' no victim' : ''; // while it's on, the time left beats the cooldown
+    const mon = priv.monster && k === 'blade'; // the monster's grab never uses the knife's cooldown
+    disabled(b, (cd > 0 && !mon) || noVictim); title(b, noVictim ? 'Needs a victim first' : TIPS[k]);
+    text(control(`#killerBar [data-move=${k}] i`), mon ? '' : k === 'disguise' && priv.disguise ? ` ${priv.disguise.t}s on` : cd > 0 ? ' ' + secs(cd) : noVictim ? ' no victim' : ''); // while it's on, the time left beats the cooldown
     b.classList.toggle('cool', b.disabled && !(k === 'disguise' && priv.disguise)); // a move that isn't ready folds to its key and the wait
   }
   // PC: the moves that aren't ready fold into one chip: their keys and the soonest wait (phones: the Moves fan shows them all)
   if (priv.isKiller && priv.alive) {
-    const cool = [...KILL_KEYS.map((k, i) => [k, i + 1, priv.cd[k] || 0]), ['perk', 7, priv.cd[priv.perk] || 0]].filter(([k]) => { const b = document.querySelector(`#killerBar [data-move=${k}]`); return !b.classList.contains('hidden') && b.classList.contains('cool'); });
+    const cool = [...KILL_KEYS.map((k, i) => [k, KILL_HINTS[i], priv.cd[k] || 0]), ['perk', 'E', priv.cd[priv.perk] || 0]].filter(([k]) => { const b = control(`#killerBar [data-move=${k}]`); return !b.classList.contains('hidden') && b.classList.contains('cool'); });
     const soon = Math.min(...cool.map(c => c[2]).filter(t => t > 0)), w = cool.length ? `<b>${cool.map(c => c[1]).join(' ')}</b> ${isFinite(soon) ? 'next ready ' + secs(soon) : 'need a victim'}` : '';
-    const kw = document.querySelector('#killerBar .kb-wait'); if (kw.innerHTML !== w) { kw.innerHTML = w; kw.classList.toggle('hidden', !w); }
+    const kw = control('#killerBar .kb-wait'); if (kw.innerHTML !== w) { kw.innerHTML = w; kw.classList.toggle('hidden', !w); }
   }
-  const eb = document.querySelector('#killerBar [data-move=perk]'), active = priv.isKiller && priv.alive && ACTIVE.has(priv.perk);
-  eb.classList.toggle('hidden', !active);
+  const eb = control('#killerBar [data-move=perk]'), active = priv.isKiller && priv.alive && (ACTIVE.has(priv.perk) || priv.perk === 'peek' || priv.perk === 'staff');
+  eb.classList.toggle('hidden', !(priv.isKiller && priv.alive && priv.perk));
+  text(control('#killerBar [data-move=perk] b'), active ? 'E' : 'PASSIVE');
+  if (priv.perk) { const e = control('#killerBar [data-move=perk] .ability-icon'), value = String(ICONS[priv.perk] ?? 10); if (e.dataset.icon !== value) e.dataset.icon = value; }
+  if (!active && priv.perk) {
+    disabled(eb, true); eb.classList.remove('cool');
+    title(eb, PERK[priv.perk].text); text(control('#killerBar [data-move=perk] span'), PERK[priv.perk].name); text(control('#killerBar [data-move=perk] i'), 'Always on');
+  }
   if (active) {
     const cd = priv.cd[priv.perk] || 0, on = priv.perk === 'sense' && priv.senseT > 0;
-    eb.disabled = cd > 0 && !on; eb.title = PERK[priv.perk].text; eb.classList.toggle('cool', eb.disabled);
-    const lab = priv.perk === 'sense' ? 'Sense' : 'Lure', left = on ? ' on' : cd > 0 ? ' ' + secs(cd) : '';
-    if (eb.querySelector('span').textContent !== lab) eb.querySelector('span').textContent = lab;
-    if (eb.querySelector('i').textContent !== left) eb.querySelector('i').textContent = left;
+    disabled(eb, cd > 0 && !on); title(eb, PERK[priv.perk].text); eb.classList.toggle('cool', eb.disabled);
+    const lab = priv.perk === 'sense' ? 'Sense' : priv.perk === 'lure' ? 'Lure' : priv.perk === 'peek' ? 'Hold to peek' : 'Vents · at a door', left = on ? ' on' : cd > 0 ? ' ' + secs(cd) : '';
+    text(control('#killerBar [data-move=perk] span'), lab);
+    text(control('#killerBar [data-move=perk] i'), left);
   }
+  const transform = control('#killerBar [data-move=transform]');
+  transform.classList.toggle('hidden', !(play && priv.alive && priv.isKiller && pub.blackout && !priv.monster));
+  const leap = control('#killerBar [data-move=leap]');
+  leap.classList.toggle('hidden', !(play && priv.alive && priv.monster));
+  disabled(leap, priv.leap || priv.leapCd > 0); text(control('#killerBar [data-move=leap] i'), priv.leapCd > 0 ? ' ' + secs(priv.leapCd) : '');
   updateBar(v);
+  const insurance = play && priv.alive && !priv.monster && priv.insurance;
+  const policy = $('insuranceBtn'); policy.classList.toggle('hidden', !insurance);
+  if (insurance) {
+    const state = insurance.state;
+    text(policy.querySelector('span'), state === 'round' ? 'Protected' : state === 'armed' ? 'Armed' : 'I · Insure');
+    disabled(policy, state !== 'owned'); policy.classList.toggle('armed', state !== 'owned');
+    title(policy, state === 'owned' ? 'Arm before your next round: I or right-stick click at a table. Returns net lost stake once.' : state === 'armed' ? 'Next round protected. Wins and ties keep insurance armed.' : 'This round is protected. All its results settle together.');
+  }
   const gun = play && priv.alive && priv.bullets > 0;
   $('gunHud').classList.toggle('hidden', !gun); $('shootBtn').classList.toggle('hidden', !gun);
-  if (gun) { const t = `REVOLVER ×${priv.bullets} · ${document.body.classList.contains('touch') ? 'SHOOT' : 'Q'}`; if ($('gunHud').textContent !== t) $('gunHud').textContent = t; }
+  if (gun) { const t = `REVOLVER ×${priv.bullets} · ${document.body.classList.contains('touch') ? 'SHOOT' : priv.isKiller ? 'J' : 'Q'}`; if ($('gunHud').textContent !== t) $('gunHud').textContent = t; }
   // phones: the buttons by the right thumb only when they can do something (Steve, 2026-10-15: "too many buttons at the
   // bottom"): Use always; Sip and Pour with a drink in hand; Check with a drink, at a game or by a snack bowl; Light in a
   // blackout, Shoot with a bullet, Moves for a killer, Pounce for the monster
   const alive = play && priv.alive && !priv.monster, held = alive && !!priv.drink; // (the monster's hands are full)
   for (const [a, on] of [['sip', held], ['pour', held], ['inspect', alive && (held || (!!priv.seat && priv.seat.game !== 'cams' && priv.seat.game !== 'vip') || /^Eat/.test(priv.ctx || ''))]]) {
-    const b = document.querySelector(`#touchBtns [data-act=${a}]`); if (b && b.classList.contains('hidden') === on) b.classList.toggle('hidden', !on);
+    const b = control(`#touchBtns [data-act=${a}]`); if (b && b.classList.contains('hidden') === on) b.classList.toggle('hidden', !on);
   }
-  const ck = document.querySelector('#touchBtns [data-act=inspect]'), ckt = priv.inspectT > 0 ? 'Checking' : quietNote() ? 'Fine' : 'Check'; if (ck && ck.textContent !== ckt) ck.textContent = ckt; // (the check in progress)
-  const killer = play && priv.alive && priv.isKiller, mb = $('movesBtn'); // (the monster keeps it: its 3 grabs)
+  const ck = control('#touchBtns [data-act=inspect]'), ckt = priv.inspectT > 0 ? 'Checking' : quietNote() ? 'Fine' : 'Check'; if (ck) text(ck, ckt); // (the check in progress)
+  const killer = play && priv.alive && priv.isKiller && !priv.seat, mb = $('movesBtn'); // seated controls belong to the current game
   if (mb.classList.contains('hidden') === killer) mb.classList.toggle('hidden', !killer);
   if (!killer && document.body.classList.contains('movesOpen')) movesFan(false);
-  if (killer) { const n = [...document.querySelectorAll('#killerBar [data-move]')].filter(b => !b.classList.contains('hidden') && !b.disabled).length, t = n ? `Moves ${n}` : 'Moves'; if (mb.textContent !== t) mb.textContent = t; }
+  if (killer) { const n = [...KILL_KEYS, 'perk', 'transform', 'leap'].map(k => control(`#killerBar [data-move=${k}]`)).filter(b => !b.classList.contains('hidden') && !b.disabled).length, t = n ? `Moves ${n}` : 'Moves'; text(mb, t); }
   $('flashBtn').classList.toggle('hidden', !(play && priv.alive && !priv.isKiller && pub.blackout)); $('flashBtn').classList.toggle('on', !!priv.flash);
-  const lb = $('leapBtn'); if (lb) { lb.classList.toggle('hidden', !(play && priv.alive && priv.monster)); lb.disabled = !!(priv.leap || priv.leapCd > 0); } // the monster's pounce (E)
+  const lb = $('leapBtn'); if (lb) { lb.classList.toggle('hidden', !(play && priv.alive && priv.monster)); disabled(lb, priv.leap || priv.leapCd > 0); }
   // ghosts
-  $('ghostBar').classList.toggle('hidden', !(play && !priv.alive && !priv.isKiller)); // killers' ghosts don't haunt
-  if (!priv.alive) { $('hauntBtn').disabled = priv.hauntUsed; $('hauntBtn').textContent = priv.hauntUsed ? 'Haunted (again after the next meeting)' : 'H · Haunt someone'; }
+  $('ghostBar').classList.toggle('hidden', !(play && !priv.alive));
+  $('hauntBtn').classList.toggle('hidden', !!priv.isKiller);
+  text($('ghostCamsBtn'), priv.cameraFeed ? 'C · Close cameras' : 'C · Cameras');
+  if (!priv.alive) { disabled($('hauntBtn'), priv.hauntUsed); text(control('#hauntBtn span'), priv.hauntUsed ? 'Haunted (again after the next meeting)' : 'H · Haunt someone'); }
   // poison
   const sick = play && priv.alive && priv.sick;
   $('sickBar').classList.toggle('hidden', !sick);
-  if (sick) $('sickBar').textContent = pub.antidotes > 0 ? `POISONED · ${priv.poisonT}s · antidote at the bar (${pub.antidotes} left)` : `POISONED · ${priv.poisonT}s · no antidote left`;
+  if (sick) text($('sickBar'), pub.antidotes > 0 ? `POISONED · ${priv.poisonT}s · antidote at the bar (${pub.antidotes} left)` : `POISONED · ${priv.poisonT}s · no antidote left`);
   // the security desk
-  const desk = play && priv.alive && priv.seat && priv.seat.game === 'cams';
+  const ghostCams = play && !priv.alive && !!priv.cameraFeed;
+  const desk = play && (ghostCams || (priv.alive && priv.seat && priv.seat.game === 'cams'));
   const card = $('secCard');
   card.classList.toggle('hidden', !desk);
   if (desk) {
-    const S = pub.security, key = [S.cams, S.feed, !!pub.guard, pub.guard && pub.guard.t, S.guardPrice, pub.bank > S.guardPrice * 2].join();
+    const S = ghostCams ? { ...pub.security, cams: true, feed: priv.cameraFeed } : pub.security, key = [ghostCams, S.cams, S.feed, !!pub.guard, pub.guard && pub.guard.t, S.guardPrice, pub.bank > S.guardPrice * 2].join();
     if (card.dataset.key !== key) {
       card.dataset.key = key;
-      card.innerHTML = `<b>Security desk</b>
-        <p>The cameras run while you sit here. Pick a room to watch.</p>
+      card.innerHTML = `<b>${ghostCams ? 'Ghost cameras' : 'Security desk'}</b>
+        <p>${ghostCams ? 'Pick a room to watch. C or Escape returns to roaming.' : 'The cameras run while you sit here. Pick a room to watch.'}</p>
         ${S.cams ? `<div class="feeds">${FEEDS.map(([k, n]) => `<button data-feed="${k}" class="${S.feed === k ? 'on' : ''}">${n}</button>`).join('')}</div><p>Live: ${esc(FEEDS.find(f => f[0] === S.feed)[1])}. You see anything that happens in that room.</p>` : '<p>The cameras are warming up...</p>'}
-        <button data-buy="guard" ${pub.guard || pub.bank < S.guardPrice * 2 ? 'disabled' : ''}>${pub.guard ? `Guard on patrol · ${Math.ceil(pub.guard.t / 60)} min` : `Hire a guard (2 min) · ${money(S.guardPrice)} from the crew bank`}</button>`;
+        ${ghostCams ? '<button data-close-cams>Return to roaming</button>' : `<button data-buy="guard" ${pub.guard || pub.bank < S.guardPrice * 2 ? 'disabled' : ''}>${pub.guard ? `Guard on patrol · ${Math.ceil(pub.guard.t / 60)} min` : `Hire a guard (2 min) · ${money(S.guardPrice)} from the crew bank`}</button>`}`;
+      const close = card.querySelector('[data-close-cams]'); if (close) close.onclick = () => act('cameras');
       card.querySelectorAll('[data-buy]').forEach(b => { b.onclick = () => act('buy', b.dataset.buy); });
       card.querySelectorAll('[data-feed]').forEach(b => { b.onclick = () => act('feed', b.dataset.feed); });
     }
-  } else card.dataset.key = '';
-  document.body.classList.toggle('cctv', !!(desk && pub.security.cams));
+  } else if (card.dataset.key) card.dataset.key = '';
+  document.body.classList.toggle('cctv', play && !!(cameraView() || (desk && pub.security.cams)));
   document.body.classList.toggle('sick', !!sick);
   document.body.classList.toggle('ghost', play && !priv.alive);
 }

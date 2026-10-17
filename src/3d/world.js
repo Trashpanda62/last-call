@@ -5,8 +5,9 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import * as T from './textures.js';
 import { ROOMS, WALLS, OBSTACLES, DOOR_GAPS, CHANDELIERS, PLANTS, TAP, BELL, BOWL_SPOTS, STAFF_DOORS, makeSeats } from '../map.js';
-import { buildMachines } from './machines.js';
-import { hasProp, placeProps, propObject, propScale, propInfo, SNACK_FIT } from './props.js';
+import { buildMachinesSteps } from './machines.js';
+import { makeMirror, mirrorFrame } from './mirror.js';
+import { hasProp, placeProps, propObject, propScale, propInfo } from './props.js';
 const propHeight = n => propInfo(n).size[1];
 
 export const M = 1 / 60, WALL_H = 3.6;
@@ -18,6 +19,8 @@ export const v3 = (x, y, z) => new THREE.Vector3(x, y, z);
 // ---------- Materials ----------
 const std = (o) => new THREE.MeshStandardMaterial(o);
 const phys = (o) => new THREE.MeshPhysicalMaterial(o);
+const candyMats = new Map();
+const shareCandy = !/[?&]uncachedCandy\b/.test(location.search); // diagnostic comparison
 // Restroom stall laminate: a sea-green panel with a faint grain and a bevelled edge every tile (one panel per 1.2 m).
 function stallTex() {
   const [c, g] = T.canvas(256, 256);
@@ -32,7 +35,7 @@ export const MAT = {
   gold: std({ color: 0xd9a94a, metalness: 0.9, roughness: 0.45, envMapIntensity: 0.5 }),
   brass: std({ color: 0xc8963a, metalness: 0.85, roughness: 0.35 }),
   chrome: std({ color: 0xdde2e6, metalness: 1, roughness: 0.4, envMapIntensity: 0.6 }),
-  darkWood: std({ map: T.wood('#4a2616', '#2a140a'), roughness: 0.42 }),
+  darkWood: std({ roughness: 0.42 }),
   wood: std({ map: T.wood('#6b4128', '#3a2214'), roughness: 0.5 }),
   polished: phys({ color: 0x3a1a10, roughness: 0.35, clearcoat: 1, clearcoatRoughness: 0.35 }),
   velvet: phys({ color: 0x9a1a30, roughness: 0.85, sheen: 1, sheenColor: new THREE.Color(0xff8090), sheenRoughness: 0.5 }),
@@ -51,7 +54,13 @@ export const MAT = {
   rope: phys({ color: 0xb01828, roughness: 0.7, sheen: 1, sheenColor: new THREE.Color(0xff8090) }),
   water: phys({ color: 0x1fa8c8, roughness: 0.05, metalness: 0, transmission: 0, transparent: true, opacity: 0.85, clearcoat: 1, clearcoatRoughness: 0.05 }),
   metalDark: std({ color: 0x2a2c34, metalness: 0.7, roughness: 0.45 }),
-  candy: c => phys({ color: c, roughness: 0.4, clearcoat: 1, clearcoatRoughness: 0.35 }),
+  // Identical lacquer colors can share a material, so static betting stands
+  // batch together instead of adding a new draw for each individual stand.
+  candy: c => {
+    if (!shareCandy) return phys({ color: c, roughness: 0.4, clearcoat: 1, clearcoatRoughness: 0.35 });
+    if (!candyMats.has(c)) candyMats.set(c, phys({ color: c, roughness: 0.4, clearcoat: 1, clearcoatRoughness: 0.35 }));
+    return candyMats.get(c);
+  },
 };
 // Emissive materials get dimmed when the lights go out; keep a list with their normal strength.
 export const GLOWS = [];
@@ -80,42 +89,56 @@ export const roomMats = {}; // (exported for backrooms.js, which swaps them on t
 for (const k in ROOM_LOOK) {
   const L = ROOM_LOOK[k];
   roomMats[k] = {
-    wall: std({ map: L.wall(), roughness: L.wallRough ?? 0.8 }),
-    floor: std({ map: L.floor(), roughness: L.floorRough ?? 0.95 }),
-    ceil: L.ceil ? std({ map: T.ceiling(L.ceil), roughness: 0.9 }) : null,
+    wall: std({ roughness: L.wallRough ?? 0.8 }),
+    floor: std({ roughness: L.floorRough ?? 0.95 }),
+    ceil: L.ceil ? std({ roughness: 0.9 }) : null,
     tile: L.tile,
   };
   if ((L.floorRough ?? 0.95) < 0.7) REFLECTS.add(roomMats[k].floor);
 }
 for (const k of ['polished', 'blackGloss', 'marble', 'marbleDark', 'chrome', 'porcelain']) if (MAT[k]) REFLECTS.add(MAT[k]);
 
-// Sorceress PBR materials (plan-v4 phase 5, assets/mats) replace the canvas paint as they load; until then, or with
-// ?toy or ?nomats, the canvas paint stands in. Phones skip the normal maps.
+// Prepare PBR materials before construction. Paint fallback maps only when they
+// are requested: startup used to paint every room, then replace all that work.
+// Phones skip the normal maps.
 const ROOM_MATS = {
   floor: ['wallFloor', 'carpetFloor'], bar: ['wallBar', 'woodFloor'], rest: ['tileWall', 'tileFloor'], arcade: ['wallArcade', 'carpetArcade'],
   race: ['wallRace', 'tileFloor'], slots: ['wallSlots', 'carpetSlots'], vip: ['wallVip', 'carpetVip'],
 };
 export function loadRoomMats(lowPower = false) {
-  if (/[?&](toy|nomats)\b/.test(location.search)) return;
+  if (/[?&](toy|nomats)\b/.test(location.search)) {
+    for (const k in ROOM_LOOK) {
+      const L = ROOM_LOOK[k], m = roomMats[k]; m.wall.map = L.wall(); m.floor.map = L.floor(); if (m.ceil) m.ceil.map = T.ceiling(L.ceil);
+      for (const material of [m.wall, m.floor, m.ceil]) if (material) material.needsUpdate = true;
+    }
+    MAT.darkWood.map = T.wood('#4a2616', '#2a140a'); MAT.darkWood.needsUpdate = true; return;
+  }
   const L = new THREE.TextureLoader(), cache = {};
   const tex = (file, srgb) => cache[file] || (cache[file] = new Promise(ok => L.load('assets/mats/' + file, t => {
     t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = T.aniso(); if (srgb) t.colorSpace = THREE.SRGBColorSpace; ok(t);
   }, undefined, () => ok(null))));
-  const use = (mat, name, { tint = 0xffffff, ns = 0.6 } = {}) => {
-    tex(name + '-color.jpg', true).then(t => { if (!t) return; mat.map = t; mat.color.set(tint); mat.needsUpdate = true; });
+  const use = (mat, name, { tint = 0xffffff, ns = 0.6, fallback = null } = {}) => {
+    tex(name + '-color.jpg', true).then(t => {
+      if (t) { mat.map = t; mat.color.set(tint); }
+      else if (fallback) mat.map = fallback();
+      mat.needsUpdate = true;
+    });
     if (!lowPower) tex(name + '-normal.jpg', false).then(t => { if (!t) return; mat.normalMap = t; mat.normalScale.set(ns, ns); mat.needsUpdate = true; });
   };
   for (const k in ROOM_MATS) {
     const [wall, floor] = ROOM_MATS[k], m = roomMats[k];
-    use(m.wall, wall, { ns: 0.4 }); use(m.floor, floor, { ns: 0.5 });
-    if (m.ceil) use(m.ceil, 'ceiling', { tint: k === 'arcade' ? 0x5a4a78 : k === 'rest' ? 0x9aa8a8 : 0xd8c8b8, ns: 0.8 });
+    const look = ROOM_LOOK[k];
+    use(m.wall, wall, { ns: 0.4, fallback: look.wall }); use(m.floor, floor, { ns: 0.5, fallback: look.floor });
+    if (m.ceil) use(m.ceil, 'ceiling', { tint: k === 'arcade' ? 0x5a4a78 : k === 'rest' ? 0x9aa8a8 : 0xd8c8b8, ns: 0.8, fallback: () => T.ceiling(look.ceil) });
   }
-  use(MAT.darkWood, 'darkWood'); use(MAT.marble, 'marble', { tint: 0xd2cbc0, ns: 0.3 }); MAT.marble.roughness = 0.38; use(MAT.marbleDark, 'marble', { tint: 0x4a4440, ns: 0.3 }); use(MAT.velvet, 'velvet', { tint: 0xe8c0c8 }); use(MAT.leather, 'leather');
+  use(MAT.darkWood, 'darkWood', { fallback: () => T.wood('#4a2616', '#2a140a') }); use(MAT.marble, 'marble', { tint: 0xd2cbc0, ns: 0.3 }); MAT.marble.roughness = 0.38; use(MAT.marbleDark, 'marble', { tint: 0x4a4440, ns: 0.3 }); use(MAT.velvet, 'velvet', { tint: 0xe8c0c8 }); use(MAT.leather, 'leather');
   use(MAT.gold, 'goldLeaf', { ns: 0.3 }); use(MAT.brass, 'brass', { ns: 0.3 });
+  return Promise.all(Object.values(cache));
 }
 
 // ---------- Static batching: everything that never moves is merged per material ----------
 // Two batches: the shell (floors, walls, ceilings) and the furniture, which casts shadows.
+const cullStaticBatches = !/[?&]globalBatches\b/.test(location.search); // diagnostic comparison
 export class Batch {
   constructor(cast = false) { this.lists = new Map(); this.cast = cast; }
   add(geom, mat, pos, rotY = 0, scale = null, rotX = 0, rotZ = 0) {
@@ -131,9 +154,17 @@ export class Batch {
   build(group) {
     for (const [mat, gs] of this.lists) {
       const mesh = new THREE.Mesh(mergeGeometries(gs, false), mat);
-      mesh.matrixAutoUpdate = false; mesh.updateMatrix(); mesh.receiveShadow = true; mesh.castShadow = this.cast;
+      mesh.matrixAutoUpdate = false; mesh.updateMatrix(); mesh.receiveShadow = true; mesh.castShadow = this.cast; mesh.userData.fixedScenery = true;
+      mesh.geometry.computeBoundingBox(); const b = mesh.geometry.boundingBox, eps = .001;
+      // Keep the existing material batches. Tag one only if its entire bounds
+      // belong to a room; shared walls and door frames stay globally visible.
+      if (cullStaticBatches) for (const [room, r] of Object.entries(ROOMS)) if (b.min.x >= r.x * M - eps && b.max.x <= (r.x + r.w) * M + eps && b.min.z >= r.y * M - eps && b.max.z <= (r.y + r.h) * M + eps) { mesh.userData.room = room; mesh.boundingBox = b; break; }
+      mesh.name = 'static-' + (mesh.userData.room || 'shared');
       group.add(mesh);
     }
+    // mergeGeometries owns new attribute buffers. Closures can retain a builder;
+    // release its staging copies once the scene owns the completed batches.
+    this.lists.clear();
   }
 }
 export function uvScale(g, su, sv) { const uv = g.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getX(i) * su, uv.getY(i) * sv); return g; }
@@ -151,12 +182,22 @@ function strictRoom(x, y) {
 const nearGap = (x, y, pad) => DOOR_GAPS.some(g => x > g.x - pad && x < g.x + g.w + pad && y > g.y - pad && y < g.y + g.h + pad);
 
 export function buildWorld(scene, opts = {}) {
+  const steps = buildWorldSteps(scene, opts);
+  let step; do { step = steps.next(); } while (!step.done);
+  return step.value;
+}
+
+// Startup consumes these same construction steps across animation frames; the
+// diagnostic world rebuild can still finish synchronously through buildWorld().
+export function* buildWorldSteps(scene, opts = {}) {
   const group = new THREE.Group(); scene.add(group);
   const S = new Batch(false), B = new Batch(true);
   const anim = [];       // per-frame updaters: f(t) or { every, f }
   const lightSpots = []; // where the pooled point lights can go: { p, color, power, range }
   const bulbs = [];      // marquee bulbs: { p, phase, color }
   const ctx = { group, S, B, anim, lightSpots, bulbs, sign, M, WALL_H };
+
+  yield 'Building casino rooms';
 
   // ---------- Floors, ceilings, cove light ----------
   for (const k in ROOMS) {
@@ -174,9 +215,8 @@ export function buildWorld(scene, opts = {}) {
       }
     }
   }
-  // Doorways: floor threshold, gold frame and header (no keystone where a neon sign hangs over the door: VIP, RESTROOMS,
-  // DUCK RACE, SPIN TO WIN; it would show behind the letters)
-  const SIGNED = [[2500, 1200], [320, 720], [2500, 720], [1740, 1200]];
+  // Doorways: floor threshold, gold frame and header and keystone (the neon signs hang beside the doors now, not over them)
+  const SIGNED = [];
   for (const gp of DOOR_GAPS) {
     const vertical = gp.w < gp.h, cx = (gp.x + gp.w / 2) * M, cz = (gp.y + gp.h / 2) * M;
     const len = (vertical ? gp.h : gp.w) * M, th = (vertical ? gp.w : gp.h) * M + 0.14;
@@ -193,6 +233,7 @@ export function buildWorld(scene, opts = {}) {
   }
 
   // ---------- Walls: each side gets the look of the room it faces ----------
+  yield 'Dressing the walls';
   const colLists = [];
   for (const r of WALLS) {
     const stall = r.w <= 10 || r.h <= 10;
@@ -246,7 +287,12 @@ export function buildWorld(scene, opts = {}) {
     for (let i = 1; i <= n; i++) {
       const u = w.lo + (w.hi - w.lo) * i / (n + 1);
       const sx = w.horiz ? u : w.c / M, sy = w.horiz ? w.c / M : u;
-      if (nearGap(sx, sy, 50) || NO_PIL.some(([x, y]) => Math.abs(sx - x) < 15 && Math.abs(sy - y) < 15)) continue;
+      const behindGuide = POSTERS.some(([x, y, yaw]) => {
+        const dx = sx - x, dy = sy - y, nx = Math.sin(yaw), ny = Math.cos(yaw);
+        // Full guide width plus half a pilaster, measured on this wall face.
+        return Math.abs(dx * nx + dy * ny) < 2 && Math.abs(dx * ny - dy * nx) < 57;
+      });
+      if (nearGap(sx, sy, 50) || behindGuide || NO_PIL.some(([x, y]) => Math.abs(sx - x) < 15 && Math.abs(sy - y) < 15)) continue;
       const pos = (d, y) => v3(sx * M + w.n[0] * d, y, sy * M + w.n[1] * d);
       B.add(pil.shaft, MAT.marble, pos(0.07, 0.3 + (WALL_H - 0.75) / 2), w.rotY);
       B.add(pil.cap, MAT.gold, pos(0.1, WALL_H - 0.4), w.rotY);
@@ -261,30 +307,38 @@ export function buildWorld(scene, opts = {}) {
   }
 
   const seats = makeSeats();
-  bar(ctx); restrooms(ctx); vip(ctx); decor(ctx); pitBell(ctx); seatsAndRails(ctx, seats); plants(ctx); chandeliers(ctx);
-  arcadeDressing(ctx); staffDoors(ctx);
+  for (const [label, build] of [['bar', bar], ['restrooms', restrooms], ['VIP lounge', vip], ['wall art', decor], ['pit bell', pitBell], ['seats', c => seatsAndRails(c, seats)], ['plants', plants], ['chandeliers', chandeliers], ['arcade', arcadeDressing], ['staff doors', staffDoors]]) {
+    yield 'Building ' + label; build(ctx);
+  }
   // what the machines add (backrooms.js keeps the games and hides the rest): their own children, glows and static batch
   const k0 = group.children.length, gm0 = GLOWS.length, MB = new Batch(true), mGroup = new THREE.Group();
-  ctx.B = MB; const machines = buildMachines(ctx, seats); ctx.B = B;
+  ctx.B = MB; const machines = yield* buildMachinesSteps(ctx, seats); ctx.B = B;
   group.add(mGroup);
   const machineKids = new Set(group.children.slice(k0)), machineGlows = new Set(GLOWS.slice(gm0).map(e => e.m));
-  // neon signs over the main rooms (over a doorway they stand 0.12 m out, in front of the header and its keystone;
-  // the tops stay under the 3.22 m crown moulding, or under the 3.48 m cove soffit when the sign stands in front of it)
+  // Neon signs on the walls of the main rooms, each on a black backer (Steve, 2026-10-16: they hung too high, the lights
+  // behind showed through them and they covered the doors). A room's sign hangs on the wall beside its doorway, centred
+  // 2.25 m up, its own width plus 0.3 m clear of the door frame, in front of the pilasters.
+  yield 'Hanging the signs';
+  const beside = (doorEdge, side, w, gap = 0.3) => doorEdge * M + side * (gap + w * 0.55);
   sign('LAST CALL', 0xff5c8a, 1320 * M, 2.2, 20 * M + 0.05, 0, 4.6, 1.15);
-  sign('BAR', 0xffc070, 320 * M, 2.88, 20 * M + 0.12, 0, 1.6, 0.5);
-  sign('VIP', 0xd070ff, 2500 * M, 2.9, 1200 * M + 0.12, 0, 1.4, 0.55);
-  sign('RESTROOMS', 0x80fff0, 320 * M, 3.02, 720 * M + 0.12, 0, 2.2, 0.38); // (restroom side: from the bar it lined up with the bar's SNACKS label)
-  sign('DUCK RACE', 0x7fe8ff, 2500 * M, 2.95, 720 * M + 0.12, 0, 2.6, 0.45);
-  sign('SLOTS', 0xffd040, 510 * M, 2.65, 1200 * M + 0.05, 0, 2.0, 0.6);
-  sign('HIGH LIMIT', 0xffd040, 680 * M, 2.72, 1880 * M - 0.05, Math.PI, 2.4, 0.42);
-  sign('DICE', 0x3fe0ff, 1240 * M, 2.6, 1200 * M + 0.05, 0, 1.4, 0.5); // over the dice table, between the pilasters
-  sign('SPIN TO WIN', 0xffd040, 1740 * M, 2.95, 1200 * M + 0.12, 0, 2.2, 0.36, false); // over the door from the floor, facing the wheel
-  sign('FLIP', 0xff3fa4, 1855 * M, 2.6, 1200 * M + 0.05, 0, 1.1, 0.45); // over the coin flip
+  sign('BAR', 0xffc070, 320 * M, 2.88, 20 * M + 0.62, 0, 1.6, 0.5); // in front of the back-bar carving
+  // (the restrooms named from the bar and the duck race from the arcade, between MINES and DRAGON TOWER: from the room
+  // you come from; VIP stays on the lounge side, the pond leaves no room to stand in front of it on the other)
+  sign('VIP', 0xd070ff, beside(2440, -1, 1.4), 2.25, 1200 * M + 0.24, 0, 1.4, 0.36);
+  sign('RESTROOMS', 0x80fff0, beside(380, 1, 1.7, 0.45), 2.3, 700 * M - 0.24, Math.PI, 1.7, 0.26);
+  sign('DUCK RACE', 0x7fe8ff, beside(2440, -1, 2.0, 0.25), 2.25, 700 * M - 0.24, Math.PI, 2.0, 0.3);
+  sign('SLOTS', 0xffd040, 510 * M, 2.35, 1200 * M + 0.24, 0, 1.8, 0.45);
+  sign('HIGH LIMIT', 0xffd040, 680 * M, 2.6, 1880 * M - 1, Math.PI, 2.2, 0.36, true, true);
+  sign('DICE', 0x3fe0ff, 1240 * M, 2.35, 1200 * M + 0.24, 0, 1.3, 0.4); // over the dice table, between the pilasters
+  sign('SPIN TO WIN', 0xffd040, beside(1680, -1, 2.0, 1.3), 2.25, 1200 * M + 0.24, 0, 2.0, 0.3, false); // beside the door from the floor, facing the wheel (past the pilaster; the coin game stands on the other side)
+  // The coin game has its own HEADS OR TAILS title; a second wall label hid behind the coin.
   bulbsMesh(ctx);
 
-  S.build(group); B.build(group); MB.build(mGroup);
+  yield 'Batching the rooms'; S.build(group);
+  yield 'Batching the furniture'; B.build(group);
+  yield 'Batching the tables'; MB.build(mGroup);
 
-  function sign(text, color, x, y, z, rotY, w, h, chase = true) {
+  function sign(text, color, x, y, z, rotY, w, h, chase = true, suspended = false) {
     const hex = '#' + new THREE.Color(color).getHexString();
     const art = T.art2Tex('sign-' + text.toLowerCase().replace(/[^a-z]/g, ''));
     if (art) { // the generated neon sign, fitted in a box a little roomier than the lettering's
@@ -293,7 +347,15 @@ export function buildWorld(scene, opts = {}) {
     }
     const t = art || T.neonTexture(text, hex, 1024, Math.round(1024 * h / w), `bold italic ${Math.round(1024 * h / w * 0.6)}px Georgia`);
     const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), basicGlow(t, 1.4, { blending: THREE.AdditiveBlending, transparent: true, depthWrite: false })); // (brighter washed the tubes out pale)
+    m.name = 'casino-room-sign-' + text.toLowerCase().replace(/[^a-z]/g, '');
     m.position.set(x, y, z); m.rotation.y = rotY; group.add(m);
+    // the black backer: nothing behind shows through the glowing tubes (additive), and the sign reads as mounted
+    const fw = v3(Math.sin(rotY), 0, Math.cos(rotY)), pad = chase ? 0.2 : 0.08;
+    B.add(rbox(w + pad * 2, h + pad * 2, 0.04, 0.015), MAT.signBack || (MAT.signBack = std({ color: 0x050405, roughness: 0.6 })), v3(x, y, z).addScaledVector(fw, -0.03), rotY);
+    if (suspended) {
+      const top = y + h / 2 + 0.08, length = WALL_H - top, rod = box(0.025, length, 0.025);
+      for (const side of [-1, 1]) B.add(rod, MAT.metalDark, v3(x + Math.cos(rotY) * w * 0.4 * side, top + length / 2, z - Math.sin(rotY) * w * 0.4 * side));
+    }
     anim.push(tt => { m.material.opacity = 0.9 + Math.sin(tt * 3 + x) * 0.1; });
     if (chase) { // a ring of marquee bulbs around the sign
       const nx = Math.max(4, Math.round(w / 0.22)), ny = Math.max(2, Math.round(h / 0.22));
@@ -310,6 +372,7 @@ export function buildWorld(scene, opts = {}) {
   return {
     group, lightSpots, seats, machines, chandeliers: ctx.chandeliers, machineKids, machineGlows,
     update(t, dt, state) {
+      mirrorFrame();
       anim.forEach((a, i) => {
         if (typeof a === 'function') return a(t, dt, state);
         acc[i] = (acc[i] || 0) + dt; if (acc[i] >= a.every) { acc[i] = 0; a.f(t, state); }
@@ -401,9 +464,14 @@ function restrooms(ctx) {
       B.add(lathe([[0, 0], [0.12, 0.01], [0.17, 0.08], [0.18, 0.1], [0, 0.1]], 20), MAT.porcelain, v3(cx + 0.05, 0.82, y * M), 0, v3(1, 1, 1.3));
       B.add(cyl(0.015, 0.015, 0.22, 8), MAT.chrome, v3(cx - 0.12, 1.0, y * M)); B.add(cyl(0.012, 0.012, 0.14, 8), MAT.chrome, v3(cx - 0.06, 1.1, y * M), 0, null, 0, Math.PI / 2);
     }
-    S.add(box(0.03, 0.9, 0.75), MAT.gold, v3(20 * M + 0.015, 1.75, y * M)); S.add(box(0.02, 0.8, 0.65), MAT.mirror, v3(20 * M + 0.03, 1.75, y * M));
-    B.add(box(0.03, 0.04, 0.6), glowMat(0xe0fff8, 1.5), v3(20 * M + 0.05, 2.25, y * M));
+    B.add(box(0.03, 0.04, 0.6), glowMat(0xe0fff8, 1.5), v3(20 * M + 0.05, 2.02, y * M));
   }
+  // one long mirror over the basins, at face height (Steve, 2026-10-16: they hung too high and reflected nothing): a real
+  // reflection (mirror.js), in a gold frame
+  const len = o.h * M - 0.12, mh = 0.78;
+  S.add(box(0.03, mh + 0.1, len + 0.1), MAT.gold, v3(20 * M + 0.015, 1.5, cz));
+  const glass = makeMirror(new THREE.PlaneGeometry(len, mh), { aspect: len / mh, size: 1024 });
+  glass.position.set(20 * M + 0.034, 1.5, cz); glass.rotation.y = Math.PI / 2; group.add(glass);
   if (hasProp('toilet')) placeProps(group, 'toilet', [320, 440, 560].map(x => ({ x: x * M, z: 1150 * M + 0.08, yaw: Math.PI, fit: [0.5, 0.82, 0.74] })));
   else for (const x of [320, 440, 560]) {
     const z = 1150 * M, sx = x * M;
@@ -500,15 +568,28 @@ function decor(ctx) {
   }
   // jukebox against the south wall
   for (const o of ob('jukebox')) {
-    if (hasProp('jukebox')) { placeProps(group, 'jukebox', [{ x: o.x, z: o.z, yaw: Math.PI, fit: [o.w + 0.1, 0, o.d + 0.1] }]); continue; }
-    const fz = o.z - o.d / 2 - 0.01;
-    B.add(rbox(o.w, 1.25, o.d, 0.1), MAT.polished, v3(o.x, 0.62, o.z));
-    B.add(cyl(o.w / 2, o.w / 2, o.d, 24), MAT.polished, v3(o.x, 1.25, o.z), 0, null, Math.PI / 2);
-    B.add(torus(o.w / 2 - 0.04, 0.03, 8, 24, Math.PI), glowMat(0xff3fa4, 2.5), v3(o.x, 1.25, fz));
-    for (const s of [-1, 1]) B.add(box(0.04, 1.0, 0.04), glowMat(0x3fe0ff, 2.5), v3(o.x + s * (o.w / 2 - 0.06), 0.62, fz));
-    B.add(box(o.w - 0.25, 0.32, 0.02), glowMat(0xffd040, 1.6), v3(o.x, 0.95, fz));
-    B.add(box(o.w - 0.25, 0.3, 0.02), MAT.chrome, v3(o.x, 0.4, fz));
+    // A clean physical cabinet: all type and song labels are drawn from real text.
+    const fz = o.z - o.d / 2 - 0.012, w = o.w, front = fz - 0.014;
+    B.add(rbox(w, 1.3, o.d, 0.09), MAT.darkWood, v3(o.x, 0.65, o.z));
+    B.add(rbox(w - 0.10, 1.20, 0.035, 0.06), MAT.brass, v3(o.x, 0.68, fz));
+    B.add(rbox(w - 0.17, 1.1, 0.035, 0.04), MAT.blackGloss, v3(o.x, 0.68, front));
+    const arch = new THREE.Mesh(new THREE.TorusGeometry(w / 2 - 0.06, 0.032, 8, 48, Math.PI), glowMat(0xffc775, 1.5));
+    arch.name = 'jukebox-arch'; add(arch, v3(o.x, 1.22, front));
+    for (const side of [-1, 1]) B.add(box(0.035, 0.92, 0.035), glowMat(0xffc775, 1.4), v3(o.x + side * (w / 2 - 0.06), 0.76, front));
+    const face = (text, width, height, y, font = 'bold 48px Georgia') => {
+      const mesh = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: T.plaque(text, { w: 1024, h: 160, bg: '#131916', ink: '#e9d9ad', font }), toneMapped: false }));
+      mesh.name = 'jukebox-label-' + text; mesh.rotation.y = Math.PI; add(mesh, v3(o.x, y, front - 0.028)); return mesh;
+    };
+    const marquee = T.art2Tex('jukebox-marquee-v2');
+    if (marquee) { const sign = new THREE.Mesh(new THREE.PlaneGeometry(w - .18, (w - .18) / 3), new THREE.MeshBasicMaterial({ map: marquee, toneMapped: false })); sign.name = 'jukebox-generated-marquee'; sign.rotation.y = Math.PI; add(sign, v3(o.x, 1.08, front - .03)); }
+    else face('LAST CALL', w - .22, .16, 1.1, '600 88px Cinzel');
+    // Song-selection strips behind glass, followed by a dark brass speaker grille.
+    for (let i = 0; i < 4; i++) face(['A1  MIDNIGHT','A2  SMOKE & VELVET','B1  LAST ROUND','B2  HOUSE LIGHTS'][i], w - 0.28, 0.055, 0.86 - i * 0.07, '32px Arial');
+    B.add(rbox(w - 0.24, 0.34, 0.025, 0.03), MAT.black, v3(o.x, 0.34, front - 0.02));
+    for (let i = 0; i < 13; i++) B.add(box(0.012, 0.29, 0.018), MAT.brass, v3(o.x + (i - 6) * (w - 0.30) / 13, 0.34, front - 0.04));
+    B.add(box(w - 0.16, 0.05, o.d + 0.02), MAT.brass, v3(o.x, 0.08, o.z));
   }
+
   // the shady guy's stock in the corner beside him: a big pine crate with a smaller one on top, dark wood frames
   for (const o of ob('crates')) {
     const crate = (w, h, d, x, y, z, yaw) => {
@@ -568,23 +649,56 @@ function decor(ctx) {
     const nx = Math.sin(yaw), nz = Math.cos(yaw), x = px * M, z = py * M;
     B.add(rbox(1.0, 1.24, 0.06, 0.02), MAT.gold, v3(x + nx * 0.03, 1.75, z + nz * 0.03), yaw);
     const pic = new THREE.Mesh(new THREE.PlaneGeometry(0.84, 1.05), std({ map: T.art2Tex(PAINTINGS[i]) || painting(kind, i + 1), roughness: 0.6 }));
+    pic.name = 'casino-painting-' + i;
     pic.rotation.y = yaw; add(pic, v3(x + nx * 0.065, 1.75, z + nz * 0.065));
     const lamp = new THREE.Mesh(cyl(0.025, 0.025, 0.5, 10), glowMat(0xffe0b0, 1.5)); lamp.rotation.set(0, yaw, Math.PI / 2, 'YXZ'); add(lamp, v3(x + nx * 0.14, 2.42, z + nz * 0.14));
   });
-  // posters (Sorceress art only): [x, y (a wall's inner face), yaw, name, framed]
+  // Crisp house guides: [x, y (a wall's inner face), yaw, name, framed].
   for (const [px, py, yaw, name, framed] of POSTERS) {
-    const map = T.art2Tex('poster-' + name); if (!map) continue;
-    const nx = Math.sin(yaw), nz = Math.cos(yaw), x = px * M, z = py * M, h = 1.05, w = h * map.image.width / map.image.height, hy = name === 'wash' ? 1.8 : 1.62; // (above the chair rail, and the restroom tiles)
+    const map = casinoGuide(name);
+    const nx = Math.sin(yaw), nz = Math.cos(yaw), x = px * M, z = py * M, h = name === 'wash' ? 1.75 : 1.95, w = h * map.image.width / map.image.height, hy = name === 'wash' ? 2.13 : 2.07; // full guide clears the chair rail / restroom tile trim
     if (framed) B.add(box(w + 0.08, h + 0.08, 0.03), MAT.black, v3(x + nx * 0.015, hy, z + nz * 0.015), yaw);
     const pic = new THREE.Mesh(new THREE.PlaneGeometry(w, h), std({ map, roughness: framed ? 0.35 : 0.8 }));
+    pic.name = 'casino-guide-' + name;
     pic.rotation.y = yaw; add(pic, v3(x + nx * (framed ? 0.035 : 0.012), hy, z + nz * (framed ? 0.035 : 0.012)));
   }
 }
+// Wall instructions are actual typography, rendered at native texture resolution.
+function casinoGuide(name) {
+  const guides = {
+    derby: ['DUCK DERBY', 'PICK A LANE. BACK YOUR BIRD.', ['Choose a numbered duck lane.', 'Click its lane to place your chips.', 'Press SPACE to enter the race.', 'Watch the finish. First duck pays.']],
+    rocket: ['ROCKET RUN', 'HOW HIGH WILL YOU GO?', ['Place chips on the betting circle.', 'Press SPACE while bets are open.', 'Watch your multiplier climb.', 'Press SPACE to cash out in flight.']],
+    roulette: ['ROULETTE', 'A LITTLE LUCK GOES A LONG WAY.', ['Place chips on numbers or colours.', 'Scroll to change your chip value.', 'Press SPACE to spin the wheel.', 'Wait for the ball to settle.']],
+    jackpot: ['LUCKY SLOTS', 'THREE OF A KIND. ONE BIG NIGHT.', ['Place chips on the betting circle.', 'Press SPACE to spin the reels.', 'Matching symbols pay the prize.', 'Change your chip before the next spin.']],
+    lounge: ['HEADS OR TAILS', 'CALL IT. FLIP IT. RIDE YOUR LUCK.', ['Choose HEADS or TAILS with your chips.', 'Press SPACE to flip the giant coin.', 'A correct call doubles your stake.', 'TAKE your winnings or flip again.']],
+    cocktails: ['HOUSE COCKTAILS', 'EVERY GOOD ALIBI STARTS AT THE BAR.', ['Walk up to the bartender.', 'Press U to choose your drink.', 'Press F to take a sip.', 'Check suspicious drinks with R.']],
+    missing: ['STAY SHARP', 'SOMEONE HERE IS NOT A GAMBLER.', ['Watch who leaves the table.', 'Space marks someone you suspect.', 'Report a body with U.', 'Ghosts can watch the cameras with C.']],
+    wash: ['A CLEAN GETAWAY', 'SOME DRINKS LEAVE A BITTER TASTE.', ['Feeling ill? Find the restroom sink.', 'Walk close and press U.', 'Check snacks and drinks with R.', 'Keep your eyes on your glass.']]
+  };
+  const [title, strap, steps] = guides[name] || guides.roulette;
+  const [c, g] = T.canvas(1200, 1600); g.fillStyle = '#101d1d'; g.fillRect(0, 0, 1200, 1600);
+  g.strokeStyle = '#d5b776'; g.lineWidth = 12; g.strokeRect(28, 28, 1144, 1544); g.lineWidth = 2; g.strokeRect(48, 48, 1104, 1504);
+  g.textAlign = 'center'; g.fillStyle = '#c5aa72'; g.font = '32px Arial'; g.fillText('LAST CALL  /  HOUSE GUIDE', 600, 135);
+  g.fillStyle = '#fff0cc'; g.font = 'bold 90px Georgia'; g.fillText(title, 600, 282, 1050);
+  g.fillStyle = '#93cbc2'; g.font = 'bold 30px Arial'; g.fillText(strap, 600, 355, 1030);
+  for (let i = 0; i < steps.length; i++) {
+    const y = 525 + i * 230;
+    g.fillStyle = '#d5b776'; g.beginPath(); g.arc(145, y, 52, 0, Math.PI * 2); g.fill();
+    g.fillStyle = '#101d1d'; g.font = 'bold 56px Arial'; g.fillText(String(i + 1), 145, y + 20);
+    g.fillStyle = '#f5f0df'; g.font = 'bold 64px Arial'; g.textAlign = 'left';
+    const words = steps[i].split(' '); let line = '', lines = [];
+    for (const word of words) { if (g.measureText(line + word).width > 800) { lines.push(line.trim()); line = ''; } line += word + ' '; } lines.push(line.trim());
+    lines.forEach((text, j) => g.fillText(text, 245, y - (lines.length - 1) * 34 + j * 72 + 18)); g.textAlign = 'center';
+    if (i < 3) { g.strokeStyle = '#37514c'; g.beginPath(); g.moveTo(245, y + 105); g.lineTo(1080, y + 105); g.stroke(); }
+  }
+  g.fillStyle = '#c5aa72'; g.font = '28px Arial'; g.fillText('PLACE CHIPS  ·  PRESS SPACE  ·  GOOD LUCK', 600, 1495);
+  return T.tex(c, false);
+}
 // the generated paintings by frame (paint-09 to 11 are in reserve), and the posters
-const PAINTINGS = ['paint-00', 'paint-07', 'paint-03', 'paint-05', 'paint-01', 'paint-04', 'paint-02', 'paint-08', 'paint-06', 'paint-11', 'paint-10'];
-const POSTERS = [[2190, 1180, Math.PI, 'derby', true], [2980, 1700, -Math.PI / 2, 'lounge', true], [1600, 1410, -Math.PI / 2, 'missing', false],
+const PAINTINGS = Array.from({ length: 11 }, (_, i) => ['portrait-gambler', 'portrait-queen', 'portrait-bartender'][i % 3]);
+const POSTERS = [[2020, 775, Math.PI / 2, 'derby', true], [2980, 1700, -Math.PI / 2, 'lounge', true], [1600, 1410, -Math.PI / 2, 'missing', false],
   [2020, 560, Math.PI / 2, 'rocket', true], [620, 250, -Math.PI / 2, 'cocktails', true], [500, 720, 0, 'wash', false],
-  [302, 1200, 0, 'jackpot', true], [1100, 1180, Math.PI, 'roulette', true]];
+  [302, 1200, 0, 'jackpot', true], [1320, 1180, Math.PI, 'roulette', true]];
 
 // ---------- Pit bell ----------
 function pitBell(ctx) {
@@ -592,18 +706,24 @@ function pitBell(ctx) {
   const bx = BELL.x * M, bz = BELL.y * M;
   if (hasProp('pitBell')) placeProps(group, 'pitBell', [{ x: bx, z: bz, fit: [0, 1.32, 0] }]);
   else pitBellHandmade(ctx, bx, bz);
-  const label = T.textSprite('PIT BELL', { color: '#e8c46a', size: 40, h: 0.16 }); label.position.set(bx, 1.55, bz); group.add(label);
+  const label = T.textSprite('PIT BELL', { color: '#e8c46a', size: 40, h: 0.16 }); label.name = 'casino-pit-bell-sign'; label.position.set(bx, 1.55, bz); group.add(label);
   // a marble medallion in the carpet around it
   const med = new THREE.Mesh(new THREE.CircleGeometry(1.6, 64), std({ map: T.medallion(), roughness: 0.55, metalness: 0.1 })); // (0.25 mirrored the chandelier)
   med.rotation.x = -Math.PI / 2; med.position.set(bx, 0.005, bz); med.receiveShadow = true; group.add(med);
   const ring = new THREE.Mesh(new THREE.RingGeometry(1.6, 1.7, 64), MAT.gold); ring.rotation.x = -Math.PI / 2; ring.position.set(bx, 0.007, bz); group.add(ring);
-  if (hasProp('snackBowl')) placeProps(group, 'snackBowl', BOWL_SPOTS.map(b => ({ x: b.x * M, z: b.y * M, yaw: b.x * 0.01, fit: SNACK_FIT })));
-  else for (const b of BOWL_SPOTS) {
+  for (const b of BOWL_SPOTS) {
     const x = b.x * M, z = b.y * M;
     B.add(cyl(0.18, 0.22, 0.04, 20), MAT.brass, v3(x, 0.02, z)); B.add(cyl(0.03, 0.03, 0.9, 10), MAT.brass, v3(x, 0.47, z)); B.add(cyl(0.2, 0.16, 0.04, 20), MAT.darkWood, v3(x, 0.93, z));
   }
   // a sign over every snack stand, so the hungry can find one from across the room
-  for (const b of BOWL_SPOTS) { const s = T.textSprite('SNACKS', { color: '#ffd27a', size: 40, h: 0.14 }); s.position.set(b.x * M, 1.5, b.y * M); group.add(s); }
+  const snackLabels = [];
+  for (const [i, b] of BOWL_SPOTS.entries()) {
+    const kind = i % 3;
+    // Fixed signs share their paint/material; each sprite keeps its own transform.
+    const s = snackLabels[kind] ? snackLabels[kind].clone() : (snackLabels[kind] = T.textSprite(['DOUGHNUTS', 'PRETZELS', 'HOT DOGS'][kind], { color: '#ffd27a', size: 40, h: 0.14 }));
+    s.name = 'casino-snack-sign-' + i;
+    s.position.set(b.x * M, 1.5, b.y * M); group.add(s);
+  }
 }
 function pitBellHandmade(ctx, bx, bz) {
   const { B, group, anim } = ctx;
@@ -678,18 +798,21 @@ function litChandelier(m) {
 // Each one is its own small model so a killer can bring it down (pub.chandeliers, same order as CHANDELIERS).
 function chandeliers(ctx) {
   const { group, lightSpots, anim } = ctx;
-  const crystal = new THREE.OctahedronGeometry(0.035, 0);
-  const crystalMat = new THREE.MeshStandardMaterial({ color: 0xfff6e0, emissive: 0xffe0a0, emissiveIntensity: 0.55, roughness: 0.05, metalness: 0.3 });
-  GLOWS.push({ m: crystalMat, k: 'emissiveIntensity', v: 0.55 });
-  const bulbMat = glowMat(0xffd8a0, 1.1), bulbGeo = sph(0.045, 10); // brighter bulbs bloomed into a glare halo overhead
+  const model = hasProp('chandelier');
+  // Generated chandeliers already contain their bulbs and crystals. Construct
+  // the handmade resources only when that visible fallback is actually needed.
+  const crystal = model ? null : new THREE.OctahedronGeometry(0.035, 0);
+  const crystalMat = model ? null : new THREE.MeshStandardMaterial({ color: 0xfff6e0, emissive: 0xffe0a0, emissiveIntensity: 0.55, roughness: 0.05, metalness: 0.3 });
+  if (crystalMat) GLOWS.push({ m: crystalMat, k: 'emissiveIntensity', v: 0.55 });
+  const bulbMat = model ? null : glowMat(0xffd8a0, 1.1), bulbGeo = model ? null : sph(0.045, 10);
   const list = ctx.chandeliers = [];
+  let modelMount = null;
   for (const [cxp, czp] of CHANDELIERS) {
     const room = strictRoom(cxp, czp);
     if (room === 'race' || room === 'arcade') { lightSpots.push({ p: v3(cxp * M, WALL_H - 0.5, czp * M), color: room === 'arcade' ? 0xd0a0ff : 0xbfefff, power: room === 'race' ? 3.5 : 6, range: 10 }); list.push(null); continue; }
     const big = room === 'floor', R = big ? 0.8 : 0.5;
     const g = new THREE.Group(); g.position.set(cxp * M, 0, czp * M); group.add(g);
-    const B = new Batch(true), crystals = [], bulbPts = [];
-    const model = hasProp('chandelier');
+    const B = model && modelMount ? null : new Batch(true), crystals = [], bulbPts = [];
     if (model) { // the model hangs from the ceiling rose; it glows a little so it reads as lit
       const sc = propScale('chandelier', { fit: [big ? 1.9 : 1.25, 0, big ? 1.9 : 1.25] }), o = propObject('chandelier', { cast: false });
       const tall = propHeight('chandelier') * sc.y, room = WALL_H - 0.12 - 2.45; // its lowest crystal stays above 2.45 m, clear of eye level
@@ -697,24 +820,34 @@ function chandeliers(ctx) {
       o.scale.copy(sc); o.position.y = WALL_H - 0.12 - propHeight('chandelier') * sc.y; g.add(o);
       o.traverse(m => { if (m.isMesh) { m.userData.prop = true; litChandelier(m.material); } });
     }
-    B.add(cyl(0.012, 0.012, 0.5, 6), MAT.gold, v3(0, WALL_H - 0.25, 0)); B.add(cyl(0.18, 0.12, 0.08, 16), MAT.gold, v3(0, WALL_H - 0.04, 0));
+    if (B) { B.add(cyl(0.012, 0.012, 0.5, 6), MAT.gold, v3(0, WALL_H - 0.25, 0)); B.add(cyl(0.18, 0.12, 0.08, 16), MAT.gold, v3(0, WALL_H - 0.04, 0)); }
     if (!model) {
     for (const [rr, y, t] of [[R, 0.6, 0.03], [R * 0.62, 0.82, 0.025], [R * 0.3, 1.0, 0.02]]) B.add(torus(rr, t, 8, 40), MAT.gold, v3(0, WALL_H - y, 0), 0, null, Math.PI / 2);
     B.add(lathe([[0, -0.3], [0.06, -0.2], [0.1, 0], [0.04, 0.1], [0, 0.12]], 16), MAT.gold, v3(0, WALL_H - 0.85, 0));
     for (let i = 0; i < 4; i++) { const a = i * Math.PI / 2; B.add(cyl(0.01, 0.01, R * 1.02, 6), MAT.gold, v3(Math.cos(a) * R * 0.5, WALL_H - 0.6, Math.sin(a) * R * 0.5), -a, null, 0, Math.PI / 2); }
     }
     const nb = big ? 14 : 8;
-    for (let i = 0; i < nb; i++) {
+    for (let i = 0; !model && i < nb; i++) {
       const a = i / nb * Math.PI * 2;
       bulbPts.push(v3(Math.cos(a) * R, WALL_H - 0.53, Math.sin(a) * R));
       if (big) bulbPts.push(v3(Math.cos(a + 0.2) * R * 0.62, WALL_H - 0.76, Math.sin(a + 0.2) * R * 0.62));
-      if (!model) for (let j = 0; j < 4; j++) crystals.push(v3(Math.cos(a + 0.2) * R * (0.95 - j * 0.02), WALL_H - 0.7 - j * 0.085, Math.sin(a + 0.2) * R * (0.95 - j * 0.02)));
-      if (!model) crystals.push(v3(Math.cos(a) * R * 0.6, WALL_H - 0.98 - (i % 2) * 0.08, Math.sin(a) * R * 0.6));
+      for (let j = 0; j < 4; j++) crystals.push(v3(Math.cos(a + 0.2) * R * (0.95 - j * 0.02), WALL_H - 0.7 - j * 0.085, Math.sin(a + 0.2) * R * (0.95 - j * 0.02)));
+      crystals.push(v3(Math.cos(a) * R * 0.6, WALL_H - 0.98 - (i % 2) * 0.08, Math.sin(a) * R * 0.6));
     }
-    B.build(g);
-    const bm = new THREE.InstancedMesh(bulbGeo, bulbMat, bulbPts.length);
-    bulbPts.forEach((p, i) => bm.setMatrixAt(i, new THREE.Matrix4().makeTranslation(p.x, p.y, p.z)));
-    g.add(bm); bm.visible = !model; // (the model has bulbs of its own; these hung in a ring around it)
+    if (B) {
+      B.build(g);
+      if (model) modelMount = g.children[g.children.length - 1];
+    } else {
+      // Every generated chandelier has the same fixed stem and ceiling rose.
+      // Share that geometry; each mesh still follows its own falling parent.
+      g.add(modelMount.clone());
+    }
+    let bm = null;
+    if (!model) {
+      bm = new THREE.InstancedMesh(bulbGeo, bulbMat, bulbPts.length);
+      bulbPts.forEach((p, i) => bm.setMatrixAt(i, new THREE.Matrix4().makeTranslation(p.x, p.y, p.z)));
+      g.add(bm);
+    }
     if (crystals.length) {
       const cm = new THREE.InstancedMesh(crystal, crystalMat, crystals.length);
       crystals.forEach((p, i) => cm.setMatrixAt(i, new THREE.Matrix4().makeTranslation(p.x, p.y, p.z)));
@@ -730,13 +863,13 @@ function chandeliers(ctx) {
     for (const ch of chs) {
       const e = list[ch.id]; if (!e) continue;
       const g = e.g;
-      if (ch.state === 'up') { g.position.y = 0; g.rotation.set(0, 0, 0); e.bm.visible = !e.model; e.spot.power = e.power; continue; }
+      if (ch.state === 'up') { g.position.y = 0; g.rotation.set(0, 0, 0); if (e.bm) e.bm.visible = true; e.spot.power = e.power; continue; }
       if (ch.state === 'falling') {
         const shake = Math.min(1, (1.6 - ch.t) / 0.8) * 0.06;
         g.rotation.set(Math.sin(t * 31 + e.seed) * shake, 0, Math.cos(t * 27 + e.seed) * shake);
         g.position.y = ch.t < 0.35 ? -e.drop * (1 - (ch.t / 0.35) ** 2) : 0;
         e.spot.power = e.power * (0.5 + 0.5 * Math.abs(Math.sin(t * 40)));
-      } else { g.position.y = -e.drop; g.rotation.set(0.12, e.seed % 3, 0.22); e.bm.visible = false; e.spot.power = 0; }
+      } else { g.position.y = -e.drop; g.rotation.set(0.12, e.seed % 3, 0.22); if (e.bm) e.bm.visible = false; e.spot.power = 0; }
     }
   });
 }
@@ -762,10 +895,9 @@ function staffDoors(ctx) {
 
 // ---------- The arcade ----------
 function arcadeDressing(ctx) {
-  if (hasProp('rocket')) placeProps(ctx.group, 'rocket', [{ x: 2085 * M, z: 95 * M, yaw: 0.6, fit: [0, 2.4, 0] }]);
-  ctx.sign('PLINKO', 0x3fe0ff, 2980 * M - 0.08, 2.96, 380 * M, -Math.PI / 2, 2.2, 0.4);
-  ctx.sign('MINES', 0x3fff8a, 2210 * M, 2.9, 700 * M - 0.08, Math.PI, 1.6, 0.45);
-  ctx.sign('DRAGON TOWER', 0xffa040, 2770 * M, 2.9, 700 * M - 0.08, Math.PI, 2.6, 0.45);
+  ctx.sign('PLINKO', 0x3fe0ff, 2166 * M, 2.75, 3.05, 0, 2.0, 0.36, true, true); // follows the relocated north-wall pair
+  ctx.sign('MINES', 0x3fff8a, 2210 * M, 2.45, 700 * M - 0.24, Math.PI, 1.5, 0.4);
+  ctx.sign('DRAGON TOWER', 0xffa040, 2770 * M, 2.45, 700 * M - 0.24, Math.PI, 2.4, 0.4);
 }
 
 // Marquee bulbs everywhere share one instanced mesh with a chasing pattern.
@@ -776,6 +908,9 @@ function bulbsMesh(ctx) {
   const im = new THREE.InstancedMesh(sph(0.028, 8), mat, bulbs.length);
   bulbs.forEach((b, i) => im.setMatrixAt(i, new THREE.Matrix4().makeTranslation(b.p.x, b.p.y, b.p.z)));
   const on = new THREE.Color(1.8, 1.35, 0.65), off = new THREE.Color(0.35, 0.25, 0.12); // (warm: brighter read as white dots)
+  // Allocate the color attribute before GPU/shader preparation. Creating it on
+  // the first chase tick changed the shader flags after compilation finished.
+  bulbs.forEach((b, i) => im.setColorAt(i, b.phase % 3 === 0 ? off : on)); im.instanceColor.needsUpdate = true;
   GLOWS.push({ m: mat, k: 'color', v: 1 });
   group.add(im);
   anim.push({ every: 0.12, f: t => { const k = Math.floor(t * 8); bulbs.forEach((b, i) => im.setColorAt(i, (b.phase + k) % 3 === 0 ? off : on)); im.instanceColor.needsUpdate = true; } });
