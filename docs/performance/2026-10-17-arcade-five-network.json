@@ -1,0 +1,244 @@
+{
+  "at": "2026-10-17T09:01:24.277Z",
+  "games": [
+    {
+      "game": "stack",
+      "round": {
+        "game": "stack",
+        "id": 1,
+        "seat": 84,
+        "player": 1,
+        "bet": 1000,
+        "seq": 2,
+        "phase": "done",
+        "score": 1,
+        "elapsed": 0.516666666666666,
+        "time": 0,
+        "timer": 0,
+        "blocks": [
+          {
+            "x": 0.5,
+            "w": 0.76
+          },
+          {
+            "x": 0.5242074562294415,
+            "w": 0.7115850875411169
+          }
+        ],
+        "x": 0.580205966654141,
+        "w": 0.7115850875411169,
+        "fall": 0.0966666666666665,
+        "cut": {
+          "x": 0.5484149124588831,
+          "w": 0.76,
+          "keepX": 0.5242074562294415,
+          "keepW": 0.7115850875411169,
+          "t": 0.433333333333333
+        },
+        "net": -900,
+        "mult": 0
+      },
+      "ownerAndSpectatorMatch": true,
+      "foreignReplayStaleRejected": true
+    },
+    {
+      "game": "vault",
+      "round": {
+        "game": "vault",
+        "id": 2,
+        "seat": 85,
+        "player": 1,
+        "bet": 1000,
+        "seq": 2,
+        "phase": "done",
+        "score": 0,
+        "elapsed": 0.433333333333333,
+        "time": 0,
+        "timer": 0,
+        "angle": 0.28333333333332433,
+        "target": 1.1,
+        "locks": 0,
+        "strikes": 1,
+        "flash": 0.3033333333333334,
+        "net": -900,
+        "mult": 0
+      },
+      "ownerAndSpectatorMatch": true,
+      "foreignReplayStaleRejected": true
+    },
+    {
+      "game": "train",
+      "round": {
+        "game": "train",
+        "id": 3,
+        "seat": 86,
+        "player": 1,
+        "bet": 1000,
+        "seq": 2,
+        "phase": "done",
+        "score": 0,
+        "elapsed": 0.516666666666666,
+        "time": 0,
+        "timer": 0,
+        "y": 0,
+        "vy": 0,
+        "slide": 0.5833333333333336,
+        "next": 1.0333333333333343,
+        "obstacles": [],
+        "n": 0,
+        "net": -900,
+        "mult": 0
+      },
+      "ownerAndSpectatorMatch": true,
+      "foreignReplayStaleRejected": true
+    },
+    {
+      "game": "pinball",
+      "round": {
+        "game": "pinball",
+        "id": 4,
+        "seat": 88,
+        "player": 1,
+        "bet": 1000,
+        "seq": 2,
+        "phase": "done",
+        "score": 0,
+        "elapsed": 0.516666666666666,
+        "time": 0,
+        "timer": 0,
+        "ball": {
+          "x": 0.8451858711892065,
+          "y": 0.4045862245674932,
+          "vx": -0.6464344058000697,
+          "vy": -1.6499465009243477,
+          "launch": false
+        },
+        "balls": 2,
+        "left": 0,
+        "right": 0.07666666666666658,
+        "la": 0.22,
+        "ra": -0.36456490882692283,
+        "trail": [],
+        "bumps": [
+          {
+            "x": 0.29,
+            "y": 0.27,
+            "r": 0.075,
+            "cool": 0
+          },
+          {
+            "x": 0.71,
+            "y": 0.27,
+            "r": 0.075,
+            "cool": 0
+          },
+          {
+            "x": 0.5,
+            "y": 0.45,
+            "r": 0.085,
+            "cool": 0
+          }
+        ],
+        "lastFlip": [
+          -1,
+          0.433333333333333
+        ],
+        "net": -900,
+        "mult": 0
+      },
+      "ownerAndSpectatorMatch": true,
+      "foreignReplayStaleRejected": true
+    },
+    {
+      "game": "pop",
+      "round": {
+        "game": "pop",
+        "id": 5,
+        "seat": 87,
+        "player": 1,
+        "bet": 1000,
+        "seq": 2,
+        "phase": "done",
+        "score": 0,
+        "elapsed": 0.516666666666666,
+        "time": 0,
+        "timer": 0,
+        "holes": [
+          {
+            "id": 0,
+            "on": false,
+            "bad": false,
+            "until": 0,
+            "up": 0
+          },
+          {
+            "id": 1,
+            "on": false,
+            "bad": false,
+            "until": 0,
+            "up": 0
+          },
+          {
+            "id": 2,
+            "on": false,
+            "bad": false,
+            "until": 0,
+            "up": 0
+          },
+          {
+            "id": 3,
+            "on": false,
+            "bad": false,
+            "until": 0,
+            "up": 0
+          },
+          {
+            "id": 4,
+            "on": false,
+            "bad": false,
+            "until": 0,
+            "up": 0
+          },
+          {
+            "id": 5,
+            "on": false,
+            "bad": false,
+            "until": 0,
+            "up": 0
+          },
+          {
+            "id": 6,
+            "on": false,
+            "bad": false,
+            "until": 0,
+            "up": 0
+          },
+          {
+            "id": 7,
+            "on": false,
+            "bad": false,
+            "until": 0,
+            "up": 0
+          },
+          {
+            "id": 8,
+            "on": false,
+            "bad": false,
+            "until": 0,
+            "up": 0
+          }
+        ],
+        "next": 0.04999999999999981,
+        "n": 0,
+        "misses": 0,
+        "flash": -1,
+        "net": -900,
+        "mult": 0
+      },
+      "ownerAndSpectatorMatch": true,
+      "foreignReplayStaleRejected": true
+    }
+  ],
+  "errors": [],
+  "disconnectedOwnerCompletes": true
+}

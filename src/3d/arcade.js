@@ -1,3 +1,5 @@
+import {SKILL_GAMES} from '../skill-arcade.js';
+import {buildSkillCabinet} from './skill-arcade.js';
 import * as THREE from 'three';
 import { FLAPPY } from '../flappy.js';
 import { ARCADE } from '../arcade.js';
@@ -5,7 +7,7 @@ import { ARCADE_CABS } from '../map.js';
 import { MAT, v3, box, rbox, cyl, sph, basicGlow } from './world.js';
 import * as T from './textures.js';
 
-export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButton, focusAt) {
+export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButton, focusAt, registerScreen) {
   const { group, lightSpots } = ctx, batch = ctx.B;
   const wood = new THREE.MeshStandardMaterial({ map: T.wood('#67452c', '#302116'), roughness: .5 });
   const bed = new THREE.MeshStandardMaterial({ color: 0x173d32, roughness: .75 });
@@ -18,6 +20,7 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
     const B={add:(g,m,p)=>batch.add(g,m,p,yaw)};
     const pos = (x,y,z) => v3(x,y,z).applyAxisAngle(axis,yaw).add(origin);
     const add = (geo,mat,x,y,z,name) => { const m = new THREE.Mesh(geo,mat);m.position.set(x,y,z);if(name)m.name=name;root.add(m);return m; };
+    if(SKILL_GAMES.includes(c.game)){buildSkillCabinet(ctx,c,seat,screen,betSocket,actionButton,focusAt,registerScreen);continue;}
     if(c.game==='flappy') {
       root.rotation.y=Math.PI; // South-wall cabinet faces north; leave the doorway/promenade clear.
       const fp=(x,y,z)=>v3(c.x/60-x,y,c.y/60-z);

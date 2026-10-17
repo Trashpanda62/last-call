@@ -78,7 +78,8 @@ export function updateHud(v) {
   const { pub, priv } = v;
   txt('personalAmt', money(priv.wallet || 0));
   txt('phoneStatus', `${pub.chars.filter(c => c.alive).length} alive · ${pub.killersCaught || 0}/${pub.nk} killers caught`);
-  const safety = priv.alive && pub.mode === 'play' && !pub.over && !priv.cameraFeed && !priv.monster;
+  const mouseRound=pub.arcade?.[priv.seat?.game],mouseGame=['train','pinball'].includes(priv.seat?.game)&&mouseRound?.player===priv.me&&mouseRound.phase!=='done';
+  const safety = !mouseGame && priv.alive && pub.mode === 'play' && !pub.over && !priv.cameraFeed && !priv.monster;
   show('safetyActions', safety && (!!priv.drink || priv.canInspect));
   for (const b of $('safetyActions').querySelectorAll('[data-safety]')) {
     b.classList.toggle('hidden', b.dataset.safety === 'inspect' ? !priv.canInspect : !priv.drink);

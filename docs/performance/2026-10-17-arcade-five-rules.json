@@ -1,0 +1,172 @@
+{
+  "at": "2026-10-17T09:13:29.777Z",
+  "games": [
+    {
+      "game": "stack",
+      "scores": [
+        {
+          "dt": 0.004166666666666667,
+          "score": 18,
+          "mult": 3
+        },
+        {
+          "dt": 0.008333333333333333,
+          "score": 18,
+          "mult": 3
+        },
+        {
+          "dt": 0.016666666666666666,
+          "score": 18,
+          "mult": 3
+        }
+      ]
+    },
+    {
+      "game": "vault",
+      "scores": [
+        {
+          "dt": 0.004166666666666667,
+          "score": 5,
+          "mult": 3
+        },
+        {
+          "dt": 0.008333333333333333,
+          "score": 5,
+          "mult": 3
+        },
+        {
+          "dt": 0.016666666666666666,
+          "score": 5,
+          "mult": 3
+        }
+      ]
+    },
+    {
+      "game": "train",
+      "scores": [
+        {
+          "dt": 0.004166666666666667,
+          "score": 22,
+          "mult": 2
+        },
+        {
+          "dt": 0.008333333333333333,
+          "score": 22,
+          "mult": 2
+        },
+        {
+          "dt": 0.016666666666666666,
+          "score": 22,
+          "mult": 2
+        }
+      ]
+    },
+    {
+      "game": "pinball",
+      "scores": [
+        {
+          "dt": 0.004166666666666667,
+          "score": 1750,
+          "mult": 2
+        },
+        {
+          "dt": 0.008333333333333333,
+          "score": 3850,
+          "mult": 3
+        },
+        {
+          "dt": 0.016666666666666666,
+          "score": 3500,
+          "mult": 3
+        }
+      ]
+    },
+    {
+      "game": "pop",
+      "scores": [
+        {
+          "dt": 0.004166666666666667,
+          "score": 60,
+          "mult": 3
+        },
+        {
+          "dt": 0.008333333333333333,
+          "score": 60,
+          "mult": 3
+        },
+        {
+          "dt": 0.016666666666666666,
+          "score": 60,
+          "mult": 3
+        }
+      ]
+    }
+  ],
+  "host": [
+    {
+      "game": "stack",
+      "score": 18,
+      "paid": true,
+      "net": 210,
+      "foreignClickRejected": true,
+      "moveExploitRejected": true,
+      "replayAndStaleRejected": true,
+      "packedGuest": true
+    },
+    {
+      "game": "vault",
+      "score": 5,
+      "paid": true,
+      "net": 210,
+      "foreignClickRejected": true,
+      "moveExploitRejected": true,
+      "replayAndStaleRejected": true,
+      "packedGuest": true
+    },
+    {
+      "game": "train",
+      "score": 22,
+      "paid": true,
+      "net": 110,
+      "foreignClickRejected": true,
+      "moveExploitRejected": true,
+      "replayAndStaleRejected": true,
+      "packedGuest": true
+    },
+    {
+      "game": "pinball",
+      "score": 3850,
+      "paid": true,
+      "net": 210,
+      "foreignClickRejected": true,
+      "moveExploitRejected": true,
+      "replayAndStaleRejected": true,
+      "packedGuest": true
+    },
+    {
+      "game": "pop",
+      "score": 60,
+      "paid": true,
+      "net": 210,
+      "foreignClickRejected": true,
+      "moveExploitRejected": true,
+      "replayAndStaleRejected": true,
+      "packedGuest": true
+    }
+  ],
+  "physics": {
+    "leftFlipper": {
+      "restVy": -0.31180174621801504,
+      "activeVy": -2.7867603669551366
+    },
+    "rightFlipper": {
+      "restVy": -0.31180174621801504,
+      "activeVy": -2.786760366955136
+    }
+  },
+  "pop": {
+    "invalidCoordinatesRejected": true,
+    "noRepeatedTargetScore": true,
+    "decoyPenalty": true
+  }
+}

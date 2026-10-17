@@ -458,7 +458,7 @@ export function* buildMachinesSteps(ctx, seats) {
   }
 
   yield 'Building the coin-pusher and prize claw';
-  buildArcade(ctx,seats,screen,updaters,betSocket,actionButton,focusAt);
+  buildArcade(ctx,seats,screen,updaters,betSocket,actionButton,focusAt,(id,mesh)=>RC.seatScreens[id]=mesh);
 
   // ---------- Mines and Dragon Tower consoles ----------
   yield 'Preparing arcade games';
@@ -703,8 +703,8 @@ export function* buildMachinesSteps(ctx, seats) {
       const c = st.of('coin'), my = c && c.view && c.view.flip ? c.view.flip : null;
       if (my) {
         const u = Math.min(1, (t - my.t0) / 1.2), e = 1 - Math.pow(1 - u, 3);
-        coin.position.set(x, 1.55 + Math.sin(u * Math.PI) * 0.9, z); coin.rotation.set(Math.PI / 2 + e * Math.PI * 14 + (my.side === 'tails' ? Math.PI : 0), 0.3, 0);
-      } else { coin.position.set(x, 1.4 + Math.sin(t * 1.5) * 0.08, z); coin.rotation.set(Math.PI / 2 - 0.2, Math.sin(t * 0.8) * 0.25, 0, 'YXZ'); }
+        coin.position.set(x, 1.55 + Math.sin(u * Math.PI) * 0.9, z); coin.rotation.set(Math.PI / 2 + e * Math.PI * 14 + (my.side === 'tails' ? Math.PI : 0), 0.3 + Math.max(0,t-my.t0-2)*.32, 0);
+      } else { coin.position.set(x, 1.4 + Math.sin(t * 1.5) * 0.08, z); coin.rotation.set(Math.PI / 2 - 0.2, t * .32, 0, 'YXZ'); }
     });
     hideAt('coin', () => true, ...beam(x, z, 0xffd040, 1.0, 3.6, 0.9));
     lightSpots.push({ p: v3(x, 2.8, z), color: 0xffd080, power: 4, range: 6 });

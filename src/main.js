@@ -14,7 +14,7 @@ import * as audio from './audio.js';
 import { $, show, toast, clearToasts, lastToastAt, whisper, quietNote, splash, updateHud, renderMeeting, resetMeeting, renderOver, renderPick, marks } from './ui.js';
 import { initMoves, updateMoves, keyMove, mouseMove, pickerOpen, resetMoves, cameraMouse, cameraView } from './moves.js';
 import { openMixer, openShop } from './bar.js';
-import { resetTableLuck, openTable, closeTable, closeAllTables, tablesBusy, tableViews, tableGame, tableSeat, tableView, tableTick, tableBar, cycleChip, chipHud, setHandHook, press as pressPart, partInfo, tableStart, spaceTable, releaseTable, tableLook } from './tables.js';
+import { resetTableLuck, openTable, closeTable, closeAllTables, tablesBusy, tableViews, tableGame, tableSeat, tableView, tableTick, tableBar, cycleChip, chipHud, setHandHook, press as pressPart, partInfo, tableStart, tableMouse, spaceTable, releaseTable, tableLook } from './tables.js';
 import { CHIP_COL } from './3d/rig.js';
 import { hostRoom, joinRoom } from './net.js';
 import { packPub, packFor, unpackSnap, resetWire } from './wire.js';
@@ -533,6 +533,16 @@ document.addEventListener('pointerlockchange', () => {
   if (S.expectUnlock) { S.expectUnlock = false; return; }
   if (wantLock()) { S.unlockAt = performance.now(); togglePause(); } // Esc while walking opens the menu
 });
+// Physical controls take priority over drinking; right click at a game checks its trap.
+function directMouse(button){
+  if(!playing()||pickerOpen()||S.phone)return false;
+  if(tableMouse(button))return true;
+  if(!S.view.priv.alive)return false;
+  const p=S.view.priv;
+  if(button===2){if(p.canInspect){act('inspect');return true;}if(p.drink){act('sniff');return true;}}
+  if(button===0&&p.drink&&!p.ctx){act('sip');return true;}
+  return false;
+}
 let drag = null;
 view.addEventListener('mousedown', e => {
   audio.unlock();
@@ -542,7 +552,9 @@ view.addEventListener('mousedown', e => {
   mouse.x = e.clientX; mouse.y = e.clientY;
   if (tableMode() && !locked()) { if (e.button === 0 || e.button === 2) pressAtNdc(...ndcOf(e.clientX, e.clientY), e.button === 2); return; } // click the felt
   if (locked()) {
+    if(e.button===2&&directMouse(2))return;
     if (seatedPlay() && (e.button === 0 || e.button === 2) && pressAtNdc(0, 0, e.button === 2)) return; // at a game: click presses what the crosshair is on
+    if(directMouse(e.button))return;
     if (!S.paused && mouseMove(e.button)) return;
     if (e.button === 0 && S.view && S.view.priv.ctx) act('use'); return;
   }
@@ -552,7 +564,9 @@ view.addEventListener('mousedown', e => {
 addEventListener('mouseup', e => {
   if (drag && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 6) {
     if (!S.paused && pickerOpen() && mouseMove(drag.b)) { drag = null; return; }
+    if(drag.b===2&&directMouse(2)){drag=null;return;}
     if (seatedPlay() && pressAtNdc(...ndcOf(e.clientX, e.clientY), drag.b === 2)) { drag = null; return; }
+    if(directMouse(drag.b)){drag=null;return;}
     if (!S.paused && !mouseMove(drag.b) && drag.b === 0 && S.view && S.view.priv.ctx) act('use'); // (left click interacts here too)
   }
   drag = null;
@@ -737,7 +751,7 @@ function simStep(dt) {
 }
 const TIPS = [
   // two per role, merged from eight (Steve, 2026-10-15: "too many pop ups")
-  [6, 'Tip: walk up to a game to play it, scroll for your chip. Right click and choose Check traps or Sniff first: killers rig games and poison drinks.', 'g'],
+  [6, 'Tip: walk up to a game to play it, scroll for your chip. Right click at a game to check traps, or right click with a drink to sniff: killers rig games and poison drinks.', 'g'],
   [6, 'Tip: left-click murders from behind. Right click for your action icons, including Disguise, abilities and Transform during a blackout.', 'k'],
   [40, 'Tip: Space marks whoever you aim at as a suspect. Found a body? Left click reports it.', 'g'],
   [40, 'Tip: your suggested target is just above your moves.', 'k'],

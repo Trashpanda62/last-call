@@ -1,0 +1,634 @@
+{
+  "at": "2026-10-17T09:12:13.616Z",
+  "errors": [],
+  "variants": [
+    {
+      "variant": "normal",
+      "games": [
+        {
+          "game": "stack",
+          "round": {
+            "game": "stack",
+            "id": 1,
+            "seat": 84,
+            "player": 0,
+            "bet": 1000,
+            "seq": 1,
+            "phase": "play",
+            "score": 0,
+            "elapsed": 1.2166666666666637,
+            "time": 58.7833333333334,
+            "timer": 0,
+            "blocks": [
+              {
+                "x": 0.5,
+                "w": 0.76
+              }
+            ],
+            "x": 0.5774291086903924,
+            "w": 0.76,
+            "fall": 0,
+            "cut": null,
+            "mult": 0
+          },
+          "screen": [
+            35.833333333333336,
+            1.51,
+            7.435
+          ],
+          "eye": 1.55,
+          "parts": [
+            "spot:main",
+            "btn:start",
+            "btn:drop"
+          ],
+          "dock": [
+            {
+              "width": 1440,
+              "buttonCenter": 720,
+              "iconOffset": 0,
+              "textOffset": 0,
+              "buttonOffset": 0
+            },
+            {
+              "width": 740,
+              "buttonCenter": 370,
+              "iconOffset": 0,
+              "textOffset": 0,
+              "buttonOffset": 0
+            },
+            {
+              "width": 420,
+              "buttonCenter": 210,
+              "iconOffset": 0,
+              "textOffset": 0,
+              "buttonOffset": 0
+            }
+          ]
+        },
+        {
+          "game": "vault",
+          "round": {
+            "game": "vault",
+            "id": 2,
+            "seat": 85,
+            "player": 0,
+            "bet": 1000,
+            "seq": 1,
+            "phase": "play",
+            "score": 0,
+            "elapsed": 1.1666666666666639,
+            "time": 58.8333333333334,
+            "timer": 0,
+            "angle": 1.5866666666666163,
+            "target": 1.1,
+            "locks": 0,
+            "strikes": 0,
+            "flash": 0,
+            "mult": 0
+          },
+          "screen": [
+            38,
+            1.51,
+            7.435
+          ],
+          "eye": 1.55,
+          "parts": [
+            "spot:main",
+            "btn:start",
+            "btn:drop"
+          ]
+        },
+        {
+          "game": "train",
+          "round": {
+            "game": "train",
+            "id": 3,
+            "seat": 86,
+            "player": 0,
+            "bet": 1000,
+            "seq": 2,
+            "phase": "play",
+            "score": 0,
+            "elapsed": 1.33333333333333,
+            "time": 58.66666666666674,
+            "timer": 0,
+            "y": 0,
+            "vy": 0,
+            "slide": 0,
+            "next": 0.20000000000000362,
+            "obstacles": [],
+            "n": 0,
+            "mult": 0
+          },
+          "screen": [
+            40.166666666666664,
+            1.51,
+            7.435
+          ],
+          "eye": 1.55,
+          "parts": [
+            "spot:main",
+            "btn:start",
+            "btn:drop",
+            "btn:alt"
+          ]
+        },
+        {
+          "game": "pinball",
+          "round": {
+            "game": "pinball",
+            "id": 4,
+            "seat": 88,
+            "player": 0,
+            "bet": 1000,
+            "seq": 2,
+            "phase": "play",
+            "score": 100,
+            "elapsed": 1.1833333333333305,
+            "time": 58.816666666666734,
+            "timer": 0,
+            "ball": {
+              "x": 0.6228363017236908,
+              "y": 0.19152976594545296,
+              "vx": 1.4760507129505587,
+              "vy": -0.18088491846960894,
+              "launch": false
+            },
+            "balls": 2,
+            "left": 0,
+            "right": 0,
+            "la": 0.22,
+            "ra": 0.21999999999052097,
+            "trail": [],
+            "bumps": [
+              {
+                "x": 0.29,
+                "y": 0.27,
+                "r": 0.075,
+                "cool": 0
+              },
+              {
+                "x": 0.71,
+                "y": 0.27,
+                "r": 0.075,
+                "cool": 0
+              },
+              {
+                "x": 0.5,
+                "y": 0.45,
+                "r": 0.085,
+                "cool": 0
+              }
+            ],
+            "lastFlip": [
+              -1,
+              0.30000000000000016
+            ],
+            "mult": 0
+          },
+          "screen": [
+            39.583333333333336,
+            1.095,
+            8.606666666666667
+          ],
+          "eye": 1.55,
+          "parts": [
+            "spot:main",
+            "btn:start",
+            "btn:drop",
+            "btn:alt"
+          ]
+        },
+        {
+          "game": "pop",
+          "round": {
+            "game": "pop",
+            "id": 5,
+            "seat": 87,
+            "player": 0,
+            "bet": 1000,
+            "seq": 2,
+            "phase": "play",
+            "score": 1,
+            "elapsed": 1.3833333333333298,
+            "time": 28.616666666666745,
+            "timer": 0,
+            "holes": [
+              {
+                "id": 0,
+                "on": false,
+                "bad": false,
+                "until": 1.5499999999999994,
+                "up": 0.49999999999999944
+              },
+              {
+                "id": 1,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 2,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 3,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 4,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 5,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 6,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 7,
+                "on": true,
+                "bad": false,
+                "until": 2.188166666666664,
+                "up": 1.154166666666664
+              },
+              {
+                "id": 8,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              }
+            ],
+            "next": 0.41183333333333416,
+            "n": 2,
+            "misses": 0,
+            "flash": 0,
+            "mult": 0
+          },
+          "screen": [
+            36.916666666666664,
+            1.51,
+            8.365
+          ],
+          "eye": 1.55,
+          "parts": [
+            "spot:main",
+            "btn:start",
+            "btn:drop"
+          ]
+        }
+      ],
+      "drinkLeftSipRightSniff": true,
+      "rightTableInspectWithDrink": true,
+      "signs": {
+        "high": [
+          25.5,
+          2.5,
+          20.24
+        ],
+        "duck": [
+          46.666666666666664,
+          2.55,
+          11.426666666666666
+        ],
+        "coin": 5.84832,
+        "afterFlipSpin": 0.3253119999885564
+      },
+      "spinDelta": 0.31996800001144354
+    },
+    {
+      "variant": "noprops",
+      "games": [
+        {
+          "game": "stack",
+          "round": {
+            "game": "stack",
+            "id": 1,
+            "seat": 84,
+            "player": 0,
+            "bet": 1000,
+            "seq": 1,
+            "phase": "play",
+            "score": 0,
+            "elapsed": 1.28333333333333,
+            "time": 58.71666666666674,
+            "timer": 0,
+            "blocks": [
+              {
+                "x": 0.5,
+                "w": 0.76
+              }
+            ],
+            "x": 0.5750338389610983,
+            "w": 0.76,
+            "fall": 0,
+            "cut": null,
+            "mult": 0
+          },
+          "screen": [
+            35.833333333333336,
+            1.51,
+            7.435
+          ],
+          "eye": 1.55,
+          "parts": [
+            "spot:main",
+            "btn:start",
+            "btn:drop"
+          ],
+          "dock": [
+            {
+              "width": 1440,
+              "buttonCenter": 720,
+              "iconOffset": 0,
+              "textOffset": 0,
+              "buttonOffset": 0
+            },
+            {
+              "width": 740,
+              "buttonCenter": 370,
+              "iconOffset": 0,
+              "textOffset": 0,
+              "buttonOffset": 0
+            },
+            {
+              "width": 420,
+              "buttonCenter": 210,
+              "iconOffset": 0,
+              "textOffset": 0,
+              "buttonOffset": 0
+            }
+          ]
+        },
+        {
+          "game": "vault",
+          "round": {
+            "game": "vault",
+            "id": 2,
+            "seat": 85,
+            "player": 0,
+            "bet": 1000,
+            "seq": 1,
+            "phase": "play",
+            "score": 0,
+            "elapsed": 1.1666666666666639,
+            "time": 58.8333333333334,
+            "timer": 0,
+            "angle": 1.5583333333332838,
+            "target": 1.1,
+            "locks": 0,
+            "strikes": 0,
+            "flash": 0,
+            "mult": 0
+          },
+          "screen": [
+            38,
+            1.51,
+            7.435
+          ],
+          "eye": 1.55,
+          "parts": [
+            "spot:main",
+            "btn:start",
+            "btn:drop"
+          ]
+        },
+        {
+          "game": "train",
+          "round": {
+            "game": "train",
+            "id": 3,
+            "seat": 86,
+            "player": 0,
+            "bet": 1000,
+            "seq": 2,
+            "phase": "play",
+            "score": 0,
+            "elapsed": 1.2999999999999967,
+            "time": 58.700000000000074,
+            "timer": 0,
+            "y": 0,
+            "vy": 0,
+            "slide": 0,
+            "next": 0.23333333333333706,
+            "obstacles": [],
+            "n": 0,
+            "mult": 0
+          },
+          "screen": [
+            40.166666666666664,
+            1.51,
+            7.435
+          ],
+          "eye": 1.55,
+          "parts": [
+            "spot:main",
+            "btn:start",
+            "btn:drop",
+            "btn:alt"
+          ]
+        },
+        {
+          "game": "pinball",
+          "round": {
+            "game": "pinball",
+            "id": 4,
+            "seat": 88,
+            "player": 0,
+            "bet": 1000,
+            "seq": 2,
+            "phase": "play",
+            "score": 100,
+            "elapsed": 1.1833333333333305,
+            "time": 58.816666666666734,
+            "timer": 0,
+            "ball": {
+              "x": 0.6228363017236908,
+              "y": 0.19152976594545296,
+              "vx": 1.4760507129505587,
+              "vy": -0.18088491846960894,
+              "launch": false
+            },
+            "balls": 2,
+            "left": 0,
+            "right": 0,
+            "la": 0.22,
+            "ra": 0.21999999998319822,
+            "trail": [],
+            "bumps": [
+              {
+                "x": 0.29,
+                "y": 0.27,
+                "r": 0.075,
+                "cool": 0
+              },
+              {
+                "x": 0.71,
+                "y": 0.27,
+                "r": 0.075,
+                "cool": 0
+              },
+              {
+                "x": 0.5,
+                "y": 0.45,
+                "r": 0.085,
+                "cool": 0
+              }
+            ],
+            "lastFlip": [
+              -1,
+              0.31666666666666676
+            ],
+            "mult": 0
+          },
+          "screen": [
+            39.583333333333336,
+            1.095,
+            8.606666666666667
+          ],
+          "eye": 1.55,
+          "parts": [
+            "spot:main",
+            "btn:start",
+            "btn:drop",
+            "btn:alt"
+          ]
+        },
+        {
+          "game": "pop",
+          "round": {
+            "game": "pop",
+            "id": 5,
+            "seat": 87,
+            "player": 0,
+            "bet": 1000,
+            "seq": 2,
+            "phase": "play",
+            "score": 1,
+            "elapsed": 1.3833333333333298,
+            "time": 28.616666666666745,
+            "timer": 0,
+            "holes": [
+              {
+                "id": 0,
+                "on": false,
+                "bad": false,
+                "until": 1.5499999999999994,
+                "up": 0.49999999999999944
+              },
+              {
+                "id": 1,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 2,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 3,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 4,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 5,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 6,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              },
+              {
+                "id": 7,
+                "on": true,
+                "bad": false,
+                "until": 2.188166666666664,
+                "up": 1.154166666666664
+              },
+              {
+                "id": 8,
+                "on": false,
+                "bad": false,
+                "until": 0,
+                "up": 0
+              }
+            ],
+            "next": 0.41183333333333416,
+            "n": 2,
+            "misses": 0,
+            "flash": 0,
+            "mult": 0
+          },
+          "screen": [
+            36.916666666666664,
+            1.51,
+            8.365
+          ],
+          "eye": 1.55,
+          "parts": [
+            "spot:main",
+            "btn:start",
+            "btn:drop"
+          ]
+        }
+      ],
+      "drinkLeftSipRightSniff": true,
+      "rightTableInspectWithDrink": true,
+      "signs": {
+        "high": [
+          25.5,
+          2.5,
+          20.24
+        ],
+        "duck": [
+          46.666666666666664,
+          2.55,
+          11.426666666666666
+        ],
+        "coin": 5.51008,
+        "afterFlipSpin": 0.32000000000000006
+      },
+      "spinDelta": 0.323103999996186
+    }
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "date": "2026-10-17",
+  "provider": "Sorceress",
+  "model": "gpt-image-2.5-sunburst",
+  "approved": "Steve: generate whatever assets you need to make them look nice, approved go",
+  "expectedCredits": 50,
+  "actualCredits": 50,
+  "usd": 0.5,
+  "jobs": {
+    "stack": {
+      "provider": "sorceress",
+      "tool": "image_generate",
+      "input": {
+        "model": "gpt-image-2.5-sunburst",
+        "prompt": "Production arcade game texture atlas, perfectly regular TWO BY TWO grid, each quadrant occupies exactly half width and half height. No text, no labels, no borders between quadrants. Premium richly detailed stylized 3D illustrated art matching luxury red black antique-gold cracked casino aesthetic. TOP LEFT quadrant: night casino rooftop and distant gold-lit towers, no foreground objects. This quadrant has a complete opaque background. TOP RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: wide horizontal black obsidian rectangular block with gold seams and burgundy inset, straight front face. BOTTOM LEFT quadrant on flat pure chroma green #00ff00 with generous margin: a short chunky potato gentleman in waistcoat and bowtie, smiling. BOTTOM RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: gold crown trophy. Each subject entirely contained in its own quadrant. Crisp silhouettes, warm highlights, no shadow on green background, no extra characters or props.",
+        "aspectRatio": "1:1",
+        "params": {
+          "resolution": "2K"
+        }
+      },
+      "created_at": "2026-10-17T08:48:09+00:00",
+      "status": "done",
+      "response": {
+        "jobId": "a9b50363-2961-4905-858d-e3655d835df7",
+        "status": "processing",
+        "model": "gpt-image-2.5-sunburst",
+        "modelName": "GPT Image 2.5 Sunburst",
+        "provider": "kie",
+        "aspectRatio": "1:1",
+        "prompt": "Production arcade game texture atlas, perfectly regular TWO BY TWO grid, each quadrant occupies exactly half width and half height. No text, no labels, no borders between quadrants. Premium richly detailed stylized 3D illustrated art matching luxury red black antique-gold cracked casino aesthetic. TOP LEFT quadrant: night casino rooftop and distant gold-lit towers, no foreground objects. This quadrant has a complete opaque background. TOP RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: wide horizontal black obsidian rectangular block with gold seams and burgundy inset, straight front face. BOTTOM LEFT quadrant on flat pure chroma green #00ff00 with generous margin: a short chunky potato gentleman in waistcoat and bowtie, smiling. BOTTOM RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: gold crown trophy. Each subject entirely contained in its own quadrant. Crisp silhouettes, warm highlights, no shadow on green background, no extra characters or props.",
+        "estimatedCredits": 10,
+        "poll": "/api/v1/jobs/a9b50363-2961-4905-858d-e3655d835df7"
+      },
+      "jobs": [
+        {
+          "jobId": "a9b50363-2961-4905-858d-e3655d835df7",
+          "status": "succeeded",
+          "checked_at": "2026-10-17T08:50:28+00:00",
+          "outputs": [
+            {
+              "key": "url",
+              "path": "runs\\sorceress\\arcade-five-stack\\assets\\01-url-3eb52164.png",
+              "bytes": 5306711
+            }
+          ],
+          "sheets": [],
+          "creditsCharged": 10,
+          "balance": 2349
+        }
+      ]
+    },
+    "vault": {
+      "provider": "sorceress",
+      "tool": "image_generate",
+      "input": {
+        "model": "gpt-image-2.5-sunburst",
+        "prompt": "Production arcade game texture atlas, perfectly regular TWO BY TWO grid, each quadrant occupies exactly half width and half height. No text, no labels, no borders between quadrants. Premium richly detailed stylized 3D illustrated art matching luxury red black antique-gold cracked casino aesthetic. TOP LEFT quadrant: dark ornate bank vault chamber, deep black marble walls and warm brass lighting, no foreground objects. This quadrant has a complete opaque background. TOP RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: round gold vault door with concentric mechanical rings and burgundy face, straight front view. BOTTOM LEFT quadrant on flat pure chroma green #00ff00 with generous margin: gold lock dial with red pointer, straight front view. BOTTOM RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: small pile of gleaming gold bars. Each subject entirely contained in its own quadrant. Crisp silhouettes, warm highlights, no shadow on green background, no extra characters or props.",
+        "aspectRatio": "1:1",
+        "params": {
+          "resolution": "2K"
+        }
+      },
+      "created_at": "2026-10-17T08:48:11+00:00",
+      "status": "done",
+      "response": {
+        "jobId": "f7ab583d-6d36-4cf6-a83e-7d2fcfaf8a53",
+        "status": "processing",
+        "model": "gpt-image-2.5-sunburst",
+        "modelName": "GPT Image 2.5 Sunburst",
+        "provider": "kie",
+        "aspectRatio": "1:1",
+        "prompt": "Production arcade game texture atlas, perfectly regular TWO BY TWO grid, each quadrant occupies exactly half width and half height. No text, no labels, no borders between quadrants. Premium richly detailed stylized 3D illustrated art matching luxury red black antique-gold cracked casino aesthetic. TOP LEFT quadrant: dark ornate bank vault chamber, deep black marble walls and warm brass lighting, no foreground objects. This quadrant has a complete opaque background. TOP RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: round gold vault door with concentric mechanical rings and burgundy face, straight front view. BOTTOM LEFT quadrant on flat pure chroma green #00ff00 with generous margin: gold lock dial with red pointer, straight front view. BOTTOM RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: small pile of gleaming gold bars. Each subject entirely contained in its own quadrant. Crisp silhouettes, warm highlights, no shadow on green background, no extra characters or props.",
+        "estimatedCredits": 10,
+        "poll": "/api/v1/jobs/f7ab583d-6d36-4cf6-a83e-7d2fcfaf8a53"
+      },
+      "jobs": [
+        {
+          "jobId": "f7ab583d-6d36-4cf6-a83e-7d2fcfaf8a53",
+          "status": "succeeded",
+          "checked_at": "2026-10-17T08:51:17+00:00",
+          "outputs": [
+            {
+              "key": "url",
+              "path": "runs\\sorceress\\arcade-five-vault\\assets\\01-url-57a5618a.png",
+              "bytes": 6292212
+            }
+          ],
+          "sheets": [],
+          "creditsCharged": 10,
+          "balance": 2339
+        }
+      ]
+    },
+    "train": {
+      "provider": "sorceress",
+      "tool": "image_generate",
+      "input": {
+        "model": "gpt-image-2.5-sunburst",
+        "prompt": "Production arcade game texture atlas, perfectly regular TWO BY TWO grid, each quadrant occupies exactly half width and half height. No text, no labels, no borders between quadrants. Premium richly detailed stylized 3D illustrated art matching luxury red black antique-gold cracked casino aesthetic. TOP LEFT quadrant: side view midnight underground railway station, deep burgundy tiled arches, antique gold lights, no trains in foreground. This quadrant has a complete opaque background. TOP RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: full-body running potato gentleman in black tuxedo, strictly side profile facing RIGHT, feet visible. BOTTOM LEFT quadrant on flat pure chroma green #00ff00 with generous margin: side view burgundy luggage trunk with brass corners, isolated. BOTTOM RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: side view low hanging black and gold railway warning bar, isolated. Each subject entirely contained in its own quadrant. Crisp silhouettes, warm highlights, no shadow on green background, no extra characters or props.",
+        "aspectRatio": "1:1",
+        "params": {
+          "resolution": "2K"
+        }
+      },
+      "created_at": "2026-10-17T08:48:12+00:00",
+      "status": "done",
+      "response": {
+        "jobId": "6d1a9967-5ef9-48f4-838f-948d045a22c9",
+        "status": "processing",
+        "model": "gpt-image-2.5-sunburst",
+        "modelName": "GPT Image 2.5 Sunburst",
+        "provider": "kie",
+        "aspectRatio": "1:1",
+        "prompt": "Production arcade game texture atlas, perfectly regular TWO BY TWO grid, each quadrant occupies exactly half width and half height. No text, no labels, no borders between quadrants. Premium richly detailed stylized 3D illustrated art matching luxury red black antique-gold cracked casino aesthetic. TOP LEFT quadrant: side view midnight underground railway station, deep burgundy tiled arches, antique gold lights, no trains in foreground. This quadrant has a complete opaque background. TOP RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: full-body running potato gentleman in black tuxedo, strictly side profile facing RIGHT, feet visible. BOTTOM LEFT quadrant on flat pure chroma green #00ff00 with generous margin: side view burgundy luggage trunk with brass corners, isolated. BOTTOM RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: side view low hanging black and gold railway warning bar, isolated. Each subject entirely contained in its own quadrant. Crisp silhouettes, warm highlights, no shadow on green background, no extra characters or props.",
+        "estimatedCredits": 10,
+        "poll": "/api/v1/jobs/6d1a9967-5ef9-48f4-838f-948d045a22c9"
+      },
+      "jobs": [
+        {
+          "jobId": "6d1a9967-5ef9-48f4-838f-948d045a22c9",
+          "status": "succeeded",
+          "checked_at": "2026-10-17T08:51:22+00:00",
+          "outputs": [
+            {
+              "key": "url",
+              "path": "runs\\sorceress\\arcade-five-train\\assets\\01-url-475792bc.png",
+              "bytes": 5159460
+            }
+          ],
+          "sheets": [],
+          "creditsCharged": 10,
+          "balance": 2329
+        }
+      ]
+    },
+    "pinball": {
+      "provider": "sorceress",
+      "tool": "image_generate",
+      "input": {
+        "model": "gpt-image-2.5-sunburst",
+        "prompt": "Production arcade game texture atlas, perfectly regular TWO BY TWO grid, each quadrant occupies exactly half width and half height. No text, no labels, no borders between quadrants. Premium richly detailed stylized 3D illustrated art matching luxury red black antique-gold cracked casino aesthetic. TOP LEFT quadrant: symmetric ornate midnight casino pinball playfield illustration, TOP DOWN, burgundy velvet and cracked black stone, fine gold filigree only at edges, clear dark central lane, NO flippers NO bumpers NO ball NO fake obstacles. This quadrant has a complete opaque background. TOP RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: gold circular pinball bumper with burgundy center, TOP DOWN. BOTTOM LEFT quadrant on flat pure chroma green #00ff00 with generous margin: gold winged spade crest, TOP DOWN. BOTTOM RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: engraved golden crescent moon medallion, TOP DOWN. Each subject entirely contained in its own quadrant. Crisp silhouettes, warm highlights, no shadow on green background, no extra characters or props.",
+        "aspectRatio": "1:1",
+        "params": {
+          "resolution": "2K"
+        }
+      },
+      "created_at": "2026-10-17T08:48:13+00:00",
+      "status": "done",
+      "response": {
+        "jobId": "161f0244-156c-400a-bd41-79fd96552c0b",
+        "status": "processing",
+        "model": "gpt-image-2.5-sunburst",
+        "modelName": "GPT Image 2.5 Sunburst",
+        "provider": "kie",
+        "aspectRatio": "1:1",
+        "prompt": "Production arcade game texture atlas, perfectly regular TWO BY TWO grid, each quadrant occupies exactly half width and half height. No text, no labels, no borders between quadrants. Premium richly detailed stylized 3D illustrated art matching luxury red black antique-gold cracked casino aesthetic. TOP LEFT quadrant: symmetric ornate midnight casino pinball playfield illustration, TOP DOWN, burgundy velvet and cracked black stone, fine gold filigree only at edges, clear dark central lane, NO flippers NO bumpers NO ball NO fake obstacles. This quadrant has a complete opaque background. TOP RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: gold circular pinball bumper with burgundy center, TOP DOWN. BOTTOM LEFT quadrant on flat pure chroma green #00ff00 with generous margin: gold winged spade crest, TOP DOWN. BOTTOM RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: engraved golden crescent moon medallion, TOP DOWN. Each subject entirely contained in its own quadrant. Crisp silhouettes, warm highlights, no shadow on green background, no extra characters or props.",
+        "estimatedCredits": 10,
+        "poll": "/api/v1/jobs/161f0244-156c-400a-bd41-79fd96552c0b"
+      },
+      "jobs": [
+        {
+          "jobId": "161f0244-156c-400a-bd41-79fd96552c0b",
+          "status": "succeeded",
+          "checked_at": "2026-10-17T08:51:26+00:00",
+          "outputs": [
+            {
+              "key": "url",
+              "path": "runs\\sorceress\\arcade-five-pinball\\assets\\01-url-19ed1ba3.png",
+              "bytes": 6190220
+            }
+          ],
+          "sheets": [],
+          "creditsCharged": 10,
+          "balance": 2319
+        }
+      ]
+    },
+    "pop": {
+      "provider": "sorceress",
+      "tool": "image_generate",
+      "input": {
+        "model": "gpt-image-2.5-sunburst",
+        "prompt": "Production arcade game texture atlas, perfectly regular TWO BY TWO grid, each quadrant occupies exactly half width and half height. No text, no labels, no borders between quadrants. Premium richly detailed stylized 3D illustrated art matching luxury red black antique-gold cracked casino aesthetic. TOP LEFT quadrant: luxury burgundy tufted velvet panel with antique brass cornerwork, straight front view, clear center. This quadrant has a complete opaque background. TOP RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: friendly smiling potato gambler head and shoulders with black bowtie, front view, NO hat. BOTTOM LEFT quadrant on flat pure chroma green #00ff00 with generous margin: sinister red-eyed potato gangster head and shoulders in black fedora, front view. BOTTOM RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: golden mechanical whack-a-mole mallet, isolated. Each subject entirely contained in its own quadrant. Crisp silhouettes, warm highlights, no shadow on green background, no extra characters or props.",
+        "aspectRatio": "1:1",
+        "params": {
+          "resolution": "2K"
+        }
+      },
+      "created_at": "2026-10-17T08:48:14+00:00",
+      "status": "done",
+      "response": {
+        "jobId": "4a6d1373-648c-4383-943d-5b178b9656be",
+        "status": "processing",
+        "model": "gpt-image-2.5-sunburst",
+        "modelName": "GPT Image 2.5 Sunburst",
+        "provider": "kie",
+        "aspectRatio": "1:1",
+        "prompt": "Production arcade game texture atlas, perfectly regular TWO BY TWO grid, each quadrant occupies exactly half width and half height. No text, no labels, no borders between quadrants. Premium richly detailed stylized 3D illustrated art matching luxury red black antique-gold cracked casino aesthetic. TOP LEFT quadrant: luxury burgundy tufted velvet panel with antique brass cornerwork, straight front view, clear center. This quadrant has a complete opaque background. TOP RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: friendly smiling potato gambler head and shoulders with black bowtie, front view, NO hat. BOTTOM LEFT quadrant on flat pure chroma green #00ff00 with generous margin: sinister red-eyed potato gangster head and shoulders in black fedora, front view. BOTTOM RIGHT quadrant on flat pure chroma green #00ff00 with generous margin: golden mechanical whack-a-mole mallet, isolated. Each subject entirely contained in its own quadrant. Crisp silhouettes, warm highlights, no shadow on green background, no extra characters or props.",
+        "estimatedCredits": 10,
+        "poll": "/api/v1/jobs/4a6d1373-648c-4383-943d-5b178b9656be"
+      },
+      "jobs": [
+        {
+          "jobId": "4a6d1373-648c-4383-943d-5b178b9656be",
+          "status": "succeeded",
+          "checked_at": "2026-10-17T08:51:30+00:00",
+          "outputs": [
+            {
+              "key": "url",
+              "path": "runs\\sorceress\\arcade-five-pop\\assets\\01-url-96b36f8d.png",
+              "bytes": 6285872
+            }
+          ],
+          "sheets": [],
+          "creditsCharged": 10,
+          "balance": 2309
+        }
+      ]
+    }
+  },
+  "processing": "Reviewed sources; quadrant crop, local green key, despill, transparent bbox trim; WebP <=768px. No additional paid takes.",
+  "rights": "Subject to provider terms; original casino artwork.",
+  "outputs": [
+    {
+      "game": "stack",
+      "source": "runs\\sorceress\\arcade-five-stack\\assets\\01-url-3eb52164.png",
+      "crop": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "output": "assets\\art2\\arcade-stack-0.webp",
+      "sha256": "d5603e10b3a4da992757f8c627448720289bcaf99ae0215351a364b043a54230"
+    },
+    {
+      "game": "stack",
+      "source": "runs\\sorceress\\arcade-five-stack\\assets\\01-url-3eb52164.png",
+      "crop": [
+        1024,
+        0,
+        2048,
+        1024
+      ],
+      "output": "assets\\art2\\arcade-stack-1.webp",
+      "sha256": "b2739171eca2bb3d0b8682edbb9f10d0a5c695cb0db7cdb42ffd666ed60dfd87"
+    },
+    {
+      "game": "stack",
+      "source": "runs\\sorceress\\arcade-five-stack\\assets\\01-url-3eb52164.png",
+      "crop": [
+        0,
+        1024,
+        1024,
+        2048
+      ],
+      "output": "assets\\art2\\arcade-stack-2.webp",
+      "sha256": "fce7a1f153bbd684c3c23fc168f5fa64ff2b05782e75d7faade9ac58caceac97"
+    },
+    {
+      "game": "stack",
+      "source": "runs\\sorceress\\arcade-five-stack\\assets\\01-url-3eb52164.png",
+      "crop": [
+        1024,
+        1024,
+        2048,
+        2048
+      ],
+      "output": "assets\\art2\\arcade-stack-3.webp",
+      "sha256": "4a5924e7a802139fb8ce3ffc783623626018642f415e0020e9f43076ca643ffe"
+    },
+    {
+      "game": "vault",
+      "source": "runs\\sorceress\\arcade-five-vault\\assets\\01-url-57a5618a.png",
+      "crop": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "output": "assets\\art2\\arcade-vault-0.webp",
+      "sha256": "ab630eafcd891b0f3d4c0e995a089d167907458fa28a0ebcfca5187be8c36c71"
+    },
+    {
+      "game": "vault",
+      "source": "runs\\sorceress\\arcade-five-vault\\assets\\01-url-57a5618a.png",
+      "crop": [
+        1024,
+        0,
+        2048,
+        1024
+      ],
+      "output": "assets\\art2\\arcade-vault-1.webp",
+      "sha256": "3c4135c346e88e48f017541381c0d13ac085bfb479c6fdcac25fd58b462249eb"
+    },
+    {
+      "game": "vault",
+      "source": "runs\\sorceress\\arcade-five-vault\\assets\\01-url-57a5618a.png",
+      "crop": [
+        0,
+        1024,
+        1024,
+        2048
+      ],
+      "output": "assets\\art2\\arcade-vault-2.webp",
+      "sha256": "d4dab2ca6b208367c10d0dfaa2f30ccff10c5e81d37b2b535c9e3a2e312396cc"
+    },
+    {
+      "game": "vault",
+      "source": "runs\\sorceress\\arcade-five-vault\\assets\\01-url-57a5618a.png",
+      "crop": [
+        1024,
+        1024,
+        2048,
+        2048
+      ],
+      "output": "assets\\art2\\arcade-vault-3.webp",
+      "sha256": "89dc414f65b95d48742d314290f562c27625394a33f8ab7e4764cd2b26f41c13"
+    },
+    {
+      "game": "train",
+      "source": "runs\\sorceress\\arcade-five-train\\assets\\01-url-475792bc.png",
+      "crop": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "output": "assets\\art2\\arcade-train-0.webp",
+      "sha256": "5e446946f7f1bc5964616d55f8fb6aa71e6b48140fb8f3273f452ebccdb59be3"
+    },
+    {
+      "game": "train",
+      "source": "runs\\sorceress\\arcade-five-train\\assets\\01-url-475792bc.png",
+      "crop": [
+        1024,
+        0,
+        2048,
+        1024
+      ],
+      "output": "assets\\art2\\arcade-train-1.webp",
+      "sha256": "fd5c6015e6c5ce2868ec98745fb57b91b7fe8def3f4548e3cf02164aadc01c54"
+    },
+    {
+      "game": "train",
+      "source": "runs\\sorceress\\arcade-five-train\\assets\\01-url-475792bc.png",
+      "crop": [
+        0,
+        1024,
+        1024,
+        2048
+      ],
+      "output": "assets\\art2\\arcade-train-2.webp",
+      "sha256": "de56d55e6448835a13c2e9beee0c486e93e12f5442aec8023fed8a5b53b6ca0c"
+    },
+    {
+      "game": "train",
+      "source": "runs\\sorceress\\arcade-five-train\\assets\\01-url-475792bc.png",
+      "crop": [
+        1024,
+        1024,
+        2048,
+        2048
+      ],
+      "output": "assets\\art2\\arcade-train-3.webp",
+      "sha256": "9f74db6a0e1ac4dc915c8f796e4d0be3f0e4fa66d61010c601e849498b980965"
+    },
+    {
+      "game": "pinball",
+      "source": "runs\\sorceress\\arcade-five-pinball\\assets\\01-url-19ed1ba3.png",
+      "crop": [
+        0,
+        0,
+        1024,
+        1024
+      ],
+      "output": "assets\\art2\\arcade-pinball-0.webp",
+      "sha256": "733993dd246b1fa28cd0566d8b73aa5e0b331f2a68dc13451aaba09bd238067c"
+    },
+    {
+      "game": "pinball",
+      "source": "runs\\sorceress\\arcade-five-pinball\\assets\\01-url-19ed1ba3.png",
+      "crop": [
+        1024,
+        0,
+        2048,
+        1024
+      ],
+      "output": "assets\\art2\\arcade-pinball-1.webp",
+      "sha256": "ba31c15cfa1feb22f8e026a3291354c1f67c32971e9f002ae3e6cdc9af646a1a"
+    },
+    {
+      "game": "pinball",
+      "source": "runs\\sorceress\\arcade-five-pinball\\assets\\01-url-19ed1ba3.png",
+      "crop": [
+        0,
+        1024,
+        1024,
+        2048
+      ],
+      "output": "assets\\art2\\arcade-pinball-2.webp",
+      "sha256": "e3011a4a649274d1c69e365932cd7577a3432f8fde4ebbe1f77f1530bbcc8cf0"
+    },
+    {
+      "game": "pinball",
+      "source": "runs\\sorceress\\arcade-five-pinball\\assets\\01-url-19ed1ba3.png",
+      "crop": [
+        1024,
+        1024,
+        2048,
+        2048
+      ],
+      "output": "assets\\art2\\arcade-pinball-3.webp",
+      "sha256": "d80d01796fb46385727ea3be727f5a2264e8fb8e5669e38c8f7a31bc7e326c5a"
+    },
+    {
+      "game": "pop",
+      "source": "runs\\sorceress\\arcade-five-pop\\assets\\01-url-96b36f8d.png",
+      "crop": [
+        0,
+        0,
+        1024,
+        962
+      ],
+      "output": "assets\\art2\\arcade-pop-0.webp",
+      "sha256": "11239faf8d5748dc074db7bcabc69ec3d30e68deab221594f4c7c4b8eb578497"
+    },
+    {
+      "game": "pop",
+      "source": "runs\\sorceress\\arcade-five-pop\\assets\\01-url-96b36f8d.png",
+      "crop": [
+        1024,
+        0,
+        2048,
+        962
+      ],
+      "output": "assets\\art2\\arcade-pop-1.webp",
+      "sha256": "bc88a7c427e59d35f5e43a16b96dd19aab95e2dbc85331861260ac6c06f2d41c"
+    },
+    {
+      "game": "pop",
+      "source": "runs\\sorceress\\arcade-five-pop\\assets\\01-url-96b36f8d.png",
+      "crop": [
+        0,
+        962,
+        1024,
+        2048
+      ],
+      "output": "assets\\art2\\arcade-pop-2.webp",
+      "sha256": "4a267e0aeaa2758432e44275a0d28cc2716d5cf63b1a949fc2651358da051fc2"
+    },
+    {
+      "game": "pop",
+      "source": "runs\\sorceress\\arcade-five-pop\\assets\\01-url-96b36f8d.png",
+      "crop": [
+        1024,
+        962,
+        2048,
+        2048
+      ],
+      "output": "assets\\art2\\arcade-pop-3.webp",
+      "sha256": "94ea8dd66bd99eebfcc171734a63256dce0b6a058814715f57e94f24696262bc"
+    }
+  ]
+}

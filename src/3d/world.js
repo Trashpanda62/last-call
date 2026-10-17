@@ -333,9 +333,9 @@ export function* buildWorldSteps(scene, opts = {}) {
   // you come from; VIP stays on the lounge side, the pond leaves no room to stand in front of it on the other)
   sign('VIP', 0xd8b36e, beside(2440, -1, 1.4), 2.25, 1200 * M + 0.24, 0, 1.4, 0.36);
   sign('RESTROOMS', 0xd2b77a, beside(380, 1, 1.7, 0.45), 2.3, 700 * M - 0.24, Math.PI, 1.7, 0.26);
-  sign('DUCK RACE', 0xd8b36e, beside(2560, 1, 2.0, 0.65), 2.25, 700 * M - 0.24, Math.PI, 2.0, 0.3);
+  sign('DUCK RACE', 0xd8b36e, 2800 * M, 2.55, 700 * M - 0.24, Math.PI, 2.0, 0.3);
   sign('SLOTS', 0xffd040, 510 * M, 2.35, 1200 * M + 0.24, 0, 1.8, 0.45);
-  sign('HIGH LIMIT', 0xffd040, 1620 * M + .24, 2.5, 1270 * M, Math.PI/2, 1.8, 0.30, true, true);
+  sign('HIGH LIMIT', 0xffd040, 1530 * M, 2.5, 1200 * M + .24, 0, 1.8, 0.30, true, false);
   sign('DICE', 0xe2bb72, 2000 * M - .24, 2.35, 780 * M, -Math.PI/2, 1.3, 0.4); // aligned with the southern table pit
   // The coin game has its own HEADS OR TAILS title; a second wall label hid behind the coin.
   bulbsMesh(ctx);

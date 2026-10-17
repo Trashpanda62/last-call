@@ -1,8 +1,10 @@
+import {SKILL_GAMES,skillNew,skillAction,skillTick,skillView,skillMultiplier} from './skill-arcade.js';
 import {flappyNew,flappyFlap,flappyTick,flappyView,flappyMultiplier} from './flappy.js';
 // Bounded, deterministic host simulations. Cabinet-local metres, +z toward the player.
 export const ARCADE = Object.freeze({ step: 1 / 120, pusherTokens: 1, clawTries: 1, seconds: 60 });
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 export function arcadeNew(game, id, seat, player, bet, hot = false) {
+  if(SKILL_GAMES.includes(game))return skillNew(game,id,seat,player,bet);
   if(game==='flappy')return flappyNew(id,seat,player,bet);
   const r = { game, id, seat, player, bet, hot, phase: 'aim', used: 0, score: 0, time: ARCADE.seconds,
     elapsed: 0, acc: 0, seq: 0, paid: false, abandoned: false, x: 0, z: 0, timer: 0, shelf: -.42, grabbed: -1, coins: [], prizes: [] };
@@ -12,15 +14,16 @@ export function arcadeNew(game, id, seat, player, bet, hot = false) {
   else for (let i = 0; i < 9; i++) r.prizes.push({ id: i, x: (i % 3 - 1) * .29, z: (Math.floor(i / 3) - 1) * .26, value: i % 3 + 1, taken: false });
   return r;
 }
-export const arcadeMultiplier = r => r.game === 'flappy' ? flappyMultiplier(r.score) : r.game === 'claw' ? r.score : Math.min(3, r.score);
+export const arcadeMultiplier = r => SKILL_GAMES.includes(r.game) ? skillMultiplier(r) : r.game === 'flappy' ? flappyMultiplier(r.score) : r.game === 'claw' ? r.score : Math.min(3, r.score);
 export function arcadeMove(r, dx, dz, seq) {
-  if (!r || r.phase !== 'aim' || r.abandoned || seq !== r.seq + 1 || !Number.isFinite(dx) || !Number.isFinite(dz)) return false;
+  if (!r || SKILL_GAMES.includes(r.game) || r.phase !== 'aim' || r.abandoned || seq !== r.seq + 1 || !Number.isFinite(dx) || !Number.isFinite(dz)) return false;
   // A message moves one detent; sending a large value cannot teleport the carriage.
   r.x = clamp(r.x + clamp(dx, -1, 1) * .075, -.43, .43);
   if (r.game === 'claw') r.z = clamp(r.z + clamp(dz, -1, 1) * .075, -.36, .36);
   r.seq = seq; return true;
 }
-export function arcadeDrop(r, seq) {
+export function arcadeDrop(r, seq, input) {
+  if(SKILL_GAMES.includes(r?.game))return skillAction(r,seq,input);
   if(r?.game==='flappy')return flappyFlap(r,seq);
   if (!r || r.phase !== 'aim' || r.abandoned || seq !== r.seq + 1 || r.used >= (r.game === 'pusher' ? ARCADE.pusherTokens : ARCADE.clawTries)) return false;
   r.seq = seq; r.used++; r.timer = 0; r.phase = 'drop';
@@ -72,6 +75,7 @@ function step(r, dt) {
   }
 }
 export function arcadeTick(r, dt) {
+  if(SKILL_GAMES.includes(r?.game))return skillTick(r,dt);
   if(r?.game==='flappy')return flappyTick(r,dt);
   if (!r || r.phase === 'done' || !(dt > 0) || !Number.isFinite(dt)) return;
   r.time = Math.max(0, r.time - dt); if (!r.time) r.abandoned = true;
@@ -81,6 +85,7 @@ export function arcadeTick(r, dt) {
 }
 export function arcadeView(r) {
   if (!r) return null;
+  if(SKILL_GAMES.includes(r.game))return skillView(r);
   if(r.game==='flappy')return flappyView(r);
   const { policy, paid, hot, acc, abandoned, ...out } = r;
   return { ...out, assist: hot, mult: arcadeMultiplier(r) };

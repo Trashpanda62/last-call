@@ -1016,9 +1016,10 @@ body.blackout #toasts { top:252px; }
 /* One action dock for crew and killers. Right click releases the cursor. */
 #actionDock {display:flex;gap:8px;align-items:flex-end;justify-content:center;max-width:96vw;flex-wrap:wrap;pointer-events:auto;}
 #actionDock #safetyActions {position:static;display:flex;gap:4px;max-width:none;flex-wrap:nowrap;}
-#actionDock #safetyActions button {display:grid;justify-items:center;align-content:center;width:66px;min-height:85px;padding:4px;border:1px solid #8b6d3f88;border-radius:4px;background:#100b0ce8;color:#dfcba5;}
+#actionDock #safetyActions button {display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-content:center;text-align:center;width:66px;min-height:85px;padding:4px;border:1px solid #8b6d3f88;border-radius:4px;background:#100b0ce8;color:#dfcba5;}
 #safetyActions svg {width:40px;height:40px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
-#safetyActions span {font:600 10px Manrope,Arial,sans-serif;margin-top:4px;white-space:nowrap;}
+#safetyActions span {display:block;width:max-content;justify-self:center;min-width:0;text-align:center;font:600 10px Manrope,Arial,sans-serif;margin-top:4px;white-space:nowrap;}
+#safetyActions small {display:block;justify-self:center;font:600 9px/11px Manrope,Arial,sans-serif;color:#bfa882;}
 #actionDock button:hover,#actionDock button:focus-visible {background:#453023;outline:2px solid #e0bd76;outline-offset:2px;}
 #actionDock button:active {transform:translateY(2px);}
 #mouseActionsHint {font:11px Manrope,Arial,sans-serif;color:#d7bf97;background:#100b0ce8;padding:4px 8px;border-radius:4px;}
@@ -1043,4 +1044,4 @@ body.touch #actionDock #killerBar {position:static;flex-wrap:wrap;max-width:100%
 #safetyActions .icon-fill {fill:#a47c3e;stroke:#f0d29a;}
 #safetyActions .icon-light {fill:#33131a;stroke:#eac98a;}
 #actionDock #safetyActions button:disabled svg {filter:grayscale(.8);opacity:.55;}
-@media(max-width:800px){#safetyActions svg{width:32px;height:32px;}}
+@media(max-width:800px){#safetyActions svg{width:32px;height:32px;}#safetyActions span{font-size:9px;}}

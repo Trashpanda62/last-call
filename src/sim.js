@@ -1,3 +1,4 @@
+import {SKILL_GAMES} from './skill-arcade.js';
 // The authoritative game. No DOM: the host (or solo client) runs it; every human sees it through view(id).
 import { CFG, DIFF, CAST, DRINKS, DEATH_SOUNDS } from './config.js';
 import { rand, pick, clamp, dist, angDiff, money, shuffle, secs } from './util.js';
@@ -65,7 +66,7 @@ export function createGame(opts) {
     t: 0, mode: 'play', pickT: 0, pickEarly: false, pickReady: false, lure: null, bank: CFG.startBank, target: Gm.roundGoal(CFG.startBank * CFG.targets[n] * CFG.killerBank[nk]),
     diff: Object.hasOwn(DIFF, opts.difficulty) ? DIFF[opts.difficulty] : DIFF.normal, bankLog: [{ t: 0, bank: CFG.startBank }],
     chars: [], drinks: [], bodies: [], floats: [], fx: [], lightsT: 0, blackout: null, afterDark: null, backrooms: !!opts.backrooms, backroomsChance: opts.backroomsChance ?? CFG.backroomsChance, escape: opts.mode === 'escape', exits: null, nextId: 1, obsT: 0, pending: null, meetEnd: 0, big: n > CFG.bigRoom, meeting: null, over: null,
-    arcade: {pusher:null,claw:null,flappy:null}, arcadeSeq: 0, skee: [null, null], skeeSeq: 0, seats: makeSeats(), held: new Map(), bowls: BOWL_SPOTS.map((p, i) => ({ id: i, x: p.x, y: p.y })), deaths: 0, traps: [],
+    arcade: Object.fromEntries(['pusher','claw','flappy',...SKILL_GAMES].map(k=>[k,null])), arcadeSeq: 0, skee: [null, null], skeeSeq: 0, seats: makeSeats(), held: new Map(), bowls: BOWL_SPOTS.map((p, i) => ({ id: i, x: p.x, y: p.y })), deaths: 0, traps: [],
     chandeliers: CHANDELIERS.map(([x, y], i) => ({ id: i, x, y, state: 'up', t: 0, by: null })).filter(ch => !['race', 'arcade'].includes(roomOf(ch))), guard: null, guardSaw: null, haunts: [],
     // (the pond and arcade have plain lamps, nothing to drop)
     antidotes: CFG.antidotes, security: { cams: false, feed: 'floor', feedT: 0 },
@@ -827,7 +828,7 @@ function makeApi(G) {
     c.gameT = every * rand(0.7, 1.3); c.betAt = G.t; // chips on the felt (the 'bet' flag in the view: everyone sees the gesture)
     let b = botBet(), m = 0, units = 1;
     switch (s.game) {
-      case 'flappy': case 'pusher': case 'claw': { startArcade(c, b); return; }
+      case 'stack': case 'vault': case 'train': case 'pinball': case 'pop': case 'flappy': case 'pusher': case 'claw': { startArcade(c, b); return; }
       case 'skee': { startSkee(c, b); return; }
       case 'bj': { const r = Gm.bjAuto(); m = r.mult; units = r.staked; break; }
       case 'roulette': { const bet = Math.random() < 0.25 ? Math.floor(Math.random() * 37) : pick(Object.keys(Gm.RL_BETS)); m = Gm.rlSpin(bet, Gm.rlLucky()).mult; break; }
@@ -884,7 +885,7 @@ function makeApi(G) {
     }
   }
   function startArcade(c, bet, after = null) {
-    const game = c.seat?.game; if (!['pusher','claw','flappy'].includes(game) || !Number.isFinite(bet) || bet < Gm.BET.min) return false;
+    const game = c.seat?.game; if (!['pusher','claw','flappy',...SKILL_GAMES].includes(game) || !Number.isFinite(bet) || bet < Gm.BET.min) return false;
     const prior = G.arcade[game]; if ((after !== null && after !== (prior?.id || 0)) || prior && prior.phase !== 'done') return false;
     springTrap(c,c.seat); if (!c.seat) return false;
     const r = arcadeNew(game,++G.arcadeSeq,c.seat.id,c.id,Gm.clampBet(bet,G.bank),c.isHuman && luckFor(c).next());
@@ -895,9 +896,10 @@ function makeApi(G) {
       if (!r || r.paid) continue; const c = byId(r.player);
       if (!c?.seat || c.seat.id !== r.seat || (!c.alive && !c.isHuman)) r.abandoned = true;
       if (r.phase === 'aim' && c && !c.isHuman && !r.abandoned && r.timer > .8) {
-        if(r.game!=='flappy'){arcadeMove(r,rand(-1,1),rand(-1,1),r.seq+1);arcadeDrop(r,r.seq+1);}
+        if(!SKILL_GAMES.includes(r.game)&&r.game!=='flappy'){arcadeMove(r,rand(-1,1),rand(-1,1),r.seq+1);arcadeDrop(r,r.seq+1);}
       }
       if(r.game==='flappy' && !c?.isHuman && !r.abandoned && (r.phase==='aim'||r.phase==='fly' && r.y < (r.pipes.filter(p=>p.x>.14).sort((a,b)=>a.x-b.x)[0]?.y||.5)-.04)) arcadeDrop(r,r.seq+1);
+      if(SKILL_GAMES.includes(r.game)&&!c?.isHuman&&!r.abandoned&&r.elapsed-(r.botAt||-1)>.35){r.botAt=r.elapsed;const p=r.holes?.find(p=>p.on&&!p.bad);arcadeDrop(r,r.seq+1,{button:r.game==='train'&&r.obstacles.find(o=>o.x>.15&&o.x<.5)?.kind==='bar'?2:r.seq%2?2:0,x:p?.id%3*.28+.22,y:Math.floor((p?.id||0)/3)*.24+.34});}
       arcadeTick(r,dt);
       if (r.phase === 'done' && !r.paid) { r.paid = true;const back=r.bet*arcadeMultiplier(r);r.net=settle(c,r.bet,back,r.policy);
         if(c?.isHuman){luckFor(c).settle(r.bet,back);tell(c,`Paid ${money(back)} / net ${r.net>0?'+':''}${money(r.net||0)}`,back<r.bet,back>r.bet?'coin':'click');}
@@ -1688,10 +1690,10 @@ function makeApi(G) {
       } else tell(c, "You're the monster. Left-click to grab whoever you catch, Shift to leap.");
       return;
     }
-    if (k === 'arcade' && arg && ['pusher','claw','flappy'].includes(c.seat?.game)) {
+    if (k === 'arcade' && arg && ['pusher','claw','flappy',...SKILL_GAMES].includes(c.seat?.game)) {
       if (arg.kind === 'start' && Number.isSafeInteger(arg.after) && arg.after >= 0) startArcade(c,arg.bet,arg.after);
       else { const r=G.arcade[c.seat.game];if(r && r.player===c.id && r.seat===c.seat.id && r.id===arg.round) {
-        const ok=arg.kind==='move'&&r.game!=='flappy'?arcadeMove(r,arg.dx,arg.dz,arg.sequence):arg.kind==='drop'?arcadeDrop(r,arg.sequence):false;
+        const ok=arg.kind==='move'&&r.game!=='flappy'?arcadeMove(r,arg.dx,arg.dz,arg.sequence):arg.kind==='drop'?arcadeDrop(r,arg.sequence,arg):false;
         if(ok)c.betAt=G.t;
       }}
       return;

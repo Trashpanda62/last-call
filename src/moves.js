@@ -41,7 +41,7 @@ export function initMoves(opts) {
     sip:['Sip', '<path class="icon-fill" d="M5 5h14l-2 9c-1 3-9 3-10 0z"/><path class="icon-light" d="M7 9h10l-1 5c-2 1-6 1-8 0z"/><path d="M5 5h14M12 17v4m-5 0h10M15 5l3-3h3"/>'],
     inspect:['Check traps', '<path class="icon-fill" d="M14 15l7 6-2 2-7-7z"/><circle class="icon-fill" cx="10" cy="10" r="7"/><circle class="icon-light" cx="10" cy="10" r="5"/><path d="m7 10 2 2 4-4"/>']
   };
-  $('safetyActions').innerHTML = Object.entries(safety).map(([k,[label,art]])=>`<button data-safety="${k}" title="${label}" aria-label="${label}"><svg viewBox="0 0 24 24" aria-hidden="true">${art}</svg><span>${label}</span></button>`).join('');
+  $('safetyActions').innerHTML = Object.entries(safety).map(([k,[label,art]])=>`<button data-safety="${k}" title="${label}${k==='sip'?' · Left click':' · Right click'}" aria-label="${label}"><svg viewBox="0 0 24 24" aria-hidden="true">${art}</svg><span>${label}</span><small>${k==='sip'?'LMB':'RMB'}</small></button>`).join('');
   $('safetyActions').querySelectorAll('button').forEach(b=>b.onclick=()=>{act(b.dataset.safety);closeActionCursor();});
   const bar = $('killerBar');
   bar.innerHTML = KILL_KEYS.map((k, i) => `<button data-move="${k}" title="${esc(TIPS[k])}">${icon(k)}<b>${KILL_HINTS[i]}</b><span> ${LABELS[k]}</span><i></i></button>`).join('') +
@@ -187,6 +187,8 @@ export function updateMoves(v) {
   const { pub, priv } = v;
   const play = pub.mode === 'play' && !pub.over;
   $('mouseActionsHint').classList.toggle('hidden', !(play && priv.alive && !priv.cameraFeed));
+  const mr=pub.arcade?.[priv.seat?.game];
+  text($('mouseActionsHint'), ['train','pinball'].includes(priv.seat?.game)&&mr?.player===priv.me&&mr.phase!=='done' ? priv.seat.game==='train'?'LMB: jump · RMB: slide':'LMB: left flipper · RMB: right flipper' : actionCursor?'Left click: choose action · Right click: return':'LMB: use / sip · RMB: check traps / sniff');
   if ((!play || !priv.alive || priv.cameraFeed) && actionCursor) {actionCursor=false;document.body.classList.remove('actionCursor');}
   if (!play && picker) closePicker();
   // killer bar

@@ -8,7 +8,7 @@ import { roomOf } from '../map.js';
 
 export const PROP_NAMES = ['bjTable', 'rouletteTable', 'diceTable', 'slot', 'slotHigh', 'jackpot', 'plinko', 'console', 'prizeWheel', 'duck',
   'barCounter', 'backBar', 'stool', 'chair', 'booth', 'couch', 'armchair', 'chandelier', 'poolTable', 'champagne',
-  'skeeCabinet', 'snackPretzel', 'palm', 'camera', 'pitBell', 'toilet', 'sink', 'rocket', 'ottoman', 'breaker']; // Jukebox and snack trays use their own meshes. coinPodium: its fluting decimated into red streaks; hightop: its column decimated away; crates: decimated into shards. The hand-built ones stay (the dumpster and street lamp went with the back alley)
+  'snackPretzel', 'palm', 'camera', 'pitBell', 'toilet', 'sink', 'rocket', 'ottoman', 'breaker']; // Jukebox and snack trays use their own meshes. coinPodium: its fluting decimated into red streaks; hightop: its column decimated away; crates: decimated into shards. The hand-built ones stay (the dumpster and street lamp went with the back alley)
 const SRC = {};
 let ready = false;
 const waiters = [];
@@ -23,7 +23,7 @@ export function loadProps(base = 'assets/props/') {
   const loader = new GLTFLoader();
   let next = 0;
   return Promise.all(Array.from({ length: 4 }, async () => {
-    while (next < PROP_NAMES.length) { const n = PROP_NAMES[next++]; try { const g = await loader.loadAsync(base + n + '.glb'); SRC[n] = prep(g.scene); } catch (error) { if (n === 'skeeCabinet') throw new Error('Skee-ball model failed to load. Retry preparation.', { cause: error }); /* optional legacy prop fallback */ } }
+    while (next < PROP_NAMES.length) { const n = PROP_NAMES[next++]; try { const g = await loader.loadAsync(base + n + '.glb'); SRC[n] = prep(g.scene); } catch (error) { /* optional legacy prop fallback */ } }
   }))
     .then(() => { if (!Object.keys(SRC).length) return; ready = true; waiters.splice(0).forEach(f => f()); });
 }

@@ -11,7 +11,7 @@ const ROWS = [
   ['Other killer moves', 'Right click, choose an icon', 'D-pad ← / → choose, ↓ use'],
   ['Transform / selected ability', 'Click icon (hold Peek)', 'Y / RB (hold for peek)'],
   ['Sprint / monster leap', 'Shift', 'Left stick click / LB'],
-  ['Actions / phone', 'Right click icons / Tab', 'X / D-pad up / View'],
+  ['Drink / safety / phone', 'LMB sip · RMB sniff / check · Tab', 'X / D-pad up / View'],
   ['Ghost cameras / haunt / pause', 'C / H / Escape', 'D-pad down / X / Menu'],
 ];
 // Vector diagrams keep every key label sharp at any resolution and add no asset downloads.

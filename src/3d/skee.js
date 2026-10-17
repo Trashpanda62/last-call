@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import * as T from './textures.js';
 import { SKEE, SKEE_POCKETS } from '../skee.js';
 import { SKEE_LANES } from '../map.js';
-import { hasProp, placeProps } from './props.js';
 import { MAT, v3, box, rbox, sph, basicGlow } from './world.js';
 
 export function buildSkee(ctx, seats, screen, updaters) {
@@ -24,16 +23,9 @@ export function buildSkee(ctx, seats, screen, updaters) {
   for (let i = 0; i <= 20; i++) { const z = -.38 - i / 20 * .44, y = .638 + .32 * (i / 20) ** 2; points.push(-.48, y, z, .48, y, z); uv.push(0, i / 20, 1, i / 20); if (i < 20) { const n = i * 2; indices.push(n, n + 1, n + 2, n + 1, n + 3, n + 2); } }
   ramp.setAttribute('position', new THREE.Float32BufferAttribute(points, 3)); ramp.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); ramp.setIndex(indices); ramp.computeVertexNormals();
   const arrowGeo = new THREE.ConeGeometry(.06, .19, 3), arrowMat = new THREE.MeshBasicMaterial({ color: 0xefd185 });
-  const shells = [];
   for (const lane of SKEE_LANES) {
     const seat = seats.find(s => s.game === 'skee' && s.machine === lane.machine), x = lane.x / 60, z = lane.y / 60;
     const at = (dx, y, dz) => v3(x + dx, y, z + dz);
-    if (hasProp('skeeCabinet')) shells.push({ x, z, scale: v3(1, 1, 1) });
-    else {
-      B.add(rbox(1.22, .56, 4.6, .04), MAT.darkWood, at(0, .28, 0));
-      B.add(rbox(1.22, 1.4, .24, .05), MAT.darkWood, at(0, 1.28, -2.18));
-      for (const side of [-1, 1]) B.add(rbox(.08, 1.4, 1.3, .025), MAT.gold, at(side * .57, 1.25, -1.65));
-    }
     // Opaque authored casing closes gaps in the cut-down generated shell, including below the lane
     // and behind the target face. Actual pocket openings remain open into a dark return box.
     B.add(rbox(1.18,.57,4.50,.035), MAT.darkWood, at(0,.285,0));
@@ -43,6 +35,10 @@ export function buildSkee(ctx, seats, screen, updaters) {
     }
     B.add(box(1.18,1.48,.065), MAT.darkWood, at(0,1.29,-2.20));
     B.add(box(1.18,.055,1.34), MAT.darkWood, at(0,2.045,-1.57));
+    for(const side of [-1,1]) {
+      B.add(box(.025,1.48,.075),MAT.gold,at(side*.58,1.29,-2.20));
+      B.add(box(.025,.055,1.34),MAT.gold,at(side*.58,2.075,-1.57));
+    }
     // A clean continuous lane covers the generated top; authored rails have consistent thickness.
     B.add(laneGeo, laneMat, at(0, .638, .90), 0, null, -Math.PI / 2);
     B.add(ramp, laneMat, at(0, 0, 0));
@@ -68,8 +64,8 @@ export function buildSkee(ctx, seats, screen, updaters) {
     const moving = new THREE.Mesh(ballGeo, ballMat.clone()); moving.name = 'skee-live-ball'; moving.visible = false; moving.castShadow = true; root.add(moving);
     const arrow = new THREE.Mesh(arrowGeo, arrowMat); arrow.rotation.x = -Math.PI / 2; arrow.position.set(0, .653, 1.4); arrow.visible = false; root.add(arrow);
     const power = new THREE.Mesh(powerGeo, arrowMat); power.position.set(0, .80, 2.18); power.visible = false; root.add(power);
-    B.add(rbox(1.25, .30, .10, .025), MAT.darkWood, at(0, 1.99, -1.45));
-    const score = screen({ w: 1.15, h: .24, cw: 768, ch: 160, pos: at(0, 1.99, -1.39), every: .1, far: 24, seat: seat.id,
+    B.add(rbox(1.25, .30, .10, .025), MAT.darkWood, at(0, 2.10, -.94));
+    const score = screen({ w: 1.15, h: .24, cw: 768, ch: 160, pos: at(0, 2.10, -.88), every: .1, far: 24, seat: seat.id,
       key: (_t, r) => r ? [r.id, r.score, r.launched, r.phase, r.last, r.seconds].join(':') : 'idle',
       paint: (g, w, h, _t, r) => {
         g.fillStyle = '#0c1816'; g.fillRect(0, 0, w, h); g.strokeStyle = '#b68b43'; g.lineWidth = 5; g.strokeRect(3, 3, w - 6, h - 6);
@@ -96,5 +92,5 @@ export function buildSkee(ctx, seats, screen, updaters) {
     });
     lightSpots.push({ p: at(0, 2.9, -.3), color: 0xffdc9c, power: 3, range: 5 });
   }
-  if (shells.length) placeProps(group, 'skeeCabinet', shells);
+
 }

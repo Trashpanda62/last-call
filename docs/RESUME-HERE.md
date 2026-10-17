@@ -2,6 +2,14 @@
 
 Updated **2026-10-17**. The remaining implementable work from the prior checkpoint is constructed. Implementation, automated checks and LAN delivery verification are complete. [active-plan.md](active-plan.md) separates implementation from player acceptance. Older reports describe historical builds.
 
+## Latest five-game arcade and control repairs
+
+Potato Stack, Vault Breaker, Last Train, Midnight Pinball and Potato Pop are implemented in a compact central arcade bank with physical controls, host-owned rules and one-time payouts. Five approved Sorceress atlases are integrated: actual 50 credits ($0.50), no extra jobs. [Controls, payout thresholds, receipts and actual previews](../design/arcade-five/README.md).
+
+Moved HIGH LIMIT from VIP to the slot hall and DUCK RACE away from behind Flying Pigs. Both skee backings now use consistent solid geometry with an unobstructed scoreboard. Left click sips, right click sniffs/checks nearby tables; contextual table placement remains. Coin flip slowly rotates before and after a round. Check Traps icon and label are centered, with the RMB binding on its own line, at desktop and narrow widths.
+
+Native game/settlement checks, real first-person normal/no-prop input, three-browser guest/observer transport, seven-hole skee entry and all 92 seats / 2,548 navigation routes pass. Reports: performance/2026-10-17-arcade-five-{rules,views,network,skee-entry,layout}.json. Player acceptance and C02 balance hold remain open. Five remaining game proposals are in [next arcade games](../design/next-arcade-games.md).
+
 ## Latest approved art and playtest repair
 
 Steve approved the pending two-image Sorceress batch on 2026-10-17. Generated pipe shaft/cap and embossed potato heads/winged crest tails are integrated and reviewed in the real casino. Actual cost: 20 credits ($0.20), exactly approved; no extra paid jobs. Provenance: design/machine-review/media-provenance.json.
@@ -10,7 +18,7 @@ Skee's previous hole-entry tests missed an unstable ramp integrator: adjacent po
 
 Left click near any of the five bar tables places the held drink on its real tabletop; click again with a free hand to pick it up. Guests receive the placement height, and sips/poison remain intact. Both high-top and booth surfaces are covered. Floating figures were baked into the legacy donut GLB; it is replaced with clean food-only geometry. Generated hats now fit width, height and depth around the head crown; wrong umbrella/hardhat assets use the correct authored forms. Reviewed all 32 hats in normal and no-prop views.
 
-Requested game list is now explicit: [next arcade games](../design/next-arcade-games.md). These are proposals only. Current test reports: performance/2026-10-17-{skee-energy-rules,table-drinks-skee-energy,approved-followup-views,skee-energy-entry,skee-energy-network}.json. Player acceptance remains separate from automated verification.
+Requested game list is now explicit: [next arcade games](../design/next-arcade-games.md). Five requested ideas are now implemented as described above; the remaining ideas are proposals. Historical test reports: performance/2026-10-17-{skee-energy-rules,table-drinks-skee-energy,approved-followup-views,skee-energy-entry,skee-energy-network}.json. Player acceptance remains separate from automated verification.
 
 ## Constructed in this continuation
 

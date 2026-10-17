@@ -59,7 +59,13 @@ export const SKEE_LANES = [2754, 2862].map((x, machine) => ({ x, y: 222, w: 84, 
 // relocated cabinet and hid half its board). r is its footprint radius, h its height in metres.
 export const ARCADE_ROCKET = { x: 2045, y: 52, r: 24, h: 1.6 };
 export const MINES_XS = [2148], TOWER_XS = [2292];  // consoles on the arcade's south wall
-export const ARCADE_CABS = [{ game: 'pusher', x: 2920, y: 522, w: 90, h: 102 }, { game: 'claw', x: 2920, y: 638, w: 96, h: 102 }, { game: 'flappy', x: 2660, y: 650, w: 90, h: 88 }];
+export const ARCADE_CABS = [
+  {game:'stack',x:2150,y:435,w:84,h:78,face:Math.PI},
+  {game:'vault',x:2280,y:435,w:84,h:78,face:Math.PI},
+  {game:'train',x:2410,y:435,w:84,h:78,face:Math.PI},
+  {game:'pop',x:2215,y:513,w:84,h:78,face:0},
+  {game:'pinball',x:2375,y:517,w:88,h:112,face:0},
+{ game: 'pusher', x: 2920, y: 522, w: 90, h: 102 }, { game: 'claw', x: 2920, y: 638, w: 96, h: 102 }, { game: 'flappy', x: 2660, y: 650, w: 90, h: 88 }];
 export const POND = { x: 2140, y: 900, w: 780, h: 170 };                     // the duck race channel, ducks swim east
 export const RACE_XS = [2690]; // one shared betting pedestal, east of the arcade doorway
 // Four continuous back-to-back banks. The centre aisle links both public doors;
@@ -140,7 +146,7 @@ export const REST_SPOTS = [{ x: 110, y: 820 }, { x: 110, y: 980 }, { x: 320, y: 
 export const BOWL_SPOTS = [{ x: 530, y: 160 }, { x: 2900, y: 1300 }, { x: 2070, y: 480 }, { x: 1520, y: 1280 }, { x: 1900, y: 1100 }, { x: 980, y: 1250 }]; // bar, VIP, arcade, slot hall (east, by the dice), casino floor, slot hall
 export const GAME_NAMES = {
   bj: 'blackjack', roulette: 'roulette', race: 'the duck race', vip: 'the VIP lounge', slots: 'the slots', crash: 'Crash',
-  flappy: 'Flying Pigs', pusher: 'the coin-pusher', claw: 'the prize claw', skee: 'skee-ball', plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice', cams: 'the security desk',
+  stack:'Potato Stack',vault:'Vault Breaker',train:'Last Train',pinball:'Midnight Pinball',pop:'Potato Pop',flappy: 'Flying Pigs', pusher: 'the coin-pusher', claw: 'the prize claw', skee: 'skee-ball', plinko: 'Plinko', mines: 'Mines', tower: 'Dragon Tower', coin: 'the coin flip', wheel: 'the prize wheel', dice: 'street dice', cams: 'the security desk',
 };
 
 export function makeSeats() {
@@ -168,7 +174,7 @@ export function makeSeats() {
   add('vip', COFFEE.x - 70, COFFEE.y + 35, 0); add('vip', COFFEE.x + COFFEE.w + 70, COFFEE.y + 35, Math.PI);
   add('vip', COFFEE.x + 80, COFFEE.y - 65, Math.PI / 2); add('vip', COFFEE.x + 80, COFFEE.y + COFFEE.h + 65, -Math.PI / 2);
   SKEE_LANES.forEach(p => add('skee', p.x, p.playerY, -Math.PI / 2, { machine: p.machine }));
-  ARCADE_CABS.forEach(c => c.game==='flappy'?add(c.game,c.x,c.y-82,Math.PI/2,{machine:0}):add(c.game, c.x-c.w/2-38, c.y, 0, { machine: 0 }));
+  ARCADE_CABS.forEach(c => c.face!==undefined?add(c.game,c.x,c.y+Math.cos(c.face)*(c.h/2+38),-Math.PI/2*Math.cos(c.face),{machine:0}):c.game==='flappy'?add(c.game,c.x,c.y-82,Math.PI/2,{machine:0}):add(c.game, c.x-c.w/2-38, c.y, 0, { machine: 0 }));
   return seats;
 }
 

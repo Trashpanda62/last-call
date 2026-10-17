@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-17T07:55:35.946Z",
+  "at": "2026-10-17T08:59:59.360Z",
   "status": "populated slot banks, south-wall Flying Pigs cabinet and lounge-facing coin; constructed",
   "units": "60 simulation pixels = 1 metre",
   "plantCanopyRadius": 71,
@@ -637,6 +637,41 @@
       "w": 50,
       "h": 48,
       "kind": "tower"
+    },
+    {
+      "x": 2108,
+      "y": 396,
+      "w": 84,
+      "h": 78,
+      "kind": "stack"
+    },
+    {
+      "x": 2238,
+      "y": 396,
+      "w": 84,
+      "h": 78,
+      "kind": "vault"
+    },
+    {
+      "x": 2368,
+      "y": 396,
+      "w": 84,
+      "h": 78,
+      "kind": "train"
+    },
+    {
+      "x": 2173,
+      "y": 474,
+      "w": 84,
+      "h": 78,
+      "kind": "pop"
+    },
+    {
+      "x": 2331,
+      "y": 461,
+      "w": 88,
+      "h": 112,
+      "kind": "pinball"
     },
     {
       "x": 2875,
@@ -2715,6 +2750,96 @@
     },
     {
       "id": 84,
+      "game": "stack",
+      "x": 2150,
+      "y": 358,
+      "face": 1.5707963267948966,
+      "drink": {
+        "x": 2150,
+        "y": 316
+      },
+      "approach": {
+        "x": 2150,
+        "y": 297.1
+      },
+      "occ": null,
+      "claim": null,
+      "machine": 0
+    },
+    {
+      "id": 85,
+      "game": "vault",
+      "x": 2280,
+      "y": 358,
+      "face": 1.5707963267948966,
+      "drink": {
+        "x": 2280,
+        "y": 316
+      },
+      "approach": {
+        "x": 2280,
+        "y": 297.1
+      },
+      "occ": null,
+      "claim": null,
+      "machine": 0
+    },
+    {
+      "id": 86,
+      "game": "train",
+      "x": 2410,
+      "y": 358,
+      "face": 1.5707963267948966,
+      "drink": {
+        "x": 2410,
+        "y": 316
+      },
+      "approach": {
+        "x": 2410,
+        "y": 297.1
+      },
+      "occ": null,
+      "claim": null,
+      "machine": 0
+    },
+    {
+      "id": 87,
+      "game": "pop",
+      "x": 2215,
+      "y": 590,
+      "face": -1.5707963267948966,
+      "drink": {
+        "x": 2215,
+        "y": 632
+      },
+      "approach": {
+        "x": 2215,
+        "y": 650.9
+      },
+      "occ": null,
+      "claim": null,
+      "machine": 0
+    },
+    {
+      "id": 88,
+      "game": "pinball",
+      "x": 2375,
+      "y": 611,
+      "face": -1.5707963267948966,
+      "drink": {
+        "x": 2375,
+        "y": 653
+      },
+      "approach": {
+        "x": 2375,
+        "y": 671.9
+      },
+      "occ": null,
+      "claim": null,
+      "machine": 0
+    },
+    {
+      "id": 89,
       "game": "pusher",
       "x": 2837,
       "y": 522,
@@ -2732,7 +2857,7 @@
       "machine": 0
     },
     {
-      "id": 85,
+      "id": 90,
       "game": "claw",
       "x": 2834,
       "y": 638,
@@ -2750,7 +2875,7 @@
       "machine": 0
     },
     {
-      "id": 86,
+      "id": 91,
       "game": "flappy",
       "x": 2660,
       "y": 568,
