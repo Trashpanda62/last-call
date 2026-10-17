@@ -30,6 +30,30 @@ function noiseFill(g, w, h, alpha, n = 2200, r = Math.random) {
 const FONT = 'Georgia, "Times New Roman", serif';
 
 // ---------- Floors ----------
+// Architectural fallback for the black stone / oxblood casino palette.
+export const noirStone = () => once('noirStone', () => {
+  const [c,g]=canvas(512,512),r=srand(317);
+  g.fillStyle='#111011';g.fillRect(0,0,512,512);noiseFill(g,512,512,.035,9000,r);
+  for(let n=0;n<11;n++){
+    const points=[];let x=r()*512,y=r()*512,angle=r()*Math.PI*2;
+    for(let i=0;i<32;i++){points.push([x,y]);angle+=(r()-.5)*.65;x+=Math.cos(angle)*13;y+=Math.sin(angle)*13;}
+    for(const ox of [-512,0,512])for(const oy of [-512,0,512]){
+      g.beginPath();points.forEach(([px,py],i)=>i?g.lineTo(px+ox,py+oy):g.moveTo(px+ox,py+oy));
+      g.strokeStyle=n%3?'#51412d':'#796040';g.lineWidth=n%3?.55:.9;g.stroke();
+    }
+  }
+  return tex(c);
+});
+export const oxbloodCarpet = () => once('oxbloodCarpet', () => {
+  const [c,g]=canvas(512,512),r=srand(318);
+  g.fillStyle='#480d1a';g.fillRect(0,0,512,512);
+  noiseFill(g,512,512,.11,24000,r);
+  for(let i=0;i<14000;i++){
+    g.fillStyle=i%2?'rgba(120,38,48,.13)':'rgba(17,5,10,.18)';
+    g.fillRect(r()*512,r()*512,.6,1+r()*3);
+  }
+  return tex(c);
+});
 // Casino carpet: deep red with dark swirls, gold fans and little diamonds. One tile = 1.6 m.
 export const carpet = (base = '#7a1424', ink = '#e8c46a', alt = '#4e0a16') => once('carpet' + base, () => {
   const [c, g] = canvas(512, 512), r = srand(7);

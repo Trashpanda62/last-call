@@ -1,0 +1,1735 @@
+{
+  "at": "2026-10-17T05:42:31.582Z",
+  "before": false,
+  "variants": [
+    {
+      "variant": "normal",
+      "rooms": {
+        "floor": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/oxbloodCarpet-color.jpg",
+          "floorRough": 0.95
+        },
+        "bar": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/oxbloodCarpet-color.jpg",
+          "floorRough": 0.95
+        },
+        "rest": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floorRough": 0.55
+        },
+        "arcade": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/oxbloodCarpet-color.jpg",
+          "floorRough": 0.95
+        },
+        "race": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floorRough": 0.48
+        },
+        "slots": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/oxbloodCarpet-color.jpg",
+          "floorRough": 0.95
+        },
+        "vip": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/oxbloodCarpet-color.jpg",
+          "floorRough": 0.95
+        }
+      },
+      "marble": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+      "seats": 58,
+      "stations": 1,
+      "shopStandable": true,
+      "vipPlants": 0,
+      "views": [
+        {
+          "name": "pit",
+          "stats": {
+            "frames": 110,
+            "calls": 534,
+            "tris": 1331818,
+            "geos": 678,
+            "tex": 356,
+            "cam": [
+              21.5,
+              1.12,
+              12.55,
+              -0.12,
+              -3.14
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 9,
+              "total": 11,
+              "offscreen": 5
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "main-wall",
+          "stats": {
+            "frames": 230,
+            "calls": 96,
+            "tris": 477445,
+            "geos": 678,
+            "tex": 356,
+            "cam": [
+              30,
+              1.12,
+              4.29,
+              0.12,
+              0
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "floor"
+            ],
+            "actorWork": {
+              "posed": 9,
+              "total": 11,
+              "offscreen": 7
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "bar",
+          "stats": {
+            "frames": 326,
+            "calls": 148,
+            "tris": 869526,
+            "geos": 678,
+            "tex": 356,
+            "cam": [
+              7.83,
+              1.12,
+              9.62,
+              0,
+              0
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "bar",
+              "floor"
+            ],
+            "actorWork": {
+              "posed": 2,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "arcade",
+          "stats": {
+            "frames": 438,
+            "calls": 450,
+            "tris": 583849,
+            "geos": 678,
+            "tex": 356,
+            "cam": [
+              41.67,
+              1.12,
+              10.79,
+              -0.06,
+              0
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "derby-door",
+          "stats": {
+            "frames": 550,
+            "calls": 470,
+            "tris": 604339,
+            "geos": 678,
+            "tex": 356,
+            "cam": [
+              41.67,
+              1.12,
+              10.55,
+              0,
+              -3.14
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade",
+              "race",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "derby",
+          "stats": {
+            "frames": 670,
+            "calls": 803,
+            "tris": 599261,
+            "geos": 678,
+            "tex": 356,
+            "cam": [
+              43.33,
+              1.12,
+              18.79,
+              0.08,
+              0
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "slots",
+          "stats": {
+            "frames": 782,
+            "calls": 119,
+            "tris": 640821,
+            "geos": 678,
+            "tex": 356,
+            "cam": [
+              10.83,
+              1.12,
+              23.38,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "vip",
+          "stats": {
+            "frames": 878,
+            "calls": 280,
+            "tris": 639273,
+            "geos": 678,
+            "tex": 356,
+            "cam": [
+              37.38,
+              1.12,
+              24.33,
+              -0.04,
+              -1.57
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "vip",
+              "race"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "vip-shop",
+          "stats": {
+            "frames": 982,
+            "calls": 107,
+            "tris": 338219,
+            "geos": 678,
+            "tex": 356,
+            "cam": [
+              44.06,
+              1.12,
+              24.11,
+              -0.03,
+              -2.02
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        }
+      ]
+    },
+    {
+      "variant": "noprops",
+      "rooms": {
+        "floor": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/oxbloodCarpet-color.jpg",
+          "floorRough": 0.95
+        },
+        "bar": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/oxbloodCarpet-color.jpg",
+          "floorRough": 0.95
+        },
+        "rest": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floorRough": 0.55
+        },
+        "arcade": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/oxbloodCarpet-color.jpg",
+          "floorRough": 0.95
+        },
+        "race": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floorRough": 0.48
+        },
+        "slots": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/oxbloodCarpet-color.jpg",
+          "floorRough": 0.95
+        },
+        "vip": {
+          "wall": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+          "floor": "http://127.0.0.1:8318/assets/mats/oxbloodCarpet-color.jpg",
+          "floorRough": 0.95
+        }
+      },
+      "marble": "http://127.0.0.1:8318/assets/mats/noirMarble-color.jpg",
+      "seats": 58,
+      "stations": 1,
+      "shopStandable": true,
+      "vipPlants": 0,
+      "views": [
+        {
+          "name": "pit",
+          "stats": {
+            "frames": 134,
+            "calls": 696,
+            "tris": 765552,
+            "geos": 956,
+            "tex": 303,
+            "cam": [
+              21.5,
+              1.12,
+              12.55,
+              -0.12,
+              -3.14
+            ],
+            "gestures": {},
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 9,
+              "total": 11,
+              "offscreen": 5
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "main-wall",
+          "stats": {
+            "frames": 254,
+            "calls": 113,
+            "tris": 557509,
+            "geos": 956,
+            "tex": 303,
+            "cam": [
+              30,
+              1.12,
+              4.29,
+              0.12,
+              0
+            ],
+            "gestures": {},
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "floor"
+            ],
+            "actorWork": {
+              "posed": 9,
+              "total": 11,
+              "offscreen": 7
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "bar",
+          "stats": {
+            "frames": 350,
+            "calls": 231,
+            "tris": 630080,
+            "geos": 956,
+            "tex": 303,
+            "cam": [
+              7.83,
+              1.12,
+              9.62,
+              0,
+              0
+            ],
+            "gestures": {},
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "bar",
+              "floor"
+            ],
+            "actorWork": {
+              "posed": 2,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "arcade",
+          "stats": {
+            "frames": 438,
+            "calls": 457,
+            "tris": 588111,
+            "geos": 956,
+            "tex": 303,
+            "cam": [
+              41.67,
+              1.12,
+              10.79,
+              -0.06,
+              0
+            ],
+            "gestures": {},
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "derby-door",
+          "stats": {
+            "frames": 534,
+            "calls": 661,
+            "tris": 539187,
+            "geos": 956,
+            "tex": 303,
+            "cam": [
+              41.67,
+              1.12,
+              10.55,
+              0,
+              -3.14
+            ],
+            "gestures": {},
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade",
+              "race",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "derby",
+          "stats": {
+            "frames": 638,
+            "calls": 853,
+            "tris": 654017,
+            "geos": 956,
+            "tex": 303,
+            "cam": [
+              43.33,
+              1.12,
+              18.79,
+              0.08,
+              0
+            ],
+            "gestures": {},
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "slots",
+          "stats": {
+            "frames": 758,
+            "calls": 166,
+            "tris": 419955,
+            "geos": 956,
+            "tex": 303,
+            "cam": [
+              10.83,
+              1.12,
+              23.38,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {},
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "vip",
+          "stats": {
+            "frames": 870,
+            "calls": 408,
+            "tris": 548967,
+            "geos": 956,
+            "tex": 303,
+            "cam": [
+              37.38,
+              1.12,
+              24.33,
+              -0.04,
+              -1.57
+            ],
+            "gestures": {},
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "vip",
+              "race"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "vip-shop",
+          "stats": {
+            "frames": 974,
+            "calls": 152,
+            "tris": 446675,
+            "geos": 956,
+            "tex": 303,
+            "cam": [
+              44.06,
+              1.12,
+              24.11,
+              -0.03,
+              -2.02
+            ],
+            "gestures": {},
+            "props": 0,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        }
+      ]
+    },
+    {
+      "variant": "nomats",
+      "rooms": {
+        "floor": {
+          "wall": "canvas",
+          "floor": "canvas",
+          "floorRough": 0.95
+        },
+        "bar": {
+          "wall": "canvas",
+          "floor": "canvas",
+          "floorRough": 0.95
+        },
+        "rest": {
+          "wall": "canvas",
+          "floor": "canvas",
+          "floorRough": 0.55
+        },
+        "arcade": {
+          "wall": "canvas",
+          "floor": "canvas",
+          "floorRough": 0.95
+        },
+        "race": {
+          "wall": "canvas",
+          "floor": "canvas",
+          "floorRough": 0.48
+        },
+        "slots": {
+          "wall": "canvas",
+          "floor": "canvas",
+          "floorRough": 0.95
+        },
+        "vip": {
+          "wall": "canvas",
+          "floor": "canvas",
+          "floorRough": 0.95
+        }
+      },
+      "marble": "canvas",
+      "seats": 58,
+      "stations": 1,
+      "shopStandable": true,
+      "vipPlants": 0,
+      "views": [
+        {
+          "name": "pit",
+          "stats": {
+            "frames": 110,
+            "calls": 534,
+            "tris": 1331818,
+            "geos": 678,
+            "tex": 348,
+            "cam": [
+              21.5,
+              1.12,
+              12.55,
+              -0.12,
+              -3.14
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "floor",
+              "slots",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 9,
+              "total": 11,
+              "offscreen": 5
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "main-wall",
+          "stats": {
+            "frames": 214,
+            "calls": 95,
+            "tris": 469445,
+            "geos": 678,
+            "tex": 348,
+            "cam": [
+              30,
+              1.12,
+              4.29,
+              0.12,
+              0
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "floor"
+            ],
+            "actorWork": {
+              "posed": 9,
+              "total": 11,
+              "offscreen": 7
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "bar",
+          "stats": {
+            "frames": 302,
+            "calls": 148,
+            "tris": 869526,
+            "geos": 678,
+            "tex": 348,
+            "cam": [
+              7.83,
+              1.12,
+              9.62,
+              0,
+              0
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "bar",
+              "floor"
+            ],
+            "actorWork": {
+              "posed": 2,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "arcade",
+          "stats": {
+            "frames": 414,
+            "calls": 450,
+            "tris": 583849,
+            "geos": 678,
+            "tex": 348,
+            "cam": [
+              41.67,
+              1.12,
+              10.79,
+              -0.06,
+              0
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "derby-door",
+          "stats": {
+            "frames": 510,
+            "calls": 470,
+            "tris": 604339,
+            "geos": 678,
+            "tex": 348,
+            "cam": [
+              41.67,
+              1.12,
+              10.55,
+              0,
+              -3.14
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "arcade",
+              "race",
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "derby",
+          "stats": {
+            "frames": 598,
+            "calls": 803,
+            "tris": 599261,
+            "geos": 678,
+            "tex": 348,
+            "cam": [
+              43.33,
+              1.12,
+              18.79,
+              0.08,
+              0
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "race",
+              "arcade"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "slots",
+          "stats": {
+            "frames": 702,
+            "calls": 119,
+            "tris": 640821,
+            "geos": 678,
+            "tex": 348,
+            "cam": [
+              10.83,
+              1.12,
+              23.38,
+              -0.05,
+              -3.14
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "slots"
+            ],
+            "actorWork": {
+              "posed": 0,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "vip",
+          "stats": {
+            "frames": 790,
+            "calls": 280,
+            "tris": 639273,
+            "geos": 678,
+            "tex": 348,
+            "cam": [
+              37.38,
+              1.12,
+              24.33,
+              -0.04,
+              -1.57
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "vip",
+              "race"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        },
+        {
+          "name": "vip-shop",
+          "stats": {
+            "frames": 894,
+            "calls": 107,
+            "tris": 338219,
+            "geos": 678,
+            "tex": 348,
+            "cam": [
+              44.06,
+              1.12,
+              24.11,
+              -0.03,
+              -2.02
+            ],
+            "gestures": {},
+            "props": 32,
+            "rebuildPending": false,
+            "rooms": [
+              "vip"
+            ],
+            "actorWork": {
+              "posed": 1,
+              "total": 11,
+              "offscreen": 0
+            },
+            "ao": true,
+            "passes": [
+              "RenderPass",
+              "GTAOPass",
+              "RenderPass",
+              "OutputPass"
+            ],
+            "internal": [
+              1440,
+              900
+            ],
+            "out": [
+              1440,
+              900
+            ],
+            "pr": 1
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "layoutRegression": {
+    "at": "2026-10-17T05:41:31.261Z",
+    "variants": [
+      {
+        "fallback": false,
+        "raceStations": 1,
+        "bettingSockets": 6,
+        "toteX": [
+          2702.000002861023,
+          2917.999997138977
+        ],
+        "doorX": [
+          2440,
+          2560
+        ],
+        "rays": [
+          {
+            "x": 2460,
+            "height": 1.1,
+            "blockers": []
+          },
+          {
+            "x": 2460,
+            "height": 1.8,
+            "blockers": []
+          },
+          {
+            "x": 2460,
+            "height": 2.5,
+            "blockers": []
+          },
+          {
+            "x": 2500,
+            "height": 1.1,
+            "blockers": []
+          },
+          {
+            "x": 2500,
+            "height": 1.8,
+            "blockers": []
+          },
+          {
+            "x": 2500,
+            "height": 2.5,
+            "blockers": []
+          },
+          {
+            "x": 2540,
+            "height": 1.1,
+            "blockers": []
+          },
+          {
+            "x": 2540,
+            "height": 1.8,
+            "blockers": []
+          },
+          {
+            "x": 2540,
+            "height": 2.5,
+            "blockers": []
+          }
+        ],
+        "highLimitRooms": [
+          "vip",
+          "vip",
+          "vip",
+          "vip"
+        ]
+      },
+      {
+        "fallback": true,
+        "raceStations": 1,
+        "bettingSockets": 6,
+        "toteX": [
+          2702.000002861023,
+          2917.999997138977
+        ],
+        "doorX": [
+          2440,
+          2560
+        ],
+        "rays": [
+          {
+            "x": 2460,
+            "height": 1.1,
+            "blockers": []
+          },
+          {
+            "x": 2460,
+            "height": 1.8,
+            "blockers": []
+          },
+          {
+            "x": 2460,
+            "height": 2.5,
+            "blockers": []
+          },
+          {
+            "x": 2500,
+            "height": 1.1,
+            "blockers": []
+          },
+          {
+            "x": 2500,
+            "height": 1.8,
+            "blockers": []
+          },
+          {
+            "x": 2500,
+            "height": 2.5,
+            "blockers": []
+          },
+          {
+            "x": 2540,
+            "height": 1.1,
+            "blockers": []
+          },
+          {
+            "x": 2540,
+            "height": 1.8,
+            "blockers": []
+          },
+          {
+            "x": 2540,
+            "height": 2.5,
+            "blockers": []
+          }
+        ],
+        "highLimitRooms": [
+          "vip",
+          "vip",
+          "vip",
+          "vip"
+        ]
+      }
+    ],
+    "errors": []
+  },
+  "vipRegression": {
+    "at": "2026-10-17T05:41:48.481Z",
+    "before": false,
+    "variants": [
+      {
+        "fallback": false,
+        "views": [
+          [
+            "shop",
+            2793,
+            1675,
+            0,
+            0.03
+          ],
+          [
+            "east-corner",
+            2650,
+            1450,
+            0.45,
+            -0.03
+          ],
+          [
+            "wheel",
+            2200,
+            1610,
+            1.5707963267948966,
+            -0.05
+          ],
+          [
+            "high-limit",
+            1880,
+            1570,
+            3.141592653589793,
+            0
+          ],
+          [
+            "entrance",
+            1740,
+            1250,
+            0.27,
+            -0.04
+          ],
+          [
+            "lounge",
+            2250,
+            1460,
+            0,
+            -0.04
+          ]
+        ],
+        "canopyRadius": 71,
+        "shop": {
+          "x": 2910,
+          "y": 1675,
+          "face": 3.141592653589793,
+          "stand": {
+            "x": 2853,
+            "y": 1675
+          }
+        },
+        "stock": {
+          "x": 2915,
+          "y": 1765,
+          "w": 40,
+          "h": 24,
+          "kind": "crates"
+        },
+        "piano": {
+          "x": 2779,
+          "y": 1708,
+          "w": 102,
+          "h": 120,
+          "kind": "piano"
+        },
+        "plants": [],
+        "boxes": {
+          "piano": {
+            "min": [
+              46.60713460207184,
+              0,
+              28.641666408628225
+            ],
+            "max": [
+              47.726201274393006,
+              1.4000000059604645,
+              30.391666416078806
+            ]
+          },
+          "poolTable": {
+            "min": [
+              35.166406851482975,
+              0,
+              21.500119505922314
+            ],
+            "max": [
+              37.66692902498187,
+              0.8786917618390611,
+              22.833212555845265
+            ]
+          },
+          "champagne": {
+            "min": [
+              45.72723854634209,
+              0,
+              21.143452394760622
+            ],
+            "max": [
+              46.706095804243844,
+              1.348237343851288,
+              22.123214017592893
+            ]
+          },
+          "armchair": {
+            "min": [
+              38.4333689296446,
+              0,
+              23.600036867877026
+            ],
+            "max": [
+              44.233295193890555,
+              0.9050934320362813,
+              27.733297101239184
+            ]
+          },
+          "slotHigh": {
+            "min": [
+              27.24164779379266,
+              0,
+              22.40846562581072
+            ],
+            "max": [
+              28.09168426797492,
+              2.199999988079071,
+              30.09153437418928
+            ]
+          },
+          "prizeWheel": {
+            "min": [
+              35.08355913129243,
+              0,
+              30.573350283619387
+            ],
+            "max": [
+              37.583104992242724,
+              3.350000006622736,
+              31.273317959788816
+            ]
+          }
+        },
+        "stockPianoGap": 51.4279235364196,
+        "shopAccess": {
+          "standable": true,
+          "distance": 57,
+          "insurance": true,
+          "openedWithUse": true
+        }
+      },
+      {
+        "fallback": true,
+        "views": [
+          [
+            "shop",
+            2793,
+            1675,
+            0,
+            0.03
+          ],
+          [
+            "east-corner",
+            2650,
+            1450,
+            0.45,
+            -0.03
+          ],
+          [
+            "wheel",
+            2200,
+            1610,
+            1.5707963267948966,
+            -0.05
+          ],
+          [
+            "high-limit",
+            1880,
+            1570,
+            3.141592653589793,
+            0
+          ],
+          [
+            "entrance",
+            1740,
+            1250,
+            0.27,
+            -0.04
+          ],
+          [
+            "lounge",
+            2250,
+            1460,
+            0,
+            -0.04
+          ]
+        ],
+        "canopyRadius": null,
+        "shop": {
+          "x": 2910,
+          "y": 1675,
+          "face": 3.141592653589793,
+          "stand": {
+            "x": 2853,
+            "y": 1675
+          }
+        },
+        "stock": {
+          "x": 2915,
+          "y": 1765,
+          "w": 40,
+          "h": 24,
+          "kind": "crates"
+        },
+        "piano": {
+          "x": 2779,
+          "y": 1708,
+          "w": 102,
+          "h": 120,
+          "kind": "piano"
+        },
+        "plants": [],
+        "boxes": {},
+        "stockPianoGap": 34,
+        "shopAccess": {
+          "standable": true,
+          "distance": 57,
+          "insurance": true,
+          "openedWithUse": true
+        }
+      }
+    ],
+    "errors": []
+  }
+}

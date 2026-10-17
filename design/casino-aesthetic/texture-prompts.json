@@ -1,0 +1,10 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-10-17",
+  "reference": "design/casino-aesthetic/reference.png",
+  "prompts": {
+    "noirMarble": "Create a production-ready seamless tileable PBR BASE COLOR texture ONLY, square 2048x2048 or highest available, full bleed flat orthographic scan with uniform shadowless lighting, no scene no objects no typography no borders no baked reflections. Material: luxurious very dark nearly-black Nero Portoro marble from a decaying 1930s Art Deco casino, natural fine irregular branching hairline fractures filled with muted antique gold and aged bronze, a few smoky charcoal mineral veins. 90 percent quiet near-black stone, sparse gold cracks, detailed realistic micrograin. Understated cinematic black-red-gold casino aesthetic. Gold veins should be thin and uneven, NOT a geometric network or bright lightning. All four edges tile seamlessly. This image will cover black stone wall panels and columns in a 3D casino.",
+    "oxbloodCarpet": "Production game texture, square full-bleed seamless tileable BASE COLOR only, straight top-down orthographic flat texture scan, no perspective no text no objects no border no lighting/shadow. Worn luxury 1930s casino carpet, deep rich oxblood burgundy/crimson wool pile, subtle large tonal damask scrolls almost lost in the dense fibers, fine dark-red mottling and gentle wear, understated old glamorous haunted casino atmosphere. 95 percent red pile, very sparse fine antique brass-gold threads weaving subtle tiny flourishes, NOT bright yellow loops, NOT bold repetitive geometric arcade pattern. Realistic textile microfibers, dark wine red overall but visible texture in midtones, exact matching edges seamless. Intended red carpet against black cracked marble and antique gold trim."
+  },
+  "preparation": "Generated square color textures resized to 1024px JPEG. Flat 512px stone normal and deterministic seeded fine carpet-fiber normal produced locally; no new Sorceress calls."
+}

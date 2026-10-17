@@ -25,6 +25,10 @@ The [top-down PNG](../design/casino-layout-top-down.png) and [SVG](../design/cas
 
 The previous route/sign audit missed the crowded shop/piano corner and full palm spread. Removed the floating vendor name that overprinted the shop sign from across the room. Removed all four VIP palms, moved the shop against the east wall and stock clear of the piano/bench, and corrected the piano collision footprint to contain its full model and bench. The main approach runs in front of the shop/TV. Reviewed six first-person views per graphics variant; actual shop use/inventory and stock-to-piano bounds pass. Evidence: performance/2026-10-17-vip-clearance.json; previews: design/previews/vip-shop-clear.jpg and vip-wheel-clear.jpg. The top-down map now shows the measured conservative 71-pixel maximum palm spread instead of only planting centers.
 
+## Red / black / gold aesthetic
+
+Matched Steve's supplied reference in the actual casino: gold-veined cracked black stone walls, columns and wainscoting; oxblood damask carpet with flush stone borders and thin gold inlay; burgundy seating, black betting stands and warmer antique-gold lights/trim. Purple/cyan architectural accents are removed. Existing layout and game cues remain. Normal, no-prop and procedural-material views were checked, with doorway and VIP regressions. [Reference, current room previews and exact texture prompts](../design/casino-aesthetic/README.md).
+
 ## Manual acceptance and holds
 
 The more realistic standard potato pilot is integrated at the shipped 1.41 m height, with natural skin, inset eyes, waistcoat/gloves and the existing local rig/animations. Steve approved the single 30-credit ($0.30) Hunyuan generation; no further paid variants were generated. Standard uses 24K triangles and baked 2K PBR maps. Graphics > Potato detail > High (original mesh), also included in Ultra, retains the full 1.5M-triangle model and 4K maps for the nearest potato up close. The optional download does not block startup. Corrected Steve's reported side-view arm: symmetric fitted shoulder/elbow/wrist joints, continuous upper-arm weights and ascending chest joints on both meshes. Both sides were visually checked idle and walking. Round/staff bodies and meeting portraits retain their previous designs pending pilot review. [Pilot details and evidence](../design/characters/potato-realism/README.md).
@@ -40,7 +44,7 @@ Latest layout/payout evidence uses the layout-review and arcade-payout report na
 
 LAN playtest: https://10.42.0.37:3161/ (existing self-signed LAN HTTPS).
 
-Delivery identity: [complete source/asset/vendor receipt](playtest-build-potato-realism-2026-10-17.json), generated after sync. All 849 Git-tracked files in src/, assets/, vendor/ and the three entry files match served SHA-256 bytes, including the mirror and new arcade modules.
+Delivery identity: [complete source/asset/vendor receipt](playtest-build-casino-aesthetic-2026-10-17.json), generated after sync. All 853 Git-tracked files in src/, assets/, vendor/ and the three entry files match served SHA-256 bytes, including the mirror and new arcade modules.
 
 The sync tool now copies Git-tracked files only. Stage new deliverables before syncing; preserve local untracked .claude/, .dev/ and shots/. Existing voice-server configuration is retained. No new generation or balance sweep is needed.
 

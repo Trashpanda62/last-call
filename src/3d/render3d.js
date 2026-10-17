@@ -66,13 +66,13 @@ export async function init(canvas, { lowPower = false, progress = () => {} } = {
   // The filtered environment texture stays in use; the source room and PMREM's
   // intermediate targets/materials are only needed while producing it.
   environmentRoom.dispose(); pmrem.dispose();
-  scene.environment = env; scene.environmentIntensity = 0.32;
+  scene.environment = env; scene.environmentIntensity = 0.28;
   const camera = new THREE.PerspectiveCamera(72, 1, 0.05, 90);
   camera.rotation.order = 'YXZ';
-  const hemi = new THREE.HemisphereLight(0xffe2b8, 0x3a1018, 0.42); scene.add(hemi);
-  const fill = new THREE.AmbientLight(0x402028, 0.28); scene.add(fill);
+  const hemi = new THREE.HemisphereLight(0xffd5a4, 0x261018, 0.36); scene.add(hemi);
+  const fill = new THREE.AmbientLight(0x352128, 0.23); scene.add(fill);
   // a soft overhead key light that follows the camera and gives everything near you a contact shadow
-  const key = new THREE.DirectionalLight(0xffe6c8, 0.75);
+  const key = new THREE.DirectionalLight(0xffd9ad, 0.68);
   key.castShadow = !lowPower; key.shadow.mapSize.set(2048, 2048);
   Object.assign(key.shadow.camera, { left: -11, right: 11, top: 11, bottom: -11, near: 0.5, far: 24 });
   key.shadow.bias = -0.0004; key.shadow.normalBias = 0.025; key.shadow.radius = 3;
@@ -787,7 +787,7 @@ export function draw(frame, { prepareOnly = false } = {}) {
   R.wasBlk = blk;
   R.br.update(!!(pub && pub.backrooms), R.world); // the backrooms casino swaps in here too: the frame the power comes back
   const lit = 1 - R.dark * (blk ? 0.985 : 0.94); // (a blackout is blacker: flashlights are the light)
-  R.hemi.intensity = 0.42 * lit; R.fill.intensity = 0.28 * lit; R.key.intensity = 0.75 * lit; R.scene.environmentIntensity = 0.32 * lit;
+  R.hemi.intensity = 0.36 * lit; R.fill.intensity = 0.23 * lit; R.key.intensity = 0.68 * lit; R.scene.environmentIntensity = 0.28 * lit;
   for (const g of GLOWS) {
     const k = g.v * (1 - R.dark * 0.85);
     if (g.k === 'color') { if (g.base) g.m.color.copy(g.base).multiplyScalar(k); else g.m.color.setScalar(k); } else g.m[g.k] = k;

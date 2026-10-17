@@ -313,12 +313,12 @@ export function* buildMachinesSteps(ctx, seats) {
   {
     const w = (CRASH_SCREEN.x1 - CRASH_SCREEN.x0) * M * 0.9, h = 2.7, cx = (CRASH_SCREEN.x0 + CRASH_SCREEN.x1) / 2 * M, z = 20 * M + 0.08;
     B.add(rbox(w + 0.3, h + 0.3, 0.14, 0.06), MAT.blackGloss, v3(cx, 1.95, z - 0.02));
-    B.add(box(w + 0.36, 0.04, 0.04), glowMat(0xff3fa4, 2.6), v3(cx, 1.95 + h / 2 + 0.17, z + 0.05)); B.add(box(w + 0.36, 0.04, 0.04), glowMat(0x3fe0ff, 2.6), v3(cx, 1.95 - h / 2 - 0.17, z + 0.05));
+    B.add(box(w + 0.36, 0.04, 0.04), glowMat(0xb64235, 1.6), v3(cx, 1.95 + h / 2 + 0.17, z + 0.05)); B.add(box(w + 0.36, 0.04, 0.04), glowMat(0xd5ab68, 1.6), v3(cx, 1.95 - h / 2 - 0.17, z + 0.05));
     const big = screen({ w, h, cw: 2048, ch: 768, paint: (g, W, H, t, a) => P.paintCrash(g, W, H, t, a && a.C, a && a.me), pos: v3(cx, 1.95, z + 0.06), every: 1 / 15, strength: 1.2, far: 40, arg: st => st.pub && { C: st.pub.crash, me: st.priv ? st.priv.me : -1 } });
     for (const s of seats) if (s.game === 'crash') focusAt(s.id, 'extra', big);
     for (const o of OBSTACLES.filter(o => o.kind === 'crashDesk')) {
       const x = (o.x + o.w / 2) * M, dz = (o.y + o.h / 2) * M;
-      B.add(rbox(0.7, 0.75, 0.42, 0.05), MAT.candy(0x2a1a5a), v3(x, 0.375, dz)); B.add(rbox(0.72, 0.06, 0.48, 0.02), MAT.chrome, v3(x, 0.78, dz));
+      B.add(rbox(0.7, 0.75, 0.42, 0.05), MAT.blackGloss, v3(x, 0.375, dz)); B.add(rbox(0.72, 0.06, 0.48, 0.02), MAT.chrome, v3(x, 0.78, dz));
 
     }
     for (const s of seats.filter(q => q.game === 'crash')) {
@@ -327,7 +327,7 @@ export function* buildMachinesSteps(ctx, seats) {
       actionButton(s, 'btn:bet', 'BET', v3(x + .20, .82, dz + .09), '#278459', .065);
       actionButton(s, 'btn:cash', 'CASH', v3(x + .20, .82, dz - .09), '#9b6225', .065);
     }
-    lightSpots.push({ p: v3(cx, 2.4, z + 2.5), color: 0xff70d0, power: 6, range: 9 });
+    lightSpots.push({ p: v3(cx, 2.4, z + 2.5), color: 0xe3b174, power: 4, range: 9 });
   }
 
   // ---------- Plinko ----------
@@ -358,8 +358,8 @@ export function* buildMachinesSteps(ctx, seats) {
       // (7 cm proud of the model's panel: its grey inner fascia stands 6.5 cm in front of the lower board and hid the payouts)
       bd = { f: -0.1 + A.z + 0.074, u: A.x, y: A.y, w: A.w, h: A.h, open: A.open };
     } else {
-      B.add(rbox(1.5, 0.8, 0.9, 0.06), MAT.candy(0x1a2a8a), at(0, 0, 0.4), yaw);
-      B.add(rbox(1.5, 1.9, 0.3, 0.06), MAT.candy(0x1a2a8a), at(-0.3, 0, 1.75), yaw);
+      B.add(rbox(1.5, 0.8, 0.9, 0.06), MAT.blackGloss, at(0, 0, 0.4), yaw);
+      B.add(rbox(1.5, 1.9, 0.3, 0.06), MAT.blackGloss, at(-0.3, 0, 1.75), yaw);
       B.add(rbox(1.56, 0.1, 0.36, 0.03), MAT.chrome, at(-0.3, 0, 2.72), yaw);
     }
     const back = new THREE.Mesh(new THREE.PlaneGeometry(bd.w, bd.h), fieldMat); back.position.copy(at(bd.f, bd.u, bd.y)); back.rotation.y = yaw; add(back);
@@ -402,7 +402,7 @@ export function* buildMachinesSteps(ctx, seats) {
     readout.position.copy(at(bd.f + 0.075, bd.u + readoutU, readoutY)); readout.rotation.y = yaw; add(readout);
     let readoutKey = 'MED', shown = null; readoutCell(readout.geometry, readoutKey);
     const glass = new THREE.Mesh(new THREE.PlaneGeometry(bd.w, bd.h), new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.25, transparent: true, opacity: 0.05, clearcoat: 0, envMapIntensity: 0.15, depthWrite: false })); glass.position.copy(at(bd.f + 0.08, bd.u, bd.y)); glass.rotation.y = yaw; add(glass);
-    for (const side of [-1, 1]) B.add(box(0.03, bd.h, 0.03), glowMat(0x3fe0ff, 2.4), at(bd.f + 0.06, bd.u + side * (bd.w / 2 + 0.02), bd.y), yaw);
+    for (const side of [-1, 1]) B.add(box(0.03, bd.h, 0.03), glowMat(0xd5ab68, 1.6), at(bd.f + 0.06, bd.u + side * (bd.w / 2 + 0.02), bd.y), yaw);
     B.add(rbox(1.42, 1.0, .9, .035), cheekMat, at(.45, 0, .50), yaw);
     B.add(rbox(1.44, .04, .92, .018), fieldMat, at(.45, 0, 1.02), yaw);
     B.add(box(1.44, .018, .025), MAT.brass, at(.90, 0, 1.045), yaw);
@@ -641,7 +641,7 @@ export function* buildMachinesSteps(ctx, seats) {
       z = 1880 * M - 0.46; placeProps(group, 'prizeWheel', [{ x: cx, z: z + 0.05, yaw: Math.PI, scale: sc }]);
       cy = A.y; R = A.r * 0.98; face = z + 0.05 - A.z - 0.012;
     } else {
-      B.add(cyl(R + 0.15, R + 0.15, 0.2, 64), MAT.candy(0x3a1a5a), v3(cx, cy, z + 0.08), 0, null, Math.PI / 2);
+      B.add(cyl(R + 0.15, R + 0.15, 0.2, 64), MAT.blackGloss, v3(cx, cy, z + 0.08), 0, null, Math.PI / 2);
       B.add(box(0.3, cy, 0.3), MAT.gold, v3(cx, cy / 2, z + 0.1));
     }
     const wheel = new THREE.Group(); wheel.position.set(cx, cy, face); wheel.rotation.y = Math.PI; add(wheel);
@@ -652,7 +652,7 @@ export function* buildMachinesSteps(ctx, seats) {
     if (!model) for (let k = 0; k < 40; k++) { const a = k / 40 * Math.PI * 2; bulbs.push({ p: v3(cx + Math.cos(a) * (R + 0.12), cy + Math.sin(a) * (R + 0.12), z - 0.12), phase: k }); }
     for (const o of OBSTACLES.filter(o => o.kind === 'wheelDesk')) {
       const x = (o.x + o.w / 2) * M, dz = (o.y + o.h / 2) * M;
-      B.add(rbox(0.6, 0.75, 0.45, 0.05), MAT.candy(0x3a1a5a), v3(x, 0.375, dz));
+      B.add(rbox(0.6, 0.75, 0.45, 0.05), MAT.blackGloss, v3(x, 0.375, dz));
     }
     for (const s of seats.filter(q => q.game === 'wheel')) betSocket(s, 'main', v3(s.x * M, .758, 1815 * M));
     updaters.push((t, dt, st) => {
@@ -673,16 +673,16 @@ export function* buildMachinesSteps(ctx, seats) {
     const coin = new THREE.Mesh(cyl(0.42, 0.42, 0.05, 48), [MAT.gold, new THREE.MeshStandardMaterial({ map: T.coinFace(true), metalness: 0.7, roughness: 0.3 }), new THREE.MeshStandardMaterial({ map: T.coinFace(false), metalness: 0.7, roughness: 0.3 })]);
     coin.name = 'coin-flip-hero'; coin.scale.setScalar(1.45); coin.castShadow = true; add(coin);
     starter('coin', () => true, coin, 'btn:flip'); // click the coin to flip
-    const coinTitle = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.38), basicGlow(T.plaque('HEADS OR TAILS', { w: 1536, h: 256, bg: '#102322', ink: '#ffe0a0', font: 'bold 112px Georgia' }), 1));
+    const coinTitle = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 0.38), basicGlow(T.plaque('HEADS OR TAILS', { w: 1536, h: 256, bg: '#140c0e', ink: '#ffe0a0', font: 'bold 112px Georgia' }), 1));
     coinTitle.name = 'coin-flip-sign'; coinTitle.position.set(x, 2.65, z); add(coinTitle);
-    for (const side of [-1, 1]) { const ring = new THREE.Mesh(torus(.78, .025, 8, 64), glowMat(side < 0 ? 0x65d9d1 : 0xffc05a, 1.4)); ring.position.set(x, 1.55, z + side * .08); add(ring); }
+    for (const side of [-1, 1]) { const ring = new THREE.Mesh(torus(.78, .025, 8, 64), glowMat(side < 0 ? 0xd0ad6a : 0xe2bb7b, 1.4)); ring.position.set(x, 1.55, z + side * .08); add(ring); }
 
     for (const s of seats.filter(q => q.game === 'coin')) { // a betting stand in front of each coin seat
       const f = v3(Math.cos(s.face), 0, Math.sin(s.face)), p = v3(s.x * M, 0, s.y * M).addScaledVector(f, 0.74), yw = yawOf(s.face);
       const right = v3(-f.z, 0, f.x);
       betSocket(s, 'heads', p.clone().addScaledVector(right, -.18).setY(.733), 'HEADS');
       betSocket(s, 'tails', p.clone().addScaledVector(right, .18).setY(.733), 'TAILS');
-      B.add(rbox(0.92, 0.7, 0.56, 0.05), MAT.candy(0x3a1a5a), p.clone().setY(0.35), yw); B.add(rbox(0.96, 0.03, 0.6, 0.012), MAT.gold, p.clone().setY(0.71), yw);
+      B.add(rbox(0.92, 0.7, 0.56, 0.05), MAT.blackGloss, p.clone().setY(0.35), yw); B.add(rbox(0.96, 0.03, 0.6, 0.012), MAT.gold, p.clone().setY(0.71), yw);
     }
     updaters.push((t, dt, st) => {
       const c = st.of('coin'), my = c && c.view && c.view.flip ? c.view.flip : null;

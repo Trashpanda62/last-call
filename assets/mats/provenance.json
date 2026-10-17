@@ -648,7 +648,7 @@
   "prompt": "Dark mahogany wood planks with a rich glossy grain. Seamless tileable texture, perfectly flat top-down orthographic view, even shadowless lighting, the pattern repeats cleanly at the edges, no perspective, no objects, no text.",
   "receipt": "runs/sorceress/v4-mats/darkWood",
   "rights": "Sorceress output is ours (Steve, 2026-09-25)"
- },
+ },
  {
   "file": "assets/mats/mats.json",
   "provider": "local",
@@ -661,5 +661,41 @@
   "prompt": null,
   "note": "Roughness and normal-map flags for the materials above, written by tools/v4_mats.py; no generated media of its own.",
   "rights": "Ours (generated index)"
+ },
+ {
+  "file": "assets/mats/noirMarble-color.jpg",
+  "provider": "built-in image_gen",
+  "date": "2026-10-17",
+  "prompt": "Create a production-ready seamless tileable PBR BASE COLOR texture ONLY, square 2048x2048 or highest available, full bleed flat orthographic scan with uniform shadowless lighting, no scene no objects no typography no borders no baked reflections. Material: luxurious very dark nearly-black Nero Portoro marble from a decaying 1930s Art Deco casino, natural fine irregular branching hairline fractures filled with muted antique gold and aged bronze, a few smoky charcoal mineral veins. 90 percent quiet near-black stone, sparse gold cracks, detailed realistic micrograin. Understated cinematic black-red-gold casino aesthetic. Gold veins should be thin and uneven, NOT a geometric network or bright lightning. All four edges tile seamlessly. This image will cover black stone wall panels and columns in a 3D casino.",
+  "receipt": "design/casino-aesthetic/texture-prompts.json",
+  "sha256": "cc0d92de0804a5f5f0fe5952f4debf0ce1a480a86c6d642b547791dd90f9c852",
+  "bytes": 298900
+ },
+ {
+  "file": "assets/mats/noirMarble-normal.jpg",
+  "provider": "local procedural",
+  "date": "2026-10-17",
+  "prompt": "Flat polished-stone normal",
+  "receipt": "design/casino-aesthetic/texture-prompts.json",
+  "sha256": "a80b978f1051b51bc17d98496ff3966f8f6e5128e588f2df879835826124c6e1",
+  "bytes": 4725
+ },
+ {
+  "file": "assets/mats/oxbloodCarpet-color.jpg",
+  "provider": "built-in image_gen",
+  "date": "2026-10-17",
+  "prompt": "Production game texture, square full-bleed seamless tileable BASE COLOR only, straight top-down orthographic flat texture scan, no perspective no text no objects no border no lighting/shadow. Worn luxury 1930s casino carpet, deep rich oxblood burgundy/crimson wool pile, subtle large tonal damask scrolls almost lost in the dense fibers, fine dark-red mottling and gentle wear, understated old glamorous haunted casino atmosphere. 95 percent red pile, very sparse fine antique brass-gold threads weaving subtle tiny flourishes, NOT bright yellow loops, NOT bold repetitive geometric arcade pattern. Realistic textile microfibers, dark wine red overall but visible texture in midtones, exact matching edges seamless. Intended red carpet against black cracked marble and antique gold trim.",
+  "receipt": "design/casino-aesthetic/texture-prompts.json",
+  "sha256": "9be219d483df30fd3ad04f2c16966064da0b7f1983195c1f38b5978cad10370c",
+  "bytes": 383819
+ },
+ {
+  "file": "assets/mats/oxbloodCarpet-normal.jpg",
+  "provider": "local procedural",
+  "date": "2026-10-17",
+  "prompt": "Fine fiber normal, NumPy default_rng seed 318, XY mean 128 sigma 5, Z 254",
+  "receipt": "design/casino-aesthetic/texture-prompts.json",
+  "sha256": "d0f51882db98f8aa2fa93ae095cb79b80e3738afcf952c1133925ae42dd543fa",
+  "bytes": 70504
  }
 ]

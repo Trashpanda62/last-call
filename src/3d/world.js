@@ -32,26 +32,26 @@ function stallTex() {
 }
 // Gold, chrome and the gloss coats stay rough (0.35 and up): sharper, every light left a white spot on them (Steve: no glare).
 export const MAT = {
-  gold: std({ color: 0xd9a94a, metalness: 0.9, roughness: 0.45, envMapIntensity: 0.5 }),
-  brass: std({ color: 0xc8963a, metalness: 0.85, roughness: 0.35 }),
+  gold: std({ color: 0xc6a15e, metalness: 0.88, roughness: 0.48, envMapIntensity: 0.5 }),
+  brass: std({ color: 0xb58b4d, metalness: 0.85, roughness: 0.46 }),
   chrome: std({ color: 0xdde2e6, metalness: 1, roughness: 0.4, envMapIntensity: 0.6 }),
   darkWood: std({ roughness: 0.42 }),
   wood: std({ map: T.wood('#6b4128', '#3a2214'), roughness: 0.5 }),
-  polished: phys({ color: 0x3a1a10, roughness: 0.35, clearcoat: 1, clearcoatRoughness: 0.35 }),
-  velvet: phys({ color: 0x9a1a30, roughness: 0.85, sheen: 1, sheenColor: new THREE.Color(0xff8090), sheenRoughness: 0.5 }),
-  purple: phys({ color: 0x5a2470, roughness: 0.85, sheen: 1, sheenColor: new THREE.Color(0xd090ff), sheenRoughness: 0.5 }),
-  teal: phys({ color: 0x1a6a6a, roughness: 0.85, sheen: 1, sheenColor: new THREE.Color(0x80fff0), sheenRoughness: 0.5 }),
+  polished: phys({ color: 0x100b0b, roughness: 0.35, clearcoat: 1, clearcoatRoughness: 0.35 }),
+  velvet: phys({ color: 0x5c0d1c, roughness: 0.85, sheen: 1, sheenColor: new THREE.Color(0x9b3945), sheenRoughness: 0.5 }),
+  purple: phys({ color: 0x430b17, roughness: 0.85, sheen: 1, sheenColor: new THREE.Color(0x85303d), sheenRoughness: 0.5 }),
+  teal: phys({ color: 0x330c15, roughness: 0.85, sheen: 1, sheenColor: new THREE.Color(0xd2b77a), sheenRoughness: 0.5 }),
   leather: phys({ color: 0x2a1410, roughness: 0.45, clearcoat: 0.4, clearcoatRoughness: 0.4 }),
   black: std({ color: 0x141014, roughness: 0.4 }),
   blackGloss: phys({ color: 0x0e0c10, roughness: 0.25, clearcoat: 1, clearcoatRoughness: 0.35 }),
-  marble: std({ color: 0xe0d8cc, roughness: 0.25 }),
-  marbleDark: std({ color: 0x3a3634, roughness: 0.3 }), // the VIP coffee table (pale marble glares under its spot)
+  marble: std({ color: 0xffffff, roughness: 0.42 }),
+  marbleDark: std({ color: 0x999999, roughness: 0.46 }), // the VIP coffee table (pale marble glares under its spot)
   porcelain: std({ color: 0xf6f6f2, roughness: 0.35 }),
   leaf: phys({ color: 0x2f7a35, roughness: 0.6, sheen: 0.6, sheenColor: new THREE.Color(0x9fe08a) }),
   pot: std({ color: 0x1a1214, roughness: 0.3, metalness: 0.4 }),
   mirror: std({ color: 0x8a7a70, metalness: 0.9, roughness: 0.3, envMapIntensity: 0.25 }),
   stall: std({ map: stallTex(), roughness: 0.38 }),
-  rope: phys({ color: 0xb01828, roughness: 0.7, sheen: 1, sheenColor: new THREE.Color(0xff8090) }),
+  rope: phys({ color: 0xb01828, roughness: 0.7, sheen: 1, sheenColor: new THREE.Color(0x9b3945) }),
   water: phys({ color: 0x1fa8c8, roughness: 0.05, metalness: 0, transmission: 0, transparent: true, opacity: 0.85, clearcoat: 1, clearcoatRoughness: 0.05 }),
   metalDark: std({ color: 0x2a2c34, metalness: 0.7, roughness: 0.45 }),
   // Identical lacquer colors can share a material, so static betting stands
@@ -76,14 +76,15 @@ export function basicGlow(map, strength = 1.6, extra = {}) {
 }
 
 // Per-room look: floor, walls, ceiling, and how the walls are dressed.
+// Shared architectural palette; machine displays and game colors keep their meanings.
 const ROOM_LOOK = {
-  floor: { wall: () => T.wallpaper('#5a1422'), floor: () => T.carpet('#7a1424'), tile: 1.6, ceil: '#2a1418', trim: 'deco', cove: 0xffc880 },
-  bar: { wall: () => T.wallpaper('#3d2416', '#d9a94a'), floor: () => T.wood('#6b4128', '#3a2214'), tile: 2.4, ceil: '#24140c', trim: 'deco', cove: 0xffb060, floorRough: 0.55 }, // (0.35 put a white mirror of every light on the parquet)
-  rest: { wall: () => T.tiles('#e6efe9', '#c4dad6'), floor: () => T.tiles('#2b3a40', '#3a4e55'), tile: 1.2, ceil: '#1e2a2e', trim: 'tile', cove: 0xc0fff0, wallRough: 0.5 },
-  arcade: { wall: () => T.wallpaper('#1a1038', '#ff3fa4'), floor: () => T.arcadeCarpet(), tile: 2.2, ceil: '#0c0a1a', trim: 'neon', cove: 0xff3fa4 },
-  race: { wall: () => T.wallpaper('#123a52', '#7fe8ff'), floor: () => T.tiles('#b8ccc8', '#3f8a98'), tile: 1.4, ceil: '#0e2232', trim: 'deco', cove: 0x7fe8ff, floorRough: 0.6 },
-  slots: { wall: () => T.wallpaper('#1c1a52', '#e8c46a'), floor: () => T.carpet('#1a2068', '#e8c46a', '#0e1240'), tile: 1.6, ceil: '#14122e', trim: 'deco', cove: 0x9fb0ff },
-  vip: { wall: () => T.wallpaper('#3e1a4c'), floor: () => T.vipCarpet(), tile: 1.6, ceil: '#24122c', trim: 'deco', cove: 0xd070ff },
+  floor: { wall: () => T.noirStone(), floor: () => T.oxbloodCarpet(), tile: 3.2, wallTile: 3.2, ceil: '#130b0d', trim: 'deco', cove: 0xd6ab66 },
+  bar: { wall: () => T.noirStone(), floor: () => T.oxbloodCarpet(), tile: 3.2, wallTile: 3.2, ceil: '#130b0d', trim: 'deco', cove: 0xe4ad67 },
+  rest: { wall: () => T.tiles('#282322', '#171415'), floor: () => T.tiles('#171415', '#302827'), tile: 1.2, ceil: '#171214', trim: 'tile', cove: 0xd2ba8b, wallRough: 0.5, floorRough: 0.55 },
+  arcade: { wall: () => T.noirStone(), floor: () => T.oxbloodCarpet(), tile: 3.2, wallTile: 3.2, ceil: '#130b0d', trim: 'deco', cove: 0xd6ab66 },
+  race: { wall: () => T.noirStone(), floor: () => T.noirStone(), tile: 2.4, wallTile: 3.2, ceil: '#130b0d', trim: 'deco', cove: 0xd6ab66, floorRough: 0.48 },
+  slots: { wall: () => T.noirStone(), floor: () => T.oxbloodCarpet(), tile: 3.2, wallTile: 3.2, ceil: '#130b0d', trim: 'deco', cove: 0xd6ab66 },
+  vip: { wall: () => T.noirStone(), floor: () => T.oxbloodCarpet(), tile: 3.2, wallTile: 3.2, ceil: '#130b0d', trim: 'deco', cove: 0xd6ab66 },
 };
 export const roomMats = {}; // (exported for backrooms.js, which swaps them on the backrooms night)
 for (const k in ROOM_LOOK) {
@@ -102,8 +103,8 @@ for (const k of ['polished', 'blackGloss', 'marble', 'marbleDark', 'chrome', 'po
 // are requested: startup used to paint every room, then replace all that work.
 // Phones skip the normal maps.
 const ROOM_MATS = {
-  floor: ['wallFloor', 'carpetFloor'], bar: ['wallBar', 'woodFloor'], rest: ['tileWall', 'tileFloor'], arcade: ['wallArcade', 'carpetArcade'],
-  race: ['wallRace', 'tileFloor'], slots: ['wallSlots', 'carpetSlots'], vip: ['wallVip', 'carpetVip'],
+  floor: ['noirMarble', 'oxbloodCarpet'], bar: ['noirMarble', 'oxbloodCarpet'], rest: ['noirMarble', 'noirMarble'], arcade: ['noirMarble', 'oxbloodCarpet'],
+  race: ['noirMarble', 'noirMarble'], slots: ['noirMarble', 'oxbloodCarpet'], vip: ['noirMarble', 'oxbloodCarpet'],
 };
 export function loadRoomMats(lowPower = false) {
   if (/[?&](toy|nomats)\b/.test(location.search)) {
@@ -111,7 +112,7 @@ export function loadRoomMats(lowPower = false) {
       const L = ROOM_LOOK[k], m = roomMats[k]; m.wall.map = L.wall(); m.floor.map = L.floor(); if (m.ceil) m.ceil.map = T.ceiling(L.ceil);
       for (const material of [m.wall, m.floor, m.ceil]) if (material) material.needsUpdate = true;
     }
-    MAT.darkWood.map = T.wood('#4a2616', '#2a140a'); MAT.darkWood.needsUpdate = true; return;
+    MAT.darkWood.map = T.wood('#170e0d', '#080607'); MAT.marble.map = T.noirStone(); MAT.marble.color.set(0xffffff); MAT.marbleDark.map = T.noirStone(); MAT.marbleDark.color.set(0x999999); for (const m of [MAT.darkWood, MAT.marble, MAT.marbleDark]) m.needsUpdate = true; return;
   }
   const L = new THREE.TextureLoader(), cache = {};
   const tex = (file, srgb) => cache[file] || (cache[file] = new Promise(ok => L.load('assets/mats/' + file, t => {
@@ -128,11 +129,11 @@ export function loadRoomMats(lowPower = false) {
   for (const k in ROOM_MATS) {
     const [wall, floor] = ROOM_MATS[k], m = roomMats[k];
     const look = ROOM_LOOK[k];
-    use(m.wall, wall, { ns: 0.4, fallback: look.wall }); use(m.floor, floor, { ns: 0.5, fallback: look.floor });
-    if (m.ceil) use(m.ceil, 'ceiling', { tint: k === 'arcade' ? 0x5a4a78 : k === 'rest' ? 0x9aa8a8 : 0xd8c8b8, ns: 0.8, fallback: () => T.ceiling(look.ceil) });
+    use(m.wall, wall, { ns: 0.12, fallback: look.wall }); use(m.floor, floor, { ns: 0.5, fallback: look.floor });
+    if (m.ceil) use(m.ceil, 'ceiling', { tint: 0x66504a, ns: 0.8, fallback: () => T.ceiling(look.ceil) });
   }
-  use(MAT.darkWood, 'darkWood', { fallback: () => T.wood('#4a2616', '#2a140a') }); use(MAT.marble, 'marble', { tint: 0xd2cbc0, ns: 0.3 }); MAT.marble.roughness = 0.38; use(MAT.marbleDark, 'marble', { tint: 0x4a4440, ns: 0.3 }); use(MAT.velvet, 'velvet', { tint: 0xe8c0c8 }); use(MAT.leather, 'leather');
-  use(MAT.gold, 'goldLeaf', { ns: 0.3 }); use(MAT.brass, 'brass', { ns: 0.3 });
+  use(MAT.darkWood, 'darkWood', { tint: 0x352324, fallback: () => T.wood('#170e0d', '#080607') }); use(MAT.marble, 'noirMarble', { ns: 0.12, fallback: T.noirStone }); use(MAT.marbleDark, 'noirMarble', { tint: 0x999999, ns: 0.12, fallback: T.noirStone }); use(MAT.velvet, 'velvet', { tint: 0x792630 }); use(MAT.leather, 'leather');
+  use(MAT.gold, 'goldLeaf', { tint: 0xc4ac79, ns: 0.18 }); use(MAT.brass, 'brass', { tint: 0xb49b72, ns: 0.18 });
   return Promise.all(Object.values(cache));
 }
 
@@ -203,7 +204,11 @@ export function* buildWorldSteps(scene, opts = {}) {
   for (const k in ROOMS) {
     const r = ROOMS[k], m = roomMats[k], L = ROOM_LOOK[k];
     const w = r.w * M, d = r.h * M, cx = (r.x + r.w / 2) * M, cz = (r.y + r.h / 2) * M;
-    S.add(uvScale(new THREE.PlaneGeometry(w, d), w / m.tile, d / m.tile), m.floor, v3(cx, 0, cz), 0, null, -Math.PI / 2);
+    // Black stone surrounds a red carpet field; the borders are flush surfaces.
+    const inset = k === 'rest' || k === 'race' ? 0 : .75;
+    if (inset) S.add(uvScale(new THREE.PlaneGeometry(w, d), w / 2.4, d / 2.4), MAT.marble, v3(cx, 0, cz), 0, null, -Math.PI / 2);
+    S.add(uvScale(new THREE.PlaneGeometry(w - inset * 2, d - inset * 2), (w - inset * 2) / m.tile, (d - inset * 2) / m.tile), m.floor, v3(cx, inset ? .002 : 0, cz), 0, null, -Math.PI / 2);
+    if (inset) for (const [sx, sz, sw, sd] of [[cx, cz-d/2+inset, w-inset*2, .018], [cx, cz+d/2-inset, w-inset*2, .018], [cx-w/2+inset, cz, .018, d-inset*2], [cx+w/2-inset, cz, .018, d-inset*2]]) S.add(new THREE.PlaneGeometry(sw, sd), MAT.gold, v3(sx, .004, sz), 0, null, -Math.PI/2);
     if (m.ceil) {
       S.add(uvScale(new THREE.PlaneGeometry(w, d), w / 2, d / 2), m.ceil, v3(cx, WALL_H, cz), 0, null, Math.PI / 2);
       // a glowing cove strip a little in from the walls, and the dark soffit above it
@@ -263,11 +268,13 @@ export function* buildWorldSteps(scene, opts = {}) {
         if (stall || len < 0.4) continue;
         const out = (d, y) => v3(p[0] + sd.n[0] * d, y, p[1] + sd.n[1] * d);
         if (L.trim === 'deco') {
-          S.add(uvScale(box(len, 1.0, 0.05), len / 2, 0.5), MAT.darkWood, out(0.025, 0.5), rotY);
+          S.add(uvScale(box(len, 1.0, 0.05), len / 2, 0.5), MAT.marble, out(0.025, 0.5), rotY);
           B.add(box(len, 0.05, 0.07), MAT.gold, out(0.05, 1.02), rotY);
           S.add(box(len, 0.16, 0.1), MAT.gold, out(0.05, WALL_H - 0.3), rotY);
           S.add(box(len, 0.12, 0.07), MAT.black, out(0.06, 0.06), rotY);
-          colLists.push({ room, n: sd.n, p, len, rotY, horiz: !sd.n[0], c: sd.c, lo: run.lo, hi: run.hi });
+          // The arcade originally had flat neon walls. Keep its cabinet and
+          // screen clearances rather than adding pilasters behind them.
+          if (room !== 'arcade') colLists.push({ room, n: sd.n, p, len, rotY, horiz: !sd.n[0], c: sd.c, lo: run.lo, hi: run.hi });
         } else if (L.trim === 'tile') {
           S.add(box(len, 1.2, 0.03), MAT.marble, out(0.015, 0.6), rotY);
           S.add(box(len, 0.04, 0.05), MAT.chrome, out(0.03, 1.22), rotY);
@@ -320,16 +327,16 @@ export function* buildWorldSteps(scene, opts = {}) {
   // 2.25 m up, its own width plus 0.3 m clear of the door frame, in front of the pilasters.
   yield 'Hanging the signs';
   const beside = (doorEdge, side, w, gap = 0.3) => doorEdge * M + side * (gap + w * 0.55);
-  sign('LAST CALL', 0xff5c8a, 1320 * M, 2.2, 20 * M + 0.05, 0, 4.6, 1.15);
+  sign('LAST CALL', 0xe2bb72, 1320 * M, 2.2, 20 * M + 0.05, 0, 4.6, 1.15);
   sign('BAR', 0xffc070, 320 * M, 2.88, 20 * M + 0.62, 0, 1.6, 0.5); // in front of the back-bar carving
   // (the restrooms named from the bar and the duck race from the arcade, between MINES and DRAGON TOWER: from the room
   // you come from; VIP stays on the lounge side, the pond leaves no room to stand in front of it on the other)
-  sign('VIP', 0xd070ff, beside(2440, -1, 1.4), 2.25, 1200 * M + 0.24, 0, 1.4, 0.36);
-  sign('RESTROOMS', 0x80fff0, beside(380, 1, 1.7, 0.45), 2.3, 700 * M - 0.24, Math.PI, 1.7, 0.26);
-  sign('DUCK RACE', 0x7fe8ff, beside(2560, 1, 2.0, 0.65), 2.25, 700 * M - 0.24, Math.PI, 2.0, 0.3);
+  sign('VIP', 0xd8b36e, beside(2440, -1, 1.4), 2.25, 1200 * M + 0.24, 0, 1.4, 0.36);
+  sign('RESTROOMS', 0xd2b77a, beside(380, 1, 1.7, 0.45), 2.3, 700 * M - 0.24, Math.PI, 1.7, 0.26);
+  sign('DUCK RACE', 0xd8b36e, beside(2560, 1, 2.0, 0.65), 2.25, 700 * M - 0.24, Math.PI, 2.0, 0.3);
   sign('SLOTS', 0xffd040, 510 * M, 2.35, 1200 * M + 0.24, 0, 1.8, 0.45);
   sign('HIGH LIMIT', 0xffd040, 1620 * M + .24, 2.5, 1270 * M, Math.PI/2, 1.8, 0.30, true, true);
-  sign('DICE', 0x3fe0ff, 2000 * M - .24, 2.35, 975 * M, -Math.PI/2, 1.3, 0.4); // aligned with the southern table pit
+  sign('DICE', 0xe2bb72, 2000 * M - .24, 2.35, 975 * M, -Math.PI/2, 1.3, 0.4); // aligned with the southern table pit
   // The coin game has its own HEADS OR TAILS title; a second wall label hid behind the coin.
   bulbsMesh(ctx);
 
@@ -507,7 +514,7 @@ function vip(ctx) {
   }
   // velvet rope at the VIP door from the duck pond, and a rug
   for (const x of [2410, 2590]) { B.add(cyl(0.03, 0.03, 0.95, 10), MAT.gold, v3(x * M, 0.475, 1235 * M)); B.add(sph(0.05, 10), MAT.gold, v3(x * M, 0.97, 1235 * M)); B.add(cyl(0.16, 0.16, 0.03, 16), MAT.gold, v3(x * M, 0.015, 1235 * M)); }
-  const rug = new THREE.Mesh(new THREE.CircleGeometry(2.4, 48), std({ color: 0x2a0e30, roughness: 0.95 })); rug.rotation.x = -Math.PI / 2; rug.position.set(cx, 0.006, cz); rug.receiveShadow = true; group.add(rug);
+  const rug = new THREE.Mesh(new THREE.CircleGeometry(2.4, 48), std({ color: 0x320912, roughness: 0.95 })); rug.rotation.x = -Math.PI / 2; rug.position.set(cx, 0.006, cz); rug.receiveShadow = true; group.add(rug);
   const ring = new THREE.Mesh(new THREE.RingGeometry(2.25, 2.33, 64), MAT.gold); ring.rotation.x = -Math.PI / 2; ring.position.set(cx, 0.008, cz); group.add(ring);
   // a big TV on the east wall
   B.add(rbox(0.08, 1.3, 2.3, 0.02), MAT.blackGloss, v3(2980 * M - 0.05, 1.9, 1540 * M));
@@ -624,7 +631,7 @@ function decor(ctx) {
     B.add(cyl(0.008, 0.014, 1.45, 8), MAT.wood, v3(o.x - 0.2, 0.83, o.z + 0.25), 0.3, null, 0, Math.PI / 2);
     }
     for (const dx of [-0.5, 0.5]) { add(new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.3, 0.2, 20, 1, true), glowMat(0x3a8a5a, 0.6, { side: THREE.DoubleSide })), v3(o.x + dx, 2.3, o.z)); B.add(cyl(0.006, 0.006, 0.9, 4), MAT.metalDark, v3(o.x + dx, 2.85, o.z)); }
-    const rug = new THREE.Mesh(new THREE.PlaneGeometry(o.w + 1.6, o.d + 1.4), std({ color: 0x2a0e30, roughness: 0.95 })); rug.rotation.x = -Math.PI / 2; rug.receiveShadow = true; add(rug, v3(o.x, 0.006, o.z));
+    const rug = new THREE.Mesh(new THREE.PlaneGeometry(o.w + 1.6, o.d + 1.4), std({ color: 0x320912, roughness: 0.95 })); rug.rotation.x = -Math.PI / 2; rug.receiveShadow = true; add(rug, v3(o.x, 0.006, o.z));
   }
   // champagne tower
   const coupe = lathe([[0, 0], [0.04, 0], [0.008, 0.01], [0.006, 0.08], [0.055, 0.1], [0.06, 0.125], [0.055, 0.125], [0.0, 0.105]], 16);
@@ -811,7 +818,7 @@ function chandeliers(ctx) {
   let modelMount = null;
   for (const [cxp, czp] of CHANDELIERS) {
     const room = strictRoom(cxp, czp);
-    if (room === 'race' || room === 'arcade') { lightSpots.push({ p: v3(cxp * M, WALL_H - 0.5, czp * M), color: room === 'arcade' ? 0xd0a0ff : 0xbfefff, power: room === 'race' ? 3.5 : 6, range: 10 }); list.push(null); continue; }
+    if (room === 'race' || room === 'arcade') { lightSpots.push({ p: v3(cxp * M, WALL_H - 0.5, czp * M), color: 0xe0b67a, power: room === 'race' ? 3.5 : 6, range: 10 }); list.push(null); continue; }
     const big = room === 'floor', R = big ? 0.8 : 0.5;
     const g = new THREE.Group(); g.position.set(cxp * M, 0, czp * M); group.add(g);
     const B = model && modelMount ? null : new Batch(true), crystals = [], bulbPts = [];
@@ -881,7 +888,7 @@ function chandeliers(ctx) {
 // steps in one and out of another; to everyone else they are just locked doors.
 function staffDoors(ctx) {
   const { B, group } = ctx;
-  const doorMat = std({ color: 0x3a4a3e, metalness: 0.4, roughness: 0.6 }), lampMat = glowMat(0xffe0a0, 1.6);
+  const doorMat = std({ color: 0x1a1416, metalness: 0.4, roughness: 0.6 }), lampMat = glowMat(0xffe0a0, 1.6);
   const plateMat = new THREE.MeshBasicMaterial({ map: T.plaque('STAFF ONLY', { w: 256, h: 70, bg: '#c8b890', ink: '#2a1a10', font: '900 34px Arial Black, sans-serif' }) });
   for (const d of STAFF_DOORS) {
     const nx = Math.cos(d.face), nz = Math.sin(d.face), yaw = Math.atan2(nx, nz);
@@ -897,8 +904,8 @@ function staffDoors(ctx) {
 
 // ---------- The arcade ----------
 function arcadeDressing(ctx) {
-  ctx.sign('PLINKO', 0x3fe0ff, 2166 * M, 2.75, 3.05, 0, 2.0, 0.36, true, true); // follows the relocated north-wall pair
-  ctx.sign('MINES', 0x3fff8a, 2210 * M, 2.45, 700 * M - 0.24, Math.PI, 1.5, 0.4);
+  ctx.sign('PLINKO', 0xe2bb72, 2166 * M, 2.75, 3.05, 0, 2.0, 0.36, true, true); // follows the relocated north-wall pair
+  ctx.sign('MINES', 0xe2bb72, 2210 * M, 2.45, 700 * M - 0.24, Math.PI, 1.5, 0.4);
   ctx.sign('DRAGON TOWER', 0xffa040, 2770 * M, 2.45, 700 * M - 0.24, Math.PI, 2.4, 0.4);
 }
 
