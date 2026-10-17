@@ -87,6 +87,7 @@ export const SHADY = { x: 2910, y: 1675, face: Math.PI, stand: { x: 2853, y: 167
 export const BELL = { x: 1320, y: 600 };
 // Wall-side waste bins: every room has an accessible place to dispose of drinks.
 export const TRASH_CANS = [[570,570],[570,800],[720,1040],[1900,500],[2090,580],[2880,1120],[100,1250],[1500,1815],[2000,1830],[2880,1400]].map(([x,y],id)=>({id,x,y}));
+export const BAR_TABLES = [[150,420,1.075],[420,470,1.075],[200,600,1.075],[73,285,.775],[73,525,.775]].map(([x,y,height],id)=>({id,x,y,height,glassOffset:height<1?22:12}));
 export const OBSTACLES = [
   ...TRASH_CANS.map(p=>({x:p.x-15,y:p.y-15,w:30,h:30,kind:'trash'})),
   { x: BELL.x-36, y: BELL.y-36, w:72, h:72, kind: 'pit-bell' },

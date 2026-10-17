@@ -23,7 +23,7 @@ export function packPub(pub) {
     let f = 0; FLAGS.forEach((n, i) => { if (c[n]) f |= 1 << i; });
     return [c.id, j, c.x, c.y, c.look, c.face, c.seat, f, c.eating || 0, c.snack || 0];
   });
-  const w = { ...pub, chars, drinks: pub.drinks.map(d => [d.id, d.owner, d.holder, d.x, d.y, d.sips, KINDS.indexOf(d.kind), d.color]),
+  const w = { ...pub, chars, drinks: pub.drinks.map(d => [d.id, d.owner, d.holder, d.x, d.y, d.sips, KINDS.indexOf(d.kind), d.color, d.barTable ?? null]),
     chandeliers: pub.chandeliers.map(ch => [ch.id, ch.x, ch.y, CH_STATE.indexOf(ch.state), ch.t]) };
   const keys = {}; for (const f of STICKY) keys[f] = JSON.stringify(w[f]);
   return { w, looks, looksKey: JSON.stringify(looks), rowKeys: chars.map(r => r.join()), keys };
@@ -67,7 +67,7 @@ export function unpackSnap(msg, mine = MINE) {
     FLAGS.forEach((n, i) => { c[n] = !!(f & (1 << i)); });
     return c;
   });
-  pub.drinks = w.drinks.map(([id, owner, holder, x, y, sips, k, color]) => ({ id, owner, holder, x, y, sips, color, kind: KINDS[k] }));
+  pub.drinks = w.drinks.map(([id, owner, holder, x, y, sips, k, color, barTable]) => ({ id, owner, holder, x, y, sips, color, barTable:barTable ?? undefined, kind: KINDS[k] }));
   if ('chandeliers' in w) w.chandeliers = w.chandeliers.map(([id, x, y, s, t]) => ({ id, x, y, state: CH_STATE[s], t }));
   for (const f of STICKY) { if (f in w) mine.pub[f] = w[f]; pub[f] = mine.pub[f]; }
   const priv = msg.priv;

@@ -18,25 +18,21 @@ export function skeeLaunch(r, aim, power, sequence) {
   aim = Math.max(-1, Math.min(1, aim)); power = Math.max(0, Math.min(1, power));
   // Launch velocity follows the same curved ramp as the visible lane. A protected
   // roll chooses a launch energy up front; nothing steers the ball during flight.
-  let speed = 3.35 + power * 2.65, lateral = aim * .40;
+  let speed = 3.40 + power * 1.66, lateral = aim * .40;
   if(r.hot) {
     const p=SKEE_POCKETS[4+((r.launched+1)%3)], distance=SKEE.tip-p.z;
     const tangent=2*.32/.44, needed=Math.sqrt(4.9*distance*distance/(tangent*distance-(p.y-(SKEE.laneY+SKEE.radius+SKEE.rise))));
-    const travel = initial => {let z=SKEE.front,v=-initial,t=0;for(let i=0;i<2400&&z>SKEE.tip;i++){
-      const u=Math.max(0,Math.min(1,(-z-.38)/.44)),slope=2*.32*u/.44;
-      v=Math.min(-.2,v+(.12+(9.8*slope+2*.32/(.44*.44)*slope*v*v)/(1+slope*slope))*SKEE.step);z+=v*SKEE.step;t+=SKEE.step;
-    }return {speed:-v,time:t};};
-    let lo=1,hi=8;for(let i=0;i<28;i++){const mid=(lo+hi)/2;if(travel(mid).speed<needed)lo=mid;else hi=mid;}
-    speed=(lo+hi)/2;
-    // Fixed ramp steps straddle the lip at different times. Refine against the
-    // actual exit speed rather than assuming that discrete curve is monotonic.
-    let error=Infinity;
-    for(let i=0;i<=256;i++) { const candidate=(lo+hi)/2-.24+i*.48/256,e=Math.abs(travel(candidate).speed-needed);if(e<error){error=e;speed=candidate;} }
-    const exit=travel(speed);lateral=p.x/(exit.time+distance/exit.speed);
+    speed=Math.sqrt(needed*needed*(1+tangent*tangent)+2*9.8*SKEE.rise+2*.12*(SKEE.front-SKEE.tip));
+    let z=SKEE.front,time=0;while(z>SKEE.tip){const v=laneVelocity(z,speed);z+=v*SKEE.step;time+=SKEE.step;}
+    lateral=p.x/(time+distance/needed);
   }
   r.launched++; r.phase = 'roll'; r.wait = 0;
-  r.ball = { x: 0, y: SKEE.laneY+SKEE.radius, z: SKEE.front, vx: lateral, vy: 0, vz: -speed, age: 0, stage: 'lane', power, aim, assist: false, spin: 0, bounces: 0 };
+  r.ball = { x: 0, y: SKEE.laneY+SKEE.radius, z: SKEE.front, vx: lateral, vy: 0, vz: -speed, age: 0, stage: 'lane', launchSpeed:speed, power, aim, assist: false, spin: 0, bounces: 0 };
   return true;
+}
+function laneVelocity(z,speed){
+  const u=Math.max(0,Math.min(1,(-z-.38)/.44)),slope=2*SKEE.rise*u/.44;
+  return -Math.sqrt(Math.max(.04,(speed*speed-2*9.8*SKEE.rise*u*u-2*.12*(SKEE.front-z))/(1+slope*slope)));
 }
 const plane = b => b.z - SKEE.boardZ + SKEE.slope * (b.y - SKEE.boardY);
 function caught(r, pocket) {
@@ -49,10 +45,11 @@ function step(r, dt) {
   if (r.phase === 'roll' && b) {
     b.age += dt;
     if (b.stage === 'lane') {
-      const u = Math.max(0, Math.min(1, (-b.z - .38) / .44));
-      const slope = 2 * .32 * u / .44;
-      const decel = .12 + (9.8 * slope + 2*.32/(.44*.44)*slope*b.vz*b.vz) / (1 + slope * slope);
-      b.vz = Math.min(-.2, b.vz + decel * dt);
+      // Conserve launch energy along the curved track. Euler acceleration at
+      // the lip made adjacent power values leave at wildly different speeds.
+      const v=laneVelocity(b.z,b.launchSpeed);
+      const midpoint=b.z+v*dt/2;
+      b.vz=laneVelocity(midpoint,b.launchSpeed);
       if(b.vz>=-.21){caught(r,null);return;}
       b.x += b.vx * dt; b.z += b.vz * dt;
       b.y = SKEE.laneY+SKEE.radius + SKEE.rise * Math.max(0, Math.min(1, (-b.z - .38) / .44)) ** 2;
@@ -60,6 +57,7 @@ function step(r, dt) {
       if (Math.abs(b.x) > SKEE.halfWidth - SKEE.radius) { b.x = Math.sign(b.x) * (SKEE.halfWidth-SKEE.radius); b.vx *= -.65; b.bounces++; }
       if (b.z <= SKEE.tip) {
         b.z = SKEE.tip; b.y = SKEE.laneY+SKEE.radius+SKEE.rise;
+        b.vz=laneVelocity(SKEE.tip,b.launchSpeed);
         b.vy = -b.vz * (2 * .32 / .44); b.stage = 'flight'; b.age = 0;
       }
     } else {
@@ -124,4 +122,3 @@ export function skeeView(r) {
     seconds: Math.ceil(r.time), mult: r.phase === 'done' ? skeeMultiplier(r.score) : null,
     ball: r.ball && { x: r.ball.x, y: r.ball.y, z: r.ball.z, stage: r.ball.stage, assist: r.ball.assist, spin: r.ball.spin, bounces: r.ball.bounces } };
 }
-

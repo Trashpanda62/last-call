@@ -40,8 +40,11 @@ export function buildArcade(ctx, seats, screen, updaters, betSocket, actionButto
           for(let i=0;i<25;i++){g.fillStyle='#a88d64';g.fillRect((i*137)%w,top+(i*83)%ph,2,2);}
           const pipes=r?.pipes||[{x:.8,y:.5}];
           for(const p of pipes){const x=p.x*w,bw=FLAPPY.width*w,y=bottom-p.y*ph,gap=(p.gap??FLAPPY.gap)*ph;
-            g.fillStyle='#763535';g.fillRect(x-bw/2,top,bw,y-gap/2-top);g.fillRect(x-bw/2,y+gap/2,bw,bottom-y-gap/2);
-            g.fillStyle='#d3b273';g.fillRect(x-bw/2-5,y-gap/2-12,bw+10,12);g.fillRect(x-bw/2-5,y+gap/2,bw+10,12);
+            const shaft=T.art2('flying-pigs-pipe'),cap=T.art2('flying-pigs-cap');
+            const segment=(start,end,flip)=>{const height=end-start;if(height<=0)return;g.save();g.beginPath();g.rect(x-bw/2,start,bw,height);g.clip();
+              if(shaft)g.drawImage(shaft,x-bw/2,start,bw,height);else{g.fillStyle='#763535';g.fillRect(x-bw/2,start,bw,height);}
+              if(cap){const ch=Math.min(30,height);g.translate(x-bw/2,flip?end:start);g.scale(1,flip?-1:1);g.drawImage(cap,0,0,bw,ch);}g.restore();};
+            segment(top,y-gap/2,true);segment(y+gap/2,bottom,false);
           }
           const x=FLAPPY.x*w,y=bottom-(r?.y??.5)*ph;
           g.save();g.translate(x,y);g.rotate(-Math.max(-.6,Math.min(.8,(r?.vy||0)*-.8)));

@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-17T08:42:24.595Z",
+  "tables": 5,
+  "poisonAndSipsPreserved": true,
+  "guestWire": true,
+  "singleHolder": true,
+  "placementAwayRejected": true,
+  "powerSamples": 1001,
+  "continuousLipSpeed": true,
+  "fullPowerScore": 50,
+  "bands": [
+    {
+      "score": 10,
+      "min": 0,
+      "max": 0.068
+    },
+    {
+      "score": 20,
+      "min": 0.144,
+      "max": 0.232
+    },
+    {
+      "score": 30,
+      "min": 0.338,
+      "max": 0.44
+    },
+    {
+      "score": 40,
+      "min": 0.592,
+      "max": 0.713
+    },
+    {
+      "score": 50,
+      "min": 0.933,
+      "max": 1
+    }
+  ]
+}

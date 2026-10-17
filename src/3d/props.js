@@ -8,7 +8,7 @@ import { roomOf } from '../map.js';
 
 export const PROP_NAMES = ['bjTable', 'rouletteTable', 'diceTable', 'slot', 'slotHigh', 'jackpot', 'plinko', 'console', 'prizeWheel', 'duck',
   'barCounter', 'backBar', 'stool', 'chair', 'booth', 'couch', 'armchair', 'chandelier', 'poolTable', 'champagne',
-  'skeeCabinet', 'snackDonut', 'snackPretzel', 'palm', 'camera', 'pitBell', 'toilet', 'sink', 'rocket', 'ottoman', 'breaker']; // Jukebox and snack trays use their own meshes. coinPodium: its fluting decimated into red streaks; hightop: its column decimated away; crates: decimated into shards. The hand-built ones stay (the dumpster and street lamp went with the back alley)
+  'skeeCabinet', 'snackPretzel', 'palm', 'camera', 'pitBell', 'toilet', 'sink', 'rocket', 'ottoman', 'breaker']; // Jukebox and snack trays use their own meshes. coinPodium: its fluting decimated into red streaks; hightop: its column decimated away; crates: decimated into shards. The hand-built ones stay (the dumpster and street lamp went with the back alley)
 const SRC = {};
 let ready = false;
 const waiters = [];

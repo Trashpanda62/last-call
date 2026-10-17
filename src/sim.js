@@ -2,7 +2,7 @@
 import { CFG, DIFF, CAST, DRINKS, DEATH_SOUNDS } from './config.js';
 import { rand, pick, clamp, dist, angDiff, money, shuffle, secs } from './util.js';
 import { mixInfo, BOT_RECIPES } from './mix.js';
-import { ROOMS, TAP, BELL, TRASH_CANS, SHADY, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, STAFF_DOORS, JACKPOT, BREAKERS, W, H, makeSeats, los, collide, roomOf, route, openSpot, clearSpot } from './map.js';
+import { ROOMS, TAP, BELL, BAR_TABLES, TRASH_CANS, SHADY, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, STAFF_DOORS, JACKPOT, BREAKERS, W, H, makeSeats, los, collide, roomOf, route, openSpot, clearSpot } from './map.js';
 import { PERKS, PERK } from './perks.js';
 import * as Gm from './games.js';
 import { makeTalk } from './talk.js';
@@ -1501,6 +1501,12 @@ function makeApi(G) {
     if (body && !G.escape) return { label: 'Report body', act: () => callMeeting(c, body, `${c.name} found ${byId(body.id).name}'s body.`) };
     if (c.seat && sitsDown(c, c.seat)) return { label: 'Stand up', act: () => standUp(c) }; // (at a game E presses what you aim at)
     if (c.drink && trashAt(c)) return {label:'Throw drink in trashcan', act:()=>discardDrink(c)};
+    const table = nearest(BAR_TABLES.filter(t => los(c,t)), c, 63);
+    if(table) {
+      const placed = G.drinks.find(d=>d.holder===null && d.barTable===table.id);
+      if(!c.drink && placed) return {label:'Pick up drink',act:()=>{if(placed.holder!==null)return;placed.holder=c.id;delete placed.barTable;c.drink=placed;c.inspect=null;}};
+      if(c.drink && !placed) return {label:'Leave drink on table',act:()=>{const d=c.drink;d.holder=null;d.barTable=table.id;d.x=table.x+table.glassOffset;d.y=table.y;c.drink=null;c.inspect=null;}};
+    }
     const door = c.isKiller && c.perk === 'staff' ? staffDoorAt(c) : null;
     if (door) return { label: 'Take the staff passage', act: () => usePerk(c, 'staff') }; // enters the private camera passage
     if (atBar(c)) {
@@ -1886,7 +1892,7 @@ function makeApi(G) {
       chars: G.chars.map(c => { const a = c.monster ? MONSTER_LOOK : appearAs(c); return { id: c.id, name: a.name, color: a.color, hat: a.hat, x: Math.round(c.x), y: Math.round(c.y), look: +c.look.toFixed(2), face: +c.face.toFixed(2),
         alive: c.alive, eating: Math.max(0, 2.4 - (G.t - (c.eatAt ?? -99))), snack: c.snack || 0, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: sick(c), human: a === c ? c.isHuman : !!a.isHuman, lucky: c.lucky > 0, inspecting: !!c.inspect, bet: G.t - (c.betAt ?? -9) < 1.2,
         monster: c.monster, flash: c.flash, held: c.grabbed !== null, maul: !!c.grab, staffInside: !!c.staffInside, escaped: !!c.escaped, leap: !!(c.leap && c.leap.miss === null) }; }),
-      drinks: G.drinks.map(d => ({ id: d.id, owner: d.owner, holder: d.holder, x: Math.round(d.x), y: Math.round(d.y), sips: d.sips, color: d.color, kind: d.glass })), // (kind: the glass it's in)
+      drinks: G.drinks.map(d => ({ id: d.id, owner: d.owner, holder: d.holder, x: Math.round(d.x), y: Math.round(d.y), sips: d.sips, barTable: d.barTable, color: d.color, kind: d.glass })), // (kind: the glass it's in)
       bodies: G.bodies.map(b => ({ id: b.id, x: Math.round(b.x), y: Math.round(b.y), cause: b.cause })),
       bowls: G.bowls.map(b => ({ id: b.id, x: b.x, y: b.y })),
       chandeliers: G.chandeliers.map(ch => ({ id: ch.id, x: ch.x, y: ch.y, state: ch.state, t: +ch.t.toFixed(2) })),

@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import * as T from './textures.js';
 import { CFG, DRINKS } from '../config.js';
-import { makeSeats } from '../map.js';
+import { BAR_TABLES, makeSeats } from '../map.js';
 import { makeBean } from './plush.js';
 import { makeSnack, snackAssets, batchSnackDisplay } from './snacks.js';
 
@@ -213,7 +213,7 @@ export class Items {
       } else {
         if (g.parent !== this.group) { this.group.add(g); g.rotation.set(0, 0, 0); }
         const onRail = SEATS.some(s => Math.abs(s.drink.x - d.x) < 6 && Math.abs(s.drink.y - d.y) < 6);
-        g.position.set(d.x * M, onRail ? RAIL_H : 0, d.y * M);
+        g.position.set(d.x * M, d.barTable !== undefined ? BAR_TABLES[d.barTable]?.height || 0 : onRail ? RAIL_H : 0, d.y * M);
         if (d.owner === priv.me) myPlaced = g;
       }
       const sp = spiked.has(d.id);

@@ -327,7 +327,9 @@ export const prizeWheel = (segs) => once('prize', () => {
   return tex(c, false);
 });
 export const coinFace = (heads) => once('coin' + heads, () => {
-  const [c, g] = canvas(512, 512); g.scale(2, 2); g.translate(128, 128); g.rotate(Math.PI / 2); g.translate(-128, -128);
+  const [c, g] = canvas(512, 512); g.scale(2, 2); g.translate(128, 128); g.rotate(heads ? Math.PI / 2 : -Math.PI / 2); g.translate(-128, -128);
+  const generated=art2(heads?'coin-heads':'coin-tails');
+  if(generated){g.drawImage(generated,0,0,256,256);return tex(c,false);}
   const rg = g.createRadialGradient(110, 100, 10, 128, 128, 128); rg.addColorStop(0, '#fff3c0'); rg.addColorStop(0.6, '#e8b440'); rg.addColorStop(1, '#8a5a20');
   g.fillStyle = rg; g.beginPath(); g.arc(128, 128, 128, 0, 7); g.fill();
   g.strokeStyle = '#8a5a20'; g.lineWidth = 8; g.beginPath(); g.arc(128, 128, 110, 0, 7); g.stroke();
@@ -514,7 +516,7 @@ export function crestImage() {
 
 // Sorceress art for phases 7, 8 and 10 (assets/art2): slot symbols and game-screen backdrops (paint.js draws them),
 // neon signs, paintings, posters, key art and effect sprites. World pieces are rebuilt once it is in.
-export const ART2_NAMES = ['flying-pigs-atlas', 'flying-pigs-sky', 'jukebox-marquee-v2', 'portrait-gambler', 'portrait-queen', 'portrait-bartender', 'sym-diamond', 'sym-seven', 'sym-bar', 'sym-bell', 'sym-cherry', 'sym-lemon',
+export const ART2_NAMES = ['flying-pigs-pipe', 'flying-pigs-cap', 'coin-heads', 'coin-tails', 'flying-pigs-atlas', 'flying-pigs-sky', 'jukebox-marquee-v2', 'portrait-gambler', 'portrait-queen', 'portrait-bartender', 'sym-diamond', 'sym-seven', 'sym-bar', 'sym-bell', 'sym-cherry', 'sym-lemon',
   ...['mines', 'tower'].map(k => 'screen-' + k),
   ...['lastcall', 'bar', 'vip', 'restrooms', 'duckrace', 'slots', 'highlimit', 'dice', 'spintowin', 'plinko', 'mines', 'dragontower'].map(k => 'sign-' + k),
   ...['smoke', 'sparks', 'confetti', 'fizz', 'stars', 'ghost'].map(k => 'fx-' + k)];

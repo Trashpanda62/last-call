@@ -9,7 +9,9 @@ const fallbackSnacks = new Map();
 // same fitted footprint as the immediate fallback meshes.
 export function makeSnack(kind = 0, width = .24) {
   const name = ['snackDonut', 'snackPretzel', 'snackHotdog'][kind % 3];
-  if (hasProp(name)) { const g = propObject(name, { x: 0, z: 0, fit: [width, width, width] }); g.name = name; return g; }
+  // The legacy donut GLB includes a miniature character above the icing.
+  // Use the clean food-only donut below in every graphics mode.
+  if (kind !== 0 && hasProp(name)) { const g = propObject(name, { x: 0, z: 0, fit: [width, width, width] }); g.name = name; return g; }
   if (!fallbackSnacks.has(kind)) fallbackSnacks.set(kind, buildSnack(kind, name));
   const g = fallbackSnacks.get(kind).clone(true); g.scale.setScalar(width / .24); return g;
 }

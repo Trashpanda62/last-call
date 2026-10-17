@@ -44,15 +44,18 @@ export function loadHats(base = 'assets/hats/') {
 }
 const HAT_FIT = new Map();
 function hatModel(kind, color) {
-  const src = HAT_SRC[kind]; if (!src) return null;
+  // These two legacy models depict a sideways umbrella and a baseball cap.
+  // Their authored counterparts retain the correct shape and crown contact.
+  const src = !['umbrella','hardhat'].includes(kind) && HAT_SRC[kind]; if (!src) return null;
   let fit = HAT_FIT.get(kind);
   if (!fit) {
     const ref = new THREE.Box3().setFromObject(makeHat(kind, color)), gb = new THREE.Box3().setFromObject(src);
-    const k = (ref.max.x - ref.min.x) / (gb.max.x - gb.min.x) * (HAT_GROW[kind] || 1);
-    HAT_FIT.set(kind, fit = { k, y: ref.min.y - gb.min.y * k });
+    const k=(ref.max.x-ref.min.x)/(gb.max.x-gb.min.x)*(HAT_GROW[kind]||1);
+    const ky=(ref.max.y-ref.min.y)/(gb.max.y-gb.min.y),kz=(ref.max.z-ref.min.z)/(gb.max.z-gb.min.z)*(HAT_GROW[kind]||1);
+    HAT_FIT.set(kind, fit = { k,ky,kz,x:(ref.min.x+ref.max.x)/2-(gb.min.x+gb.max.x)*k/2,z:(ref.min.z+ref.max.z)/2-(gb.min.z+gb.max.z)*kz/2,y:ref.min.y-gb.min.y*ky });
   }
   const m = src.clone(true), k = fit.k;
-  m.scale.setScalar(k); m.position.y = fit.y;
+  m.scale.set(k,fit.ky,fit.kz);m.position.set(fit.x,fit.y,fit.z);
   m.traverse(o => { if (o.isMesh) { o.castShadow = true; o.material = hatFelt(o.material, k); o.material.envMapIntensity = 0.4; } });
   const g = new THREE.Group(); g.add(m); g.userData.model = true; return g;
 }
@@ -719,7 +722,7 @@ export class PlushBean {
     // hat on the crown, riding the head bone
     this.hat = null; this.hatKind = hat; this.hatColor = color || '#888888';
     if (hat) {
-      const s = S.info.trunkR / 0.31;
+      const s = S.info.crownR / 0.31;
       this.hat = hatModel(hat, this.hatColor) || makeHat(hat, this.hatColor); this.hat.scale.setScalar(s); this.hat.position.set(0, H - 0.08 * s, 0.01);
       this.model.add(this.hat); this.b.Head.o.attach(this.hat);
       if (!this.hat.userData.model) hatted.add(new WeakRef(this));

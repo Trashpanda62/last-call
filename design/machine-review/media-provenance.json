@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-17",
+  "provider": "Sorceress",
+  "tool": "image_generate",
+  "model": "gpt-image-2.5-sunburst",
+  "rights": "Generated through the user-approved Sorceress account for use in Last Call; provider terms apply.",
+  "approval": "Steve approved the two-image batch for 20 credits ($0.20).",
+  "jobs": [
+    {
+      "jobId": "1590fd90-1263-411f-9ea7-58d09391990d",
+      "prompt": "pipes-input.json",
+      "credits": 10
+    },
+    {
+      "jobId": "756e22bb-aeb6-449b-99e3-fdede183ef6b",
+      "prompt": "coin-input.json",
+      "credits": 10
+    }
+  ],
+  "actualCredits": 20,
+  "usd": 0.2,
+  "processing": "Local chroma removal and cropped shaft/cap/heads/tails. No additional paid calls.",
+  "outputs": [
+    {
+      "path": "assets/art2/flying-pigs-pipe.webp",
+      "sha256": "925779f5c1f827c2bf69fec21887c33c73cd2e3f4e03a76a99086130e83b3f72"
+    },
+    {
+      "path": "assets/art2/flying-pigs-cap.webp",
+      "sha256": "6ca9b07107d4de5706b96e41af279f3e3414e2bd973716df5b91c7952c79769f"
+    },
+    {
+      "path": "assets/art2/coin-heads.webp",
+      "sha256": "d4b9e7d18871db4a061b696fe2da763e5781a2ab65f44cdcdadc71b53370ac0b"
+    },
+    {
+      "path": "assets/art2/coin-tails.webp",
+      "sha256": "5bd178c369ab97c0ae0830ed49e5fa217169ce6fcf9445b1e2e848d32114ceac"
+    }
+  ]
+}

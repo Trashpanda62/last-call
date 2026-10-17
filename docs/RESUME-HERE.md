@@ -2,6 +2,16 @@
 
 Updated **2026-10-17**. The remaining implementable work from the prior checkpoint is constructed. Implementation, automated checks and LAN delivery verification are complete. [active-plan.md](active-plan.md) separates implementation from player acceptance. Older reports describe historical builds.
 
+## Latest approved art and playtest repair
+
+Steve approved the pending two-image Sorceress batch on 2026-10-17. Generated pipe shaft/cap and embossed potato heads/winged crest tails are integrated and reviewed in the real casino. Actual cost: 20 credits ($0.20), exactly approved; no extra paid jobs. Provenance: design/machine-review/media-provenance.json.
+
+Skee's previous hole-entry tests missed an unstable ramp integrator: adjacent powers could leave the lip at sharply different speeds, and full charge overshot the board. Ramp velocity now follows conserved launch energy and the actual curved surface. All 1,001 sampled powers have ordered exit speeds and contiguous scoring bands; center full charge reaches 50, side aim reaches both 100s. Actual held-Space input, all seven physical openings and host/guest/spectator scoring/settlement pass. Nine-ball rounds and payout tiers remain the same.
+
+Left click near any of the five bar tables places the held drink on its real tabletop; click again with a free hand to pick it up. Guests receive the placement height, and sips/poison remain intact. Both high-top and booth surfaces are covered. Floating figures were baked into the legacy donut GLB; it is replaced with clean food-only geometry. Generated hats now fit width, height and depth around the head crown; wrong umbrella/hardhat assets use the correct authored forms. Reviewed all 32 hats in normal and no-prop views.
+
+Requested game list is now explicit: [next arcade games](../design/next-arcade-games.md). These are proposals only. Current test reports: performance/2026-10-17-{skee-energy-rules,table-drinks-skee-energy,approved-followup-views,skee-energy-entry,skee-energy-network}.json. Player acceptance remains separate from automated verification.
+
 ## Constructed in this continuation
 
 - **Plinko:** continuous walnut/green lower cabinet, supported BET circle, physical DROP and LOW/MED/HIGH controls. Both cabinets show falling balls and landed risk channels.
@@ -59,7 +69,7 @@ Steve's new feedback supersedes the previous Discard icon. Ten black/gold lined 
 
 Actual mouse disposal, 15 game heights, compact dock, 30-second rocket movement with 10 Hz snapshots, piano bounds and normal/no-props views pass on ml350. All 200 door-to-bin routes and all 2,418 existing game/snack routes pass; actual skee entry/held-Space score and slot/camera controls pass. [Details, previews and reports](../design/machine-review/README.md). Delivery receipt: playtest-build-machine-review-2026-10-17.json.
 
-**Still to do: new generated pipes and coin faces.** Prepared exact two-image Sorceress plan: Sunburst 2K at 10 credits each, 20 total ($0.20), free local keying/cropping, no extra paid takes or 3D stage. Needs cost approval per the Sorceress skill before calling. Previous batch covered pig poses/backdrop only. [Plan and prompts](../design/machine-review/generation-plan.json). No paid job is running or submitted for this batch. B23 done; B24 awaiting approval. Do not claim this art is generated yet.
+**Completed in the latest follow-up:** Steve approved the pipe / coin batch; both images are integrated at 20 actual credits ($0.20). B24 is done. See the latest section above and design/machine-review/media-provenance.json. Delivery receipt: playtest-build-approved-followup-2026-10-17.json.
 
 ## Manual acceptance and holds
 
