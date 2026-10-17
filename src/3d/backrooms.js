@@ -1,3 +1,4 @@
+import {BR_WALLS,BR_HIDES} from '../backrooms-map.js';
 // The backrooms casino (Steve, 2026-10-15): one time in a hundred, when the lights come back on, the casino is Level 0
 // of the Backrooms. "Make it look EXACTLY like the backrooms": a low drop ceiling of stained tiles with flush fluorescent
 // panels in a grid, mono-yellow wallpaper with its faint chevron stripes on every wall, damp mottled carpet, a thin dark
@@ -90,6 +91,17 @@ export class Backrooms {
     W.base = std('base', { color: 0x4a3c22, roughness: 0.75 }); // the thin dark baseboard
     W.stain = Object.assign(new THREE.MeshBasicMaterial({ map: stainTex(), color: 0x3a2a0c, transparent: true, opacity: 0.4, fog: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }), { name: 'br-stain' });
     this.build();
+    this.maze=new THREE.Group();this.maze.visible=false;R.scene.add(this.maze);
+    const floorGeo=new THREE.PlaneGeometry(50,1900*M).rotateX(-Math.PI/2),floorUV=floorGeo.attributes.uv;for(let i=0;i<floorUV.count;i++)floorUV.setXY(i,floorUV.getX(i)*50/roomMats.floor.tile,floorUV.getY(i)*1900*M/roomMats.floor.tile);const floor=new THREE.Mesh(floorGeo,W.floor.floor);floor.position.set(25,.012,950*M);floor.receiveShadow=true;this.maze.add(floor);
+    for(const r of BR_WALLS){const geo=new THREE.BoxGeometry(r.w*M,CEIL_H,r.h*M),uv=geo.attributes.uv,dims=[[r.h*M,CEIL_H],[r.h*M,CEIL_H],[r.w*M,r.h*M],[r.w*M,r.h*M],[r.w*M,CEIL_H],[r.w*M,CEIL_H]];for(let f=0;f<6;f++)for(let k=0;k<4;k++){const i=f*4+k;uv.setXY(i,uv.getX(i)*dims[f][0],uv.getY(i)*dims[f][1]);}const m=new THREE.Mesh(geo,W.pillar);m.position.set((r.x+r.w/2)*M,CEIL_H/2,(r.y+r.h/2)*M);m.receiveShadow=true;this.maze.add(m);
+      const base=new THREE.Mesh(new THREE.BoxGeometry(r.w*M+.02,.09,r.h*M+.02),W.base);base.position.set(m.position.x,.045,m.position.z);this.maze.add(base);}
+    const metal=new THREE.MeshStandardMaterial({color:0x777969,roughness:.92});
+    for(const h of BR_HIDES){const b=h.box,g=new THREE.Group();g.name='backrooms-hiding-locker-'+h.id;g.position.set((b.x+b.w/2)*M,0,(b.y+b.h/2)*M);
+      const body=new THREE.Mesh(new THREE.BoxGeometry(b.w*M,2.15,b.h*M),metal);body.position.y=1.075;g.add(body);
+      for(let i=0;i<5;i++){const vent=new THREE.Mesh(new THREE.BoxGeometry(.48,.025,.02),W.base);vent.position.set(0,1.65-i*.09,b.h*M/2+.012);g.add(vent);}
+      const handle=new THREE.Mesh(new THREE.BoxGeometry(.035,.18,.04),W.base);handle.position.set(.25,1.05,b.h*M/2+.03);g.add(handle);this.maze.add(g);
+    }
+    this.mazeHides=[];
     this.vignette = null;
     this.loading = this.load(R.lowPower);
     this.base = null; // the casino's light colours, kept while the backrooms' are in
@@ -265,21 +277,22 @@ export class Backrooms {
   }
 
   // Every frame, at the blackout snap (render3d.js): on is the snapshot's pub.backrooms. Switches in this frame.
-  update(on, world) {
-    if (world !== this.world) { if (this.on) this.unapply(); this.scan(world); if (this.on) this.apply(); }
-    if (on === this.on) return;
-    this.on = on; this.flips++;
-    const R = this.R;
-    if (on) {
-      this.apply();
-      this.base = { hemi: R.hemi.color.getHex(), ground: R.hemi.groundColor.getHex(), fill: R.fill.color.getHex(), key: R.key.color.getHex() };
-      R.hemi.color.setHex(LIGHT.hemi[0]); R.hemi.groundColor.setHex(LIGHT.hemi[1]); R.fill.color.setHex(LIGHT.fill); R.key.color.setHex(LIGHT.key);
-    } else {
-      this.unapply();
-      const b = this.base; if (b) { R.hemi.color.setHex(b.hemi); R.hemi.groundColor.setHex(b.ground); R.fill.color.setHex(b.fill); R.key.color.setHex(b.key); }
-      audio.hum(0);
+  update(on, world, escape=false) {
+    const restoreMaze=()=>{for(const [o,mask]of this.mazeHides)o.layers.mask=mask;this.mazeHides=[];this.maze.visible=false;};
+    if(world!==this.world){restoreMaze();if(this.on)this.unapply();this.scan(world);if(this.on)this.apply();}
+    if(on!==this.on){restoreMaze();this.on=on;this.flips++;const R=this.R;
+      if(on){this.apply();this.base={hemi:R.hemi.color.getHex(),ground:R.hemi.groundColor.getHex(),fill:R.fill.color.getHex(),key:R.key.color.getHex()};R.hemi.color.setHex(LIGHT.hemi[0]);R.hemi.groundColor.setHex(LIGHT.hemi[1]);R.fill.color.setHex(LIGHT.fill);R.key.color.setHex(LIGHT.key);}
+      else{this.unapply();const b=this.base;if(b){R.hemi.color.setHex(b.hemi);R.hemi.groundColor.setHex(b.ground);R.fill.color.setHex(b.fill);R.key.color.setHex(b.key);}audio.hum(0);}
+      this.vig(on);
     }
-    this.vig(on);
+    const mazeOn=!!on&&escape;
+    if(mazeOn!==this.maze.visible){restoreMaze();if(mazeOn){
+      const originals=new Map(this.swaps.map(([o,from])=>[o,from]));
+      const visit=(o,machine=false)=>{const m=originals.get(o)||o.material,floors=Object.values(roomMats).some(r=>m===r.floor);
+        if(!machine&&o.isMesh&&(Object.values(roomMats).some(r=>m===r.wall)||(!floors&&o.userData.fixedScenery&&!o.castShadow)||m===MAT.stall||(m?.color?.getHex()===DOOR_COLOR&&!m.map))){this.mazeHides.push([o,o.layers.mask]);o.layers.mask=0;}
+        for(const c of o.children)visit(c,machine||world.machineKids?.has(c));};visit(world.group);
+      this.maze.visible=true;
+    }}
   }
 
   // The camera's edges darken a little, as in the photo (a page overlay on the canvas, under the HUD).

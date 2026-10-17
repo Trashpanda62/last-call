@@ -37,12 +37,8 @@ export const CFG = {
   // monsterNear: someone in the dark with theirs off, or moving; monsterHold: the kill, the victim in its hands.
   // backroomsChance: when the lights come back on, the casino is the backrooms casino for the rest of the night (Steve, 2026-10-15)
   backroomsChance: 0.01,
-  // Escape mode (Steve, 2026-10-15): no meetings and no votes. The power goes out by escapeDarkAt at the latest (a killer
-  // can cut it sooner). The breakers power CFG.exits staff doors, not the lights: they open as the way out for exitOpen
-  // seconds, in the dark, with the monster still loose. (Left alone, the power company gets the lights and the doors on.)
-  // Escape mode's gear (Steve, 2026-10-15: "there needs to be a reason to gamble"): your own winnings buy it, B, any
-  // time. sneakers: faster on your feet; fuse: resets breakers twice as fast; crowbar: an exit door opens in 2 s, not
-  // exitHold; charm: the monster's first grab, you slip out of it.
+  // Backrooms survival timing/creatures are in backrooms-survival.js. Its gear uses personal winnings.
+  // Fuse remains a legacy definition for saved data; the new mode does not offer it.
   gear: {
     sneakers: { name: 'Sneakers', price: 60000, tip: 'You move 15% faster.' },
     fuse: { name: 'Fuse kit', price: 80000, tip: 'You reset a breaker twice as fast.' },

@@ -1,3 +1,4 @@
+import {brCollide} from './backrooms-map.js';
 // Screens, modes (solo, host, guest), input and the main loop.
 import { initLoading, loadingProgress, showBriefing, briefingReady, preloadInterface } from './loading.js';
 import { createGamepad } from './gamepad.js';
@@ -147,24 +148,24 @@ function openSetup(mode) {
   S.screen = mode === 'solo' ? 'setup' : 'lobby';
   closeMenuPanel(); only('setup');
   $('setupTitle').textContent = (mode === 'solo' ? 'Solo game' : mode === 'host' ? 'Your room' : 'Joined room') + (mode === 'guest' ? '' : ' · ' + MODE_NAME[S.gameMode]);
-  show('roomBox', mode !== 'solo'); show('opts', mode !== 'guest'); show('roleField', mode === 'solo');
+  show('roomBox', mode !== 'solo'); show('opts', mode !== 'guest'); show('roleField', mode === 'solo' && S.gameMode !== 'escape');
+  $('optKillers').closest('label').classList.toggle('hidden',S.gameMode==='escape');
   show('guestWait', mode === 'guest'); show('startBtn', mode !== 'guest'); $('setupErr').textContent = '';
   $('startBtn').textContent = mode === 'solo' ? 'Deal me in' : 'Start the game';
 }
 function readOpts() {
   return { players: +$('optPlayers').value, killers: +$('optKillers').value, difficulty: $('optDiff').value, forceRole: $('optRole').value, mode: S.gameMode };
 }
-// The main menu's game mode (Steve, 2026-10-15): Murder Mystery (the meetings and votes) or Escape (no meetings: the
-// blackout, then the exits). Remembered here; the host's choice is the room's.
-const MODE_NAME = { classic: 'Murder Mystery', escape: 'Escape' };
+// The host chooses Murder Mystery or Backrooms survival; the stored key stays 'escape' for existing invites/preferences.
+const MODE_NAME = { classic: 'Murder Mystery', escape: 'The Backrooms' };
 S.gameMode = store.get('lc-mode', 'classic') === 'escape' ? 'escape' : 'classic';
 function setMode(m) {
   S.gameMode = m === 'escape' ? 'escape' : 'classic'; store.set('lc-mode', S.gameMode);
-  $('menu').dataset.mode = S.gameMode;
-  $('modeDescription').textContent = S.gameMode === 'escape' ? 'Restore the power. Find the exit. Don’t look back.' : 'Find the killers. Break the bank. Survive the night.';
+  $('menu').dataset.mode = S.gameMode;$('setup').dataset.mode=S.gameMode;
+  $('modeDescription').textContent = S.gameMode === 'escape' ? 'Earn money. Hide from the entities. Escape with your winnings.' : 'Find the killers. Break the bank. Survive the night.';
   document.querySelectorAll('#modePick .mode').forEach(b => { const on = b.dataset.mode === S.gameMode; b.classList.toggle('on', on); b.setAttribute('aria-checked', on); });
 }
-document.querySelectorAll('#modePick .mode').forEach(b => { b.onclick = () => setMode(b.dataset.mode); });
+document.querySelectorAll('#modePick .mode').forEach(b => { b.onclick = () => setMode(b.dataset.mode); b.onkeydown=e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const mode=e.key==='Home'?'classic':e.key==='End'?'escape':b.dataset.mode==='classic'?'escape':'classic';setMode(mode);document.querySelector('#modePick [data-mode='+mode+']').focus();}}; });
 setMode(S.gameMode);
 function enterGame(skipBriefing = false) {
   S.overToken = null; S.deathKey = null; S.deathUntil = 0;
@@ -455,7 +456,7 @@ function moveMe(dt) {
     if (Math.hypot(f, r) > 0.6 && !S.standReq) { S.standReq = true; act('leave'); }
     return;
   }
-  if (p.held || p.leap) return; // in the monster's hands (or the monster mid-pounce: the host flies it)
+  if (p.held || p.leap || p.hidden) return; // in the monster's hands (or the monster mid-pounce: the host flies it)
   if (f || r) {
     const l = Math.hypot(f, r); if (l > 1) { f /= l; r /= l; }
     const a = me.look;
@@ -465,7 +466,7 @@ function moveMe(dt) {
     const sp = !p.alive ? CFG.ghostSpeed : CFG.playerSpeed * (p.thirst <= 0 ? CFG.parched : 1) * (p.hunger <= 0 ? CFG.starving : 1) * (S.sprinting ? CFG.sprint : 1) * (S.peekT > 0.5 ? CFG.peekSlow : 1) * (p.monster ? CFG.monsterSpeed : 1) * (p.gear && p.gear.includes('sneakers') ? CFG.sneakers : 1);
     me.x += mx * sp * dt; me.y += my * sp * dt; me.moving = true;
     if (p.alive && (S.stepD = (S.stepD || 0) + sp * dt) > 62) { S.stepD = 0; audio.sfx('step'); }
-    if (p.alive) collide(me);
+    if (p.alive) (S.view?.pub.escape?brCollide:collide)(me);
     me.x = clamp(me.x, 0, W); me.y = clamp(me.y, 0, H);
   }
   const smax = p.staminaMax || CFG.stamina; // light feet: a longer sprint that comes back faster
@@ -796,7 +797,7 @@ function frameGame(dt) {
   }
   // a tip waits for a quiet screen: no message for 10 s (they used to stack four deep over the top of the screen)
   // (phones get none: they name keys, and phones had too many pop-ups, Steve 2026-10-15)
-  if (!touchMode && S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0] && !$('toasts').children.length && performance.now() - lastToastAt > 10000) {
+  if (!pub.escape && !touchMode && S.tips < TIPS.length && pub.mode === 'play' && priv.alive && pub.t > TIPS[S.tips][0] && !$('toasts').children.length && performance.now() - lastToastAt > 10000) {
     const tip = TIPS[S.tips++]; if (store.get('lc.stats', { games: 0 }).games < 3 && (!tip[2] || priv.isKiller === (tip[2] === 'k'))) toast(tip[1], false, true);
   }
   updateHud(v); updateMoves(v); tableTick(v); tableLook(effLook());

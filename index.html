@@ -107,18 +107,15 @@
 
 <!-- Main menu -->
 <div id="menu" class="overlay title-screen hidden" data-mode="classic">
-  <div class="menu-art menu-art-mystery" aria-hidden="true"></div>
-  <div class="menu-art menu-art-escape" aria-hidden="true"></div>
-  <div class="menu-shade" aria-hidden="true"></div>
+  <div id="modePick" class="mode-split" role="radiogroup" aria-label="Game mode">
+    <button type="button" class="mode mode-mystery" data-mode="classic" role="radio" aria-checked="true"><span class="mode-scene"></span><span class="mode-copy"><small>01 / TRUST NO ONE</small><b>Murder<br>Mystery</b><span>A casino full of gamblers.<br>Some of them are killers.</span><em>SELECT MODE ↗</em></span></button>
+    <button type="button" class="mode mode-backrooms" data-mode="escape" role="radio" aria-checked="false"><span class="mode-scene"></span><span class="mode-copy"><small>02 / KNOW WHEN TO LEAVE</small><b>The<br>Backrooms</b><span>Make a fortune. Stay quiet.<br>Get out while you still can.</span><em>SELECT MODE ↗</em></span></button>
+  </div>
   <header class="menu-masthead"><span class="house-mark" aria-hidden="true">LC</span><span>THE HOUSE IS WAITING</span><button id="profileBtn" aria-controls="profilePanel" aria-expanded="false"><span class="profile-dot"></span><span id="profileName">Guest</span><span aria-hidden="true"> / </span>Player</button></header>
   <main class="menu-main">
-    <div class="menu-eyebrow">A game of chance. A night of suspicion.</div>
-    <h1 class="game-title"><span>LAST</span><span>CALL</span></h1>
-    <p class="menu-tagline">Watch the table.<br>Watch your drink. Watch your back.</p>
-    <div id="modePick" class="modes" role="radiogroup" aria-label="Game mode">
-      <button type="button" class="mode" data-mode="classic" role="radio"><b>Murder Mystery</b></button>
-      <button type="button" class="mode" data-mode="escape" role="radio"><b>Escape</b></button>
-    </div>
+    <div class="menu-eyebrow">CHOOSE YOUR NIGHT</div>
+    <h1 class="game-title"><span>LAST CALL</span></h1>
+    
     <p id="modeDescription" class="mode-description">Find the killers. Break the bank. Survive the night.</p>
     <nav class="menu-play" aria-label="Play">
       <button id="soloBtn" class="menu-primary"><span>PLAY SOLO</span><span class="menu-action-detail">WITH BOTS</span><span aria-hidden="true">↗</span></button>
@@ -175,6 +172,7 @@
 <div id="how" class="overlay hidden">
   <div class="card wide">
     <h2>How to play</h2>
+    <div class="hcard"><b>The Backrooms · Escape mode</b><p>Everyone is a gambler. Earn as much as you dare on the same machines in a different maze. There are no creatures for the first 90 seconds, then Bacteria, Hounds, Smilers and Skin-Stealers gradually arrive. Hounds hear running; Smilers stop when watched. Break line of sight, then left click a locker to hide. If it saw you hide, it can still catch you. Some machines are mimics: when one breathes, back away immediately. You cannot inspect them for traps. Green exits unlock after 30 seconds: stay at a marked door for three seconds to leave with your personal winnings. The exits close after 15 minutes. Stay longer for more money, or leave while it is quiet.</p></div>
     <div class="cards">
       <div class="hcard"><b>The setup</b><p>Up to thirty-two gamblers walk into a casino. One to eight of them are killers. Nobody knows who.</p></div>
       <div class="hcard"><b>Gamblers</b><p>Fourteen games, one crew bank. Blackjack, roulette, slots, Crash, Plinko, Mines, Dragon Tower, the duck race, street dice, the prize wheel the coin flip, skee-ball, coin-pusher and prize claw. Pick your bet; the max grows with the bank. Hit the target and the house is broken. Or vote every killer out.</p></div>

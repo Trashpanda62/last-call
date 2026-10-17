@@ -1,9 +1,11 @@
+import {createSurvival} from './backrooms-survival.js';
+import {BR_HIDES,brCollide,brLos,brRoute,brClear,brOpen} from './backrooms-map.js';
 import {SKILL_GAMES} from './skill-arcade.js';
 // The authoritative game. No DOM: the host (or solo client) runs it; every human sees it through view(id).
 import { CFG, DIFF, CAST, DRINKS, DEATH_SOUNDS } from './config.js';
 import { rand, pick, clamp, dist, angDiff, money, shuffle, secs } from './util.js';
 import { mixInfo, BOT_RECIPES } from './mix.js';
-import { ROOMS, TAP, BELL, BAR_TABLES, TRASH_CANS, SHADY, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, STAFF_DOORS, JACKPOT, BREAKERS, W, H, makeSeats, los, collide, roomOf, route, openSpot, clearSpot } from './map.js';
+import { ROOMS, TAP, BELL, BAR_TABLES, TRASH_CANS, SHADY, REST_SPOTS, BOWL_SPOTS, GAME_NAMES, OBSTACLES, POND, CHANDELIERS, STAFF_DOORS, JACKPOT, BREAKERS, W, H, makeSeats, los as casinoLos, collide as casinoCollide, roomOf, route as casinoRoute, openSpot as casinoOpen, clearSpot as casinoClear } from './map.js';
 import { PERKS, PERK } from './perks.js';
 import * as Gm from './games.js';
 import { makeTalk } from './talk.js';
@@ -59,13 +61,14 @@ export function createGame(opts) {
   if (opts.forceRole === 'killer') killerIds = [0, ...shuffle(all.slice(1)).slice(0, nk - 1)];
   else if (opts.forceRole === 'gambler') killerIds = shuffle(all.slice(1)).slice(0, nk);
   else killerIds = shuffle(all).slice(0, nk);
+  if (opts.mode === 'escape') killerIds = [];
   const usedNames = new Set(humans.map(h => h.name.toLowerCase()));
   const spare = ['Vinnie', 'Rosa', 'Hank', 'Fifi', 'Gus', 'Dot', 'Sly', 'Bea', 'Moe', 'Lulu', 'Rex', 'Opal', 'Ziggy', 'Nell', 'Bo', 'Tex',
     'Mack', 'Ida', 'Lou', 'Kiki', 'Abe', 'Tess', 'Fritz', 'Lottie', 'Cy', 'Mimi', 'Hugo', 'Edie', 'Sid', 'Wally', 'Gigi', 'Ned'].filter(nm => !usedNames.has(nm.toLowerCase()));
   const G = {
     t: 0, mode: 'play', pickT: 0, pickEarly: false, pickReady: false, lure: null, bank: CFG.startBank, target: Gm.roundGoal(CFG.startBank * CFG.targets[n] * CFG.killerBank[nk]),
     diff: Object.hasOwn(DIFF, opts.difficulty) ? DIFF[opts.difficulty] : DIFF.normal, bankLog: [{ t: 0, bank: CFG.startBank }],
-    chars: [], drinks: [], bodies: [], floats: [], fx: [], lightsT: 0, blackout: null, afterDark: null, backrooms: !!opts.backrooms, backroomsChance: opts.backroomsChance ?? CFG.backroomsChance, escape: opts.mode === 'escape', exits: null, nextId: 1, obsT: 0, pending: null, meetEnd: 0, big: n > CFG.bigRoom, meeting: null, over: null,
+    chars: [], drinks: [], bodies: [], floats: [], fx: [], lightsT: 0, blackout: null, afterDark: null, backrooms: opts.mode === 'escape' || !!opts.backrooms, backroomsChance: opts.backroomsChance ?? CFG.backroomsChance, escape: opts.mode === 'escape', exits: null, nextId: 1, obsT: 0, pending: null, meetEnd: 0, big: n > CFG.bigRoom, meeting: null, over: null,
     arcade: Object.fromEntries(['pusher','claw','flappy',...SKILL_GAMES].map(k=>[k,null])), arcadeSeq: 0, skee: [null, null], skeeSeq: 0, seats: makeSeats(), held: new Map(), bowls: BOWL_SPOTS.map((p, i) => ({ id: i, x: p.x, y: p.y })), deaths: 0, traps: [],
     chandeliers: CHANDELIERS.map(([x, y], i) => ({ id: i, x, y, state: 'up', t: 0, by: null })).filter(ch => !['race', 'arcade'].includes(roomOf(ch))), guard: null, guardSaw: null, haunts: [],
     // (the pond and arcade have plain lamps, nothing to drop)
@@ -77,6 +80,7 @@ export function createGame(opts) {
     const h = humans[i];
     const botName = h ? null : usedNames.has(look.name.toLowerCase()) ? spare.shift() : look.name;
     const sp = ringSpot(i, n);
+    if(G.escape&&!brClear(sp)){outer:for(let r=20;r<=200;r+=20)for(let a=0;a<16;a++){const p={x:sp.x+Math.cos(a*Math.PI/8)*r,y:sp.y+Math.sin(a*Math.PI/8)*r};if(brClear(p)&&G.chars.every(c=>dist(c,p)>35)){Object.assign(sp,p);break outer;}}}
     G.chars.push({
       id: i, name: h ? h.name : botName, color: look.color, hat: look.hat, isHuman: !!h, netKey: h ? h.key : null,
       isKiller: killerIds.includes(i), alive: true, x: sp.x, y: sp.y,
@@ -97,12 +101,14 @@ export function createGame(opts) {
   // whole pickTime whoever they are; solo the night starts when you pick (a killer), say you're ready (a gambler), or at
   // the end of pickTime. Without a pick screen (tests) a human killer has opts.perk, or none.
   const pickers = G.chars.filter(c => c.isHuman && c.isKiller);
-  if (opts.pick === 'timed' || opts.pick === 'solo') { G.mode = 'pick'; G.pickT = CFG.pickTime; G.pickEarly = opts.pick === 'solo'; }
+  if (opts.mode !== 'escape' && (opts.pick === 'timed' || opts.pick === 'solo')) { G.mode = 'pick'; G.pickT = CFG.pickTime; G.pickEarly = opts.pick === 'solo'; }
   else { for (const c of pickers) c.perk = Object.hasOwn(PERK, opts.perk) ? opts.perk : null; api.startPlay(); }
   return api;
 }
 
 function makeApi(G) {
+  const collide=G.escape?brCollide:casinoCollide,los=G.escape?brLos:casinoLos,route=G.escape?brRoute:casinoRoute,clearSpot=G.escape?brClear:casinoClear,openSpot=G.escape?brOpen:casinoOpen;
+  const survival=G.escape?createSurvival(G,{kill,tell,standUp,getOut}):null;
   const footsteps = createFootsteps(roomOf);
   const sharedLuck = new Map();
   const luckFor = c => {
@@ -141,6 +147,7 @@ function makeApi(G) {
   // ---------- The pick screen, then the night starts ----------
   function startPlay(picked) {
     G.mode = 'play'; G.pickT = 0;
+    if(G.escape){for(const c of humans())tell(c,'Earn as much as you dare. Left click lockers to hide. Leave through a green exit with your winnings. Machines can be mimics.',false,'start');return;}
     const nk = G.killerIds.length;
     for (const c of humans()) {
       const partners = G.chars.filter(o => o.isKiller && o !== c).map(o => o.name);
@@ -249,7 +256,7 @@ function makeApi(G) {
   // ---------- The shady guy in the VIP alcove (Steve, 2026-10-15): your own winnings buy what the house doesn't sell ----------
   const atShady = c => dist(c, SHADY) < CFG.shadyReach;
   const shopPrice = id => CFG.gear[id] ? CFG.gear[id].price : Gm.niceDown(G.target * CFG.shop[id].frac);
-  const shopIds = () => Object.keys(CFG.shop).concat(G.escape ? Object.keys(CFG.gear) : []); // (escape mode's gear too)
+  const shopIds = () => Object.keys(CFG.shop).concat(G.escape ? Object.keys(CFG.gear).filter(k=>k!=='fuse') : []); // (escape mode's gear too)
   function spend(c, p) {
     c.won -= p; G.bank = Math.max(0, G.bank - p); logBank();
     G.floats.push({ x: c.x, y: c.y - 30, text: '-' + money(p), color: '#e8443a', t: 1.6 });
@@ -466,7 +473,7 @@ function makeApi(G) {
   // Escape mode's gear, bought with your own winnings (CFG.gear)
   function buyGear(c, item) {
     const g = CFG.gear[item];
-    if (!G.escape || !g || !c.alive || c.isKiller || G.over) return false;
+    if (!G.escape || !g || item==='fuse' || !c.alive || c.isKiller || G.over) return false;
     if (c.gear.has(item)) return tell(c, `You already have the ${g.name.toLowerCase()}.`), false;
     if (c.won < g.price) return tell(c, `The ${g.name.toLowerCase()} costs ${money(g.price)} of your winnings. You have ${money(Math.max(0, Math.round(c.won)))}.`), false;
     c.won -= g.price; c.gear.add(item);
@@ -477,7 +484,7 @@ function makeApi(G) {
   function botGear(c, dt) {
     if ((c.gearT = (c.gearT ?? rand(20, 40)) - dt) > 0) return;
     c.gearT = rand(20, 40);
-    const can = Object.keys(CFG.gear).filter(k => !c.gear.has(k) && c.won >= CFG.gear[k].price);
+    const can = Object.keys(CFG.gear).filter(k => k!=='fuse' && !c.gear.has(k) && c.won >= CFG.gear[k].price);
     if (can.length) buyGear(c, pick(can));
   }
   function exitsTick(dt) {
@@ -502,6 +509,7 @@ function makeApi(G) {
   }
   // A bot when the exits open: a moment to take it in, then for the nearest one, fast.
   function exitBrain(c, dt) {
+    c.exitCommitted=true;
     if (c.seat) standUp(c);
     if (c.target && c.target.claim === c.id) { c.target.claim = null; c.target = null; }
     if (c.exitAt == null) c.exitAt = G.exits.t - rand(0, 5);
@@ -726,11 +734,12 @@ function makeApi(G) {
     shot: (v, by) => [`${by ? appearAs(by).name : 'Someone'} shot you. You're a ghost now.`, `${v.name} was shot!`],
   };
   function kill(v, cause, by) {
+    if(v.hidden!=null){delete v.hidden;v.hideSeen=false;v.posVer++;}
     const knew = by && v.alive && cause !== 'monster' && canSee(v, by); // (nobody knows who the monster is)
     v.staffInside = null; v.cameraFeed = null; v.alive = false; v.poisonT = 0; v.trapT = 0; v.inspect = null;
     v.killedBy = knew ? appearAs(by).id : null;
     const seenAttacker = by && ['blade', 'monster', 'shiv', 'shot'].includes(cause) ? appearAs(by) : null;
-    v.deathScene = { t: G.t, x: v.x, y: v.y, face: v.look ?? v.face, cause, killer: by ? {id: by.id, name: by.name} : null, attacker: seenAttacker ? { color: seenAttacker.color, hat: seenAttacker.hat, monster: cause === 'monster' } : null };
+    v.deathScene = { t: G.t, x: v.x, y: v.y, face: v.look ?? v.face, cause, killer: by ? {id: by.id, name: by.name} : null, attacker: seenAttacker ? { color: seenAttacker.color, hat: seenAttacker.hat, monster: cause === 'monster', entity:by?.kind||null } : null };
     if (by) by.lastVictim = v.id;
     if (v.seat) { v.seat.occ = null; v.seat = null; v.leftSeatT = G.t; v.posVer++; }
     if (v.target && v.target.claim === v.id) v.target.claim = null;
@@ -784,13 +793,14 @@ function makeApi(G) {
   }
   // A rigged game goes off once someone plays it: a bot as it takes it, a player at their first chip or press there.
   function springTrap(c, seat) {
+    if(G.escape){survival.trigger(c,seat);return;}
     const trap = trapAt('seat', seat.id);
     if (trap && !c.isKiller) { removeTrap(trap); c.trapT = CFG.rigDelay; c.trapBy = trap.by; c.trapItem = trap.label; c.trapSeat = seat.id; }
   }
   // Walking up to a free game you face puts you at it, no key (Steve, 2026-10-14): the nearest free spot within
   // joinReach, or from one game a free spot nearer than your own. Walking past one sideways doesn't.
   function walkUp(c) {
-    if (c.monster || c.grabbed !== null) return;
+    if (c.monster || c.grabbed !== null || c.hidden != null) return;
     const s = nearest(G.seats.filter(s => !s.occ && !heldOff(s, c) && s.game !== 'cams' && s.game !== 'vip' && Math.abs(angDiff(c.look, s.face)) < CFG.joinFace), c, c.seat ? Math.min(CFG.joinReach, dist(c, c.seat) - 10) : CFG.joinReach);
     if (s) { standUp(c); sit(c, s, true); }
   }
@@ -1052,8 +1062,9 @@ function makeApi(G) {
       if (G.blackout.t >= c.tfAt) transform(c);
     }
     if (c.monster) { monsterBrain(c, dt); c.look = c.face; return; }
+    if (G.escape && survival.bot(c,dt)) return;
     if (G.escape && !c.isKiller) botGear(c, dt);
-    if (G.exits && !G.exits.closed && !c.isKiller) { exitBrain(c, dt); c.look = c.face; return; }
+    if (G.exits && !G.exits.closed && !c.isKiller && (!G.escape || c.exitCommitted || G.t>240+(c.id%4)*60 || c.won>25000)) { exitBrain(c, dt); c.look = c.face; return; }
     if (G.blackout && !c.isKiller && darkBrain(c, dt)) { c.look = c.face; return; }
     if (c.isKiller && killerBrain(c, dt)) { c.look = c.face; return; }
     if (!c.isKiller && c.items.has('gun') && botGun(c)) return;
@@ -1091,7 +1102,7 @@ function makeApi(G) {
         if (s.occ && s.occ !== c) { s.claim = null; c.state = 'idle'; break; }
         if (followPath(c, dt, CFG.botSpeed)) {
           // careful gamblers check the machine first, more so once people have died
-          if (!c.isKiller && s.game !== 'cams' && Math.random() < D().sniff * (G.deaths ? 1.6 : 0.5)) { c.state = 'inspect'; c.inspectT = CFG.inspectTime; break; }
+          if (!G.escape && !c.isKiller && s.game !== 'cams' && Math.random() < D().sniff * (G.deaths ? 1.6 : 0.5)) { c.state = 'inspect'; c.inspectT = CFG.inspectTime; break; }
           sit(c, s); c.sitT = rand(22, 45); c.gameT = rand(1, 3); c.state = 'seated'; c.secT = rand(3, 8);
         }
         break;
@@ -1107,6 +1118,7 @@ function makeApi(G) {
         break;
       }
       case 'seated': {
+        if(!c.seat){c.state='idle';break;}
         c.face = c.seat.face; c.sitT -= dt; c.gameT -= dt;
         if (c.gameT <= 0) botPlay(c);
         if (c.seat.game === 'cams') botSecurity(c, dt);
@@ -1392,11 +1404,15 @@ function makeApi(G) {
   // ---------- Win ----------
   function checkOver() {
     if (G.over) return;
+    if(G.escape){
+      if(G.chars.some(c=>c.alive)&&!G.exits?.closed)return;
+      const out=G.chars.filter(c=>c.escaped);G.over={escape:true,killersWin:!out.length,text:out.length?`${nameList(out.map(c=>c.name))} escaped with ${money(out.reduce((n,c)=>n+(c.extracted||0),0))}.`:'The Backrooms kept everyone.',out:out.map(c=>c.id),killers:[],edges:[],t:G.t,stats:{...G.stats}};
+      for(const h of humans())sfxTo(h,h.escaped?'win':'lose');return;
+    }
     const k = killersAlive().length, g = gamblersAlive().length;
     const kn = nameList(G.killerIds.map(id => byId(id).name));
     const was = G.killerIds.length > 1 ? 'were the killers' : 'was the killer';
     let killersWin = null, text = '';
-    if (G.escape) return escapeOver(k, g, kn, was);
     if (!k) { killersWin = false; text = `${kn} ${was}, and security dragged ${G.killerIds.length > 1 ? 'them' : 'them'} out.`; }
     else if (k >= g) { killersWin = true; text = `${kn} ${was}. Last call came for everyone.`; }
     else if (G.closed) { killersWin = true; text = `Closing time. The crew never broke the bank, and ${kn} walked out free.`; }
@@ -1406,18 +1422,7 @@ function makeApi(G) {
     for (const h of humans()) sfxTo(h, (killersWin === h.isKiller) ? 'win' : 'lose');
   }
 
-  // Escape mode is over when nobody is left inside to get out, or the exits shut. The killers win only if nobody got out.
-  function escapeOver(k, g, kn, was) {
-    const out = G.chars.filter(c => c.escaped), all = G.chars.filter(c => !c.isKiller).length;
-    if (k && g && !(G.exits && G.exits.closed)) return;
-    const killersWin = !!k && !out.length;
-    const text = !k ? `${kn} ${was}, and ${G.killerIds.length > 1 ? 'they are' : 'they are'} dead. Everyone left walks out.`
-      : !out.length ? `${kn} ${was}. Nobody got out.`
-      : `${nameList(out.map(c => c.name))} got out (${out.length} of ${all}). ${kn} ${was}.`;
-    G.over = { killersWin, text, escape: true, out: out.map(c => c.id), killers: G.killerIds.slice(), edges: G.killerIds.filter(id => byId(id).perk).map(id => ({ name: byId(id).name, perk: byId(id).perk })), t: G.t, stats: Object.assign({}, G.stats) };
-    for (const h of humans()) sfxTo(h, wonEscape(h) ? 'win' : 'lose');
-  }
-  const wonEscape = c => c.isKiller ? G.over.killersWin : !!c.escaped || (c.alive && !killersAlive().length);
+  const wonEscape = c => !!c.escaped;
 
   // ---------- Security: the cameras run whenever someone sits at the security desk; a guard is hired from the crew bank there ----------
   const price = item => Gm.niceDown(G.target * CFG[item + 'Price']);
@@ -1499,6 +1504,7 @@ function makeApi(G) {
       const desk = nearest(G.seats.filter(s => s.game === 'cams'), c, CFG.joinReach);
       return desk ? { label: 'Watch the cameras', act: () => { c.cameraFeed = 'floor'; } } : null;
     }
+    if(G.escape){if(c.hidden!=null)return {label:'Leave hiding place',act:()=>survival.hide(c)};const h=BR_HIDES.find(h=>dist(c,h)<65&&los(c,h));if(h)return {label:'Hide in locker',act:()=>survival.hide(c)};}
     const body = G.bodies.find(b => !b.reported && dist(b, c) < 90 && canSee(c, b));
     if (body && !G.escape) return { label: 'Report body', act: () => callMeeting(c, body, `${c.name} found ${byId(body.id).name}'s body.`) };
     if (c.seat && sitsDown(c, c.seat)) return { label: 'Stand up', act: () => standUp(c) }; // (at a game E presses what you aim at)
@@ -1605,6 +1611,8 @@ function makeApi(G) {
   const GHOST_PLAYS = new Set(['crash', 'cashout', 'race', 'play', 'cameras', 'feed', 'skee', 'arcade']);
   function action(id, k, arg) {
     const c = byId(id); if (!c || !c.isHuman || G.over) return;
+    if(G.escape&&c.hidden!=null){if(k==='use'||k==='hide'){survival.hide(c);return;}if(!['tableHold','tableBet','play','cashout'].includes(k))return;}
+    if(G.escape&&['inspect','rig','lights','blade','accident','order','staff','haunt'].includes(k)){if(k==='inspect')tell(c,'Mimics cannot be checked for traps. Watch for breathing and back away.');return;}
     if (c.staffInside && c.alive && G.mode === 'play') {
       if (k === 'feed' && STAFF_DOORS.some(d=>d.room===arg)) c.cameraFeed = arg;
       if (k === 'staffexit') {
@@ -1620,6 +1628,7 @@ function makeApi(G) {
     }
     if (G.mode === 'play' && k === 'tableBet') { // at your game, or one of yours still running (tableHold)
       const at = arg && Number.isInteger(arg.seat) ? G.seats[arg.seat] : null, s = at && (at === c.seat || G.held.get(at.id) === c.id) ? at : c.seat;
+      if(G.escape&&s&&c.alive)survival.trigger(c,s);
       if (s && Gm.GAME_MAX[s.game] && arg) policyFor(c).begin(arg, s.game, mbOf(c) + Gm.BET.min);
       return;
     }
@@ -1766,7 +1775,7 @@ function makeApi(G) {
     }
   }
   function setInput(id, inp, remote = false) {
-    const c = byId(id); if (!c || !c.isHuman || !inp || c.staffInside) return;
+    const c = byId(id); if (!c || !c.isHuman || !inp || c.staffInside || c.hidden!=null) return;
     if (inp.posVer !== c.posVer) return; // client hasn't caught up with a teleport yet
     if (remote && G.mode !== 'play') { c.inT = G.t; c.mvBudget = 60; return; }
     const seated = c.seat && sitsDown(c, c.seat);
@@ -1821,8 +1830,8 @@ function makeApi(G) {
     G.t += dt;
     if (G.lightsT > 0) G.lightsT -= dt;
     if (G.blackout) { blackoutTick(dt); if (G.over || G.mode !== 'play') return; }
-    if (G.escape && !G.blackout && !G.exits && G.t >= CFG.escapeDarkAt && killersAlive().length) doLights(pick(killersAlive()), true);
-    if (G.exits && !G.exits.closed) { exitsTick(dt); if (G.over) return; }
+    if(survival){survival.tick(dt);checkOver();if(G.over)return;}
+    if (G.exits && !G.exits.closed && !G.escape) { exitsTick(dt); if (G.over) return; }
     if (G.meeting) { meetingTick(dt); if (G.over) return; }
     if (!G.warned && !G.escape && G.t > CFG.closingTime - CFG.closingWarn) { G.warned = true; tellAll(`Last call! The casino closes in ${CFG.closingWarn / 60} minutes. Break the bank or catch the killer.`, true, 'meeting'); }
     if (G.t >= CFG.closingTime && !G.escape) { G.closed = true; checkOver(); if (G.over) return; }
@@ -1854,7 +1863,7 @@ function makeApi(G) {
         }
         if (!c.sickTold && sick(c)) { c.sickTold = true; tell(c, G.antidotes > 0 ? `You feel sick. Poison! Get the antidote at the bar in ${Math.floor(c.poisonT)} seconds.` : 'You feel sick. Poison, and the antidote is gone.', true, 'poison'); }
       }
-      if (c.staffInside) continue;
+      if (c.staffInside || c.hidden!=null) continue;
       if (c.isHuman) humanTick(c, dt); else botTick(c, dt);
       const room = roomOf(c), tr = c.trail; if (tr[tr.length - 1].room !== room) { tr.push({ t: G.t, room }); if (tr.length > 60) tr.shift(); }
       if (c.drink) { c.drink.x = c.x + Math.cos(c.face + 0.9) * 16; c.drink.y = c.y + Math.sin(c.face + 0.9) * 16; }
@@ -1887,13 +1896,13 @@ function makeApi(G) {
   function pubView() {
     const m = G.meeting;
     return {
-      t: G.t, mode: G.mode, pickT: G.mode === 'pick' ? Math.ceil(G.pickT) : null, bank: G.bank, target: G.target, closeT: Math.max(0, Math.ceil(CFG.closingTime - G.t)), lightsT: G.blackout ? 1 : G.lightsT, nk: G.killerIds.length, killersCaught: G.chars.filter(c => c.isKiller && c.ejected).length, killersCaught: G.chars.filter(c => c.isKiller && c.ejected).length, backrooms: G.backrooms, escape: G.escape,
+      t: G.t, mode: G.mode, pickT: G.mode === 'pick' ? Math.ceil(G.pickT) : null, bank: G.bank, target: G.target, closeT: Math.max(0, Math.ceil(CFG.closingTime - G.t)), lightsT: G.blackout ? 1 : G.lightsT, nk: G.killerIds.length, killersCaught: G.chars.filter(c => c.isKiller && c.ejected).length, killersCaught: G.chars.filter(c => c.isKiller && c.ejected).length, backrooms: G.backrooms, escape: G.escape, survival:survival?.public()||null,
       exits: G.exits && { ids: G.exits.ids, t: Math.max(0, Math.ceil(G.exits.t)), closed: G.exits.closed },
-      darkT: G.escape && !G.blackout && !G.exits ? Math.max(0, Math.ceil(CFG.escapeDarkAt - G.t)) : null,
+      darkT: G.escape && !survival && !G.blackout && !G.exits ? Math.max(0, Math.ceil(CFG.escapeDarkAt - G.t)) : null,
       blackout: G.blackout && { t: +G.blackout.t.toFixed(1), br: G.blackout.br.map(b => [b.i, +Math.min(1, b.work / CFG.breakerWork).toFixed(2), b.done ? 1 : 0]) },
       chars: G.chars.map(c => { const a = c.monster ? MONSTER_LOOK : appearAs(c); return { id: c.id, name: a.name, color: a.color, hat: a.hat, x: Math.round(c.x), y: Math.round(c.y), look: +c.look.toFixed(2), face: +c.face.toFixed(2),
         alive: c.alive, eating: Math.max(0, 2.4 - (G.t - (c.eatAt ?? -99))), snack: c.snack || 0, ejected: !!c.ejected, seat: c.seat ? c.seat.id : null, moving: c.moving, pale: sick(c), human: a === c ? c.isHuman : !!a.isHuman, lucky: c.lucky > 0, inspecting: !!c.inspect, bet: G.t - (c.betAt ?? -9) < 1.2,
-        monster: c.monster, flash: c.flash, held: c.grabbed !== null, maul: !!c.grab, staffInside: !!c.staffInside, escaped: !!c.escaped, leap: !!(c.leap && c.leap.miss === null) }; }),
+        monster: c.monster, flash: c.flash, held: c.grabbed !== null, maul: !!c.grab, hidden:c.hidden!=null, staffInside: !!c.staffInside, escaped: !!c.escaped, leap: !!(c.leap && c.leap.miss === null) }; }),
       drinks: G.drinks.map(d => ({ id: d.id, owner: d.owner, holder: d.holder, x: Math.round(d.x), y: Math.round(d.y), sips: d.sips, barTable: d.barTable, color: d.color, kind: d.glass })), // (kind: the glass it's in)
       bodies: G.bodies.map(b => ({ id: b.id, x: Math.round(b.x), y: Math.round(b.y), cause: b.cause })),
       bowls: G.bowls.map(b => ({ id: b.id, x: b.x, y: b.y })),
@@ -1924,7 +1933,7 @@ function makeApi(G) {
     const myDrink = c.drink;
     const cd = {}; for (const k in c.cd) cd[k] = Math.ceil(c.cd[k]);
     const priv = {
-      me: c.id, isKiller: c.isKiller, killers: c.isKiller ? G.killerIds.slice() : [], alive: c.alive, deathScene: !c.alive ? c.deathScene || null : null, cameraFeed: !c.alive || c.staffInside ? c.cameraFeed || null : null, staffInside: !!c.staffInside,
+      hidden:c.hidden!=null, extracted:c.extracted||0, me: c.id, isKiller: c.isKiller, killers: c.isKiller ? G.killerIds.slice() : [], alive: c.alive, deathScene: !c.alive ? c.deathScene || null : null, cameraFeed: !c.alive || c.staffInside ? c.cameraFeed || null : null, staffInside: !!c.staffInside,
       footsteps: c.footsteps?.length ? {seq: c.footstepSeq = (c.footstepSeq || 0) + 1, ids: c.footsteps.splice(0)} : null,
       thirst: Math.round(c.thirst), hunger: Math.round(c.hunger), stamina: +(c.stamina / staMax(c)).toFixed(2), staminaMax: staMax(c), cd,
       perk: c.perk, crew: c.isKiller ? G.killerIds.map(id => ({ id, perk: byId(id).perk, human: byId(id).isHuman })) : [], senseT: +c.senseT.toFixed(1),
@@ -1934,14 +1943,14 @@ function makeApi(G) {
       notes: c.notes.slice(-12).map(n => ({ text: n.text, hard: !!n.hard })), inbox: c.inbox.splice(0),
       ctx: ctx ? ctx.label : null, posVer: c.posVer, x: c.x, y: c.y, seat: c.seat ? { id: c.seat.id, x: c.seat.x, y: c.seat.y, face: c.seat.face, game: c.seat.game, tier: c.seat.tier || null } : null,
       drink: myDrink ? { kind: myDrink.kind, glass: myDrink.glass, sips: myDrink.sips, held: true } : null,
-      canInspect: c.alive && ['seat', 'bowl'].includes(inspectTarget(c)?.kind), sniffT: c.inspect ? c.inspect.t : 0, inspectT: c.inspect ? c.inspect.t : 0, bellUsed: c.bellUsed, voted: c.voted, accused: c.accused, lucky: Math.ceil(c.lucky),
+      canInspect: !G.escape && c.alive && ['seat', 'bowl'].includes(inspectTarget(c)?.kind), sniffT: c.inspect ? c.inspect.t : 0, inspectT: c.inspect ? c.inspect.t : 0, bellUsed: c.bellUsed, voted: c.voted, accused: c.accused, lucky: Math.ceil(c.lucky),
       sick: sick(c), poisonT: sick(c) ? Math.ceil(c.poisonT) : 0, hauntUsed: !!c.hauntUsed, atBar: atBar(c),
       disguise: c.disguise && c.disguise.t > 0 ? { as: c.disguise.as, t: Math.ceil(c.disguise.t) } : null, canDisguise: c.lastVictim !== undefined,
       spiked: c.isKiller ? G.drinks.filter(d => d.poisoned).map(d => d.id).concat(G.traps.filter(t => t.kind === 'bowl').map(t => 'bowl' + t.id)) : G.drinks.filter(d => d.poisoned && d.poisonBy === c.id).map(d => d.id), // (anyone's own poisoned pours)
       rigged: c.isKiller ? G.traps.filter(t => t.kind === 'seat').map(t => t.id) : [],
       monster: c.monster, flash: c.flash, held: c.grabbed !== null, escaped: !!c.escaped,
       leap: c.monster ? (c.leap ? 1 : 0) : 0, leapCd: c.monster ? Math.ceil(Math.max(c.leapCd || 0, c.mCd || 0)) : 0, // (mid-pounce or winded; when the next pounce is ready)
-      canTransform: c.isKiller && c.alive && !!G.blackout && G.blackout.by === null, exitT: c.exitT > 0 ? +Math.min(1, c.exitT / exitHoldOf(c)).toFixed(2) : 0, gear: [...c.gear], wallet: Math.max(0, Math.round(c.won)),
+      canTransform: c.isKiller && c.alive && !!G.blackout && G.blackout.by === null, exitT: c.exitT > 0 ? +Math.min(1, c.exitT / (G.escape?(c.gear.has('crowbar')?2:3):exitHoldOf(c))).toFixed(2) : 0, gear: [...c.gear], wallet: c.escaped?(c.extracted||0):G.escape&&!c.alive?0:Math.max(0, Math.round(c.won)),
       // the mixer (at the bar): everyone's thirst and hunger, and how long until your next poisoned pour; the shady guy's wares
       needs: atBar(c) && c.alive ? G.chars.filter(o => o.alive).map(o => [o.id, Math.round(o.thirst), Math.round(o.hunger)]) : null,
       insurance: c.items.has('insurance') ? policyFor(c).view() : null,

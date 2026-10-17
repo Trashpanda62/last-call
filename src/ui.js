@@ -88,7 +88,7 @@ export function updateHud(v) {
   // the crew's money, big (Steve: the amount left should be very obvious); each change flashes as + or -
   const dk = pub.darkT;
   const gearLine = pub.escape && !priv.isKiller && priv.alive ? ` · your winnings ${money(priv.wallet || 0)} · B: gear${priv.gear && priv.gear.length ? ' (' + priv.gear.length + ')' : ''}` : '';
-  txt('bankAmt', money(pub.bank)); txt('bankGoal', !pub.escape ? 'break the bank at ' + money(pub.target) : (dk !== null && dk !== undefined ? `the power goes out in ${Math.floor(dk / 60)}:${String(dk % 60).padStart(2, '0')}` : 'escape') + gearLine); cls('bankAmt', 'low', pub.bank < pub.target * 0.15);
+  txt('bankAmt', money(pub.bank)); txt('bankGoal', !pub.escape ? 'break the bank at ' + money(pub.target) : (dk !== null && dk !== undefined ? `the power goes out in ${Math.floor(dk / 60)}:${String(dk % 60).padStart(2, '0')}` : 'Backrooms') + gearLine); cls('bankAmt', 'low', pub.bank < pub.target * 0.15);
   if (bankWas !== null && pub.bank !== bankWas) {
     const d = pub.bank - bankWas, el = $('bankDelta');
     el.textContent = (d > 0 ? '+' : '-') + money(Math.abs(d)); el.className = 'on ' + (d > 0 ? 'up' : 'down');
@@ -136,7 +136,7 @@ export function updateHud(v) {
   const X = pub.exits && !pub.exits.closed && pub.mode === 'play' && !pub.over ? pub.exits : null;
   if (X) {
     const doors = X.ids.map(i => `<span class="ok">${esc(ROOMS[STAFF_DOORS[i].room].name)}</span>`).join('');
-    const me = priv.escaped ? '<div class="me">You got out. Play the games while you wait.</div>'
+    const me = priv.escaped ? '<div class="me">You got out. Your winnings are safe.</div>'
       : !priv.alive ? '<div class="me">You are a ghost. Watch them run.</div>'
       : priv.isKiller ? '<div class="me mon">Stop them before they reach the doors.</div>'
       : priv.exitT ? `<div class="me big">OPENING THE DOOR ${Math.round(priv.exitT * 100)}% · it is loud</div>`
@@ -145,6 +145,7 @@ export function updateHud(v) {
     bh = B ? bh.replace(/<div class="me[^]*$/, '') + xh + (priv.monster || priv.held ? bh.match(/<div class="me[^]*$/)[0] : me) : xh + me; // (in the dark, under the power-out lines)
   }
   if (bh !== hudLast.get('blk')) { hudLast.set('blk', bh); $('blackoutHud').innerHTML = bh; show('blackoutHud', !!bh); $('blackoutHud').classList.toggle('exits', !!X); document.body.classList.toggle('blackout', !!bh); document.body.classList.toggle('tallHud', !!(B && X)); }
+  if(pub.survival&&pub.mode==='play'&&!pub.over){const s=pub.survival;const html=`<div class="bt">THE BACKROOMS<span>${Math.floor(s.limit/60)}:${String(s.limit%60).padStart(2,'0')}</span></div><div class="me">${priv.hidden?'HIDDEN · Left click to leave':s.grace>0?'Quiet for now · Make your money':s.entities.length+' entities roaming · Break line of sight; hide unseen'}</div><div class="me">${pub.exits?'Green exits open · Hold position at a door for 3 seconds':'Exits unlock in '+Math.max(0,30-Math.floor(pub.t))+'s'} · Escape to keep your winnings</div>`;$('blackoutHud').innerHTML=html;show('blackoutHud',true);document.body.classList.remove('blackout');}
   // a killer's suggested target
   const pr = priv.prey && !priv.seat && !priv.cameraFeed && pub.mode === 'play' && !pub.over ? `<b>TARGET</b> ${esc(priv.prey.name)} · ${esc(priv.prey.room)} · ${esc(priv.prey.why)}` : '';
   if (pr !== hudLast.get('prey')) { hudLast.set('prey', pr); $('prey').innerHTML = pr; show('prey', !!pr); }
@@ -170,7 +171,7 @@ export function updateHud(v) {
         : "Poison orders, rigged machines, a knife from behind, accidents. Don't get seen.") + '</span>'
         + (pk ? ` <span class="rl-edge">Edge: ${esc(pk.name)}${pk.key ? ' (' + esc(pk.key) + ')' : ''}</span>` : '');
     } else { r.className = ''; r.innerHTML = pub.escape
-      ? `<b>You are a GAMBLER.</b> <span class="rl-more">No meetings tonight. Win money: <b>B</b> spends your winnings on gear (sneakers, a fuse kit, a crowbar, a lucky rabbit foot). When the power goes out, reset the breakers by flashlight: they power an exit door. Then get out before they get you all.</span>`
+      ? `<b>You are a GAMBLER.</b> <span class="rl-more">Earn as much as you dare, then leave through a green exit. Entities arrive after 90 seconds and keep coming. Break line of sight and left click a locker to hide. Smilers freeze when watched. Breathing machines are mimics: back away, do not check for traps.</span>`
       : `<b>You are a GAMBLER.</b> <span class="rl-more">Win the crew ${money(pub.target)} or vote out the killer. Check a game before you play it, sniff before you sip.</span>`; }
     r.classList.toggle('brief', brief);
   }
@@ -299,7 +300,7 @@ export function renderOver(v, isHost, solo) {
   $('over').classList.toggle('killers', !!o.killersWin);
   $('oTitle').textContent = o.escape && !priv.isKiller ? (priv.escaped ? 'You got out' : priv.won ? 'You survived' : 'You never got out') : priv.won ? 'You win' : 'You lose';
   $('oTitle').style.color = priv.won ? 'var(--gold)' : 'var(--red)';
-  $('oText').textContent = o.text + (o.edges && o.edges.length ? ' ' + o.edges.map(e => `${e.name}'s edge: ${PERK[e.perk].name}.`).join(' ') : '');
+  $('oText').textContent = (o.escape?(priv.escaped?'You kept '+money(priv.extracted||0)+'. ':'Your winnings stayed behind. '):'') + o.text + (o.edges && o.edges.length ? ' ' + o.edges.map(e => `${e.name}'s edge: ${PERK[e.perk].name}.`).join(' ') : '');
   const mins = Math.floor(o.t / 60), secs = Math.floor(o.t % 60);
   $('oStats').textContent = `${mins}:${String(secs).padStart(2, '0')} long · ${deaths(o.stats)} · ` + (o.escape ? `${o.out.length} got out` : `${o.stats.meetings} meeting${o.stats.meetings === 1 ? '' : 's'} · bankroll ${money(pub.bank)}`);
   show('againBtn', solo || isHost); show('overWait', !solo && !isHost);

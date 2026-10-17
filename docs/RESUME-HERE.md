@@ -2,6 +2,14 @@
 
 Updated **2026-10-17**. The remaining implementable work from the prior checkpoint is constructed. Implementation, automated checks and LAN delivery verification are complete. [active-plan.md](active-plan.md) separates implementation from player acceptance. Older reports describe historical builds.
 
+## Latest split menu / Backrooms survival
+
+Escape is replaced with The Backrooms: no assigned killers or perk/meeting loop. Split left/right menu with animated selection, responsive controls, reduced-motion support and a scene image captured from the actual level. Machines retain all 92 positions. New walls/collision/navigation, continuous carpet, low ceiling, five hiding lockers and three perimeter exits replace the casino shell in this mode only.
+
+90-second creature/mimic grace; Bacteria, Hound, Smiler and Skin-Stealer spawn progressively every 55 seconds, capped at eight. Break sightlines and left click lockers to hide; witnessed hiding remains unsafe. Six private machine mimics telegraph before attacking; machine trap checking is removed. Exits unlock at 0:30, hold three seconds to save your personal winnings, and close at 15:00. Matching creature death cinematic, host-owned state and guest transport. Initial timing/difficulty values await Steve's playtest; C02 remains held. No paid generation.
+
+[Controls, rules, top-down layout and previews](../design/backrooms/README.md). Native route/rules checks, actual normal/no-prop views and three-browser PeerJS tests pass; reports: performance/2026-10-17-backrooms-*.json. Player acceptance remains open.
+
 ## Latest five-game arcade and control repairs
 
 Potato Stack, Vault Breaker, Last Train, Midnight Pinball and Potato Pop are implemented in a compact central arcade bank with physical controls, host-owned rules and one-time payouts. Five approved Sorceress atlases are integrated: actual 50 credits ($0.50), no extra jobs. [Controls, payout thresholds, receipts and actual previews](../design/arcade-five/README.md).

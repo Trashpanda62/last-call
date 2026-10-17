@@ -75,6 +75,7 @@ export function initMoves(opts) {
 function closeActionCursor() { if (!actionCursor) return; actionCursor=false; document.body.classList.remove('actionCursor'); relock(); }
 export function mouseMove(button, viaPad = false) {
   if (!viaPad && last && !picker && !barOpen() && !cameraView() && last.priv.alive && last.pub.mode === 'play' && !last.pub.over && button === 2) {
+    if (last.pub.escape) return true;
     actionCursor = !actionCursor; document.body.classList.toggle('actionCursor', actionCursor);
     if (actionCursor) unlock(); else relock(); return true;
   }
@@ -142,7 +143,7 @@ function move(k) {
     openPicker('Haunt...', pub.chars.filter(c => c.alive), id => act('haunt', id));
   } else if (k === 'gear') {
     if (!pub.escape || !priv.alive || priv.isKiller) return;
-    const items = Object.entries(CFG.gear).filter(([id]) => !(priv.gear || []).includes(id))
+    const items = Object.entries(CFG.gear).filter(([id]) => id!=='fuse' && !(priv.gear || []).includes(id))
       .map(([id, g]) => ({ id, name: `${g.name} · ${money(g.price)} · ${g.tip}`, color: priv.wallet >= g.price ? '#6aff9a' : '#806870' }));
     if (!items.length) return;
     openPicker(`Your winnings: ${money(priv.wallet)}. Buy...`, items, id => act('gear', id));
@@ -188,7 +189,7 @@ export function updateMoves(v) {
   const play = pub.mode === 'play' && !pub.over;
   $('mouseActionsHint').classList.toggle('hidden', !(play && priv.alive && !priv.cameraFeed));
   const mr=pub.arcade?.[priv.seat?.game];
-  text($('mouseActionsHint'), ['train','pinball'].includes(priv.seat?.game)&&mr?.player===priv.me&&mr.phase!=='done' ? priv.seat.game==='train'?'LMB: jump · RMB: slide':'LMB: left flipper · RMB: right flipper' : actionCursor?'Left click: choose action · Right click: return':'LMB: use / sip · RMB: check traps / sniff');
+  text($('mouseActionsHint'), ['train','pinball'].includes(priv.seat?.game)&&mr?.player===priv.me&&mr.phase!=='done' ? priv.seat.game==='train'?'LMB: jump · RMB: slide':'LMB: left flipper · RMB: right flipper' : actionCursor?'Left click: choose action · Right click: return':pub.escape?'LMB: use / hide / sip · RMB: sniff':'LMB: use / sip · RMB: check traps / sniff');
   if ((!play || !priv.alive || priv.cameraFeed) && actionCursor) {actionCursor=false;document.body.classList.remove('actionCursor');}
   if (!play && picker) closePicker();
   // killer bar
@@ -227,6 +228,7 @@ export function updateMoves(v) {
   const leap = control('#killerBar [data-move=leap]');
   leap.classList.toggle('hidden', !(play && priv.alive && priv.monster));
   disabled(leap, priv.leap || priv.leapCd > 0); text(control('#killerBar [data-move=leap] i'), priv.leapCd > 0 ? ' ' + secs(priv.leapCd) : '');
+  control('#safetyActions [data-safety=inspect]').classList.toggle('hidden',!!pub.escape);
   updateBar(v);
   const insurance = play && priv.alive && !priv.monster && priv.insurance;
   const policy = $('insuranceBtn'); policy.classList.toggle('hidden', !insurance);
@@ -243,7 +245,7 @@ export function updateMoves(v) {
   // bottom"): Use always; Sip with a drink in hand; Check with a drink, at a game or by a snack bowl; Light in a
   // blackout, Shoot with a bullet, Moves for a killer, Pounce for the monster
   const alive = play && priv.alive && !priv.monster, held = alive && !!priv.drink; // (the monster's hands are full)
-  for (const [a, on] of [['sip', held], ['inspect', alive && (held || (!!priv.seat && priv.seat.game !== 'cams' && priv.seat.game !== 'vip') || /^Eat/.test(priv.ctx || ''))]]) {
+  for (const [a, on] of [['sip', held], ['inspect', alive && !pub.escape && (held || (!!priv.seat && priv.seat.game !== 'cams' && priv.seat.game !== 'vip') || /^Eat/.test(priv.ctx || ''))]]) {
     const b = control(`#touchBtns [data-act=${a}]`); if (b && b.classList.contains('hidden') === on) b.classList.toggle('hidden', !on);
   }
   const ck = control('#touchBtns [data-act=inspect]'), ckt = priv.inspectT > 0 ? 'Checking' : quietNote() ? 'Fine' : 'Check'; if (ck) text(ck, ckt); // (the check in progress)

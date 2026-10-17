@@ -1,3 +1,4 @@
+import {BackroomsEntities} from './backrooms-entities.js';
 // The 3D view: first-person camera for the player, a camera tour for the menu, an orbit for meetings.
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
@@ -104,6 +105,7 @@ export async function init(canvas, { lowPower = false, progress = () => {} } = {
   R.bartender = makeBean({ kind: 'bartender' }); scene.add(R.bartender.root);
   R.shady = makeBean({ color: '#34343c', hat: 'fedora' }); scene.add(R.shady.root);
   R.blk = new Blackout(scene);
+  R.backroomsEntities=new BackroomsEntities(scene);
   R.br = new Backrooms(R); // the backrooms casino (pub.backrooms)
   applyGfx({ ...PRESETS[lowPower ? 'low' : 'high'], tone: 'agx', exposure: 1, fov: 72, sharpness: 0.25, dynres: 0 });
   R.fsrReady = import('./fsr.js').then(m => { passes.fsr = new m.FSRPass({ sharpness: R.gfx.sharpness }); passes.fsr.name = 'fsr'; if (R.gfx) applyGfx(R.gfx); }).catch(() => { /* bilinear it is */ });
@@ -785,7 +787,7 @@ export function draw(frame, { prepareOnly = false } = {}) {
   const blk = !!(pub && pub.blackout && !pub.over && pub.mode === 'play');
   if (blk !== !!R.wasBlk) R.dark = want;
   R.wasBlk = blk;
-  R.br.update(!!(pub && pub.backrooms), R.world); // the backrooms casino swaps in here too: the frame the power comes back
+  R.br.update(!!(pub && pub.backrooms), R.world,!!pub?.escape); // the backrooms casino swaps in here too: the frame the power comes back
   const lit = 1 - R.dark * (blk ? 0.985 : 0.94); // (a blackout is blacker: flashlights are the light)
   R.hemi.intensity = 0.36 * lit; R.fill.intensity = 0.23 * lit; R.key.intensity = 0.68 * lit; R.scene.environmentIntensity = 0.28 * lit;
   for (const g of GLOWS) {
@@ -829,7 +831,7 @@ export function draw(frame, { prepareOnly = false } = {}) {
       const b = beanFor(c); seen.add(c.id);
       const isMe = c.id === meIdx;
       const peekMe = isMe && !orbit && (frame.peek || 0) > 0.05 && !R.peekNear; // over the shoulder you see yourself (not with a wall right behind you)
-      b.root.visible = c.alive && !c.staffInside && !c.monster && !(isMe && !orbit && !peekMe); // (the monster is drawn by blackout.js instead)
+      b.root.visible = c.alive && !c.staffInside && !c.hidden && !c.monster && !(isMe && !orbit && !peekMe); // (the monster is drawn by blackout.js instead)
       if (!c.held && b.root.rotation.z) b.root.rotation.z = 0; // (kicking in the monster's hands)
       if (!b.root.visible) continue;
       let x = c.x, y = c.y, face = c.face, look = c.look, moving = c.moving, seated = c.seat !== null;
@@ -922,7 +924,7 @@ export function draw(frame, { prepareOnly = false } = {}) {
       if (d < 1.5 || (d < 3 && (dx * camFwd.x + dz * camFwd.z) / (fl * d) > 0.3)) b.root.visible = false; // close, or close and ahead
     }
   }
-  if (pub && !orbit && priv.monster) handsHidden = true;
+  if (frame.hideHands || (pub && !orbit && priv.monster)) handsHidden = true;
   const deathActive = R.death.update(pub, priv, cam, dt);
   // The cinematic's key light replaces your own glow. Keeping the point-light
   // count constant avoids recompiling the entire visible casino on a death.
@@ -930,7 +932,7 @@ export function draw(frame, { prepareOnly = false } = {}) {
   if (deathActive) handsHidden = true;
   if (handsHidden) R.hands.update({ hidden: true, dt });
   cam.updateMatrixWorld();
-  cullRooms(cam, orbit);
+  cullRooms(cam, orbit || !!pub?.escape);
   let posed = 0;
   for (const { b, state, height } of poses) {
     b.poseDt = Math.min(.1, (b.poseDt || 0) + dt);
@@ -939,6 +941,7 @@ export function draw(frame, { prepareOnly = false } = {}) {
   }
   R.actorWork = { posed, total: poses.length };
   R.blk.update(pub, priv, R.beans, t, dt, cam, meIdx, !orbit);
+  R.backroomsEntities.update(pub,priv,t,dt);
   R.torch.position.copy(cam.position);
   placeLights(cam.position, lit);
   if (R.br.on) R.br.pool();
@@ -1091,7 +1094,7 @@ export async function warmup(frame, progress = () => {}, current = () => true) {
       // resize/room/character order while giving the loading screen time to paint.
       progress(.02, 'Preparing the view'); await paint(); resize();
       progress(.04, 'Preparing rooms'); await paint();
-      R.br.update(!!frame.pub?.backrooms, R.world);
+      R.br.update(!!frame.pub?.backrooms, R.world,!!frame.pub?.escape);
       progress(.06, 'Preparing players'); await paint();
       const chars = frame.pub?.chars || []; let began = performance.now();
       for (let i = 0; i < chars.length; i++) {

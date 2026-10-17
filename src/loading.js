@@ -89,7 +89,7 @@ export function briefingReady() {
 export async function preloadInterface() {
   // World art is loaded by textures.js. Each interface image is fetched once,
   // then CSS uses its retained blob URL even on a no-store preview server.
-  const files = ['menu-mystery-v2', 'menu-escape-v2', 'loading-arrival-v1', 'loading-controls-v1', 'ability-icons-v1'];
+  const files = ['menu-mystery-v2', 'menu-escape-v2', 'menu-backrooms-world', 'loading-arrival-v1', 'loading-controls-v1', 'ability-icons-v1'];
   await Promise.all(files.map(async file => {
     const response = await fetch(`assets/art2/${file}.webp`); if (!response.ok) throw new Error('Image failed: ' + file);
     const url = URL.createObjectURL(await response.blob()), image = new Image(); image.src = url; await image.decode();

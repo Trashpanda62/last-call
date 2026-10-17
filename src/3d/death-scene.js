@@ -1,3 +1,5 @@
+import {makeBackroomsMonster} from './backrooms-entities.js';
+import {brLos} from '../backrooms-map.js';
 import * as THREE from 'three';
 import { makeBean } from './plush.js';
 import { makeMonster } from './monster.js';
@@ -33,7 +35,7 @@ export class DeathScene {
       this.caption.replaceChildren(name, cause); this.caption.classList.remove('hidden');
       this.age = 0; this.group = new THREE.Group(); this.group.name = 'death-cinematic'; this.scene.add(this.group);
       const v = pub.chars[priv.me]; this.victim = makeBean({ color: v.color, hat: v.hat }); this.group.add(this.victim.root);
-      this.monster = d.attacker?.monster || !d.attacker ? makeMonster() : null;
+      this.monster = d.attacker?.entity ? makeBackroomsMonster(d.attacker.entity) : d.attacker?.monster || !d.attacker ? makeMonster() : null;
       this.attacker = this.monster ? null : makeBean({ color: d.attacker?.color || '#29202b', hat: d.attacker?.hat || 'none' });
       this.actor = this.monster?.obj || this.attacker.root; this.actor.name = 'death-jumpscare-attacker'; this.group.add(this.actor);
       this.light = new THREE.PointLight(0xffb18a, 5, 7, 1.5); this.group.add(this.light);
@@ -41,7 +43,7 @@ export class DeathScene {
       this.angle = d.face + Math.PI * .72;
       for (let i = 0; i < 12; i++) {
         const a = d.face + Math.PI * .72 + i * Math.PI / 6;
-        if (los({ x: d.x, y: d.y }, { x: d.x + Math.cos(a) * 140, y: d.y + Math.sin(a) * 140 })) { this.angle = a; break; }
+        if ((pub.escape?brLos:los)({ x: d.x, y: d.y }, { x: d.x + Math.cos(a) * 140, y: d.y + Math.sin(a) * 140 })) { this.angle = a; break; }
       }
     }
     // Advance with rendered frames so a shader compilation or a slow device cannot skip the scare.
